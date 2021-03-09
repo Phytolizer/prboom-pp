@@ -32,6 +32,7 @@
  *-----------------------------------------------------------------------------*/
 
 #include "doomstat.h"
+#include "p_mobj.h"
 #include "w_wad.h"
 #include "r_main.h"
 #include "r_bsp.h"
@@ -537,6 +538,14 @@ static void R_DrawVisSprite(vissprite_t *vis)
 
   if (!dcvars.colormap)   // NULL colormap = shadow draw
     colfunc = R_GetDrawColumnFunc(RDC_PIPELINE_FUZZ, filter, filterz);    // killough 3/14/98
+  else
+    // [FG] colored blood and gibs
+    if (vis->mobjflags & MF_COLOREDBLOOD)
+    {
+      colfunc = R_GetDrawColumnFunc(RDC_PIPELINE_TRANSLATED, filter, filterz);
+      dcvars.translation = (vis->mobjflags & MF_TRANSLATION1) ?
+                            colrngs[CR_BLUE2] : colrngs[CR_GREEN];
+    }
   else
     if (vis->mobjflags & MF_TRANSLATION)
       {

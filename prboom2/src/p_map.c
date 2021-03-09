@@ -1820,7 +1820,7 @@ dboolean PTR_ShootTraverse (intercept_t* in)
     if (heretic || in->d.thing->flags & MF_NOBLOOD)
       P_SpawnPuff (x,y,z);
     else
-      P_SpawnBlood (x,y,z, la_damage);
+      P_SpawnBlood (x,y,z, la_damage, th);
   }
 
   if (la_damage)
@@ -2132,6 +2132,7 @@ dboolean PIT_ChangeSector (mobj_t* thing)
     }
     thing->height = 0;
     thing->radius = 0;
+    thing->flags |= P_ColoredBlood(thing);
     return true; // keep checking
     }
 
@@ -2170,6 +2171,7 @@ dboolean PIT_ChangeSector (mobj_t* thing)
     mo = P_SpawnMobj (thing->x,
                       thing->y,
                       thing->z + thing->height/2, g_mt_blood);
+    mo->flags |= P_ColoredBlood(thing);
 
     /* killough 8/10/98: remove dependence on order of evaluation */
     t = P_Random(pr_crush);
