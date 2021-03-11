@@ -1,4 +1,4 @@
-# dsda-doom v0.15.2
+# dsda-doom v0.16.0
 This is a fork of prboom+ with extra tooling for demo recording and playback, with a focus on speedrunning.
 
 ### Heretic Support (beta)
@@ -13,12 +13,7 @@ This is a fork of prboom+ with extra tooling for demo recording and playback, wi
 - Some of the more advanced features are not implemented for heretic yet, and using them may cause crashes or other odd behaviour. This includes ghost players, key frames (working but not always in sync), and the analysis code.
 - Heretic cheats aren't implemented yet, but you should be able to use the corresponding doom ones.
 - Dehacked support for heretic isn't implemented / investigated yet. It's possible some things will work by chance.
-- At the end of E2, one of the images requires palette swapping. This is not implemented yet, so the image will look wrong.
-- There isn't a separate heretic configuration file - if you'd like to keep different key configurations for each game, you'll have to keep two config files (for now).
-- Save files should work but are not compatible with the original.
 - Advanced hud is not implemented for heretic.
-- Extended hud colors are different due to heretic's different palette and the existing color translation tables. This can be improved eventually.
-- The heretic font does not have all the characters that the doom font does. As a result, the prboom+ hud font has been extended to the full character set and is used in various menus.
 - Some menus extend over the hud. This will be cleaned up later.
 - Any number of things may be broken...please let me know on dw or discord if you run into a problem.
 
@@ -42,6 +37,8 @@ This is a fork of prboom+ with extra tooling for demo recording and playback, wi
 - You can configure multiple input profiles.
 - You can configure multiple keys to one action.
 - You can bind (many) cheats.
+- You can cycle through alternate palettes (for testing purposes).
+  The cycle starts with `PLAYPAL`, followed by `PLAYPAL1` to `PLAYPAL9`.
 
 ### Changes
 - Smart Totals renamed to Max Totals and fixed to show kill constraint for max.

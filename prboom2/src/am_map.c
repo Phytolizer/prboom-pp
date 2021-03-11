@@ -976,8 +976,7 @@ dboolean AM_Responder
   {
     automapmode ^= am_overlay;
     AM_SetPosition();
-    AM_SetScale();
-    AM_initVariables();
+    AM_activateNewScale();
     plr->message = (automapmode & am_overlay) ? s_AMSTR_OVERLAYON : s_AMSTR_OVERLAYOFF;
 
     return true;
@@ -2490,16 +2489,18 @@ void AM_Drawer (void)
   AM_drawThings(); //jff 1/5/98 default double IDDT sprite
   AM_drawCrosshair((*mapcolor_hair_p));   //jff 1/7/98 default crosshair color
 
-#if defined(HAVE_LIBSDL2_IMAGE) && defined(GL_DOOM)
+#if defined(GL_DOOM)
   if (V_GetMode() == VID_MODEGL)
   {
     gld_DrawMapLines();
     M_ArrayClear(&map_lines);
 
+#if defined(HAVE_LIBSDL2_IMAGE)
     if (map_things_appearance == map_things_appearance_icon)
     {
       gld_DrawNiceThings(f_x, f_y, f_w, f_h);
     }
+#endif
   }
 #endif
 
