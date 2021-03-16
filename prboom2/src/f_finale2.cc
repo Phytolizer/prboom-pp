@@ -109,6 +109,7 @@ void FMI_StartFinale(void)
 void FMI_Ticker(void)
 {
 	int i;
+    float speed;
 	if (!demo_compatibility) WI_checkForAccelerate();  // killough 3/28/98: check for acceleration
 	else for (i = 0; i < MAXPLAYERS; i++)	if (players[i].cmd.buttons) goto next_level;      // go on to the next level
 
@@ -117,7 +118,7 @@ void FMI_Ticker(void)
 
 	if (!finalestage)
 	{
-		float speed = demo_compatibility ? TEXTSPEED : Get_TextSpeed();
+		speed = demo_compatibility ? TEXTSPEED : Get_TextSpeed();
 		/* killough 2/28/98: changed to allow acceleration */
 		if (finalecount > strlen(finaletext)*speed +
 			(midstage ? NEWTEXTWAIT : TEXTWAIT) ||
@@ -135,7 +136,8 @@ void FMI_Ticker(void)
 				{
 					finalecount = 0;
 					finalestage = 1;
-					wipegamestate = -1;         // force a wipe
+					wipegamestate =
+                        static_cast<gamestate_t>(-1);         // force a wipe
 					if (!stricmp(gamemapinfo->endpic, "$BUNNY"))
 					{
 						S_StartMusic(mus_bunny);

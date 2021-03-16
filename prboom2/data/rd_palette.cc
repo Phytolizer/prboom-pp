@@ -60,7 +60,7 @@ static void loadpal(const char *filename)
   if (size != 3*PAL_SIZE)
     die("Bad palette: %s\n", filename);
 
-  palette_data = data;
+  palette_data = static_cast<unsigned char *>(data);
 }
 
 //

@@ -111,9 +111,10 @@ dboolean P_SetMobjState(mobj_t* mobj,statenum_t state)
     // Call action functions when the state is set
 
     if (st->action)
-      st->action(mobj);
+      reinterpret_cast<actionf_p1>(st->action)(mobj);
 
-    seenstate[state] = 1 + st->nextstate;   // killough 4/9/98
+    seenstate[state] =
+        static_cast<statenum_t>(1 + st->nextstate);   // killough 4/9/98
 
     state = st->nextstate;
     } while (!mobj->tics && !seenstate[state]);   // killough 4/9/98
@@ -122,8 +123,9 @@ dboolean P_SetMobjState(mobj_t* mobj,statenum_t state)
     doom_printf("Warning: State Cycle Detected");
 
   if (!--recursion)
-    for (;(state=seenstate[i]);i=state-1)
-      seenstate[i] = 0;  // killough 4/9/98: erase memory of states
+    for (;(state=seenstate[i]);i= static_cast<statenum_t>(state - 1))
+      seenstate[i] = static_cast<statenum_t>(
+            0);  // killough 4/9/98: erase memory of states
 
   return ret;
 }
@@ -145,7 +147,7 @@ void P_ExplodeMissile (mobj_t* mo)
 
   mo->momx = mo->momy = mo->momz = 0;
 
-  P_SetMobjState (mo, mobjinfo[mo->type].deathstate);
+  P_SetMobjState (mo, static_cast<statenum_t>(mobjinfo[mo->type].deathstate));
 
   if (!heretic)
   {
@@ -191,9 +193,9 @@ static void P_XYMovement (mobj_t* mo)
       mo->momz = 0;
 
       if (heretic)
-        new_state = mo->info->seestate;
+        new_state = static_cast<statenum_t>(mo->info->seestate);
       else
-        new_state = mo->info->spawnstate;
+        new_state = static_cast<statenum_t>(mo->info->spawnstate);
 
       P_SetMobjState (mo, new_state);
     }
@@ -424,7 +426,7 @@ static void P_XYMovement (mobj_t* mo)
         if ((unsigned)(player->mo->state - states - g_s_play_run1) < 4)
         {
           if (heretic || player->mo == mo || compatibility_level >= lxdoom_1_compatibility)
-            P_SetMobjState(player->mo, g_s_play);
+            P_SetMobjState(player->mo, static_cast<statenum_t>(g_s_play));
         }
       }
     }
@@ -786,7 +788,7 @@ floater:
 
     if (mo->info->crashstate && (mo->flags & MF_CORPSE))
     {
-      P_SetMobjState(mo, mo->info->crashstate);
+      P_SetMobjState(mo, static_cast<statenum_t>(mo->info->crashstate));
       return;
     }
 
@@ -901,7 +903,7 @@ static void P_NightmareRespawn(mobj_t* mobj)
   mo = P_SpawnMobj (mobj->x,
                     mobj->y,
                     mobj->subsector->sector->floorheight + g_telefog_height,
-                    g_mt_tfog);
+                   static_cast<mobjtype_t>(g_mt_tfog));
 
   // initiate teleport sound
 
@@ -911,7 +913,8 @@ static void P_NightmareRespawn(mobj_t* mobj)
 
   ss = R_PointInSubsector (x,y);
 
-  mo = P_SpawnMobj (x, y, ss->sector->floorheight + g_telefog_height, g_mt_tfog);
+  mo = P_SpawnMobj (x, y, ss->sector->floorheight + g_telefog_height,
+                   static_cast<mobjtype_t>(g_mt_tfog));
 
   S_StartSound (mo, g_sfx_telept);
 
@@ -996,7 +999,7 @@ void P_MobjThinker (mobj_t* mobj)
   if (mobj->momx | mobj->momy || mobj->flags & MF_SKULLFLY)
   {
     P_XYMovement(mobj);
-    if (mobj->thinker.function != P_MobjThinker) // cph - Must've been removed
+    if (mobj->thinker.function != reinterpret_cast<think_t>(P_MobjThinker)) // cph - Must've been removed
       return;       // killough - mobj was removed
   }
 
@@ -1042,7 +1045,7 @@ void P_MobjThinker (mobj_t* mobj)
     }
     else
       P_ZMovement(mobj);
-    if (mobj->thinker.function != P_MobjThinker) // cph - Must've been removed
+    if (mobj->thinker.function != reinterpret_cast<think_t>(P_MobjThinker)) // cph - Must've been removed
       return;       // killough - mobj was removed
   }
   // heretic_note: are the intflags irrelevant when compatibility is enabled?
@@ -1130,7 +1133,7 @@ mobj_t* P_SpawnMobj(fixed_t x,fixed_t y,fixed_t z,mobjtype_t type)
   state_t*    st;
   mobjinfo_t* info;
 
-  mobj = Z_Malloc (sizeof(*mobj), PU_LEVEL, NULL);
+  mobj = static_cast<mobj_t *>(Z_Malloc(sizeof(*mobj), PU_LEVEL, NULL));
   memset (mobj, 0, sizeof (*mobj));
   info = &mobjinfo[type];
   mobj->type = type;
@@ -1153,7 +1156,7 @@ mobj_t* P_SpawnMobj(fixed_t x,fixed_t y,fixed_t z,mobjtype_t type)
   mobj->health = info->spawnhealth;
 
   if (gameskill != sk_nightmare)
-    mobj->reactiontime = info->reactiontime;
+    mobj->reactiontime = static_cast<short>(info->reactiontime);
 
   mobj->lastlook = P_Random (pr_lastlook) % MAXPLAYERS;
 
@@ -1220,7 +1223,7 @@ mobj_t* P_SpawnMobj(fixed_t x,fixed_t y,fixed_t z,mobjtype_t type)
   mobj->PrevY = mobj->y;
   mobj->PrevZ = mobj->z;
 
-  mobj->thinker.function = P_MobjThinker;
+  mobj->thinker.function = reinterpret_cast<think_t>(P_MobjThinker);
 
   //e6y
   mobj->friction = ORIG_FRICTION;                        // phares 3/17/98
@@ -1325,12 +1328,12 @@ void P_RemoveMobj (mobj_t* mobj)
 
 static PUREFUNC int P_FindDoomedNum(unsigned type)
 {
-  static struct { int first, next; } *hash;
-  register int i;
+  static struct hash_t { int first, next; } *hash;
+  int i;
 
   if (!hash)
     {
-      hash = Z_Malloc(sizeof *hash * num_mobj_types, PU_CACHE, (void **) &hash);
+      hash = static_cast<hash_t *>(Z_Malloc(sizeof *hash * num_mobj_types, PU_CACHE, (void **) &hash));
       for (i=0; i<num_mobj_types; i++)
   hash[i].first = num_mobj_types;
       for (i=mobj_types_zero; i<mobj_types_max; i++)
@@ -1400,7 +1403,7 @@ void P_RespawnSpecials (void)
   else
     z = ONFLOORZ;
 
-  mo = P_SpawnMobj (x,y,z, i);
+  mo = P_SpawnMobj (x,y,z, static_cast<mobjtype_t>(i));
   mo->spawnpoint = *mthing;
   mo->angle = ANG45 * (mthing->angle/45);
 
@@ -1453,7 +1456,7 @@ void P_SpawnPlayer (int n, const mapthing_t* mthing)
   x    = mthing->x << FRACBITS;
   y    = mthing->y << FRACBITS;
   z    = ONFLOORZ;
-  mobj = P_SpawnMobj (x,y,z, g_mt_player);
+  mobj = P_SpawnMobj (x,y,z, static_cast<mobjtype_t>(g_mt_player));
 
   if (deathmatch)
     mobj->index = TracerGetDeathmatchStart(n);
@@ -1605,9 +1608,9 @@ mobj_t* P_SpawnMapThing (const mapthing_t* mthing, int index)
       {
         num_deathmatchstarts = num_deathmatchstarts ?
                                num_deathmatchstarts * 2 : 16;
-        deathmatchstarts = realloc(deathmatchstarts,
+        deathmatchstarts = static_cast<mapthing_t *>(realloc(deathmatchstarts,
                                    num_deathmatchstarts *
-                                   sizeof(*deathmatchstarts));
+                                   sizeof(*deathmatchstarts)));
         deathmatch_p = deathmatchstarts + offset;
       }
       memcpy(deathmatch_p++, mthing, sizeof(*mthing));
@@ -1762,7 +1765,7 @@ spawnit:
   else
     z = ONFLOORZ;
 
-  mobj = P_SpawnMobj (x, y, z, i);
+  mobj = P_SpawnMobj (x, y, z, static_cast<mobjtype_t>(i));
   mobj->spawnpoint = *mthing; // heretic_note: this is only done with totalkills++ in heretic
   mobj->index = index;//e6y
   mobj->iden_nums = iden_num;
@@ -2420,7 +2423,7 @@ dboolean Heretic_P_SetMobjState(mobj_t * mobj, statenum_t state)
     mobj->frame = st->frame;
     if (st->action)
     {                           // Call action function
-        st->action(mobj);
+        reinterpret_cast<actionf_p1>(st->action)(mobj);
     }
     return (true);
 }
@@ -2428,7 +2431,7 @@ dboolean Heretic_P_SetMobjState(mobj_t * mobj, statenum_t state)
 void P_FloorBounceMissile(mobj_t * mo)
 {
     mo->momz = -mo->momz;
-    P_SetMobjState(mo, mobjinfo[mo->type].deathstate);
+    P_SetMobjState(mo, static_cast<statenum_t>(mobjinfo[mo->type].deathstate));
 }
 
 void Heretic_P_SpawnPuff(fixed_t x, fixed_t y, fixed_t z)

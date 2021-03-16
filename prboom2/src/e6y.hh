@@ -199,7 +199,7 @@ void M_ChangeScreenMultipleFactor(void);
 void M_ChangeInterlacedScanning(void);
 void M_MouseMLook(int choice);
 void M_MouseAccel(int choice);
-void CheckPitch(signed int *pitch);
+void CheckPitch(signed int *view_pitch);
 void I_Init2(void);
 
 dboolean GetMouseLook(void);

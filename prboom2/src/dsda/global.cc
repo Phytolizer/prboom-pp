@@ -123,7 +123,7 @@ static void dsda_AllocateMobjInfo(int zero, int max, int count) {
   mobj_types_zero = zero;
   mobj_types_max = max;
 
-  mobjinfo = malloc(sizeof(mobjinfo_t) * num_mobj_types);
+  mobjinfo = malloc<mobjinfo_t *>(sizeof(mobjinfo_t) * num_mobj_types);
   memset(mobjinfo, 0, sizeof(mobjinfo_t) * num_mobj_types);
 }
 
@@ -145,7 +145,7 @@ static void dsda_SetSfx(sfxinfo_t* sfx_list, int count) {
 static void dsda_SetMusic(musicinfo_t* music_list, int count) {
   S_music = music_list;
   num_music = count;
-  S_music_files = malloc(sizeof(char *) * num_music);
+  S_music_files = malloc<const char **>(sizeof(char *) * num_music);
   memset(S_music_files, 0, sizeof(char *) * num_music);
 }
 
@@ -356,7 +356,7 @@ static void dsda_InitHeretic(void) {
     mobjinfo[j].activesound  = mobjinfo_p->activesound;
     mobjinfo[j].flags        = mobjinfo_p->flags;
     mobjinfo[j].raisestate   = 0; // not in heretic
-    mobjinfo[j].droppeditem  = 0; // not in heretic
+    mobjinfo[j].droppeditem  = MT_NULL; // not in heretic
     mobjinfo[j].crashstate   = mobjinfo_p->crashstate;
     mobjinfo[j].flags2       = mobjinfo_p->flags2;
   }

@@ -90,9 +90,9 @@ void SC_OpenLumpByNum(int lump)
 
 static void OpenScript(void)
 {
-  ScriptBuffer = W_CacheLumpNum(ScriptLump);
+  ScriptBuffer = static_cast<const char *>(W_CacheLumpNum(ScriptLump));
   ScriptSize = W_LumpLength(ScriptLump);
-  ScriptBuffer = W_CacheLumpNum(ScriptLump);
+  ScriptBuffer = static_cast<const char *>(W_CacheLumpNum(ScriptLump));
   ScriptSize = W_LumpLength(ScriptLump);
 
   ScriptPtr = ScriptBuffer;

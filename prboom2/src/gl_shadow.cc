@@ -48,7 +48,7 @@ int gl_shadows_factor;
 simple_shadow_params_t simple_shadows =
 {
   0, 0,
-  -1, 0, 0,
+  static_cast<GLuint>(-1), 0, 0,
   80, 1000, 0.5f, 0.0044f
 };
 

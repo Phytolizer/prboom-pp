@@ -13,7 +13,7 @@ static void p_checksum_cleanup(void);
 void checksum_gamestate(int tic);
 
 /* vars */
-static void p_checksum_nop(int tic){} /* do nothing */
+static void p_checksum_nop(int /* tic */){} /* do nothing */
 void (*P_Checksum)(int) = p_checksum_nop;
 
 /*

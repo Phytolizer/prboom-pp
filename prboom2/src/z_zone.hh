@@ -110,10 +110,28 @@ void Z_DumpHistory(char *);
 #undef calloc
 #undef strdup
 
-#define malloc(n)          Z_Malloc(n,PU_STATIC,0)
-#define free(p)            Z_Free(p)
-#define realloc(p,n)       Z_Realloc(p,n,PU_STATIC,0)
-#define calloc(n1,n2)      Z_Calloc(n1,n2,PU_STATIC,0)
+#include <type_traits>
+
+template <typename T, typename = std::enable_if_t<std::is_pointer_v<T>>>
+constexpr T malloc(size_t n)
+{
+    return static_cast<T>(Z_Malloc(n, PU_STATIC, nullptr));
+}
+template <typename T, typename = std::enable_if_t<std::is_pointer_v<T>>>
+constexpr void free(T p)
+{
+    Z_Free(p);
+}
+template <typename T, typename = std::enable_if_t<std::is_pointer_v<T>>>
+constexpr T realloc(T p, size_t n)
+{
+    return static_cast<T>(Z_Realloc(p, n, PU_STATIC, nullptr));
+}
+template <typename T, typename = std::enable_if_t<std::is_pointer_v<T>>>
+constexpr T calloc(size_t n1, size_t n2)
+{
+    return static_cast<T>(Z_Calloc(n1, n2, PU_STATIC, nullptr));
+}
 #define strdup(s)          Z_Strdup(s,PU_STATIC,0)
 
 #else

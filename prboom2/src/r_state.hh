@@ -39,10 +39,6 @@
 #include "d_player.hh"
 #include "r_data.hh"
 
-#ifdef __GNUG__
-#pragma interface
-#endif
-
 
 //
 // Refresh internal data structures,

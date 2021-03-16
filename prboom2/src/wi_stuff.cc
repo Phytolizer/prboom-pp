@@ -483,7 +483,8 @@ static void WI_DrawString(int cx, int cy, const char* ch)
 		if (cx + w > 320)
 			break;
 
-		V_DrawNumPatch(cx, cy, 0, hu_font[c].lumpnum, CR_GRAY, VPT_STRETCH | VPT_TRANS);
+		V_DrawNumPatch(cx, cy, 0, hu_font[c].lumpnum, CR_GRAY,
+            static_cast<patch_translation_e>(VPT_STRETCH | VPT_TRANS));
 		cx += w;
 	}
 }
@@ -1138,8 +1139,8 @@ void WI_initDeathmatchStats(void)
   int   i; // looping variables
 
   // CPhipps - allocate data structures needed
-  dm_frags  = calloc(MAXPLAYERS, sizeof(*dm_frags));
-  dm_totals = calloc(MAXPLAYERS, sizeof(*dm_totals));
+  dm_frags  = calloc<short **>(MAXPLAYERS, sizeof(*dm_frags));
+  dm_totals = calloc<short *>(MAXPLAYERS, sizeof(*dm_totals));
 
   state = StatCount;  // We're doing stats
   acceleratestage = 0;
@@ -1152,7 +1153,7 @@ void WI_initDeathmatchStats(void)
     if (playeringame[i])
     {
       // CPhipps - allocate frags line
-      dm_frags[i] = calloc(MAXPLAYERS, sizeof(**dm_frags)); // set all counts to zero
+      dm_frags[i] = calloc<short *>(MAXPLAYERS, sizeof(**dm_frags)); // set all counts to zero
 
       dm_totals[i] = 0;
     }
@@ -1328,10 +1329,10 @@ void WI_drawDeathmatchStats(void)
       //int trans = playernumtotrans[i];
       V_DrawNamePatch(x-halfface, DM_MATRIXY - WI_SPACINGY,
          FB, facebackp, i ? CR_LIMIT+i : CR_DEFAULT,
-         VPT_STRETCH | (i ? VPT_TRANS : 0));
+          static_cast<patch_translation_e>(VPT_STRETCH | (i ? VPT_TRANS : 0)));
       V_DrawNamePatch(DM_MATRIXX-halfface, y,
          FB, facebackp, i ? CR_LIMIT+i : CR_DEFAULT,
-         VPT_STRETCH | (i ? VPT_TRANS : 0));
+          static_cast<patch_translation_e>(VPT_STRETCH | (i ? VPT_TRANS : 0)));
 
       if (i == me)
       {
@@ -1428,10 +1429,10 @@ void WI_initNetgameStats(void)
   cnt_pause = TICRATE;
 
   // CPhipps - allocate these dynamically, blank with calloc
-  cnt_kills = calloc(MAXPLAYERS, sizeof(*cnt_kills));
-  cnt_items = calloc(MAXPLAYERS, sizeof(*cnt_items));
-  cnt_secret= calloc(MAXPLAYERS, sizeof(*cnt_secret));
-  cnt_frags = calloc(MAXPLAYERS, sizeof(*cnt_frags));
+  cnt_kills = calloc<int *>(MAXPLAYERS, sizeof(*cnt_kills));
+  cnt_items = calloc<int *>(MAXPLAYERS, sizeof(*cnt_items));
+  cnt_secret= calloc<int *>(MAXPLAYERS, sizeof(*cnt_secret));
+  cnt_frags = calloc<int *>(MAXPLAYERS, sizeof(*cnt_frags));
 
   for (i=0 ; i<MAXPLAYERS ; i++)
     if (playeringame[i])
@@ -1657,7 +1658,7 @@ void WI_drawNetgameStats(void)
     x = NG_STATSX;
     V_DrawNamePatch(x-fwidth, y, FB, facebackp,
        i ? CR_LIMIT+i : CR_DEFAULT,
-       VPT_STRETCH | (i ? VPT_TRANS : 0));
+        static_cast<patch_translation_e>(VPT_STRETCH | (i ? VPT_TRANS : 0)));
 
     if (i == me)
       V_DrawNamePatch(x-fwidth, y, FB, star, CR_DEFAULT, VPT_STRETCH);
@@ -1701,9 +1702,9 @@ void WI_initStats(void)
   sp_state = 1;
 
   // CPhipps - allocate (awful code, I know, but saves changing it all) and initialise
-  *(cnt_kills = malloc(sizeof(*cnt_kills))) =
-  *(cnt_items = malloc(sizeof(*cnt_items))) =
-  *(cnt_secret= malloc(sizeof(*cnt_secret))) = -1;
+  *(cnt_kills = malloc<int *>(sizeof(*cnt_kills))) =
+  *(cnt_items = malloc<int *>(sizeof(*cnt_items))) =
+  *(cnt_secret= malloc<int *>(sizeof(*cnt_secret))) = -1;
   cnt_time = cnt_par = cnt_total_time = -1;
   cnt_pause = TICRATE;
 

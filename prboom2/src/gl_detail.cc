@@ -850,7 +850,7 @@ void gld_ParseDetail(void)
 
   details_count = 2; // reserved for default wall and flat
   details_size = 128;
-  details = calloc(details_size, sizeof(details[0]));
+  details = calloc<detail_t *>(details_size, sizeof(details[0]));
 
   // skip "Detail" params
   while (SC_Check() && !SC_Compare("{"))

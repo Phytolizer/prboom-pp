@@ -118,7 +118,8 @@ static dboolean CachePCSLump(int sound_id)
 
     // Load from WAD
 
-    current_sound_lump = W_CacheLumpNum(S_sfx[sound_id].lumpnum/* e6y, PU_STATIC*/);
+    current_sound_lump = static_cast<const uint8_t *>(
+        W_CacheLumpNum(S_sfx[sound_id].lumpnum /* e6y, PU_STATIC*/));
     lumplen = W_LumpLength(S_sfx[sound_id].lumpnum);
 
     // Read header
@@ -145,10 +146,10 @@ static dboolean CachePCSLump(int sound_id)
 
 int I_PCS_StartSound(int id,
                      int channel,
-                     int vol,
-                     int sep,
-                     int pitch,
-                     int priority)
+                     int /* vol */,
+                     int /* sep */,
+                     int /* pitch */,
+                     int /* priority */)
 {
     int result;
 

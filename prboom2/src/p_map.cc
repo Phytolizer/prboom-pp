@@ -401,13 +401,13 @@ dboolean PIT_CrossLine (line_t* ld)
 
 static int untouched(line_t *ld)
 {
-  fixed_t x, y, tmbbox[4];
+  fixed_t x, y, tm_bounding_box[4];
   return
-    (tmbbox[BOXRIGHT] = (x=tmthing->x)+tmthing->radius) <= ld->bbox[BOXLEFT] ||
-    (tmbbox[BOXLEFT] = x-tmthing->radius) >= ld->bbox[BOXRIGHT] ||
-    (tmbbox[BOXTOP] = (y=tmthing->y)+tmthing->radius) <= ld->bbox[BOXBOTTOM] ||
-    (tmbbox[BOXBOTTOM] = y-tmthing->radius) >= ld->bbox[BOXTOP] ||
-    P_BoxOnLineSide(tmbbox, ld) != -1;
+    (tm_bounding_box[BOXRIGHT] = (x=tmthing->x)+tmthing->radius) <= ld->bbox[BOXLEFT] ||
+    (tm_bounding_box[BOXLEFT] = x-tmthing->radius) >= ld->bbox[BOXRIGHT] ||
+    (tm_bounding_box[BOXTOP] = (y=tmthing->y)+tmthing->radius) <= ld->bbox[BOXBOTTOM] ||
+    (tm_bounding_box[BOXBOTTOM] = y-tmthing->radius) >= ld->bbox[BOXTOP] ||
+    P_BoxOnLineSide(tm_bounding_box, ld) != -1;
 }
 
 //
@@ -581,12 +581,12 @@ static dboolean PIT_CheckThing(mobj_t *thing) // killough 3/26/98: make static
   if (tmthing->flags & MF_SKULLFLY)
   {
     // A flying skull is smacking something.
-    // Determine damage amount, and the skull comes to a dead stop.
+    // Determine skull_damage amount, and the skull comes to a dead stop.
 
     int new_state;
-    int damage = ((P_Random(pr_skullfly)%8)+1)*tmthing->info->damage;
+    int skull_damage = ((P_Random(pr_skullfly)%8)+1)*tmthing->info->damage;
 
-    P_DamageMobj (thing, tmthing, tmthing, damage);
+    P_DamageMobj (thing, tmthing, tmthing, skull_damage);
 
     tmthing->flags &= ~MF_SKULLFLY;
     tmthing->momx = tmthing->momy = tmthing->momz = 0;
@@ -596,7 +596,7 @@ static dboolean PIT_CheckThing(mobj_t *thing) // killough 3/26/98: make static
     else
       new_state = tmthing->info->spawnstate;
 
-    P_SetMobjState (tmthing, new_state);
+    P_SetMobjState (tmthing, static_cast<statenum_t>(new_state));
 
     return false;   // stop moving
   }
@@ -901,7 +901,7 @@ dboolean P_CheckPosition (mobj_t* thing,fixed_t x,fixed_t y)
 // crossing special lines unless MF_TELEPORT is set.
 //
 dboolean P_TryMove(mobj_t* thing,fixed_t x,fixed_t y,
-                  dboolean dropoff) // killough 3/15/98: allow dropoff as option
+                  int dropoff) // killough 3/15/98: allow dropoff as option
 {
   fixed_t oldx;
   fixed_t oldy;
@@ -2170,7 +2170,8 @@ dboolean PIT_ChangeSector (mobj_t* thing)
     // spray blood in a random direction
     mo = P_SpawnMobj (thing->x,
                       thing->y,
-                      thing->z + thing->height/2, g_mt_blood);
+                      thing->z + thing->height/2,
+                     static_cast<mobjtype_t>(g_mt_blood));
     mo->flags |= P_ColoredBlood(thing);
 
     /* killough 8/10/98: remove dependence on order of evaluation */

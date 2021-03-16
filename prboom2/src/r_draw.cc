@@ -709,7 +709,8 @@ void R_InitTranslationTables (void)
   // Remove dependency of colormaps aligned on 256-byte boundary
 
   if (translationtables == NULL) // CPhipps - allow multiple calls
-    translationtables = Z_Malloc(256*MAXTRANS, PU_STATIC, 0);
+    translationtables =
+          static_cast<byte *>(Z_Malloc(256 * MAXTRANS, PU_STATIC, 0));
 
   for (i=0; i<MAXTRANS; i++) transtocolour[i] = 255;
 
@@ -998,10 +999,10 @@ void R_InitBuffersRes(void)
   if (short_tempbuf) free(short_tempbuf);
   if (int_tempbuf) free(int_tempbuf);
 
-  solidcol = calloc(1, SCREENWIDTH * sizeof(*solidcol));
-  byte_tempbuf = calloc(1, (SCREENHEIGHT * 4) * sizeof(*byte_tempbuf));
-  short_tempbuf = calloc(1, (SCREENHEIGHT * 4) * sizeof(*short_tempbuf));
-  int_tempbuf = calloc(1, (SCREENHEIGHT * 4) * sizeof(*int_tempbuf));
+  solidcol = calloc<byte *>(1, SCREENWIDTH * sizeof(*solidcol));
+  byte_tempbuf = calloc<byte *>(1, (SCREENHEIGHT * 4) * sizeof(*byte_tempbuf));
+  short_tempbuf = calloc<unsigned short *>(1, (SCREENHEIGHT * 4) * sizeof(*short_tempbuf));
+  int_tempbuf = calloc<unsigned int *>(1, (SCREENHEIGHT * 4) * sizeof(*int_tempbuf));
 }
 
 //

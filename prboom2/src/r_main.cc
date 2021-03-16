@@ -388,8 +388,8 @@ static void R_InitLightTables (void)
   int i;
 
   // killough 4/4/98: dynamic colormaps
-  c_zlight = malloc(sizeof(*c_zlight) * numcolormaps);
-  c_scalelight = malloc(sizeof(*c_scalelight) * numcolormaps);
+  c_zlight = malloc<const lighttable_t *(*)[LIGHTLEVELS_MAX][MAXLIGHTZ]>(sizeof(*c_zlight) * numcolormaps);
+  c_scalelight = malloc<const lighttable_t *(*)[LIGHTLEVELS_MAX][MAXLIGHTSCALE]>(sizeof(*c_scalelight) * numcolormaps);
 
   LIGHTLEVELS   = (render_doom_lightmaps ? 16 : 32);
   LIGHTSEGSHIFT = (render_doom_lightmaps ? 4 : 3);
@@ -546,7 +546,8 @@ void R_SetupViewScaling(void)
   {
     for (k = 0; k < VPT_ALIGN_MAX; k++)
     {
-      InitStretchParam(&stretch_params_table[i][k], i, k);
+      InitStretchParam(&stretch_params_table[i][k], i,
+                         static_cast<patch_translation_e>(k));
     }
   }
   stretch_params = stretch_params_table[render_stretch_hud];

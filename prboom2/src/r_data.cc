@@ -138,10 +138,11 @@ static void R_InitTextures (void)
 
   // Load the patch names from pnames.lmp.
   name[8] = 0;
-  names = W_CacheLumpNum(names_lump = W_GetNumForName("PNAMES"));
+  names = static_cast<const char *>(
+      W_CacheLumpNum(names_lump = W_GetNumForName("PNAMES")));
   nummappatches = LittleLong(*((const int *)names));
   name_p = names+4;
-  patchlookup = malloc(nummappatches*sizeof(*patchlookup));  // killough
+  patchlookup = malloc<int *>(nummappatches*sizeof(*patchlookup));  // killough
 
   for (i=0 ; i<nummappatches ; i++)
     {
@@ -170,14 +171,16 @@ static void R_InitTextures (void)
   // The data is contained in one or two lumps,
   //  TEXTURE1 for shareware, plus TEXTURE2 for commercial.
 
-  maptex = maptex1 = W_CacheLumpNum(maptex_lump[0] = W_GetNumForName("TEXTURE1"));
+  maptex = maptex1 = static_cast<const int *>(
+      W_CacheLumpNum(maptex_lump[0] = W_GetNumForName("TEXTURE1")));
   numtextures1 = LittleLong(*maptex);
   maxoff = W_LumpLength(maptex_lump[0]);
   directory = maptex+1;
 
   if (W_CheckNumForName("TEXTURE2") != -1)
     {
-      maptex2 = W_CacheLumpNum(maptex_lump[1] = W_GetNumForName("TEXTURE2"));
+      maptex2 = static_cast<const int *>(
+            W_CacheLumpNum(maptex_lump[1] = W_GetNumForName("TEXTURE2")));
       numtextures2 = LittleLong(*maptex2);
       maxoff2 = W_LumpLength(maptex_lump[1]);
     }
@@ -192,8 +195,10 @@ static void R_InitTextures (void)
   // killough 4/9/98: make column offsets 32-bit;
   // clean up malloc-ing to use sizeof
 
-  textures = Z_Malloc(numtextures*sizeof*textures, PU_STATIC, 0);
-  textureheight = Z_Malloc(numtextures*sizeof*textureheight, PU_STATIC, 0);
+  textures = static_cast<texture_t **>(
+      Z_Malloc(numtextures * sizeof *textures, PU_STATIC, 0));
+  textureheight = static_cast<fixed_t *>(
+      Z_Malloc(numtextures * sizeof *textureheight, PU_STATIC, 0));
 
   for (i=0 ; i<numtextures ; i++, directory++)
     {
@@ -212,10 +217,10 @@ static void R_InitTextures (void)
 
       mtexture = (const maptexture_t *) ( (const byte *)maptex + offset);
 
-      texture = textures[i] =
-        Z_Malloc(sizeof(texture_t) +
-                 sizeof(texpatch_t)*(LittleShort(mtexture->patchcount)-1),
-                 PU_STATIC, 0);
+      texture = textures[i] = static_cast<texture_t *>(Z_Malloc(
+          sizeof(texture_t) +
+              sizeof(texpatch_t) * (LittleShort(mtexture->patchcount) - 1),
+          PU_STATIC, 0));
 
       texture->width = LittleShort(mtexture->width);
       texture->height = LittleShort(mtexture->height);
@@ -315,8 +320,8 @@ static void R_InitTextures (void)
   // killough 4/9/98: make column offsets 32-bit;
   // clean up malloc-ing to use sizeof
 
-  texturetranslation =
-    Z_Malloc((numtextures+1)*sizeof*texturetranslation, PU_STATIC, 0);
+  texturetranslation = static_cast<int *>(
+      Z_Malloc((numtextures + 1) * sizeof *texturetranslation, PU_STATIC, 0));
 
   for (i=0 ; i<numtextures ; i++)
     texturetranslation[i] = i;
@@ -347,8 +352,8 @@ static void R_InitFlats(void)
   // killough 4/9/98: make column offsets 32-bit;
   // clean up malloc-ing to use sizeof
 
-  flattranslation =
-    Z_Malloc((numflats+1)*sizeof(*flattranslation), PU_STATIC, 0);
+  flattranslation = static_cast<int *>(
+      Z_Malloc((numflats + 1) * sizeof(*flattranslation), PU_STATIC, 0));
 
   for (i=0 ; i<numflats ; i++)
     flattranslation[i] = i;
@@ -382,8 +387,9 @@ static void R_InitColormaps(void)
   firstcolormaplump = W_GetNumForName("C_START");
   lastcolormaplump  = W_GetNumForName("C_END");
   numcolormaps = lastcolormaplump - firstcolormaplump;
-  colormaps = Z_Malloc(sizeof(*colormaps) * numcolormaps, PU_STATIC, 0);
-  colormaps[0] = (const lighttable_t *)W_CacheLumpName("COLORMAP");
+  colormaps = static_cast<const lighttable_t **>(
+      Z_Malloc(sizeof(*colormaps) * numcolormaps, PU_STATIC, 0));
+  colormaps[0] = W_CacheLumpName<const lighttable_t *>("COLORMAP");
   for (i=1; i<numcolormaps; i++)
     colormaps[i] = (const lighttable_t *)W_CacheLumpNum(i+firstcolormaplump);
   // cph - always lock
@@ -395,7 +401,7 @@ static void R_InitColormaps(void)
 
 int R_ColormapNumForName(const char *name)
 {
-  register int i = 0;
+  int i = 0;
   if (strncasecmp(name,"COLORMAP",8))     // COLORMAP predefined to return 0
     if ((i = (W_CheckNumForName)(name, ns_colormaps)) != -1)
       i -= firstcolormaplump;
@@ -421,10 +427,11 @@ void R_InitTranMap(int progress)
   // If a tranlucency filter map lump is present, use it
 
   if (lump != -1)  // Set a pointer to the translucency filter maps.
-    main_tranmap = W_CacheLumpNum(lump);   // killough 4/11/98
+    main_tranmap =
+          static_cast<const byte *>(W_CacheLumpNum(lump));   // killough 4/11/98
   else if (W_CheckNumForName("PLAYPAL")!=-1) // can be called before WAD loaded
     {   // Compose a default transparent filter map based on PLAYPAL.
-      const byte *playpal = W_CacheLumpName("PLAYPAL");
+      const byte *playpal = (W_CacheLumpName<const byte *>("PLAYPAL"));
       byte       *my_tranmap;
 
       char *fname;
@@ -436,11 +443,12 @@ void R_InitTranMap(int progress)
       FILE *cachefp;
 
       fnlen = doom_snprintf(NULL, 0, "%s/tranmap.dat", I_DoomExeDir());
-      fname = malloc(fnlen+1);
+      fname = malloc<char *>(fnlen+1);
       doom_snprintf(fname, fnlen+1, "%s/tranmap.dat", I_DoomExeDir());
       cachefp = fopen(fname, "rb");
 
-      main_tranmap = my_tranmap = Z_Malloc(256*256, PU_STATIC, 0);  // killough 4/11/98
+      main_tranmap = my_tranmap = static_cast<byte *>(
+          Z_Malloc(256 * 256, PU_STATIC, 0));  // killough 4/11/98
 
       // Use cached translucency filter if it's available
 
@@ -461,11 +469,11 @@ void R_InitTranMap(int progress)
           // for fast inner-loop calculations. Precompute tot array.
 
           {
-            register int i = 255;
-            register const unsigned char *p = playpal+255*3;
+            int i = 255;
+            const unsigned char *p = playpal+255*3;
             do
               {
-                register long t,d;
+                long t,d;
                 pal_w1[0][i] = (pal[0][i] = t = p[0]) * w1;
                 d = t*t;
                 pal_w1[1][i] = (pal[1][i] = t = p[1]) * w1;
@@ -493,8 +501,8 @@ void R_InitTranMap(int progress)
                   lprintf(LO_INFO,".");
                 for (j=0;j<256;j++,tp++)
                   {
-                    register int color = 255;
-                    register long err;
+                    int color = 255;
+                    long err;
                     long r = pal_w1[0][j] + r1;
                     long g = pal_w1[1][j] + g1;
                     long b = pal_w1[2][j] + b1;
@@ -645,15 +653,15 @@ static inline void precache_lump(int l)
 
 void R_PrecacheLevel(void)
 {
-  register int i;
-  register byte *hitlist;
+  int i;
+  byte *hitlist;
 
   if (timingdemo)
     return;
 
   {
     int size = numflats > numsprites  ? numflats : numsprites;
-    hitlist = malloc(numtextures > size ? numtextures : size);
+    hitlist = malloc<byte *>(numtextures > size ? numtextures : size);
   }
 
   // Precache flats.
@@ -700,7 +708,7 @@ void R_PrecacheLevel(void)
   {
     thinker_t *th = NULL;
     while ((th = P_NextThinker(th,th_all)) != NULL)
-      if (th->function == P_MobjThinker)
+      if (th->function == reinterpret_cast<think_t>(P_MobjThinker))
         hitlist[((mobj_t *)th)->sprite] = 1;
   }
 

@@ -543,15 +543,15 @@ dboolean HaveMouseLook(void)
   return (viewpitch != 0);
 }
 
-void CheckPitch(signed int *pitch)
+void CheckPitch(signed int *view_pitch)
 {
-  if(*pitch > maxViewPitch)
-    *pitch = maxViewPitch;
-  if(*pitch < minViewPitch)
-    *pitch = minViewPitch;
+  if(*view_pitch > maxViewPitch)
+    *view_pitch = maxViewPitch;
+  if(*view_pitch < minViewPitch)
+    *view_pitch = minViewPitch;
 
-  (*pitch) >>= 16;
-  (*pitch) <<= 16;
+  (*view_pitch) >>= 16;
+  (*view_pitch) <<= 16;
 }
 
 int render_aspect;
@@ -634,7 +634,7 @@ void M_ChangeSpriteClip(void)
   gl_spriteclip_threshold_f = (float)gl_spriteclip_threshold / MAP_COEFF;
 }
 
-void ResolveColormapsHiresConflict(dboolean prefer_colormap)
+void ResolveColormapsHiresConflict(dboolean /* prefer_colormap */)
 {
   gl_boom_colormaps = !r_have_internal_hires && !gl_texture_external_hires;
 #if 0
@@ -772,10 +772,8 @@ void I_Warning(const char *message, ...)
   va_end(argptr);
 }
 
-int I_MessageBox(const char* text, unsigned int type)
+int I_MessageBox(const char* /* text */, unsigned int /* type */)
 {
-  int result = PRB_IDCANCEL;
-
 #ifdef _WIN32
   {
     HWND current_hwnd = GetForegroundWindow();
@@ -869,7 +867,7 @@ void e6y_G_DoCompleted(void)
   if (numlevels >= levels_max)
   {
     levels_max = levels_max ? levels_max*2 : 32;
-    stats = realloc(stats,sizeof(*stats)*levels_max);
+    stats = static_cast<timetable_t *>(realloc(stats,sizeof(*stats)*levels_max));
   }
 
   memset(&stats[numlevels], 0, sizeof(timetable_t));

@@ -40,7 +40,7 @@ static unsigned char *parseppm(char *ppm, size_t size, const char *file,
   if (maxcol != 255 || !isspace(*pos++))
     die("Invalid PPM header: %s\n", file);
 
-  if (!numpixels || numpixels > (size-(ppm-pos))/3)
+  if (!numpixels || static_cast<unsigned long>(numpixels) > (size-(ppm-pos))/3)
     die("Invalid PPM size: %s\n", file);
 
   return (unsigned char *)pos;
@@ -77,7 +77,7 @@ static void pixels_to_colours(int *colours, unsigned char *pixels,
 static size_t createcolumn(unsigned char **column, int *colours, int height)
 {
   size_t size = 256, length = 0;
-  unsigned char *data = xmalloc(size);
+  unsigned char *data = static_cast<unsigned char *>(xmalloc(size));
   int i, y, top, transparent, opaque;
 
   for (y = 0; y < height; )
@@ -93,14 +93,15 @@ static size_t createcolumn(unsigned char **column, int *colours, int height)
     if (opaque > 0) // this post has pixels
     {
       while (size < length + opaque + 8)
-        size *= 2, data = xrealloc(data, size);
+        size *= 2, data = static_cast<unsigned char *>(xrealloc(data, size));
 
-      data[length++] = top + transparent; // column offset
-      data[length++] = opaque; // length of column
+      data[length++] = static_cast<unsigned char>(top + transparent); // column offset
+      data[length++] = static_cast<unsigned char>(opaque); // length of column
       data[length++] = 0; // padding
 
       for (i = 0; i < opaque; i++)
-        data[length++] = colours[top + transparent + i];
+        data[length++] =
+              static_cast<unsigned char>(colours[top + transparent + i]);
 
       data[length++] = 0; // more padding
     }
@@ -128,10 +129,11 @@ size_t ppm_to_patch(void **lumpdata, const char *filename,
   unsigned char *pixels, **columns, *patch;
   size_t *columnsizes, totalcolumnsize, offset;
 
-  pixels = parseppm(data, size, filename, &width, &height);
-  columns = xmalloc(width * sizeof(*columns));
-  columnsizes = xmalloc(width * sizeof(*columnsizes));
-  column_colours = xmalloc(height * sizeof(*column_colours));
+  pixels = parseppm(static_cast<char *>(data), size, filename, &width, &height);
+  columns = static_cast<unsigned char **>(xmalloc(width * sizeof(*columns)));
+  columnsizes = static_cast<size_t *>(xmalloc(width * sizeof(*columnsizes)));
+  column_colours =
+      static_cast<int *>(xmalloc(height * sizeof(*column_colours)));
 
   for (totalcolumnsize = i = 0; i < width; i++)
   {
@@ -140,7 +142,8 @@ size_t ppm_to_patch(void **lumpdata, const char *filename,
     totalcolumnsize += columnsizes[i];
   }
 
-  patch = xmalloc(8+4*width+totalcolumnsize);
+  patch =
+      static_cast<unsigned char *>(xmalloc(8 + 4 * width + totalcolumnsize));
 
   ((short *)patch)[0] = SHORT(width);
   ((short *)patch)[1] = SHORT(height);
@@ -183,12 +186,13 @@ size_t ppm_to_bitmap(void **lumpdata, const char *filename)
   int i, j, width, height;
   unsigned char *pixels, *bitmap;
 
-  pixels = parseppm(data, size, filename, &width, &height);
-  bitmap = xmalloc(width * height);
+  pixels = parseppm(reinterpret_cast<char *>(data), size, filename, &width, &height);
+  bitmap = static_cast<unsigned char *>(xmalloc(width * height));
 
   for (j = 0; j < height; j++)
     for (i = 0; i < width; i++)
-      bitmap[width*j+i] = palette_getindex(&pixels[3*(width*j+i)]);
+      bitmap[width*j+i] = static_cast<unsigned char>(
+            palette_getindex(&pixels[3 * (width * j + i)]));
 
   free(data);
 

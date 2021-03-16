@@ -178,7 +178,7 @@ void S_Init(int sfxVolume, int musicVolume)
 
   if (!heretic) return;
 
-  soundCurve = Z_Malloc(MAX_SND_DIST, PU_STATIC, NULL);
+  soundCurve = static_cast<byte *>(Z_Malloc(MAX_SND_DIST, PU_STATIC, NULL));
   S_SetSoundCurve(true);
 }
 
@@ -428,7 +428,7 @@ void S_UpdateSounds(void* listener_p)
   mobj_t *listener = (mobj_t*) listener_p;
   int cnum;
 
-  if (heretic) return Heretic_S_UpdateSounds(listener_p);
+  if (heretic) return Heretic_S_UpdateSounds(static_cast<mobj_t *>(listener_p));
 
   //jff 1/22/98 return if sound is not enabled
   if (!snd_card || nosfxparm)
@@ -469,7 +469,7 @@ void S_UpdateSounds(void* listener_p)
         // or modify their params
         if (c->origin && listener_p != c->origin) // killough 3/20/98
         {
-          if (!S_AdjustSoundParams(listener, c->origin, &volume, &sep, &pitch))
+          if (!S_AdjustSoundParams(static_cast<mobj_t *>(listener), static_cast<mobj_t *>(c->origin), &volume, &sep, &pitch))
             S_StopChannel(cnum);
           else
             I_UpdateSoundParams(c->handle, volume, sep, pitch);
@@ -836,7 +836,7 @@ void S_SetSoundCurve(dboolean fullprocess)
   const byte* lump;
 
   limit = fullprocess ? MAX_SND_DIST : 1;
-  lump = (const byte *) W_CacheLumpName("SNDCURVE");
+  lump = (const byte *) W_CacheLumpName<const byte *>("SNDCURVE");
 
   for (i = 0; i < limit; i++)
     soundCurve[i] = (*(lump + i) * (snd_SfxVolume * 8)) >> 7;
@@ -1088,7 +1088,7 @@ static void Heretic_S_StartSoundAtVolume(void *_origin, int sound_id, int volume
 
 static void Heretic_S_StopSound(void *_origin)
 {
-  mobj_t *origin = _origin;
+  mobj_t *origin = static_cast<mobj_t *>(_origin);
   int i;
 
   //jff 1/22/98 return if sound is not enabled

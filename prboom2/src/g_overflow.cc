@@ -340,8 +340,9 @@ void RejectOverrun(int rejectlump, const byte **rejectmatrix, int totallines)
   {
     // allocate a new block and copy the reject table into it; zero the rest
     // PU_LEVEL => will be freed on level exit
-    newreject = Z_Malloc(required, PU_LEVEL, NULL);
-    *rejectmatrix = memmove(newreject, *rejectmatrix, length);
+    newreject = static_cast<byte *>(Z_Malloc(required, PU_LEVEL, NULL));
+    *rejectmatrix =
+        static_cast<const byte *>(memmove(newreject, *rejectmatrix, length));
 
     // e6y
     // PrBoom 2.2.5 and 2.2.6 padded a short REJECT with 0xff
@@ -368,7 +369,7 @@ void RejectOverrun(int rejectlump, const byte **rejectmatrix, int totallines)
           50,       // DOOM_CONST_PU_LEVEL
           0x1d4a11  // DOOM_CONST_ZONEID
         };
-        unsigned int i, pad = 0, *src = rejectpad;
+        unsigned int i, padding = 0, *src = rejectpad;
         byte *dest = newreject + length;
 
         rejectpad[0] = ((totallines*4+3)&~3)+24; // doom.exe zone header size
@@ -377,9 +378,9 @@ void RejectOverrun(int rejectlump, const byte **rejectmatrix, int totallines)
         // emulating a 32-bit, little-endian architecture (can't memmove)
         for (i = 0; i < (unsigned int)(required - length) && i < 16; i++) { // 16 hard-coded
           if (!(i&3)) // get the next 4 bytes to copy when i=0,4,8,12
-            pad = *src++;
-          *dest++ = pad & 0xff; // store lowest-significant byte
-          pad >>= 8; // rotate the next byte down
+              padding = *src++;
+          *dest++ = padding & 0xff; // store lowest-significant byte
+          padding >>= 8; // rotate the next byte down
         }
       }
     }
@@ -485,7 +486,7 @@ int DonutOverrun(fixed_t *pfloorheight, short *pfloorpic)
         // bounds-check floorpic
         if ((*pfloorpic) <= 0 || (*pfloorpic) >= numflats)
         {
-          *pfloorpic = MIN(numflats - 1, DONUT_FLOORPIC_DEFAULT);
+          *pfloorpic = MIN(static_cast<short>(numflats - 1), DONUT_FLOORPIC_DEFAULT);
         }
 
         return true;

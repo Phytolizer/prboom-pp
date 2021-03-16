@@ -61,16 +61,16 @@ static int boom_cheat_route[MAX_COMPATIBILITY_LEVEL];
 //
 //-----------------------------------------------------------------------------
 
-static void cheat_mus();
+static void cheat_mus(char *buf);
 static void cheat_choppers();
 static void cheat_god();
 static void cheat_fa();
 static void cheat_k();
 static void cheat_kfa();
 static void cheat_noclip();
-static void cheat_pw();
+static void cheat_pw(int key);
 static void cheat_behold();
-static void cheat_clev();
+static void cheat_clev(char *buf);
 static void cheat_mypos();
 static void cheat_rate();
 static void cheat_comp();
@@ -83,11 +83,11 @@ static void cheat_hom();
 static void cheat_fast();
 static void cheat_tntkey();
 static void cheat_tntkeyx();
-static void cheat_tntkeyxx();
+static void cheat_tntkeyxx(int key);
 static void cheat_tntweap();
-static void cheat_tntweapx();
+static void cheat_tntweapx(char *buf);
 static void cheat_tntammo();
-static void cheat_tntammox();
+static void cheat_tntammox(char *buf);
 static void cheat_smart();
 static void cheat_pitch();
 static void cheat_megaarmour();
@@ -117,7 +117,8 @@ static void cheat_fly();
 //-----------------------------------------------------------------------------
 
 cheatseq_t cheat[] = {
-  CHEAT("idmus",      "Change music",     always, cheat_mus, -2),
+  CHEAT("idmus",      "Change music",     always,
+          reinterpret_cast<void (*)()>(cheat_mus), -2),
   CHEAT("idchoppers", "Chainsaw",         cht_never, cheat_choppers, 0),
   CHEAT("iddqd",      "God mode",         cht_never, cheat_god, 0),
   CHEAT("idkfa",      "Ammo & Keys",      cht_never, cheat_kfa, 0),
@@ -126,14 +127,14 @@ cheatseq_t cheat[] = {
   CHEAT("idclip",     "No Clipping 2",    cht_never, cheat_noclip, 0),
   CHEAT("idbeholdh",  "Invincibility",    cht_never, cheat_health, 0),
   CHEAT("idbeholdm",  "Invincibility",    cht_never, cheat_megaarmour, 0),
-  CHEAT("idbeholdv",  "Invincibility",    cht_never, cheat_pw, pw_invulnerability),
-  CHEAT("idbeholds",  "Berserk",          cht_never, cheat_pw, pw_strength),
-  CHEAT("idbeholdi",  "Invisibility",     cht_never, cheat_pw, pw_invisibility),
-  CHEAT("idbeholdr",  "Radiation Suit",   cht_never, cheat_pw, pw_ironfeet),
-  CHEAT("idbeholda",  "Auto-map",         not_dm, cheat_pw, pw_allmap),
-  CHEAT("idbeholdl",  "Lite-Amp Goggles", not_dm, cheat_pw, pw_infrared),
+  CHEAT("idbeholdv",  "Invincibility",    cht_never, reinterpret_cast<void (*)()>(cheat_pw), pw_invulnerability),
+  CHEAT("idbeholds",  "Berserk",          cht_never, reinterpret_cast<void (*)()>(cheat_pw), pw_strength),
+  CHEAT("idbeholdi",  "Invisibility",     cht_never, reinterpret_cast<void (*)()>(cheat_pw), pw_invisibility),
+  CHEAT("idbeholdr",  "Radiation Suit",   cht_never, reinterpret_cast<void (*)()>(cheat_pw), pw_ironfeet),
+  CHEAT("idbeholda",  "Auto-map",         not_dm, reinterpret_cast<void (*)()>(cheat_pw), pw_allmap),
+  CHEAT("idbeholdl",  "Lite-Amp Goggles", not_dm, reinterpret_cast<void (*)()>(cheat_pw), pw_infrared),
   CHEAT("idbehold",   "BEHOLD menu",      not_dm, cheat_behold, 0),
-  CHEAT("idclev",     "Level Warp",       cht_never | not_menu, cheat_clev, -2),
+  CHEAT("idclev",     "Level Warp",       static_cast<cheat_when_t>(cht_never | not_menu), reinterpret_cast<void (*)()>(cheat_clev), -2),
   CHEAT("idmypos",    "Player Position",  not_dm, cheat_mypos, 0),
   CHEAT("idrate",     "Frame rate",       always, cheat_rate, 0),
   // phares
@@ -149,21 +150,22 @@ cheatseq_t cheat[] = {
   CHEAT("tntkeyr",    NULL,               cht_never, cheat_tntkeyx, 0),
   CHEAT("tntkeyy",    NULL,               cht_never, cheat_tntkeyx, 0),
   CHEAT("tntkeyb",    NULL,               cht_never, cheat_tntkeyx, 0),
-  CHEAT("tntkeyrc",   NULL,               cht_never, cheat_tntkeyxx, it_redcard),
-  CHEAT("tntkeyyc",   NULL,               cht_never, cheat_tntkeyxx, it_yellowcard),
-  CHEAT("tntkeybc",   NULL,               cht_never, cheat_tntkeyxx, it_bluecard),
-  CHEAT("tntkeyrs",   NULL,               cht_never, cheat_tntkeyxx, it_redskull),
-  CHEAT("tntkeyys",   NULL,               cht_never, cheat_tntkeyxx, it_yellowskull),
-  // killough 2/16/98: end generalized keys
-  CHEAT("tntkeybs",   NULL,               cht_never, cheat_tntkeyxx, it_blueskull),
-  // Ty 04/11/98 - Added TNTKA
+  CHEAT("tntkeyrc",   NULL,               cht_never, reinterpret_cast<void (*)()>(cheat_tntkeyxx), it_redcard),
+  CHEAT("tntkeyyc",   NULL,               cht_never, reinterpret_cast<void (*)()>(cheat_tntkeyxx), it_yellowcard),
+  CHEAT("tntkeybc",   NULL,               cht_never, reinterpret_cast<void (*)()>(cheat_tntkeyxx), it_bluecard),
+  CHEAT("tntkeyrs",   NULL,               cht_never, reinterpret_cast<void (*)()>(cheat_tntkeyxx), it_redskull),
+  CHEAT("tntkeyys",   NULL,               cht_never, reinterpret_cast<void (*)()>(cheat_tntkeyxx), it_yellowskull),
+    // killough 2/16/98: end generalized keys
+  CHEAT("tntkeybs",   NULL,               cht_never, reinterpret_cast<void (*)()>(cheat_tntkeyxx), it_blueskull),
+
+    // Ty 04/11/98 - Added TNTKA
   CHEAT("tntka",      NULL,               cht_never, cheat_k, 0),
   // killough 2/16/98: generalized weapon cheats
   CHEAT("tntweap",    NULL,               cht_never, cheat_tntweap, 0),
-  CHEAT("tntweap",    NULL,               cht_never, cheat_tntweapx, -1),
+  CHEAT("tntweap",    NULL,               cht_never, reinterpret_cast<void (*)()>(cheat_tntweapx), -1),
   CHEAT("tntammo",    NULL,               cht_never, cheat_tntammo, 0),
   // killough 2/16/98: end generalized weapons
-  CHEAT("tntammo",    NULL,               cht_never, cheat_tntammox, -1),
+  CHEAT("tntammo",    NULL,               cht_never, reinterpret_cast<void (*)()>(cheat_tntammox), -1),
   // invoke translucency         // phares
   CHEAT("tnttran",    NULL,               always, cheat_tnttran, 0),
   // killough 2/21/98: smart monster toggle
@@ -176,7 +178,7 @@ cheatseq_t cheat[] = {
   // killough 2/21/98: same as tntammo
   CHEAT("tntamo",     NULL,               cht_never, cheat_tntammo, 0),
   // killough 2/21/98: same as tntammo
-  CHEAT("tntamo",     NULL,               cht_never, cheat_tntammox, -1),
+  CHEAT("tntamo",     NULL,               cht_never, reinterpret_cast<void (*)()>(cheat_tntammox), -1),
   // killough 3/6/98: -fast toggle
   CHEAT("tntfast",    NULL,               cht_never, cheat_fast, 0),
   // phares 3/10/98: toggle variable friction effects
@@ -194,8 +196,7 @@ cheatseq_t cheat[] = {
 
 //-----------------------------------------------------------------------------
 
-static void cheat_mus(buf)
-char buf[3];
+static void cheat_mus(char buf[3])
 {
   int musnum;
 
@@ -255,7 +256,7 @@ static void cheat_god()
       mt.x = plyr->mo->x >> FRACBITS;
       mt.y = plyr->mo->y >> FRACBITS;
       mt.angle = (plyr->mo->angle + ANG45/2)*(uint_64_t)45/ANG45;
-      mt.type = consoleplayer + 1;
+      mt.type = static_cast<short>(consoleplayer + 1);
       mt.options = 1; // arbitrary non-zero value
       P_SpawnPlayer(consoleplayer, &mt);
 
@@ -398,7 +399,7 @@ static dboolean cannot_clev(int epsd, int map)
 }
 
 extern int EpiCustom;
-struct MapEntry* G_LookupMapinfo(int gameepisode, int gamemap);
+struct MapEntry* G_LookupMapinfo(int game_episode, int game_map);
 
 // 'clev' change-level cheat
 static void cheat_clev(char buf[3])
@@ -515,7 +516,7 @@ static void cheat_massacre()    // jff 2/01/98 kill all monsters
   P_MapStart();
   do
     while ((currentthinker = P_NextThinker(currentthinker,th_all)) != NULL)
-    if (currentthinker->function == P_MobjThinker &&
+    if (currentthinker->function == reinterpret_cast<think_t>(P_MobjThinker) &&
   !(((mobj_t *) currentthinker)->flags & mask) && // killough 7/20/98
         (((mobj_t *) currentthinker)->flags & MF_COUNTKILL ||
          ((mobj_t *) currentthinker)->type == MT_SKULL))
@@ -587,8 +588,7 @@ static void cheat_tntweap()
     "Weapon number 1-9" : "Weapon number 1-8";
 }
 
-static void cheat_tntweapx(buf)
-char buf[3];
+static void cheat_tntweapx(char buf[3])
 {
   int w = *buf - '1';
 
@@ -606,7 +606,8 @@ char buf[3];
         {
           plyr->message = "Weapon Removed"; // Ty 03/27/98 - *not* externalized
           if (w==plyr->readyweapon)         // maybe switch if weapon removed
-            plyr->pendingweapon = P_SwitchWeapon(plyr);
+            plyr->pendingweapon =
+                  static_cast<weapontype_t>(P_SwitchWeapon(plyr));
         }
     }
 }
@@ -617,8 +618,7 @@ static void cheat_tntammo()
   plyr->message = "Ammo 1-4, Backpack";  // Ty 03/27/98 - *not* externalized
 }
 
-static void cheat_tntammox(buf)
-char buf[1];
+static void cheat_tntammox(char buf[1])
 {
   int a = *buf - '1';
   if (*buf == 'b')  // Ty 03/27/98 - strings *not* externalized
@@ -708,9 +708,9 @@ static int M_FindCheats_Boom(int key)
 
   if (argsleft)
     {
-      *arg++ = tolower(key);             // store key in arg buffer
+      *arg++ = static_cast<char>(tolower(key));             // store key in arg buffer
       if (!--argsleft)                   // if last key in arg list,
-        cheat[cht].func(argbuf);         // process the arg buffer
+        reinterpret_cast<void (*)(char *)>(cheat[cht].func)(argbuf);         // process the arg buffer
       return 1;                          // affirmative response
     }
 
@@ -731,10 +731,10 @@ static int M_FindCheats_Boom(int key)
 
           for (p=cheat[i].cheat; *p; p++)
             {
-              unsigned key = tolower(*p)-'a';  // convert to 0-31
-              if (key >= 32)            // ignore most non-alpha cheat letters
+              unsigned letter = tolower(*p)-'a';  // convert to 0-31
+              if (letter >= 32)            // ignore most non-alpha cheat letters
                 continue;
-              c = (c<<5) + key;         // shift key into code
+              c = (c<<5) + letter;         // shift letter into code
               m = (m<<5) + 31;          // shift 1's into mask
             }
           cheat[i].code = c;            // code for this cheat key
@@ -757,7 +757,7 @@ static int M_FindCheats_Boom(int key)
         if (!matchedbefore)               // allow only one cheat at a time
           {
             matchedbefore = ret = 1;      // responder has eaten key
-            cheat[i].func(cheat[i].arg);  // call cheat handler
+            reinterpret_cast<void (*)(int)>(cheat[i].func)(cheat[i].arg);  // call cheat handler
           }
     }
   return ret;
@@ -828,12 +828,12 @@ static int M_FindCheats_Doom(int key)
           // process the arg buffer
           memcpy(argbuf, cht->parameter_buf, -cht->arg);
 
-          cht->func(argbuf);
+          reinterpret_cast<void (*)(char *)>(cht->func)(argbuf);
         }
         else
         {
           // call cheat handler
-          cht->func(cht->arg);
+          reinterpret_cast<void (*)(int)>(cht->func)(cht->arg);
         }
 
         cht->chars_read = cht->param_chars_read = 0;
@@ -880,9 +880,9 @@ dboolean M_FindCheats(int key)
 
 typedef struct cheat_input_s {
   int input;
-  const cheat_when_t when;
-  void (*const func)();
-  const int arg;
+  const cheat_when_t when = cht_never;
+  void (*const func)() = nullptr;
+  const int arg = 0;
 } cheat_input_t;
 
 static cheat_input_t cheat_input[] = {
@@ -892,12 +892,12 @@ static cheat_input_t cheat_input[] = {
   { dsda_input_idclip, cht_never, cheat_noclip, 0 },
   { dsda_input_idbeholdh, cht_never, cheat_health, 0 },
   { dsda_input_idbeholdm, cht_never, cheat_megaarmour, 0 },
-  { dsda_input_idbeholdv, cht_never, cheat_pw, pw_invulnerability },
-  { dsda_input_idbeholds, cht_never, cheat_pw, pw_strength },
-  { dsda_input_idbeholdi, cht_never, cheat_pw, pw_invisibility },
-  { dsda_input_idbeholdr, cht_never, cheat_pw, pw_ironfeet },
-  { dsda_input_idbeholda, not_dm, cheat_pw, pw_allmap },
-  { dsda_input_idbeholdl, not_dm, cheat_pw, pw_infrared },
+  { dsda_input_idbeholdv, cht_never, reinterpret_cast<void (*)()>(cheat_pw), pw_invulnerability },
+  { dsda_input_idbeholds, cht_never, reinterpret_cast<void (*)()>(cheat_pw), pw_strength },
+  { dsda_input_idbeholdi, cht_never, reinterpret_cast<void (*)()>(cheat_pw), pw_invisibility },
+  { dsda_input_idbeholdr, cht_never, reinterpret_cast<void (*)()>(cheat_pw), pw_ironfeet },
+  { dsda_input_idbeholda, not_dm, reinterpret_cast<void (*)()>(cheat_pw), pw_allmap },
+  { dsda_input_idbeholdl, not_dm, reinterpret_cast<void (*)()>(cheat_pw), pw_infrared },
   { dsda_input_idmypos, not_dm, cheat_mypos, 0 },
   { dsda_input_idrate, always, cheat_rate, 0 },
   { dsda_input_iddt, not_dm, cheat_ddt, 0 },
@@ -916,7 +916,7 @@ dboolean M_CheatResponder(event_t *ev)
     if (dsda_InputActivated(cheat_i->input))
     {
       if (M_CheatAllowed(cheat_i->when))
-        cheat_i->func(cheat_i->arg);
+        reinterpret_cast<void (*)(int)>(cheat_i->func)(cheat_i->arg);
 
       return true;
     }

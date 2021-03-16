@@ -35,10 +35,6 @@
 // We are referring to sprite numbers.
 #include "doomtype.hh"
 #include "info.hh"
-
-#ifdef __GNUG__
-#pragma implementation "d_items.h"
-#endif
 #include "d_items.hh"
 
 
@@ -156,7 +152,7 @@ weaponinfo_t doom_weaponinfo[NUMWEAPONS+2] =
   // dseg03:00082E68                 dd 0                    ; istexture
   {
     // ololo weapon
-    0,
+    static_cast<ammotype_t>(0),
     S_NULL, // states are not used for emulation of weaponinfo overrun
     S_NULL,
     S_NULL,
@@ -166,7 +162,7 @@ weaponinfo_t doom_weaponinfo[NUMWEAPONS+2] =
   },
   {
     // preved medved weapon
-    0,
+    static_cast<ammotype_t>(0),
     S_NULL,
     S_NULL,
     S_NULL,

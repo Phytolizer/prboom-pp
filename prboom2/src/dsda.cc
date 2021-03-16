@@ -134,7 +134,7 @@ void dsda_DisplayNotifications(void) {
 
 void dsda_DisplayNotification(const char* msg) {
   S_StartSound(0, sfx_radio);
-  doom_printf(msg);
+  doom_printf("%s", msg);
 }
 
 void dsda_WatchCard(card_t card) {
@@ -294,7 +294,7 @@ void dsda_WatchLevelCompletion(void) {
   int kill_count = 0;
 
   for (th = thinkercap.next; th != &thinkercap; th = th->next) {
-    if (th->function != P_MobjThinker) continue;
+    if (th->function != reinterpret_cast<think_t>(P_MobjThinker)) continue;
 
     mobj = (mobj_t *)th;
 
@@ -361,7 +361,7 @@ char* dsda_NewDemoName(void) {
   static unsigned int j = 2;
 
   demo_name_size = strlen(dsda_demo_name_base) + 11; // 11 = -12345.lmp\0
-  demo_name = malloc(demo_name_size);
+  demo_name = malloc<char *>(demo_name_size);
   snprintf(demo_name, demo_name_size, "%s.lmp", dsda_demo_name_base);
 
   for (; j <= 99999 && (fp = fopen(demo_name, "rb")) != NULL; j++) {
@@ -395,7 +395,7 @@ static void dsda_ResetTracking(void) {
   dsda_pacifist_note_shown = false;
 }
 
-void dsda_WatchDeferredInitNew(skill_t skill, int episode, int map) {
+void dsda_WatchDeferredInitNew(skill_t /* skill */, int /* episode */, int /* map */) {
   char* demo_name;
 
   if (!demorecording) return;
@@ -434,7 +434,7 @@ void dsda_WatchRecordDemo(const char* name) {
   if (dsda_demo_name_base != NULL) return;
 
   base_size = strlen(name) - 3;
-  dsda_demo_name_base = malloc(base_size);
+  dsda_demo_name_base = malloc<char *>(base_size);
   strncpy(dsda_demo_name_base, name, base_size);
   dsda_demo_name_base[base_size - 1] = '\0';
 

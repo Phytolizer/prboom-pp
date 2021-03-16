@@ -85,11 +85,12 @@ static void R_ClipWallSegment(int first, int last, dboolean solid)
   byte *p;
   while (first < last) {
     if (solidcol[first]) {
-      if (!(p = memchr(solidcol+first, 0, last-first))) return; // All solid
+      if (!(p = static_cast<byte *>(
+                  memchr(solidcol + first, 0, last - first)))) return; // All solid
       first = p - solidcol;
     } else {
       int to;
-      if (!(p = memchr(solidcol+first, 1, last-first))) to = last;
+      if (!(p = static_cast<byte *>(memchr(solidcol + first, 1, last - first)))) to = last;
       else to = p - solidcol;
       R_StoreWallRange(first, to-1);
       if (solid) {
@@ -139,7 +140,7 @@ static void R_RecalcLineFlags(line_t *linedef)
         frontsector->ceilingpic!=skyflatnum)
     )
       )
-    linedef->r_flags = RF_CLOSED;
+    linedef->r_flags = line_t::RF_CLOSED;
   else {
     // Reject empty lines used for triggers
     //  and special events.
@@ -156,9 +157,9 @@ static void R_RecalcLineFlags(line_t *linedef)
       sizeof(frontsector->ceilingpic) + sizeof(frontsector->floorpic) +
       sizeof(frontsector->lightlevel) + sizeof(frontsector->floorlightsec) +
       sizeof(frontsector->ceilinglightsec))) {
-      linedef->r_flags = 0; return;
+      linedef->r_flags = static_cast<line_t::r_flags_t>(0); return;
     } else
-      linedef->r_flags = RF_IGNORE;
+      linedef->r_flags = line_t::RF_IGNORE;
   }
 
   /* cph - I'm too lazy to try and work with offsets in this */
@@ -171,18 +172,18 @@ static void R_RecalcLineFlags(line_t *linedef)
     /* Does top texture need tiling */
     if ((c = frontsector->ceilingheight - backsector->ceilingheight) > 0 &&
    (textureheight[texturetranslation[curline->sidedef->toptexture]] > c))
-      linedef->r_flags |= RF_TOP_TILE;
+      linedef->r_flags = static_cast<line_t::r_flags_t>(linedef->r_flags | line_t::RF_TOP_TILE);
 
     /* Does bottom texture need tiling */
     if ((c = frontsector->floorheight - backsector->floorheight) > 0 &&
    (textureheight[texturetranslation[curline->sidedef->bottomtexture]] > c))
-      linedef->r_flags |= RF_BOT_TILE;
+      linedef->r_flags = static_cast<line_t::r_flags_t>(linedef->r_flags | line_t::RF_BOT_TILE);
   } else {
     int c;
     /* Does middle texture need tiling */
     if ((c = frontsector->ceilingheight - frontsector->floorheight) > 0 &&
    (textureheight[texturetranslation[curline->sidedef->midtexture]] > c))
-      linedef->r_flags |= RF_MID_TILE;
+      linedef->r_flags = static_cast<line_t::r_flags_t>(linedef->r_flags | line_t::RF_MID_TILE);
   }
 }
 
@@ -488,12 +489,12 @@ static void R_AddLine (seg_t *line)
   if ((linedef = curline->linedef)->r_validcount != gametic)
     R_RecalcLineFlags(linedef);
 
-  if (linedef->r_flags & RF_IGNORE)
+  if (linedef->r_flags & line_t::RF_IGNORE)
   {
     return;
   }
   else
-    R_ClipWallSegment (x1, x2, linedef->r_flags & RF_CLOSED);
+    R_ClipWallSegment (x1, x2, linedef->r_flags & line_t::RF_CLOSED);
 }
 
 //

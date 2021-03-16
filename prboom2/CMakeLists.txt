@@ -2,6 +2,10 @@ cmake_minimum_required(VERSION 3.0)
 
 project("dsda-doom" VERSION 0.17.1)
 
+#set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -pedantic -Wformat -pedantic-errors -Werror -Wimplicit-int-conversion -Warith-conversion -Wconversion")
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_CLANG_TIDY clang-tidy -checks=-*,modernize-use-nullptr)
+
 # Set a default build type if none was specified
 set(default_build_type "RelWithDebInfo")
 if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)

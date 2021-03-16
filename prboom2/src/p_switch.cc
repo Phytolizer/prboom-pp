@@ -213,7 +213,7 @@ void P_ChangeSwitchTexture
     line->special = 0;
 
   /* search for a texture to change */
-  texture = NULL; position = 0;
+  texture = NULL; position = static_cast<bwhere_e>(0);
   for (i = 0;i < numswitches*2;i++) { /* this could be more efficient... */
     if (switchlist[i] == *ttop) {
       texture = ttop; position = top; break;

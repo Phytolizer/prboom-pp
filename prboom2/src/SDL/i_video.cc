@@ -436,9 +436,9 @@ static void I_UploadNewPalette(int pal, int force)
   if ((playpal_data->colours == NULL) || (cachedgamma != usegamma) || force) {
     int pplump;
     int gtlump;
-    register const byte * palette;
-    register const byte * gtable;
-    register int i;
+    const byte * palette;
+    const byte * gtable;
+    int i;
 
     pplump = W_GetNumForName(playpal_data->lump_name);
     gtlump = (W_CheckNumForName)("GAMMATBL", ns_prboom);
@@ -1044,7 +1044,7 @@ void I_SetWindowCaption(void)
 // Set the application icon
 //
 
-#include "icon.c"
+#include "icon.cc"
 
 void I_SetWindowIcon(void)
 {
@@ -1252,7 +1252,8 @@ void I_UpdateVideoMode(void)
     }
 
     // [FG] force integer scales
-    SDL_RenderSetIntegerScale(sdl_renderer, integer_scaling);
+    SDL_RenderSetIntegerScale(sdl_renderer,
+                              static_cast<SDL_bool>(integer_scaling));
 
     screen = SDL_CreateRGBSurface(0, SCREENWIDTH, SCREENHEIGHT, V_GetNumPixelBits(), 0, 0, 0, 0);
     buffer = SDL_CreateRGBSurface(0, SCREENWIDTH, SCREENHEIGHT, 32, 0, 0, 0, 0);

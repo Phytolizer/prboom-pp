@@ -37,10 +37,6 @@
 #include "d_player.hh"
 #include "p_mobj.hh"
 
-#ifdef __GNUG__
-#pragma interface
-#endif
-
 /* Ty 03/09/98 Moved to an int in p_inter.c for deh and externalization */
 #define MAXHEALTH maxhealth
 

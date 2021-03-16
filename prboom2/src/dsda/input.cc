@@ -96,6 +96,8 @@ void dsda_InputTrackEvent(event_t* ev) {
     case ev_joystick:
       dsda_InputTrackButtons(joybuttons, MAX_JOY_BUTTONS, ev);
       break;
+    default:
+        break;
   }
 }
 
@@ -148,6 +150,8 @@ void dsda_InputTrackGameEvent(event_t* ev) {
     case ev_joystick:
       dsda_InputTrackGameButtons(joybuttons, MAX_JOY_BUTTONS, ev);
       break;
+    default:
+        break;
   }
 }
 
@@ -260,7 +264,7 @@ void dsda_InputSetSpecific(int config_index, int identifier, dsda_input_default_
   dsda_input_t* p = &dsda_input[config_index][identifier];
 
   if (p->num_keys == 0)
-    p->key = realloc(p->key, sizeof(*p->key));
+    p->key = static_cast<int *>(realloc(p->key, sizeof(*p->key)));
   if (input.key > 0) {
     p->key[0] = input.key;
     p->num_keys = 1;
@@ -278,7 +282,7 @@ static void dsda_InputAddThing(int** list, int* count, int value) {
     if ((*list)[i] == value) return;
 
   (*count)++;
-  (*list) = realloc((*list), (*count) * sizeof(**list));
+  (*list) = static_cast<int *>(realloc((*list), (*count) * sizeof(**list)));
   (*list)[(*count) - 1] = value;
 }
 
@@ -339,11 +343,11 @@ void dsda_InputRemoveKey(int identifier, int value) {
   dsda_InputRemoveThing(p->key, &p->num_keys, value);
 }
 
-void dsda_InputRemoveMouseB(int identifier, int value) {
+void dsda_InputRemoveMouseB(int identifier, int /* value */) {
   dsda_input[dsda_input_profile][identifier].mouseb = -1;
 }
 
-void dsda_InputRemoveJoyB(int identifier, int value) {
+void dsda_InputRemoveJoyB(int identifier, int /* value */) {
   dsda_input[dsda_input_profile][identifier].joyb = -1;
 }
 

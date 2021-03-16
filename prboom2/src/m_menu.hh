@@ -185,7 +185,7 @@ typedef struct setup_menu_s
 // MENU TYPEDEFS
 //
 
-typedef struct
+struct menuitem_t
 {
   short status; // 0 = no cursor here, 1 = ok, 2 = arrows ok
   char  name[10];
@@ -194,9 +194,9 @@ typedef struct
   // if status = 2,
   //   choice=0:leftarrow,1:rightarrow
   void  (*routine)(int choice);
-  char  alphaKey; // hotkey in menu
-  const char *alttext;
-} menuitem_t;
+  char  alphaKey = '\0'; // hotkey in menu
+  const char *alttext = nullptr;
+} ;
 
 typedef struct menu_s
 {

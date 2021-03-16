@@ -52,10 +52,6 @@
 // as commands per game tick.
 #include "d_ticcmd.hh"
 
-#ifdef __GNUG__
-#pragma interface
-#endif
-
 
 //
 // Player states.

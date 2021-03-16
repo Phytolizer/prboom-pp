@@ -84,7 +84,7 @@ void F_StartFinale (void)
 
   gameaction = ga_nothing;
   gamestate = GS_FINALE;
-  automapmode &= ~am_active;
+  automapmode = static_cast<automapmode_e>(automapmode & ~am_active);
 
   // killough 3/28/98: clear accelerative text flags
   acceleratestage = midstage = 0;
@@ -242,6 +242,7 @@ void F_Ticker(void)
 		return;
 	}
 
+    float speed;
   if (!demo_compatibility)
     WI_checkForAccelerate();  // killough 3/28/98: check for acceleration
   else
@@ -258,7 +259,7 @@ void F_Ticker(void)
 
   if (!finalestage)
     {
-      float speed = demo_compatibility ? TEXTSPEED : Get_TextSpeed();
+      speed = demo_compatibility ? TEXTSPEED : Get_TextSpeed();
       /* killough 2/28/98: changed to allow acceleration */
       if (finalecount > strlen(finaletext)*speed +
           (midstage ? NEWTEXTWAIT : TEXTWAIT) ||
@@ -267,7 +268,7 @@ void F_Ticker(void)
           {                               // with enough time, it's automatic
             finalecount = 0;
             finalestage = 1;
-            wipegamestate = -1;         // force a wipe
+            wipegamestate = static_cast<gamestate_t>(-1);         // force a wipe
             if (gameepisode == 3)
               S_StartMusic(mus_bunny);
           }
@@ -377,7 +378,7 @@ static const castinfo_t castorder[] = { // CPhipps - static const, initialised h
   { &s_CC_SPIDER,  MT_SPIDER },
   { &s_CC_CYBER,   MT_CYBORG },
   { &s_CC_HERO,    MT_PLAYER },
-  { NULL,         0}
+  { NULL, static_cast<mobjtype_t>(0)}
   };
 
 int             castnum;
@@ -395,7 +396,7 @@ dboolean         castattacking;
 
 void F_StartCast (void)
 {
-  wipegamestate = -1;         // force a screen wipe
+  wipegamestate = static_cast<gamestate_t>(-1);         // force a screen wipe
   castnum = 0;
   caststate = &states[mobjinfo[castorder[castnum].type].seestate];
   casttics = caststate->tics;
@@ -617,7 +618,7 @@ void F_CastDrawer (void)
 
   // CPhipps - patch drawing updated
   V_DrawNumPatch(160, 170, 0, lump+firstspritelump, CR_DEFAULT,
-     VPT_STRETCH | (flip ? VPT_FLIP : 0));
+      static_cast<patch_translation_e>(VPT_STRETCH | (flip ? VPT_FLIP : 0)));
 }
 
 //

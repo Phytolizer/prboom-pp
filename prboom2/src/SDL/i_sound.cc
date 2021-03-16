@@ -444,8 +444,8 @@ static void I_UpdateSound(void *unused, Uint8 *stream, int len)
   // Mix current sound data.
   // Data, from raw sound, for right and left.
   // register unsigned char sample;
-  register int    dl;
-  register int    dr;
+  int    dl;
+  int    dr;
 
   // Pointers in audio stream, left, right, end.
   signed short   *leftout;
@@ -849,7 +849,7 @@ void I_InitMusic(void)
 #ifdef HAVE_MIXER
   if (!music_tmp) {
 #ifndef _WIN32
-    music_tmp = strdup("/tmp/"PACKAGE_TARNAME"-music-XXXXXX");
+    music_tmp = strdup("/tmp/" PACKAGE_TARNAME"-music-XXXXXX");
     {
       int fd = mkstemp(music_tmp);
       if (fd<0) {

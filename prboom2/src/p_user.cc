@@ -604,7 +604,7 @@ void P_PlayerThink (player_t* player)
     }
     else
     {
-      P_PlayerUseArtifact(player, cmd->arti);
+      P_PlayerUseArtifact(player, static_cast<artitype_t>(cmd->arti));
     }
   }
 
@@ -621,7 +621,8 @@ void P_PlayerThink (player_t* player)
     //  when the weapon psprite can do it
     //  (read: not in the middle of an attack).
 
-    newweapon = (cmd->buttons & BT_WEAPONMASK) >> BT_WEAPONSHIFT;
+    newweapon = static_cast<weapontype_t>((cmd->buttons & BT_WEAPONMASK) >>
+                                          BT_WEAPONSHIFT);
 
     // killough 3/22/98: For demo compatibility we must perform the fist
     // and SSG weapons switches here, rather than in G_BuildTiccmd(). For
@@ -631,7 +632,8 @@ void P_PlayerThink (player_t* player)
     { // compatibility mode -- required for old demos -- killough
       //e6y
       if (!prboom_comp[PC_ALLOW_SSG_DIRECT].state)
-        newweapon = (cmd->buttons & BT_WEAPONMASK_OLD)>>BT_WEAPONSHIFT;
+        newweapon = static_cast<weapontype_t>(
+              (cmd->buttons & BT_WEAPONMASK_OLD) >> BT_WEAPONSHIFT);
 
       if (
         newweapon == g_wp_fist && player->weaponowned[g_wp_chainsaw]
@@ -640,7 +642,7 @@ void P_PlayerThink (player_t* player)
           (!heretic && !player->powers[pw_strength])
         )
       )
-        newweapon = g_wp_chainsaw;
+        newweapon = static_cast<weapontype_t>(g_wp_chainsaw);
 
       if (!heretic &&
           gamemode == commercial &&
@@ -861,11 +863,11 @@ dboolean P_UndoPlayerChicken(player_t * player)
     y = pmo->y;
     z = pmo->z;
     angle = pmo->angle;
-    weapon = pmo->special1.i;
+    weapon = static_cast<weapontype_t>(pmo->special1.i);
     oldFlags = pmo->flags;
     oldFlags2 = pmo->flags2;
     P_SetMobjState(pmo, HERETIC_S_FREETARGMOBJ);
-    mo = P_SpawnMobj(x, y, z, g_mt_player);
+    mo = P_SpawnMobj(x, y, z, static_cast<mobjtype_t>(g_mt_player));
     if (P_TestMobjLocation(mo) == false)
     {                           // Didn't fit
         P_RemoveMobj(mo);
@@ -956,7 +958,8 @@ void P_PlayerNextArtifact(player_t * player)
                 curpos = 6;
             }
         }
-        player->readyArtifact = player->inventory[inv_ptr].type;
+        player->readyArtifact =
+            static_cast<artitype_t>(player->inventory[inv_ptr].type);
     }
 }
 
@@ -992,7 +995,8 @@ void P_PlayerRemoveArtifact(player_t * player, int slot)
             {
                 inv_ptr = 0;
             }
-            player->readyArtifact = player->inventory[inv_ptr].type;
+            player->readyArtifact =
+                static_cast<artitype_t>(player->inventory[inv_ptr].type);
         }
     }
 }

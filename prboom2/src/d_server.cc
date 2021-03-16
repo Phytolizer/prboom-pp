@@ -406,8 +406,8 @@ int main(int argc, char** argv)
       case 'w':
   if (optarg) {
     char *p;
-    wadname = realloc(wadname, ++numwads * sizeof *wadname);
-    wadget  = realloc(wadget ,   numwads * sizeof *wadget );
+    wadname = static_cast<char **>(realloc(wadname, ++numwads * sizeof *wadname));
+    wadget  = static_cast<char **>(realloc(wadget ,   numwads * sizeof *wadget ));
     wadname[numwads-1] = strdup(optarg);
     if ((p = strchr(wadname[numwads-1], ','))) {
       *p++ = 0; wadget[numwads-1] = p;
@@ -466,7 +466,7 @@ int main(int argc, char** argv)
     ticcmd_t netcmds[MAXPLAYERS][BACKUPTICS];
 
     while (1) {
-  packet_header_t *packet = malloc(10000);
+  packet_header_t *packet = static_cast<packet_header_t *>(malloc(10000));
   size_t len;
 
   I_WaitForPacket(120*1000);

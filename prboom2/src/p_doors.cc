@@ -111,7 +111,7 @@ void T_VerticalDoor (vldoor_t* door)
           case raiseIn5Mins:
           case vld_raiseIn5Mins:
             door->direction = 1;  // time to raise then
-            door->type = g_door_normal; // door acts just like normal 1 DR door now
+            door->type = static_cast<vldoor_e>(g_door_normal); // door acts just like normal 1 DR door now
             S_StartSound((mobj_t *)&door->sector->soundorg,g_sfx_doropn);
             break;
 
@@ -413,12 +413,12 @@ manual_door://e6y
 
     // new door thinker
     rtn = 1;
-    door = Z_Malloc (sizeof(*door), PU_LEVSPEC, 0);
+    door = static_cast<vldoor_t *>(Z_Malloc(sizeof(*door), PU_LEVSPEC, 0));
     memset(door, 0, sizeof(*door));
     P_AddThinker (&door->thinker);
     sec->ceilingdata = door; //jff 2/22/98
 
-    door->thinker.function = T_VerticalDoor;
+    door->thinker.function = reinterpret_cast<think_t>(T_VerticalDoor);
     door->sector = sec;
     door->type = type;
     door->topwait = VDOORWAIT;
@@ -571,10 +571,10 @@ int EV_VerticalDoor
    * Secondly, original Doom didn't distinguish floor/lighting/ceiling
    *  actions, so we need to do the same in demo compatibility mode.
    */
-  door = sec->ceilingdata;
+  door = static_cast<vldoor_t *>(sec->ceilingdata);
   if (demo_compatibility) {
-    if (!door) door = sec->floordata;
-    if (!door) door = sec->lightingdata;
+    if (!door) door = static_cast<vldoor_t *>(sec->floordata);
+    if (!door) door = static_cast<vldoor_t *>(sec->lightingdata);
   }
   /* If this is a repeatable line, and the door is already moving, then we can just reverse the current action. Note that in prboom 2.3.0 I erroneously removed the if-this-is-repeatable check, hence the prboom_4_compatibility clause below (foolishly assumed that already moving implies repeatable - but it could be moving due to another switch, e.g. lv19-509) */
   if (door &&
@@ -586,7 +586,7 @@ int EV_VerticalDoor
      * mess up non-T_VerticalDoor actions.
      */
     if (compatibility_level < prboom_4_compatibility ||
-        door->thinker.function == T_VerticalDoor) {
+        door->thinker.function == reinterpret_cast<think_t>(T_VerticalDoor)) {
       /* cph - we are writing outval to door->direction iff it is non-zero */
       signed int outval = 0;
 
@@ -594,7 +594,7 @@ int EV_VerticalDoor
        * monster is trying to open a closing door - so change direction
        * DEMOSYNC: we only read door->direction now if it really is a door.
        */
-      if (door->thinker.function == T_VerticalDoor && door->direction == -1) {
+      if (door->thinker.function == reinterpret_cast<think_t>(T_VerticalDoor) && door->direction == -1) {
         outval = 1; /* go back up */
       } else if (player) {
         outval = -1; /* go back down */
@@ -606,9 +606,9 @@ int EV_VerticalDoor
        *  being corrupted by this.
        */
       if (outval) {
-        if (door->thinker.function == T_VerticalDoor) {
+        if (door->thinker.function == reinterpret_cast<think_t>(T_VerticalDoor)) {
           door->direction = outval;
-        } else if (door->thinker.function == T_PlatRaise) {
+        } else if (door->thinker.function == reinterpret_cast<think_t>(T_PlatRaise)) {
           plat_t* p = (plat_t*)door;
           p->wait = outval;
         } else {
@@ -638,11 +638,11 @@ int EV_VerticalDoor
   }
 
   // new door thinker
-  door = Z_Malloc (sizeof(*door), PU_LEVSPEC, 0);
+  door = static_cast<vldoor_t *>(Z_Malloc(sizeof(*door), PU_LEVSPEC, 0));
   memset(door, 0, sizeof(*door));
   P_AddThinker (&door->thinker);
   sec->ceilingdata = door; //jff 2/22/98
-  door->thinker.function = T_VerticalDoor;
+  door->thinker.function = reinterpret_cast<think_t>(T_VerticalDoor);
   door->sector = sec;
   door->direction = 1;
   door->speed = VDOORSPEED;
@@ -710,7 +710,7 @@ void P_SpawnDoorCloseIn30 (sector_t* sec)
 {
   vldoor_t* door;
 
-  door = Z_Malloc ( sizeof(*door), PU_LEVSPEC, 0);
+  door = static_cast<vldoor_t *>(Z_Malloc(sizeof(*door), PU_LEVSPEC, 0));
 
   memset(door, 0, sizeof(*door));
   P_AddThinker (&door->thinker);
@@ -718,10 +718,10 @@ void P_SpawnDoorCloseIn30 (sector_t* sec)
   sec->ceilingdata = door; //jff 2/22/98
   sec->special = 0;
 
-  door->thinker.function = T_VerticalDoor;
+  door->thinker.function = reinterpret_cast<think_t>(T_VerticalDoor);
   door->sector = sec;
   door->direction = 0;
-  door->type = g_door_normal;
+  door->type = static_cast<vldoor_e>(g_door_normal);
   door->speed = VDOORSPEED;
   door->topcountdown = 30 * 35;
   door->line = NULL; // jff 1/31/98 remember line that triggered us
@@ -738,11 +738,11 @@ void P_SpawnDoorCloseIn30 (sector_t* sec)
 //
 void P_SpawnDoorRaiseIn5Mins
 ( sector_t* sec,
-  int   secnum )
+  int   /* secnum */ )
 {
   vldoor_t* door;
 
-  door = Z_Malloc ( sizeof(*door), PU_LEVSPEC, 0);
+  door = static_cast<vldoor_t *>(Z_Malloc(sizeof(*door), PU_LEVSPEC, 0));
 
   memset(door, 0, sizeof(*door));
   P_AddThinker (&door->thinker);
@@ -750,10 +750,10 @@ void P_SpawnDoorRaiseIn5Mins
   sec->ceilingdata = door; //jff 2/22/98
   sec->special = 0;
 
-  door->thinker.function = T_VerticalDoor;
+  door->thinker.function = reinterpret_cast<think_t>(T_VerticalDoor);
   door->sector = sec;
   door->direction = 2;
-  door->type = g_door_raise_in_5_mins;
+  door->type = static_cast<vldoor_e>(g_door_raise_in_5_mins);
   door->speed = VDOORSPEED;
   door->topheight = P_FindLowestCeilingSurrounding(sec);
   door->topheight -= 4*FRACUNIT;
@@ -827,7 +827,7 @@ void Heretic_EV_VerticalDoor(line_t * line, mobj_t * thing)
     sec = sides[line->sidenum[side ^ 1]].sector;
     if (sec->ceilingdata)
     {
-        door = sec->ceilingdata;
+        door = static_cast<vldoor_t *>(sec->ceilingdata);
         switch (line->special)
         {
             case 1:            // ONLY FOR "RAISE" DOORS, NOT "OPEN"s
@@ -855,11 +855,11 @@ void Heretic_EV_VerticalDoor(line_t * line, mobj_t * thing)
     //
     // new door thinker
     //
-    door = Z_Malloc(sizeof(*door), PU_LEVSPEC, 0);
+    door = static_cast<vldoor_t *>(Z_Malloc(sizeof(*door), PU_LEVSPEC, 0));
     memset(door, 0, sizeof(*door));
     P_AddThinker(&door->thinker);
     sec->ceilingdata = door;
-    door->thinker.function = T_VerticalDoor;
+    door->thinker.function = reinterpret_cast<think_t>(T_VerticalDoor);
     door->sector = sec;
     door->direction = 1;
     door->speed = VDOORSPEED;

@@ -71,10 +71,10 @@ void R_InitMeltRes(void)
 {
   if (y_lookup) free(y_lookup);
 
-  y_lookup = calloc(1, SCREENWIDTH * sizeof(*y_lookup));
+  y_lookup = calloc<int *>(1, SCREENWIDTH * sizeof(*y_lookup));
 }
 
-static int wipe_initMelt(int ticks)
+static int wipe_initMelt(int /* ticks */)
 {
   int i;
 

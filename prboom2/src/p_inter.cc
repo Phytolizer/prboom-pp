@@ -45,10 +45,6 @@
 #include "p_inter.hh"
 #include "p_enemy.hh"
 #include "hu_tracers.hh"
-
-#ifdef __GNUG__
-#pragma implementation "p_inter.h"
-#endif
 #include "p_inter.hh"
 #include "e6y.hh"//e6y
 #include "dsda.hh"
@@ -623,7 +619,7 @@ void P_TouchSpecialThing(mobj_t *special, mobj_t *toucher)
           player->backpack = true;
         }
       for (i=0 ; i<NUMAMMO ; i++)
-        P_GiveAmmo (player, i, 1);
+        P_GiveAmmo (player, static_cast<ammotype_t>(i), 1);
       player->message = s_GOTBACKPACK; // Ty 03/22/98 - externalized
       break;
 
@@ -843,9 +839,10 @@ static void P_KillMobj(mobj_t *source, mobj_t *target)
 
   xdeath_limit = heretic ? (target->info->spawnhealth >> 1) : target->info->spawnhealth;
   if (target->health < -xdeath_limit && target->info->xdeathstate)
-    P_SetMobjState (target, target->info->xdeathstate);
+    P_SetMobjState (target,
+                     static_cast<statenum_t>(target->info->xdeathstate));
   else
-    P_SetMobjState (target, target->info->deathstate);
+    P_SetMobjState (target, static_cast<statenum_t>(target->info->deathstate));
 
   target->tics -= P_Random(pr_killtics)&3;
 
@@ -1165,7 +1162,7 @@ void P_DamageMobj(mobj_t *target,mobj_t *inflictor, mobj_t *source, int damage)
     else
       target->flags |= MF_JUSTHIT;    // fight back!
 
-    P_SetMobjState(target, target->info->painstate);
+    P_SetMobjState(target, static_cast<statenum_t>(target->info->painstate));
   }
 
   target->reactiontime = 0;           // we're awake now...
@@ -1204,7 +1201,7 @@ void P_DamageMobj(mobj_t *target,mobj_t *inflictor, mobj_t *source, int damage)
     target->threshold = BASETHRESHOLD;
     if (target->state == &states[target->info->spawnstate]
         && target->info->seestate != g_s_null)
-      P_SetMobjState (target, target->info->seestate);
+      P_SetMobjState (target, static_cast<statenum_t>(target->info->seestate));
   }
 
   /* killough 11/98: Don't attack a friend, unless hit by that friend.
@@ -1224,7 +1221,7 @@ void P_DamageMobj(mobj_t *target,mobj_t *inflictor, mobj_t *source, int damage)
 void A_RestoreArtifact(mobj_t * arti)
 {
     arti->flags |= MF_SPECIAL;
-    P_SetMobjState(arti, arti->info->spawnstate);
+    P_SetMobjState(arti, static_cast<statenum_t>(arti->info->spawnstate));
     S_StartSound(arti, heretic_sfx_respawn);
 }
 
@@ -1241,12 +1238,12 @@ void A_RestoreSpecialThing1(mobj_t * thing)
 void A_RestoreSpecialThing2(mobj_t * thing)
 {
     thing->flags |= MF_SPECIAL;
-    P_SetMobjState(thing, thing->info->spawnstate);
+    P_SetMobjState(thing, static_cast<statenum_t>(thing->info->spawnstate));
 }
 
 // heretic
 
-void P_SetMessage(player_t * player, const char *message, dboolean ultmsg)
+void P_SetMessage(player_t * player, const char *message, dboolean /* ultmsg */)
 {
     player->message = message;
 }

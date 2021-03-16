@@ -20,6 +20,7 @@
 #ifndef HERETIC_P_ACTION_H
 #define HERETIC_P_ACTION_H
 
+#include <d_net.hh>
 // in doom
 void A_Scream();
 void A_Explode();
@@ -27,7 +28,7 @@ void A_Light0();
 void A_WeaponReady();
 void A_Lower();
 void A_Raise();
-void A_ReFire();
+void A_ReFire(player_s *pS, pspdef_t *ptr);
 void A_Pain();
 void A_SkullPop();
 void A_FaceTarget();

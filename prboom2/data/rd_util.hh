@@ -22,8 +22,8 @@
                   +(((x) & 0xFF00) >> 8) )
 # endif
 #else
-#define LONG(x) (x)
-#define SHORT(x) (x)
+#define LONG(x) static_cast<long>(x)
+#define SHORT(x) static_cast<short>(x)
 #endif
 
 void ATTR((noreturn)) die(const char *error, ...);

@@ -35,12 +35,9 @@
 #ifndef __D_NET__
 #define __D_NET__
 
+#include "doomstat.hh"
 #include "d_player.hh"
 
-
-#ifdef __GNUG__
-#pragma interface
-#endif
 
 
 //

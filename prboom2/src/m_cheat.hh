@@ -57,20 +57,20 @@ typedef enum {
 
 typedef struct cheatseq_s {
   const char *	cheat;
-  const char *const deh_cheat;
-  const cheat_when_t when;
-  void (*const func)();
-  const int arg;
-  uint_64_t code, mask;
+  const char *const deh_cheat = nullptr;
+  const cheat_when_t when = cht_never;
+  void (*const func)() = nullptr;
+  const int arg = 0;
+  uint_64_t code = 0, mask = 0;
 
   // settings for this cheat
-  size_t sequence_len;
-  size_t deh_sequence_len;
+  size_t sequence_len = 0;
+  size_t deh_sequence_len = 0;
 
   // state used during the game
-  size_t chars_read;
-  int param_chars_read;
-  char parameter_buf[CHEAT_ARGS_MAX];
+  size_t chars_read = 0;
+  int param_chars_read = 0;
+  char parameter_buf[CHEAT_ARGS_MAX]{};
 } cheatseq_t;
 
 extern cheatseq_t cheat[];

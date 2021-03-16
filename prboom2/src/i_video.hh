@@ -46,10 +46,6 @@
 #include "v_video.hh"
 #include "SDL.h"
 
-#ifdef __GNUG__
-#pragma interface
-#endif
-
 extern int render_vsync;
 extern int render_screen_multiply;
 extern int screen_multiply;

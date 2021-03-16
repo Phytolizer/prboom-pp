@@ -43,10 +43,6 @@
 #include "d_player.hh"
 #include "umapinfo.hh"
 
-#ifdef __GNUG__
-#pragma interface
-#endif
-
 // ------------------------
 // Command line parameters.
 //
@@ -165,7 +161,7 @@ extern  dboolean netgame;
 
 // Flag: true only if started as net deathmatch.
 // An enum might handle altdeath/cooperative better.
-extern  dboolean deathmatch;
+extern  int deathmatch;
 
 // ------------------------------------------
 // Internal parameters for sound rendering.

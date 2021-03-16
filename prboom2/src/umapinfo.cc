@@ -24,8 +24,6 @@
 #include "umapinfo.hh"
 #include "scanner.hh"
 
-extern "C"
-{
 #include "m_misc.hh"
 #include "g_game.hh"
 #include "doomdef.hh"
@@ -34,7 +32,6 @@ extern "C"
 void M_AddEpisode(const char *map, char *def);
 
 MapList Maps;
-}
 
 
 //==========================================================================

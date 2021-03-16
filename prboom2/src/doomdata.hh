@@ -237,13 +237,13 @@ typedef struct {
 
 // Thing definition, position, orientation and type,
 // plus skill/visibility flags and attributes.
-typedef struct {
+struct mapthing_t{
   short x;
-  short y;
-  short angle;
-  short type;
-  short options;
-} PACKEDATTR mapthing_t;
+  short y = 0;
+  short angle = 0;
+  short type = 0;
+  short options = 0;
+} PACKEDATTR ;
 
 #ifdef _MSC_VER
 #pragma pack(pop)

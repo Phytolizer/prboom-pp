@@ -39,9 +39,9 @@ static void dsda_EnsureDemoBufferSpace(size_t length) {
 
   offset = dsda_DemoBufferOffset();
 
-  if (offset + length <= dsda_demo_write_buffer_length) return;
+  if (offset + length <= static_cast<unsigned long>(dsda_demo_write_buffer_length)) return;
 
-  while (offset + length > dsda_demo_write_buffer_length)
+  while (offset + length > static_cast<unsigned long>(dsda_demo_write_buffer_length))
     dsda_demo_write_buffer_length *= 2;
 
   dsda_demo_write_buffer =
@@ -63,10 +63,10 @@ void dsda_InitDemo(char* name) {
   size_t name_size;
 
   name_size = strlen(name) + 1;
-  dsda_demo_name = malloc(name_size);
+  dsda_demo_name = malloc<char *>(name_size);
   memcpy(dsda_demo_name, name, name_size);
 
-  dsda_demo_write_buffer = malloc(INITIAL_DEMO_BUFFER_SIZE);
+  dsda_demo_write_buffer = malloc<byte *>(INITIAL_DEMO_BUFFER_SIZE);
   if (dsda_demo_write_buffer == NULL)
     I_Error("dsda_InitDemo: unable to initialize demo buffer!");
 

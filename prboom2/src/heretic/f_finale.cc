@@ -53,7 +53,7 @@ void Heretic_F_StartFinale(void)
 {
   gameaction = ga_nothing;
   gamestate = GS_FINALE;
-  automapmode &= ~am_active;
+  automapmode = static_cast<automapmode_e>(automapmode & ~am_active);
 
   switch (gameepisode)
   {
@@ -110,7 +110,7 @@ dboolean Heretic_F_Responder(event_t * event)
 void Heretic_F_Ticker(void)
 {
   finalecount++;
-  if (!finalestage && finalecount > strlen(finaletext) * TEXTSPEED + TEXTWAIT)
+  if (!finalestage && static_cast<size_t>(finalecount) > strlen(finaletext) * TEXTSPEED + TEXTWAIT)
   {
     finalecount = 0;
     if (!finalestage)
@@ -130,7 +130,6 @@ void Heretic_F_Ticker(void)
 
 void Heretic_F_TextWrite(void)
 {
-  int x, y;
   int count;
   const char *ch;
   int c;
@@ -203,8 +202,8 @@ void F_DemonScroll(void)
     return;
   }
 
-  p1 = W_CacheLumpName(DEH_String("FINAL1"));
-  p2 = W_CacheLumpName(DEH_String("FINAL2"));
+  p1 = W_CacheLumpName<const byte *>(DEH_String("FINAL1"));
+  p2 = W_CacheLumpName<const byte *>(DEH_String("FINAL2"));
 
   if (finalecount < 70)
   {
@@ -241,13 +240,13 @@ void F_DrawUnderwater(void)
   {
     case 1:
       V_SetPlayPal(playpal_heretic_e2end);
-      V_DrawRawScreen(W_CacheLumpName(DEH_String("E2END")));
+      V_DrawRawScreen(W_CacheLumpName<const byte *>(DEH_String("E2END")));
       W_UnlockLumpName(DEH_String("E2END"));
       V_SetPlayPal(playpal_default);
 
       break;
     case 2:
-      V_DrawRawScreen(W_CacheLumpName(DEH_String("TITLE")));
+      V_DrawRawScreen(W_CacheLumpName<const byte *>(DEH_String("TITLE")));
       W_UnlockLumpName(DEH_String("TITLE"));
   }
 }
@@ -272,12 +271,12 @@ void Heretic_F_Drawer(void)
       case 1:
         if (gamemode == shareware)
         {
-          V_DrawRawScreen(W_CacheLumpName("ORDER"));
+          V_DrawRawScreen(W_CacheLumpName<const byte *>("ORDER"));
           W_UnlockLumpName("ORDER");
         }
         else
         {
-          V_DrawRawScreen(W_CacheLumpName("CREDIT"));
+          V_DrawRawScreen(W_CacheLumpName<const byte *>("CREDIT"));
           W_UnlockLumpName("CREDIT");
         }
         break;
@@ -289,7 +288,7 @@ void Heretic_F_Drawer(void)
         break;
       case 4:            // Just show credits screen for extended episodes
       case 5:
-        V_DrawRawScreen(W_CacheLumpName("CREDIT"));
+        V_DrawRawScreen(W_CacheLumpName<const byte *>("CREDIT"));
         W_UnlockLumpName("CREDIT");
         break;
     }

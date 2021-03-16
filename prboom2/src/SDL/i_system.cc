@@ -403,7 +403,7 @@ const char *I_DoomExeDir(void)
       char *home = getenv("HOME");
       size_t len = strlen(home);
 
-      base = malloc(len + strlen(prboom_dir) + 1);
+      base = malloc<char *>(len + strlen(prboom_dir) + 1);
       strcpy(base, home);
       // I've had trouble with trailing slashes before...
       if (base[len-1] == '/') base[len-1] = 0;
@@ -460,7 +460,7 @@ dboolean HasTrailingSlash(const char* dn)
 char* I_FindFileInternal(const char* wfname, const char* ext, dboolean isStatic)
 {
   // lookup table of directories to search
-  static struct {
+  static struct search_t {
     const char *dir; // directory
     const char *sub; // subdirectory
     const char *env; // environment variable
@@ -495,7 +495,7 @@ char* I_FindFileInternal(const char* wfname, const char* ext, dboolean isStatic)
 
     // initialize with the static lookup table
     num_search = sizeof(search0)/sizeof(*search0);
-    search = malloc(num_search * sizeof(*search));
+    search = malloc<search_t *>(num_search * sizeof(*search));
     memcpy(search, search0, num_search * sizeof(*search));
 
     // add each directory from the $DOOMWADPATH environment variable

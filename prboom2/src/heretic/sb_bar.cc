@@ -55,7 +55,6 @@ int playerkeys = 0;
 
 // Private Data
 
-static int DisplayTicker = 0;
 static int HealthMarker;
 static int ChainWiggle;
 static player_t *CPlayer;
@@ -328,7 +327,7 @@ static void DrSmallNumber(int val, int x, int y)
 //
 //---------------------------------------------------------------------------
 
-static void ShadeLine(int x, int y, int height, int shade)
+static void ShadeLine(int /* x */, int /* y */, int /* height */, int /* shade */)
 {
     // HERETIC_TODO: ShadeLine
     // byte *dest;
@@ -753,7 +752,6 @@ void DrawInventoryBar(void)
 
 void DrawFullScreenStuff(void)
 {
-    const char *name;
     int lump;
     int i;
     int x;

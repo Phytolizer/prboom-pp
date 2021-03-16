@@ -378,7 +378,7 @@ void MN_DrTextA(const char *text, int x, int y)
 
   while ((c = *text++) != 0)
   {
-    c = toupper(c);
+    c = static_cast<char>(toupper(c));
     if (c < 33)
     {
       x += 5;
@@ -414,7 +414,7 @@ int MN_TextAWidth(const char *text)
   width = 0;
   while ((c = *text++) != 0)
   {
-    c = toupper(c);
+    c = static_cast<char>(toupper(c));
     if (c < 33)
     {
       width += 5;
@@ -435,7 +435,7 @@ void MN_DrTextB(const char *text, int x, int y)
 
   while ((c = *text++) != 0)
   {
-    c = toupper(c);
+    c = static_cast<char>(toupper(c));
     if (c < 33)
     {
       x += 8;
@@ -458,7 +458,7 @@ int MN_TextBWidth(const char *text)
   width = 0;
   while ((c = *text++) != 0)
   {
-    c = toupper(c);
+    c = static_cast<char>(toupper(c));
     if (c < 33)
     {
       width += 5;

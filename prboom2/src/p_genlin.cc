@@ -110,11 +110,11 @@ manual_floor:
 
     // new floor thinker
     rtn = 1;
-    floor = Z_Malloc (sizeof(*floor), PU_LEVSPEC, 0);
+    floor = static_cast<floormove_t *>(Z_Malloc(sizeof(*floor), PU_LEVSPEC, 0));
     memset(floor, 0, sizeof(*floor));
     P_AddThinker (&floor->thinker);
     sec->floordata = floor;
-    floor->thinker.function = T_MoveFloor;
+    floor->thinker.function = reinterpret_cast<think_t>(T_MoveFloor);
     floor->crush = Crsh;
     floor->direction = Dirn? 1 : -1;
     floor->sector = sec;
@@ -189,16 +189,16 @@ manual_floor:
     {
       if (ChgM) // if a numeric model change
       {
-        sector_t *sec;
+        sector_t *sector;
 
         //jff 5/23/98 find model with ceiling at target height if target
         //is a ceiling type
-        sec = (Targ==FtoLnC || Targ==FtoC)?
+        sector = (Targ==FtoLnC || Targ==FtoC)?
           P_FindModelCeilingSector(floor->floordestheight,secnum) :
           P_FindModelFloorSector(floor->floordestheight,secnum);
-        if (sec)
+        if (sector)
         {
-          floor->texture = sec->floorpic;
+          floor->texture = sector->floorpic;
           switch(ChgT)
           {
             case FChgZero:  // zero type
@@ -208,9 +208,9 @@ manual_floor:
               floor->type = genFloorChg0;
               break;
             case FChgTyp:   // copy type
-              floor->newspecial = sec->special;
+              floor->newspecial = sector->special;
               //jff 3/14/98 change old field too
-              floor->oldspecial = sec->oldspecial;
+              floor->oldspecial = sector->oldspecial;
               floor->type = genFloorChgT;
               break;
             case FChgTxt:   // leave type be
@@ -315,11 +315,12 @@ manual_ceiling:
 
     // new ceiling thinker
     rtn = 1;
-    ceiling = Z_Malloc (sizeof(*ceiling), PU_LEVSPEC, 0);
+    ceiling =
+        static_cast<ceiling_t *>(Z_Malloc(sizeof(*ceiling), PU_LEVSPEC, 0));
     memset(ceiling, 0, sizeof(*ceiling));
     P_AddThinker (&ceiling->thinker);
     sec->ceilingdata = ceiling; //jff 2/22/98
-    ceiling->thinker.function = T_MoveCeiling;
+    ceiling->thinker.function = reinterpret_cast<think_t>(T_MoveCeiling);
     ceiling->crush = Crsh;
     ceiling->direction = Dirn? 1 : -1;
     ceiling->sector = sec;
@@ -398,16 +399,16 @@ manual_ceiling:
     {
       if (ChgM)   // if a numeric model change
       {
-        sector_t *sec;
+        sector_t *sector;
 
         //jff 5/23/98 find model with floor at target height if target
         //is a floor type
-        sec = (Targ==CtoHnF || Targ==CtoF)?
+        sector = (Targ==CtoHnF || Targ==CtoF)?
           P_FindModelFloorSector(targheight,secnum) :
           P_FindModelCeilingSector(targheight,secnum);
-        if (sec)
+        if (sector)
         {
-          ceiling->texture = sec->ceilingpic;
+          ceiling->texture = sector->ceilingpic;
           switch (ChgT)
           {
             case CChgZero:  // type is zeroed
@@ -417,9 +418,9 @@ manual_ceiling:
               ceiling->type = genCeilingChg0;
               break;
             case CChgTyp:   // type is copied
-              ceiling->newspecial = sec->special;
+              ceiling->newspecial = sector->special;
               //jff 3/14/98 change old field too
-              ceiling->oldspecial = sec->oldspecial;
+              ceiling->oldspecial = sector->oldspecial;
               ceiling->type = genCeilingChgT;
               break;
             case CChgTxt:   // type is left alone
@@ -523,13 +524,13 @@ manual_lift:
 
     // Setup the plat thinker
     rtn = 1;
-    plat = Z_Malloc( sizeof(*plat), PU_LEVSPEC, 0);
+    plat = static_cast<plat_t *>(Z_Malloc(sizeof(*plat), PU_LEVSPEC, 0));
     memset(plat, 0, sizeof(*plat));
     P_AddThinker(&plat->thinker);
 
     plat->sector = sec;
     plat->sector->floordata = plat;
-    plat->thinker.function = T_PlatRaise;
+    plat->thinker.function = reinterpret_cast<think_t>(T_PlatRaise);
     plat->crush = false;
     plat->tag = line->tag;
 
@@ -561,7 +562,7 @@ manual_lift:
         plat->high = P_FindHighestFloorSurrounding(sec);
         if (plat->high < sec->floorheight)
           plat->high = sec->floorheight;
-        plat->status = P_Random(pr_genlift)&1;
+        plat->status = static_cast<plat_e>(P_Random(pr_genlift) & 1);
         break;
       default:
         break;
@@ -685,11 +686,11 @@ manual_stair:
 
     // new floor thinker
     rtn = 1;
-    floor = Z_Malloc (sizeof(*floor), PU_LEVSPEC, 0);
+    floor = static_cast<floormove_t *>(Z_Malloc(sizeof(*floor), PU_LEVSPEC, 0));
     memset(floor, 0, sizeof(*floor));
     P_AddThinker (&floor->thinker);
     sec->floordata = floor;
-    floor->thinker.function = T_MoveFloor;
+    floor->thinker.function = reinterpret_cast<think_t>(T_MoveFloor);
     floor->direction = Dirn? 1 : -1;
     floor->sector = sec;
 
@@ -786,13 +787,14 @@ manual_stair:
 
         sec = tsec;
         secnum = newsecnum;
-        floor = Z_Malloc (sizeof(*floor), PU_LEVSPEC, 0);
+        floor =
+            static_cast<floormove_t *>(Z_Malloc(sizeof(*floor), PU_LEVSPEC, 0));
 
         memset(floor, 0, sizeof(*floor));
         P_AddThinker (&floor->thinker);
 
         sec->floordata = floor;
-        floor->thinker.function = T_MoveFloor;
+        floor->thinker.function = reinterpret_cast<think_t>(T_MoveFloor);
         floor->direction = Dirn? 1 : -1;
         floor->sector = sec;
         floor->speed = speed;
@@ -872,11 +874,12 @@ manual_crusher:
 
     // new ceiling thinker
     rtn = 1;
-    ceiling = Z_Malloc (sizeof(*ceiling), PU_LEVSPEC, 0);
+    ceiling =
+        static_cast<ceiling_t *>(Z_Malloc(sizeof(*ceiling), PU_LEVSPEC, 0));
     memset(ceiling, 0, sizeof(*ceiling));
     P_AddThinker (&ceiling->thinker);
     sec->ceilingdata = ceiling; //jff 2/22/98
-    ceiling->thinker.function = T_MoveCeiling;
+    ceiling->thinker.function = reinterpret_cast<think_t>(T_MoveCeiling);
     ceiling->crush = true;
     ceiling->direction = -1;
     ceiling->sector = sec;
@@ -969,12 +972,12 @@ manual_locked:
 
     // new door thinker
     rtn = 1;
-    door = Z_Malloc (sizeof(*door), PU_LEVSPEC, 0);
+    door = static_cast<vldoor_t *>(Z_Malloc(sizeof(*door), PU_LEVSPEC, 0));
     memset(door, 0, sizeof(*door));
     P_AddThinker (&door->thinker);
     sec->ceilingdata = door; //jff 2/22/98
 
-    door->thinker.function = T_VerticalDoor;
+    door->thinker.function = reinterpret_cast<think_t>(T_VerticalDoor);
     door->sector = sec;
     door->topwait = VDOORWAIT;
     door->line = line;
@@ -1080,12 +1083,12 @@ manual_door:
 
     // new door thinker
     rtn = 1;
-    door = Z_Malloc (sizeof(*door), PU_LEVSPEC, 0);
+    door = static_cast<vldoor_t *>(Z_Malloc(sizeof(*door), PU_LEVSPEC, 0));
     memset(door, 0, sizeof(*door));
     P_AddThinker (&door->thinker);
     sec->ceilingdata = door; //jff 2/22/98
 
-    door->thinker.function = T_VerticalDoor;
+    door->thinker.function = reinterpret_cast<think_t>(T_VerticalDoor);
     door->sector = sec;
     // setup delay for door remaining open/closed
     switch(Dely)

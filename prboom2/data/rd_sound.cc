@@ -58,7 +58,7 @@ size_t wav_to_doom(void **lumpdata, const char *filename)
 {
   void *data;
   size_t size = read_or_die(&data, filename);
-  struct wav_header *header = data;
+  struct wav_header *header = static_cast<wav_header *>(data);
   struct doom_sound_header *out;
 
   if (size < sizeof(*header) - 1
@@ -67,7 +67,7 @@ size_t wav_to_doom(void **lumpdata, const char *filename)
     die("Invalid WAV file: %s\n", filename);
 
   size = sizeof(*out) - 1 + LONG(header->datalen);
-  out = xmalloc(size);
+  out = static_cast<doom_sound_header *>(xmalloc(size));
 
   out->log2bits = 3;
   out->rate = SHORT(LONG(header->samplerate));

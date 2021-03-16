@@ -422,7 +422,8 @@ static void ST_refreshBackground(void)
       {
         V_DrawNumPatch(ST_FX, y, BG, faceback.lumpnum,
            displayplayer ? CR_LIMIT+displayplayer : CR_DEFAULT,
-           displayplayer ? (VPT_TRANS | VPT_ALIGN_BOTTOM) : flags);
+              static_cast<patch_translation_e>(
+                  displayplayer ? (VPT_TRANS | VPT_ALIGN_BOTTOM) : flags));
       }
       V_CopyRect(BG, FG, ST_X + wide_offsetx, SCREENHEIGHT - ST_SCALED_HEIGHT, ST_SCALED_WIDTH, ST_SCALED_HEIGHT, VPT_NONE);
     }

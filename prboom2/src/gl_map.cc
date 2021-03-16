@@ -47,24 +47,24 @@
 
 am_icon_t am_icons[am_icon_count + 1] =
 {
-  {-1, "M_SHADOW"},
+  {static_cast<GLuint>(-1), "M_SHADOW"},
 
-  {-1, "M_ARROW"},
-  {-1, "M_NORMAL"},
-  {-1, "M_HEALTH"},
-  {-1, "M_ARMOUR"},
-  {-1, "M_AMMO"},
-  {-1, "M_KEY"},
-  {-1, "M_POWER"},
-  {-1, "M_WEAP"},
+  {static_cast<GLuint>(-1), "M_ARROW"},
+  {static_cast<GLuint>(-1), "M_NORMAL"},
+  {static_cast<GLuint>(-1), "M_HEALTH"},
+  {static_cast<GLuint>(-1), "M_ARMOUR"},
+  {static_cast<GLuint>(-1), "M_AMMO"},
+  {static_cast<GLuint>(-1), "M_KEY"},
+  {static_cast<GLuint>(-1), "M_POWER"},
+  {static_cast<GLuint>(-1), "M_WEAP"},
 
-  {-1, "M_ARROW"},
-  {-1, "M_ARROW"},
-  {-1, "M_ARROW"},
-  {-1, "M_MARK"},
-  {-1, "M_NORMAL"},
+  {static_cast<GLuint>(-1), "M_ARROW"},
+  {static_cast<GLuint>(-1), "M_ARROW"},
+  {static_cast<GLuint>(-1), "M_ARROW"},
+  {static_cast<GLuint>(-1), "M_MARK"},
+  {static_cast<GLuint>(-1), "M_NORMAL"},
 
-  {-1, NULL},
+  {static_cast<GLuint>(-1), NULL},
 };
 
 typedef struct map_nice_thing_s
@@ -128,7 +128,8 @@ void gld_InitMapPics(void)
 void gld_AddNiceThing(int type, float x, float y, float radius, float angle,
                      unsigned char r, unsigned char g, unsigned char b, unsigned char a)
 {
-  map_nice_thing_t *thing = M_ArrayGetNewItem(&map_things[type], sizeof(thing[0]));
+  map_nice_thing_t *thing = static_cast<map_nice_thing_t *>(
+        M_ArrayGetNewItem(&map_things[type], sizeof(thing[0])));
 
   float sina_r = (float)sin(angle) * radius;
   float cosa_r = (float)cos(angle) * radius;

@@ -38,10 +38,6 @@
 #include "d_event.hh"
 #include "w_wad.hh"
 
-#ifdef __GNUG__
-#pragma interface
-#endif
-
 /* CPhipps - removed wadfiles[] stuff to w_wad.h */
 
 extern char *basesavegame;      // killough 2/16/98: savegame path
@@ -83,11 +79,11 @@ void AddIWAD(const char *iwad);
 #define MAXLOADFILES 3
 extern const char *wad_files[MAXLOADFILES], *deh_files[MAXLOADFILES];
 
-typedef struct
+struct demostate_t
 {
   void (*func)(const char *);
-  const char *name;
-} demostate_t;
+  const char *name = nullptr;
+} ;
 
 void D_SetPage(const char* name, int tics, int music);
 

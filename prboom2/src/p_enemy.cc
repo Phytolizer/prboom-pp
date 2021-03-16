@@ -280,7 +280,7 @@ static dboolean P_IsOnLift(const mobj_t *actor)
   int l;
 
   // Short-circuit: it's on a lift which is active.
-  if (sec->floordata && ((thinker_t *) sec->floordata)->function==T_PlatRaise)
+  if (sec->floordata && ((thinker_t *) sec->floordata)->function==reinterpret_cast<think_t>(T_PlatRaise))
     return true;
 
   // Check to see if it's in a sector which can be activated as a lift.
@@ -316,8 +316,9 @@ static int P_IsUnderDamage(mobj_t *actor)
   const ceiling_t *cl;             // Crushing ceiling
   int dir = 0;
   for (seclist=actor->touching_sectorlist; seclist; seclist=seclist->m_tnext)
-    if ((cl = seclist->m_sector->ceilingdata) &&
-  cl->thinker.function == T_MoveCeiling)
+    if ((cl = static_cast<const ceiling_t *>(
+               seclist->m_sector->ceilingdata)) &&
+  cl->thinker.function == reinterpret_cast<think_t>(T_MoveCeiling))
       dir |= cl->direction;
   return dir;
 }
@@ -560,30 +561,30 @@ static void P_DoNewChaseDir(mobj_t *actor, fixed_t deltax, fixed_t deltay)
     tdir = xdir, xdir = ydir, ydir = tdir;
 
   if ((xdir == turnaround ? xdir = DI_NODIR : xdir) != DI_NODIR &&
-      (actor->movedir = xdir, P_TryWalk(actor)))
+      (actor->movedir = static_cast<short>(xdir), P_TryWalk(actor)))
     return;         // either moved forward or attacked
 
   if ((ydir == turnaround ? ydir = DI_NODIR : ydir) != DI_NODIR &&
-      (actor->movedir = ydir, P_TryWalk(actor)))
+      (actor->movedir = static_cast<short>(ydir), P_TryWalk(actor)))
     return;
 
   // there is no direct path to the player, so pick another direction.
-  if (olddir != DI_NODIR && (actor->movedir = olddir, P_TryWalk(actor)))
+  if (olddir != DI_NODIR && (actor->movedir = static_cast<short>(olddir), P_TryWalk(actor)))
     return;
 
   // randomly determine direction of search
   if (P_Random(pr_newchasedir) & 1)
     {
       for (tdir = DI_EAST; tdir <= DI_SOUTHEAST; tdir++)
-        if (tdir != turnaround && (actor->movedir = tdir, P_TryWalk(actor)))
+        if (tdir != turnaround && (actor->movedir = static_cast<short>(tdir), P_TryWalk(actor)))
     return;
     }
   else
     for (tdir = DI_SOUTHEAST; tdir != DI_EAST-1; tdir--)
-      if (tdir != turnaround && (actor->movedir = tdir, P_TryWalk(actor)))
+      if (tdir != turnaround && (actor->movedir = static_cast<short>(tdir), P_TryWalk(actor)))
   return;
 
-  if ((actor->movedir = turnaround) != DI_NODIR && !P_TryWalk(actor))
+  if ((actor->movedir = static_cast<short>(turnaround)) != DI_NODIR && !P_TryWalk(actor))
     actor->movedir = DI_NODIR;
 }
 
@@ -833,7 +834,7 @@ static dboolean P_LookForPlayers(mobj_t *actor, dboolean allaround)
 
         if (actor->info->missilestate)
     {
-      P_SetMobjState(actor, actor->info->seestate);
+      P_SetMobjState(actor, static_cast<statenum_t>(actor->info->seestate));
       actor->flags &= ~MF_JUSTHIT;
     }
 
@@ -1053,7 +1054,7 @@ void A_KeenDie(mobj_t* mo)
   // scan the remaining thinkers to see if all Keens are dead
 
   for (th = thinkercap.next ; th != &thinkercap ; th=th->next)
-    if (th->function == P_MobjThinker)
+    if (th->function == reinterpret_cast<think_t>(P_MobjThinker))
       {
         mobj_t *mo2 = (mobj_t *) th;
         if (mo2 != mo && mo2->type == mo->type && mo2->health > 0)
@@ -1136,7 +1137,7 @@ void A_Look(mobj_t *actor)
     else
       S_StartSound(actor, sound);
   }
-  P_SetMobjState(actor, actor->info->seestate);
+  P_SetMobjState(actor, static_cast<statenum_t>(actor->info->seestate));
 }
 
 //
@@ -1145,17 +1146,6 @@ void A_Look(mobj_t *actor)
 // killough 10/98:
 // Allows monsters to continue movement while attacking
 //
-
-static void A_KeepChasing(mobj_t *actor)
-{
-  if (actor->movecount)
-    {
-      actor->movecount--;
-      if (actor->strafecount)
-        actor->strafecount--;
-      P_SmartMove(actor);
-    }
-}
 
 //
 // A_Chase
@@ -1210,7 +1200,8 @@ void A_Chase(mobj_t *actor)
   if (!actor->target || !(actor->target->flags&MF_SHOOTABLE))
   {
     if (!P_LookForTargets(actor,true)) // look for a new target
-      P_SetMobjState(actor, actor->info->spawnstate); // no new target
+      P_SetMobjState(actor, static_cast<statenum_t>(
+                                  actor->info->spawnstate)); // no new target
     return;
   }
 
@@ -1228,7 +1219,7 @@ void A_Chase(mobj_t *actor)
   {
     if (actor->info->attacksound)
       S_StartSound(actor, actor->info->attacksound);
-    P_SetMobjState(actor, actor->info->meleestate);
+    P_SetMobjState(actor, static_cast<statenum_t>(actor->info->meleestate));
     /* killough 8/98: remember an attack
     * cph - DEMOSYNC? */
     if (!actor->info->missilestate && !heretic)
@@ -1241,7 +1232,8 @@ void A_Chase(mobj_t *actor)
     if (!(gameskill < sk_nightmare && !fastparm && actor->movecount))
       if (P_CheckMissileRange(actor))
       {
-        P_SetMobjState(actor, actor->info->missilestate);
+        P_SetMobjState(actor,
+                         static_cast<statenum_t>(actor->info->missilestate));
         actor->flags |= MF_JUSTATTACKED;
         return;
       }
@@ -1413,7 +1405,7 @@ void A_CPosRefire(mobj_t *actor)
 
   if (!actor->target || actor->target->health <= 0
       || !P_CheckSight(actor, actor->target))
-stop:  P_SetMobjState(actor, actor->info->seestate);
+stop:  P_SetMobjState(actor, static_cast<statenum_t>(actor->info->seestate));
 }
 
 void A_SpidRefire(mobj_t* actor)
@@ -1432,7 +1424,7 @@ void A_SpidRefire(mobj_t* actor)
   if (!actor->target || actor->target->health <= 0
       || actor->flags & actor->target->flags & MF_FRIEND
       || !P_CheckSight(actor, actor->target))
-    stop: P_SetMobjState(actor, actor->info->seestate);
+    stop: P_SetMobjState(actor, static_cast<statenum_t>(actor->info->seestate));
 }
 
 void A_BspiAttack(mobj_t *actor)
@@ -1754,7 +1746,7 @@ static dboolean PIT_VileCheck(mobj_t *thing)
 //        if ((thing->height == 0) && (thing->radius == 0))         //   |
 //            return true;                                          // phares
 
-    corpsehit = thing;
+  corpsehit = thing;
     corpsehit->momx = corpsehit->momy = 0;
     if (comp[comp_vile])                                            // phares
       {                                                             //   |
@@ -1828,7 +1820,8 @@ void A_VileChase(mobj_t* actor)
                   S_StartSound(corpsehit, sfx_slop);
                   info = corpsehit->info;
 
-                  P_SetMobjState(corpsehit,info->raisestate);
+                  P_SetMobjState(corpsehit,
+                                 static_cast<statenum_t>(info->raisestate));
 
                   if (comp[comp_vile])                              // phares
                     corpsehit->height <<= 2;                        //   |
@@ -2143,7 +2136,7 @@ static void A_PainShootSkull(mobj_t *actor, angle_t angle)
       int count = 0;
       thinker_t *currentthinker = NULL;
       while ((currentthinker = P_NextThinker(currentthinker,th_all)) != NULL)
-        if ((currentthinker->function == P_MobjThinker)
+        if ((currentthinker->function == reinterpret_cast<think_t>(P_MobjThinker))
             && ((mobj_t *)currentthinker)->type == MT_SKULL)
           count++;
       if (count > 20)                                               // phares
@@ -2283,7 +2276,8 @@ void A_SkullPop(mobj_t *actor)
   }
 
   actor->flags &= ~MF_SOLID;
-  mo = P_SpawnMobj(actor->x, actor->y, actor->z + 48 * FRACUNIT, g_skullpop_mt);
+  mo = P_SpawnMobj(actor->x, actor->y, actor->z + 48 * FRACUNIT,
+                   static_cast<mobjtype_t>(g_skullpop_mt));
   //mo->target = actor;
   mo->momx = P_SubRandom() << 9;
   mo->momy = P_SubRandom() << 9;
@@ -2384,7 +2378,7 @@ void A_BossDeath(mobj_t *mo)
 		// scan the remaining thinkers to see
 		// if all bosses are dead
 	  for (th = thinkercap.next ; th != &thinkercap ; th=th->next)
-		if (th->function == P_MobjThinker)
+		if (th->function == reinterpret_cast<think_t>(P_MobjThinker))
 		  {
 			mobj_t *mo2 = (mobj_t *) th;
 			if (mo2 != mo && mo2->type == mo->type && mo2->health > 0)
@@ -2501,7 +2495,7 @@ void A_BossDeath(mobj_t *mo)
     // scan the remaining thinkers to see
     // if all bosses are dead
   for (th = thinkercap.next ; th != &thinkercap ; th=th->next)
-    if (th->function == P_MobjThinker)
+    if (th->function == reinterpret_cast<think_t>(P_MobjThinker))
       {
         mobj_t *mo2 = (mobj_t *) th;
         if (mo2 != mo && mo2->type == mo->type && mo2->health > 0)
@@ -2577,12 +2571,12 @@ void A_BabyMetal(mobj_t *mo)
   A_Chase(mo);
 }
 
-void A_OpenShotgun2(player_t *player, pspdef_t *psp)
+void A_OpenShotgun2(player_t *player, pspdef_t */* psp */)
 {
   S_StartSound(player->mo, sfx_dbopn);
 }
 
-void A_LoadShotgun2(player_t *player, pspdef_t *psp)
+void A_LoadShotgun2(player_t *player, pspdef_t */* psp */)
 {
   S_StartSound(player->mo, sfx_dbload);
 }
@@ -2590,7 +2584,7 @@ void A_LoadShotgun2(player_t *player, pspdef_t *psp)
 void A_CloseShotgun2(player_t *player, pspdef_t *psp)
 {
   S_StartSound(player->mo, sfx_dbcls);
-  A_ReFire(player,psp);
+  A_ReFire(player, psp);
 }
 
 // killough 2/7/98: Remove limit on icon landings:
@@ -2615,22 +2609,22 @@ void P_SpawnBrainTargets(void)  // killough 3/26/98: renamed old function
   for (thinker = thinkercap.next ;
        thinker != &thinkercap ;
        thinker = thinker->next)
-    if (thinker->function == P_MobjThinker)
+    if (thinker->function == reinterpret_cast<think_t>(P_MobjThinker))
       {
         mobj_t *m = (mobj_t *) thinker;
 
         if (m->type == MT_BOSSTARGET )
           {   // killough 2/7/98: remove limit on icon landings:
             if (numbraintargets >= numbraintargets_alloc)
-              braintargets = realloc(braintargets,
+              braintargets = static_cast<mobj_t **>(realloc(braintargets,
                       (numbraintargets_alloc = numbraintargets_alloc ?
-                       numbraintargets_alloc*2 : 32) *sizeof *braintargets);
+                       numbraintargets_alloc*2 : 32) *sizeof *braintargets));
             braintargets[numbraintargets++] = m;
           }
       }
 }
 
-void A_BrainAwake(mobj_t *mo)
+void A_BrainAwake(mobj_t */* mo */)
 {
   //e6y
   if (demo_compatibility && !prboom_comp[PC_BOOM_BRAINAWAKE].state)
@@ -2642,7 +2636,7 @@ void A_BrainAwake(mobj_t *mo)
   S_StartSound(NULL,sfx_bossit); // killough 3/26/98: only generates sound now
 }
 
-void A_BrainPain(mobj_t *mo)
+void A_BrainPain(mobj_t */* mo */)
 {
   S_StartSound(NULL,sfx_bospn);
 }
@@ -2678,7 +2672,7 @@ void A_BrainExplode(mobj_t *mo)
     th->tics = 1;
 }
 
-void A_BrainDie(mobj_t *mo)
+void A_BrainDie(mobj_t */* mo */)
 {
   G_ExitLevel();
 }
@@ -2782,7 +2776,7 @@ void A_SpawnFly(mobj_t *mo)
   P_UpdateThinker(&newmobj->thinker);
 
   if (P_LookForTargets(newmobj,true))      /* killough 9/4/98 */
-    P_SetMobjState(newmobj, newmobj->info->seestate);
+    P_SetMobjState(newmobj, static_cast<statenum_t>(newmobj->info->seestate));
 
     // telefrag anything in this spot
   P_TeleportMove(newmobj, newmobj->x, newmobj->y, true); /* killough 8/9/98 */
@@ -2880,7 +2874,7 @@ void A_Spawn(mobj_t *mo)
     {
       mobj_t *newmobj =
       P_SpawnMobj(mo->x, mo->y, (mo->state->misc2 << FRACBITS) + mo->z,
-      mo->state->misc1 - 1);
+                        static_cast<mobjtype_t>(mo->state->misc1 - 1));
       if (compatibility_level == mbf_compatibility &&
           !prboom_comp[PC_DO_NOT_INHERIT_FRIENDLYNESS_FLAG_ON_SPAWN].state)
       /* CPhipps - no friendlyness (yet)*/ //e6y: why not?
@@ -2933,7 +2927,7 @@ void A_RandomJump(mobj_t *mo)
     return;
 
   if (P_Random(pr_randomjump) < mo->state->misc2)
-    P_SetMobjState(mo, mo->state->misc1);
+    P_SetMobjState(mo, static_cast<statenum_t>(mo->state->misc1));
 }
 
 //
@@ -3089,7 +3083,7 @@ void A_ImpMsAttack(mobj_t * actor)
 
     if (!actor->target || P_Random(pr_heretic) > 64)
     {
-        P_SetMobjState(actor, actor->info->seestate);
+        P_SetMobjState(actor, static_cast<statenum_t>(actor->info->seestate));
         return;
     }
     dest = actor->target;
@@ -3165,7 +3159,7 @@ dboolean P_UpdateChicken(mobj_t * actor, int tics)
     {
         return (false);
     }
-    moType = actor->special2.i;
+    moType = static_cast<mobjtype_t>(actor->special2.i);
     x = actor->x;
     y = actor->y;
     z = actor->z;
@@ -3256,7 +3250,8 @@ void A_Feathers(mobj_t * actor)
         mo->momx = P_SubRandom() << 8;
         mo->momy = P_SubRandom() << 8;
         mo->momz = FRACUNIT + (P_Random(pr_heretic) << 9);
-        P_SetMobjState(mo, HERETIC_S_FEATHER1 + (P_Random(pr_heretic) & 7));
+        P_SetMobjState(mo, static_cast<statenum_t>(HERETIC_S_FEATHER1 +
+                                                   (P_Random(pr_heretic) & 7)));
     }
 }
 
@@ -3493,7 +3488,8 @@ void A_GenWizard(mobj_t * actor)
         return;
     }
     actor->momx = actor->momy = actor->momz = 0;
-    P_SetMobjState(actor, mobjinfo[actor->type].deathstate);
+    P_SetMobjState(actor,
+                   static_cast<statenum_t>(mobjinfo[actor->type].deathstate));
     actor->flags &= ~MF_MISSILE;
     fog = P_SpawnMobj(actor->x, actor->y, actor->z, HERETIC_MT_TFOG);
     S_StartSound(fog, heretic_sfx_telept);
@@ -3506,7 +3502,7 @@ void P_Massacre(void)
 
     for (think = thinkercap.next; think != &thinkercap; think = think->next)
     {
-        if (think->function != P_MobjThinker)
+        if (think->function != reinterpret_cast<think_t>(P_MobjThinker))
         {                       // Not a mobj thinker
             continue;
         }
@@ -3532,32 +3528,32 @@ void A_Sor2DthLoop(mobj_t * actor)
     }
 }
 
-void A_SorZap(mobj_t * actor)
+void A_SorZap(mobj_t * /* actor */)
 {
     S_StartSound(NULL, heretic_sfx_sorzap);
 }
 
-void A_SorRise(mobj_t * actor)
+void A_SorRise(mobj_t * /* actor */)
 {
     S_StartSound(NULL, heretic_sfx_sorrise);
 }
 
-void A_SorDSph(mobj_t * actor)
+void A_SorDSph(mobj_t * /* actor */)
 {
     S_StartSound(NULL, heretic_sfx_sordsph);
 }
 
-void A_SorDExp(mobj_t * actor)
+void A_SorDExp(mobj_t * /* actor */)
 {
     S_StartSound(NULL, heretic_sfx_sordexp);
 }
 
-void A_SorDBon(mobj_t * actor)
+void A_SorDBon(mobj_t * /* actor */)
 {
     S_StartSound(NULL, heretic_sfx_sordbon);
 }
 
-void A_SorSightSnd(mobj_t * actor)
+void A_SorSightSnd(mobj_t * /* actor */)
 {
     S_StartSound(NULL, heretic_sfx_sorsit);
 }
@@ -3637,7 +3633,7 @@ void A_MinotaurCharge(mobj_t * actor)
     else
     {
         actor->flags &= ~MF_SKULLFLY;
-        P_SetMobjState(actor, actor->info->seestate);
+        P_SetMobjState(actor, static_cast<statenum_t>(actor->info->seestate));
     }
 }
 
@@ -3740,7 +3736,7 @@ void A_WhirlwindSeek(mobj_t * actor)
     if (actor->health < 0)
     {
         actor->momx = actor->momy = actor->momz = 0;
-        P_SetMobjState(actor, mobjinfo[actor->type].deathstate);
+        P_SetMobjState(actor, static_cast<statenum_t>(mobjinfo[actor->type].deathstate));
         actor->flags &= ~MF_MISSILE;
         return;
     }
@@ -4052,7 +4048,7 @@ void A_AccTeleGlitter(mobj_t * actor)
 void A_InitKeyGizmo(mobj_t * gizmo)
 {
     mobj_t *mo;
-    statenum_t state = g_s_null;
+    statenum_t state = static_cast<statenum_t>(g_s_null);
 
     switch (gizmo->type)
     {
@@ -4173,7 +4169,7 @@ void A_AddPlayerCorpse(mobj_t * actor)
       static int queuesize;
       if (queuesize < bodyquesize)
     	{
-    	  bodyque = realloc(bodyque, bodyquesize * sizeof(*bodyque));
+    	  bodyque = static_cast<mobj_t **>(realloc(bodyque, bodyquesize * sizeof(*bodyque)));
     	  memset(bodyque+queuesize, 0, (bodyquesize - queuesize) * sizeof(*bodyque));
     	  queuesize = bodyquesize;
     	}
@@ -4245,9 +4241,7 @@ void Heretic_A_BossDeath(mobj_t * actor)
         HERETIC_MT_MINOTAUR,
         HERETIC_MT_SORCERER2,
         HERETIC_MT_HEAD,
-        HERETIC_MT_MINOTAUR,
-        -1
-    };
+        HERETIC_MT_MINOTAUR, static_cast<mobjtype_t>(-1)};
 
     if (gamemap != 8)
     {                           // Not a boss level
@@ -4260,7 +4254,7 @@ void Heretic_A_BossDeath(mobj_t * actor)
     // Make sure all bosses are dead
     for (think = thinkercap.next; think != &thinkercap; think = think->next)
     {
-        if (think->function != P_MobjThinker)
+        if (think->function != reinterpret_cast<think_t>(P_MobjThinker))
         {                       // Not a mobj thinker
             continue;
         }
@@ -4295,7 +4289,7 @@ dboolean Heretic_P_LookForMonsters(mobj_t * actor)
     count = 0;
     for (think = thinkercap.next; think != &thinkercap; think = think->next)
     {
-        if (think->function != P_MobjThinker)
+        if (think->function != reinterpret_cast<think_t>(P_MobjThinker))
         {                       // Not a mobj thinker
             continue;
         }

@@ -483,7 +483,7 @@ dboolean P_CrossSubsector_PrBoom(int num)
 {
   ssline_t *ssline = &sslines[sslines_indexes[num]];
   const ssline_t *ssline_last = &sslines[sslines_indexes[num + 1]];
-  fixed_t opentop = 0, openbottom = 0;
+  fixed_t open_top = 0, open_bottom = 0;
   const sector_t *front = NULL, *back = NULL;
 
 #ifdef RANGECHECK
@@ -546,22 +546,22 @@ dboolean P_CrossSubsector_PrBoom(int num)
 
       // possible occluder
       // because of ceiling height differences
-      opentop = MIN(front->ceilingheight, back->ceilingheight);
+      open_top = MIN(front->ceilingheight, back->ceilingheight);
 
       // because of floor height differences
-      openbottom = MAX(front->floorheight, back->floorheight);
+      open_bottom = MAX(front->floorheight, back->floorheight);
 
       // cph - reject if does not intrude in the z-space of the possible LOS
-      if ((opentop >= los.maxz) && (openbottom <= los.minz))
+      if ((open_top >= los.maxz) && (open_bottom <= los.minz))
         continue;
     }
 
     // cph - if bottom >= top or top < minz or bottom > maxz then it must be
     // solid wrt this LOS
-    if (!(ssline->linedef->flags & ML_TWOSIDED) || (openbottom >= opentop) ||
+    if (!(ssline->linedef->flags & ML_TWOSIDED) || (open_bottom >= open_top) ||
   (prboom_comp[PC_FORCE_LXDOOM_DEMO_COMPATIBILITY].state ?
-  (opentop <= los.minz) || (openbottom >= los.maxz) :
-  (opentop < los.minz) || (openbottom > los.maxz)))
+  (open_top <= los.minz) || (open_bottom >= los.maxz) :
+  (open_top < los.minz) || (open_bottom > los.maxz)))
   return false;
 
     { // crosses a two sided line
@@ -573,14 +573,14 @@ dboolean P_CrossSubsector_PrBoom(int num)
 
       if (front->floorheight != back->floorheight)
       {
-        fixed_t slope = FixedDiv(openbottom - los.sightzstart, frac);
+        fixed_t slope = FixedDiv(open_bottom - los.sightzstart, frac);
         if (slope > los.bottomslope)
           los.bottomslope = slope;
       }
 
       if (front->ceilingheight != back->ceilingheight)
       {
-        fixed_t slope = FixedDiv(opentop - los.sightzstart, frac);
+        fixed_t slope = FixedDiv(open_top - los.sightzstart, frac);
         if (slope < los.topslope)
           los.topslope = slope;
       }
@@ -606,7 +606,7 @@ dboolean P_CrossSubsector_Doom(int num)
   for (; ssline < ssline_last; ssline++)
   {
     divline_t divl;
-    fixed_t opentop, openbottom;
+    fixed_t open_top, open_bottom;
     const sector_t *front, *back;
     fixed_t frac;
 
@@ -654,27 +654,27 @@ dboolean P_CrossSubsector_Doom(int num)
 
     // possible occluder
     // because of ceiling height differences
-    opentop = MIN(front->ceilingheight, back->ceilingheight);
+    open_top = MIN(front->ceilingheight, back->ceilingheight);
 
     // because of floor height differences
-    openbottom = MAX(front->floorheight, back->floorheight);
+    open_bottom = MAX(front->floorheight, back->floorheight);
 
     // quick test for totally closed doors
-    if (openbottom >= opentop)
+    if (open_bottom >= open_top)
       return false;               // stop
 
     frac = P_InterceptVector2(&los.strace, &divl);
 
     if (front->floorheight != back->floorheight)
     {
-      fixed_t slope = FixedDiv(openbottom - los.sightzstart, frac);
+      fixed_t slope = FixedDiv(open_bottom - los.sightzstart, frac);
       if (slope > los.bottomslope)
         los.bottomslope = slope;
     }
 
     if (front->ceilingheight != back->ceilingheight)
     {
-      fixed_t slope = FixedDiv(opentop - los.sightzstart, frac);
+      fixed_t slope = FixedDiv(open_top - los.sightzstart, frac);
       if (slope < los.topslope)
         los.topslope = slope;
     }
@@ -699,7 +699,7 @@ dboolean P_CrossSubsector_Boom(int num)
   for (; ssline < ssline_last; ssline++)
   {
     divline_t divl;
-    fixed_t opentop, openbottom;
+    fixed_t open_top, open_bottom;
     const sector_t *front, *back;
     fixed_t frac;
 
@@ -752,27 +752,27 @@ dboolean P_CrossSubsector_Boom(int num)
 
     // possible occluder
     // because of ceiling height differences
-    opentop = MIN(front->ceilingheight, back->ceilingheight);
+    open_top = MIN(front->ceilingheight, back->ceilingheight);
 
     // because of floor height differences
-    openbottom = MAX(front->floorheight, back->floorheight);
+    open_bottom = MAX(front->floorheight, back->floorheight);
 
     // quick test for totally closed doors
-    if (openbottom >= opentop)
+    if (open_bottom >= open_top)
       return false;               // stop
 
     frac = P_InterceptVector2(&los.strace, &divl);
 
     if (front->floorheight != back->floorheight)
     {
-      fixed_t slope = FixedDiv(openbottom - los.sightzstart, frac);
+      fixed_t slope = FixedDiv(open_bottom - los.sightzstart, frac);
       if (slope > los.bottomslope)
         los.bottomslope = slope;
     }
 
     if (front->ceilingheight != back->ceilingheight)
     {
-      fixed_t slope = FixedDiv(opentop - los.sightzstart, frac);
+      fixed_t slope = FixedDiv(open_top - los.sightzstart, frac);
       if (slope < los.topslope)
         los.topslope = slope;
     }
@@ -798,7 +798,7 @@ static dboolean P_CrossBSPNode_LxDoom(int bspnum)
 {
   while (!(bspnum & NF_SUBSECTOR))
     {
-      register const node_t *bsp = nodes + bspnum;
+      const node_t *bsp = nodes + bspnum;
       int side,side2;
       side = R_PointOnSide(los.strace.x, los.strace.y, bsp);
       side2 = R_PointOnSide(los.t2x, los.t2y, bsp);
@@ -817,7 +817,7 @@ static dboolean P_CrossBSPNode_PrBoom(int bspnum)
 {
   while (!(bspnum & NF_SUBSECTOR))
     {
-      register const node_t *bsp = nodes + bspnum;
+      const node_t *bsp = nodes + bspnum;
       int side,side2;
       side = P_DivlineSide(los.strace.x,los.strace.y,(const divline_t *)bsp)&1;
       side2= P_DivlineSide(los.t2x, los.t2y, (const divline_t *) bsp);

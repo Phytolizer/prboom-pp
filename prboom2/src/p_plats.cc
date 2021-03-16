@@ -244,14 +244,14 @@ manual_plat://e6y
 
     // Create a thinker
     rtn = 1;
-    plat = Z_Malloc( sizeof(*plat), PU_LEVSPEC, 0);
+    plat = static_cast<plat_t *>(Z_Malloc(sizeof(*plat), PU_LEVSPEC, 0));
     memset(plat, 0, sizeof(*plat));
     P_AddThinker(&plat->thinker);
 
     plat->type = type;
     plat->sector = sec;
     plat->sector->floordata = plat; //jff 2/23/98 multiple thinkers
-    plat->thinker.function = T_PlatRaise;
+    plat->thinker.function = reinterpret_cast<think_t>(T_PlatRaise);
     plat->crush = false;
     plat->tag = line->tag;
 
@@ -324,7 +324,7 @@ manual_plat://e6y
           plat->high = sec->floorheight;
 
         plat->wait = 35*PLATWAIT;
-        plat->status = P_Random(pr_plats)&1;
+        plat->status = static_cast<plat_e>(P_Random(pr_plats) & 1);
 
         S_StartSound((mobj_t *)&sec->soundorg,g_sfx_pstart);
         break;
@@ -378,7 +378,7 @@ void P_ActivateInStasis(int tag)
         plat->status = plat->oldstatus==up? down : up;
       else
         plat->status = plat->oldstatus;
-      plat->thinker.function = T_PlatRaise;
+      plat->thinker.function = reinterpret_cast<think_t>(T_PlatRaise);
     }
   }
 }
@@ -419,7 +419,7 @@ int EV_StopPlat(line_t* line)
 //
 void P_AddActivePlat(plat_t* plat)
 {
-  platlist_t *list = malloc(sizeof *list);
+  platlist_t *list = malloc<platlist_t *>(sizeof *list);
   list->plat = plat;
   plat->list = list;
   if ((list->next = activeplats))

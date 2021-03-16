@@ -2622,15 +2622,15 @@ typedef enum
  * Definition of the state (frames) structure                       *
  ********************************************************************/
 
-typedef struct
+struct state_t
 {
   spritenum_t sprite;       /* sprite number to show                       */
   long        frame;        /* which frame/subframe of the sprite is shown */
   long        tics;         /* number of gametics this frame should last   */
   actionf_t   action;       /* code pointer to function for action if any  */
   statenum_t  nextstate;    /* linked list pointer to next state or zero   */
-  long        misc1, misc2; /* apparently never used in DOOM               */
-} state_t;
+  long        misc1 = 0, misc2 = 0; /* apparently never used in DOOM               */
+} ;
 
 /********************************************************************
  * Thing enumeration -- must match info.c                           *
@@ -3057,7 +3057,7 @@ typedef struct
   int flags2;
 } mobjinfo_t;
 
-typedef struct
+struct doom_mobjinfo_t
 {
     int doomednum;
     int spawnstate;
@@ -3081,9 +3081,9 @@ typedef struct
     int damage;
     int activesound;
     uint_64_t flags;
-    int raisestate;
-    mobjtype_t droppeditem;
-} doom_mobjinfo_t;
+    int raisestate = S_NULL;
+    mobjtype_t droppeditem = MT_NULL;
+} ;
 
 typedef struct
 {

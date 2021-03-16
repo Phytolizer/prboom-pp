@@ -49,10 +49,6 @@
 
 #include "info.hh"
 
-#ifdef __GNUG__
-#pragma interface
-#endif
-
 /*
  * Frame flags:
  * handles maximum brightness (torches, muzzle flare, light sources)
@@ -107,7 +103,7 @@ void A_WeaponReady();
 void A_Lower();
 void A_Raise();
 void A_Punch();
-void A_ReFire();
+void A_ReFire(player_s *pS, pspdef_t *ptr);
 void A_FirePistol();
 void A_Light1();
 void A_FireShotgun();

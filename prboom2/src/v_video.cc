@@ -188,15 +188,15 @@ void V_InitFlexTranTable(void)
 // killough 5/2/98: tiny engine driven by table above
 void V_InitColorTranslation(void)
 {
-  register const crdef_t *p;
+  const crdef_t *p;
   for (p=crdefs; p->name; p++)
   {
-    *p->map = W_CacheLumpName(p->name);
+    *p->map = W_CacheLumpName<const byte *>(p->name);
     if (p - crdefs == CR_DEFAULT)
       continue;
     if (gamemission == chex || gamemission == hacx)
     {
-      byte *temp = malloc(256);
+      byte *temp = malloc<byte *>(256);
       memcpy (temp, *p->map, 256);
       if (gamemission == chex)
         memcpy (temp+112, *p->map+176, 16); // green range
@@ -298,7 +298,7 @@ static void FUNC_V_FillFlat(int lump, int scrn, int x, int y, int width, int hei
   lump += firstflat;
 
   // killough 4/17/98:
-  data = W_CacheLumpNum(lump);
+  data = static_cast<const byte *>(W_CacheLumpNum(lump));
 
   if (V_GetMode() == VID_MODE8) {
     const byte *src, *src_p;
@@ -420,14 +420,14 @@ static void V_DrawMemPatch(int x, int y, int scrn, const rpatch_t *patch,
 
   // CPhipps - auto-no-stretch if not high-res
   if ((flags & VPT_STRETCH_MASK) && SCREEN_320x200)
-    flags &= ~VPT_STRETCH_MASK;
+    flags = static_cast<patch_translation_e>(flags & ~VPT_STRETCH_MASK);
 
   // e6y: wide-res
   params = &stretch_params[flags & VPT_ALIGN_MASK];
 
   // CPhipps - null translation pointer => no translation
   if (!trans)
-    flags &= ~VPT_TRANS;
+    flags = static_cast<patch_translation_e>(flags & ~VPT_TRANS);
 
   if (V_GetMode() == VID_MODE8 && !(flags & VPT_STRETCH_MASK)) {
     int             col;
@@ -465,7 +465,7 @@ static void V_DrawMemPatch(int x, int y, int scrn, const rpatch_t *patch,
         if (!(flags & VPT_TRANS)) {
           if ((count-=4)>=0)
             do {
-              register byte s0,s1;
+              byte s0,s1;
               s0 = source[0];
               s1 = source[1];
               dest[0] = s0;
@@ -487,7 +487,7 @@ static void V_DrawMemPatch(int x, int y, int scrn, const rpatch_t *patch,
           // CPhipps - merged translation code here
           if ((count-=4)>=0)
             do {
-              register byte s0,s1;
+              byte s0,s1;
               s0 = source[0];
               s1 = source[1];
               s0 = trans[s0];
@@ -742,7 +742,7 @@ void V_UpdateTrueColorPalette(video_mode_t mode) {
     return;
 
   gtlump = (W_CheckNumForName)("GAMMATBL", ns_prboom);
-  pal = W_CacheLumpNum(pplump);
+  pal = static_cast<const byte *>(W_CacheLumpNum(pplump));
 
   // opengl doesn't use the gamma
   gtable =
@@ -765,7 +765,7 @@ void V_UpdateTrueColorPalette(video_mode_t mode) {
   if (mode == VID_MODE32) {
     if (!playpal_data->Palettes32) {
       // set int palette
-      playpal_data->Palettes32 = malloc(numPals*256*sizeof(int)*VID_NUMCOLORWEIGHTS);
+      playpal_data->Palettes32 = malloc<unsigned int *>(numPals*256*sizeof(int)*VID_NUMCOLORWEIGHTS);
       for (p=0; p<numPals; p++) {
         for (i=0; i<256; i++) {
           r = gtable[pal[(256*p+i)*3+0]];
@@ -795,7 +795,7 @@ void V_UpdateTrueColorPalette(video_mode_t mode) {
   else if (mode == VID_MODE16) {
     if (!playpal_data->Palettes16) {
       // set short palette
-      playpal_data->Palettes16 = malloc(numPals*256*sizeof(short)*VID_NUMCOLORWEIGHTS);
+      playpal_data->Palettes16 = malloc<unsigned short *>(numPals*256*sizeof(short)*VID_NUMCOLORWEIGHTS);
       for (p=0; p<numPals; p++) {
         for (i=0; i<256; i++) {
           r = gtable[pal[(256*p+i)*3+0]];
@@ -825,7 +825,7 @@ void V_UpdateTrueColorPalette(video_mode_t mode) {
   else if (mode == VID_MODE15) {
     if (!playpal_data->Palettes15) {
       // set short palette
-      playpal_data->Palettes15 = malloc(numPals*256*sizeof(short)*VID_NUMCOLORWEIGHTS);
+      playpal_data->Palettes15 = malloc<unsigned short *>(numPals*256*sizeof(short)*VID_NUMCOLORWEIGHTS);
       for (p=0; p<numPals; p++) {
         for (i=0; i<256; i++) {
           r = gtable[pal[(256*p+i)*3+0]];
@@ -1169,7 +1169,7 @@ void V_AllocScreen(screeninfo_t *scrn) {
   if (!scrn->not_on_heap)
     if ((scrn->byte_pitch * scrn->height) > 0)
       //e6y: Clear the screen to black.
-      scrn->data = calloc(scrn->byte_pitch*scrn->height, 1);
+      scrn->data = calloc<byte *>(scrn->byte_pitch*scrn->height, 1);
 }
 
 //
@@ -1231,15 +1231,15 @@ static void V_PlotPixel32(int scrn, int x, int y, byte color) {
 //
 static void WRAP_V_DrawLine(fline_t* fl, int color)
 {
-  register int x;
-  register int y;
-  register int dx;
-  register int dy;
-  register int sx;
-  register int sy;
-  register int ax;
-  register int ay;
-  register int d;
+  int x;
+  int y;
+  int dx;
+  int dy;
+  int sx;
+  int sy;
+  int ax;
+  int ay;
+  int d;
 
 #ifdef RANGECHECK         // killough 2/22/98
   static int fuck = 0;
@@ -1482,8 +1482,8 @@ const unsigned char* V_GetPlaypal(void)
   {
     int lump = W_GetNumForName(playpal_data->lump_name);
     int len = W_LumpLength(lump);
-    const byte *data = W_CacheLumpNum(lump);
-    playpal_data->lump = malloc(len);
+    const byte *data = static_cast<const byte *>(W_CacheLumpNum(lump));
+    playpal_data->lump = malloc<unsigned char *>(len);
     memcpy(playpal_data->lump, data, len);
     W_UnlockLumpNum(lump);
   }

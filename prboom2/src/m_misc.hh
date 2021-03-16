@@ -78,23 +78,23 @@ typedef struct default_s
   // Note: casts are now made via unions to avoid discarding qualifier warnings
   struct {
     int* pi;
-    const char** ppsz;
+    const char** ppsz = nullptr;
     //e6y: arrays
-    int* array_size;
-    char*** array_data;
-    int array_index;
+    int* array_size = nullptr;
+    char*** array_data = nullptr;
+    int array_index = 0;
   } location;
-  struct {
+  struct defaultvalue_t {
     int i;
-    const char* psz;
+    const char* psz = nullptr;
     //e6y: arrays
-    int array_size;
-    const char** array_data;
+    int array_size = 0;
+    const char** array_data = nullptr;
   } defaultvalue; // CPhipps - default value
   // Limits (for an int)
   int   minvalue;         // jff 3/3/98 minimum allowed value
   int   maxvalue;         // jff 3/3/98 maximum allowed value
-  enum {
+  enum type_t {
     def_none, // Dummy entry
     def_str,  // A string
     def_int,  // Integer
@@ -105,18 +105,18 @@ typedef struct default_s
     def_colour = def_hex // Colour (256 colour palette entry)
   } type; // CPhipps - type of entry
   int   setupscreen;      // phares 4/19/98: setup screen where this appears
-  int  *current;          /* cph - MBF-like pointer to current value */
+  int  *current = nullptr;          /* cph - MBF-like pointer to current value */
   // cph - removed the help strings from the config file
   // const char* help;       // jff 3/3/98 description of parameter
   // CPhipps - remove unused "lousy hack" code
-  struct setup_menu_s *setup_menu;   /* Xref to setup menu item, if any */
+  struct setup_menu_s *setup_menu = nullptr;   /* Xref to setup menu item, if any */
 
   // composite input
-  int identifier;
-  dsda_input_default_t input;
+  int identifier = 0;
+  dsda_input_default_t input{};
 } default_t;
 
-#define IS_STRING(dv) ((dv).type == def_str)
+#define IS_STRING(dv) ((dv).type == default_t::def_str)
 // CPhipps - What is the max. key code that X will send us?
 #define MAX_KEY 65536
 

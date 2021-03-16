@@ -119,14 +119,14 @@ void R_InitPlanesRes(void)
   if (yslope) free(yslope);
   if (distscale) free(distscale);
 
-  floorclip = calloc(1, SCREENWIDTH * sizeof(*floorclip));
-  ceilingclip = calloc(1, SCREENWIDTH * sizeof(*ceilingclip));
-  spanstart = calloc(1, SCREENHEIGHT * sizeof(*spanstart));
+  floorclip = calloc<int *>(1, SCREENWIDTH * sizeof(*floorclip));
+  ceilingclip = calloc<int *>(1, SCREENWIDTH * sizeof(*ceilingclip));
+  spanstart = calloc<int *>(1, SCREENHEIGHT * sizeof(*spanstart));
 
-  cachedheight = calloc(1, SCREENHEIGHT * sizeof(*cachedheight));
+  cachedheight = calloc<int *>(1, SCREENHEIGHT * sizeof(*cachedheight));
 
-  yslope = calloc(1, SCREENHEIGHT * sizeof(*yslope));
-  distscale = calloc(1, SCREENWIDTH * sizeof(*distscale));
+  yslope = calloc<int *>(1, SCREENHEIGHT * sizeof(*yslope));
+  distscale = calloc<int *>(1, SCREENWIDTH * sizeof(*distscale));
 }
 
 void R_InitVisplanesRes(void)
@@ -260,7 +260,7 @@ static visplane_t *new_visplane(unsigned hash)
   if (!check)
   {
     // e6y: resolution limitation is removed
-    check = calloc(1, sizeof(*check) + sizeof(*check->top) * (SCREENWIDTH * 2));
+    check = calloc<visplane_t *>(1, sizeof(*check) + sizeof(*check->top) * (SCREENWIDTH * 2));
     check->bottom = &check->top[SCREENWIDTH + 2];
   }
   else
@@ -389,7 +389,7 @@ static void R_MakeSpans(int x, unsigned int t1, unsigned int b1,
 
 static void R_DoDrawPlane(visplane_t *pl)
 {
-  register int x;
+  int x;
   draw_column_vars_t dcvars;
   R_DrawColumn_f colfunc = R_GetDrawColumnFunc(RDC_PIPELINE_STANDARD, drawvars.filterwall, drawvars.filterz);
 
@@ -489,7 +489,8 @@ static void R_DoDrawPlane(visplane_t *pl)
       int stop, light;
       draw_span_vars_t dsvars;
 
-      dsvars.source = W_CacheLumpNum(firstflat + flattranslation[pl->picnum]);
+      dsvars.source = static_cast<const byte *>(
+          W_CacheLumpNum(firstflat + flattranslation[pl->picnum]));
 
       xoffs = pl->xoffs;  // killough 2/28/98: Add offsets
       yoffs = pl->yoffs;

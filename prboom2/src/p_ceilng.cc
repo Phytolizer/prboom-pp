@@ -109,9 +109,11 @@ void T_MoveCeiling (ceiling_t* ceiling)
           // movers with texture change, change the texture then get removed
           case genCeilingChgT:
           case genCeilingChg0:
-            ceiling->sector->special = ceiling->newspecial;
+            ceiling->sector->special =
+                  static_cast<short>(ceiling->newspecial);
             //jff 3/14/98 transfer old special field as well
-            ceiling->sector->oldspecial = ceiling->oldspecial;
+            ceiling->sector->oldspecial =
+                static_cast<short>(ceiling->oldspecial);
             // fallthrough
           case genCeilingChg:
             ceiling->sector->ceilingpic = ceiling->texture;
@@ -190,9 +192,11 @@ void T_MoveCeiling (ceiling_t* ceiling)
           // then remove the active ceiling
           case genCeilingChgT:
           case genCeilingChg0:
-            ceiling->sector->special = ceiling->newspecial;
+            ceiling->sector->special =
+                  static_cast<short>(ceiling->newspecial);
             //jff add to fix bug in special transfers from changes
-            ceiling->sector->oldspecial = ceiling->oldspecial;
+            ceiling->sector->oldspecial =
+                static_cast<short>(ceiling->oldspecial);
             // fallthrough
           case genCeilingChg:
             ceiling->sector->ceilingpic = ceiling->texture;
@@ -287,11 +291,12 @@ manual_ceiling://e6y
 
     // create a new ceiling thinker
     rtn = 1;
-    ceiling = Z_Malloc (sizeof(*ceiling), PU_LEVSPEC, 0);
+    ceiling =
+        static_cast<ceiling_t *>(Z_Malloc(sizeof(*ceiling), PU_LEVSPEC, 0));
     memset(ceiling, 0, sizeof(*ceiling));
     P_AddThinker (&ceiling->thinker);
     sec->ceilingdata = ceiling;               //jff 2/22/98
-    ceiling->thinker.function = T_MoveCeiling;
+    ceiling->thinker.function = reinterpret_cast<think_t>(T_MoveCeiling);
     ceiling->sector = sec;
     ceiling->crush = false;
 
@@ -387,7 +392,7 @@ int P_ActivateInStasisCeiling(line_t *line)
     if (ceiling->tag == line->tag && ceiling->direction == 0)
     {
       ceiling->direction = ceiling->olddirection;
-      ceiling->thinker.function = T_MoveCeiling;
+      ceiling->thinker.function = reinterpret_cast<think_t>(T_MoveCeiling);
       //jff 4/5/98 return if activated
       rtn=1;
     }
@@ -432,7 +437,7 @@ int EV_CeilingCrushStop(line_t* line)
 //
 void P_AddActiveCeiling(ceiling_t* ceiling)
 {
-  ceilinglist_t *list = malloc(sizeof *list);
+  ceilinglist_t *list = malloc<ceilinglist_t *>(sizeof *list);
   list->ceiling = ceiling;
   ceiling->list = list;
   if ((list->next = activeceilings))

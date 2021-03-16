@@ -164,12 +164,12 @@ typedef struct
   int joyb;
 } dsda_input_t;
 
-typedef struct
+struct dsda_input_default_t
 {
-  int key;
-  int mouseb;
-  int joyb;
-} dsda_input_default_t;
+  int key = 0;
+  int mouseb = 0;
+  int joyb = 0;
+} ;
 
 void dsda_InputFlushTick(void);
 void dsda_InputTrackEvent(event_t* ev);

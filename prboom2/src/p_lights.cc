@@ -64,9 +64,9 @@ void T_FireFlicker (fireflicker_t* flick)
   amount = (P_Random(pr_lights)&3)*16;
 
   if (flick->sector->lightlevel - amount < flick->minlight)
-    flick->sector->lightlevel = flick->minlight;
+    flick->sector->lightlevel = static_cast<short>(flick->minlight);
   else
-    flick->sector->lightlevel = flick->maxlight - amount;
+    flick->sector->lightlevel = static_cast<short>(flick->maxlight - amount);
 
   flick->count = 4;
 }
@@ -86,12 +86,12 @@ void T_LightFlash (lightflash_t* flash)
 
   if (flash->sector->lightlevel == flash->maxlight)
   {
-    flash-> sector->lightlevel = flash->minlight;
+    flash-> sector->lightlevel = static_cast<short>(flash->minlight);
     flash->count = (P_Random(pr_lights)&flash->mintime)+1;
   }
   else
   {
-    flash-> sector->lightlevel = flash->maxlight;
+    flash-> sector->lightlevel = static_cast<short>(flash->maxlight);
     flash->count = (P_Random(pr_lights)&flash->maxtime)+1;
   }
 
@@ -112,12 +112,12 @@ void T_StrobeFlash (strobe_t*   flash)
 
   if (flash->sector->lightlevel == flash->minlight)
   {
-    flash-> sector->lightlevel = flash->maxlight;
+    flash-> sector->lightlevel = static_cast<short>(flash->maxlight);
     flash->count = flash->brighttime;
   }
   else
   {
-    flash-> sector->lightlevel = flash->minlight;
+    flash-> sector->lightlevel = static_cast<short>(flash->minlight);
     flash->count =flash->darktime;
   }
 }
@@ -182,12 +182,12 @@ void P_SpawnFireFlicker (sector_t*  sector)
   // Nothing special about it during gameplay.
   sector->special &= ~31; //jff 3/14/98 clear non-generalized sector type
 
-  flick = Z_Malloc ( sizeof(*flick), PU_LEVSPEC, 0);
+  flick = static_cast<fireflicker_t *>(Z_Malloc(sizeof(*flick), PU_LEVSPEC, 0));
 
   memset(flick, 0, sizeof(*flick));
   P_AddThinker (&flick->thinker);
 
-  flick->thinker.function = T_FireFlicker;
+  flick->thinker.function = reinterpret_cast<think_t>(T_FireFlicker);
   flick->sector = sector;
   flick->maxlight = sector->lightlevel;
   flick->minlight = P_FindMinSurroundingLight(sector,sector->lightlevel)+16;
@@ -212,12 +212,12 @@ void P_SpawnLightFlash (sector_t* sector)
   else
     sector->special &= ~31; //jff 3/14/98 clear non-generalized sector type
 
-  flash = Z_Malloc ( sizeof(*flash), PU_LEVSPEC, 0);
+  flash = static_cast<lightflash_t *>(Z_Malloc(sizeof(*flash), PU_LEVSPEC, 0));
 
   memset(flash, 0, sizeof(*flash));
   P_AddThinker (&flash->thinker);
 
-  flash->thinker.function = T_LightFlash;
+  flash->thinker.function = reinterpret_cast<think_t>(T_LightFlash);
   flash->sector = sector;
   flash->maxlight = sector->lightlevel;
 
@@ -244,7 +244,7 @@ void P_SpawnStrobeFlash
 {
   strobe_t* flash;
 
-  flash = Z_Malloc ( sizeof(*flash), PU_LEVSPEC, 0);
+  flash = static_cast<strobe_t *>(Z_Malloc(sizeof(*flash), PU_LEVSPEC, 0));
 
   memset(flash, 0, sizeof(*flash));
   P_AddThinker (&flash->thinker);
@@ -252,7 +252,7 @@ void P_SpawnStrobeFlash
   flash->sector = sector;
   flash->darktime = fastOrSlow;
   flash->brighttime = STROBEBRIGHT;
-  flash->thinker.function = T_StrobeFlash;
+  flash->thinker.function = reinterpret_cast<think_t>(T_StrobeFlash);
   flash->maxlight = sector->lightlevel;
   flash->minlight = P_FindMinSurroundingLight(sector, sector->lightlevel);
 
@@ -283,7 +283,7 @@ void P_SpawnGlowingLight(sector_t*  sector)
 {
   glow_t* g;
 
-  g = Z_Malloc( sizeof(*g), PU_LEVSPEC, 0);
+  g = static_cast<glow_t *>(Z_Malloc(sizeof(*g), PU_LEVSPEC, 0));
 
   memset(g, 0, sizeof(*g));
   P_AddThinker(&g->thinker);
@@ -291,7 +291,7 @@ void P_SpawnGlowingLight(sector_t*  sector)
   g->sector = sector;
   g->minlight = P_FindMinSurroundingLight(sector,sector->lightlevel);
   g->maxlight = sector->lightlevel;
-  g->thinker.function = T_Glow;
+  g->thinker.function = reinterpret_cast<think_t>(T_Glow);
   g->direction = -1;
 
   if (heretic)
@@ -361,7 +361,7 @@ int EV_TurnTagLightsOff(line_t* line)
   if ((tsec = getNextSector(sector->lines[i], sector)) &&
       tsec->lightlevel < min)
     min = tsec->lightlevel;
-      sector->lightlevel = min;
+      sector->lightlevel = static_cast<short>(min);
     }
   return 1;
 }
@@ -397,7 +397,7 @@ int EV_LightTurnOn(line_t *line, int bright)
         temp->lightlevel > tbright)
       tbright = temp->lightlevel;
 
-  sector->lightlevel = tbright;
+  sector->lightlevel = static_cast<short>(tbright);
 
       //jff 5/17/98 unless compatibility optioned
       //then maximum near ANY tagged sector

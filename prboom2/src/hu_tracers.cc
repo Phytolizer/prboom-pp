@@ -84,7 +84,7 @@ void InitTracers(void)
         traces[i].items[count].index = value;
 
         if (traces[i].ApplyFunc)
-          traces[i].ApplyFunc(i);
+          traces[i].ApplyFunc(static_cast<tracertype_t>(i));
 
         traces_present = true;
         count++;
@@ -246,9 +246,9 @@ void TracerAddDeathmatchStart(int num, int index)
   {
     num_deathmatchstarts_indexes = num + 1;
 
-    deathmatchstarts_indexes = realloc(
+    deathmatchstarts_indexes = static_cast<tracer_mapthing_t *>(realloc(
       deathmatchstarts_indexes,
-      num_deathmatchstarts_indexes * sizeof(deathmatchstarts_indexes[0]));
+      num_deathmatchstarts_indexes * sizeof(deathmatchstarts_indexes[0])));
   }
 
   deathmatchstarts_indexes[num].index = index;

@@ -340,7 +340,7 @@ static dboolean LoadInstrumentTable(void)
 {
     const byte *lump;
 
-    lump = (const byte*)W_CacheLumpName("GENMIDI");
+    lump = W_CacheLumpName<const byte *>("GENMIDI");
 
     // Check header
 

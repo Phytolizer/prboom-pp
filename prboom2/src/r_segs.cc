@@ -273,7 +273,8 @@ void R_RenderMaskedSegRange(drawseg_t *ds, int x1, int x2)
       colfunc = R_GetDrawColumnFunc(RDC_PIPELINE_TRANSLUCENT, drawvars.filterwall, drawvars.filterz);
       tranmap = main_tranmap;
       if (curline->linedef->tranlump > 0)
-        tranmap = W_CacheLumpNum(curline->linedef->tranlump-1);
+        tranmap = static_cast<const byte *>(
+              W_CacheLumpNum(curline->linedef->tranlump - 1));
     }
   // killough 4/11/98: end translucent 2s normal code
 
@@ -750,7 +751,7 @@ void R_StoreWallRange(const int start, const int stop)
     {
       // single sided line
       midtexture = texturetranslation[sidedef->midtexture];
-      midtexheight = (linedef->r_flags & RF_MID_TILE) ? 0 : textureheight[midtexture] >> FRACBITS;
+      midtexheight = (linedef->r_flags & line_t::RF_MID_TILE) ? 0 : textureheight[midtexture] >> FRACBITS;
 
       // a single sided line is terminal, so it must mark ends
       markfloor = markceiling = true;
@@ -777,7 +778,7 @@ void R_StoreWallRange(const int start, const int stop)
       ds_p->sprtopclip = ds_p->sprbottomclip = NULL;
       ds_p->silhouette = 0;
 
-      if (linedef->r_flags & RF_CLOSED) { /* cph - closed 2S line e.g. door */
+      if (linedef->r_flags & line_t::RF_CLOSED) { /* cph - closed 2S line e.g. door */
   // cph - killough's (outdated) comment follows - this deals with both
   // "automap fixes", his and mine
   // killough 1/17/98: this test is required if the fix
@@ -867,7 +868,7 @@ void R_StoreWallRange(const int start, const int stop)
       if (worldhigh < worldtop)   // top texture
         {
           toptexture = texturetranslation[sidedef->toptexture];
-    toptexheight = (linedef->r_flags & RF_TOP_TILE) ? 0 : textureheight[toptexture] >> FRACBITS;
+    toptexheight = (linedef->r_flags & line_t::RF_TOP_TILE) ? 0 : textureheight[toptexture] >> FRACBITS;
           rw_toptexturemid = linedef->flags & ML_DONTPEGTOP ? worldtop :
             backsector->ceilingheight+textureheight[sidedef->toptexture]-viewz;
     rw_toptexturemid += FixedMod(sidedef->rowoffset, textureheight[toptexture]);
@@ -876,7 +877,7 @@ void R_StoreWallRange(const int start, const int stop)
       if (worldlow > worldbottom) // bottom texture
         {
           bottomtexture = texturetranslation[sidedef->bottomtexture];
-    bottomtexheight = (linedef->r_flags & RF_BOT_TILE) ? 0 : textureheight[bottomtexture] >> FRACBITS;
+    bottomtexheight = (linedef->r_flags & line_t::RF_BOT_TILE) ? 0 : textureheight[bottomtexture] >> FRACBITS;
           rw_bottomtexturemid = linedef->flags & ML_DONTPEGBOTTOM ? worldtop :
             worldlow;
     rw_bottomtexturemid += FixedMod(sidedef->rowoffset, textureheight[bottomtexture]);

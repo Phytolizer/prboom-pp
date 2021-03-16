@@ -336,8 +336,8 @@ void gld_InitVertexData()
   if (gl_vertexsplit)
     return;
 
-  vt_sectorlists = calloc(sizeof(vt_sectorlists[0]), numvertexes);
-  vt_sectorlists_size = calloc(sizeof(vt_sectorlists_size[0]), numvertexes);
+  vt_sectorlists = calloc<int **>(sizeof(vt_sectorlists[0]), numvertexes);
+  vt_sectorlists_size = calloc<unsigned int *>(sizeof(vt_sectorlists_size[0]), numvertexes);
 
   for(i = 0; i < numlines; i++)
   {
@@ -377,7 +377,7 @@ void gld_InitVertexData()
     vertexes_count * sizeof(gl_vertexsplit->sectors[0]) +
     2 * vertexes_count * sizeof(gl_vertexsplit->heightlist[0]);
 
-  gl_vertexsplit = malloc(gl_vertexsplit_size);
+  gl_vertexsplit = malloc<vertexsplit_info_t *>(gl_vertexsplit_size);
   memset(gl_vertexsplit, 0, gl_vertexsplit_size);
 
   pos = numvertexes * sizeof(vertexsplit_info_t);
@@ -409,7 +409,7 @@ void gld_InitVertexData()
     }
   }
 
-  gl_splitsbysector = malloc(sizeof(gl_splitsbysector[0]) * numsectors);
+  gl_splitsbysector = malloc<splitsbysector_t *>(sizeof(gl_splitsbysector[0]) * numsectors);
   memset(gl_splitsbysector, 0, sizeof(gl_splitsbysector[0]) * numsectors);
 
   for(i = 0; i < numsectors; i++)

@@ -134,7 +134,8 @@ static void STlib_drawNum
     I_Error("STlib_drawNum: n->y - ST_Y < 0");
 #endif
 
-  V_CopyRect(BG, FG, x, n->y, w * numdigits, h, VPT_STRETCH | VPT_ALIGN_BOTTOM);
+  V_CopyRect(BG, FG, x, n->y, w * numdigits, h,
+             static_cast<patch_translation_e>(VPT_STRETCH | VPT_ALIGN_BOTTOM));
 
   // if non-number, do not draw it
   if (num == 1994)
@@ -147,7 +148,9 @@ static void STlib_drawNum
   if (!num)
     // CPhipps - patch drawing updated, reformatted
     V_DrawNumPatch(x - w, n->y, FG, n->p[0].lumpnum, cm,
-       (((cm!=CR_DEFAULT) && !sts_always_red) ? VPT_TRANS : VPT_NONE) | VPT_ALIGN_BOTTOM);
+        static_cast<patch_translation_e>(
+            (((cm != CR_DEFAULT) && !sts_always_red) ? VPT_TRANS : VPT_NONE) |
+            VPT_ALIGN_BOTTOM));
 
   // draw the new number
   //jff 2/16/98 add color translation to digit output
@@ -155,7 +158,9 @@ static void STlib_drawNum
     // CPhipps - patch drawing updated, reformatted
     x -= w;
     V_DrawNumPatch(x, n->y, FG, n->p[num % 10].lumpnum, cm,
-       (((cm!=CR_DEFAULT) && !sts_always_red) ? VPT_TRANS : VPT_NONE) | VPT_ALIGN_BOTTOM);
+        static_cast<patch_translation_e>(
+            (((cm != CR_DEFAULT) && !sts_always_red) ? VPT_TRANS : VPT_NONE) |
+            VPT_ALIGN_BOTTOM));
     num /= 10;
   }
 
@@ -164,7 +169,9 @@ static void STlib_drawNum
   // cph - patch drawing updated, load by name instead of acquiring pointer earlier
   if (neg)
     V_DrawNamePatch(x - w, n->y, FG, "STTMINUS", cm,
-       (((cm!=CR_DEFAULT) && !sts_always_red) ? VPT_TRANS : VPT_NONE) | VPT_ALIGN_BOTTOM);
+          static_cast<patch_translation_e>(
+              (((cm != CR_DEFAULT) && !sts_always_red) ? VPT_TRANS : VPT_NONE) |
+              VPT_ALIGN_BOTTOM));
 }
 
 /*
@@ -232,7 +239,8 @@ void STlib_updatePercent
     // CPhipps - patch drawing updated
     V_DrawNumPatch(per->n.x, per->n.y, FG, per->p->lumpnum,
        sts_pct_always_gray ? CR_GRAY : cm,
-       (sts_always_red ? VPT_NONE : VPT_TRANS) | VPT_ALIGN_BOTTOM);
+        static_cast<patch_translation_e>(
+            (sts_always_red ? VPT_NONE : VPT_TRANS) | VPT_ALIGN_BOTTOM));
   }
 
   STlib_updateNum(&per->n, cm, refresh);
@@ -297,7 +305,8 @@ void STlib_updateMultIcon
         I_Error("STlib_updateMultIcon: y - ST_Y < 0");
 #endif
 
-      V_CopyRect(BG, FG, x, y, w, h, VPT_STRETCH | VPT_ALIGN_BOTTOM);
+      V_CopyRect(BG, FG, x, y, w, h,
+          static_cast<patch_translation_e>(VPT_STRETCH | VPT_ALIGN_BOTTOM));
     }
     if (*mi->inum != -1)  // killough 2/16/98: redraw only if != -1
       V_DrawNumPatch(mi->x, mi->y, FG, mi->p[*mi->inum].lumpnum, CR_DEFAULT, VPT_ALIGN_BOTTOM);

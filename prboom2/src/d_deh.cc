@@ -486,11 +486,11 @@ const char *savegamename = PACKAGE_TARNAME"-savegame";
 // the original value set above.
 
 // CPhipps - make strings pointed to const
-typedef struct {
+struct deh_strs {
   const char **ppstr;  // doubly indirect pointer to string
   const char *lookup;  // pointer to lookup string name
-  const char *orig;
-} deh_strs;
+  const char *orig = nullptr;
+};
 
 /* CPhipps - const
  *         - removed redundant "Can't XXX in a netgame" strings
@@ -821,186 +821,12 @@ const char *deh_newlevel = "NEWLEVEL"; // CPhipps - const
 
 // DOOM shareware/registered/retail (Ultimate) names.
 // CPhipps - const**const
-const char **const mapnames[] =
-{
-  &s_HUSTR_E1M1,
-  &s_HUSTR_E1M2,
-  &s_HUSTR_E1M3,
-  &s_HUSTR_E1M4,
-  &s_HUSTR_E1M5,
-  &s_HUSTR_E1M6,
-  &s_HUSTR_E1M7,
-  &s_HUSTR_E1M8,
-  &s_HUSTR_E1M9,
-
-  &s_HUSTR_E2M1,
-  &s_HUSTR_E2M2,
-  &s_HUSTR_E2M3,
-  &s_HUSTR_E2M4,
-  &s_HUSTR_E2M5,
-  &s_HUSTR_E2M6,
-  &s_HUSTR_E2M7,
-  &s_HUSTR_E2M8,
-  &s_HUSTR_E2M9,
-
-  &s_HUSTR_E3M1,
-  &s_HUSTR_E3M2,
-  &s_HUSTR_E3M3,
-  &s_HUSTR_E3M4,
-  &s_HUSTR_E3M5,
-  &s_HUSTR_E3M6,
-  &s_HUSTR_E3M7,
-  &s_HUSTR_E3M8,
-  &s_HUSTR_E3M9,
-
-  &s_HUSTR_E4M1,
-  &s_HUSTR_E4M2,
-  &s_HUSTR_E4M3,
-  &s_HUSTR_E4M4,
-  &s_HUSTR_E4M5,
-  &s_HUSTR_E4M6,
-  &s_HUSTR_E4M7,
-  &s_HUSTR_E4M8,
-  &s_HUSTR_E4M9,
-
-  &deh_newlevel,  // spares?  Unused.
-  &deh_newlevel,
-  &deh_newlevel,
-  &deh_newlevel,
-  &deh_newlevel,
-  &deh_newlevel,
-  &deh_newlevel,
-  &deh_newlevel,
-  &deh_newlevel,
-
-  &deh_newlevel,  // spares?  Unused.
-  &deh_newlevel,
-  &deh_newlevel,
-  &deh_newlevel,
-  &deh_newlevel,
-  &deh_newlevel,
-  &deh_newlevel,
-  &deh_newlevel,
-  &deh_newlevel
-};
 
 // CPhipps - const**const
-const char **const mapnames2[] = // DOOM 2 map names.
-{
-  &s_HUSTR_1,
-  &s_HUSTR_2,
-  &s_HUSTR_3,
-  &s_HUSTR_4,
-  &s_HUSTR_5,
-  &s_HUSTR_6,
-  &s_HUSTR_7,
-  &s_HUSTR_8,
-  &s_HUSTR_9,
-  &s_HUSTR_10,
-  &s_HUSTR_11,
-
-  &s_HUSTR_12,
-  &s_HUSTR_13,
-  &s_HUSTR_14,
-  &s_HUSTR_15,
-  &s_HUSTR_16,
-  &s_HUSTR_17,
-  &s_HUSTR_18,
-  &s_HUSTR_19,
-  &s_HUSTR_20,
-
-  &s_HUSTR_21,
-  &s_HUSTR_22,
-  &s_HUSTR_23,
-  &s_HUSTR_24,
-  &s_HUSTR_25,
-  &s_HUSTR_26,
-  &s_HUSTR_27,
-  &s_HUSTR_28,
-  &s_HUSTR_29,
-  &s_HUSTR_30,
-  &s_HUSTR_31,
-  &s_HUSTR_32,
-  &s_HUSTR_33,
-};
 
 // CPhipps - const**const
-const char **const mapnamesp[] = // Plutonia WAD map names.
-{
-  &s_PHUSTR_1,
-  &s_PHUSTR_2,
-  &s_PHUSTR_3,
-  &s_PHUSTR_4,
-  &s_PHUSTR_5,
-  &s_PHUSTR_6,
-  &s_PHUSTR_7,
-  &s_PHUSTR_8,
-  &s_PHUSTR_9,
-  &s_PHUSTR_10,
-  &s_PHUSTR_11,
-
-  &s_PHUSTR_12,
-  &s_PHUSTR_13,
-  &s_PHUSTR_14,
-  &s_PHUSTR_15,
-  &s_PHUSTR_16,
-  &s_PHUSTR_17,
-  &s_PHUSTR_18,
-  &s_PHUSTR_19,
-  &s_PHUSTR_20,
-
-  &s_PHUSTR_21,
-  &s_PHUSTR_22,
-  &s_PHUSTR_23,
-  &s_PHUSTR_24,
-  &s_PHUSTR_25,
-  &s_PHUSTR_26,
-  &s_PHUSTR_27,
-  &s_PHUSTR_28,
-  &s_PHUSTR_29,
-  &s_PHUSTR_30,
-  &s_PHUSTR_31,
-  &s_PHUSTR_32,
-};
 
 // CPhipps - const**const
-const char **const mapnamest[] = // TNT WAD map names.
-{
-  &s_THUSTR_1,
-  &s_THUSTR_2,
-  &s_THUSTR_3,
-  &s_THUSTR_4,
-  &s_THUSTR_5,
-  &s_THUSTR_6,
-  &s_THUSTR_7,
-  &s_THUSTR_8,
-  &s_THUSTR_9,
-  &s_THUSTR_10,
-  &s_THUSTR_11,
-
-  &s_THUSTR_12,
-  &s_THUSTR_13,
-  &s_THUSTR_14,
-  &s_THUSTR_15,
-  &s_THUSTR_16,
-  &s_THUSTR_17,
-  &s_THUSTR_18,
-  &s_THUSTR_19,
-  &s_THUSTR_20,
-
-  &s_THUSTR_21,
-  &s_THUSTR_22,
-  &s_THUSTR_23,
-  &s_THUSTR_24,
-  &s_THUSTR_25,
-  &s_THUSTR_26,
-  &s_THUSTR_27,
-  &s_THUSTR_28,
-  &s_THUSTR_29,
-  &s_THUSTR_30,
-  &s_THUSTR_31,
-  &s_THUSTR_32,
-};
 
 // Function prototypes
 void    lfstrip(char *);     // strip the \r and/or \n off of a line
@@ -1309,7 +1135,7 @@ static const deh_bexptr deh_bexptrs[] = // CPhipps - static const
   {A_Lower,           "A_Lower"},
   {A_Raise,           "A_Raise"},
   {A_Punch,           "A_Punch"},
-  {A_ReFire,          "A_ReFire"},
+  {reinterpret_cast<actionf_t>(A_ReFire),          "A_ReFire"},
   {A_FirePistol,      "A_FirePistol"},
   {A_Light1,          "A_Light1"},
   {A_FireShotgun,     "A_FireShotgun"},
@@ -1327,71 +1153,65 @@ static const deh_bexptr deh_bexptrs[] = // CPhipps - static const
   {A_BFGsound,        "A_BFGsound"},
   {A_FireBFG,         "A_FireBFG"},
   {A_BFGSpray,        "A_BFGSpray"},
-  {A_Explode,         "A_Explode"},
-  {A_Pain,            "A_Pain"},
-  {A_PlayerScream,    "A_PlayerScream"},
-  {A_Fall,            "A_Fall"},
-  {A_XScream,         "A_XScream"},
-  {A_Look,            "A_Look"},
-  {A_Chase,           "A_Chase"},
-  {A_FaceTarget,      "A_FaceTarget"},
-  {A_PosAttack,       "A_PosAttack"},
-  {A_Scream,          "A_Scream"},
-  {A_SPosAttack,      "A_SPosAttack"},
-  {A_VileChase,       "A_VileChase"},
-  {A_VileStart,       "A_VileStart"},
-  {A_VileTarget,      "A_VileTarget"},
-  {A_VileAttack,      "A_VileAttack"},
-  {A_StartFire,       "A_StartFire"},
-  {A_Fire,            "A_Fire"},
-  {A_FireCrackle,     "A_FireCrackle"},
-  {A_Tracer,          "A_Tracer"},
-  {A_SkelWhoosh,      "A_SkelWhoosh"},
-  {A_SkelFist,        "A_SkelFist"},
-  {A_SkelMissile,     "A_SkelMissile"},
-  {A_FatRaise,        "A_FatRaise"},
-  {A_FatAttack1,      "A_FatAttack1"},
-  {A_FatAttack2,      "A_FatAttack2"},
-  {A_FatAttack3,      "A_FatAttack3"},
-  {A_BossDeath,       "A_BossDeath"},
-  {A_CPosAttack,      "A_CPosAttack"},
-  {A_CPosRefire,      "A_CPosRefire"},
-  {A_TroopAttack,     "A_TroopAttack"},
-  {A_SargAttack,      "A_SargAttack"},
-  {A_HeadAttack,      "A_HeadAttack"},
-  {A_BruisAttack,     "A_BruisAttack"},
-  {A_SkullAttack,     "A_SkullAttack"},
-  {A_Metal,           "A_Metal"},
-  {A_SpidRefire,      "A_SpidRefire"},
-  {A_BabyMetal,       "A_BabyMetal"},
-  {A_BspiAttack,      "A_BspiAttack"},
-  {A_Hoof,            "A_Hoof"},
-  {A_CyberAttack,     "A_CyberAttack"},
-  {A_PainAttack,      "A_PainAttack"},
-  {A_PainDie,         "A_PainDie"},
-  {A_KeenDie,         "A_KeenDie"},
-  {A_BrainPain,       "A_BrainPain"},
-  {A_BrainScream,     "A_BrainScream"},
-  {A_BrainDie,        "A_BrainDie"},
-  {A_BrainAwake,      "A_BrainAwake"},
-  {A_BrainSpit,       "A_BrainSpit"},
-  {A_SpawnSound,      "A_SpawnSound"},
-  {A_SpawnFly,        "A_SpawnFly"},
-  {A_BrainExplode,    "A_BrainExplode"},
-  {A_Detonate,        "A_Detonate"},       // killough 8/9/98
-  {A_Mushroom,        "A_Mushroom"},       // killough 10/98
-  {A_Die,             "A_Die"},            // killough 11/98
-  {A_Spawn,           "A_Spawn"},          // killough 11/98
-  {A_Turn,            "A_Turn"},           // killough 11/98
-  {A_Face,            "A_Face"},           // killough 11/98
-  {A_Scratch,         "A_Scratch"},        // killough 11/98
-  {A_PlaySound,       "A_PlaySound"},      // killough 11/98
-  {A_RandomJump,      "A_RandomJump"},     // killough 11/98
-  {A_LineEffect,      "A_LineEffect"},     // killough 11/98
+  {reinterpret_cast<actionf_t>(A_Explode),         "A_Explode"},
+  {reinterpret_cast<actionf_t>(A_Pain),            "A_Pain"},
+  {reinterpret_cast<actionf_t>(A_PlayerScream),    "A_PlayerScream"},
+  {reinterpret_cast<actionf_t>(A_Fall),            "A_Fall"},
+  {reinterpret_cast<actionf_t>(A_XScream),         "A_XScream"},
+  {reinterpret_cast<actionf_t>(A_Look),            "A_Look"},
+  {reinterpret_cast<actionf_t>(A_Chase),           "A_Chase"},
+  {reinterpret_cast<actionf_t>(A_FaceTarget),      "A_FaceTarget"},
+  {reinterpret_cast<actionf_t>(A_PosAttack),       "A_PosAttack"},
+  {reinterpret_cast<actionf_t>(A_Scream),          "A_Scream"},
+  {reinterpret_cast<actionf_t>(A_SPosAttack),      "A_SPosAttack"},
+  {reinterpret_cast<actionf_t>(A_VileChase),       "A_VileChase"},
+  {reinterpret_cast<actionf_t>(A_VileStart),       "A_VileStart"},
+  {reinterpret_cast<actionf_t>(A_VileTarget),      "A_VileTarget"},
+  {reinterpret_cast<actionf_t>(A_VileAttack),      "A_VileAttack"},
+  {reinterpret_cast<actionf_t>(A_StartFire),       "A_StartFire"},
+  {reinterpret_cast<actionf_t>(A_Fire),            "A_Fire"},
+  {reinterpret_cast<actionf_t>(A_FireCrackle),     "A_FireCrackle"},
+  {reinterpret_cast<actionf_t>(A_FatAttack2),      "A_FatAttack2"},
+  {reinterpret_cast<actionf_t>(A_FatAttack3) ,     "A_FatAttack3"},
+  {reinterpret_cast<actionf_t>(A_BossDeath)   ,    "A_BossDeath"},
+  {reinterpret_cast<actionf_t>(A_CPosAttack)   ,   "A_CPosAttack"},
+  {reinterpret_cast<actionf_t>(A_CPosRefire)    ,  "A_CPosRefire"},
+  {reinterpret_cast<actionf_t>(A_TroopAttack)    , "A_TroopAttack"},
+  {reinterpret_cast<actionf_t>(A_SargAttack),      "A_SargAttack"},
+  {reinterpret_cast<actionf_t>(A_HeadAttack) ,     "A_HeadAttack"},
+  {reinterpret_cast<actionf_t>(A_BruisAttack) ,    "A_BruisAttack"},
+  {reinterpret_cast<actionf_t>(A_SkullAttack)  ,   "A_SkullAttack"},
+  {reinterpret_cast<actionf_t>(A_Metal)         ,  "A_Metal"},
+  {reinterpret_cast<actionf_t>(A_SpidRefire)     , "A_SpidRefire"},
+  {reinterpret_cast<actionf_t>(A_BabyMetal)       ,"A_BabyMetal"},
+  {reinterpret_cast<actionf_t>(A_BspiAttack),      "A_BspiAttack"},
+  {reinterpret_cast<actionf_t>(A_Hoof)       ,     "A_Hoof"},
+  {reinterpret_cast<actionf_t>(A_CyberAttack) ,    "A_CyberAttack"},
+  {reinterpret_cast<actionf_t>(A_PainAttack)   ,   "A_PainAttack"},
+  {reinterpret_cast<actionf_t>(A_PainDie)       ,  "A_PainDie"},
+  {reinterpret_cast<actionf_t>(A_KeenDie)        , "A_KeenDie"},
+  {reinterpret_cast<actionf_t>(A_BrainPain)       ,"A_BrainPain"},
+  {reinterpret_cast<actionf_t>(A_BrainScream),     "A_BrainScream"},
+  {reinterpret_cast<actionf_t>(A_BrainDie)    ,    "A_BrainDie"},
+  {reinterpret_cast<actionf_t>(A_BrainAwake)   ,   "A_BrainAwake"},
+  {reinterpret_cast<actionf_t>(A_BrainSpit)     ,  "A_BrainSpit"},
+  {reinterpret_cast<actionf_t>(A_SpawnSound)     , "A_SpawnSound"},
+  {reinterpret_cast<actionf_t>(A_SpawnFly)        ,"A_SpawnFly"},
+  {reinterpret_cast<actionf_t>(A_BrainExplode),    "A_BrainExplode"},
+  {reinterpret_cast<actionf_t>(A_Detonate)     ,   "A_Detonate"},       // killough 8/9/98
+  {reinterpret_cast<actionf_t>(A_Mushroom)      ,  "A_Mushroom"},       // killough 10/98
+  {reinterpret_cast<actionf_t>(A_Die)            , "A_Die"},            // killough 11/98
+  {reinterpret_cast<actionf_t>(A_Spawn)           ,"A_Spawn"},          // killough 11/98
+  {reinterpret_cast<actionf_t>(A_Turn) ,           "A_Turn"},           // killough 11/98
+  {reinterpret_cast<actionf_t>(A_Face)  ,          "A_Face"},           // killough 11/98
+  {reinterpret_cast<actionf_t>(A_Scratch),         "A_Scratch"},        // killough 11/98
+  {reinterpret_cast<actionf_t>(A_PlaySound),       "A_PlaySound"},      // killough 11/98
+  {reinterpret_cast<actionf_t>(A_RandomJump),      "A_RandomJump"},     // killough 11/98
 
+  {reinterpret_cast<actionf_t>(A_LineEffect),      "A_LineEffect"},     // killough 11/98
   {A_FireOldBFG,      "A_FireOldBFG"},      // killough 7/19/98: classic BFG firing function
-  {A_BetaSkullAttack, "A_BetaSkullAttack"}, // killough 10/98: beta lost souls attacked different
-  {A_Stop,            "A_Stop"},
+  {reinterpret_cast<actionf_t>(A_BetaSkullAttack), "A_BetaSkullAttack"}, // killough 10/98: beta lost souls attacked different
+  {reinterpret_cast<actionf_t>(A_Stop),            "A_Stop"},
 
   // This NULL entry must be the last in the list
   {NULL,              "A_NULL"},  // Ty 05/16/98
@@ -1423,7 +1243,7 @@ void D_BuildBEXTables(void)
      states[i].frame = 0;
      states[i].tics = -1;
      states[i].action = NULL;
-     states[i].nextstate = i;
+     states[i].nextstate = static_cast<statenum_t>(i);
      states[i].misc1 = 0;
      states[i].misc2 = 0;
      deh_codeptr[i] = states[i].action;
@@ -1587,7 +1407,8 @@ void ProcessDehFile(const char *filename, const char *outfilename, int lumpnum)
   else  // DEH file comes from lump indicated by third argument
     {
       infile.size = W_LumpLength(lumpnum);
-      infile.inp = infile.lump = W_CacheLumpNum(lumpnum);
+      infile.inp = infile.lump =
+          static_cast<const byte *>(W_CacheLumpNum(lumpnum));
       // [FG] skip empty DEHACKED lumps
       if (!infile.inp)
         {
@@ -1873,7 +1694,7 @@ static void setMobjInfoValue(int mobjInfoIndex, int keyIndex, uint_64_t value) {
         return;
       }
       break;
-    case 24: mi->droppeditem = (int)(value-1); return; // make it base zero (deh is 1-based)
+    case 24: mi->droppeditem = static_cast<mobjtype_t>((int)(value - 1)); return; // make it base zero (deh is 1-based)
     default: return;
   }
 }
@@ -2138,7 +1959,7 @@ static void deh_procPointer(DEHFILE *fpin, FILE* fpout, char *line) // done
           continue;
         }
 
-      if (value >= num_states)
+      if (value >= static_cast<uint_64_t>(num_states))
         {
           if (fpout)
             fprintf(fpout,"Bad pointer number %ld of %d\n",(long)value, num_states);
@@ -2692,7 +2513,7 @@ static void deh_procText(DEHFILE *fpin, FILE* fpout, char *line)
     int c, totlen = 0;
     while (totlen < fromlen + tolen && (c = dehfgetc(fpin)) != EOF)
       if (c != '\r')
-	inbuffer[totlen++] = c;
+	inbuffer[totlen++] = static_cast<char>(c);
     inbuffer[totlen]='\0';
   }
 
@@ -2800,7 +2621,7 @@ static void deh_procText(DEHFILE *fpin, FILE* fpout, char *line)
   return;
 }
 
-static void deh_procError(DEHFILE *fpin, FILE* fpout, char *line)
+static void deh_procError(DEHFILE */* fpin */, FILE* fpout, char *line)
 {
   char inbuffer[DEH_BUFFERMAX];
 
@@ -2831,7 +2652,8 @@ static void deh_procStrings(DEHFILE *fpin, FILE* fpout, char *line)
 
   if (fpout) fprintf(fpout,"Processing extended string substitution\n");
 
-  if (!holdstring) holdstring = malloc(maxstrlen*sizeof(*holdstring));
+  if (!holdstring)
+      holdstring = malloc<char *>(maxstrlen * sizeof(*holdstring));
 
   *holdstring = '\0';  // empty string to start with
   strncpy(inbuffer,line,DEH_BUFFERMAX-1);
@@ -2858,7 +2680,7 @@ static void deh_procStrings(DEHFILE *fpin, FILE* fpout, char *line)
           if (fpout) fprintf(fpout,
                              "* increased buffer from to %ld for buffer size %d\n",
                              (long)maxstrlen,(int)strlen(inbuffer));
-          holdstring = realloc(holdstring,maxstrlen*sizeof(*holdstring));
+          holdstring = static_cast<char *>(realloc(holdstring,maxstrlen*sizeof(*holdstring)));
         }
       // concatenate the whole buffer if continuation or the value iffirst
       strcat(holdstring,ptr_lstrip(((*holdstring) ? inbuffer : strval)));
@@ -3268,7 +3090,7 @@ char *ptr_lstrip(char *p)  // point past leading whitespace
 //          as a long just in case.  The passed pointer to hold
 //          the key must be DEH_MAXKEYLEN in size.
 
-dboolean deh_GetData(char *s, char *k, uint_64_t *l, char **strval, FILE *fpout)
+dboolean deh_GetData(char *s, char *k, uint_64_t *l, char **strval, FILE */* fpout */)
 {
   char *t;  // current char
   int val; // to hold value of pair

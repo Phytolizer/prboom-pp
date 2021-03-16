@@ -48,10 +48,6 @@
 // SECTORS do store MObjs anyway.
 #include "p_mobj.hh"
 
-#ifdef __GNUG__
-#pragma interface
-#endif
-
 // Silhouette, needed for clipping Segs (mainly)
 // and sprites representing things.
 #define SIL_NONE    0
@@ -237,7 +233,7 @@ typedef struct line_s
   int tranlump;          // killough 4/11/98: translucency filter, -1 == none
   int firsttag,nexttag;  // killough 4/17/98: improves searches for tags.
   int r_validcount;      // cph: if == gametic, r_flags already done
-  enum {                 // cph:
+  enum r_flags_t {                 // cph:
     RF_TOP_TILE  = 1,     // Upper texture needs tiling
     RF_MID_TILE = 2,     // Mid texture needs tiling
     RF_BOT_TILE = 4,     // Lower texture needs tiling

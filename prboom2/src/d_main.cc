@@ -281,7 +281,7 @@ void D_Display (fixed_t frac)
 {
   static dboolean isborderstate        = false;
   static dboolean borderwillneedredraw = false;
-  static gamestate_t oldgamestate = -1;
+  static gamestate_t oldgamestate = static_cast<gamestate_t>(-1);
   dboolean wipe;
   dboolean viewactive = false, isborder = false;
 
@@ -311,7 +311,7 @@ void D_Display (fixed_t frac)
 
   if (setsizeneeded) {               // change the view size if needed
     R_ExecuteSetViewSize();
-    oldgamestate = -1;            // force background redraw
+    oldgamestate = static_cast<gamestate_t>(-1);            // force background redraw
   }
 
   // save the current screen if about to wipe
@@ -543,7 +543,7 @@ static void D_DoomLoop(void)
         char *avi_shot_curr_fname;
         avi_shot_num++;
         len = snprintf(NULL, 0, "%s%06d.tga", avi_shot_fname, avi_shot_num);
-        avi_shot_curr_fname = malloc(len+1);
+        avi_shot_curr_fname = malloc<char *>(len + 1);
         sprintf(avi_shot_curr_fname, "%s%06d.tga", avi_shot_fname, avi_shot_num);
         M_DoScreenShot(avi_shot_curr_fname);
         free(avi_shot_curr_fname);
@@ -577,7 +577,7 @@ static void D_PageDrawer(void)
 {
   if (heretic)
   {
-    const byte* lump = W_CacheLumpName(pagename);
+    const byte *lump = W_CacheLumpName<const byte *>(pagename);
     V_DrawRawScreen(lump);
     W_UnlockLumpName(pagename);
 
@@ -629,89 +629,11 @@ void D_SetPage(const char* name, int tics, int music)
   D_SetPageName(name);
 }
 
-static void D_DrawTitle1(const char *name)
-{
-  D_SetPage(name, TICRATE * 170 / 35, mus_intro);
-}
-
-static void D_DrawTitle2(const char *name)
-{
-  D_SetPage(name, 0, mus_dm2ttl);
-}
-
 /* killough 11/98: tabulate demo sequences
  */
 
 extern const demostate_t (*demostates)[4];
 
-const demostate_t doom_demostates[][4] =
-{
-  {
-    {D_DrawTitle1, "TITLEPIC"},
-    {D_DrawTitle1, "TITLEPIC"},
-    {D_DrawTitle2, "TITLEPIC"},
-    {D_DrawTitle1, "TITLEPIC"},
-  },
-
-  {
-    {G_DeferedPlayDemo, "demo1"},
-    {G_DeferedPlayDemo, "demo1"},
-    {G_DeferedPlayDemo, "demo1"},
-    {G_DeferedPlayDemo, "demo1"},
-  },
-
-  {
-    {D_SetPageName, NULL},
-    {D_SetPageName, NULL},
-    {D_SetPageName, NULL},
-    {D_SetPageName, NULL},
-  },
-
-  {
-    {G_DeferedPlayDemo, "demo2"},
-    {G_DeferedPlayDemo, "demo2"},
-    {G_DeferedPlayDemo, "demo2"},
-    {G_DeferedPlayDemo, "demo2"},
-  },
-
-  {
-    {D_SetPageName, "HELP2"},
-    {D_SetPageName, "HELP2"},
-    {D_SetPageName, "CREDIT"},
-    {D_DrawTitle1,  "TITLEPIC"},
-  },
-
-  {
-    {G_DeferedPlayDemo, "demo3"},
-    {G_DeferedPlayDemo, "demo3"},
-    {G_DeferedPlayDemo, "demo3"},
-    {G_DeferedPlayDemo, "demo3"},
-  },
-
-  {
-    {NULL},
-    {NULL},
-    // e6y
-    // Both Plutonia and TNT are commercial like Doom2,
-    // but in difference from  Doom2, they have demo4 in demo cycle.
-    {G_DeferedPlayDemo, "demo4"},
-    {D_SetPageName, "CREDIT"},
-  },
-
-  {
-    {NULL},
-    {NULL},
-    {NULL},
-    {G_DeferedPlayDemo, "demo4"},
-  },
-
-  {
-    {NULL},
-    {NULL},
-    {NULL},
-    {NULL},
-  }
-};
 
 /*
  * This cycles through the demo sequences.
@@ -759,9 +681,9 @@ void D_AddFile (const char *file, wad_source_t source)
   char *gwa_filename=NULL;
   int len;
 
-  wadfiles = realloc(wadfiles, sizeof(*wadfiles)*(numwadfiles+1));
+  wadfiles = static_cast<wadfile_info_t *>(realloc(wadfiles, sizeof(*wadfiles)*(numwadfiles+1)));
   wadfiles[numwadfiles].name =
-    AddDefaultExtension(strcpy(malloc(strlen(file)+5), file), ".wad");
+    AddDefaultExtension(strcpy(malloc<char *>(strlen(file) + 5), file), ".wad");
   wadfiles[numwadfiles].src = source; // Ty 08/29/98
   wadfiles[numwadfiles].handle = 0;
 
@@ -773,14 +695,15 @@ void D_AddFile (const char *file, wad_source_t source)
   numwadfiles++;
   // proff: automatically try to add the gwa files
   // proff - moved from w_wad.c
-  gwa_filename=AddDefaultExtension(strcpy(malloc(strlen(file)+5), file), ".wad");
+  gwa_filename=AddDefaultExtension(strcpy(malloc<char *>(strlen(file) + 5), file), ".wad");
   if (strlen(gwa_filename)>4)
     if (!strcasecmp(gwa_filename+(strlen(gwa_filename)-4),".wad"))
     {
       char *ext;
       ext = &gwa_filename[strlen(gwa_filename)-4];
       ext[1] = 'g'; ext[2] = 'w'; ext[3] = 'a';
-      wadfiles = realloc(wadfiles, sizeof(*wadfiles)*(numwadfiles+1));
+      wadfiles = realloc<wadfile_info_t *>(wadfiles, sizeof(*wadfiles) *
+                                                         (numwadfiles + 1));
       wadfiles[numwadfiles].name = gwa_filename;
       wadfiles[numwadfiles].src = source; // Ty 08/29/98
       wadfiles[numwadfiles].handle = 0;
@@ -834,14 +757,14 @@ void CheckIWAD(const char *iwadname,GameMode_t *gmode,dboolean *hassec)
 
         if (strncmp(header.identification, "IWAD", 4)) // missing IWAD tag in header
         {
-          noiwad++;
+          noiwad = true;
         }
 
         // read IWAD directory
         header.numlumps = LittleLong(header.numlumps);
         header.infotableofs = LittleLong(header.infotableofs);
         length = header.numlumps;
-        fileinfo = malloc(length*sizeof(filelump_t));
+        fileinfo = malloc<filelump_t *>(length * sizeof(filelump_t));
         if (fseek (fp, header.infotableofs, SEEK_SET) ||
             fread (fileinfo, sizeof(filelump_t), length, fp) != length ||
             fclose(fp))
@@ -876,7 +799,7 @@ void CheckIWAD(const char *iwadname,GameMode_t *gmode,dboolean *hassec)
           }
 
           if (!strncmp(fileinfo[length].name,"DMENUPIC",8))
-            bfgedition++;
+            bfgedition = true;
           if (!strncmp(fileinfo[length].name,"HACX",4))
             hx++;
           if (!strncmp(fileinfo[length].name,"W94_1",5) ||
@@ -1112,12 +1035,13 @@ static void FindResponseFile (void)
         int  index;
 	int indexinfile;
         byte *file = NULL;
-        const char **moreargs = malloc(myargc * sizeof(const char*));
+        const char **moreargs =
+            malloc<const char **>(myargc * sizeof(const char *));
         char **newargv;
         // proff 04/05/2000: Added for searching responsefile
         char *fname;
 
-        fname = malloc(strlen(&myargv[i][i])+4+1);
+        fname = static_cast<char *>(malloc(strlen(&myargv[i][i])+4+1));
         strcpy(fname,&myargv[i][1]);
         AddDefaultExtension(fname,".rsp");
 
@@ -1130,7 +1054,7 @@ static void FindResponseFile (void)
         {
           size_t fnlen = doom_snprintf(NULL, 0, "%s/%s",
                                        I_DoomExeDir(), &myargv[i][1]);
-          fname = realloc(fname, fnlen+4+1);
+          fname = static_cast<char *>(realloc(fname, fnlen+4+1));
           doom_snprintf(fname, fnlen+1, "%s/%s",
                         I_DoomExeDir(), &myargv[i][1]);
           AddDefaultExtension(fname,".rsp");
@@ -1153,7 +1077,7 @@ static void FindResponseFile (void)
 	  int k;
           lprintf(LO_ERROR,"\nResponse file empty!\n");
 
-          newargv = calloc(sizeof(newargv[0]),myargc);
+          newargv = calloc<char **>(sizeof(newargv[0]), myargc);
           newargv[0] = myargv[0];
           for (k = 1,index = 1;k < myargc;k++)
           {
@@ -1170,7 +1094,7 @@ static void FindResponseFile (void)
 
 	{
 	  char *firstargv = myargv[0];
-	  newargv = calloc(sizeof(newargv[0]), 1);
+      newargv = calloc<char **>(sizeof(newargv[0]), 1);
 	  newargv[0] = firstargv;
 	}
 
@@ -1181,7 +1105,7 @@ static void FindResponseFile (void)
 	  do {
 	    while (size > 0 && isspace(*infile)) { infile++; size--; }
 	    if (size > 0) {
-	      char *s = malloc(size+1);
+	      char *s = static_cast<char *>(malloc(size+1));
 	      char *p = s;
 	      int quoted = 0;
 
@@ -1199,14 +1123,14 @@ static void FindResponseFile (void)
 
 	      // Terminate string, realloc and add to argv
 	      *p = 0;
-        newargv = realloc(newargv, sizeof(newargv[0]) * (indexinfile + 1));
-	      newargv[indexinfile++] = realloc(s,strlen(s)+1);
+        newargv = static_cast<char **>(realloc(newargv, sizeof(newargv[0]) * (indexinfile + 1)));
+	      newargv[indexinfile++] = static_cast<char *>(realloc(s,strlen(s)+1));
 	    }
 	  } while(size > 0);
 	}
 	free(file);
 
-  newargv = realloc(newargv, sizeof(newargv[0]) * (indexinfile + index));
+  newargv = static_cast<char **>(realloc(newargv, sizeof(newargv[0]) * (indexinfile + index)));
 	memcpy((void *)&newargv[indexinfile],moreargs,index*sizeof(moreargs[0]));
 	free((void *)moreargs);
 
@@ -1265,8 +1189,8 @@ static void DoLooseFiles(void)
 
   struct {
     const char *ext;
-    char ***list;
-    int *count;
+    char ***list = nullptr;
+    int *count = nullptr;
   } looses[] = {
     {".wad", &wads, &wadcount},
     {".lmp", &lmps, &lmpcount},
@@ -1280,8 +1204,8 @@ static void DoLooseFiles(void)
 
   struct {
     const char *cmdparam;
-    char ***list;
-    int *count;
+    char ***list = nullptr;
+    int *count = nullptr;
   } params[] = {
     {"-file"    , &wads, &wadcount},
     {"-deh"     , &dehs, &dehcount},
@@ -1289,10 +1213,10 @@ static void DoLooseFiles(void)
     {0}
   };
 
-  wads = malloc(myargc * sizeof(*wads));
-  lmps = malloc(myargc * sizeof(*lmps));
-  dehs = malloc(myargc * sizeof(*dehs));
-  skip = malloc(myargc * sizeof(dboolean));
+  wads = static_cast<char **>(malloc(myargc * sizeof(*wads)));
+  lmps = static_cast<char **>(malloc(myargc * sizeof(*lmps)));
+  dehs = static_cast<char **>(malloc(myargc * sizeof(*dehs)));
+  skip = static_cast<bool *>(malloc(myargc * sizeof(dboolean)));
 
   for (i = 0; i < myargc; i++)
     skip[i] = false;
@@ -1350,7 +1274,7 @@ static void DoLooseFiles(void)
 
     // Now go back and redo the whole myargv array with our stuff in it.
     // First, create a new myargv array to copy into
-    tmyargv = calloc(sizeof(tmyargv[0]), myargc + n);
+    tmyargv = calloc<char **>(sizeof(tmyargv[0]), myargc + n);
     tmyargv[0] = myargv[0]; // invocation
     tmyargc = 1;
 
@@ -1524,7 +1448,7 @@ static void D_DoomMainSetup(void)
     {
       char *tempverstr;
       const char bfgverstr[]=" (BFG Edition)";
-      tempverstr = malloc(sizeof(char) * (strlen(doomverstr)+strlen(bfgverstr)+1));
+      tempverstr = static_cast<char *>(malloc(sizeof(char) * (strlen(doomverstr)+strlen(bfgverstr)+1)));
       strcpy (tempverstr, doomverstr);
       strcat (tempverstr, bfgverstr);
       doomverstr = strdup (tempverstr);
@@ -1575,7 +1499,7 @@ static void D_DoomMainSetup(void)
 
   if ((p = M_CheckParm ("-skill")) && p < myargc-1)
     {
-      startskill = myargv[p+1][0]-'1';
+      startskill = static_cast<skill_t>(myargv[p + 1][0] - '1');
       autostart = true;
     }
 
@@ -1741,7 +1665,7 @@ static void D_DoomMainSetup(void)
 
   if (p && p < myargc-1)
     {
-      char *file = malloc(strlen(myargv[p+1])+4+1); // cph - localised
+      char *file = static_cast<char *>(malloc(strlen(myargv[p+1])+4+1)); // cph - localised
       strcpy(file,myargv[p+1]);
       AddDefaultExtension(file,".lmp");     // killough
       D_AddFile (file,source_lmp);
@@ -1884,11 +1808,11 @@ static void D_DoomMainSetup(void)
 
   if (!M_CheckParm("-nomapinfo"))
   {
-	  int p;
-	  for (p = -1; (p = W_ListNumFromName("UMAPINFO", p)) >= 0; )
+	  int lump_index;
+	  for (lump_index = -1; (lump_index = W_ListNumFromName("UMAPINFO", lump_index)) >= 0; )
 	  {
-		  const unsigned char * lump = (const unsigned char *)W_CacheLumpNum(p);
-		  ParseUMapInfo(lump, W_LumpLength(p), I_Error);
+		  const unsigned char * lump = (const unsigned char *)W_CacheLumpNum(lump_index);
+		  ParseUMapInfo(lump, W_LumpLength(lump_index), I_Error);
 		  umapinfo_loaded = true;
 	  }
   }

@@ -43,10 +43,6 @@
 // not used currently
 // code to initialize HUlib would go here if needed
 //
-static void HUlib_init(void)
-{
-}
-
 ////////////////////////////////////////////////////////
 //
 // Basic text line widget
@@ -165,7 +161,7 @@ void HUlib_drawTextLine
   {
     for (i = 0; i < l->len; i++)
     {
-      c = toupper(l->l[i]);
+      c = static_cast<unsigned char>(toupper(l->l[i]));
       if (c == '\n')
         continue;
       else if (c == '\x1b')
@@ -183,7 +179,8 @@ void HUlib_drawTextLine
   y = (l->y < 0 ? -l->y - l->f[toupper(l->l[0]) - l->sc].height : l->y);
   for (i=0;i<l->len;i++)
   {
-    c = toupper(l->l[i]); //jff insure were not getting a cheap toupper conv.
+    c = static_cast<unsigned char>(toupper(
+          l->l[i])); //jff insure were not getting a cheap toupper conv.
 
     if (c=='\n')         // killough 1/18/98 -- support multiple lines
       x=0,y+=8;
@@ -202,7 +199,8 @@ void HUlib_drawTextLine
         break;
       // killough 1/18/98 -- support multiple lines:
       // CPhipps - patch drawing updated
-      V_DrawNumPatch(x, y, FG, l->f[c - l->sc].lumpnum, l->cm, VPT_TRANS | l->flags);
+      V_DrawNumPatch(x, y, FG, l->f[c - l->sc].lumpnum, l->cm,
+                     static_cast<patch_translation_e>(VPT_TRANS | l->flags));
       x += w;
     }
     else
@@ -219,7 +217,8 @@ void HUlib_drawTextLine
   {
     // killough 1/18/98 -- support multiple lines
     // CPhipps - patch drawing updated
-    V_DrawNumPatch(x, y, FG, l->f['_' - l->sc].lumpnum, CR_DEFAULT, VPT_NONE | l->flags);
+    V_DrawNumPatch(x, y, FG, l->f['_' - l->sc].lumpnum, CR_DEFAULT,
+                   static_cast<patch_translation_e>(VPT_NONE | l->flags));
   }
 }
 
@@ -701,11 +700,6 @@ static void HUlib_delCharFromIText(hu_itext_t* it)
 // Passed the hu_itext_t
 // Returns nothing
 //
-static void HUlib_eraseLineFromIText(hu_itext_t* it)
-{
-  while (it->lm != it->l.len)
-    HUlib_delCharFromTextLine(&it->l);
-}
 
 //
 // HUlib_resetIText()

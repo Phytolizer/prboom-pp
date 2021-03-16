@@ -818,7 +818,8 @@ void gld_DrawLine_f(float x0, float y0, float x1, float y1, int BaseColor)
   g = playpal[3 * BaseColor + 1];
   b = playpal[3 * BaseColor + 2];
 
-  line = M_ArrayGetNewItem(&map_lines, sizeof(line[0]));
+  line =
+      static_cast<map_line_t *>(M_ArrayGetNewItem(&map_lines, sizeof(line[0])));
 
   line->point[0].x = x0;
   line->point[0].y = y0;
@@ -1765,7 +1766,7 @@ void gld_AddWall(seg_t *seg)
       {
         temptex=gld_RegisterTexture(toptexture, true, false);
         if (!temptex && gl_use_stencil && backsector &&
-          !(seg->linedef->r_flags & RF_ISOLATED) &&
+          !(seg->linedef->r_flags & line_t::RF_ISOLATED) &&
           /*frontsector->ceilingpic != skyflatnum && */backsector->ceilingpic != skyflatnum &&
           !(backsector->flags & NULL_SECTOR))
         {
@@ -1933,7 +1934,7 @@ bottomtexture:
     {
       temptex=gld_RegisterTexture(bottomtexture, true, false);
       if (!temptex && gl_use_stencil && backsector &&
-        !(seg->linedef->r_flags & RF_ISOLATED) &&
+        !(seg->linedef->r_flags & line_t::RF_ISOLATED) &&
         /*frontsector->floorpic != skyflatnum && */backsector->floorpic != skyflatnum &&
         !(backsector->flags & NULL_SECTOR))
       {

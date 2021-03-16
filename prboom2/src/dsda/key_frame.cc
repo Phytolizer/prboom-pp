@@ -15,7 +15,7 @@
 //	DSDA Key Frame
 //
 
-#include "time.hh"
+#include <time.h>
 
 #include "doomstat.hh"
 #include "s_advsound.hh"
@@ -42,7 +42,7 @@ extern byte* savebuffer;
 extern size_t savegamesize;
 extern dboolean setsizeneeded;
 extern dboolean BorderNeedRefresh;
-struct MapEntry *G_LookupMapinfo(int gameepisode, int gamemap);
+struct MapEntry *G_LookupMapinfo(int game_episode, int game_map);
 void RecalculateDrawnSubsectors(void);
 
 static byte* dsda_quick_key_frame_buffer;
@@ -66,7 +66,7 @@ void dsda_InitKeyFrame(void) {
   if (dsda_auto_key_frames != NULL) free(dsda_auto_key_frames);
 
   dsda_auto_key_frames =
-    calloc(dsda_auto_key_frames_size, sizeof(dsda_key_frame_t));
+    calloc<dsda_key_frame_t *>(dsda_auto_key_frames_size, sizeof(dsda_key_frame_t));
   dsda_last_auto_key_frame = -1;
 }
 
@@ -81,7 +81,7 @@ void dsda_ExportKeyFrame(byte* buffer, int length) {
 
   if ((fp = fopen(name, "rb")) != NULL) {
     fclose(fp);
-    snprintf(name, 40, "backup-%010d-%lld.kf", timestamp, time(NULL));
+    snprintf(name, 40, "backup-%010d-%ld.kf", timestamp, time(NULL));
   }
 
   if (!M_WriteFile(name, buffer, length))
@@ -93,13 +93,13 @@ void dsda_StoreKeyFrame(byte** buffer, byte complete) {
   int demo_write_buffer_offset, i, length;
   demo_write_buffer_offset = dsda_DemoBufferOffset();
 
-  save_p = savebuffer = malloc(savegamesize);
+  save_p = savebuffer = malloc<byte *>(savegamesize);
 
   CheckSaveGame(5 + MIN_MAXPLAYERS);
-  *save_p++ = compatibility_level;
+  *save_p++ = static_cast<byte>(compatibility_level);
   *save_p++ = gameskill;
-  *save_p++ = gameepisode;
-  *save_p++ = gamemap;
+  *save_p++ = static_cast<byte>(gameepisode);
+  *save_p++ = static_cast<byte>(gamemap);
 
   for (i = 0; i < MAXPLAYERS; i++)
     *save_p++ = playeringame[i];
@@ -107,7 +107,7 @@ void dsda_StoreKeyFrame(byte** buffer, byte complete) {
   for (; i < MIN_MAXPLAYERS; i++)
     *save_p++ = 0;
 
-  *save_p++ = idmusnum;
+  *save_p++ = static_cast<byte>(idmusnum);
 
   CheckSaveGame(GAME_OPTION_SIZE);
   save_p = G_WriteOptions(save_p);
@@ -185,7 +185,7 @@ void dsda_RestoreKeyFrame(byte* buffer, byte complete) {
   save_p = buffer;
 
   compatibility_level = *save_p++;
-  gameskill = *save_p++;
+  gameskill = static_cast<skill_t>(*save_p++);
   gameepisode = *save_p++;
   gamemap = *save_p++;
   gamemapinfo = G_LookupMapinfo(gameepisode, gamemap);

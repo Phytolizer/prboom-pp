@@ -587,7 +587,7 @@ void gld_GetSkyCapColors(void)
   glGetTexLevelParameteriv(GL_TEXTURE_2D, 0, GL_TEXTURE_WIDTH, &width);
   glGetTexLevelParameteriv(GL_TEXTURE_2D, 0, GL_TEXTURE_HEIGHT, &height);
 
-  buffer = malloc(width * height * 4);
+  buffer = malloc<unsigned char *>(width * height * 4);
   glGetTexImage(GL_TEXTURE_2D, 0, GL_RGBA, GL_UNSIGNED_BYTE, buffer);
 
   averageColor(ceiling_rgb, (unsigned int*)buffer, width * MIN(30, height), 0);
@@ -699,9 +699,9 @@ static void gld_BuildSky(int row_count, int col_count, SkyBoxParams_t *sky, int 
   if (!vbo->data)
   {
     memset(vbo, 0, sizeof(vbo[0]));
-    vbo->loops = malloc((row_count * 2 + 2) * sizeof(vbo->loops[0]));
+    vbo->loops = malloc<GLSkyLoopDef *>((row_count * 2 + 2) * sizeof(vbo->loops[0]));
     // create vertex array
-    vbo->data = malloc(vertex_count * sizeof(vbo->data[0]));
+    vbo->data = malloc<vbo_vertex_t *>(vertex_count * sizeof(vbo->data[0]));
   }
 
   vbo->columns = col_count;
@@ -714,7 +714,7 @@ static void gld_BuildSky(int row_count, int col_count, SkyBoxParams_t *sky, int 
 
   vertex_p = &vbo->data[0];
   vbo->loopcount = 0;
-  for (yflip = 0; yflip < 2; yflip++)
+  for (yflip = false;; yflip = true)
   {
     vbo->loops[vbo->loopcount].mode = GL_TRIANGLE_FAN;
     vbo->loops[vbo->loopcount].vertexindex = vertex_p - &vbo->data[0];
@@ -762,6 +762,10 @@ static void gld_BuildSky(int row_count, int col_count, SkyBoxParams_t *sky, int 
         SkyVertex(vertex_p++, r + (yflip ? 1 : 0), (c ? c : 0));
         SkyVertex(vertex_p++, r + (yflip ? 0 : 1), (c ? c : 0));
       }
+    }
+    if (yflip)
+    {
+        break;
     }
   }
 }

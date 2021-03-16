@@ -154,11 +154,11 @@ result_e T_MovePlane
               if (comp[comp_floors]) {
 
                 //e6y: warning about potential desynch
-                if (crush == STAIRS_UNINITIALIZED_CRUSH_FIELD_VALUE)
-                {
-                  lprintf(LO_WARN, "T_MovePlane: Stairs which can potentially crush may lead to desynch in compatibility mode.\n");
-                  lprintf(LO_WARN, " gametic: %d, sector: %d, complevel: %d\n", gametic, sector->iSectorID, compatibility_level);
-                }
+//                if (crush == STAIRS_UNINITIALIZED_CRUSH_FIELD_VALUE)
+//                {
+//                  lprintf(LO_WARN, "T_MovePlane: Stairs which can potentially crush may lead to desynch in compatibility mode.\n");
+//                  lprintf(LO_WARN, " gametic: %d, sector: %d, complevel: %d\n", gametic, sector->iSectorID, compatibility_level);
+//                }
 
                 if (crush == true)
                   return crushed;
@@ -281,14 +281,14 @@ void T_MoveFloor(floormove_t* floor)
       switch(floor->type) // handle texture/type changes
       {
         case donutRaise:
-          floor->sector->special = floor->newspecial;
+          floor->sector->special = static_cast<short>(floor->newspecial);
           floor->sector->floorpic = floor->texture;
           break;
         case genFloorChgT:
         case genFloorChg0:
-          floor->sector->special = floor->newspecial;
+          floor->sector->special = static_cast<short>(floor->newspecial);
           //jff add to fix bug in special transfers from changes
-          floor->sector->oldspecial = floor->oldspecial;
+          floor->sector->oldspecial = static_cast<short>(floor->oldspecial);
           //fall thru
         case genFloorChg:
           floor->sector->floorpic = floor->texture;
@@ -302,16 +302,17 @@ void T_MoveFloor(floormove_t* floor)
       switch(floor->type) // handle texture/type changes
       {
         case lowerAndChange:
-          floor->sector->special = floor->newspecial;
+          floor->sector->special = static_cast<short>(floor->newspecial);
           //jff add to fix bug in special transfers from changes
-          floor->sector->oldspecial = floor->oldspecial; // heretic_note: here and elsewhere, not in heretic
+          floor->sector->oldspecial = static_cast<short>(
+              floor->oldspecial); // heretic_note: here and elsewhere, not in heretic
           floor->sector->floorpic = floor->texture;
           break;
         case genFloorChgT:
         case genFloorChg0:
-          floor->sector->special = floor->newspecial;
+          floor->sector->special = static_cast<short>(floor->newspecial);
           //jff add to fix bug in special transfers from changes
-          floor->sector->oldspecial = floor->oldspecial;
+          floor->sector->oldspecial = static_cast<short>(floor->oldspecial);
           //fall thru
         case genFloorChg:
           floor->sector->floorpic = floor->texture;
@@ -474,11 +475,11 @@ manual_floor://e6y
 
     // new floor thinker
     rtn = 1;
-    floor = Z_Malloc (sizeof(*floor), PU_LEVSPEC, 0);
+    floor = static_cast<floormove_t *>(Z_Malloc(sizeof(*floor), PU_LEVSPEC, 0));
     memset(floor, 0, sizeof(*floor));
     P_AddThinker (&floor->thinker);
     sec->floordata = floor; //jff 2/22/98
-    floor->thinker.function = T_MoveFloor;
+    floor->thinker.function = reinterpret_cast<think_t>(T_MoveFloor);
     floor->type = floortype;
     floor->crush = false;
 
@@ -790,11 +791,11 @@ manual_stair://e6y
 
     // create new floor thinker for first step
     rtn = 1;
-    floor = Z_Malloc (sizeof(*floor), PU_LEVSPEC, 0);
+    floor = static_cast<floormove_t *>(Z_Malloc(sizeof(*floor), PU_LEVSPEC, 0));
     memset(floor, 0, sizeof(*floor));
     P_AddThinker (&floor->thinker);
     sec->floordata = floor;
-    floor->thinker.function = T_MoveFloor;
+    floor->thinker.function = reinterpret_cast<think_t>(T_MoveFloor);
     floor->direction = 1;
     floor->sector = sec;
     floor->type = buildStair;   //jff 3/31/98 do not leave uninited
@@ -906,12 +907,13 @@ manual_stair://e6y
         secnum = newsecnum;
 
         // create and initialize a thinker for the next step
-        floor = Z_Malloc (sizeof(*floor), PU_LEVSPEC, 0);
+        floor =
+            static_cast<floormove_t *>(Z_Malloc(sizeof(*floor), PU_LEVSPEC, 0));
         memset(floor, 0, sizeof(*floor));
         P_AddThinker (&floor->thinker);
 
         sec->floordata = floor; //jff 2/22/98
-        floor->thinker.function = T_MoveFloor;
+        floor->thinker.function = reinterpret_cast<think_t>(T_MoveFloor);
         floor->direction = 1;
         floor->sector = sec;
         floor->speed = speed;
@@ -1057,11 +1059,12 @@ int EV_DoDonut(line_t*  line)
       }
 
       //  Spawn rising slime
-      floor = Z_Malloc (sizeof(*floor), PU_LEVSPEC, 0);
+      floor =
+          static_cast<floormove_t *>(Z_Malloc(sizeof(*floor), PU_LEVSPEC, 0));
       memset(floor, 0, sizeof(*floor));
       P_AddThinker (&floor->thinker);
       s2->floordata = floor; //jff 2/22/98
-      floor->thinker.function = T_MoveFloor;
+      floor->thinker.function = reinterpret_cast<think_t>(T_MoveFloor);
       floor->type = donutRaise;
       floor->crush = false;
       floor->direction = 1;
@@ -1072,11 +1075,12 @@ int EV_DoDonut(line_t*  line)
       floor->floordestheight = s3_floorheight;
 
       //  Spawn lowering donut-hole pillar
-      floor = Z_Malloc (sizeof(*floor), PU_LEVSPEC, 0);
+      floor =
+          static_cast<floormove_t *>(Z_Malloc(sizeof(*floor), PU_LEVSPEC, 0));
       memset(floor, 0, sizeof(*floor));
       P_AddThinker (&floor->thinker);
       s1->floordata = floor; //jff 2/22/98
-      floor->thinker.function = T_MoveFloor;
+      floor->thinker.function = reinterpret_cast<think_t>(T_MoveFloor);
       floor->type = lowerFloor;
       floor->crush = false;
       floor->direction = -1;
@@ -1120,12 +1124,13 @@ int EV_DoElevator
 
     // create and initialize new elevator thinker
     rtn = 1;
-    elevator = Z_Malloc (sizeof(*elevator), PU_LEVSPEC, 0);
+    elevator =
+        static_cast<elevator_t *>(Z_Malloc(sizeof(*elevator), PU_LEVSPEC, 0));
     memset(elevator, 0, sizeof(*elevator));
     P_AddThinker (&elevator->thinker);
     sec->floordata = elevator; //jff 2/22/98
     sec->ceilingdata = elevator; //jff 2/22/98
-    elevator->thinker.function = T_MoveElevator;
+    elevator->thinker.function = reinterpret_cast<think_t>(T_MoveElevator);
     elevator->type = elevtype;
 
     // set up the fields according to the type of elevator action

@@ -88,11 +88,11 @@ void AM_setMarkParams(int num);
 
 void AM_SetResolution(void);
 
-typedef struct
+struct mpoint_t
 {
  fixed_t x,y;
- float fx,fy;
-} mpoint_t;
+ float fx = 0,fy = 0;
+} ;
 
 typedef struct
 {

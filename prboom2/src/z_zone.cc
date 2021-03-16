@@ -394,7 +394,7 @@ void *(Z_Malloc)(size_t size, int tag, void **user
 #ifdef HAVE_LIBDMALLOC
   while (!(block = dmalloc_malloc(file,line,size + HEADER_SIZE,DMALLOC_FUNC_MALLOC,0,0))) {
 #else
-  while (!(block = (malloc)(size + HEADER_SIZE))) {
+  while (!(block = static_cast<memblock_t *>((malloc)(size + HEADER_SIZE)))) {
 #endif
     if (!blockbytag[PU_CACHE])
       I_Error ("Z_Malloc: Failure trying to allocate %lu bytes"
@@ -673,7 +673,7 @@ char *(Z_Strdup)(const char *s, int tag, void **user
 #endif
                 )
 {
-  return strcpy((Z_Malloc)(strlen(s)+1, tag, user DA(file, line)), s);
+  return strcpy(static_cast<char *>((Z_Malloc)(strlen(s)+1, tag, user DA(file, line))), s);
 }
 
 void (Z_CheckHeap)(

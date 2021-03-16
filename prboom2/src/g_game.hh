@@ -76,8 +76,8 @@ void G_ReadDemoTiccmd(ticcmd_t *cmd);
 void G_WriteDemoTiccmd(ticcmd_t *cmd);
 void G_DoWorldDone(void);
 void G_Compatibility(void);
-const byte *G_ReadOptions(const byte *demo_p);   /* killough 3/1/98 - cph: const byte* */
-byte *G_WriteOptions(byte *demo_p);        // killough 3/1/98
+const byte *G_ReadOptions(const byte *demo_pointer);   /* killough 3/1/98 - cph: const byte* */
+byte *G_WriteOptions(byte *demo_pointer);        // killough 3/1/98
 void G_PlayerReborn(int player);
 void G_RestartLevel(void); // CPhipps - menu involked level restart
 void G_DoVictory(void);
@@ -95,8 +95,8 @@ void G_SetSpeed(void);
 //e6y
 #define RDH_SAFE 0x00000001
 #define RDH_SKIP_HEADER 0x00000002
-const byte* G_ReadDemoHeaderEx(const byte* demo_p, size_t size, unsigned int params);
-const byte* G_ReadDemoHeader(const byte* demo_p, size_t size);
+const byte* G_ReadDemoHeaderEx(const byte*demo_pointer, size_t size, unsigned int params);
+const byte* G_ReadDemoHeader(const byte*demo_pointer, size_t size);
 void G_CalculateDemoParams(const byte *demo_p);
 
 // killough 1/18/98: Doom-style printf;   killough 4/25/98: add gcc attributes

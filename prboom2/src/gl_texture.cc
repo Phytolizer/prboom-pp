@@ -240,18 +240,20 @@ static GLTexture *gld_AddNewGLTexItem(int num, int count, GLTexture ***items)
     return NULL;
   if (!(*items))
   {
-    (*items)=Z_Calloc(count, sizeof(GLTexture *),PU_STATIC,0);
+    (*items)= static_cast<GLTexture **>(
+          Z_Calloc(count, sizeof(GLTexture *), PU_STATIC, 0));
   }
   if (!(*items)[num])
   {
-    (*items)[num]=Z_Calloc(1, sizeof(GLTexture),PU_STATIC,0);
+    (*items)[num]= static_cast<GLTexture *>(
+          Z_Calloc(1, sizeof(GLTexture), PU_STATIC, 0));
     (*items)[num]->textype=GLDT_UNREGISTERED;
 
     //if (gl_boom_colormaps)
     {
       GLTexture *texture = (*items)[num];
       int dims[3] = {(CR_LIMIT+MAXPLAYERS), (PLAYERCOLORMAP_COUNT), numcolormaps};
-      texture->glTexExID = NewIntDynArray(3, dims);
+      texture->glTexExID = static_cast<GLuint ***>(NewIntDynArray(3, dims));
     }
   }
   return (*items)[num];
@@ -633,7 +635,7 @@ unsigned char* gld_GetTextureBuffer(GLuint texid, int miplevel, int *width, int 
 
   if (!buf)
   {
-    buf = malloc(buf_size);
+    buf = malloc<unsigned char *>(buf_size);
   }
 
   if (texid)
@@ -647,7 +649,7 @@ unsigned char* gld_GetTextureBuffer(GLuint texid, int miplevel, int *width, int 
   {
     free(buf);
     buf_size = w * h * 4;
-    buf = malloc(buf_size);
+    buf = malloc<unsigned char *>(buf_size);
   }
   glGetTexImage(GL_TEXTURE_2D, miplevel, GL_RGBA, GL_UNSIGNED_BYTE, buf);
 
@@ -834,7 +836,7 @@ int gld_BuildTexture(GLTexture *gltexture, void *data, dboolean readonly, int wi
       tex_width, tex_height,
       0, GL_RGBA, GL_UNSIGNED_BYTE, data);
 
-    gld_RecolorMipLevels(data);
+    gld_RecolorMipLevels(static_cast<byte *>(data));
 
     gld_SetTexFilters(gltexture);
 
@@ -848,7 +850,7 @@ int gld_BuildTexture(GLTexture *gltexture, void *data, dboolean readonly, int wi
     gluBuild2DMipmaps(GL_TEXTURE_2D, gl_tex_format,
       width, height, GL_RGBA, GL_UNSIGNED_BYTE, data);
 
-    gld_RecolorMipLevels(data);
+    gld_RecolorMipLevels(static_cast<byte *>(data));
 
     gld_SetTexFilters(gltexture);
 
@@ -861,7 +863,7 @@ int gld_BuildTexture(GLTexture *gltexture, void *data, dboolean readonly, int wi
 #ifdef USE_GLU_IMAGESCALE
     if ((width != tex_width) || (height != tex_height))
     {
-      tex_buffer = malloc(tex_buffer_size);
+      tex_buffer = malloc<unsigned char *>(tex_buffer_size);
       if (!tex_buffer)
       {
         goto l_exit;
@@ -883,13 +885,13 @@ int gld_BuildTexture(GLTexture *gltexture, void *data, dboolean readonly, int wi
       {
         if (width == tex_width)
         {
-          tex_buffer = malloc(tex_buffer_size);
+          tex_buffer = malloc<unsigned char *>(tex_buffer_size);
           memcpy(tex_buffer, data, width * height * 4);
         }
         else
         {
           int y;
-          tex_buffer = calloc(1, tex_buffer_size);
+          tex_buffer = calloc<unsigned char *>(1, tex_buffer_size);
           for (y = 0; y < height; y++)
           {
             memcpy(tex_buffer + y * tex_width * 4,
@@ -899,7 +901,7 @@ int gld_BuildTexture(GLTexture *gltexture, void *data, dboolean readonly, int wi
       }
       else
       {
-        tex_buffer = data;
+        tex_buffer = static_cast<unsigned char *>(data);
       }
 
       if (gl_paletted_texture) {
@@ -1250,7 +1252,7 @@ void gld_BindFlat(GLTexture *gltexture, unsigned int flags)
     return;
   }
 
-  flat=W_CacheLumpNum(gltexture->index);
+  flat= static_cast<const unsigned char *>(W_CacheLumpNum(gltexture->index));
   buffer=(unsigned char*)Z_Malloc(gltexture->buffer_size,PU_STATIC,0);
   if (!(gltexture->flags & GLTEXTURE_MIPMAP) && gl_paletted_texture)
     memset(buffer,transparent_pal_index,gltexture->buffer_size);
@@ -1372,7 +1374,8 @@ void gld_Precache(void)
 
   {
     size_t size = numflats > numsprites  ? numflats : numsprites;
-    hitlist = Z_Malloc((size_t)numtextures > size ? (size_t)numtextures : size,PU_LEVEL,0);
+    hitlist = static_cast<byte *>(Z_Malloc(
+        (size_t)numtextures > size ? (size_t)numtextures : size, PU_LEVEL, 0));
   }
 
   // Precache flats.
@@ -1524,7 +1527,7 @@ void gld_Precache(void)
     thinker_t *th;
     for (th = thinkercap.next ; th != &thinkercap ; th=th->next)
     {
-      if (th->function == P_MobjThinker)
+      if (th->function == reinterpret_cast<think_t>(P_MobjThinker))
         hitlist[((mobj_t *)th)->sprite] = 1;
     }
   }

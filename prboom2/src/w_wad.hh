@@ -35,11 +35,8 @@
 #ifndef __W_WAD__
 #define __W_WAD__
 
-#ifdef __GNUG__
-#pragma interface
-#endif
-
 #include <stddef.h>
+#include <type_traits>
 
 //
 // TYPES
@@ -160,7 +157,11 @@ void    W_UnlockLumpNum(int lump);
 
 // CPhipps - convenience macros
 //#define W_CacheLumpNum(num) (W_CacheLumpNum)((num),1)
-#define W_CacheLumpName(name) W_CacheLumpNum (W_GetNumForName(name))
+template <typename T, typename = std::enable_if_t<std::is_pointer_v<T>>>
+constexpr T W_CacheLumpName(const char *name)
+{
+    return static_cast<T>(W_CacheLumpNum(W_GetNumForName(name)));
+}
 
 //#define W_UnlockLumpNum(num) (W_UnlockLumpNum)((num),1)
 #define W_UnlockLumpName(name) W_UnlockLumpNum (W_GetNumForName(name))

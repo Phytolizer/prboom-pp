@@ -296,7 +296,7 @@ void M_ChangeVideoMode(void);
 void M_ChangeUseGLSurface(void);
 void M_ChangeApplyPalette(void);
 
-menu_t NewDef;                                              // phares 5/04/98
+extern menu_t NewDef;                                              // phares 5/04/98
 
 // end of prototypes added to support Setup Menus and Extended HELP screens
 
@@ -312,7 +312,7 @@ menu_t NewDef;                                              // phares 5/04/98
 
 // main_e provides numerical values for which Big Font screen you're on
 
-enum
+enum main_e
 {
   newgame = 0,
   loadgame,
@@ -321,7 +321,7 @@ enum
   readthis,
   quitdoom,
   main_end
-} main_e;
+} ;
 
 //
 // MainMenu is the definition of what the main menu Screen should look
@@ -371,23 +371,23 @@ void M_DrawMainMenu(void)
 // There are no menu items on the Read This! screens, so read_e just
 // provides a placeholder to maintain structure.
 
-enum
+enum read_e
 {
   rdthsempty1,
   read1_end
-} read_e;
+} ;
 
-enum
+enum read_e2
 {
   rdthsempty2,
   read2_end
-} read_e2;
+} ;
 
-enum               // killough 10/98
+enum  help_e             // killough 10/98
 {
   helpempty,
   help_end
-} help_e;
+} ;
 
 
 // The definitions of the Read This! screens
@@ -442,22 +442,22 @@ menu_t HelpDef =           // killough 10/98
 // M_ReadThis
 //
 
-void M_ReadThis(int choice)
+void M_ReadThis(int /* choice */)
 {
   M_SetupNextMenu(&ReadDef1);
 }
 
-void M_ReadThis2(int choice)
+void M_ReadThis2(int /* choice */)
 {
   M_SetupNextMenu(&ReadDef2);
 }
 
-void M_FinishReadThis(int choice)
+void M_FinishReadThis(int /* choice */)
 {
   M_SetupNextMenu(&MainDef);
 }
 
-void M_FinishHelp(int choice)        // killough 10/98
+void M_FinishHelp(int /* choice */)        // killough 10/98
 {
   M_SetupNextMenu(&MainDef);
 }
@@ -503,14 +503,14 @@ void M_DrawReadThis2(void)
 // this is accounted for in the code.
 //
 
-enum
+enum episodes_e
 {
   ep1,
   ep2,
   ep3,
   ep4,
   ep_end
-} episodes_e;
+} ;
 
 // The definitions of the Episodes menu
 
@@ -560,8 +560,8 @@ void M_AddEpisode(const char *map, char *def)
     const char *alpha = strtok(NULL, "\n");
     if (EpiDef.numitems >= 8) return;
     G_ValidateMapName(map, &epi, &mapnum);
-    EpiMenuEpi[EpiDef.numitems] = epi;
-    EpiMenuMap[EpiDef.numitems] = mapnum;
+    EpiMenuEpi[EpiDef.numitems] = static_cast<short>(epi);
+    EpiMenuMap[EpiDef.numitems] = static_cast<short>(mapnum);
     strncpy(EpisodeMenu[EpiDef.numitems].name, gfx, 8);
     EpisodeMenu[EpiDef.numitems].name[8] = 0;
     EpisodeMenu[EpiDef.numitems].alttext = txt;
@@ -673,19 +673,20 @@ static void M_RestartLevelResponse(int ch)
   G_RestartLevel ();
 }
 
-void M_NewGame(int choice)
+void M_NewGame(int /* choice */)
 {
   if (netgame && !demoplayback) {
     if (compatibility_level < lxdoom_1_compatibility)
       M_StartMessage(s_NEWGAME,NULL,false); // Ty 03/27/98 - externalized
     else // CPhipps - query restarting the level
-      M_StartMessage(s_RESTARTLEVEL,M_RestartLevelResponse,true);
+      M_StartMessage(s_RESTARTLEVEL,
+                       reinterpret_cast<void *>(M_RestartLevelResponse),true);
     return;
   }
 
   if (demorecording) {  /* killough 5/26/98: exclude during demo recordings */
     M_StartMessage("you can't start a new game\n"
-       "while recording a demo!\n\n"PRESSKEY,
+       "while recording a demo!\n\n" PRESSKEY,
        NULL, false); // killough 5/26/98: not externalized
     return;
   }
@@ -706,7 +707,7 @@ static void M_VerifyNightmare(int ch)
   if (ch != 'y')
     return;
 
-  G_DeferedInitNew(nightmare,EpiMenuEpi[epiChoice], EpiMenuMap[epiChoice]);
+  G_DeferedInitNew(static_cast<skill_t>(nightmare),EpiMenuEpi[epiChoice], EpiMenuMap[epiChoice]);
   M_ClearMenus ();
 }
 
@@ -714,12 +715,12 @@ void M_ChooseSkill(int choice)
 {
   if (choice == nightmare)
     {   // Ty 03/27/98 - externalized
-      M_StartMessage(s_NIGHTMARE,M_VerifyNightmare,true);
+      M_StartMessage(s_NIGHTMARE, reinterpret_cast<void *>(M_VerifyNightmare),true);
       return;
     }
   if (EpiMenuEpi[epiChoice] == -1 || EpiMenuMap[epiChoice] == -1) return;  // There is no map to start here.
 
-  G_DeferedInitNew(choice, EpiMenuEpi[epiChoice], EpiMenuMap[epiChoice]);
+  G_DeferedInitNew(static_cast<skill_t>(choice), EpiMenuEpi[epiChoice], EpiMenuMap[epiChoice]);
   M_ClearMenus ();
 }
 
@@ -730,7 +731,7 @@ void M_ChooseSkill(int choice)
 
 // numerical values for the Load Game slots
 
-enum
+enum load_e
 {
   load1,
   load2,
@@ -741,7 +742,7 @@ enum
   load7, //jff 3/15/98 extend number of slots
   load8,
   load_end
-} load_e;
+} ;
 
 // The definitions of the Load Game screen
 
@@ -838,21 +839,22 @@ static void M_VerifyForcedLoadGame(int ch)
 void M_ForcedLoadGame(const char *msg)
 {
   forced_loadgame_message = strdup(msg); // free()'d above
-  M_StartMessage(forced_loadgame_message, M_VerifyForcedLoadGame, true);
+  M_StartMessage(forced_loadgame_message,
+                 reinterpret_cast<void *>(M_VerifyForcedLoadGame), true);
 }
 
 //
 // Selected from DOOM menu
 //
 
-void M_LoadGame (int choice)
+void M_LoadGame (int /* choice */)
 {
   /* killough 5/26/98: exclude during demo recordings
    * cph - unless a new demo */
   if (demorecording && (compatibility_level < prboom_2_compatibility))
     {
     M_StartMessage("you can't load a game\n"
-       "while recording an old demo!\n\n"PRESSKEY,
+       "while recording an old demo!\n\n" PRESSKEY,
        NULL, false); // killough 5/26/98: not externalized
     return;
     }
@@ -906,7 +908,7 @@ void M_ReadSaveStrings(void)
     /* killough 3/22/98
      * cph - add not-demoplayback parameter */
     len = G_SaveGameName(NULL, 0, i, false);
-    name = malloc(len+1);
+    name = malloc<char *>(len+1);
     G_SaveGameName(name, len+1, i, false);
     fp = fopen(name,"rb");
     free(name);
@@ -977,7 +979,7 @@ void M_SaveSelect(int choice)
 //
 // Selected from DOOM menu
 //
-void M_SaveGame (int choice)
+void M_SaveGame (int /* choice */)
 {
   // killough 10/6/98: allow savegames during single-player demo playback
   if (!usergame && (!demoplayback || netgame))
@@ -1000,7 +1002,7 @@ void M_SaveGame (int choice)
 
 // numerical values for the Options menu items
 
-enum
+enum options_e
 {
   general, // killough 10/98
   // killough 4/6/98: move setup to be a sub-menu of OPTIONs
@@ -1014,7 +1016,7 @@ enum
   /* option_empty2, submenu now -- killough */
   soundvol,
   opt_end
-} options_e;
+} ;
 
 // The definitions of the Options menu
 
@@ -1046,7 +1048,6 @@ menu_t OptionsDef =
 //
 // M_Options
 //
-char detailNames[2][9] = {"M_GDHIGH","M_GDLOW"};
 char msgNames[2][9]  = {"M_MSGOFF","M_MSGON"};
 
 
@@ -1074,7 +1075,7 @@ void M_DrawOptions(void)
    9,screenSize);
 }
 
-void M_Options(int choice)
+void M_Options(int /* choice */)
 {
   M_SetupNextMenu(&OptionsDef);
 }
@@ -1135,7 +1136,7 @@ static void M_QuitResponse(int ch)
   I_SafeExit(0); // killough
 }
 
-void M_QuitDOOM(int choice)
+void M_QuitDOOM(int /* choice */)
 {
   static char endstring[160];
 
@@ -1147,7 +1148,7 @@ void M_QuitDOOM(int choice)
   else         // killough 1/18/98: fix endgame message calculation:
     sprintf(endstring,"%s\n\n%s", endmsg[gametic%(NUM_QUITMESSAGES-1)+1], s_DOSY);
 
-  M_StartMessage(endstring,M_QuitResponse,true);
+  M_StartMessage(endstring, reinterpret_cast<void *>(M_QuitResponse),true);
 }
 
 /////////////////////////////
@@ -1203,7 +1204,7 @@ void M_DrawSound(void)
   M_DrawThermo(SoundDef.x,SoundDef.y+LINEHEIGHT*(music_vol+1),16,snd_MusicVolume);
 }
 
-void M_Sound(int choice)
+void M_Sound(int /* choice */)
 {
   M_SetupNextMenu(&SoundDef);
 }
@@ -1317,7 +1318,7 @@ void M_DrawMouse(void)
                200, mouse_acceleration);
 }
 
-void M_ChangeSensitivity(int choice)
+void M_ChangeSensitivity(int /* choice */)
 {
   M_SetupNextMenu(&MouseDef);      // killough
 
@@ -1391,7 +1392,7 @@ void M_QuickSave(void)
     return;
   }
   sprintf(tempstring,s_QSPROMPT,savegamestrings[quickSaveSlot]); // Ty 03/27/98 - externalized
-  M_StartMessage(tempstring,M_QuickSaveResponse,true);
+  M_StartMessage(tempstring, reinterpret_cast<void *>(M_QuickSaveResponse),true);
 }
 
 /////////////////////////////
@@ -1413,7 +1414,7 @@ void M_QuickLoad(void)
 
   if (demorecording) {  // killough 5/26/98: exclude during demo recordings
     M_StartMessage("you can't quickload\n"
-       "while recording a demo!\n\n"PRESSKEY,
+       "while recording a demo!\n\n" PRESSKEY,
        NULL, false); // killough 5/26/98: not externalized
     return;
   }
@@ -1423,7 +1424,7 @@ void M_QuickLoad(void)
     return;
   }
   sprintf(tempstring,s_QLPROMPT,savegamestrings[quickSaveSlot]); // Ty 03/27/98 - externalized
-  M_StartMessage(tempstring,M_QuickLoadResponse,true);
+  M_StartMessage(tempstring, reinterpret_cast<void *>(M_QuickLoadResponse),true);
 }
 
 /////////////////////////////
@@ -1445,14 +1446,14 @@ static void M_EndGameResponse(int ch)
   D_StartTitle ();
 }
 
-void M_EndGame(int choice)
+void M_EndGame(int /* choice */)
 {
   if (netgame)
     {
     M_StartMessage(s_NETEND,NULL,false); // Ty 03/27/98 - externalized
     return;
     }
-  M_StartMessage(s_ENDGAME,M_EndGameResponse,true); // Ty 03/27/98 - externalized
+  M_StartMessage(s_ENDGAME, reinterpret_cast<void *>(M_EndGameResponse),true); // Ty 03/27/98 - externalized
 }
 
 /////////////////////////////
@@ -1586,7 +1587,7 @@ static void M_SetSetupMenuItemOn (const int x)
     while (!(menu->m_flags & S_END))
       menu++;
 
-    menu->m_x = x;
+    menu->m_x = (short)x;
   }
 }
 
@@ -1640,7 +1641,7 @@ menuitem_t SetupMenu[]=
 //
 // M_DoNothing does just that: nothing. Just a placeholder.
 
-static void M_DoNothing(int choice)
+static void M_DoNothing(int /* choice */)
 {
 }
 
@@ -1651,11 +1652,11 @@ static void M_DoNothing(int choice)
 // the generic_setup_e enum mimics the 'Big Font' menu structures, but
 // means nothing to the Setup Menus.
 
-enum
+enum generic_setup_e
 {
   generic_setupempty1,
   generic_setup_end
-} generic_setup_e;
+} ;
 
 // Generic_Setup is a do-nothing definition that the mainstream Menu code
 // can understand, while the Setup Menu code is working. Another placeholder.
@@ -2115,7 +2116,7 @@ static void M_DrawSetting(const setup_menu_t* s)
   // Is the item a selection of choices?
 
   if (flags & S_CHOICE) {
-    if (s->var.def->type == def_int) {
+    if (s->var.def->type == default_t::def_int) {
       if (s->selectstrings == NULL) {
         sprintf(menu_buffer,"%d",*s->var.def->location.pi);
       } else {
@@ -2123,7 +2124,7 @@ static void M_DrawSetting(const setup_menu_t* s)
       }
     }
 
-    if (s->var.def->type == def_str) {
+    if (s->var.def->type == default_t::def_str) {
       sprintf(menu_buffer,"%s", *s->var.def->location.ppsz);
     }
 
@@ -2288,17 +2289,17 @@ static void M_DrawInstructions(void)
 
 // Definitions of the (in this case) four key binding screens.
 
-setup_menu_t keys_settings1[];
-setup_menu_t keys_settings2[];
-setup_menu_t keys_settings3[];
-setup_menu_t keys_settings4[];
-setup_menu_t keys_settings5[];
-setup_menu_t keys_settings6[];
-setup_menu_t keys_settings7[];
-setup_menu_t keys_settings8[];
-setup_menu_t heretic_keys_settings1[];
-setup_menu_t heretic_keys_settings2[];
-setup_menu_t dsda_keys_settings[];
+extern setup_menu_t keys_settings1[];
+extern setup_menu_t keys_settings2[];
+extern setup_menu_t keys_settings3[];
+extern setup_menu_t keys_settings4[];
+extern setup_menu_t keys_settings5[];
+extern setup_menu_t keys_settings6[];
+extern setup_menu_t keys_settings7[];
+extern setup_menu_t keys_settings8[];
+extern setup_menu_t heretic_keys_settings1[];
+extern setup_menu_t heretic_keys_settings2[];
+extern setup_menu_t dsda_keys_settings[];
 
 // The table which gets you from one screen table to the next.
 
@@ -2684,7 +2685,7 @@ enum {           // killough 10/98: enum for y-offset info
   weap_toggle2,
 };
 
-setup_menu_t weap_settings1[];
+extern setup_menu_t weap_settings1[];
 
 setup_menu_t* weap_settings[] =
 {
@@ -2771,9 +2772,9 @@ void M_DrawWeapons(void)
 
 // Screen table definitions
 
-setup_menu_t stat_settings1[];
+extern setup_menu_t stat_settings1[];
 //e6y
-setup_menu_t stat_settings2[];
+extern setup_menu_t stat_settings2[];
 
 setup_menu_t* stat_settings[] =
 {
@@ -2893,9 +2894,9 @@ void M_DrawStatusHUD(void)
 #define AU_PREV KB_PREV
 #define AU_NEXT KB_NEXT
 
-setup_menu_t auto_settings1[];
-setup_menu_t auto_settings2[];
-setup_menu_t auto_settings3[];
+extern setup_menu_t auto_settings1[];
+extern setup_menu_t auto_settings2[];
+extern setup_menu_t auto_settings3[];
 
 setup_menu_t* auto_settings[] =
 {
@@ -3080,7 +3081,7 @@ void M_DrawAutoMap(void)
 #define E_X 250
 #define E_Y  31
 
-setup_menu_t enem_settings1[];
+extern setup_menu_t enem_settings1[];
 
 setup_menu_t* enem_settings[] =
 {
@@ -3201,10 +3202,10 @@ void M_DrawEnemy(void)
 extern int usejoystick, usemouse, default_mus_card, default_snd_card;
 extern int detect_voices, realtic_clock_rate, tran_filter_pct;
 
-setup_menu_t gen_settings1[], gen_settings2[], gen_settings3[];
-setup_menu_t gen_settings4[], gen_settings5[], gen_settings6[];
-setup_menu_t gen_settings7[], gen_settings8[];
-setup_menu_t dsda_gen_settings[];
+extern setup_menu_t gen_settings1[], gen_settings2[], gen_settings3[];
+extern setup_menu_t gen_settings4[], gen_settings5[], gen_settings6[];
+extern setup_menu_t gen_settings7[], gen_settings8[];
+extern setup_menu_t dsda_gen_settings[];
 
 setup_menu_t* gen_settings[] =
 {
@@ -3586,8 +3587,8 @@ void M_DrawGeneral(void)
 #define COMP_SPC 12
 #define C_NEXTPREV 131
 
-setup_menu_t comp_settings1[], comp_settings2[], comp_settings3[];
-setup_menu_t comp_settings3[];//e6y
+extern setup_menu_t comp_settings1[], comp_settings2[], comp_settings3[];
+extern setup_menu_t comp_settings3[];//e6y
 
 setup_menu_t* comp_settings[] =
 {
@@ -3803,7 +3804,7 @@ enum {
   mess_background,
 };
 
-setup_menu_t mess_settings1[];
+extern setup_menu_t mess_settings1[];
 
 setup_menu_t* mess_settings[] =
 {
@@ -3907,7 +3908,7 @@ void M_DrawMessages(void)
 #define CS_X 20
 #define CS_Y (31+8)
 
-setup_menu_t chat_settings1[];
+extern setup_menu_t chat_settings1[];
 
 setup_menu_t* chat_settings[] =
 {
@@ -4442,7 +4443,8 @@ static void M_DrawString(int cx, int cy, int color, const char* ch)
     // desired color, colrngs[color]
 
     // CPhipps - patch drawing updated
-    V_DrawNumPatch(cx, cy, 0, g_menu_font[c].lumpnum, color, VPT_STRETCH | VPT_TRANS);
+    V_DrawNumPatch(cx, cy, 0, g_menu_font[c].lumpnum, color,
+                   static_cast<patch_translation_e>(VPT_STRETCH | VPT_TRANS));
     // The screen is cramped, so trim one unit from each
     // character so they butt up against each other.
     cx += w + g_menu_font_spacing;
@@ -4558,7 +4560,7 @@ void M_DrawCredits(void)     // killough 10/98: credit screen
 
   if (heretic)
   {
-    const byte* lump = W_CacheLumpNum(creditlump);
+    const byte* lump = static_cast<const byte *>(W_CacheLumpNum(creditlump));
 
     V_DrawRawScreen(lump);
 
@@ -4809,7 +4811,7 @@ dboolean M_Responder (event_t* ev) {
         !(ch == ' ' || ch == 'n' || ch == 'y' || ch == KEYD_ESCAPE)) // phares
       return false;
 
-    menuactive = messageLastMenuActive;
+    menuactive = static_cast<menuactive_e>(messageLastMenuActive);
     messageToPrint = 0;
     if (messageRoutine)
       messageRoutine(ch);
@@ -5296,7 +5298,7 @@ dboolean M_Responder (event_t* ev) {
       if (ptr1->m_flags & S_CHOICE) // selection of choices?
       {
         if (action == MENU_LEFT) {
-          if (ptr1->var.def->type == def_int) {
+          if (ptr1->var.def->type == default_t::def_int) {
             int value = *ptr1->var.def->location.pi;
 
             value = value - 1;
@@ -5310,7 +5312,7 @@ dboolean M_Responder (event_t* ev) {
               S_StartSound(NULL,g_sfx_menu);
             *ptr1->var.def->location.pi = value;
           }
-          if (ptr1->var.def->type == def_str) {
+          if (ptr1->var.def->type == default_t::def_str) {
             int old_value, value;
 
             old_value = M_IndexInChoices(*ptr1->var.def->location.ppsz,
@@ -5324,7 +5326,7 @@ dboolean M_Responder (event_t* ev) {
           }
         }
         if (action == MENU_RIGHT) {
-          if (ptr1->var.def->type == def_int) {
+          if (ptr1->var.def->type == default_t::def_int) {
             int value = *ptr1->var.def->location.pi;
 
             value = value + 1;
@@ -5338,7 +5340,7 @@ dboolean M_Responder (event_t* ev) {
               S_StartSound(NULL,g_sfx_menu);
             *ptr1->var.def->location.pi = value;
           }
-          if (ptr1->var.def->type == def_str) {
+          if (ptr1->var.def->type == default_t::def_str) {
             int old_value, value;
 
             old_value = M_IndexInChoices(*ptr1->var.def->location.ppsz,
@@ -5711,7 +5713,7 @@ dboolean M_Responder (event_t* ev) {
         //
         // killough 10/98: fix bugs, simplify
 
-        chat_string_buffer = malloc(CHAT_STRING_BFR_SIZE);
+        chat_string_buffer = malloc<char *>(CHAT_STRING_BFR_SIZE);
         strncpy(chat_string_buffer,
           *ptr1->var.def->location.ppsz, CHAT_STRING_BFR_SIZE);
 
@@ -6146,7 +6148,7 @@ void M_StartMessage (const char* string,void* routine,dboolean input)
   messageLastMenuActive = menuactive;
   messageToPrint = 1;
   messageString = string;
-  messageRoutine = routine;
+  messageRoutine = reinterpret_cast<void (*)(int)>(routine);
   messageNeedsInput = input;
   menuactive = mnact_float;
   return;
@@ -6154,7 +6156,7 @@ void M_StartMessage (const char* string,void* routine,dboolean input)
 
 void M_StopMessage(void)
 {
-  menuactive = messageLastMenuActive;
+  menuactive = static_cast<menuactive_e>(messageLastMenuActive);
   messageToPrint = 0;
 }
 
@@ -6310,7 +6312,8 @@ void M_WriteText (int x,int y, const char* string, int cm)
       break;
     // proff/nicolas 09/20/98 -- changed for hi-res
     // CPhipps - patch drawing updated
-    V_DrawNumPatch(cx, cy, 0, g_menu_font[c].lumpnum, cm, flags);
+    V_DrawNumPatch(cx, cy, 0, g_menu_font[c].lumpnum, cm,
+                   static_cast<patch_translation_e>(flags));
     cx+=w;
   }
 }
@@ -6325,7 +6328,8 @@ void M_DrawTitle(int x, int y, const char *patch, int cm,
     int flags = VPT_STRETCH;
     if (cm != CR_DEFAULT)
       flags |= VPT_TRANS;
-    V_DrawNumPatch(x, y, 0, lumpnum, cm, flags);
+    V_DrawNumPatch(x, y, 0, lumpnum, cm,
+                   static_cast<patch_translation_e>(flags));
   }
   else
   {

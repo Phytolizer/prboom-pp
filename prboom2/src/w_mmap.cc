@@ -57,7 +57,7 @@
 
 #include "e6y.hh"//e6y
 
-static struct {
+static struct cachelump_t {
   void *cache;
 #ifdef TIMEDIAG
   int locktic;
@@ -222,7 +222,7 @@ void W_InitCache(void)
 {
   int maxfd = 0;
   // set up caching
-  cachelump = calloc(numlumps, sizeof *cachelump);
+  cachelump = calloc<cachelump_t *>(numlumps, sizeof *cachelump);
   if (!cachelump)
     I_Error ("W_Init: Couldn't allocate lumpcache");
 
@@ -236,7 +236,7 @@ void W_InitCache(void)
       if (lumpinfo[i].wadfile)
         if (lumpinfo[i].wadfile->handle > maxfd) maxfd = lumpinfo[i].wadfile->handle;
   }
-  mapped_wad = calloc(maxfd+1,sizeof *mapped_wad);
+  mapped_wad = calloc<void **>(maxfd+1,sizeof *mapped_wad);
   {
     int i;
     for (i=0; i<numlumps; i++) {

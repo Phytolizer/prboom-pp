@@ -82,19 +82,19 @@ struct sfxinfo_struct {
 // MusicInfo struct.
 //
 
-typedef struct {
+struct musicinfo_t {
   // up to 6-character name
   const char *name; // CPhipps - const
 
   // lump number of music
-  int lumpnum;
+  int lumpnum = 0;
 
   /* music data - cphipps 4/11 made const void* */
-  const void *data;
+  const void *data = nullptr;
 
   // music handle once registered
-  int handle;
-} musicinfo_t;
+  int handle = 0;
+} ;
 
 //
 // Identifiers for all music in game.

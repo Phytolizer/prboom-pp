@@ -511,9 +511,9 @@ static void AM_addMark(void)
   // remove limit on automap marks
 
   if (markpointnum >= markpointnum_max)
-    markpoints = realloc(markpoints,
+    markpoints = static_cast<markpoint_t *>(realloc(markpoints,
                         (markpointnum_max = markpointnum_max ?
-                         markpointnum_max*2 : 16) * sizeof(*markpoints));
+                         markpointnum_max*2 : 16) * sizeof(*markpoints)));
 
   markpoints[markpointnum].x = m_x + m_w/2;
   markpoints[markpointnum].y = m_y + m_h/2;
@@ -574,7 +574,7 @@ static void AM_changeWindowLoc(void)
 
   if (m_paninc.x || m_paninc.y)
   {
-    automapmode &= ~am_follow;
+    automapmode = static_cast<automapmode_e>(automapmode & ~am_follow);
   }
 
   if (movement_smooth)
@@ -670,7 +670,7 @@ static void AM_initVariables(void)
   int pnum;
   static event_t st_notify = { ev_keyup, AM_MSGENTERED, 0, 0 };
 
-  automapmode |= am_active;
+  automapmode = static_cast<automapmode_e>(automapmode | am_active);
 
   m_paninc.x = m_paninc.y = 0;
   ftom_zoommul = FRACUNIT;
@@ -765,10 +765,10 @@ static void AM_LevelInit(void)
 //
 void AM_Stop (void)
 {
-  static event_t st_notify = { 0, ev_keyup, AM_MSGEXITED, 0 };
+  static event_t st_notify = {static_cast<evtype_t>(0), ev_keyup, AM_MSGEXITED, 0 };
 
   AM_unloadPics();
-  automapmode &= ~am_active;
+  automapmode = static_cast<automapmode_e>(automapmode & ~am_active);
   ST_Responder(&st_notify);
   stopped = true;
 }
@@ -947,7 +947,7 @@ dboolean AM_Responder
   }
   else if (dsda_InputActivated(dsda_input_map_follow))
   {
-    automapmode ^= am_follow;     // CPhipps - put all automap mode stuff into one enum
+    automapmode = static_cast<automapmode_e>(automapmode ^ am_follow);     // CPhipps - put all automap mode stuff into one enum
     // Ty 03/27/98 - externalized
     plr->message = (automapmode & am_follow) ? s_AMSTR_FOLLOWON : s_AMSTR_FOLLOWOFF;
 
@@ -955,7 +955,7 @@ dboolean AM_Responder
   }
   else if (dsda_InputActivated(dsda_input_map_grid))
   {
-    automapmode ^= am_grid;      // CPhipps
+    automapmode = static_cast<automapmode_e>(automapmode ^ am_grid);      // CPhipps
     // Ty 03/27/98 - *not* externalized
     plr->message = (automapmode & am_grid) ? s_AMSTR_GRIDON : s_AMSTR_GRIDOFF;
 
@@ -979,14 +979,14 @@ dboolean AM_Responder
   }
   else if (dsda_InputActivated(dsda_input_map_rotate))
   {
-    automapmode ^= am_rotate;
+    automapmode = static_cast<automapmode_e>(automapmode ^ am_rotate);
     plr->message = (automapmode & am_rotate) ? s_AMSTR_ROTATEON : s_AMSTR_ROTATEOFF;
 
     return true;
   }
   else if (dsda_InputActivated(dsda_input_map_overlay))
   {
-    automapmode ^= am_overlay;
+    automapmode = static_cast<automapmode_e>(automapmode ^ am_overlay);
     AM_SetPosition();
     AM_activateNewScale();
     plr->message = (automapmode & am_overlay) ? s_AMSTR_OVERLAYON : s_AMSTR_OVERLAYOFF;
@@ -1166,9 +1166,9 @@ static dboolean AM_clipMline
     TOP     =8
   };
 
-  register int outcode1 = 0;
-  register int outcode2 = 0;
-  register int outside;
+  int outcode1 = 0;
+  int outcode2 = 0;
+  int outside;
 
   fpoint_t  tmp;
   int   dx;
@@ -1869,10 +1869,10 @@ static void AM_ProcessNiceThing(mobj_t* mobj, angle_t angle, fixed_t x, fixed_t 
   typedef struct map_nice_icon_param_s
   {
     spritenum_t sprite;
-    int icon;
-    int radius;
-    int rotate;
-    unsigned char r, g, b;
+    int icon = 0;
+    int radius = 0;
+    int rotate = 0;
+    unsigned char r = 0, g = 0, b = 0;
   } map_nice_icon_param_t;
 
   static const map_nice_icon_param_t icons[] =
@@ -1928,7 +1928,7 @@ static void AM_ProcessNiceThing(mobj_t* mobj, angle_t angle, fixed_t x, fixed_t 
     {SPR_BFS1, am_icon_bullet, 12, 0, 119, 255, 111},
     {SPR_BFE1, am_icon_bullet, 12, 0, 119, 255, 111},
 
-    {-1}
+    {static_cast<spritenum_t>(-1)}
   };
 
   need_shadow = true;
@@ -2107,20 +2107,20 @@ static void AM_DrawNiceThings(void)
     {
       if (markpoints[i].x != -1)
       {
-        mpoint_t p;
+        mpoint_t markpoint;
 
-        p.x = markpoints[i].x;
-        p.y = markpoints[i].y;
+        markpoint.x = markpoints[i].x;
+        markpoint.y = markpoints[i].y;
 
         if (automapmode & am_rotate)
-          AM_rotatePoint(&p);
+          AM_rotatePoint(&markpoint);
         else
-          AM_SetMPointFloatValue(&p);
+          AM_SetMPointFloatValue(&markpoint);
 
-        p.fx = CXMTOF_F(p.fx);
-        p.fy = CYMTOF_F(p.fy);
+        markpoint.fx = CXMTOF_F(markpoint.fx);
+        markpoint.fy = CYMTOF_F(markpoint.fy);
 
-        gld_AddNiceThing(am_icon_mark, p.fx, p.fy, radius, 0, 255, 255, 0, (unsigned char)anim_flash_level);
+        gld_AddNiceThing(am_icon_mark, markpoint.fx, markpoint.fy, radius, 0, 255, 255, 0, (unsigned char)anim_flash_level);
       }
     }
   }
@@ -2324,13 +2324,17 @@ static void AM_drawMarks(void)
             {
               V_DrawNamePatchPrecise(
                 (float)p.fx * 320.0f / SCREENWIDTH, (float)p.fy * 200.0f / SCREENHEIGHT,
-                FB, namebuf, CR_DEFAULT, VPT_ALIGN_WIDE | VPT_STRETCH);
+                FB, namebuf, CR_DEFAULT,
+                                       static_cast<patch_translation_e>(
+                                           VPT_ALIGN_WIDE | VPT_STRETCH));
             }
             else
             {
               V_DrawNamePatch(
                 p.x * 320 / SCREENWIDTH, p.y * 200 / SCREENHEIGHT,
-                FB, namebuf, CR_DEFAULT, VPT_ALIGN_WIDE | VPT_STRETCH);
+                FB, namebuf, CR_DEFAULT,
+                                static_cast<patch_translation_e>(
+                                    VPT_ALIGN_WIDE | VPT_STRETCH));
             }
           }
 

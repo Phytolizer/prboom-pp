@@ -120,6 +120,6 @@ typedef struct crosshair_s
 } crosshair_t;
 extern crosshair_t crosshair;
 
-int SetCustomMessage(int plr, const char *msg, int delay, int ticks, int cm, int sfx);
+int SetCustomMessage(int player, const char *msg, int delay, int ticks, int cm, int sfx);
 
 #endif

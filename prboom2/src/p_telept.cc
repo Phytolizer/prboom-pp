@@ -47,10 +47,10 @@ static mobj_t* P_TeleportDestination(line_t* line)
 {
   int i;
   for (i = -1; (i = P_FindSectorFromLineTag(line, i)) >= 0;) {
-    register thinker_t* th = NULL;
+    thinker_t* th = NULL;
     while ((th = P_NextThinker(th,th_misc)) != NULL)
-      if (th->function == P_MobjThinker) {
-        register mobj_t* m = (mobj_t*)th;
+      if (th->function == reinterpret_cast<think_t>(P_MobjThinker)) {
+        mobj_t* m = (mobj_t*)th;
         if (m->type == MT_TELEPORTMAN  &&
             m->subsector->sector->iSectorID == i)
             return m;
@@ -466,7 +466,7 @@ dboolean Heretic_EV_Teleport(line_t * line, int side, mobj_t * thing)
             for (thinker = thinkercap.next; thinker != &thinkercap;
                  thinker = thinker->next)
             {
-                if (thinker->function != P_MobjThinker)
+                if (thinker->function != reinterpret_cast<think_t>(P_MobjThinker))
                 {               // Not a mobj
                     continue;
                 }

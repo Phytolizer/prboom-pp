@@ -1083,17 +1083,17 @@ void HU_widget_draw_gkeys(void);
 
 static hud_widget_t hud_name_widget[] =
 {
-  {&w_ammo,   0, 0, 0, HU_widget_build_ammo,   HU_widget_draw_ammo,   "ammo"},
-  {&w_weapon, 0, 0, 0, HU_widget_build_weapon, HU_widget_draw_weapon, "weapon"},
-  {&w_keys,   0, 0, 0, HU_widget_build_keys,   HU_widget_draw_keys,   "keys"},
-  {&w_monsec, 0, 0, 0, HU_widget_build_monsec, HU_widget_draw_monsec, "monsec"},
-  {&w_health, 0, 0, 0, HU_widget_build_health, HU_widget_draw_health, "health"},
-  {&w_armor,  0, 0, 0, HU_widget_build_armor,  HU_widget_draw_armor,  "armor"},
-  {&w_hudadd, 0, 0, 0, HU_widget_build_hudadd, HU_widget_draw_hudadd, "hudadd"},
+  {&w_ammo,   0, 0, static_cast<patch_translation_e>(0), HU_widget_build_ammo,   HU_widget_draw_ammo,   "ammo"},
+  {&w_weapon, 0, 0, static_cast<patch_translation_e>(0), HU_widget_build_weapon, HU_widget_draw_weapon, "weapon"},
+  {&w_keys,   0, 0, static_cast<patch_translation_e>(0), HU_widget_build_keys,   HU_widget_draw_keys,   "keys"},
+  {&w_monsec, 0, 0, static_cast<patch_translation_e>(0), HU_widget_build_monsec, HU_widget_draw_monsec, "monsec"},
+  {&w_health, 0, 0, static_cast<patch_translation_e>(0), HU_widget_build_health, HU_widget_draw_health, "health"},
+  {&w_armor,  0, 0, static_cast<patch_translation_e>(0), HU_widget_build_armor,  HU_widget_draw_armor,  "armor"},
+  {&w_hudadd, 0, 0, static_cast<patch_translation_e>(0), HU_widget_build_hudadd, HU_widget_draw_hudadd, "hudadd"},
 
-  {&w_keys_icon, 0, 0, 0, HU_widget_build_gkeys, HU_widget_draw_gkeys, "gkeys"},
+  {&w_keys_icon, 0, 0, static_cast<patch_translation_e>(0), HU_widget_build_gkeys, HU_widget_draw_gkeys, "gkeys"},
 
-  {&w_traces[0], 0, 0, 0, NULL, NULL, "tracers"},
+  {&w_traces[0], 0, 0, static_cast<patch_translation_e>(0), NULL, NULL, "tracers"},
 
   {&w_health_big, 0, 0, VPT_NOOFFSET, HU_widget_build_health_big, HU_widget_draw_health_big, "health_big"},
   {&w_armor_big,  0, 0, VPT_NOOFFSET, HU_widget_build_armor_big,  HU_widget_draw_armor_big,  "armor_big"},
@@ -1115,7 +1115,7 @@ static hud_widget_t hud_name_widget[] =
   {&w_ammo_icon, 0, 0, VPT_NOOFFSET, HU_widget_build_ammo_icon, HU_widget_draw_ammo_icon, "ammo_icon"},
   {&w_ammo_icon, 0, 0, VPT_NOOFFSET, HU_widget_build_ammo_icon, HU_widget_draw_ammo_icon, "ammo_icon"},
 
-  {NULL, 0, 0, 0, NULL, NULL, NULL}
+  {NULL, 0, 0, static_cast<patch_translation_e>(0), NULL, NULL, NULL}
 };
 
 void HU_LoadHUDDefs(void)
@@ -1152,7 +1152,7 @@ void HU_LoadHUDDefs(void)
 
         // setup new hud
         huds_count++;
-        huds = realloc(huds, huds_count * sizeof(huds[0]));
+        huds = static_cast<hud_widgets_list_t *>(realloc(huds, huds_count * sizeof(huds[0])));
         list = &huds[huds_count - 1];
         list->items = NULL;
         list->count = 0;
@@ -1185,7 +1185,7 @@ void HU_LoadHUDDefs(void)
             hud_widget_t *item;
 
             list->count++;
-            list->items = realloc(list->items, list->count * sizeof(list->items[0]));
+            list->items = static_cast<hud_widget_t *>(realloc(list->items, list->count * sizeof(list->items[0])));
 
             item = &list->items[list->count - 1];
 
@@ -1202,7 +1202,8 @@ void HU_LoadHUDDefs(void)
             {
               item->flags = (abs(cfg_item.y) > 100 ? VPT_ALIGN_RIGHT_BOTTOM : VPT_ALIGN_RIGHT_TOP);
             }
-            item->flags |= hud_name_widget[i].flags;
+            item->flags =
+                static_cast<patch_translation_e>(item->flags | hud_name_widget[i].flags);
 
             item->build = hud_name_widget[i].build;
             item->draw = hud_name_widget[i].draw;
@@ -1694,7 +1695,7 @@ void HU_widget_build_weapon(void)
       else
         hud_weapstr[i++] = '0'+CR_GREEN;
     }
-    hud_weapstr[i++] = '0'+w+1;
+    hud_weapstr[i++] = static_cast<char>('0' + w + 1);
     hud_weapstr[i++] = ' ';
     hud_weapstr[i] = '\0';
   }
@@ -1731,7 +1732,8 @@ void HU_widget_build_keys(void)
       if (!plr->cards[k])
         continue;
 
-      hud_gkeysstr[i++] = '!'+k;   // key number plus '!' is char for key
+      hud_gkeysstr[i++] =
+          static_cast<char>('!' + k);   // key number plus '!' is char for key
       hud_gkeysstr[i++] = ' ';     // spacing
       hud_gkeysstr[i++] = ' ';
     }
@@ -1794,7 +1796,7 @@ void HU_widget_build_keys(void)
         sprintf(numbuf,"%5d",top1);
         // make frag count in player's color via escape code
         hud_keysstr[i++] = '\x1b'; //jff 3/26/98 use ESC not '\' for paths
-        hud_keysstr[i++] = '0'+plyrcoltran[idx1&3];
+        hud_keysstr[i++] = static_cast<char>('0' + plyrcoltran[idx1 & 3]);
         s = numbuf;
         while (*s)
           hud_keysstr[i++] = *(s++);
@@ -1805,7 +1807,7 @@ void HU_widget_build_keys(void)
         sprintf(numbuf,"%5d",top2);
         // make frag count in player's color via escape code
         hud_keysstr[i++] = '\x1b'; //jff 3/26/98 use ESC not '\' for paths
-        hud_keysstr[i++] = '0'+plyrcoltran[idx2&3];
+        hud_keysstr[i++] = static_cast<char>('0' + plyrcoltran[idx2 & 3]);
         s = numbuf;
         while (*s)
           hud_keysstr[i++] = *(s++);
@@ -1816,7 +1818,7 @@ void HU_widget_build_keys(void)
         sprintf(numbuf,"%5d",top3);
         // make frag count in player's color via escape code
         hud_keysstr[i++] = '\x1b'; //jff 3/26/98 use ESC not '\' for paths
-        hud_keysstr[i++] = '0'+plyrcoltran[idx3&3];
+        hud_keysstr[i++] = static_cast<char>('0' + plyrcoltran[idx3 & 3]);
         s = numbuf;
         while (*s)
           hud_keysstr[i++] = *(s++);
@@ -1827,7 +1829,7 @@ void HU_widget_build_keys(void)
         sprintf(numbuf,"%5d",top4);
         // make frag count in player's color via escape code
         hud_keysstr[i++] = '\x1b'; //jff 3/26/98 use ESC not '\' for paths
-        hud_keysstr[i++] = '0'+plyrcoltran[idx4&3];
+        hud_keysstr[i++] = static_cast<char>('0' + plyrcoltran[idx4 & 3]);
         s = numbuf;
         while (*s)
           hud_keysstr[i++] = *(s++);
@@ -2180,7 +2182,8 @@ void HU_widget_build_gkeys(void)
     if (!plr->cards[k])
       continue;
 
-    gkeysstr[i++] = '!' + k; // key number plus '!' is char for key
+    gkeysstr[i++] =
+        static_cast<char>('!' + k); // key number plus '!' is char for key
     gkeysstr[i++] = ' ';     // spacing
     gkeysstr[i++] = ' ';
 
@@ -2332,7 +2335,8 @@ void HU_draw_crosshair(void)
   {
     float x = crosshair.target_screen_x;
     float y = crosshair.target_screen_y;
-    V_DrawNumPatchPrecise(x, y, 0, crosshair.lump, cm, crosshair.flags);
+    V_DrawNumPatchPrecise(x, y, 0, crosshair.lump, cm,
+                          static_cast<patch_translation_e>(crosshair.flags));
   }
   else
   {
@@ -2351,7 +2355,8 @@ void HU_draw_crosshair(void)
       y = (200 - st_height - crosshair.h) / 2;
     }
 
-    V_DrawNumPatch(x, y, 0, crosshair.lump, cm, crosshair.flags);
+    V_DrawNumPatch(x, y, 0, crosshair.lump, cm,
+                   static_cast<patch_translation_e>(crosshair.flags));
   }
 }
 
@@ -2365,7 +2370,7 @@ void HU_draw_crosshair(void)
 void HU_Drawer(void)
 {
   char *s;
-  player_t *plr;
+  player_t *player;
   //jff 3/4/98 speed update up for slow systems
   //e6y: speed update for uncapped framerate
   static dboolean needupdate = false;
@@ -2375,7 +2380,7 @@ void HU_Drawer(void)
   if (menuactive == mnact_full)
     return;
 
-  plr = &players[displayplayer];         // killough 3/7/98
+  player = &players[displayplayer];         // killough 3/7/98
   // draw the automap widgets if automap is displayed
   if (automapmode & am_active)
   {
@@ -2400,7 +2405,7 @@ void HU_Drawer(void)
       }
       else
       {
-        sprintf(hud_coordstrx,"X: %-5d", (plr->mo->x)>>FRACBITS);
+        sprintf(hud_coordstrx,"X: %-5d", (player->mo->x)>>FRACBITS);
         HUlib_clearTextLine(&w_coordx);
         s = hud_coordstrx;
         while (*s)
@@ -2409,7 +2414,7 @@ void HU_Drawer(void)
 
         //jff 3/3/98 split coord display into x,y,z lines
         // y-coord
-        sprintf(hud_coordstry,"Y: %-5d", (plr->mo->y)>>FRACBITS);
+        sprintf(hud_coordstry,"Y: %-5d", (player->mo->y)>>FRACBITS);
         HUlib_clearTextLine(&w_coordy);
         s = hud_coordstry;
         while (*s)
@@ -2419,7 +2424,7 @@ void HU_Drawer(void)
         //jff 3/3/98 split coord display into x,y,z lines
         //jff 2/22/98 added z
         // z-coord
-        sprintf(hud_coordstrz,"Z: %-5d", (plr->mo->z)>>FRACBITS);
+        sprintf(hud_coordstrz,"Z: %-5d", (player->mo->z)>>FRACBITS);
         HUlib_clearTextLine(&w_coordz);
         s = hud_coordstrz;
         while (*s)
@@ -2523,7 +2528,7 @@ void HU_Drawer(void)
             w_traces[num].y = w_traces[0].y - num * 8;
 
             if (traces[k].ApplyFunc)
-              traces[k].ApplyFunc(k);
+              traces[k].ApplyFunc(static_cast<tracertype_t>(k));
 
             HUlib_clearTextLine(&w_traces[num]);
             s = traces[k].hudstr;
@@ -2531,7 +2536,7 @@ void HU_Drawer(void)
               HUlib_addCharToTextLine(&w_traces[num], *(s++));
 
             if (traces[k].ResetFunc)
-              traces[k].ResetFunc(k);
+              traces[k].ResetFunc(static_cast<tracertype_t>(k));
           }
           HUlib_drawTextLine(&w_traces[num], false);
           num++;
@@ -2790,7 +2795,7 @@ dboolean HU_Responder(event_t *ev)
 
   static int    num_nobrainers = 0;
 
-  c = ev->type == ev_keydown ? ev->data1 : 0;
+  c = ev->type == ev_keydown ? static_cast<unsigned char>(ev->data1) : 0;
 
   numplayers = 0;
   for (i=0 ; i<MAXPLAYERS ; i++)
@@ -2942,11 +2947,11 @@ void T_ShowMessage (message_thinker_t* message)
   P_RemoveThinker(&message->thinker); // unlink and free
 }
 
-int SetCustomMessage(int plr, const char *msg, int delay, int ticks, int cm, int sfx)
+int SetCustomMessage(int player, const char *msg, int delay, int ticks, int cm, int sfx)
 {
   custom_message_t item;
 
-  if (plr < 0 || plr >= MAXPLAYERS || !msg || ticks < 0 ||
+  if (player < 0 || player >= MAXPLAYERS || !msg || ticks < 0 ||
       sfx < 0 || sfx >= num_sfx || cm < 0 || cm >= CR_LIMIT)
   {
     return false;
@@ -2959,14 +2964,15 @@ int SetCustomMessage(int plr, const char *msg, int delay, int ticks, int cm, int
 
   if (delay <= 0)
   {
-    custom_message[plr] = item;
+    custom_message[player] = item;
   }
   else
   {
-    message_thinker_t *message = Z_Calloc(1, sizeof(*message), PU_LEVEL, NULL);
-    message->thinker.function = T_ShowMessage;
+    message_thinker_t *message = static_cast<message_thinker_t *>(
+          Z_Calloc(1, sizeof(*message), PU_LEVEL, NULL));
+    message->thinker.function = reinterpret_cast<think_t>(T_ShowMessage);
     message->delay = delay;
-    message->plr = plr;
+    message->plr = player;
 
     message->msg = item;
 

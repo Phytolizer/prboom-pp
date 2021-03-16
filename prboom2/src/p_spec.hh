@@ -745,7 +745,7 @@ typedef struct {
   fixed_t last_height; // Last known height of control sector
   fixed_t vdx, vdy;    // Accumulated velocity if accelerative
   int accel;           // Whether it's accelerative
-  enum
+  enum type_t
   {
     sc_side,
     sc_floor,
@@ -768,7 +768,7 @@ typedef struct {
 
 typedef struct {
   thinker_t thinker;   // Thinker structure for Pusher
-  enum
+  enum type_t
   {
     p_push,
     p_pull,
