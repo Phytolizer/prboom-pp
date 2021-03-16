@@ -1857,6 +1857,8 @@ uint_64_t P_ColoredBlood(mobj_t* bleeder)
     else if (bleeder->type == MT_HEAD)
       return MF_COLOREDBLOOD | MF_TRANSLATION1;
   }
+
+  return 0;
 }
 
 
