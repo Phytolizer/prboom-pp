@@ -1,6 +1,10 @@
 prboom2/ICONS/icons.aps
 prboom2/release
-/build*
+build/
+cmake-build-*
+.vscode/
+.idea/
+
 /dependencies*
 
 # spec files
