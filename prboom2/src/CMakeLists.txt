@@ -9,273 +9,273 @@ endfunction()
 # PrBoom main executable
 
 set(COMMON_SRC
-    am_map.c
-    am_map.h
-    doomdata.h
-    doomdef.c
-    doomdef.h
-    doomstat.c
-    doomstat.h
-    doomtype.h
-    dsda.c
-    dsda.h
-    dsda/demo.c
-    dsda/demo.h
-    dsda/ghost.c
-    dsda/ghost.h
-    dsda/global.c
-    dsda/global.h
-    dsda/hud.c
-    dsda/hud.h
-    dsda/input.c
-    dsda/input.h
-    dsda/key_frame.c
-    dsda/key_frame.h
-    dsda/msecnode.c
-    dsda/msecnode.h
-    dsda/palette.c
-    dsda/palette.h
-    dsda/settings.c
-    dsda/settings.h
-    dstrings.c
-    dstrings.h
-    d_deh.c
-    d_deh.h
-    d_englsh.h
-    d_event.h
-    d_items.c
-    d_items.h
-    d_main.c
-    d_main.h
-    d_net.h
-    d_player.h
-    d_think.h
-    d_ticcmd.h
-    e6y.c
-    e6y.h
-    f_finale.c
-    f_finale.h
-    f_finale2.c
-    f_wipe.c
-    f_wipe.h
-    g_game.c
-    g_game.h
-    g_overflow.c
-    g_overflow.h
-    heretic/d_main.c
-    heretic/def.c
-    heretic/def.h
-    heretic/dstrings.h
-    heretic/dstrings.c
-    heretic/f_finale.h
-    heretic/f_finale.c
-    heretic/info.c
-    heretic/in_lude.c
-    heretic/in_lude.h
-    heretic/level_names.c
-    heretic/mn_menu.c
-    heretic/mn_menu.h
-    heretic/p_action.h
-    heretic/sb_bar.c
-    heretic/sb_bar.h
-    heretic/sounds.c
-    hu_lib.c
-    hu_lib.h
-    hu_stuff.c
-    hu_stuff.h
-    hu_tracers.c
-    hu_tracers.h
-    info.c
-    info.h
-    i_capture.c
-    i_capture.h
-    i_joy.h
-    i_main.h
-    i_network.h
-    i_pcsound.c
-    i_pcsound.h
-    i_sound.h
-    i_system.h
-    i_video.h
-    lprintf.c
-    lprintf.h
-    md5.c
-    md5.h
-    m_argv.c
-    m_argv.h
-    m_bbox.c
-    m_bbox.h
-    m_cheat.c
-    m_cheat.h
-    m_fixed.h
-    m_menu.c
-    m_menu.h
-    m_misc.c
-    m_misc.h
-    m_random.c
-    m_random.h
-    m_swap.h
-    protocol.h
-    p_ceilng.c
-    p_checksum.c
-    p_checksum.h
-    p_doors.c
-    p_enemy.c
-    p_enemy.h
-    p_floor.c
-    p_genlin.c
-    p_inter.c
-    p_inter.h
-    p_lights.c
-    p_map.c
-    p_map.h
-    p_maputl.c
-    p_maputl.h
-    p_mobj.c
-    p_mobj.h
-    p_plats.c
-    p_pspr.c
-    p_pspr.h
-    p_saveg.c
-    p_saveg.h
-    p_setup.c
-    p_setup.h
-    p_sight.c
-    p_spec.c
-    p_spec.h
-    p_switch.c
-    p_telept.c
-    p_tick.c
-    p_tick.h
-    p_user.c
-    p_user.h
-    r_bsp.c
-    r_bsp.h
-    r_data.c
-    r_data.h
-    r_defs.h
-    r_demo.c
-    r_demo.h
-    r_draw.c
-    r_draw.h
-    r_filter.c
-    r_filter.h
-    r_fps.c
-    r_fps.h
-    r_main.c
-    r_main.h
-    r_patch.c
-    r_patch.h
-    r_plane.c
-    r_plane.h
-    r_segs.c
-    r_segs.h
-    r_sky.c
-    r_sky.h
-    r_state.h
-    r_things.c
-    r_things.h
+    am_map.cc
+    am_map.hh
+    doomdata.hh
+    doomdef.cc
+    doomdef.hh
+    doomstat.cc
+    doomstat.hh
+    doomtype.hh
+    dsda.cc
+    dsda.hh
+    dsda/demo.cc
+    dsda/demo.hh
+    dsda/ghost.cc
+    dsda/ghost.hh
+    dsda/global.cc
+    dsda/global.hh
+    dsda/hud.cc
+    dsda/hud.hh
+    dsda/input.cc
+    dsda/input.hh
+    dsda/key_frame.cc
+    dsda/key_frame.hh
+    dsda/msecnode.cc
+    dsda/msecnode.hh
+    dsda/palette.cc
+    dsda/palette.hh
+    dsda/settings.cc
+    dsda/settings.hh
+    dstrings.cc
+    dstrings.hh
+    d_deh.cc
+    d_deh.hh
+    d_englsh.hh
+    d_event.hh
+    d_items.cc
+    d_items.hh
+    d_main.cc
+    d_main.hh
+    d_net.hh
+    d_player.hh
+    d_think.hh
+    d_ticcmd.hh
+    e6y.cc
+    e6y.hh
+    f_finale.cc
+    f_finale.hh
+    f_finale2.cc
+    f_wipe.cc
+    f_wipe.hh
+    g_game.cc
+    g_game.hh
+    g_overflow.cc
+    g_overflow.hh
+    heretic/d_main.cc
+    heretic/def.cc
+    heretic/def.hh
+    heretic/dstrings.hh
+    heretic/dstrings.cc
+    heretic/f_finale.hh
+    heretic/f_finale.cc
+    heretic/info.cc
+    heretic/in_lude.cc
+    heretic/in_lude.hh
+    heretic/level_names.cc
+    heretic/mn_menu.cc
+    heretic/mn_menu.hh
+    heretic/p_action.hh
+    heretic/sb_bar.cc
+    heretic/sb_bar.hh
+    heretic/sounds.cc
+    hu_lib.cc
+    hu_lib.hh
+    hu_stuff.cc
+    hu_stuff.hh
+    hu_tracers.cc
+    hu_tracers.hh
+    info.cc
+    info.hh
+    i_capture.cc
+    i_capture.hh
+    i_joy.hh
+    i_main.hh
+    i_network.hh
+    i_pcsound.cc
+    i_pcsound.hh
+    i_sound.hh
+    i_system.hh
+    i_video.hh
+    lprintf.cc
+    lprintf.hh
+    md5.cc
+    md5.hh
+    m_argv.cc
+    m_argv.hh
+    m_bbox.cc
+    m_bbox.hh
+    m_cheat.cc
+    m_cheat.hh
+    m_fixed.hh
+    m_menu.cc
+    m_menu.hh
+    m_misc.cc
+    m_misc.hh
+    m_random.cc
+    m_random.hh
+    m_swap.hh
+    protocol.hh
+    p_ceilng.cc
+    p_checksum.cc
+    p_checksum.hh
+    p_doors.cc
+    p_enemy.cc
+    p_enemy.hh
+    p_floor.cc
+    p_genlin.cc
+    p_inter.cc
+    p_inter.hh
+    p_lights.cc
+    p_map.cc
+    p_map.hh
+    p_maputl.cc
+    p_maputl.hh
+    p_mobj.cc
+    p_mobj.hh
+    p_plats.cc
+    p_pspr.cc
+    p_pspr.hh
+    p_saveg.cc
+    p_saveg.hh
+    p_setup.cc
+    p_setup.hh
+    p_sight.cc
+    p_spec.cc
+    p_spec.hh
+    p_switch.cc
+    p_telept.cc
+    p_tick.cc
+    p_tick.hh
+    p_user.cc
+    p_user.hh
+    r_bsp.cc
+    r_bsp.hh
+    r_data.cc
+    r_data.hh
+    r_defs.hh
+    r_demo.cc
+    r_demo.hh
+    r_draw.cc
+    r_draw.hh
+    r_filter.cc
+    r_filter.hh
+    r_fps.cc
+    r_fps.hh
+    r_main.cc
+    r_main.hh
+    r_patch.cc
+    r_patch.hh
+    r_plane.cc
+    r_plane.hh
+    r_segs.cc
+    r_segs.hh
+    r_sky.cc
+    r_sky.hh
+    r_state.hh
+    r_things.cc
+    r_things.hh
     scanner.cpp
-    scanner.h
-    sc_man.c
-    sc_man.h
-    sounds.c
-    sounds.h
-    statdump.c
-    statdump.h
-    st_lib.c
-    st_lib.h
-    st_stuff.c
-    st_stuff.h
-    s_advsound.c
-    s_advsound.h
-    s_sound.c
-    s_sound.h
-    tables.c
-    tables.h
-    umapinfo.cpp
-    umapinfo.h
-    version.c
-    version.h
-    v_video.c
-    v_video.h
-    wi_stuff.c
-    wi_stuff.h
-    w_wad.c
-    w_wad.h
-    z_bmalloc.c
-    z_bmalloc.h
-    z_zone.c
-    z_zone.h
+    scanner.hh
+    sc_man.cc
+    sc_man.hh
+    sounds.cc
+    sounds.hh
+    statdump.cc
+    statdump.hh
+    st_lib.cc
+    st_lib.hh
+    st_stuff.cc
+    st_stuff.hh
+    s_advsound.cc
+    s_advsound.hh
+    s_sound.cc
+    s_sound.hh
+    tables.cc
+    tables.hh
+    umapinfo.cc
+    umapinfo.hh
+    version.cc
+    version.hh
+    v_video.cc
+    v_video.hh
+    wi_stuff.cc
+    wi_stuff.hh
+    w_wad.cc
+    w_wad.hh
+    z_bmalloc.cc
+    z_bmalloc.hh
+    z_zone.cc
+    z_zone.hh
 )
 
 set(NET_CLIENT_SRC
-    d_client.c
+    d_client.cc
 )
 
 if(HAVE_MMAP)
-    set(WAD_SRC w_mmap.c)
+    set(WAD_SRC w_mmap.cc)
 else()
-    set(WAD_SRC w_memcache.c)
+    set(WAD_SRC w_memcache.cc)
 endif()
 
 set(MUS2MID_SRC
-    memio.c
-    memio.h
-    mus2mid.c
-    mus2mid.h
+    memio.cc
+    memio.hh
+    mus2mid.cc
+    mus2mid.hh
 )
 
 set(SDLDOOM_SOURCES
-    SDL/i_joy.c
-    SDL/i_main.c
-    SDL/i_network.c
-    SDL/i_sound.c
-    SDL/i_sshot.c
-    SDL/i_system.c
-    SDL/i_video.c
+    SDL/i_joy.cc
+    SDL/i_main.cc
+    SDL/i_network.cc
+    SDL/i_sound.cc
+    SDL/i_sshot.cc
+    SDL/i_system.cc
+    SDL/i_video.cc
 )
 
 set(PCSOUND_SOURCES
-    PCSOUND/pcsound.c
-    PCSOUND/pcsound.h
-    PCSOUND/pcsound_linux.c
-    PCSOUND/pcsound_sdl.c
-    PCSOUND/pcsound_win32.c
+    PCSOUND/pcsound.cc
+    PCSOUND/pcsound.hh
+    PCSOUND/pcsound_linux.cc
+    PCSOUND/pcsound_sdl.cc
+    PCSOUND/pcsound_win32.cc
 )
 
 set(TEXTSCREEN_SOURCES
-    TEXTSCREEN/doomkeys.h
-    TEXTSCREEN/txt_main.h
-    TEXTSCREEN/txt_font.h
-    TEXTSCREEN/txt_largefont.h
-    TEXTSCREEN/txt_sdl.c
-    TEXTSCREEN/txt_sdl.h
-    TEXTSCREEN/txt_smallfont.h
+    TEXTSCREEN/doomkeys.hh
+    TEXTSCREEN/txt_main.hh
+    TEXTSCREEN/txt_font.hh
+    TEXTSCREEN/txt_largefont.hh
+    TEXTSCREEN/txt_sdl.cc
+    TEXTSCREEN/txt_sdl.hh
+    TEXTSCREEN/txt_smallfont.hh
 )
 
 set(DOOMMUSIC_SOURCES
-    MUSIC/dbopl.c
-    MUSIC/dbopl.h
-    MUSIC/dumbplayer.c
-    MUSIC/dumbplayer.h
-    MUSIC/flplayer.c
-    MUSIC/flplayer.h
-    MUSIC/madplayer.c
-    MUSIC/madplayer.h
-    MUSIC/midifile.c
-    MUSIC/midifile.h
-    MUSIC/musicplayer.h
-    MUSIC/opl.c
-    MUSIC/opl.h
-    MUSIC/oplplayer.c
-    MUSIC/oplplayer.h
-    MUSIC/opl_queue.c
-    MUSIC/opl_queue.h
-    MUSIC/portmidiplayer.c
-    MUSIC/portmidiplayer.h
-    MUSIC/vorbisplayer.c
-    MUSIC/vorbisplayer.h
+    MUSIC/dbopl.cc
+    MUSIC/dbopl.hh
+    MUSIC/dumbplayer.cc
+    MUSIC/dumbplayer.hh
+    MUSIC/flplayer.cc
+    MUSIC/flplayer.hh
+    MUSIC/madplayer.cc
+    MUSIC/madplayer.hh
+    MUSIC/midifile.cc
+    MUSIC/midifile.hh
+    MUSIC/musicplayer.hh
+    MUSIC/opl.cc
+    MUSIC/opl.hh
+    MUSIC/oplplayer.cc
+    MUSIC/oplplayer.hh
+    MUSIC/opl_queue.cc
+    MUSIC/opl_queue.hh
+    MUSIC/portmidiplayer.cc
+    MUSIC/portmidiplayer.hh
+    MUSIC/vorbisplayer.cc
+    MUSIC/vorbisplayer.hh
 )
 
 set(EXTRA_FILES
@@ -301,28 +301,28 @@ function(AddGameExecutable TARGET SOURCES)
     if(OPENGL_FOUND AND OPENGL_GLU_FOUND)
         set(SOURCES
             ${SOURCES}
-            gl_clipper.c
-            gl_detail.c
-            gl_drawinfo.c
-            gl_fbo.c
-            gl_gamma.c
-            gl_hires.c
-            gl_hqresize.c
-            gl_intern.h
-            gl_light.c
-            gl_main.c
-            gl_map.c
-            gl_missingtexture.c
-            gl_opengl.c
-            gl_opengl.h
-            gl_preprocess.c
-            gl_shader.c
-            gl_shadow.c
-            gl_sky.c
-            gl_struct.h
-            gl_texture.c
-            gl_vertex.c
-            gl_wipe.c
+            gl_clipper.cc
+            gl_detail.cc
+            gl_drawinfo.cc
+            gl_fbo.cc
+            gl_gamma.cc
+            gl_hires.cc
+            gl_hqresize.cc
+            gl_intern.hh
+            gl_light.cc
+            gl_main.cc
+            gl_map.cc
+            gl_missingtexture.cc
+            gl_opengl.cc
+            gl_opengl.hh
+            gl_preprocess.cc
+            gl_shader.cc
+            gl_shadow.cc
+            gl_sky.cc
+            gl_struct.hh
+            gl_texture.cc
+            gl_vertex.cc
+            gl_wipe.cc
         )
     endif()
 
@@ -331,9 +331,9 @@ function(AddGameExecutable TARGET SOURCES)
         set(SOURCES
             ${SOURCES}
             ../ICONS/icons.rc
-            e6y_launcher.c
-            e6y_launcher.h
-            SDL/SDL_windows_main.c
+            e6y_launcher.cc
+            e6y_launcher.hh
+            SDL/SDL_windows_main.cc
         )
     endif()
 
@@ -433,20 +433,20 @@ option(BUILD_SERVER "Build PrBoom-Plus server executable" ON)
 
 if(BUILD_SERVER AND SDL2_NET_FOUND)
     set(PRBOOM_PLUS_GAME_SERVER_SOURCES
-        d_server.c
-        protocol.h
-        SDL/i_network.c
+        d_server.cc
+        protocol.hh
+        SDL/i_network.cc
     )
 
     if(MSVC)
         set(PRBOOM_PLUS_GAME_SERVER_SOURCES
             ${PRBOOM_PLUS_GAME_SERVER_SOURCES}
-            SDL/i_system.c
+            SDL/i_system.cc
         )
     else()
         set(PRBOOM_PLUS_GAME_SERVER_SOURCES
             ${PRBOOM_PLUS_GAME_SERVER_SOURCES}
-            POSIX/i_system.c
+            POSIX/i_system.cc
         )
     endif()
 
