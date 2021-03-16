@@ -16,7 +16,7 @@
  *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-//#include "inttypes.h" //NSM
+//#include "inttypes.hh" //NSM
 #include "SDL_stdinc.h"
 
 #ifdef _MSC_VER

@@ -58,22 +58,22 @@
 **---------------------------------------------------------------------------
 */
 
-#include "z_zone.h"
-#include "doomstat.h"
-#include "w_wad.h"
-#include "r_main.h"
-#include "r_sky.h"
-#include "r_bsp.h"
-#include "r_things.h"
-#include "p_tick.h"
-#include "i_system.h"
-#include "r_draw.h"
-#include "lprintf.h"
-#include "r_patch.h"
-#include "v_video.h"
+#include "z_zone.hh"
+#include "doomstat.hh"
+#include "w_wad.hh"
+#include "r_main.hh"
+#include "r_sky.hh"
+#include "r_bsp.hh"
+#include "r_things.hh"
+#include "p_tick.hh"
+#include "i_system.hh"
+#include "r_draw.hh"
+#include "lprintf.hh"
+#include "r_patch.hh"
+#include "v_video.hh"
 #include <assert.h>
 
-#include "dsda/palette.h"
+#include "dsda/palette.hh"
 
 // posts are runs of non masked source pixels
 typedef struct

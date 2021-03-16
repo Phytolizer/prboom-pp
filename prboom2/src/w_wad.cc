@@ -34,7 +34,7 @@
 
 // use config.h if autoconf made one -- josh
 #ifdef HAVE_CONFIG_H
-#include "config.h"
+#include "config.hh"
 #endif
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
@@ -45,21 +45,21 @@
 #endif
 #include <fcntl.h>
 
-#include "doomstat.h"
-#include "d_net.h"
-#include "doomtype.h"
-#include "i_system.h"
-#include "r_main.h"
+#include "doomstat.hh"
+#include "d_net.hh"
+#include "doomtype.hh"
+#include "i_system.hh"
+#include "r_main.hh"
 
 #ifdef __GNUG__
 #pragma implementation "w_wad.h"
 #endif
-#include "w_wad.h"
-#include "lprintf.h"
+#include "w_wad.hh"
+#include "lprintf.hh"
 
 //e6y
-#include "r_demo.h"
-#include "e6y.h"
+#include "r_demo.hh"
+#include "e6y.hh"
 
 //
 // GLOBALS

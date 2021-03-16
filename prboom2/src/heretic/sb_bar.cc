@@ -16,17 +16,17 @@
 
 // SB_bar.c
 
-#include "doomstat.h"
-#include "m_cheat.h"
-#include "m_random.h"
-#include "v_video.h"
-#include "r_main.h"
-#include "w_wad.h"
+#include "doomstat.hh"
+#include "m_cheat.hh"
+#include "m_random.hh"
+#include "v_video.hh"
+#include "r_main.hh"
+#include "w_wad.hh"
 
-#include "heretic/def.h"
-#include "heretic/dstrings.h"
+#include "heretic/def.hh"
+#include "heretic/dstrings.hh"
 
-#include "sb_bar.h"
+#include "sb_bar.hh"
 
 #define STARTREDPALS            1
 #define STARTBONUSPALS          9

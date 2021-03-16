@@ -31,13 +31,13 @@
  *
  *-----------------------------------------------------------------------------*/
 
-#include "doomstat.h"
-#include "r_main.h"
-#include "p_spec.h"
-#include "p_tick.h"
-#include "s_sound.h"
-#include "sounds.h"
-#include "e6y.h"//e6y
+#include "doomstat.hh"
+#include "r_main.hh"
+#include "p_spec.hh"
+#include "p_tick.hh"
+#include "s_sound.hh"
+#include "sounds.hh"
+#include "e6y.hh"//e6y
 
 // the list of ceilings moving currently, including crushers
 ceilinglist_t *activeceilings;

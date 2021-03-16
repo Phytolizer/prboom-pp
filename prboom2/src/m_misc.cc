@@ -33,9 +33,9 @@
  *
  *-----------------------------------------------------------------------------*/
 
-#include "doomdef.h"
+#include "doomdef.hh"
 #ifdef HAVE_CONFIG_H
-#include "config.h"
+#include "config.hh"
 #endif
 
 #include <stdio.h>
@@ -49,45 +49,45 @@
 #include <fcntl.h>
 #include <sys/stat.h>
 
-#include "doomstat.h"
-#include "m_argv.h"
-#include "g_game.h"
-#include "m_menu.h"
-#include "am_map.h"
-#include "w_wad.h"
-#include "i_system.h"
-#include "i_sound.h"
-#include "i_video.h"
-#include "v_video.h"
-#include "hu_stuff.h"
-#include "st_stuff.h"
-#include "dstrings.h"
-#include "m_misc.h"
-#include "s_sound.h"
-#include "sounds.h"
-#include "i_joy.h"
-#include "lprintf.h"
-#include "d_main.h"
-#include "d_deh.h"
-#include "r_draw.h"
-#include "r_demo.h"
-#include "r_fps.h"
-#include "r_main.h"
-#include "r_things.h"
-#include "r_sky.h"
+#include "doomstat.hh"
+#include "m_argv.hh"
+#include "g_game.hh"
+#include "m_menu.hh"
+#include "am_map.hh"
+#include "w_wad.hh"
+#include "i_system.hh"
+#include "i_sound.hh"
+#include "i_video.hh"
+#include "v_video.hh"
+#include "hu_stuff.hh"
+#include "st_stuff.hh"
+#include "dstrings.hh"
+#include "m_misc.hh"
+#include "s_sound.hh"
+#include "sounds.hh"
+#include "i_joy.hh"
+#include "lprintf.hh"
+#include "d_main.hh"
+#include "d_deh.hh"
+#include "r_draw.hh"
+#include "r_demo.hh"
+#include "r_fps.hh"
+#include "r_main.hh"
+#include "r_things.hh"
+#include "r_sky.hh"
 
 //e6y
-#include "gl_struct.h"
-#include "g_overflow.h"
-#include "e6y.h"
+#include "gl_struct.hh"
+#include "g_overflow.hh"
+#include "e6y.hh"
 #ifdef USE_WINDOWS_LAUNCHER
-#include "e6y_launcher.h"
+#include "e6y_launcher.hh"
 #endif
 
-#include "dsda/settings.h"
+#include "dsda/settings.hh"
 
 // NSM
-#include "i_capture.h"
+#include "i_capture.hh"
 
 /* cph - disk icon not implemented */
 static inline void I_BeginRead(void) {}

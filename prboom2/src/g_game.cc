@@ -46,51 +46,51 @@
 #include <fcntl.h>
 
 #ifdef HAVE_CONFIG_H
-#include "config.h"
+#include "config.hh"
 #endif
 
-#include "doomstat.h"
-#include "d_net.h"
-#include "f_finale.h"
-#include "m_argv.h"
-#include "m_misc.h"
-#include "m_menu.h"
-#include "m_random.h"
-#include "p_setup.h"
-#include "p_saveg.h"
-#include "p_tick.h"
-#include "p_map.h"
-#include "p_checksum.h"
-#include "d_main.h"
-#include "wi_stuff.h"
-#include "hu_stuff.h"
-#include "st_stuff.h"
-#include "am_map.h"
-#include "w_wad.h"
-#include "r_main.h"
-#include "r_draw.h"
-#include "p_map.h"
-#include "s_sound.h"
-#include "s_advsound.h"
-#include "dstrings.h"
-#include "sounds.h"
-#include "r_data.h"
-#include "r_sky.h"
-#include "d_deh.h"              // Ty 3/27/98 deh declarations
-#include "p_inter.h"
-#include "g_game.h"
-#include "lprintf.h"
-#include "i_main.h"
-#include "i_system.h"
-#include "r_demo.h"
-#include "r_fps.h"
-#include "e6y.h"//e6y
-#include "dsda.h"
-#include "dsda/demo.h"
-#include "dsda/key_frame.h"
-#include "dsda/settings.h"
-#include "dsda/input.h"
-#include "statdump.h"
+#include "doomstat.hh"
+#include "d_net.hh"
+#include "f_finale.hh"
+#include "m_argv.hh"
+#include "m_misc.hh"
+#include "m_menu.hh"
+#include "m_random.hh"
+#include "p_setup.hh"
+#include "p_saveg.hh"
+#include "p_tick.hh"
+#include "p_map.hh"
+#include "p_checksum.hh"
+#include "d_main.hh"
+#include "wi_stuff.hh"
+#include "hu_stuff.hh"
+#include "st_stuff.hh"
+#include "am_map.hh"
+#include "w_wad.hh"
+#include "r_main.hh"
+#include "r_draw.hh"
+#include "p_map.hh"
+#include "s_sound.hh"
+#include "s_advsound.hh"
+#include "dstrings.hh"
+#include "sounds.hh"
+#include "r_data.hh"
+#include "r_sky.hh"
+#include "d_deh.hh"              // Ty 3/27/98 deh declarations
+#include "p_inter.hh"
+#include "g_game.hh"
+#include "lprintf.hh"
+#include "i_main.hh"
+#include "i_system.hh"
+#include "r_demo.hh"
+#include "r_fps.hh"
+#include "e6y.hh"//e6y
+#include "dsda.hh"
+#include "dsda/demo.hh"
+#include "dsda/key_frame.hh"
+#include "dsda/settings.hh"
+#include "dsda/input.hh"
+#include "statdump.hh"
 
 // ano - used for version 255+ demos, like EE or MBF
 static char     prdemosig[] = "PR+UM";
@@ -277,8 +277,8 @@ int    bodyqueslot, bodyquesize;        // killough 2/8/98
 mobj_t **bodyque = 0;                   // phares 8/10/98
 
 // heretic
-#include "p_user.h"
-#include "heretic/def.h"
+#include "p_user.hh"
+#include "heretic/def.hh"
 
 int inventoryTics;
 int lookheld;
@@ -1442,7 +1442,7 @@ static void G_PlayerFinishLevel(int player)
 //
 // G_SetPlayerColour
 
-#include "r_draw.h"
+#include "r_draw.hh"
 
 void G_ChangedPlayerColour(int pn, int cl)
 {

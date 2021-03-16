@@ -18,7 +18,7 @@
 #ifndef __DSDA_GLOBAL__
 #define __DSDA_GLOBAL__
 
-#include "doomtype.h"
+#include "doomtype.hh"
 
 extern int g_mt_player;
 extern int g_mt_tfog;

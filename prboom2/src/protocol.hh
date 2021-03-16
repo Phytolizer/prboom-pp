@@ -33,9 +33,9 @@
 #ifndef __PROTOCOL__
 #define __PROTOCOL__
 
-#include "doomtype.h"
-#include "d_ticcmd.h"
-#include "m_swap.h"
+#include "doomtype.hh"
+#include "d_ticcmd.hh"
+#include "m_swap.hh"
 
 enum packet_type_e {
   PKT_INIT,    // initial packet to server

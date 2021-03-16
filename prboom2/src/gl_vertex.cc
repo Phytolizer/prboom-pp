@@ -71,15 +71,15 @@
 // Adapted for prboom(-plus) by entryway
 
 #ifdef HAVE_CONFIG_H
-#include "config.h"
+#include "config.hh"
 #endif
 
-#include "gl_opengl.h"
+#include "gl_opengl.hh"
 
-#include "z_zone.h"
-#include "v_video.h"
-#include "gl_intern.h"
-#include "r_main.h"
+#include "z_zone.hh"
+#include "v_video.hh"
+#include "gl_intern.hh"
+#include "r_main.hh"
 
 typedef struct vertexsplit_info_s
 {

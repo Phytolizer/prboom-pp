@@ -37,10 +37,10 @@
 #ifndef __V_VIDEO__
 #define __V_VIDEO__
 
-#include "doomtype.h"
-#include "doomdef.h"
+#include "doomtype.hh"
+#include "doomdef.hh"
 // Needed because we are refering to patches.
-#include "r_data.h"
+#include "r_data.hh"
 
 //
 // VIDEO
@@ -304,7 +304,7 @@ void V_GetWideRect(int *x, int *y, int *w, int *h, enum patch_translation_e flag
 int V_BestColor(const unsigned char *palette, int r, int g, int b);
 
 #ifdef GL_DOOM
-#include "gl_struct.h"
+#include "gl_struct.hh"
 #endif
 
 // heretic

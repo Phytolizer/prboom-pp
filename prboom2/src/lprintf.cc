@@ -34,7 +34,7 @@
  *-----------------------------------------------------------------------------*/
 
 #ifdef HAVE_CONFIG_H
-#include "config.h"
+#include "config.hh"
 #endif
 #ifdef _MSC_VER
 #include <io.h>
@@ -47,13 +47,13 @@
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif
-#include "doomtype.h"
-#include "lprintf.h"
-#include "i_main.h"
-#include "i_system.h"
-#include "m_argv.h"
-#include "e6y.h"//e6y
-#include "i_capture.h"
+#include "doomtype.hh"
+#include "lprintf.hh"
+#include "i_main.hh"
+#include "i_system.hh"
+#include "m_argv.hh"
+#include "e6y.hh"//e6y
+#include "i_capture.hh"
 
 int cons_error_mask = -1-LO_INFO; /* all but LO_INFO when redir'd */
 int cons_output_mask = -1;        /* all output enabled */

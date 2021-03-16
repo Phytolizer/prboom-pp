@@ -21,15 +21,15 @@
 #include <string.h>
 #include <ctype.h>
 #include <assert.h>
-#include "umapinfo.h"
-#include "scanner.h"
+#include "umapinfo.hh"
+#include "scanner.hh"
 
 extern "C"
 {
-#include "m_misc.h"
-#include "g_game.h"
-#include "doomdef.h"
-#include "doomstat.h"
+#include "m_misc.hh"
+#include "g_game.hh"
+#include "doomdef.hh"
+#include "doomstat.hh"
 
 void M_AddEpisode(const char *map, char *def);
 

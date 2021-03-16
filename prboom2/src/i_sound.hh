@@ -34,14 +34,14 @@
 #ifndef __I_SOUND__
 #define __I_SOUND__
 
-#include "sounds.h"
-#include "doomtype.h"
+#include "sounds.hh"
+#include "doomtype.hh"
 
 #define SNDSERV
 #undef SNDINTR
 
 #ifndef SNDSERV
-#include "l_soundgen.h"
+#include "l_soundgen.hh"
 #endif
 
 extern int snd_pcspeaker;

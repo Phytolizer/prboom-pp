@@ -19,33 +19,33 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "txt_main.h"
-#include "txt_io.h"
+#include "txt_main.hh"
+#include "txt_io.hh"
 
-#include "net_client.h"
+#include "net_client.hh"
 
-#include "config.h"
-#include "ct_chat.h"
-#include "doomdef.h"
-#include "deh_main.h"
-#include "d_iwad.h"
-#include "i_endoom.h"
-#include "i_input.h"
-#include "i_joystick.h"
-#include "i_sound.h"
-#include "i_swap.h" // [crispy] SHORT()
-#include "i_system.h"
-#include "i_timer.h"
-#include "i_video.h"
-#include "m_argv.h"
-#include "m_config.h"
-#include "m_controls.h"
-#include "m_misc.h"
-#include "p_local.h"
-#include "s_sound.h"
-#include "w_main.h"
-#include "v_video.h"
-#include "v_trans.h" // [crispy] dp_translation
+#include "config.hh"
+#include "ct_chat.hh"
+#include "doomdef.hh"
+#include "deh_main.hh"
+#include "d_iwad.hh"
+#include "i_endoom.hh"
+#include "i_input.hh"
+#include "i_joystick.hh"
+#include "i_sound.hh"
+#include "i_swap.hh" // [crispy] SHORT()
+#include "i_system.hh"
+#include "i_timer.hh"
+#include "i_video.hh"
+#include "m_argv.hh"
+#include "m_config.hh"
+#include "m_controls.hh"
+#include "m_misc.hh"
+#include "p_local.hh"
+#include "s_sound.hh"
+#include "w_main.hh"
+#include "v_video.hh"
+#include "v_trans.hh" // [crispy] dp_translation
 
 #define CT_KEY_GREEN    'g'
 #define CT_KEY_YELLOW   'y'

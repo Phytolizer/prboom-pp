@@ -34,21 +34,21 @@
 // killough 5/2/98: reindented, removed useless code, beautified
 
 #ifdef HAVE_CONFIG_H
-#include "config.h"
+#include "config.hh"
 #endif
 
-#include "doomstat.h"
-#include "s_sound.h"
-#include "s_advsound.h"
-#include "i_sound.h"
-#include "i_system.h"
-#include "d_main.h"
-#include "r_main.h"
-#include "m_random.h"
-#include "w_wad.h"
-#include "lprintf.h"
-#include "sc_man.h"
-#include "e6y.h"
+#include "doomstat.hh"
+#include "s_sound.hh"
+#include "s_advsound.hh"
+#include "i_sound.hh"
+#include "i_system.hh"
+#include "d_main.hh"
+#include "r_main.hh"
+#include "m_random.hh"
+#include "w_wad.hh"
+#include "lprintf.hh"
+#include "sc_man.hh"
+#include "e6y.hh"
 
 // when to clip out sounds
 // Does not fit the large outdoor areas.

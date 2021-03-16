@@ -17,10 +17,10 @@
 
 #include <stdlib.h>
 #include <math.h>
-#include "doomdef.h"
-#include "m_bbox.h"
-#include "r_local.h"
-#include "tables.h"
+#include "doomdef.hh"
+#include "m_bbox.hh"
+#include "r_local.hh"
+#include "tables.hh"
 
 int viewangleoffset;
 

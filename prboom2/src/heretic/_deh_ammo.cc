@@ -19,12 +19,12 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "doomdef.h"
-#include "doomtype.h"
-#include "deh_defs.h"
-#include "deh_io.h"
-#include "deh_main.h"
-#include "p_local.h"
+#include "doomdef.hh"
+#include "doomtype.hh"
+#include "deh_defs.hh"
+#include "deh_io.hh"
+#include "deh_main.hh"
+#include "p_local.hh"
 
 static void *DEH_AmmoStart(deh_context_t *context, char *line)
 {

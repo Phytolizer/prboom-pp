@@ -24,7 +24,7 @@
 #ifndef __IN_LUDE__
 #define __IN_LUDE__
 
-#include "doomdef.h"
+#include "doomdef.hh"
 
 void IN_Ticker(void);
 void IN_Drawer(void);

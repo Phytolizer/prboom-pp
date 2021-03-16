@@ -34,7 +34,7 @@
 #ifndef __M_CHEAT__
 #define __M_CHEAT__
 
-#include "d_event.h"
+#include "d_event.hh"
 
 #define CHEAT(cheat, deh_cheat, when, func, arg) \
   { cheat, deh_cheat, when, func, arg, 0, 0, \

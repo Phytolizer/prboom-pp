@@ -33,7 +33,7 @@
 
 
 #ifdef HAVE_CONFIG_H
-#include "config.h"
+#include "config.hh"
 #endif
 
 #ifdef USE_SHADERS
@@ -41,17 +41,17 @@
 #include <SDL.h>
 #include <SDL_opengl.h>
 #include <math.h>
-#include "doomstat.h"
-#include "v_video.h"
-#include "gl_opengl.h"
-#include "gl_intern.h"
-#include "r_main.h"
-#include "w_wad.h"
-#include "i_system.h"
-#include "r_bsp.h"
-#include "lprintf.h"
-#include "e6y.h"
-#include "r_things.h"
+#include "doomstat.hh"
+#include "v_video.hh"
+#include "gl_opengl.hh"
+#include "gl_intern.hh"
+#include "r_main.hh"
+#include "w_wad.hh"
+#include "i_system.hh"
+#include "r_bsp.hh"
+#include "lprintf.hh"
+#include "e6y.hh"
+#include "r_things.hh"
 
 GLShader *sh_main = NULL;
 static GLShader *active_shader = NULL;

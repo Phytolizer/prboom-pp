@@ -31,30 +31,30 @@
  *
  *-----------------------------------------------------------------------------*/
 
-#include "doomstat.h"
-#include "dstrings.h"
-#include "m_random.h"
-#include "am_map.h"
-#include "r_main.h"
-#include "s_sound.h"
-#include "sounds.h"
-#include "d_deh.h"  // Ty 03/22/98 - externalized strings
-#include "p_tick.h"
-#include "lprintf.h"
+#include "doomstat.hh"
+#include "dstrings.hh"
+#include "m_random.hh"
+#include "am_map.hh"
+#include "r_main.hh"
+#include "s_sound.hh"
+#include "sounds.hh"
+#include "d_deh.hh"  // Ty 03/22/98 - externalized strings
+#include "p_tick.hh"
+#include "lprintf.hh"
 
-#include "p_inter.h"
-#include "p_enemy.h"
-#include "hu_tracers.h"
+#include "p_inter.hh"
+#include "p_enemy.hh"
+#include "hu_tracers.hh"
 
 #ifdef __GNUG__
 #pragma implementation "p_inter.h"
 #endif
-#include "p_inter.h"
-#include "e6y.h"//e6y
-#include "dsda.h"
+#include "p_inter.hh"
+#include "e6y.hh"//e6y
+#include "dsda.hh"
 
-#include "heretic/def.h"
-#include "heretic/sb_bar.h"
+#include "heretic/def.hh"
+#include "heretic/sb_bar.hh"
 
 #define BONUSADD        6
 
@@ -1217,7 +1217,7 @@ void P_DamageMobj(mobj_t *target,mobj_t *inflictor, mobj_t *source, int damage)
 
 // heretic
 
-#include "p_user.h"
+#include "p_user.hh"
 
 #define CHICKENTICS (40*35)
 

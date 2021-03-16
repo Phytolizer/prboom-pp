@@ -38,15 +38,15 @@
 #include <string.h>
 
 #ifdef HAVE_CONFIG_H
-#include "config.h"
+#include "config.hh"
 #endif
 
-#include "doomdef.h"
-#include "doomtype.h"
-#include "dstrings.h"
-#include "d_main.h"
-#include "m_fixed.h"
-#include "i_system.h"
+#include "doomdef.hh"
+#include "doomtype.hh"
+#include "dstrings.hh"
+#include "d_main.hh"
+#include "m_fixed.hh"
+#include "i_system.hh"
 
 #import <Foundation/NSArray.h>
 #import <Foundation/NSBundle.h>

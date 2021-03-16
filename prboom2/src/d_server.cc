@@ -34,7 +34,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include "config.h"
+#include "config.hh"
 #endif
 
 #include <stdio.h>
@@ -54,14 +54,14 @@
  #include "SDL.h"
 #endif
 
-#include "doomtype.h"
-#include "protocol.h"
-#include "i_network.h"
+#include "doomtype.hh"
+#include "protocol.hh"
+#include "i_network.hh"
 #ifndef PRBOOM_SERVER
-#include "m_fixed.h"
+#include "m_fixed.hh"
 #endif
-#include "i_system.h"
-#include "m_swap.h"
+#include "i_system.hh"
+#include "m_swap.hh"
 
 #ifndef HAVE_GETOPT
 /* The following code for getopt is from the libc-source of FreeBSD,

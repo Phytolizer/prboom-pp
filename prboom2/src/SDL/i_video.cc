@@ -33,7 +33,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include "config.h"
+#include "config.hh"
 #endif
 
 #ifdef _WIN32
@@ -55,39 +55,39 @@
 #include <SDL_syswm.h>
 #endif
 
-#include "m_argv.h"
-#include "doomstat.h"
-#include "doomdef.h"
-#include "doomtype.h"
-#include "v_video.h"
-#include "r_draw.h"
-#include "r_things.h"
-#include "r_plane.h"
-#include "r_main.h"
-#include "f_wipe.h"
-#include "d_main.h"
-#include "d_event.h"
-#include "d_deh.h"
-#include "i_joy.h"
-#include "i_video.h"
-#include "i_capture.h"
-#include "z_zone.h"
-#include "s_sound.h"
-#include "sounds.h"
-#include "w_wad.h"
-#include "st_stuff.h"
-#include "am_map.h"
-#include "g_game.h"
-#include "lprintf.h"
+#include "m_argv.hh"
+#include "doomstat.hh"
+#include "doomdef.hh"
+#include "doomtype.hh"
+#include "v_video.hh"
+#include "r_draw.hh"
+#include "r_things.hh"
+#include "r_plane.hh"
+#include "r_main.hh"
+#include "f_wipe.hh"
+#include "d_main.hh"
+#include "d_event.hh"
+#include "d_deh.hh"
+#include "i_joy.hh"
+#include "i_video.hh"
+#include "i_capture.hh"
+#include "z_zone.hh"
+#include "s_sound.hh"
+#include "sounds.hh"
+#include "w_wad.hh"
+#include "st_stuff.hh"
+#include "am_map.hh"
+#include "g_game.hh"
+#include "lprintf.hh"
 
 #ifdef GL_DOOM
-#include "gl_struct.h"
+#include "gl_struct.hh"
 #endif
 
-#include "e6y.h"//e6y
-#include "i_main.h"
+#include "e6y.hh"//e6y
+#include "i_main.hh"
 
-#include "dsda/palette.h"
+#include "dsda/palette.hh"
 
 //e6y: new mouse code
 static SDL_Cursor* cursors[2] = {NULL, NULL};

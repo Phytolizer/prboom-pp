@@ -34,7 +34,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include "config.h"
+#include "config.hh"
 #endif
 
 #include <stdio.h>
@@ -47,15 +47,15 @@
 #include <signal.h>
 #include <string.h>
 
-#include "doomtype.h"
-#include "m_fixed.h"
-#include "i_system.h"
-#include "doomdef.h"
+#include "doomtype.hh"
+#include "m_fixed.hh"
+#include "i_system.hh"
+#include "doomdef.hh"
 
 #ifdef __GNUG__
 #pragma implementation "i_system.h"
 #endif
-#include "i_system.h"
+#include "i_system.hh"
 
 void I_uSleep(unsigned long usecs)
 {

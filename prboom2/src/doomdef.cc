@@ -37,7 +37,7 @@
 #pragma implementation "doomdef.h"
 #endif
 
-#include "doomdef.h"
+#include "doomdef.hh"
 
 // Location for any defines turned variables.
 // None.

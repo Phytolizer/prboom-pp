@@ -15,11 +15,11 @@
 //
 // R_bsp.c
 
-#include "doomdef.h"
-#include "i_system.h"
-#include "m_bbox.h"
-#include "i_system.h"
-#include "r_local.h"
+#include "doomdef.hh"
+#include "i_system.hh"
+#include "m_bbox.hh"
+#include "i_system.hh"
+#include "r_local.hh"
 
 seg_t *curline;
 side_t *sidedef;

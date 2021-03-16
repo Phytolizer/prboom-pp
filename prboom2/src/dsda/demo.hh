@@ -18,7 +18,7 @@
 #ifndef __DSDA_DEMO__
 #define __DSDA_DEMO__
 
-#include "d_ticcmd.h"
+#include "d_ticcmd.hh"
 
 void dsda_InitDemo(char* name);
 void dsda_WriteToDemo(void* buffer, size_t length);

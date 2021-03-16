@@ -32,17 +32,17 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include "config.h"
+#include "config.hh"
 #endif
 
-#include "gl_opengl.h"
+#include "gl_opengl.hh"
 
 #include <SDL.h>
 
-#include "gl_intern.h"
+#include "gl_intern.hh"
 
-#include "i_main.h"
-#include "lprintf.h"
+#include "i_main.hh"
+#include "lprintf.hh"
 
 dboolean gl_use_FBO = false;
 

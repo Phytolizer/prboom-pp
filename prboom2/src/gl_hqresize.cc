@@ -68,14 +68,14 @@
 */
 
 #ifdef HAVE_CONFIG_H
-#include "config.h"
+#include "config.hh"
 #endif
 
 #include <SDL.h>
 
-#include "doomstat.h"
-#include "v_video.h"
-#include "gl_intern.h"
+#include "doomstat.hh"
+#include "v_video.hh"
+#include "gl_intern.hh"
 
 int gl_texture_hqresize;
 const char *gl_hqresizemodes[hq_scale_max] = {

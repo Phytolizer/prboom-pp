@@ -18,15 +18,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "doomtype.h"
-#include "m_misc.h"
+#include "doomtype.hh"
+#include "m_misc.hh"
 
-#include "deh_defs.h"
-#include "deh_main.h"
-#include "deh_mapping.h"
-#include "deh_htic.h"
+#include "deh_defs.hh"
+#include "deh_main.hh"
+#include "deh_mapping.hh"
+#include "deh_htic.hh"
 
-#include "info.h"
+#include "info.hh"
 
 DEH_BEGIN_MAPPING(thing_mapping, mobjinfo_t)
   DEH_MAPPING("ID #",                doomednum)

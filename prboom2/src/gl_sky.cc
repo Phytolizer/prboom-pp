@@ -38,24 +38,24 @@
 */
 
 #ifdef HAVE_CONFIG_H
-#include "config.h"
+#include "config.hh"
 #endif
 
-#include "gl_opengl.h"
+#include "gl_opengl.hh"
 
 #include <SDL.h>
 
-#include "doomstat.h"
-#include "v_video.h"
-#include "gl_intern.h"
-#include "r_plane.h"
-#include "r_sky.h"
-#include "r_main.h"
-#include "sc_man.h"
-#include "m_misc.h"
-#include "lprintf.h"
+#include "doomstat.hh"
+#include "v_video.hh"
+#include "gl_intern.hh"
+#include "r_plane.hh"
+#include "r_sky.hh"
+#include "r_main.hh"
+#include "sc_man.hh"
+#include "m_misc.hh"
+#include "lprintf.hh"
 
-#include "e6y.h"
+#include "e6y.hh"
 
 typedef struct
 {

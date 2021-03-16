@@ -34,20 +34,20 @@
 // 4/25/98, 5/2/98 killough: reformatted, beautified
 
 #ifdef HAVE_CONFIG_H
-#include "config.h"
+#include "config.hh"
 #endif
 #include "SDL.h"
 
-#include "doomstat.h"
-#include "r_main.h"
-#include "r_bsp.h"
-#include "r_segs.h"
-#include "r_plane.h"
-#include "r_things.h"
-#include "r_draw.h"
-#include "w_wad.h"
-#include "v_video.h"
-#include "lprintf.h"
+#include "doomstat.hh"
+#include "r_main.hh"
+#include "r_bsp.hh"
+#include "r_segs.hh"
+#include "r_plane.hh"
+#include "r_things.hh"
+#include "r_draw.hh"
+#include "w_wad.hh"
+#include "v_video.hh"
+#include "lprintf.hh"
 
 // OPTIMIZE: closed two sided lines as single sided
 

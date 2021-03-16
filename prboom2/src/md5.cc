@@ -19,12 +19,12 @@
  *  - Ian Jackson <ian@chiark.greenend.org.uk>.
  * Still in the public domain.
  */
-#include "config.h"
+#include "config.hh"
 
 #include <string.h>             /* for memcpy() */
 #include <sys/types.h>          /* for stupid systems */
 
-#include "md5.h"
+#include "md5.hh"
 
 #ifdef WORDS_BIGENDIAN
 void

@@ -34,17 +34,17 @@
  *
  *-----------------------------------------------------------------------------*/
 
-#include "doomstat.h"
-#include "doomtype.h"
-#include "m_bbox.h"
-#include "r_main.h"
-#include "p_maputl.h"
-#include "p_map.h"
-#include "p_setup.h"
-#include "lprintf.h"
-#include "g_game.h"
-#include "g_overflow.h"
-#include "e6y.h"//e6y
+#include "doomstat.hh"
+#include "doomtype.hh"
+#include "m_bbox.hh"
+#include "r_main.hh"
+#include "p_maputl.hh"
+#include "p_map.hh"
+#include "p_setup.hh"
+#include "lprintf.hh"
+#include "g_game.hh"
+#include "g_overflow.hh"
+#include "e6y.hh"//e6y
 
 //
 // P_AproxDistance

@@ -33,10 +33,10 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "i_sound.h"
-#include "i_video.h"
-#include "lprintf.h"
-#include "i_capture.h"
+#include "i_sound.hh"
+#include "i_video.hh"
+#include "lprintf.hh"
+#include "i_capture.hh"
 
 
 int capturing_video = 0;

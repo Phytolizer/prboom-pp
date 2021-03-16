@@ -47,7 +47,7 @@
 // active before macro replacements below are in effect.
 
 #ifdef HAVE_CONFIG_H
-#include "config.h"
+#include "config.hh"
 #endif
 #include <stdio.h>
 #include <stdlib.h>

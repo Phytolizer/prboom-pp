@@ -29,10 +29,10 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include "config.h"
+#include "config.hh"
 #endif
 
-#include "musicplayer.h"
+#include "musicplayer.hh"
 
 #ifndef HAVE_LIBDUMB
 #include <string.h>
@@ -75,7 +75,7 @@ const music_player_t db_player =
 
 #include <dumb.h>
 #include <string.h>
-#include "lprintf.h"
+#include "lprintf.hh"
 
 
 static float db_delta;

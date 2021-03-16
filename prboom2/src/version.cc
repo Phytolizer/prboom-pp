@@ -33,8 +33,8 @@
  */
 
 
-#include "doomdef.h"
-#include "version.h"
+#include "doomdef.hh"
+#include "version.hh"
 
 #ifndef BUILD_DATE
 #define BUILD_DATE __DATE__

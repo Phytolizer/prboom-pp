@@ -36,7 +36,7 @@
 #define __M_BBOX__
 
 #include <limits.h>
-#include "m_fixed.h"
+#include "m_fixed.hh"
 
 /* Bounding box coordinate storage. */
 enum

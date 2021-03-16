@@ -15,15 +15,15 @@
 //	DSDA Hud
 //
 
-#include "st_stuff.h"
-#include "hu_lib.h"
-#include "hu_stuff.h"
-#include "doomstat.h"
+#include "st_stuff.hh"
+#include "hu_lib.hh"
+#include "hu_stuff.hh"
+#include "doomstat.hh"
 
-#include "dsda.h"
-#include "dsda/global.h"
-#include "dsda/settings.h"
-#include "hud.h"
+#include "dsda.hh"
+#include "dsda/global.hh"
+#include "dsda/settings.hh"
+#include "hud.hh"
 
 #define DSDA_TEXT_X 2
 #define DSDA_INTERMISSION_TIME_Y 1

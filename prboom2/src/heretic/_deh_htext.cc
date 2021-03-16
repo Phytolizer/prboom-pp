@@ -19,15 +19,15 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "doomtype.h"
-#include "dstrings.h"
+#include "doomtype.hh"
+#include "dstrings.hh"
 
-#include "z_zone.h"
+#include "z_zone.hh"
 
-#include "deh_defs.h"
-#include "deh_io.h"
-#include "deh_htic.h"
-#include "deh_main.h"
+#include "deh_defs.hh"
+#include "deh_io.hh"
+#include "deh_htic.hh"
+#include "deh_main.hh"
 
 //
 // Ok, Greg, the action pointers thing was bad enough, but this really

@@ -33,7 +33,7 @@
 #ifndef __P_TICK__
 #define __P_TICK__
 
-#include "d_think.h"
+#include "d_think.hh"
 
 #ifdef __GNUG__
 #pragma interface

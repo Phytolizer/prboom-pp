@@ -29,10 +29,10 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include "config.h"
+#include "config.hh"
 #endif
 
-#include "musicplayer.h"
+#include "musicplayer.hh"
 
 #ifndef HAVE_LIBFLUIDSYNTH
 #include <string.h>
@@ -66,10 +66,10 @@ const music_player_t fl_player =
 #else // HAVE_LIBFLUIDSYNTH
 
 #include <fluidsynth.h>
-#include "i_sound.h" // for snd_soundfont, mus_fluidsynth_gain
-#include "i_system.h" // for I_FindFile()
-#include "lprintf.h"
-#include "midifile.h"
+#include "i_sound.hh" // for snd_soundfont, mus_fluidsynth_gain
+#include "i_system.hh" // for I_FindFile()
+#include "lprintf.hh"
+#include "midifile.hh"
 #include <stdlib.h>
 #include <string.h>
 

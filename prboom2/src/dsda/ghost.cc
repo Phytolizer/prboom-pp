@@ -17,19 +17,19 @@
 
 #include <stdio.h>
 
-#include "m_argv.h"
-#include "lprintf.h"
-#include "doomtype.h"
-#include "doomstat.h"
-#include "info.h"
-#include "p_maputl.h"
-#include "p_tick.h"
-#include "sounds.h"
-#include "z_zone.h"
-#include "w_wad.h"
+#include "m_argv.hh"
+#include "lprintf.hh"
+#include "doomtype.hh"
+#include "doomstat.hh"
+#include "info.hh"
+#include "p_maputl.hh"
+#include "p_tick.hh"
+#include "sounds.hh"
+#include "z_zone.hh"
+#include "w_wad.hh"
 
-#include "settings.h"
-#include "ghost.h"
+#include "settings.hh"
+#include "ghost.hh"
 
 #define DSDA_GHOST_MIN_VERSION 1
 #define DSDA_GHOST_VERSION 2

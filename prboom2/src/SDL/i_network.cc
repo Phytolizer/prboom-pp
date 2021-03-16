@@ -53,10 +53,10 @@
 #include "SDL.h"
 #include "SDL_net.h"
 
-#include "protocol.h"
-#include "i_network.h"
-#include "lprintf.h"
-//#include "doomstat.h"
+#include "protocol.hh"
+#include "i_network.hh"
+#include "lprintf.hh"
+//#include "doomstat.hh"
 
 /* cph -
  * Each client will either use the IPv4 socket or the IPv6 socket

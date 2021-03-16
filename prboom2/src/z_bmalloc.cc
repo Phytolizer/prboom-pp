@@ -32,13 +32,13 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include "config.h"
+#include "config.hh"
 #endif
 
-#include "doomtype.h"
-#include "z_zone.h"
-#include "z_bmalloc.h"
-#include "lprintf.h"
+#include "doomtype.hh"
+#include "z_zone.hh"
+#include "z_bmalloc.hh"
+#include "lprintf.hh"
 
 typedef struct bmalpool_s {
   struct bmalpool_s *nextpool;

@@ -32,16 +32,16 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include "config.h"
+#include "config.hh"
 #endif
 
-#include "doomdef.h"
-#include "doomstat.h"
-#include "m_argv.h"
-#include "m_misc.h"
-#include "lprintf.h"
+#include "doomdef.hh"
+#include "doomstat.hh"
+#include "m_argv.hh"
+#include "m_misc.hh"
+#include "lprintf.hh"
 
-#include "hu_tracers.h"
+#include "hu_tracers.hh"
 
 dboolean traces_present;
 

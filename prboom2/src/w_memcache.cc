@@ -34,18 +34,18 @@
 
 // use config.h if autoconf made one -- josh
 #ifdef HAVE_CONFIG_H
-#include "config.h"
+#include "config.hh"
 #endif
 
-#include "doomstat.h"
-#include "doomtype.h"
+#include "doomstat.hh"
+#include "doomtype.hh"
 
 #ifdef __GNUG__
 #pragma implementation "w_wad.h"
 #endif
-#include "w_wad.h"
-#include "z_zone.h"
-#include "lprintf.h"
+#include "w_wad.hh"
+#include "z_zone.hh"
+#include "lprintf.hh"
 
 static struct {
   void *cache;

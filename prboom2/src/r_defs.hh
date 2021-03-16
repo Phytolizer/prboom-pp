@@ -35,18 +35,18 @@
 #define __R_DEFS__
 
 // Screenwidth.
-#include "doomdef.h"
+#include "doomdef.hh"
 
 // Some more or less basic data types
 // we depend on.
-#include "m_fixed.h"
+#include "m_fixed.hh"
 
 // We rely on the thinker data struct
 // to handle sound origins in sectors.
-#include "d_think.h"
+#include "d_think.hh"
 
 // SECTORS do store MObjs anyway.
-#include "p_mobj.h"
+#include "p_mobj.hh"
 
 #ifdef __GNUG__
 #pragma interface

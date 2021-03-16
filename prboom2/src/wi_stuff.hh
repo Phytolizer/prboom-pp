@@ -34,9 +34,9 @@
 #ifndef __WI_STUFF__
 #define __WI_STUFF__
 
-//#include "v_video.h"
+//#include "v_video.hh"
 
-#include "doomdef.h"
+#include "doomdef.hh"
 
 // States for the intermission
 

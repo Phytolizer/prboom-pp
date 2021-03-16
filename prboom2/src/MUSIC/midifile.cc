@@ -29,15 +29,15 @@
 #include <assert.h>
 
 #ifndef TEST
-#include "doomdef.h"
-#include "doomtype.h"
+#include "doomdef.hh"
+#include "doomtype.hh"
 #else
 typedef enum {false, true} dboolean;
 typedef unsigned char byte;
 #define PACKEDATTR __attribute__((packed))
 #endif
-#include "lprintf.h"
-#include "midifile.h"
+#include "lprintf.hh"
+#include "midifile.hh"
 
 #define HEADER_CHUNK_ID "MThd"
 #define TRACK_CHUNK_ID  "MTrk"
@@ -48,7 +48,7 @@ typedef unsigned char byte;
 
 
 #ifdef HAVE_CONFIG_H
-#include "config.h"
+#include "config.hh"
 #endif
 
 #ifndef ntohl

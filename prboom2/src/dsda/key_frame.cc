@@ -15,26 +15,26 @@
 //	DSDA Key Frame
 //
 
-#include "time.h"
+#include "time.hh"
 
-#include "doomstat.h"
-#include "s_advsound.h"
-#include "s_sound.h"
-#include "p_saveg.h"
-#include "p_map.h"
-#include "r_draw.h"
-#include "r_fps.h"
-#include "r_main.h"
-#include "g_game.h"
-#include "m_argv.h"
-#include "m_misc.h"
-#include "i_system.h"
-#include "lprintf.h"
-#include "e6y.h"
+#include "doomstat.hh"
+#include "s_advsound.hh"
+#include "s_sound.hh"
+#include "p_saveg.hh"
+#include "p_map.hh"
+#include "r_draw.hh"
+#include "r_fps.hh"
+#include "r_main.hh"
+#include "g_game.hh"
+#include "m_argv.hh"
+#include "m_misc.hh"
+#include "i_system.hh"
+#include "lprintf.hh"
+#include "e6y.hh"
 
-#include "dsda/demo.h"
-#include "dsda/settings.h"
-#include "key_frame.h"
+#include "dsda/demo.hh"
+#include "dsda/settings.hh"
+#include "key_frame.hh"
 
 // Hook into the save & demo ecosystem
 extern const byte* demo_p;

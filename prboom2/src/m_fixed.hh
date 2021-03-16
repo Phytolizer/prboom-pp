@@ -35,11 +35,11 @@
 #define __M_FIXED__
 
 #ifdef HAVE_CONFIG_H
-#include "config.h"
+#include "config.hh"
 #endif
 
 #include <stdlib.h>
-#include "doomtype.h"
+#include "doomtype.hh"
 
 /*
  * Fixed point, 32bit as 16.16.

@@ -32,27 +32,27 @@
  *
  *-----------------------------------------------------------------------------*/
 
-#include "doomstat.h"
-#include "r_main.h"
-#include "p_mobj.h"
-#include "p_maputl.h"
-#include "p_map.h"
-#include "p_setup.h"
-#include "p_spec.h"
-#include "s_sound.h"
-#include "sounds.h"
-#include "p_inter.h"
-#include "m_random.h"
-#include "m_bbox.h"
-#include "lprintf.h"
-#include "m_argv.h"
-#include "g_game.h"
-#include "g_overflow.h"
-#include "hu_tracers.h"
-#include "e6y.h"//e6y
-#include "dsda.h"
+#include "doomstat.hh"
+#include "r_main.hh"
+#include "p_mobj.hh"
+#include "p_maputl.hh"
+#include "p_map.hh"
+#include "p_setup.hh"
+#include "p_spec.hh"
+#include "s_sound.hh"
+#include "sounds.hh"
+#include "p_inter.hh"
+#include "m_random.hh"
+#include "m_bbox.hh"
+#include "lprintf.hh"
+#include "m_argv.hh"
+#include "g_game.hh"
+#include "g_overflow.hh"
+#include "hu_tracers.hh"
+#include "e6y.hh"//e6y
+#include "dsda.hh"
 
-#include "heretic/def.h"
+#include "heretic/def.hh"
 
 static mobj_t    *tmthing;
 static fixed_t   tmx;
@@ -2259,7 +2259,7 @@ dboolean P_CheckSector(sector_t* sector,dboolean crunch)
 // CPhipps -
 // Use block memory allocator here
 
-#include "z_bmalloc.h"
+#include "z_bmalloc.hh"
 
 IMPLEMENT_BLOCK_MEMORY_ALLOC_ZONE(secnodezone, sizeof(msecnode_t), PU_LEVEL, 256, "SecNodes");
 

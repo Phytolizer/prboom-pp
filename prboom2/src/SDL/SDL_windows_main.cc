@@ -8,7 +8,7 @@
 #ifdef __WIN32__
 
 /* Include this so we define UNICODE properly */
-//#include "../../core/windows/SDL_windows.h"
+//#include "../../core/windows/SDL_windows.hh"
 #include "SDL/SDL_windows.h"
 #include <shellapi.h> /* CommandLineToArgvW() */
 

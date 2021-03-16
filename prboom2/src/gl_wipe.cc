@@ -32,16 +32,16 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include "config.h"
+#include "config.hh"
 #endif
 
-#include "gl_opengl.h"
+#include "gl_opengl.hh"
 
-#include "v_video.h"
-#include "gl_intern.h"
-#include "m_random.h"
-#include "lprintf.h"
-#include "e6y.h"
+#include "v_video.hh"
+#include "gl_intern.hh"
+#include "m_random.hh"
+#include "lprintf.hh"
+#include "e6y.hh"
 
 static GLuint wipe_scr_start_tex = 0;
 static GLuint wipe_scr_end_tex = 0;

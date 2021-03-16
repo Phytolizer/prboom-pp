@@ -40,8 +40,8 @@
 #define __D_STATE__
 
 // We need the playr data structure as well.
-#include "d_player.h"
-#include "umapinfo.h"
+#include "d_player.hh"
+#include "umapinfo.hh"
 
 #ifdef __GNUG__
 #pragma interface

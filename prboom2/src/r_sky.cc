@@ -37,9 +37,9 @@
 #ifdef __GNUG__
 #pragma implementation "r_sky.h"
 #endif
-#include "r_sky.h"
-#include "r_main.h"
-#include "e6y.h"
+#include "r_sky.hh"
+#include "r_main.hh"
+#include "e6y.hh"
 
 //
 // sky mapping

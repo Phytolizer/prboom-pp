@@ -32,16 +32,16 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include "config.h"
+#include "config.hh"
 #endif
 
 #include <stdio.h>
 
 #include <SDL.h>
-#include "gl_opengl.h"
+#include "gl_opengl.hh"
 
-#include "doomtype.h"
-#include "lprintf.h"
+#include "doomtype.hh"
+#include "lprintf.hh"
 
 #define isExtensionSupported(ext) strstr(extensions, ext)
 

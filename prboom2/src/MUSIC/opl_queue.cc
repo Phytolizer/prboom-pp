@@ -26,9 +26,9 @@
 
 #include <stdlib.h>
 #include <string.h>
-#include "lprintf.h"
+#include "lprintf.hh"
 
-#include "opl_queue.h"
+#include "opl_queue.hh"
 
 #define MAX_OPL_QUEUE 64
 

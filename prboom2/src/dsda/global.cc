@@ -18,18 +18,18 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "m_argv.h"
-#include "info.h"
-#include "d_items.h"
-#include "p_inter.h"
-#include "p_spec.h"
-#include "sounds.h"
-#include "d_main.h"
-#include "v_video.h"
-#include "hu_stuff.h"
-#include "heretic/def.h"
+#include "m_argv.hh"
+#include "info.hh"
+#include "d_items.hh"
+#include "p_inter.hh"
+#include "p_spec.hh"
+#include "sounds.hh"
+#include "d_main.hh"
+#include "v_video.hh"
+#include "hu_stuff.hh"
+#include "heretic/def.hh"
 
-#include "global.h"
+#include "global.hh"
 
 #define IGNORE_VALUE -1
 

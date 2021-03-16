@@ -36,26 +36,26 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include "config.h"
+#include "config.hh"
 #endif
 #include "SDL.h"
 
-#include "doomdef.h"
-#include "doomstat.h"
-#include "r_main.h"
-#include "r_draw.h"
-#include "r_patch.h"
-#include "m_bbox.h"
-#include "w_wad.h"   /* needed for color translation lump lookup */
-#include "v_video.h"
-#include "i_video.h"
-#include "r_filter.h"
-#include "lprintf.h"
-#include "st_stuff.h"
-#include "e6y.h"
+#include "doomdef.hh"
+#include "doomstat.hh"
+#include "r_main.hh"
+#include "r_draw.hh"
+#include "r_patch.hh"
+#include "m_bbox.hh"
+#include "w_wad.hh"   /* needed for color translation lump lookup */
+#include "v_video.hh"
+#include "i_video.hh"
+#include "r_filter.hh"
+#include "lprintf.hh"
+#include "st_stuff.hh"
+#include "e6y.hh"
 
-#include "dsda/global.h"
-#include "dsda/palette.h"
+#include "dsda/global.hh"
+#include "dsda/palette.hh"
 
 // DWF 2012-05-10
 // SetRatio sets the following global variables based on window geometry and

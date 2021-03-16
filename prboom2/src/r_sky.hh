@@ -34,7 +34,7 @@
 #ifndef __R_SKY__
 #define __R_SKY__
 
-#include "m_fixed.h"
+#include "m_fixed.hh"
 
 #ifdef __GNUG__
 #pragma interface

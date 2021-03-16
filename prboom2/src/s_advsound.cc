@@ -31,23 +31,23 @@
  *-----------------------------------------------------------------------------*/
 
 #ifdef HAVE_CONFIG_H
-#include "config.h"
+#include "config.hh"
 #endif
 
-#include "doomstat.h"
-#include "doomtype.h"
-#include "d_main.h"
-#include "p_mobj.h"
-#include "m_misc.h"
-#include "sounds.h"
-#include "s_sound.h"
-#include "i_sound.h"
-#include "r_defs.h"
-#include "sc_man.h"
-#include "w_wad.h"
-#include "lprintf.h"
+#include "doomstat.hh"
+#include "doomtype.hh"
+#include "d_main.hh"
+#include "p_mobj.hh"
+#include "m_misc.hh"
+#include "sounds.hh"
+#include "s_sound.hh"
+#include "i_sound.hh"
+#include "r_defs.hh"
+#include "sc_man.hh"
+#include "w_wad.hh"
+#include "lprintf.hh"
 
-#include "s_advsound.h"
+#include "s_advsound.hh"
 
 #define TIDNUM(x) ((int)(x->iden_nums & 0xFFFF))		// thing identifier
 

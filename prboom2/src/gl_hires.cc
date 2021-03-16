@@ -32,10 +32,10 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include "config.h"
+#include "config.hh"
 #endif
 
-#include "gl_opengl.h"
+#include "gl_opengl.hh"
 
 #ifdef _MSC_VER
 //#include <ddraw.h> /* needed for DirectX's DDSURFACEDESC2 structure definition */
@@ -48,20 +48,20 @@
 #ifdef HAVE_LIBSDL2_IMAGE
 #include <SDL_image.h>
 #endif
-#include "doomstat.h"
-#include "v_video.h"
-#include "gl_intern.h"
-#include "i_system.h"
-#include "w_wad.h"
-#include "lprintf.h"
-#include "i_video.h"
-#include "hu_lib.h"
-#include "hu_stuff.h"
-#include "r_main.h"
-#include "r_sky.h"
-#include "m_argv.h"
-#include "m_misc.h"
-#include "e6y.h"
+#include "doomstat.hh"
+#include "v_video.hh"
+#include "gl_intern.hh"
+#include "i_system.hh"
+#include "w_wad.hh"
+#include "lprintf.hh"
+#include "i_video.hh"
+#include "hu_lib.hh"
+#include "hu_stuff.hh"
+#include "r_main.hh"
+#include "r_sky.hh"
+#include "m_argv.hh"
+#include "m_misc.hh"
+#include "e6y.hh"
 
 unsigned int gl_has_hires = 0;
 int gl_texture_external_hires = -1;

@@ -17,7 +17,7 @@
 #ifndef HERETIC_DEF_H
 #define HERETIC_DEF_H
 
-#include "doomtype.h"
+#include "doomtype.hh"
 
 extern dboolean heretic;
 
@@ -58,6 +58,6 @@ extern dboolean BorderTopRefresh;
 
 #define BLINKTHRESHOLD (4*32)
 
-#include "dstrings.h"
+#include "dstrings.hh"
 
 #endif

@@ -3,18 +3,18 @@
 
 // Main program, parse command line arguments
 
-#include "config.h"
+#include "config.hh"
 
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 #include <ctype.h>
 
-#include "rd_util.h"
-#include "rd_output.h"
-#include "rd_sound.h"
-#include "rd_palette.h"
-#include "rd_graphic.h"
+#include "rd_util.hh"
+#include "rd_output.hh"
+#include "rd_sound.hh"
+#include "rd_palette.hh"
+#include "rd_graphic.hh"
 
 enum argtype
 {

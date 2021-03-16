@@ -34,7 +34,7 @@
 #ifndef __S_ADVSOUND__
 #define __S_ADVSOUND__
 
-#include "p_mobj.h"
+#include "p_mobj.hh"
 
 #ifdef __GNUG__
 #pragma interface

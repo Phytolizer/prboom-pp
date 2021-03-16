@@ -10,7 +10,7 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 
-#include "protocol.h"
+#include "protocol.hh"
 
 #define BACKUPTICS 12
 #define NCMD_EXIT               0x80000000

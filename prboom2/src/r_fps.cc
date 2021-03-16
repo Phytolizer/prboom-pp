@@ -32,16 +32,16 @@
  *---------------------------------------------------------------------
  */
 
-#include "doomstat.h"
-#include "r_defs.h"
-#include "r_state.h"
-#include "p_spec.h"
-#include "r_demo.h"
-#include "r_fps.h"
-#include "i_system.h"
-#include "i_capture.h"
-#include "e6y.h"
-#include "dsda/settings.h"
+#include "doomstat.hh"
+#include "r_defs.hh"
+#include "r_state.hh"
+#include "p_spec.hh"
+#include "r_demo.hh"
+#include "r_fps.hh"
+#include "i_system.hh"
+#include "i_capture.hh"
+#include "e6y.hh"
+#include "dsda/settings.hh"
 
 int movement_smooth_default;
 int movement_smooth;

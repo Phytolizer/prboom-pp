@@ -33,29 +33,29 @@
 
 // killough 5/3/98: remove unnecessary headers
 
-#include "doomstat.h"
-#include "hu_stuff.h"
-#include "hu_lib.h"
-#include "hu_tracers.h"
-#include "st_stuff.h" /* jff 2/16/98 need loc of status bar */
-#include "s_sound.h"
-#include "dstrings.h"
-#include "sounds.h"
-#include "d_deh.h"   /* Ty 03/27/98 - externalization of mapnamesx arrays */
-#include "g_game.h"
-#include "r_main.h"
-#include "p_inter.h"
-#include "p_tick.h"
-#include "p_map.h"
-#include "sc_man.h"
-#include "m_misc.h"
-#include "r_main.h"
-#include "lprintf.h"
-#include "e6y.h" //e6y
-#include "dsda.h"
-#include "dsda/hud.h"
-#include "dsda/settings.h"
-#include "g_overflow.h"
+#include "doomstat.hh"
+#include "hu_stuff.hh"
+#include "hu_lib.hh"
+#include "hu_tracers.hh"
+#include "st_stuff.hh" /* jff 2/16/98 need loc of status bar */
+#include "s_sound.hh"
+#include "dstrings.hh"
+#include "sounds.hh"
+#include "d_deh.hh"   /* Ty 03/27/98 - externalization of mapnamesx arrays */
+#include "g_game.hh"
+#include "r_main.hh"
+#include "p_inter.hh"
+#include "p_tick.hh"
+#include "p_map.hh"
+#include "sc_man.hh"
+#include "m_misc.hh"
+#include "r_main.hh"
+#include "lprintf.hh"
+#include "e6y.hh" //e6y
+#include "dsda.hh"
+#include "dsda/hud.hh"
+#include "dsda/settings.hh"
+#include "g_overflow.hh"
 
 // global heads up display controls
 

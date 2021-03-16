@@ -19,13 +19,13 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "doomtype.h"
-#include "doomstat.h"
-#include "m_misc.h"
-#include "lprintf.h"
-#include "e6y.h"
+#include "doomtype.hh"
+#include "doomstat.hh"
+#include "m_misc.hh"
+#include "lprintf.hh"
+#include "e6y.hh"
 
-#include "demo.h"
+#include "demo.hh"
 
 #define INITIAL_DEMO_BUFFER_SIZE 0x20000
 

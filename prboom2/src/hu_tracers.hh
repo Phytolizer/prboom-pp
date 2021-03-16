@@ -33,7 +33,7 @@
 #ifndef __HU_TRACERS__
 #define __HU_TRACERS__
 
-#include "hu_lib.h"
+#include "hu_lib.hh"
 
 #define MAXTRACEITEMS 8
 

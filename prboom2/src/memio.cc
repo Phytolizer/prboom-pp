@@ -31,9 +31,9 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "memio.h"
+#include "memio.hh"
 
-#include "z_zone.h"
+#include "z_zone.hh"
 
 typedef enum {
   MODE_READ,

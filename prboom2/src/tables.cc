@@ -46,12 +46,12 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include "config.h"
+#include "config.hh"
 #endif
 
 #include <stddef.h>
-#include "w_wad.h"
-#include "tables.h"
+#include "w_wad.hh"
+#include "tables.hh"
 
 // killough 5/3/98: reformatted
 
@@ -83,8 +83,8 @@ fixed_t finesine[10240];
 
 angle_t tantoangle[2049];
 
-#include "m_swap.h"
-#include "lprintf.h"
+#include "m_swap.hh"
+#include "lprintf.hh"
 
 // R_LoadTrigTables
 // Load trig tables from a wad file lump

@@ -33,7 +33,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include "config.h"
+#include "config.hh"
 #endif
 #include <math.h>
 #ifdef HAVE_UNISTD_H
@@ -56,25 +56,25 @@
 #include "SDL_mixer.h"
 #endif
 
-#include "z_zone.h"
+#include "z_zone.hh"
 
-#include "m_swap.h"
-#include "i_sound.h"
-#include "m_argv.h"
-#include "m_misc.h"
-#include "w_wad.h"
-#include "lprintf.h"
-#include "s_sound.h"
+#include "m_swap.hh"
+#include "i_sound.hh"
+#include "m_argv.hh"
+#include "m_misc.hh"
+#include "w_wad.hh"
+#include "lprintf.hh"
+#include "s_sound.hh"
 
-#include "doomdef.h"
-#include "doomstat.h"
-#include "doomtype.h"
+#include "doomdef.hh"
+#include "doomstat.hh"
+#include "doomtype.hh"
 
-#include "d_main.h"
+#include "d_main.hh"
 
 //e6y
-#include "i_pcsound.h"
-#include "e6y.h"
+#include "i_pcsound.hh"
+#include "e6y.hh"
 
 int snd_pcspeaker;
 
@@ -795,7 +795,7 @@ static void Exp_ShutdownMusic(void);
 
 #ifdef HAVE_MIXER
 
-#include "mus2mid.h"
+#include "mus2mid.hh"
 
 
 static Mix_Music *music[2] = { NULL, NULL };
@@ -1208,16 +1208,16 @@ experimental music API
 const char *snd_soundfont; // soundfont name for synths that use it
 const char *snd_mididev; // midi device to use (portmidiplayer)
 
-#include "mus2mid.h"
+#include "mus2mid.hh"
 
-#include "MUSIC/musicplayer.h"
+#include "MUSIC/musicplayer.hh"
 
-#include "MUSIC/oplplayer.h"
-#include "MUSIC/madplayer.h"
-#include "MUSIC/dumbplayer.h"
-#include "MUSIC/flplayer.h"
-#include "MUSIC/vorbisplayer.h"
-#include "MUSIC/portmidiplayer.h"
+#include "MUSIC/oplplayer.hh"
+#include "MUSIC/madplayer.hh"
+#include "MUSIC/dumbplayer.hh"
+#include "MUSIC/flplayer.hh"
+#include "MUSIC/vorbisplayer.hh"
+#include "MUSIC/portmidiplayer.hh"
 
 // list of possible music players
 static const music_player_t *music_players[] =

@@ -16,10 +16,10 @@
 // R_planes.c
 
 #include <stdlib.h>
-#include "doomdef.h"
-#include "deh_str.h"
-#include "i_system.h"
-#include "r_local.h"
+#include "doomdef.hh"
+#include "deh_str.hh"
+#include "i_system.hh"
+#include "r_local.hh"
 
 planefunction_t floorfunc, ceilingfunc;
 

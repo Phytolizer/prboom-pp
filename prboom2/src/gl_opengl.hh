@@ -35,7 +35,7 @@
 #define _GL_OPENGL_H
 
 #ifdef HAVE_CONFIG_H
-#include "config.h"
+#include "config.hh"
 #endif
 
 #define USE_VERTEX_ARRAYS
@@ -57,7 +57,7 @@
 #endif
 #endif
 
-#include "doomtype.h"
+#include "doomtype.hh"
 
 #if !defined(GL_DEPTH_STENCIL_EXT)
 #define GL_DEPTH_STENCIL_EXT              0x84F9

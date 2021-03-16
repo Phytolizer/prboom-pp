@@ -32,17 +32,17 @@
  *-----------------------------------------------------------------------------
  */
 
-#include "doomstat.h"
-#include "d_event.h"
-#include "g_game.h"
-#include "v_video.h"
-#include "w_wad.h"
-#include "s_sound.h"
-#include "sounds.h"
-#include "d_deh.h"  // Ty 03/22/98 - externalizations
-#include "heretic/f_finale.h"
+#include "doomstat.hh"
+#include "d_event.hh"
+#include "g_game.hh"
+#include "v_video.hh"
+#include "w_wad.hh"
+#include "s_sound.hh"
+#include "sounds.hh"
+#include "d_deh.hh"  // Ty 03/22/98 - externalizations
+#include "heretic/f_finale.hh"
 
-#include "f_finale.h" // CPhipps - hmm...
+#include "f_finale.hh" // CPhipps - hmm...
 
 
 // The implementation for UMAPINFO is kept separate to avoid demo sync issues
@@ -296,7 +296,7 @@ void F_Ticker(void)
 // written.                                                         // phares
 // CPhipps - reformatted
 
-#include "hu_stuff.h"
+#include "hu_stuff.hh"
 extern patchnum_t hu_font[HU_FONTSIZE];
 
 

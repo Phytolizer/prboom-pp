@@ -34,7 +34,7 @@
 #ifndef __P_MAPUTL__
 #define __P_MAPUTL__
 
-#include "r_defs.h"
+#include "r_defs.hh"
 
 /* mapblocks are used to check movement against lines and things */
 #define MAPBLOCKUNITS   128

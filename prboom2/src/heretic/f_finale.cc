@@ -15,18 +15,18 @@
 //
 // F_finale.c
 
-#include "doomstat.h"
-#include "w_wad.h"
-#include "v_video.h"
-#include "s_sound.h"
-#include "sounds.h"
+#include "doomstat.hh"
+#include "w_wad.hh"
+#include "v_video.hh"
+#include "s_sound.hh"
+#include "sounds.hh"
 
-#include "dsda/palette.h"
+#include "dsda/palette.hh"
 
-#include "heretic/def.h"
-#include "heretic/dstrings.h"
+#include "heretic/def.hh"
+#include "heretic/dstrings.hh"
 
-#include "heretic/f_finale.h"
+#include "heretic/f_finale.hh"
 
 static int finalestage;                // 0 = text, 1 = art screen
 static int finalecount;

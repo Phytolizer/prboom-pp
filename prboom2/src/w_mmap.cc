@@ -31,7 +31,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include "config.h"
+#include "config.hh"
 #endif
 
 #ifdef HAVE_UNISTD_H
@@ -44,18 +44,18 @@
 #include <sys/mman.h>
 #endif
 
-#include "doomstat.h"
-#include "doomtype.h"
+#include "doomstat.hh"
+#include "doomtype.hh"
 
 #ifdef __GNUG__
 #pragma implementation "w_wad.h"
 #endif
-#include "w_wad.h"
-#include "z_zone.h"
-#include "lprintf.h"
-#include "i_system.h"
+#include "w_wad.hh"
+#include "z_zone.hh"
+#include "lprintf.hh"
+#include "i_system.hh"
 
-#include "e6y.h"//e6y
+#include "e6y.hh"//e6y
 
 static struct {
   void *cache;

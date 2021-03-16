@@ -23,11 +23,11 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "doomdef.h"
-#include "d_player.h"
-#include "m_argv.h"
+#include "doomdef.hh"
+#include "d_player.hh"
+#include "m_argv.hh"
 
-#include "statdump.h"
+#include "statdump.hh"
 
 /* Par times for E1M1-E1M9. */
 static const int doom1_par_times[] =

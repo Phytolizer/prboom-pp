@@ -35,11 +35,11 @@
 #define __AMMAP_H__
 
 #ifdef HAVE_CONFIG_H
-#include "config.h"
+#include "config.hh"
 #endif
 
-#include "d_event.h"
-#include "m_misc.h"
+#include "d_event.hh"
+#include "m_misc.hh"
 
 typedef struct map_point_s
 {

@@ -35,23 +35,23 @@
 #define __P_MOBJ__
 
 // Basics.
-#include "doomtype.h"
-#include "tables.h"
-#include "m_fixed.h"
+#include "doomtype.hh"
+#include "tables.hh"
+#include "m_fixed.hh"
 
 // We need the thinker_t stuff.
-#include "d_think.h"
+#include "d_think.hh"
 
 // We need the WAD data structure for Map things,
 // from the THINGS lump.
-#include "doomdata.h"
+#include "doomdata.hh"
 
 // States are tied to finite states are
 //  tied to animation frames.
 // Needs precompiled tables/data structures.
-#include "info.h"
+#include "info.hh"
 
-#include "dsda_mobj_extension.h"
+#include "dsda_mobj_extension.hh"
 
 //
 // NOTES: mobj_t

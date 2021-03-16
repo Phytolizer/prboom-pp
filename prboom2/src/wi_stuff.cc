@@ -32,20 +32,20 @@
  *-----------------------------------------------------------------------------
  */
 
-#include "doomstat.h"
-#include "m_random.h"
-#include "w_wad.h"
-#include "g_game.h"
-#include "r_main.h"
-#include "v_video.h"
-#include "wi_stuff.h"
-#include "s_sound.h"
-#include "sounds.h"
-#include "lprintf.h"  // jff 08/03/98 - declaration of lprintf
-#include "r_draw.h"
-#include "hu_stuff.h"
-#include "dsda/hud.h"
-#include "heretic/in_lude.h"
+#include "doomstat.hh"
+#include "m_random.hh"
+#include "w_wad.hh"
+#include "g_game.hh"
+#include "r_main.hh"
+#include "v_video.hh"
+#include "wi_stuff.hh"
+#include "s_sound.hh"
+#include "sounds.hh"
+#include "lprintf.hh"  // jff 08/03/98 - declaration of lprintf
+#include "r_draw.hh"
+#include "hu_stuff.hh"
+#include "dsda/hud.hh"
+#include "heretic/in_lude.hh"
 
 // Ty 03/17/98: flag that new par times have been loaded in d_deh
 extern dboolean deh_pars;

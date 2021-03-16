@@ -30,7 +30,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include "config.h"
+#include "config.hh"
 #endif
 
 #ifdef _WIN32
@@ -43,16 +43,16 @@
 
 #include <math.h>
 
-#include "gl_opengl.h"
+#include "gl_opengl.hh"
 
-#include "z_zone.h"
-#include "doomstat.h"
-#include "gl_intern.h"
-#include "gl_struct.h"
-#include "p_maputl.h"
-#include "r_main.h"
-#include "am_map.h"
-#include "lprintf.h"
+#include "z_zone.hh"
+#include "doomstat.hh"
+#include "gl_intern.hh"
+#include "gl_struct.hh"
+#include "p_maputl.hh"
+#include "r_main.hh"
+#include "am_map.hh"
+#include "lprintf.hh"
 
 static FILE *levelinfo;
 

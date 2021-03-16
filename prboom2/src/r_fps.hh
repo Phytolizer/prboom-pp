@@ -35,7 +35,7 @@
 #ifndef __R_FPS__
 #define __R_FPS__
 
-#include "doomstat.h"
+#include "doomstat.hh"
 
 extern int movement_smooth_default;
 extern int movement_smooth;

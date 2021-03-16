@@ -31,12 +31,12 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include "config.h"
+#include "config.hh"
 #endif
 
-#include "doomtype.h"
-#include "gl_intern.h"
-#include "lprintf.h"
+#include "doomtype.hh"
+#include "gl_intern.hh"
+#include "lprintf.hh"
 
 GLDrawInfo gld_drawinfo;
 

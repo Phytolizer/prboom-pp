@@ -35,24 +35,24 @@
  *--------------------------------------------------------------------*/
 
 // killough 5/2/98: fixed headers, removed rendunant external declarations:
-#include "doomdef.h"
-#include "doomtype.h"
-#include "doomstat.h"
-#include "d_deh.h"
-#include "sounds.h"
-#include "info.h"
-#include "m_cheat.h"
-#include "p_inter.h"
-#include "p_enemy.h"
-#include "g_game.h"
-#include "d_think.h"
-#include "w_wad.h"
-#include "m_argv.h"
-#include "m_misc.h"
-#include "e6y.h"//e6y
+#include "doomdef.hh"
+#include "doomtype.hh"
+#include "doomstat.hh"
+#include "d_deh.hh"
+#include "sounds.hh"
+#include "info.hh"
+#include "m_cheat.hh"
+#include "p_inter.hh"
+#include "p_enemy.hh"
+#include "g_game.hh"
+#include "d_think.hh"
+#include "w_wad.hh"
+#include "m_argv.hh"
+#include "m_misc.hh"
+#include "e6y.hh"//e6y
 
 // CPhipps - modify to use logical output routine
-#include "lprintf.h"
+#include "lprintf.hh"
 
 #define TRUE 1
 #define FALSE 0
@@ -139,7 +139,7 @@ int HelperThing = -1;     // in P_SpawnMapThing to substitute helper thing
 // variables used in other routines
 dboolean deh_pars = FALSE; // in wi_stuff to allow pars in modified games
 
-// #include "d_deh.h" -- we don't do that here but we declare the
+// #include "d_deh.hh" -- we don't do that here but we declare the
 // variables.  This externalizes everything that there is a string
 // set for in the language files.  See d_deh.h for detailed comments,
 // original English values etc.  These are set to the macro values,
@@ -148,7 +148,7 @@ dboolean deh_pars = FALSE; // in wi_stuff to allow pars in modified games
 
 // ====================================================================
 // Any of these can be changed using the bex extensions
-#include "dstrings.h"  // to get the initial values
+#include "dstrings.hh"  // to get the initial values
 /* cph - const's
  *     - removed redundant "can't XXX in a netgame" strings.
  */

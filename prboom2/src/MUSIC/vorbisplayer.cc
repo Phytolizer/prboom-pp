@@ -31,10 +31,10 @@
 
 
 #ifdef HAVE_CONFIG_H
-#include "config.h"
+#include "config.hh"
 #endif
 
-#include "musicplayer.h"
+#include "musicplayer.hh"
 
 #ifndef HAVE_LIBVORBISFILE
 #include <string.h>
@@ -70,12 +70,12 @@ const music_player_t vorb_player =
 
 #include <stdlib.h>
 #include <string.h>
-#include "lprintf.h"
+#include "lprintf.hh"
 
 #include <vorbis/vorbisfile.h>
 #include <vorbis/codec.h>
 
-#include "i_sound.h"
+#include "i_sound.hh"
 
 // uncomment to allow (experiemntal) support for
 // zdoom-style audio loops

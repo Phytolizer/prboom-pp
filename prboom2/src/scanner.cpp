@@ -29,7 +29,7 @@
 #include <stdarg.h>
 #include <ctype.h>
 
-#include "scanner.h"
+#include "scanner.hh"
 
 
 #ifdef _WIN32

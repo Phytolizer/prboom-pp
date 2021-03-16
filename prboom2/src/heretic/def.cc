@@ -14,7 +14,7 @@
 // GNU General Public License for more details.
 //
 
-#include "def.h"
+#include "def.hh"
 
 dboolean heretic = false;
 

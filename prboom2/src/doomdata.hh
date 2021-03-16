@@ -37,8 +37,8 @@
 #define __DOOMDATA__
 
 // The most basic types we use, portability.
-#include "config.h"
-#include "doomtype.h"
+#include "config.hh"
+#include "doomtype.hh"
 
 //
 // Map level types.

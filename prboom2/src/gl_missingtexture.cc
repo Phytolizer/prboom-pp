@@ -32,25 +32,25 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include "config.h"
+#include "config.hh"
 #endif
 
-#include "gl_opengl.h"
+#include "gl_opengl.hh"
 
 #include <SDL.h>
 #ifdef HAVE_LIBSDL2_IMAGE
 #include <SDL_image.h>
 #endif
-#include "doomstat.h"
-#include "v_video.h"
-#include "gl_intern.h"
-#include "i_system.h"
-#include "lprintf.h"
-#include "i_video.h"
-#include "hu_lib.h"
-#include "hu_stuff.h"
-#include "r_main.h"
-#include "e6y.h"
+#include "doomstat.hh"
+#include "v_video.hh"
+#include "gl_intern.hh"
+#include "i_system.hh"
+#include "lprintf.hh"
+#include "i_video.hh"
+#include "hu_lib.hh"
+#include "hu_stuff.hh"
+#include "r_main.hh"
+#include "e6y.hh"
 
 typedef struct
 {

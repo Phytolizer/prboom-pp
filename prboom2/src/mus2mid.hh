@@ -31,8 +31,8 @@
 #ifndef MUS2MID_H
 #define MUS2MID_H
 
-#include "doomtype.h"
-#include "memio.h"
+#include "doomtype.hh"
+#include "memio.hh"
 
 // Structure to hold MUS file header
 typedef struct

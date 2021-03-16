@@ -37,17 +37,17 @@
  *-----------------------------------------------------------------------------
  */
 
-#include "doomdef.h"
-#include "sounds.h"
-#include "m_fixed.h"
-#include "p_mobj.h"
-#include "p_enemy.h"
-#include "p_pspr.h"
+#include "doomdef.hh"
+#include "sounds.hh"
+#include "m_fixed.hh"
+#include "p_mobj.hh"
+#include "p_enemy.hh"
+#include "p_pspr.hh"
 
 #ifdef __GNUG__
 #pragma implementation "info.h"
 #endif
-#include "info.h"
+#include "info.hh"
 
 void A_BetaSkullAttack(); // killough 10/98: beta lost souls attacked different
 void A_Stop();

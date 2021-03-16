@@ -34,7 +34,7 @@
 #ifndef __R_DRAW__
 #define __R_DRAW__
 
-#include "r_defs.h"
+#include "r_defs.hh"
 
 #ifdef __GNUG__
 #pragma interface

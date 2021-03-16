@@ -32,16 +32,16 @@
  *
  *-----------------------------------------------------------------------------*/
 
-#include "doomstat.h"
-#include "r_main.h"
-#include "p_map.h"
-#include "p_spec.h"
-#include "p_tick.h"
-#include "s_sound.h"
-#include "sounds.h"
-#include "lprintf.h"
-#include "g_overflow.h"
-#include "e6y.h"//e6y
+#include "doomstat.hh"
+#include "r_main.hh"
+#include "p_map.hh"
+#include "p_spec.hh"
+#include "p_tick.hh"
+#include "s_sound.hh"
+#include "sounds.hh"
+#include "lprintf.hh"
+#include "g_overflow.hh"
+#include "e6y.hh"//e6y
 
 //e6y
 #define STAIRS_UNINITIALIZED_CRUSH_FIELD_VALUE 10

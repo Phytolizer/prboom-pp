@@ -18,7 +18,7 @@
 #ifndef DEH_HTIC_H
 #define DEH_HTIC_H
 
-#include "info.h"
+#include "info.hh"
 
 // HHE executable version.  Loading HHE patches is (unfortunately)
 // dependent on the version of the Heretic executable used to make them.

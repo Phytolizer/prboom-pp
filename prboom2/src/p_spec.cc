@@ -39,31 +39,31 @@
  *
  *-----------------------------------------------------------------------------*/
 
-#include "doomstat.h"
-#include "p_spec.h"
-#include "p_tick.h"
-#include "p_setup.h"
-#include "m_random.h"
-#include "d_englsh.h"
-#include "m_argv.h"
-#include "w_wad.h"
-#include "r_main.h"
-#include "p_maputl.h"
-#include "p_map.h"
-#include "g_game.h"
-#include "p_inter.h"
-#include "s_sound.h"
-#include "sounds.h"
-#include "i_sound.h"
-#include "m_bbox.h"                                         // phares 3/20/98
-#include "d_deh.h"
-#include "r_plane.h"
-#include "hu_stuff.h"
-#include "lprintf.h"
-#include "e6y.h"//e6y
-#include "dsda.h"
+#include "doomstat.hh"
+#include "p_spec.hh"
+#include "p_tick.hh"
+#include "p_setup.hh"
+#include "m_random.hh"
+#include "d_englsh.hh"
+#include "m_argv.hh"
+#include "w_wad.hh"
+#include "r_main.hh"
+#include "p_maputl.hh"
+#include "p_map.hh"
+#include "g_game.hh"
+#include "p_inter.hh"
+#include "s_sound.hh"
+#include "sounds.hh"
+#include "i_sound.hh"
+#include "m_bbox.hh"                                         // phares 3/20/98
+#include "d_deh.hh"
+#include "r_plane.hh"
+#include "hu_stuff.hh"
+#include "lprintf.hh"
+#include "e6y.hh"//e6y
+#include "dsda.hh"
 
-#include "dsda/global.h"
+#include "dsda/global.hh"
 
 //
 //      source animation definition
@@ -3584,7 +3584,7 @@ static void P_SpawnPushers(void)
 
 // heretic
 
-#include "heretic/def.h"
+#include "heretic/def.hh"
 
 #define MAX_AMBIENT_SFX 8
 
@@ -4094,7 +4094,7 @@ void Heretic_P_CrossSpecialLine(line_t * line, int side, mobj_t * thing)
     }
 }
 
-#include "p_user.h"
+#include "p_user.hh"
 
 void Heretic_P_PlayerInSpecialSector(player_t * player)
 {

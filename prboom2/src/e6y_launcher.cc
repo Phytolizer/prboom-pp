@@ -37,22 +37,22 @@
 #include <direct.h>
 #include <commctrl.h>
 
-#include "doomtype.h"
-#include "w_wad.h"
-#include "doomstat.h"
-#include "lprintf.h"
-#include "d_main.h"
-#include "m_misc.h"
-#include "i_system.h"
-#include "m_argv.h"
-#include "i_main.h"
+#include "doomtype.hh"
+#include "w_wad.hh"
+#include "doomstat.hh"
+#include "lprintf.hh"
+#include "d_main.hh"
+#include "m_misc.hh"
+#include "i_system.hh"
+#include "m_argv.hh"
+#include "i_main.hh"
 #include ".\..\ICONS\resource.h"
 #ifdef HAVE_LIBPCREPOSIX
-#include "pcreposix.h"
+#include "pcreposix.hh"
 #endif /* HAVE_LIBPCREPOSIX */
-#include "r_demo.h"
-#include "e6y.h"
-#include "e6y_launcher.h"
+#include "r_demo.hh"
+#include "e6y.hh"
+#include "e6y_launcher.hh"
 
 #pragma comment( lib, "comctl32.lib" )
 #pragma comment( lib, "advapi32.lib" )

@@ -15,7 +15,7 @@
 //	DSDA MSecNode Management
 //
 
-#include "r_defs.h"
+#include "r_defs.hh"
 
 void dsda_ArchiveMSecNodes(void);
 void dsda_UnArchiveMSecNodes(mobj_t** mobj_p, int mobj_count);

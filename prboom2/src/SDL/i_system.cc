@@ -60,7 +60,7 @@
 #include "SDL.h"
 
 #ifdef HAVE_CONFIG_H
-#include "config.h"
+#include "config.hh"
 #endif
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
@@ -73,29 +73,29 @@
 #include <errno.h>
 
 #ifndef PRBOOM_SERVER
-#include "m_argv.h"
+#include "m_argv.hh"
 #endif
-#include "lprintf.h"
-#include "doomtype.h"
-#include "doomdef.h"
+#include "lprintf.hh"
+#include "doomtype.hh"
+#include "doomdef.hh"
 #ifndef PRBOOM_SERVER
-#include "d_player.h"
-#include "m_fixed.h"
-#include "r_fps.h"
-#include "e6y.h"
+#include "d_player.hh"
+#include "m_fixed.hh"
+#include "r_fps.hh"
+#include "e6y.hh"
 #endif
-#include "i_system.h"
+#include "i_system.hh"
 
 #ifdef __GNUG__
 #pragma implementation "i_system.h"
 #endif
-#include "i_system.h"
+#include "i_system.hh"
 
 #ifdef HAVE_CONFIG_H
-#include "config.h"
+#include "config.hh"
 #endif
 
-#include "z_zone.h"
+#include "z_zone.hh"
 
 void I_uSleep(unsigned long usecs)
 {

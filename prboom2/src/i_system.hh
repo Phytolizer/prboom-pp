@@ -41,7 +41,7 @@
 #include <windows.h>
 #endif
 
-#include "m_fixed.h"
+#include "m_fixed.hh"
 
 #ifdef __GNUG__
 #pragma interface

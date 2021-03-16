@@ -37,7 +37,7 @@
 
 /* use config.h if autoconf made one -- josh */
 #ifdef HAVE_CONFIG_H
-#include "config.h"
+#include "config.hh"
 #endif
 
 // killough 4/25/98: Make gcc extensions mean nothing on other compilers
@@ -46,7 +46,7 @@
 #endif
 
 // This must come first, since it redefines malloc(), free(), etc. -- killough:
-#include "z_zone.h"
+#include "z_zone.hh"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -59,9 +59,9 @@
 #define O_BINARY 0
 #endif
 
-#include "m_swap.h"
-#include "version.h"
-#include "doomtype.h"
+#include "m_swap.hh"
+#include "version.hh"
+#include "doomtype.hh"
 
 extern dboolean bfgedition;
 

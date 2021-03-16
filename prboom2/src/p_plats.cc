@@ -31,15 +31,15 @@
  *
  *-----------------------------------------------------------------------------*/
 
-#include "doomstat.h"
-#include "m_random.h"
-#include "r_main.h"
-#include "p_spec.h"
-#include "p_tick.h"
-#include "s_sound.h"
-#include "sounds.h"
-#include "lprintf.h"
-#include "e6y.h"//e6y
+#include "doomstat.hh"
+#include "m_random.hh"
+#include "r_main.hh"
+#include "p_spec.hh"
+#include "p_tick.hh"
+#include "s_sound.hh"
+#include "sounds.hh"
+#include "lprintf.hh"
+#include "e6y.hh"//e6y
 
 platlist_t *activeplats;       // killough 2/14/98: made global again
 

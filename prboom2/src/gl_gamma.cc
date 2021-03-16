@@ -32,7 +32,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include "config.h"
+#include "config.hh"
 #endif
 
 #include <math.h>
@@ -41,13 +41,13 @@
 #include <unistd.h>
 #endif
 #include <SDL.h>
-#include "doomstat.h"
-#include "v_video.h"
-#include "gl_intern.h"
-#include "doomtype.h"
-#include "i_video.h"
-#include "m_argv.h"
-#include "lprintf.h"
+#include "doomstat.hh"
+#include "v_video.hh"
+#include "gl_intern.hh"
+#include "doomtype.hh"
+#include "i_video.hh"
+#include "m_argv.hh"
+#include "lprintf.hh"
 
 #ifndef HIBYTE
 #define HIBYTE(W) (((W) >> 8) & 0xFF)

@@ -36,8 +36,8 @@
 
 #include <stdarg.h>
 
-#include "hu_lib.h"
-#include "r_demo.h"
+#include "hu_lib.hh"
+#include "r_demo.hh"
 
 #define HU_HUDADDX (HU_HUDX)
 #define HU_HUDADDY (HU_HUDY+(-1)*HU_GAPY)

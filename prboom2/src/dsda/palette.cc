@@ -15,10 +15,10 @@
 //	DSDA Palette Management
 //
 
-#include "w_wad.h"
-#include "v_video.h"
+#include "w_wad.hh"
+#include "v_video.hh"
 
-#include "palette.h"
+#include "palette.hh"
 
 static int playpal_index = playpal_default;
 

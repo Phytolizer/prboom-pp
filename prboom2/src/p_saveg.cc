@@ -33,20 +33,20 @@
 
 #include <stdint.h>
 
-#include "doomstat.h"
-#include "r_main.h"
-#include "p_maputl.h"
-#include "p_spec.h"
-#include "p_tick.h"
-#include "p_saveg.h"
-#include "m_random.h"
-#include "am_map.h"
-#include "p_enemy.h"
-#include "lprintf.h"
-#include "s_advsound.h"
-#include "e6y.h"//e6y
+#include "doomstat.hh"
+#include "r_main.hh"
+#include "p_maputl.hh"
+#include "p_spec.hh"
+#include "p_tick.hh"
+#include "p_saveg.hh"
+#include "m_random.hh"
+#include "am_map.hh"
+#include "p_enemy.hh"
+#include "lprintf.hh"
+#include "s_advsound.hh"
+#include "e6y.hh"//e6y
 
-#include "dsda/msecnode.h"
+#include "dsda/msecnode.hh"
 
 #define MARKED_FOR_DELETION -2
 

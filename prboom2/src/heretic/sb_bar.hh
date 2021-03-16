@@ -19,7 +19,7 @@
 #ifndef __SB_BAR__
 #define __SB_BAR__
 
-#include "d_event.h"
+#include "d_event.hh"
 
 void SB_Init(void);
 void SB_Ticker(void);

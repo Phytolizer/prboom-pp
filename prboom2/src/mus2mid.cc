@@ -29,11 +29,11 @@
 
 #include <stdio.h>
 
-#include "doomtype.h"
-#include "m_swap.h"
+#include "doomtype.hh"
+#include "m_swap.hh"
 
-#include "memio.h"
-#include "mus2mid.h"
+#include "memio.hh"
+#include "mus2mid.hh"
 
 #define NUM_CHANNELS 16
 

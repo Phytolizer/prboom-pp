@@ -32,17 +32,17 @@
  *
  *-----------------------------------------------------------------------------*/
 
-#include "doomstat.h"
-#include "w_wad.h"
-#include "r_draw.h"
-#include "r_main.h"
-#include "r_sky.h"
-#include "i_system.h"
-#include "r_bsp.h"
-#include "r_things.h"
-#include "p_tick.h"
-#include "lprintf.h"  // jff 08/03/98 - declaration of lprintf
-#include "p_tick.h"
+#include "doomstat.hh"
+#include "w_wad.hh"
+#include "r_draw.hh"
+#include "r_main.hh"
+#include "r_sky.hh"
+#include "i_system.hh"
+#include "r_bsp.hh"
+#include "r_things.hh"
+#include "p_tick.hh"
+#include "lprintf.hh"  // jff 08/03/98 - declaration of lprintf
+#include "p_tick.hh"
 
 //
 // Graphics.

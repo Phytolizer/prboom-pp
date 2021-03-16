@@ -16,15 +16,15 @@
 
 // R_data.c
 
-#include "doomdef.h"
-#include "deh_str.h"
+#include "doomdef.hh"
+#include "deh_str.hh"
 
-#include "i_swap.h"
-#include "i_system.h"
-#include "m_misc.h"
-#include "r_local.h"
-#include "p_local.h"
-#include "v_trans.h" // [crispy] color translation and color string tables
+#include "i_swap.hh"
+#include "i_system.hh"
+#include "m_misc.hh"
+#include "r_local.hh"
+#include "p_local.hh"
+#include "v_trans.hh" // [crispy] color translation and color string tables
 
 extern void CheckAbortStartup(void);
 

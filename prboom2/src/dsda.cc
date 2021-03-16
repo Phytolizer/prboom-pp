@@ -18,21 +18,21 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#include "m_argv.h"
-#include "doomstat.h"
-#include "p_inter.h"
-#include "p_tick.h"
-#include "g_game.h"
-#include "sounds.h"
-#include "s_sound.h"
-#include "am_map.h"
+#include "m_argv.hh"
+#include "doomstat.hh"
+#include "p_inter.hh"
+#include "p_tick.hh"
+#include "g_game.hh"
+#include "sounds.hh"
+#include "s_sound.hh"
+#include "am_map.hh"
 
-#include "dsda_mobj_extension.h"
-#include "dsda/ghost.h"
-#include "dsda/hud.h"
-#include "dsda/key_frame.h"
-#include "dsda/settings.h"
-#include "dsda.h"
+#include "dsda_mobj_extension.hh"
+#include "dsda/ghost.hh"
+#include "dsda/hud.hh"
+#include "dsda/key_frame.hh"
+#include "dsda/settings.hh"
+#include "dsda.hh"
 
 #define TELEFRAG_DAMAGE 10000
 #define STROLLER_THRESHOLD 25

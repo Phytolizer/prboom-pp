@@ -18,7 +18,7 @@
 #ifndef __DSDA_HUD__
 #define __DSDA_HUD__
 
-#include "r_defs.h"
+#include "r_defs.hh"
 
 typedef enum
 {

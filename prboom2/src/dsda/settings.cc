@@ -15,12 +15,12 @@
 //	DSDA Settings
 //
 
-#include "doomstat.h"
-#include "m_argv.h"
-#include "e6y.h"
-#include "r_things.h"
+#include "doomstat.hh"
+#include "m_argv.hh"
+#include "e6y.hh"
+#include "r_things.hh"
 
-#include "settings.h"
+#include "settings.hh"
 
 int dsda_auto_key_frame_interval;
 int dsda_auto_key_frame_depth;

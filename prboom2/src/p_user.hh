@@ -36,7 +36,7 @@
 #ifndef __P_USER__
 #define __P_USER__
 
-#include "d_player.h"
+#include "d_player.hh"
 
 void P_PlayerThink(player_t *player);
 void P_CalcHeight(player_t *player);

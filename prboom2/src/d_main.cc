@@ -36,7 +36,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include "config.h"
+#include "config.hh"
 #endif
 
 #include "SDL_timer.h"
@@ -51,56 +51,56 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 
-#include "doomdef.h"
-#include "doomtype.h"
-#include "doomstat.h"
-#include "d_net.h"
-#include "dstrings.h"
-#include "sounds.h"
-#include "z_zone.h"
-#include "w_wad.h"
-#include "s_sound.h"
-#include "v_video.h"
-#include "f_finale.h"
-#include "f_wipe.h"
-#include "m_argv.h"
-#include "m_misc.h"
-#include "m_menu.h"
-#include "p_checksum.h"
-#include "i_main.h"
-#include "i_system.h"
-#include "i_sound.h"
-#include "i_video.h"
-#include "g_game.h"
-#include "hu_stuff.h"
-#include "wi_stuff.h"
-#include "st_stuff.h"
-#include "am_map.h"
-#include "p_setup.h"
-#include "r_draw.h"
-#include "r_main.h"
-#include "r_fps.h"
-#include "d_main.h"
-#include "d_deh.h"  // Ty 04/08/98 - Externalizations
-#include "lprintf.h"  // jff 08/03/98 - declaration of lprintf
-#include "am_map.h"
-#include "umapinfo.h"
-#include "statdump.h"
+#include "doomdef.hh"
+#include "doomtype.hh"
+#include "doomstat.hh"
+#include "d_net.hh"
+#include "dstrings.hh"
+#include "sounds.hh"
+#include "z_zone.hh"
+#include "w_wad.hh"
+#include "s_sound.hh"
+#include "v_video.hh"
+#include "f_finale.hh"
+#include "f_wipe.hh"
+#include "m_argv.hh"
+#include "m_misc.hh"
+#include "m_menu.hh"
+#include "p_checksum.hh"
+#include "i_main.hh"
+#include "i_system.hh"
+#include "i_sound.hh"
+#include "i_video.hh"
+#include "g_game.hh"
+#include "hu_stuff.hh"
+#include "wi_stuff.hh"
+#include "st_stuff.hh"
+#include "am_map.hh"
+#include "p_setup.hh"
+#include "r_draw.hh"
+#include "r_main.hh"
+#include "r_fps.hh"
+#include "d_main.hh"
+#include "d_deh.hh"  // Ty 04/08/98 - Externalizations
+#include "lprintf.hh"  // jff 08/03/98 - declaration of lprintf
+#include "am_map.hh"
+#include "umapinfo.hh"
+#include "statdump.hh"
 
 //e6y
-#include "r_demo.h"
-#include "e6y.h"
+#include "r_demo.hh"
+#include "e6y.hh"
 #ifdef USE_WINDOWS_LAUNCHER
-#include "e6y_launcher.h"
+#include "e6y_launcher.hh"
 #endif
 
-#include "dsda/global.h"
-#include "dsda/settings.h"
+#include "dsda/global.hh"
+#include "dsda/settings.hh"
 
-#include "heretic/mn_menu.h"
+#include "heretic/mn_menu.hh"
 
 // NSM
-#include "i_capture.h"
+#include "i_capture.hh"
 
 void GetFirstMap(int *ep, int *map); // Ty 08/29/98 - add "-warp x" functionality
 static void D_PageDrawer(void);

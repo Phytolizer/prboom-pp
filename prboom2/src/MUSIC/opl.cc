@@ -24,17 +24,17 @@
 //-----------------------------------------------------------------------------
 
 
-#include "config.h"
+#include "config.hh"
 
 #include <stdio.h>
 #include <stdlib.h>
 
 
-#include "opl.h"
-#include "opl_queue.h"
-#include "dbopl.h"
+#include "opl.hh"
+#include "opl_queue.hh"
+#include "dbopl.hh"
 
-#include "i_sound.h" // mus_opl_gain
+#include "i_sound.hh" // mus_opl_gain
 
 static int init_stage_reg_writes = 1;
 

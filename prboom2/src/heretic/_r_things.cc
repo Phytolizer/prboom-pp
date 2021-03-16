@@ -16,11 +16,11 @@
 // R_things.c
 #include <stdio.h>
 #include <stdlib.h>
-#include "doomdef.h"
-#include "deh_str.h"
-#include "i_swap.h"
-#include "i_system.h"
-#include "r_local.h"
+#include "doomdef.hh"
+#include "deh_str.hh"
+#include "i_swap.hh"
+#include "i_system.hh"
+#include "r_local.hh"
 
 typedef struct
 {

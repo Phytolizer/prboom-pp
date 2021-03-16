@@ -12,13 +12,13 @@
 // HEADER FILES ------------------------------------------------------------
 
 #include <stdlib.h>
-#include "doomtype.h"
-#include "w_wad.h"
-#include "m_misc.h"
-#include "z_zone.h"
-#include "lprintf.h"
+#include "doomtype.hh"
+#include "w_wad.hh"
+#include "m_misc.hh"
+#include "z_zone.hh"
+#include "lprintf.hh"
 
-#include "sc_man.h"
+#include "sc_man.hh"
 
 // MACROS ------------------------------------------------------------------
 

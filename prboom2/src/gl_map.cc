@@ -28,7 +28,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include "config.h"
+#include "config.hh"
 #endif
 
 #include <math.h>
@@ -38,12 +38,12 @@
 #include "SDL_image.h"
 #endif
 
-#include "gl_opengl.h"
-#include "gl_intern.h"
-#include "w_wad.h"
-#include "m_misc.h"
-#include "am_map.h"
-#include "lprintf.h"
+#include "gl_opengl.hh"
+#include "gl_intern.hh"
+#include "w_wad.hh"
+#include "m_misc.hh"
+#include "am_map.hh"
+#include "lprintf.hh"
 
 am_icon_t am_icons[am_icon_count + 1] =
 {

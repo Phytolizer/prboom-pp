@@ -33,7 +33,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include "config.h"
+#include "config.hh"
 #endif
 
 #include <stdlib.h>
@@ -44,13 +44,13 @@
 #include <SDL_image.h>
 #endif
 
-#include "doomstat.h"
-#include "doomdef.h"
-#include "doomtype.h"
-#include "v_video.h"
-#include "i_video.h"
-#include "z_zone.h"
-#include "lprintf.h"
+#include "doomstat.hh"
+#include "doomdef.hh"
+#include "doomtype.hh"
+#include "v_video.hh"
+#include "i_video.hh"
+#include "z_zone.hh"
+#include "lprintf.hh"
 
 int renderW;
 int renderH;

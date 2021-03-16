@@ -21,24 +21,24 @@
 ========================
 */
 
-#include "doomstat.h"
-#include "d_event.h"
-#include "s_sound.h"
-#include "sounds.h"
-#include "i_system.h"
-#include "i_video.h"
-#include "v_video.h"
-#include "lprintf.h"
-#include "w_wad.h"
-#include "g_game.h"
+#include "doomstat.hh"
+#include "d_event.hh"
+#include "s_sound.hh"
+#include "sounds.hh"
+#include "i_system.hh"
+#include "i_video.hh"
+#include "v_video.hh"
+#include "lprintf.hh"
+#include "w_wad.hh"
+#include "g_game.hh"
 
-#include "dsda/hud.h"
+#include "dsda/hud.hh"
 
-#include "heretic/def.h"
-#include "heretic/dstrings.h"
-#include "heretic/mn_menu.h"
+#include "heretic/def.hh"
+#include "heretic/dstrings.hh"
+#include "heretic/mn_menu.hh"
 
-#include "in_lude.h"
+#include "in_lude.hh"
 
 extern dboolean BorderNeedRefresh;
 

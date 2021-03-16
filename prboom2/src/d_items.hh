@@ -35,7 +35,7 @@
 #ifndef __D_ITEMS__
 #define __D_ITEMS__
 
-#include "doomdef.h"
+#include "doomdef.hh"
 
 #ifdef __GNUG__
 #pragma interface

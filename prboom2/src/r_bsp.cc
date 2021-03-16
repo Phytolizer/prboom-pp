@@ -31,15 +31,15 @@
  *
  *-----------------------------------------------------------------------------*/
 
-#include "doomstat.h"
-#include "m_bbox.h"
-#include "r_main.h"
-#include "r_segs.h"
-#include "r_plane.h"
-#include "r_things.h"
-#include "r_bsp.h" // cph - sanity checking
-#include "v_video.h"
-#include "lprintf.h"
+#include "doomstat.hh"
+#include "m_bbox.hh"
+#include "r_main.hh"
+#include "r_segs.hh"
+#include "r_plane.hh"
+#include "r_things.hh"
+#include "r_bsp.hh" // cph - sanity checking
+#include "v_video.hh"
+#include "lprintf.hh"
 
 int currentsubsectornum;
 

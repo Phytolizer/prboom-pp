@@ -27,12 +27,12 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "config.h"
-#include "pcsound.h"
+#include "config.hh"
+#include "pcsound.hh"
 
 //e6y
-#include "doomtype.h"
-#include "lprintf.h"
+#include "doomtype.hh"
+#include "lprintf.hh"
 
 #ifdef USE_WIN32_PCSOUND_DRIVER
 extern pcsound_driver_t pcsound_win32_driver;

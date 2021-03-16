@@ -34,9 +34,9 @@
 #ifndef __G_OVERFLOW__
 #define __G_OVERFLOW__
 
-#include "doomtype.h"
-#include "doomdata.h"
-#include "p_maputl.h"
+#include "doomtype.hh"
+#include "doomdata.hh"
+#include "p_maputl.hh"
 
 typedef struct overrun_param_s
 {

@@ -16,12 +16,12 @@
 
 // MN_menu.c
 
-#include "doomstat.h"
-#include "w_wad.h"
-#include "v_video.h"
-#include "m_menu.h"
-#include "heretic/dstrings.h"
-#include "heretic/mn_menu.h"
+#include "doomstat.hh"
+#include "w_wad.hh"
+#include "v_video.hh"
+#include "m_menu.hh"
+#include "heretic/dstrings.hh"
+#include "heretic/mn_menu.hh"
 
 #define ITEM_HEIGHT 20
 #define SELECTOR_XOFFSET (-28)

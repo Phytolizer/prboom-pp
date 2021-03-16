@@ -43,18 +43,18 @@
 
 // use config.h if autoconf made one -- josh
 #ifdef HAVE_CONFIG_H
-#include "config.h"
+#include "config.hh"
 #endif
 
 #include <stdlib.h>
 #include <stdio.h>
 
-#include "z_zone.h"
-#include "doomstat.h"
-#include "m_argv.h"
-#include "v_video.h"
-#include "g_game.h"
-#include "lprintf.h"
+#include "z_zone.hh"
+#include "doomstat.hh"
+#include "m_argv.hh"
+#include "v_video.hh"
+#include "g_game.hh"
+#include "lprintf.hh"
 
 #ifdef DJGPP
 #include <dpmi.h>

@@ -35,16 +35,16 @@
 
 #include <stdint.h>
 
-#include "doomstat.h"
-#include "w_wad.h"
-#include "r_main.h"
-#include "r_draw.h"
-#include "r_filter.h"
-#include "v_video.h"
-#include "st_stuff.h"
-#include "g_game.h"
-#include "am_map.h"
-#include "lprintf.h"
+#include "doomstat.hh"
+#include "w_wad.hh"
+#include "r_main.hh"
+#include "r_draw.hh"
+#include "r_filter.hh"
+#include "v_video.hh"
+#include "st_stuff.hh"
+#include "g_game.hh"
+#include "am_map.hh"
+#include "lprintf.hh"
 
 //
 // All drawing to the view buffer is accomplished in this file.

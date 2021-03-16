@@ -18,7 +18,7 @@
 #include <string.h>
 #include <stdlib.h>
 
-#include "input.h"
+#include "input.hh"
 
 int dsda_input_profile = 0;
 static dsda_input_t dsda_input[DSDA_INPUT_PROFILE_COUNT][DSDA_INPUT_IDENTIFIER_COUNT];

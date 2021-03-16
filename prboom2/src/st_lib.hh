@@ -35,8 +35,8 @@
 #define __STLIB__
 
 // We are referring to patches.
-#include "r_defs.h"
-#include "v_video.h"  // color ranges
+#include "r_defs.hh"
+#include "v_video.hh"  // color ranges
 
 //
 // Background and foreground screen numbers

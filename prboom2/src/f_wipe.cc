@@ -34,19 +34,19 @@
 
 
 #ifdef HAVE_CONFIG_H
-#include "config.h"
+#include "config.hh"
 #endif
 
-#include "z_zone.h"
-#include "doomdef.h"
-#include "i_video.h"
-#include "v_video.h"
-#include "m_random.h"
-#include "f_wipe.h"
+#include "z_zone.hh"
+#include "doomdef.hh"
+#include "i_video.hh"
+#include "v_video.hh"
+#include "m_random.hh"
+#include "f_wipe.hh"
 #ifdef GL_DOOM
-#include "gl_struct.h"
+#include "gl_struct.hh"
 #endif
-#include "e6y.h"//e6y
+#include "e6y.hh"//e6y
 
 //
 // SCREEN WIPE PACKAGE

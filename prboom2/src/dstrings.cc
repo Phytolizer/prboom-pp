@@ -35,7 +35,7 @@
 #ifdef __GNUG__
 #pragma implementation "dstrings.h"
 #endif
-#include "dstrings.h"
+#include "dstrings.hh"
 
 
 // killough 1/18/98: remove hardcoded limit, add const:

@@ -33,29 +33,29 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include "config.h"
+#include "config.hh"
 #endif
 #include <math.h>
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif
 
-#include "doomdef.h"
-#include "doomstat.h"
-#include "doomtype.h"
+#include "doomdef.hh"
+#include "doomstat.hh"
+#include "doomtype.hh"
 
-#include "z_zone.h"
+#include "z_zone.hh"
 
-#include "m_swap.h"
-#include "i_system.h"
-#include "i_sound.h"
-#include "m_argv.h"
-#include "m_misc.h"
-#include "w_wad.h"
-#include "lprintf.h"
-#include "s_sound.h"
+#include "m_swap.hh"
+#include "i_system.hh"
+#include "i_sound.hh"
+#include "m_argv.hh"
+#include "m_misc.hh"
+#include "w_wad.hh"
+#include "lprintf.hh"
+#include "s_sound.hh"
 
-#include "d_main.h"
+#include "d_main.hh"
 
 //
 // MUSIC API.
@@ -73,7 +73,7 @@ void M_ChangeMIDIPlayer(void)
 
 #import <Cocoa/Cocoa.h>
 #import <QTKit/QTKit.h>
-#include "mus2mid.h"
+#include "mus2mid.hh"
 
 char *music_tmp = 0; /* cph - name of music temporary file */
 QTMovie *movie = 0;

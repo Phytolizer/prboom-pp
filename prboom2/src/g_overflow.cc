@@ -32,20 +32,20 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include "config.h"
+#include "config.hh"
 #endif
 
 #include <stdio.h>
 #include <stdarg.h>
 #include <stdint.h>
 
-#include "g_overflow.h"
+#include "g_overflow.hh"
 
-#include "doomstat.h"
-#include "lprintf.h"
-#include "m_argv.h"
-#include "m_misc.h"
-#include "e6y.h"
+#include "doomstat.hh"
+#include "lprintf.hh"
+#include "m_argv.hh"
+#include "m_misc.hh"
+#include "e6y.hh"
 
 int overflows_enabled = true;
 

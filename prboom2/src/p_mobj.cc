@@ -31,33 +31,33 @@
  *
  *-----------------------------------------------------------------------------*/
 
-#include "doomdef.h"
-#include "doomstat.h"
-#include "doomtype.h"
-#include "m_random.h"
-#include "p_mobj.h"
-#include "r_main.h"
-#include "p_maputl.h"
-#include "p_map.h"
-#include "p_tick.h"
-#include "sounds.h"
-#include "st_stuff.h"
-#include "hu_stuff.h"
-#include "hu_tracers.h"
-#include "s_sound.h"
-#include "s_advsound.h"
-#include "info.h"
-#include "g_game.h"
-#include "p_inter.h"
-#include "lprintf.h"
-#include "r_demo.h"
-#include "g_overflow.h"
-#include "e6y.h"//e6y
-#include "dsda.h"
+#include "doomdef.hh"
+#include "doomstat.hh"
+#include "doomtype.hh"
+#include "m_random.hh"
+#include "p_mobj.hh"
+#include "r_main.hh"
+#include "p_maputl.hh"
+#include "p_map.hh"
+#include "p_tick.hh"
+#include "sounds.hh"
+#include "st_stuff.hh"
+#include "hu_stuff.hh"
+#include "hu_tracers.hh"
+#include "s_sound.hh"
+#include "s_advsound.hh"
+#include "info.hh"
+#include "g_game.hh"
+#include "p_inter.hh"
+#include "lprintf.hh"
+#include "r_demo.hh"
+#include "g_overflow.hh"
+#include "e6y.hh"//e6y
+#include "dsda.hh"
 
-#include "heretic/def.h"
-#include "p_enemy.h"
-#include "p_spec.h"
+#include "heretic/def.hh"
+#include "p_enemy.hh"
+#include "p_spec.hh"
 
 dboolean colored_blood;
 
@@ -2073,7 +2073,7 @@ mobj_t* P_SpawnPlayerMissile(mobj_t* source,mobjtype_t type)
 
 // heretic
 
-#include "p_spec.h"
+#include "p_spec.hh"
 
 mobjtype_t PuffType;
 mobj_t *MissileMobj;

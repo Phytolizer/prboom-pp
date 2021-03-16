@@ -37,8 +37,8 @@
 /* Basic data types.
  * Needs fixed point, and BAM angles. */
 
-#include "m_fixed.h"
-#include "tables.h"
+#include "m_fixed.hh"
+#include "tables.hh"
 
 /* Needs to include the precompiled sprite animation tables.
  *
@@ -47,7 +47,7 @@
  * i.e. the Thing Atrributes table and the Frame Sequence table.
  */
 
-#include "info.h"
+#include "info.hh"
 
 #ifdef __GNUG__
 #pragma interface
@@ -129,7 +129,7 @@ void A_FireOldBFG();
 
 // heretic
 
-#include "p_mobj.h"
+#include "p_mobj.hh"
 
 struct player_s;
 

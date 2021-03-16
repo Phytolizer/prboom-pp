@@ -37,9 +37,9 @@
 #define __M_MISC__
 
 
-#include "doomtype.h"
+#include "doomtype.hh"
 
-#include "dsda/input.h"
+#include "dsda/input.hh"
 
 //
 // MISC

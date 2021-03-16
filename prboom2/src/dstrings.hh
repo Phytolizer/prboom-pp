@@ -45,9 +45,9 @@
  */
 
 #ifdef FRENCH
-#include "d_french.h"
+#include "d_french.hh"
 #else
-#include "d_englsh.h"
+#include "d_englsh.hh"
 #endif
 
 /* Note this is not externally modifiable through DEH/BEX

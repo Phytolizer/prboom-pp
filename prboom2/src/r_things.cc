@@ -31,19 +31,19 @@
  *
  *-----------------------------------------------------------------------------*/
 
-#include "doomstat.h"
-#include "p_mobj.h"
-#include "w_wad.h"
-#include "r_main.h"
-#include "r_bsp.h"
-#include "r_segs.h"
-#include "r_draw.h"
-#include "r_things.h"
-#include "r_fps.h"
-#include "v_video.h"
-#include "p_pspr.h"
-#include "lprintf.h"
-#include "e6y.h"//e6y
+#include "doomstat.hh"
+#include "p_mobj.hh"
+#include "w_wad.hh"
+#include "r_main.hh"
+#include "r_bsp.hh"
+#include "r_segs.hh"
+#include "r_draw.hh"
+#include "r_things.hh"
+#include "r_fps.hh"
+#include "v_video.hh"
+#include "p_pspr.hh"
+#include "lprintf.hh"
+#include "e6y.hh"//e6y
 
 #define BASEYCENTER 100
 

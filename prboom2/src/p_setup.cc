@@ -34,32 +34,32 @@
 
 #include <math.h>
 
-#include "doomstat.h"
-#include "m_bbox.h"
-#include "m_argv.h"
-#include "g_game.h"
-#include "w_wad.h"
-#include "r_main.h"
-#include "r_things.h"
-#include "p_maputl.h"
-#include "p_map.h"
-#include "p_setup.h"
-#include "p_spec.h"
-#include "p_tick.h"
-#include "p_enemy.h"
-#include "s_sound.h"
-#include "s_advsound.h"
-#include "lprintf.h" //jff 10/6/98 for debug outputs
-#include "v_video.h"
-#include "r_demo.h"
-#include "r_fps.h"
-#include "hu_tracers.h"
-#include "g_overflow.h"
-#include "am_map.h"
-#include "e6y.h"//e6y
-#include "dsda.h"
+#include "doomstat.hh"
+#include "m_bbox.hh"
+#include "m_argv.hh"
+#include "g_game.hh"
+#include "w_wad.hh"
+#include "r_main.hh"
+#include "r_things.hh"
+#include "p_maputl.hh"
+#include "p_map.hh"
+#include "p_setup.hh"
+#include "p_spec.hh"
+#include "p_tick.hh"
+#include "p_enemy.hh"
+#include "s_sound.hh"
+#include "s_advsound.hh"
+#include "lprintf.hh" //jff 10/6/98 for debug outputs
+#include "v_video.hh"
+#include "r_demo.hh"
+#include "r_fps.hh"
+#include "hu_tracers.hh"
+#include "g_overflow.hh"
+#include "am_map.hh"
+#include "e6y.hh"//e6y
+#include "dsda.hh"
 
-#include "config.h"
+#include "config.hh"
 #ifdef HAVE_LIBZ
 #include <zlib.h>
 #endif

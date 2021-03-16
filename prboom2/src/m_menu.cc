@@ -36,44 +36,44 @@
  *-----------------------------------------------------------------------------*/
 
 #ifdef HAVE_CONFIG_H
-#include "config.h"
+#include "config.hh"
 #endif
 
 #include <stdio.h>
 #include <fcntl.h>
 
-#include "doomdef.h"
-#include "doomstat.h"
-#include "dstrings.h"
-#include "d_main.h"
-#include "v_video.h"
-#include "w_wad.h"
-#include "r_main.h"
-#include "hu_stuff.h"
-#include "st_stuff.h"
-#include "g_game.h"
-#include "s_sound.h"
-#include "sounds.h"
-#include "m_menu.h"
-#include "d_deh.h"
-#include "m_misc.h"
-#include "lprintf.h"
-#include "am_map.h"
-#include "i_main.h"
-#include "i_system.h"
-#include "i_video.h"
-#include "i_sound.h"
-#include "r_demo.h"
-#include "r_fps.h"
-#include "e6y.h"//e6y
-#include "dsda/global.h"
-#include "dsda/settings.h"
-#include "dsda/key_frame.h"
-#include "dsda/input.h"
-#include "dsda/palette.h"
-#include "heretic/mn_menu.h"
+#include "doomdef.hh"
+#include "doomstat.hh"
+#include "dstrings.hh"
+#include "d_main.hh"
+#include "v_video.hh"
+#include "w_wad.hh"
+#include "r_main.hh"
+#include "hu_stuff.hh"
+#include "st_stuff.hh"
+#include "g_game.hh"
+#include "s_sound.hh"
+#include "sounds.hh"
+#include "m_menu.hh"
+#include "d_deh.hh"
+#include "m_misc.hh"
+#include "lprintf.hh"
+#include "am_map.hh"
+#include "i_main.hh"
+#include "i_system.hh"
+#include "i_video.hh"
+#include "i_sound.hh"
+#include "r_demo.hh"
+#include "r_fps.hh"
+#include "e6y.hh"//e6y
+#include "dsda/global.hh"
+#include "dsda/settings.hh"
+#include "dsda/key_frame.hh"
+#include "dsda/input.hh"
+#include "dsda/palette.hh"
+#include "heretic/mn_menu.hh"
 #ifdef _WIN32
-#include "e6y_launcher.h"
+#include "e6y_launcher.hh"
 #endif
 
 extern dboolean  message_dontfuckwithme;

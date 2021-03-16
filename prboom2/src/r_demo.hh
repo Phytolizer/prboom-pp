@@ -35,11 +35,11 @@
 #ifndef __R_DEMO__
 #define __R_DEMO__
 
-#include "doomdef.h"
-#include "doomtype.h"
-#include "tables.h"
-#include "d_player.h"
-#include "w_wad.h"
+#include "doomdef.hh"
+#include "doomtype.hh"
+#include "tables.hh"
+#include "d_player.hh"
+#include "w_wad.hh"
 
 //
 // Smooth playing stuff

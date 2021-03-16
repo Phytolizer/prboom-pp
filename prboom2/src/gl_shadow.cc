@@ -28,19 +28,19 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include "config.h"
+#include "config.hh"
 #endif
 
-#include "gl_opengl.h"
-#include "gl_intern.h"
-#include "doomstat.h"
-#include "p_maputl.h"
-#include "w_wad.h"
-#include "r_fps.h"
-#include "r_bsp.h"
-#include "r_sky.h"
-#include "r_main.h"
-#include "lprintf.h"
+#include "gl_opengl.hh"
+#include "gl_intern.hh"
+#include "doomstat.hh"
+#include "p_maputl.hh"
+#include "w_wad.hh"
+#include "r_fps.hh"
+#include "r_bsp.hh"
+#include "r_sky.hh"
+#include "r_main.hh"
+#include "lprintf.hh"
 
 int gl_shadows_maxdist;
 int gl_shadows_factor;

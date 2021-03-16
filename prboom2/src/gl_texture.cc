@@ -32,12 +32,12 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include "config.h"
+#include "config.hh"
 #endif
 
-#include "gl_opengl.h"
+#include "gl_opengl.hh"
 
-#include "z_zone.h"
+#include "z_zone.hh"
 #ifdef _WIN32
 #ifndef WIN32_LEAN_AND_MEAN
 #define WIN32_LEAN_AND_MEAN 1
@@ -50,26 +50,26 @@
 #include <stdio.h>
 #include <string.h>
 #include <SDL.h>
-#include "doomtype.h"
-#include "w_wad.h"
-#include "m_argv.h"
-#include "d_event.h"
-#include "v_video.h"
-#include "doomstat.h"
-#include "r_bsp.h"
-#include "r_main.h"
-#include "r_draw.h"
-#include "r_sky.h"
-#include "r_plane.h"
-#include "r_data.h"
-#include "p_maputl.h"
-#include "p_tick.h"
-#include "m_bbox.h"
-#include "lprintf.h"
-#include "gl_intern.h"
-#include "gl_struct.h"
-#include "p_spec.h"
-#include "e6y.h"
+#include "doomtype.hh"
+#include "w_wad.hh"
+#include "m_argv.hh"
+#include "d_event.hh"
+#include "v_video.hh"
+#include "doomstat.hh"
+#include "r_bsp.hh"
+#include "r_main.hh"
+#include "r_draw.hh"
+#include "r_sky.hh"
+#include "r_plane.hh"
+#include "r_data.hh"
+#include "p_maputl.hh"
+#include "p_tick.hh"
+#include "m_bbox.hh"
+#include "lprintf.hh"
+#include "gl_intern.hh"
+#include "gl_struct.hh"
+#include "p_spec.hh"
+#include "e6y.hh"
 
 int imageformats[5] = {0, GL_LUMINANCE, GL_LUMINANCE_ALPHA, GL_RGB, GL_RGBA};
 

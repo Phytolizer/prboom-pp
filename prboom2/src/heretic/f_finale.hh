@@ -18,7 +18,7 @@
 #ifndef __HERETIC_F_FINALE__
 #define __HERETIC_F_FINALE__
 
-#include "d_event.h"
+#include "d_event.hh"
 
 dboolean Heretic_F_Responder(event_t * event);
 void Heretic_F_Drawer(void);

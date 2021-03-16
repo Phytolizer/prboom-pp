@@ -35,7 +35,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include "config.h"
+#include "config.hh"
 #endif
 
 #ifdef HAVE_UNISTD_H
@@ -52,32 +52,32 @@ typedef BOOL (WINAPI *SetAffinityFunc)(HANDLE hProcess, DWORD mask);
 
 #include <errno.h>
 
-#include "TEXTSCREEN/txt_main.h"
+#include "TEXTSCREEN/txt_main.hh"
 
-#include "doomdef.h"
-#include "m_argv.h"
-#include "d_main.h"
-#include "m_fixed.h"
-#include "i_system.h"
-#include "i_video.h"
-#include "z_zone.h"
-#include "lprintf.h"
-#include "m_random.h"
-#include "doomstat.h"
-#include "g_game.h"
-#include "m_misc.h"
-#include "i_sound.h"
-#include "i_main.h"
-#include "r_fps.h"
-#include "lprintf.h"
+#include "doomdef.hh"
+#include "m_argv.hh"
+#include "d_main.hh"
+#include "m_fixed.hh"
+#include "i_system.hh"
+#include "i_video.hh"
+#include "z_zone.hh"
+#include "lprintf.hh"
+#include "m_random.hh"
+#include "doomstat.hh"
+#include "g_game.hh"
+#include "m_misc.hh"
+#include "i_sound.hh"
+#include "i_main.hh"
+#include "r_fps.hh"
+#include "lprintf.hh"
 
 #include <signal.h>
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "e6y.h"
-#include "dsda.h"
-#include "dsda/settings.h"
+#include "e6y.hh"
+#include "dsda.hh"
+#include "dsda/settings.hh"
 
 /* Most of the following has been rewritten by Lee Killough
  *

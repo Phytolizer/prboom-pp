@@ -33,25 +33,25 @@
  *
  *-----------------------------------------------------------------------------*/
 
-#include "doomstat.h"
-#include "d_event.h"
-#include "r_main.h"
-#include "p_map.h"
-#include "p_spec.h"
-#include "p_user.h"
-#include "r_demo.h"
-#include "r_fps.h"
-#include "g_game.h"
-#include "e6y.h"//e6y
+#include "doomstat.hh"
+#include "d_event.hh"
+#include "r_main.hh"
+#include "p_map.hh"
+#include "p_spec.hh"
+#include "p_user.hh"
+#include "r_demo.hh"
+#include "r_fps.hh"
+#include "g_game.hh"
+#include "e6y.hh"//e6y
 
-#include "dsda/settings.h"
+#include "dsda/settings.hh"
 
 // heretic needs
-#include "heretic/def.h"
-#include "s_sound.h"
-#include "sounds.h"
-#include "p_inter.h"
-#include "m_random.h"
+#include "heretic/def.hh"
+#include "s_sound.hh"
+#include "sounds.hh"
+#include "p_inter.hh"
+#include "m_random.hh"
 
 //
 // Movement.
@@ -824,7 +824,7 @@ void P_PlayerThink (player_t* player)
 
 // heretic
 
-#include "p_tick.h"
+#include "p_tick.hh"
 
 void P_PlayerNextArtifact(player_t * player);
 

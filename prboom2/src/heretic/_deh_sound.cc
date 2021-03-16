@@ -18,15 +18,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "doomtype.h"
-#include "deh_defs.h"
-#include "deh_main.h"
-#include "deh_mapping.h"
+#include "doomtype.hh"
+#include "deh_defs.hh"
+#include "deh_main.hh"
+#include "deh_mapping.hh"
 
-#include "doomdef.h"
-#include "i_sound.h"
+#include "doomdef.hh"
+#include "i_sound.hh"
 
-#include "sounds.h"
+#include "sounds.hh"
 
 DEH_BEGIN_MAPPING(sound_mapping, sfxinfo_t)
     DEH_MAPPING_STRING("Name", name)

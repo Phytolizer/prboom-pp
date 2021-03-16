@@ -19,17 +19,17 @@
 
 #include <stdlib.h>
 
-#include "i_system.h"
-#include "i_timer.h"
-#include "i_video.h"
-#include "doomdef.h"
-#include "m_argv.h"
-#include "m_misc.h"
-#include "w_checksum.h"
+#include "i_system.hh"
+#include "i_timer.hh"
+#include "i_video.hh"
+#include "doomdef.hh"
+#include "m_argv.hh"
+#include "m_misc.hh"
+#include "w_checksum.hh"
 
-#include "deh_main.h"
+#include "deh_main.hh"
 
-#include "d_loop.h"
+#include "d_loop.hh"
 
 ticcmd_t *netcmds;
 

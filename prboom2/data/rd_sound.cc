@@ -3,14 +3,14 @@
 
 // Convert WAVE files to Doom sound format
 
-#include "config.h"
+#include "config.hh"
 
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 
-#include "rd_util.h"
-#include "rd_sound.h"
+#include "rd_util.hh"
+#include "rd_sound.hh"
 
 //
 // wav_to_doom

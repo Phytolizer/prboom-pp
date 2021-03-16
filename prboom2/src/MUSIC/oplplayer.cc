@@ -28,21 +28,21 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "doomdef.h"
-#include "memio.h"
-#include "mus2mid.h"
+#include "doomdef.hh"
+#include "memio.hh"
+#include "mus2mid.hh"
 
-#include "m_misc.h"
-#include "s_sound.h"
-#include "w_wad.h"
-#include "z_zone.h"
+#include "m_misc.hh"
+#include "s_sound.hh"
+#include "w_wad.hh"
+#include "z_zone.hh"
 
-#include "opl.h"
-#include "midifile.h"
+#include "opl.hh"
+#include "midifile.hh"
 
-#include "musicplayer.h"
+#include "musicplayer.hh"
 
-#include "lprintf.h"
+#include "lprintf.hh"
 
 // #define OPL_MIDI_DEBUG
 

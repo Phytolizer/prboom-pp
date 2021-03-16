@@ -33,25 +33,25 @@
  *
  *-----------------------------------------------------------------------------*/
 
-#include "doomstat.h"
-#include "m_random.h"
-#include "r_main.h"
-#include "p_maputl.h"
-#include "p_map.h"
-#include "p_setup.h"
-#include "p_spec.h"
-#include "s_sound.h"
-#include "sounds.h"
-#include "p_inter.h"
-#include "g_game.h"
-#include "p_enemy.h"
-#include "p_tick.h"
-#include "i_sound.h"
-#include "m_bbox.h"
-#include "hu_stuff.h"
-#include "lprintf.h"
-#include "e6y.h"//e6y
-#include "dsda.h"
+#include "doomstat.hh"
+#include "m_random.hh"
+#include "r_main.hh"
+#include "p_maputl.hh"
+#include "p_map.hh"
+#include "p_setup.hh"
+#include "p_spec.hh"
+#include "s_sound.hh"
+#include "sounds.hh"
+#include "p_inter.hh"
+#include "g_game.hh"
+#include "p_enemy.hh"
+#include "p_tick.hh"
+#include "i_sound.hh"
+#include "m_bbox.hh"
+#include "hu_stuff.hh"
+#include "lprintf.hh"
+#include "e6y.hh"//e6y
+#include "dsda.hh"
 
 static mobj_t *current_actor;
 
@@ -2966,7 +2966,7 @@ void A_LineEffect(mobj_t *mo)
 
 // heretic
 
-#include "heretic/def.h"
+#include "heretic/def.hh"
 
 #define MAX_BOSS_SPOTS 8
 

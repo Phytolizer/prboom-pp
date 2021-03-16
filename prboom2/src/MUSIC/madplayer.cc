@@ -31,10 +31,10 @@
 
 
 #ifdef HAVE_CONFIG_H
-#include "config.h"
+#include "config.hh"
 #endif
 
-#include "musicplayer.h"
+#include "musicplayer.hh"
 
 #ifndef HAVE_LIBMAD
 #include <string.h>
@@ -70,11 +70,11 @@ const music_player_t mp_player =
 
 #include <stdlib.h>
 #include <string.h>
-#include "lprintf.h"
+#include "lprintf.hh"
 
 #include <mad.h>
 
-#include "i_sound.h"
+#include "i_sound.hh"
 
 static struct mad_stream Stream;
 static struct mad_frame  Frame;

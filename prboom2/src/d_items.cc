@@ -33,13 +33,13 @@
  */
 
 // We are referring to sprite numbers.
-#include "doomtype.h"
-#include "info.h"
+#include "doomtype.hh"
+#include "info.hh"
 
 #ifdef __GNUG__
 #pragma implementation "d_items.h"
 #endif
-#include "d_items.h"
+#include "d_items.hh"
 
 
 //

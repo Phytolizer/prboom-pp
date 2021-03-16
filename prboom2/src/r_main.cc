@@ -34,31 +34,31 @@
  *-----------------------------------------------------------------------------*/
 
 #ifdef HAVE_CONFIG_H
-#include "config.h"
+#include "config.hh"
 #endif
 #include "SDL.h"
 
-#include "doomstat.h"
-#include "d_net.h"
-#include "w_wad.h"
-#include "r_main.h"
-#include "r_things.h"
-#include "r_plane.h"
-#include "r_bsp.h"
-#include "r_draw.h"
-#include "m_bbox.h"
-#include "r_sky.h"
-#include "v_video.h"
-#include "lprintf.h"
-#include "st_stuff.h"
-#include "i_main.h"
-#include "i_system.h"
-#include "g_game.h"
-#include "r_demo.h"
-#include "r_fps.h"
+#include "doomstat.hh"
+#include "d_net.hh"
+#include "w_wad.hh"
+#include "r_main.hh"
+#include "r_things.hh"
+#include "r_plane.hh"
+#include "r_bsp.hh"
+#include "r_draw.hh"
+#include "m_bbox.hh"
+#include "r_sky.hh"
+#include "v_video.hh"
+#include "lprintf.hh"
+#include "st_stuff.hh"
+#include "i_main.hh"
+#include "i_system.hh"
+#include "g_game.hh"
+#include "r_demo.hh"
+#include "r_fps.hh"
 #include <math.h>
-#include "e6y.h"//e6y
-#include "xs_Float.h"
+#include "e6y.hh"//e6y
+#include "xs_Float.hh"
 
 // e6y
 // Now they are variables. Depends from render_doom_lightmaps variable.

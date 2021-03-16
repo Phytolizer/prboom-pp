@@ -26,7 +26,7 @@
 // NSM: reworked to function without sdl_mixer (needs new i_sound.c)
 
 #ifdef HAVE_CONFIG_H
-#include "config.h"
+#include "config.hh"
 #endif
 
 #include <stdio.h>
@@ -34,12 +34,12 @@
 
 #include "SDL.h"
 
-#include "pcsound.h"
+#include "pcsound.hh"
 
 //e6y
-#include "lprintf.h"
+#include "lprintf.hh"
 
-#include "i_sound.h" // snd_samplerate
+#include "i_sound.hh" // snd_samplerate
 
 #define SQUARE_WAVE_AMP 0x2000
 

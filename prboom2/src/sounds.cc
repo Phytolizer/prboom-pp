@@ -35,11 +35,11 @@
 // killough 5/3/98: reformatted
 
 #ifdef HAVE_CONFIG_H
-#include "config.h"
+#include "config.hh"
 #endif
 
-#include "doomtype.h"
-#include "sounds.h"
+#include "doomtype.hh"
+#include "sounds.hh"
 
 //
 // Information about all the music

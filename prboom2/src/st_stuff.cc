@@ -33,25 +33,25 @@
  *
  *-----------------------------------------------------------------------------*/
 
-#include "doomdef.h"
-#include "doomstat.h"
-#include "m_random.h"
-#include "i_video.h"
-#include "w_wad.h"
-#include "st_stuff.h"
-#include "st_lib.h"
-#include "r_main.h"
-#include "am_map.h"
-#include "m_cheat.h"
-#include "s_sound.h"
-#include "sounds.h"
-#include "dstrings.h"
-#include "r_draw.h"
-#include "e6y.h"//e6y
+#include "doomdef.hh"
+#include "doomstat.hh"
+#include "m_random.hh"
+#include "i_video.hh"
+#include "w_wad.hh"
+#include "st_stuff.hh"
+#include "st_lib.hh"
+#include "r_main.hh"
+#include "am_map.hh"
+#include "m_cheat.hh"
+#include "s_sound.hh"
+#include "sounds.hh"
+#include "dstrings.hh"
+#include "r_draw.hh"
+#include "e6y.hh"//e6y
 
-#include "dsda/settings.h"
+#include "dsda/settings.hh"
 
-#include "heretic/sb_bar.h"
+#include "heretic/sb_bar.hh"
 
 //
 // STATUS BAR DATA

@@ -32,12 +32,12 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include "config.h"
+#include "config.hh"
 #endif
 
-#include "gl_opengl.h"
+#include "gl_opengl.hh"
 
-#include "z_zone.h"
+#include "z_zone.hh"
 #include <SDL.h>
 
 #ifdef HAVE_LIBSDL2_IMAGE
@@ -46,15 +46,15 @@
 
 #include <math.h>
 
-#include "v_video.h"
-#include "r_main.h"
-#include "gl_intern.h"
-#include "w_wad.h"
-#include "lprintf.h"
-#include "p_spec.h"
-#include "m_misc.h"
-#include "sc_man.h"
-#include "e6y.h"
+#include "v_video.hh"
+#include "r_main.hh"
+#include "gl_intern.hh"
+#include "w_wad.hh"
+#include "lprintf.hh"
+#include "p_spec.hh"
+#include "m_misc.hh"
+#include "sc_man.hh"
+#include "e6y.hh"
 
 int render_usedetail;
 int gl_allow_detail_textures;

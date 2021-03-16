@@ -32,20 +32,20 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include "config.h"
+#include "config.hh"
 #endif
 
 #include <SDL.h>
 
 #include <math.h>
 
-#include "doomstat.h"
-#include "lprintf.h"
-#include "v_video.h"
-#include "r_main.h"
-#include "gl_intern.h"
-#include "gl_opengl.h"
-#include "e6y.h"
+#include "doomstat.hh"
+#include "lprintf.hh"
+#include "v_video.hh"
+#include "r_main.hh"
+#include "gl_intern.hh"
+#include "gl_opengl.hh"
+#include "e6y.hh"
 
 gl_lightmode_t gl_lightmode;
 gl_lightmode_t gl_lightmode_default;

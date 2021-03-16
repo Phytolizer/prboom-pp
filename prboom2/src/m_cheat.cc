@@ -31,24 +31,24 @@
  *
  *-----------------------------------------------------------------------------*/
 
-#include "doomstat.h"
-#include "g_game.h"
-#include "r_data.h"
-#include "p_inter.h"
-#include "p_tick.h"
-#include "m_cheat.h"
-#include "m_argv.h"
-#include "s_sound.h"
-#include "sounds.h"
-#include "dstrings.h"
-#include "r_main.h"
-#include "p_map.h"
-#include "d_deh.h"  // Ty 03/27/98 - externalized strings
+#include "doomstat.hh"
+#include "g_game.hh"
+#include "r_data.hh"
+#include "p_inter.hh"
+#include "p_tick.hh"
+#include "m_cheat.hh"
+#include "m_argv.hh"
+#include "s_sound.hh"
+#include "sounds.hh"
+#include "dstrings.hh"
+#include "r_main.hh"
+#include "p_map.hh"
+#include "d_deh.hh"  // Ty 03/27/98 - externalized strings
 /* cph 2006/07/23 - needs direct access to thinkercap */
-#include "p_tick.h"
+#include "p_tick.hh"
 
-#include "dsda/input.h"
-#include "dsda/settings.h"
+#include "dsda/input.hh"
+#include "dsda/settings.hh"
 
 #define plyr (players+consoleplayer)     /* the console player */
 

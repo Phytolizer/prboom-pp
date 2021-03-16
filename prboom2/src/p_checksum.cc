@@ -3,10 +3,10 @@
 #include <errno.h>
 #include <stdlib.h> /* exit(), atexit() */
 
-#include "p_checksum.h"
-#include "md5.h"
-#include "doomstat.h" /* players{,ingame} */
-#include "lprintf.h"
+#include "p_checksum.hh"
+#include "md5.hh"
+#include "doomstat.hh" /* players{,ingame} */
+#include "lprintf.hh"
 
 /* forward decls */
 static void p_checksum_cleanup(void);

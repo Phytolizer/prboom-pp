@@ -16,11 +16,11 @@
 
 // D_main.c
 
-#include "sounds.h"
-#include "g_game.h"
-#include "d_main.h"
+#include "sounds.hh"
+#include "g_game.hh"
+#include "d_main.hh"
 
-#include "heretic/dstrings.h"
+#include "heretic/dstrings.hh"
 
 static void Heretic_D_DrawTitle(const char *_x)
 {

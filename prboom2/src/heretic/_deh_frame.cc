@@ -18,16 +18,16 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "doomtype.h"
-#include "info.h"
+#include "doomtype.hh"
+#include "info.hh"
 
-#include "deh_defs.h"
-#include "deh_io.h"
-#include "deh_main.h"
-#include "deh_mapping.h"
-#include "deh_htic.h"
+#include "deh_defs.hh"
+#include "deh_io.hh"
+#include "deh_main.hh"
+#include "deh_mapping.hh"
+#include "deh_htic.hh"
 
-#include "p_action.h"
+#include "p_action.hh"
 
 typedef struct
 {

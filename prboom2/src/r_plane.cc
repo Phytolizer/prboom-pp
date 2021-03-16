@@ -45,21 +45,21 @@
  *-----------------------------------------------------------------------------*/
 
 #ifdef HAVE_CONFIG_H
-#include "config.h"
+#include "config.hh"
 #endif
 
-#include "z_zone.h"  /* memory allocation wrappers -- killough */
+#include "z_zone.hh"  /* memory allocation wrappers -- killough */
 
-#include "doomstat.h"
-#include "w_wad.h"
-#include "r_main.h"
-#include "r_draw.h"
-#include "r_things.h"
-#include "r_sky.h"
-#include "r_plane.h"
-#include "r_main.h"
-#include "v_video.h"
-#include "lprintf.h"
+#include "doomstat.hh"
+#include "w_wad.hh"
+#include "r_main.hh"
+#include "r_draw.hh"
+#include "r_things.hh"
+#include "r_sky.hh"
+#include "r_plane.hh"
+#include "r_main.hh"
+#include "v_video.hh"
+#include "lprintf.hh"
 
 #define MAXVISPLANES 128    /* must be a power of 2 */
 

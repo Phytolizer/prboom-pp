@@ -15,12 +15,12 @@
 //	DSDA MSecNode Management
 //
 
-#include "r_defs.h"
-#include "p_saveg.h"
-#include "lprintf.h"
-#include "p_tick.h"
+#include "r_defs.hh"
+#include "p_saveg.hh"
+#include "lprintf.hh"
+#include "p_tick.hh"
 
-#include "msecnode.h"
+#include "msecnode.hh"
 
 extern sector_t *sectors;
 extern int numsectors;

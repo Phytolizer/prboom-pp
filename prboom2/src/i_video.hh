@@ -35,15 +35,15 @@
 #define __I_VIDEO__
 
 #ifdef HAVE_CONFIG_H
-#include "config.h"
+#include "config.hh"
 #endif
 
 #ifdef GL_DOOM
 #include <SDL_opengl.h>
 #endif
 
-#include "doomtype.h"
-#include "v_video.h"
+#include "doomtype.hh"
+#include "v_video.hh"
 #include "SDL.h"
 
 #ifdef __GNUG__

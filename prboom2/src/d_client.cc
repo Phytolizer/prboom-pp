@@ -37,7 +37,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include "config.h"
+#include "config.hh"
 #endif
 #include <sys/types.h>
 #ifdef HAVE_UNISTD_H
@@ -51,26 +51,26 @@
  #include "SDL.h"
 #endif
 
-#include "doomtype.h"
-#include "doomstat.h"
-#include "d_net.h"
-#include "z_zone.h"
+#include "doomtype.hh"
+#include "doomstat.hh"
+#include "d_net.hh"
+#include "z_zone.hh"
 
-#include "d_main.h"
-#include "g_game.h"
-#include "m_menu.h"
-#include "p_checksum.h"
+#include "d_main.hh"
+#include "g_game.hh"
+#include "m_menu.hh"
+#include "p_checksum.hh"
 
-#include "protocol.h"
-#include "i_network.h"
-#include "i_system.h"
-#include "i_main.h"
-#include "i_video.h"
-#include "m_argv.h"
-#include "r_fps.h"
-#include "lprintf.h"
-#include "e6y.h"
-#include "dsda/settings.h"
+#include "protocol.hh"
+#include "i_network.hh"
+#include "i_system.hh"
+#include "i_main.hh"
+#include "i_video.hh"
+#include "m_argv.hh"
+#include "r_fps.hh"
+#include "lprintf.hh"
+#include "e6y.hh"
+#include "dsda/settings.hh"
 
 static dboolean   server;
 static int       remotetic; // Tic expected from the remote

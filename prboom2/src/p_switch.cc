@@ -31,15 +31,15 @@
  *
  *-----------------------------------------------------------------------------*/
 
-#include "doomstat.h"
-#include "w_wad.h"
-#include "r_main.h"
-#include "p_spec.h"
-#include "g_game.h"
-#include "s_sound.h"
-#include "sounds.h"
-#include "lprintf.h"
-#include "e6y.h"//e6y
+#include "doomstat.hh"
+#include "w_wad.hh"
+#include "r_main.hh"
+#include "p_spec.hh"
+#include "g_game.hh"
+#include "s_sound.hh"
+#include "sounds.hh"
+#include "lprintf.hh"
+#include "e6y.hh"//e6y
 
 
 //==================================================================

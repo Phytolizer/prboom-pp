@@ -32,14 +32,14 @@
  *
  *-----------------------------------------------------------------------------*/
 
-#include "doomstat.h" //jff 6/19/98 for demo_compatibility
-#include "r_main.h"
-#include "p_spec.h"
-#include "p_tick.h"
-#include "m_random.h"
-#include "s_sound.h"
-#include "sounds.h"
-#include "e6y.h"
+#include "doomstat.hh" //jff 6/19/98 for demo_compatibility
+#include "r_main.hh"
+#include "p_spec.hh"
+#include "p_tick.hh"
+#include "m_random.hh"
+#include "s_sound.hh"
+#include "sounds.hh"
+#include "e6y.hh"
 
 //////////////////////////////////////////////////////////
 //

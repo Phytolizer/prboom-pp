@@ -33,12 +33,12 @@
  *
  *-----------------------------------------------------------------------------*/
 
-#include "doomstat.h" //jff 5/18/98
-#include "doomdef.h"
-#include "m_random.h"
-#include "r_main.h"
-#include "p_spec.h"
-#include "p_tick.h"
+#include "doomstat.hh" //jff 5/18/98
+#include "doomdef.hh"
+#include "m_random.hh"
+#include "r_main.hh"
+#include "p_spec.hh"
+#include "p_tick.hh"
 
 //////////////////////////////////////////////////////////
 //

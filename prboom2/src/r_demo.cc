@@ -33,7 +33,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include "config.h"
+#include "config.hh"
 #endif
 
 #ifdef _WIN32
@@ -46,25 +46,25 @@
 #include <errno.h>
 #include <fcntl.h>
 
-#include "doomdef.h"
-#include "doomtype.h"
-#include "doomstat.h"
-#include "r_demo.h"
-#include "r_fps.h"
-#include "lprintf.h"
-#include "i_system.h"
-#include "i_video.h"
-#include "m_misc.h"
-#include "m_argv.h"
-#include "w_wad.h"
-#include "d_main.h"
-#include "d_deh.h"
-#include "g_game.h"
-#include "p_map.h"
-#include "hu_stuff.h"
-#include "g_overflow.h"
-#include "e6y.h"
-#include "dsda/demo.h"
+#include "doomdef.hh"
+#include "doomtype.hh"
+#include "doomstat.hh"
+#include "r_demo.hh"
+#include "r_fps.hh"
+#include "lprintf.hh"
+#include "i_system.hh"
+#include "i_video.hh"
+#include "m_misc.hh"
+#include "m_argv.hh"
+#include "w_wad.hh"
+#include "d_main.hh"
+#include "d_deh.hh"
+#include "g_game.hh"
+#include "p_map.hh"
+#include "hu_stuff.hh"
+#include "g_overflow.hh"
+#include "e6y.hh"
+#include "dsda/demo.hh"
 
 int IsDemoPlayback(void)
 {
@@ -214,7 +214,7 @@ void R_ResetAfterTeleport(player_t *player)
 //
 
 #ifdef HAVE_LIBPCREPOSIX
-#include "pcreposix.h"
+#include "pcreposix.hh"
 #endif
 
 #define PWAD_SIGNATURE "PWAD"

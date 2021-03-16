@@ -23,7 +23,7 @@
 //
 //-----------------------------------------------------------------------------
 
-#include "config.h"
+#include "config.hh"
 
 #ifdef HAVE_LINUX_KD_H
 
@@ -39,10 +39,10 @@
 #include "SDL.h"
 #include "SDL_thread.h"
 
-#include "pcsound.h"
+#include "pcsound.hh"
 
 //e6y
-#include "lprintf.h"
+#include "lprintf.hh"
 
 #define CONSOLE_DEVICE "/dev/console"
 

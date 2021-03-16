@@ -32,10 +32,10 @@
 // split off or something
 
 #ifdef HAVE_CONFIG_H
-#include "config.h"
+#include "config.hh"
 #endif
 
-#include "musicplayer.h"
+#include "musicplayer.hh"
 
 #ifndef HAVE_LIBPORTMIDI
 #include <string.h>
@@ -73,9 +73,9 @@ const music_player_t pm_player =
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "lprintf.h"
-#include "midifile.h"
-#include "i_sound.h" // for snd_mididev
+#include "lprintf.hh"
+#include "midifile.hh"
+#include "i_sound.hh" // for snd_mididev
 
 static midi_event_t **events;
 static int eventpos;

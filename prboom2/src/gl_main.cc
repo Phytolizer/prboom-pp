@@ -34,45 +34,45 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include "config.h"
+#include "config.hh"
 #endif
 
-#include "gl_opengl.h"
+#include "gl_opengl.hh"
 
-#include "z_zone.h"
+#include "z_zone.hh"
 #include <math.h>
 #include <SDL.h>
-#include "doomtype.h"
-#include "w_wad.h"
-#include "m_argv.h"
-#include "d_event.h"
-#include "v_video.h"
-#include "doomstat.h"
-#include "r_bsp.h"
-#include "r_main.h"
-#include "r_draw.h"
-#include "r_sky.h"
-#include "r_plane.h"
-#include "r_data.h"
-#include "r_things.h"
-#include "r_fps.h"
-#include "p_maputl.h"
-#include "m_bbox.h"
-#include "lprintf.h"
-#include "gl_intern.h"
-#include "gl_struct.h"
-#include "p_spec.h"
-#include "i_system.h"
-#include "m_argv.h"
-#include "i_video.h"
-#include "i_main.h"
-#include "am_map.h"
-#include "sc_man.h"
-#include "st_stuff.h"
-#include "hu_stuff.h"
-#include "e6y.h"//e6y
+#include "doomtype.hh"
+#include "w_wad.hh"
+#include "m_argv.hh"
+#include "d_event.hh"
+#include "v_video.hh"
+#include "doomstat.hh"
+#include "r_bsp.hh"
+#include "r_main.hh"
+#include "r_draw.hh"
+#include "r_sky.hh"
+#include "r_plane.hh"
+#include "r_data.hh"
+#include "r_things.hh"
+#include "r_fps.hh"
+#include "p_maputl.hh"
+#include "m_bbox.hh"
+#include "lprintf.hh"
+#include "gl_intern.hh"
+#include "gl_struct.hh"
+#include "p_spec.hh"
+#include "i_system.hh"
+#include "m_argv.hh"
+#include "i_video.hh"
+#include "i_main.hh"
+#include "am_map.hh"
+#include "sc_man.hh"
+#include "st_stuff.hh"
+#include "hu_stuff.hh"
+#include "e6y.hh"//e6y
 
-#include "dsda/settings.h"
+#include "dsda/settings.hh"
 
 // All OpenGL extentions will be disabled in gl_compatibility mode
 int gl_compatibility = 0;

@@ -32,7 +32,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include "config.h"
+#include "config.hh"
 #endif
 #ifdef _WIN32
 #define WIN32_LEAN_AND_MEAN
@@ -55,38 +55,38 @@
 #include <SDL_syswm.h>
 #endif
 
-#include "hu_lib.h"
+#include "hu_lib.hh"
 
-#include "doomtype.h"
-#include "doomstat.h"
-#include "d_main.h"
-#include "s_sound.h"
-#include "i_system.h"
-#include "i_main.h"
-#include "i_sound.h"
-#include "m_menu.h"
-#include "lprintf.h"
-#include "m_argv.h"
-#include "m_misc.h"
-#include "i_system.h"
-#include "p_maputl.h"
-#include "p_map.h"
-#include "i_video.h"
-#include "info.h"
-#include "r_main.h"
-#include "r_things.h"
-#include "r_sky.h"
-#include "am_map.h"
-#include "hu_tracers.h"
-#include "dsda.h"
+#include "doomtype.hh"
+#include "doomstat.hh"
+#include "d_main.hh"
+#include "s_sound.hh"
+#include "i_system.hh"
+#include "i_main.hh"
+#include "i_sound.hh"
+#include "m_menu.hh"
+#include "lprintf.hh"
+#include "m_argv.hh"
+#include "m_misc.hh"
+#include "i_system.hh"
+#include "p_maputl.hh"
+#include "p_map.hh"
+#include "i_video.hh"
+#include "info.hh"
+#include "r_main.hh"
+#include "r_things.hh"
+#include "r_sky.hh"
+#include "am_map.hh"
+#include "hu_tracers.hh"
+#include "dsda.hh"
 #ifdef GL_DOOM
-#include "gl_struct.h"
-#include "gl_intern.h"
+#include "gl_struct.hh"
+#include "gl_intern.hh"
 #endif
-#include "g_game.h"
-#include "r_demo.h"
-#include "d_deh.h"
-#include "e6y.h"
+#include "g_game.hh"
+#include "r_demo.hh"
+#include "d_deh.hh"
+#include "e6y.hh"
 
 dboolean wasWiped = false;
 
