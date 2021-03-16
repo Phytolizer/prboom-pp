@@ -33,6 +33,7 @@
  *
  *-----------------------------------------------------------------------------*/
 
+#include "doomdef.h"
 #ifdef HAVE_CONFIG_H
 #include "config.h"
 #endif
@@ -370,6 +371,9 @@ default_t defaults[] =
   {"dog_jumping",{&default_dog_jumping}, {1}, 0, 1,
    def_bool, ss_enem, &dog_jumping},
    /* End of MBF AI extras */
+
+  // [FG] colored blood and gibs
+  {"colored_blood",{(int*)&colored_blood}, {0}, 0, 1, def_bool, ss_none},
 
   {"sts_always_red",{&sts_always_red},{1},0,1, // no color changes on status bar
    def_bool,ss_stat},

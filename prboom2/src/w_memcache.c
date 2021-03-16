@@ -128,9 +128,9 @@ const void *W_CacheLumpNum(int lump)
   cachelump[lump].locks += locks;
 
 #ifdef SIMPLECHECKS
-  if (!((cachelump[lump].locks+1) & 0xf))
-    lprintf(LO_DEBUG, "W_CacheLumpNum: High lock on %.8s (%d)\n",
-	    lumpinfo[lump].name, cachelump[lump].locks);
+  // if (!((cachelump[lump].locks+1) & 0xf))
+  //   lprintf(LO_DEBUG, "W_CacheLumpNum: High lock on %.8s (%d)\n",
+	//     lumpinfo[lump].name, cachelump[lump].locks);
 #endif
 
   return cachelump[lump].cache;
