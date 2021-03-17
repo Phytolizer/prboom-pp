@@ -60,7 +60,7 @@ typedef BOOL(WINAPI *SetAffinityFunc)(HANDLE hProcess, DWORD mask);
 #include "m_fixed.hh"
 #include "i_system.hh"
 #include "i_video.hh"
-#include "z_zone.hh"
+
 #include "lprintf.hh"
 #include "m_random.hh"
 #include "doomstat.hh"

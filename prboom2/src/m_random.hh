@@ -141,7 +141,7 @@ extern rng_t rng; // The rng's state
 extern unsigned int rngseed; // The starting seed (not part of state)
 
 // As M_Random, but used by the play simulation.
-int P_Random(pr_class_t DA(const char *, int));
+int P_Random(pr_class_t DA);
 
 #ifdef INSTRUMENTED
 #define P_Random(a) (P_Random)(a, __FILE__, __LINE__)

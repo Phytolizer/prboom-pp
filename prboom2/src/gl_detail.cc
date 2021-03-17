@@ -37,7 +37,7 @@
 
 #include "gl_opengl.hh"
 
-#include "z_zone.hh"
+
 #include <SDL.h>
 
 #ifdef HAVE_LIBSDL2_IMAGE
@@ -905,8 +905,8 @@ void gld_ParseDetailItem(tag_detail_e item)
                     {
                         details_size =
                             (details_size == 0 ? 128 : details_size * 2);
-                        details =
-                            realloc(details, details_size * sizeof(details[0]));
+                        details = static_cast<detail_t *>(realloc(
+                            details, details_size * sizeof(details[0])));
                     }
                     details[details_count] = detail;
                     details_count++;
@@ -922,7 +922,7 @@ void gld_ParseDetail(void)
 
     details_count = 2; // reserved for default wall and flat
     details_size = 128;
-    details = calloc<detail_t *>(details_size, sizeof(details[0]));
+    details = static_cast<detail_t *>(calloc(details_size, sizeof(details[0])));
 
     // skip "Detail" params
     while (SC_Check() && !SC_Compare("{"))

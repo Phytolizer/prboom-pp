@@ -45,9 +45,6 @@
 #define __attribute__(x)
 #endif
 
-// This must come first, since it redefines malloc(), free(), etc. -- killough:
-#include "z_zone.hh"
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

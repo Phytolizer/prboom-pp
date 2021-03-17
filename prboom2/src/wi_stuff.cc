@@ -1222,8 +1222,8 @@ void WI_initDeathmatchStats(void)
     int i; // looping variables
 
     // CPhipps - allocate data structures needed
-    dm_frags = calloc<short **>(MAXPLAYERS, sizeof(*dm_frags));
-    dm_totals = calloc<short *>(MAXPLAYERS, sizeof(*dm_totals));
+    dm_frags = static_cast<short **>(calloc(MAXPLAYERS, sizeof(*dm_frags)));
+    dm_totals = static_cast<short *>(calloc(MAXPLAYERS, sizeof(*dm_totals)));
 
     state = StatCount; // We're doing stats
     acceleratestage = 0;
@@ -1236,8 +1236,8 @@ void WI_initDeathmatchStats(void)
         if (playeringame[i])
         {
             // CPhipps - allocate frags line
-            dm_frags[i] = calloc<short *>(
-                MAXPLAYERS, sizeof(**dm_frags)); // set all counts to zero
+            dm_frags[i] = static_cast<short *>(calloc(
+                MAXPLAYERS, sizeof(**dm_frags))); // set all counts to zero
 
             dm_totals[i] = 0;
         }
@@ -1545,10 +1545,10 @@ void WI_initNetgameStats(void)
     cnt_pause = TICRATE;
 
     // CPhipps - allocate these dynamically, blank with calloc
-    cnt_kills = calloc<int *>(MAXPLAYERS, sizeof(*cnt_kills));
-    cnt_items = calloc<int *>(MAXPLAYERS, sizeof(*cnt_items));
-    cnt_secret = calloc<int *>(MAXPLAYERS, sizeof(*cnt_secret));
-    cnt_frags = calloc<int *>(MAXPLAYERS, sizeof(*cnt_frags));
+    cnt_kills = static_cast<int *>(calloc(MAXPLAYERS, sizeof(*cnt_kills)));
+    cnt_items = static_cast<int *>(calloc(MAXPLAYERS, sizeof(*cnt_items)));
+    cnt_secret = static_cast<int *>(calloc(MAXPLAYERS, sizeof(*cnt_secret)));
+    cnt_frags = static_cast<int *>(calloc(MAXPLAYERS, sizeof(*cnt_frags)));
 
     for (i = 0; i < MAXPLAYERS; i++)
     {
@@ -1884,9 +1884,10 @@ void WI_initStats(void)
 
     // CPhipps - allocate (awful code, I know, but saves changing it all) and
     // initialise
-    *(cnt_kills = malloc<int *>(sizeof(*cnt_kills))) =
-        *(cnt_items = malloc<int *>(sizeof(*cnt_items))) =
-            *(cnt_secret = malloc<int *>(sizeof(*cnt_secret))) = -1;
+    *(cnt_kills = static_cast<int *>(malloc(sizeof(*cnt_kills)))) =
+        *(cnt_items = static_cast<int *>(malloc(sizeof(*cnt_items)))) =
+            *(cnt_secret = static_cast<int *>(malloc(sizeof(*cnt_secret)))) =
+                -1;
     cnt_time = cnt_par = cnt_total_time = -1;
     cnt_pause = TICRATE;
 

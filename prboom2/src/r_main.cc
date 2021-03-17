@@ -431,11 +431,10 @@ static void R_InitLightTables(void)
     int i;
 
     // killough 4/4/98: dynamic colormaps
-    c_zlight = malloc<const lighttable_t *(*)[LIGHTLEVELS_MAX][MAXLIGHTZ]>(
-        sizeof(*c_zlight) * numcolormaps);
-    c_scalelight =
-        malloc<const lighttable_t *(*)[LIGHTLEVELS_MAX][MAXLIGHTSCALE]>(
-            sizeof(*c_scalelight) * numcolormaps);
+    c_zlight = reinterpret_cast<const lighttable_t *(*)[32][128]>(
+        malloc(sizeof(*c_zlight) * numcolormaps));
+    c_scalelight = static_cast<const lighttable_t *(*)[32][48]>(
+        malloc(sizeof(*c_scalelight) * numcolormaps));
 
     LIGHTLEVELS = (render_doom_lightmaps ? 16 : 32);
     LIGHTSEGSHIFT = (render_doom_lightmaps ? 4 : 3);

@@ -1286,7 +1286,7 @@ static void P_LoadZNodes(int lump, int glnodes, int compressed)
         output = static_cast<byte *>(std::malloc(outlen));
 
         // initialize stream state for decompression
-        zstream = malloc<z_stream *>(sizeof(*zstream));
+        zstream = static_cast<z_stream *>(malloc(sizeof(*zstream)));
         memset(zstream, 0, sizeof(*zstream));
         zstream->next_in = const_cast<Bytef *>(data + 4);
         zstream->avail_in = len - 4;
@@ -1304,7 +1304,7 @@ static void P_LoadZNodes(int lump, int glnodes, int compressed)
         {
             int outlen_old = outlen;
             outlen = 2 * outlen_old;
-            output = realloc(output, outlen);
+            output = static_cast<byte *>(realloc(output, outlen));
             zstream->next_out = output + outlen_old;
             zstream->avail_out = outlen - outlen_old;
         }
@@ -1357,8 +1357,8 @@ static void P_LoadZNodes(int lump, int glnodes, int compressed)
         }
         else
         {
-            newvertarray =
-                calloc<vertex_t *>(orgVerts + newVerts, sizeof(vertex_t));
+            newvertarray = static_cast<vertex_t *>(
+                calloc(orgVerts + newVerts, sizeof(vertex_t)));
             memcpy(newvertarray, vertexes, orgVerts * sizeof(vertex_t));
         }
 
@@ -1920,7 +1920,7 @@ static void AddBlockLine(linelist_t **lists, int *count, int *done, int blockno,
         return;
     }
 
-    l = malloc<linelist_t *>(sizeof(linelist_t));
+    l = static_cast<linelist_t *>(malloc(sizeof(linelist_t)));
     l->num = lineno;
     l->next = lists[blockno];
     lists[blockno] = l;
@@ -1994,16 +1994,17 @@ static void P_CreateBlockMap(void)
     // finally make an array in which we can mark blocks done per line
 
     // CPhipps - calloc's
-    blocklists = calloc<linelist_t **>(NBlocks, sizeof(linelist_t *));
-    blockcount = calloc<int *>(NBlocks, sizeof(int));
-    blockdone = malloc<int *>(NBlocks * sizeof(int));
+    blocklists =
+        static_cast<linelist_t **>(calloc(NBlocks, sizeof(linelist_t *)));
+    blockcount = static_cast<int *>(calloc(NBlocks, sizeof(int)));
+    blockdone = static_cast<int *>(malloc(NBlocks * sizeof(int)));
 
     // initialize each blocklist, and enter the trailing -1 in all blocklists
     // note the linked list of lines grows backwards
 
     for (i = 0; i < NBlocks; i++)
     {
-        blocklists[i] = malloc<linelist_t *>(sizeof(linelist_t));
+        blocklists[i] = static_cast<linelist_t *>(malloc(sizeof(linelist_t)));
         blocklists[i]->num = -1;
         blocklists[i]->next = nullptr;
         blockcount[i]++;
@@ -2810,8 +2811,8 @@ void P_InitSubsectorsLines(void)
     }
 
     count = 0;
-    sslines_indexes =
-        malloc<int *>((numsubsectors + 1) * sizeof(sslines_indexes[0]));
+    sslines_indexes = static_cast<int *>(
+        malloc((numsubsectors + 1) * sizeof(sslines_indexes[0])));
 
     for (num = 0; num < numsubsectors; num++)
     {
@@ -2849,7 +2850,7 @@ void P_InitSubsectorsLines(void)
 
     sslines_indexes[numsubsectors] = count;
 
-    sslines = malloc<ssline_t *>(count * sizeof(sslines[0]));
+    sslines = static_cast<ssline_t *>(malloc(count * sizeof(sslines[0])));
     count = 0;
 
     for (num = 0; num < numsubsectors; num++)

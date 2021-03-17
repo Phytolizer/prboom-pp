@@ -11,6 +11,10 @@ endfunction()
 set(COMMON_SRC
         am_map.cc
         am_map.hh
+        cpp/chars.cc
+        cpp/chars.hh
+        cpp/strings.cc
+        cpp/strings.hh
         doomdata.hh
         doomdef.cc
         doomdef.hh
@@ -205,8 +209,6 @@ set(COMMON_SRC
         w_wad.hh
         z_bmalloc.cc
         z_bmalloc.hh
-        z_zone.cc
-        z_zone.hh
         )
 
 set(NET_CLIENT_SRC

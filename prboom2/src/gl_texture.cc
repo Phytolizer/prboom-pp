@@ -37,7 +37,7 @@
 
 #include "gl_opengl.hh"
 
-#include "z_zone.hh"
+
 #ifdef _WIN32
 #ifndef WIN32_LEAN_AND_MEAN
 #define WIN32_LEAN_AND_MEAN 1
@@ -778,7 +778,7 @@ unsigned char *gld_GetTextureBuffer(GLuint texid, int miplevel, int *width,
 
     if (!buf)
     {
-        buf = malloc<unsigned char *>(buf_size);
+        buf = static_cast<unsigned char *>(malloc(buf_size));
     }
 
     if (texid)
@@ -792,7 +792,7 @@ unsigned char *gld_GetTextureBuffer(GLuint texid, int miplevel, int *width,
     {
         free(buf);
         buf_size = w * h * 4;
-        buf = malloc<unsigned char *>(buf_size);
+        buf = static_cast<unsigned char *>(malloc(buf_size));
     }
     glGetTexImage(GL_TEXTURE_2D, miplevel, GL_RGBA, GL_UNSIGNED_BYTE, buf);
 
@@ -1012,7 +1012,7 @@ int gld_BuildTexture(GLTexture *gltexture, void *data, dboolean readonly,
 #ifdef USE_GLU_IMAGESCALE
         if ((width != tex_width) || (height != tex_height))
         {
-            tex_buffer = malloc<unsigned char *>(tex_buffer_size);
+            tex_buffer = static_cast<unsigned char *>(malloc(tex_buffer_size));
             if (!tex_buffer)
             {
                 goto l_exit;
@@ -1031,13 +1031,15 @@ int gld_BuildTexture(GLTexture *gltexture, void *data, dboolean readonly,
             {
                 if (width == tex_width)
                 {
-                    tex_buffer = malloc<unsigned char *>(tex_buffer_size);
+                    tex_buffer =
+                        static_cast<unsigned char *>(malloc(tex_buffer_size));
                     memcpy(tex_buffer, data, width * height * 4);
                 }
                 else
                 {
                     int y;
-                    tex_buffer = calloc<unsigned char *>(1, tex_buffer_size);
+                    tex_buffer = static_cast<unsigned char *>(
+                        calloc(1, tex_buffer_size));
                     for (y = 0; y < height; y++)
                     {
                         memcpy(tex_buffer + y * tex_width * 4,

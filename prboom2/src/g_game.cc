@@ -2557,7 +2557,7 @@ void G_DoLoadGame(void)
     int time, ttime;
 
     length = G_SaveGameName(nullptr, 0, savegameslot, demoplayback);
-    name = malloc<char *>(length + 1);
+    name = static_cast<char *>(malloc(length + 1));
     G_SaveGameName(name, length + 1, savegameslot, demoplayback);
 
     gameaction = ga_nothing;
@@ -2611,8 +2611,8 @@ void G_DoLoadGame(void)
         {
             if (!forced_loadgame)
             {
-                char *msg = malloc<char *>(
-                    strlen((char *)save_p + sizeof checksum) + 128);
+                char *msg = static_cast<char *>(
+                    malloc(strlen((char *)save_p + sizeof checksum) + 128));
                 strcpy(msg, "Incompatible Savegame!!!\n");
                 if (save_p[sizeof checksum])
                 {
@@ -2858,7 +2858,7 @@ static void G_DoSaveGame(dboolean menu)
                              // in case later problems cause a premature exit
 
     length = G_SaveGameName(nullptr, 0, savegameslot, demoplayback && !menu);
-    name = malloc<char *>(length + 1);
+    name = static_cast<char *>(malloc(length + 1));
     G_SaveGameName(name, length + 1, savegameslot, demoplayback && !menu);
 
     description = savedescription;

@@ -11,11 +11,14 @@
 
 // HEADER FILES ------------------------------------------------------------
 
-#include <stdlib.h>
+#include <cstdlib>
+#include <cstring>
+
+#include "cpp/strings.hh"
 #include "doomtype.hh"
 #include "w_wad.hh"
 #include "m_misc.hh"
-#include "z_zone.hh"
+
 #include "lprintf.hh"
 
 #include "sc_man.hh"
@@ -404,7 +407,7 @@ int SC_MustMatchString(const char **strings)
 
 dboolean SC_Compare(const char *text)
 {
-    if (strcasecmp(text, sc_String) == 0)
+    if (str::caseInsensitiveCompare(text, sc_String) == 0)
     {
         return true;
     }

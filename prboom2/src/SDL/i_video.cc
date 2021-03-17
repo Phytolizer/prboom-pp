@@ -71,7 +71,7 @@
 #include "i_joy.hh"
 #include "i_video.hh"
 #include "i_capture.hh"
-#include "z_zone.hh"
+
 #include "s_sound.hh"
 #include "sounds.hh"
 #include "w_wad.hh"

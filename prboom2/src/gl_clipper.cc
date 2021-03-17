@@ -105,7 +105,7 @@ static clipnode_t *gld_clipnode_GetNew(void)
     }
     else
     {
-        return malloc<clipnode_t *>(sizeof(clipnode_t));
+        return static_cast<clipnode_t *>(malloc(sizeof(clipnode_t)));
     }
 }
 

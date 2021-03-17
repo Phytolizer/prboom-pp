@@ -76,7 +76,7 @@
 
 #include "gl_opengl.hh"
 
-#include "z_zone.hh"
+
 #include "v_video.hh"
 #include "gl_intern.hh"
 #include "r_main.hh"
@@ -415,7 +415,8 @@ void gld_InitVertexData()
         vertexes_count * sizeof(gl_vertexsplit->sectors[0]) +
         2 * vertexes_count * sizeof(gl_vertexsplit->heightlist[0]);
 
-    gl_vertexsplit = malloc<vertexsplit_info_t *>(gl_vertexsplit_size);
+    gl_vertexsplit =
+        static_cast<vertexsplit_info_t *>(malloc(gl_vertexsplit_size));
     memset(gl_vertexsplit, 0, gl_vertexsplit_size);
 
     pos = numvertexes * sizeof(vertexsplit_info_t);
@@ -447,8 +448,8 @@ void gld_InitVertexData()
         }
     }
 
-    gl_splitsbysector =
-        malloc<splitsbysector_t *>(sizeof(gl_splitsbysector[0]) * numsectors);
+    gl_splitsbysector = static_cast<splitsbysector_t *>(
+        malloc(sizeof(gl_splitsbysector[0]) * numsectors));
     memset(gl_splitsbysector, 0, sizeof(gl_splitsbysector[0]) * numsectors);
 
     for (i = 0; i < numsectors; i++)

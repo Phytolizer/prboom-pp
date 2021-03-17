@@ -71,10 +71,11 @@ void dsda_InitDemo(char *name)
     size_t name_size;
 
     name_size = strlen(name) + 1;
-    dsda_demo_name = malloc<char *>(name_size);
+    dsda_demo_name = static_cast<char *>(malloc(name_size));
     memcpy(dsda_demo_name, name, name_size);
 
-    dsda_demo_write_buffer = malloc<byte *>(INITIAL_DEMO_BUFFER_SIZE);
+    dsda_demo_write_buffer =
+        static_cast<byte *>(malloc(INITIAL_DEMO_BUFFER_SIZE));
     if (dsda_demo_write_buffer == nullptr)
     {
         I_Error("dsda_InitDemo: unable to initialize demo buffer!");

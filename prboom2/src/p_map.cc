@@ -2524,8 +2524,9 @@ dboolean P_CheckSector(sector_t *sector, dboolean crunch)
 
 #include "z_bmalloc.hh"
 
-IMPLEMENT_BLOCK_MEMORY_ALLOC_ZONE(secnodezone, sizeof(msecnode_t), PU_LEVEL,
-                                  256, "SecNodes");
+// FIXME this is awful
+IMPLEMENT_BLOCK_MEMORY_ALLOC_ZONE(secnodezone, sizeof(msecnode_t), 0, 256,
+                                  "SecNodes");
 
 //
 // P_FreeSecNodeList
@@ -2547,7 +2548,7 @@ inline static void P_PutSecnode(msecnode_t *node)
 {
     Z_BFree(&secnodezone, node);
 }
-#else  // USE_BLOCK_MEMORY_ALLOCATOR
+#else // USE_BLOCK_MEMORY_ALLOCATOR
 // phares 3/21/98
 //
 // Maintain a freelist of msecnode_t's to reduce memory allocs and frees.
@@ -3102,7 +3103,8 @@ void P_AppendSpecHit(line_t *ld)
     if (numspechit >= spechit_max)
     {
         spechit_max = spechit_max ? spechit_max * 2 : 8;
-        spechit = realloc(spechit, sizeof *spechit * spechit_max); // killough
+        spechit = static_cast<line_t **>(
+            realloc(spechit, sizeof *spechit * spechit_max));
     }
     spechit[numspechit++] = ld;
     // e6y: Spechits overrun emulation code

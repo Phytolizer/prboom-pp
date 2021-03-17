@@ -73,8 +73,8 @@ void dsda_InitKeyFrame(void)
         free(dsda_auto_key_frames);
     }
 
-    dsda_auto_key_frames = calloc<dsda_key_frame_t *>(dsda_auto_key_frames_size,
-                                                      sizeof(dsda_key_frame_t));
+    dsda_auto_key_frames = static_cast<dsda_key_frame_t *>(
+        calloc(dsda_auto_key_frames_size, sizeof(dsda_key_frame_t)));
     dsda_last_auto_key_frame = -1;
 }
 

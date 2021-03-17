@@ -51,7 +51,7 @@
 #pragma implementation "w_wad.h"
 #endif
 #include "w_wad.hh"
-#include "z_zone.hh"
+
 #include "lprintf.hh"
 #include "i_system.hh"
 
@@ -224,7 +224,7 @@ void W_InitCache(void)
 {
     int maxfd = 0;
     // set up caching
-    cachelump = calloc<cachelump_t *>(numlumps, sizeof *cachelump);
+    cachelump = static_cast<cachelump_t *>(calloc(numlumps, sizeof *cachelump));
     if (!cachelump)
     {
         I_Error("W_Init: Couldn't allocate lumpcache");
@@ -247,7 +247,7 @@ void W_InitCache(void)
             }
         }
     }
-    mapped_wad = calloc<void **>(maxfd + 1, sizeof *mapped_wad);
+    mapped_wad = static_cast<void **>(calloc(maxfd + 1, sizeof *mapped_wad));
     {
         int i;
         for (i = 0; i < numlumps; i++)

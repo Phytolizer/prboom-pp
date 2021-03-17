@@ -95,7 +95,7 @@
 #include "config.h"
 #endif
 
-#include "z_zone.hh"
+
 
 void I_uSleep(unsigned long usecs)
 {
@@ -431,7 +431,7 @@ const char *I_DoomExeDir(void)
         char *home = getenv("HOME");
         size_t len = strlen(home);
 
-        base = malloc<char *>(len + strlen(prboom_dir) + 1);
+        base = static_cast<char *>(malloc(len + strlen(prboom_dir) + 1));
         strcpy(base, home);
         // I've had trouble with trailing slashes before...
         if (base[len - 1] == '/')
@@ -533,7 +533,8 @@ char *I_FindFileInternal(const char *wfname, const char *ext, dboolean isStatic)
 
         // initialize with the static lookup table
         num_search = sizeof(search0) / sizeof(*search0);
-        search = malloc<search_t *>(num_search * sizeof(*search));
+        search = static_cast<struct search_t *>(
+            malloc(num_search * sizeof(*search)));
         memcpy(search, search0, num_search * sizeof(*search));
 
         // add each directory from the $DOOMWADPATH environment variable
@@ -552,7 +553,8 @@ char *I_FindFileInternal(const char *wfname, const char *ext, dboolean isStatic)
                     *ptr = '\0';
 
                     num_search++;
-                    search = realloc(search, num_search * sizeof(*search));
+                    search = static_cast<struct search_t *>(
+                        realloc(search, num_search * sizeof(*search)));
                     memset(&search[num_search - 1], 0, sizeof(*search));
                     search[num_search - 1].dir = strdup(left);
 
@@ -565,7 +567,8 @@ char *I_FindFileInternal(const char *wfname, const char *ext, dboolean isStatic)
             }
 
             num_search++;
-            search = realloc(search, num_search * sizeof(*search));
+            search = static_cast<struct search_t *>(
+                realloc(search, num_search * sizeof(*search)));
             memset(&search[num_search - 1], 0, sizeof(*search));
             search[num_search - 1].dir = strdup(left);
 

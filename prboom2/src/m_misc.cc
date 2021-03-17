@@ -4532,8 +4532,8 @@ void M_LoadDefaults(void)
     int len;
     FILE *f;
     char def[80];
-    char *strparm = malloc<char *>(CFG_BUFFERMAX);
-    char *cfgline = malloc<char *>(CFG_BUFFERMAX);
+    char *strparm = static_cast<char *>(malloc(CFG_BUFFERMAX));
+    char *cfgline = static_cast<char *>(malloc(CFG_BUFFERMAX));
     char *newstring = nullptr; // killough
     int parm;
     dboolean isstring;
@@ -4601,8 +4601,8 @@ void M_LoadDefaults(void)
             *arr = nullptr;
             *(item->location.array_size) = 0;
             // load predefined data
-            *arr =
-                realloc(*arr, sizeof(char *) * item->defaultvalue.array_size);
+            *arr = static_cast<char **>(
+                realloc(*arr, sizeof(char *) * item->defaultvalue.array_size));
             *(item->location.array_size) = item->defaultvalue.array_size;
             item->location.array_index = 0;
             for (k = 0; k < item->defaultvalue.array_size; k++)
@@ -4633,7 +4633,7 @@ void M_LoadDefaults(void)
         const char *exedir = I_DoomExeDir();
         /* get config file from same directory as executable */
         int len = doom_snprintf(nullptr, 0, "%s/" BOOM_CFG, exedir);
-        defaultfile = malloc<char *>(len + 1);
+        defaultfile = static_cast<char *>(malloc(len + 1));
         doom_snprintf(defaultfile, len + 1, "%s/" BOOM_CFG, exedir);
     }
 
@@ -4665,7 +4665,7 @@ void M_LoadDefaults(void)
 
                     isstring = true;
                     len = strlen(strparm);
-                    newstring = malloc<char *>(len);
+                    newstring = static_cast<char *>(malloc(len));
                     strparm[len - 1] = 0; // clears trailing double-quote mark
                     strcpy(newstring,
                            strparm + 1); // clears leading double-quote mark
@@ -4694,8 +4694,8 @@ void M_LoadDefaults(void)
                     {
                         if ((*index) + 1 > *pcount)
                         {
-                            *arr =
-                                realloc(*arr, sizeof(char *) * ((*index) + 1));
+                            *arr = static_cast<char **>(
+                                realloc(*arr, sizeof(char *) * ((*index) + 1)));
                             (*pcount)++;
                         }
                         else
@@ -4901,7 +4901,7 @@ const char *M_CheckWritableDir(const char *dir)
     if (len + 1 > base_len)
     {
         base_len = len + 1;
-        base = malloc<char *>(len + 1);
+        base = static_cast<char *>(malloc(len + 1));
     }
 
     if (base)
@@ -4956,7 +4956,7 @@ void M_ScreenShot(void)
             {
                 int size = doom_snprintf(
                     nullptr, 0, "%s/doom%02d" SCREENSHOT_EXT, shot_dir, shot);
-                lbmname = realloc(lbmname, size + 1);
+                lbmname = static_cast<char *>(realloc(lbmname, size + 1));
                 doom_snprintf(lbmname, size + 1, "%s/doom%02d" SCREENSHOT_EXT,
                               shot_dir, shot);
                 shot++;

@@ -39,7 +39,7 @@
 
 #include "gl_opengl.hh"
 
-#include "z_zone.hh"
+
 #include <math.h>
 #include <SDL.h>
 #include "doomtype.hh"
@@ -495,9 +495,9 @@ void gld_MapDrawSubsectors(player_t *plr, int fx, int fy, fixed_t mx,
     if (numsubsectors > visible_subsectors_size)
     {
         visible_subsectors_size = numsubsectors;
-        visible_subsectors =
+        visible_subsectors = static_cast<subsector_t **>(
             realloc(visible_subsectors,
-                    visible_subsectors_size * sizeof(visible_subsectors[0]));
+                    visible_subsectors_size * sizeof(visible_subsectors[0])));
     }
 
     visible_subsectors_count = 0;
@@ -1103,13 +1103,13 @@ unsigned char *gld_ReadScreen(void)
     if (!buffer || size > buffer_size)
     {
         buffer_size = size;
-        buffer = realloc(buffer, size);
+        buffer = static_cast<unsigned char *>(realloc(buffer, size));
     }
     size = SCREENWIDTH * SCREENHEIGHT * 3;
     if (!scr || size > scr_size)
     {
         scr_size = size;
-        scr = realloc(scr, size);
+        scr = static_cast<unsigned char *>(realloc(scr, size));
     }
 
     if (buffer && scr)

@@ -58,7 +58,7 @@
 #include "d_net.hh"
 #include "dstrings.hh"
 #include "sounds.hh"
-#include "z_zone.hh"
+
 #include "w_wad.hh"
 #include "s_sound.hh"
 #include "v_video.hh"
@@ -590,7 +590,7 @@ static void D_DoomLoop(void)
             avi_shot_num++;
             len = snprintf(nullptr, 0, "%s%06d.tga", avi_shot_fname,
                            avi_shot_num);
-            avi_shot_curr_fname = malloc<char *>(len + 1);
+            avi_shot_curr_fname = static_cast<char *>(malloc(len + 1));
             sprintf(avi_shot_curr_fname, "%s%06d.tga", avi_shot_fname,
                     avi_shot_num);
             M_DoScreenShot(avi_shot_curr_fname);
@@ -825,7 +825,7 @@ void D_AddFile(const char *file, wad_source_t source)
     wadfiles = static_cast<wadfile_info_t *>(
         std::realloc(wadfiles, sizeof(*wadfiles) * (numwadfiles + 1)));
     wadfiles[numwadfiles].name = AddDefaultExtension(
-        strcpy(malloc<char *>(strlen(file) + 5), file), ".wad");
+        strcpy(static_cast<char *>(malloc(strlen(file) + 5)), file), ".wad");
     wadfiles[numwadfiles].src = source; // Ty 08/29/98
     wadfiles[numwadfiles].handle = 0;
 
@@ -841,7 +841,7 @@ void D_AddFile(const char *file, wad_source_t source)
     // proff: automatically try to add the gwa files
     // proff - moved from w_wad.c
     gwa_filename = AddDefaultExtension(
-        strcpy(malloc<char *>(strlen(file) + 5), file), ".wad");
+        strcpy(static_cast<char *>(malloc(strlen(file) + 5)), file), ".wad");
     if (strlen(gwa_filename) > 4)
     {
         if (!strcasecmp(gwa_filename + (strlen(gwa_filename) - 4), ".wad"))
@@ -917,7 +917,8 @@ void CheckIWAD(const char *iwadname, GameMode_t *gmode, dboolean *hassec)
                 header.numlumps = LittleLong(header.numlumps);
                 header.infotableofs = LittleLong(header.infotableofs);
                 length = header.numlumps;
-                fileinfo = malloc<filelump_t *>(length * sizeof(filelump_t));
+                fileinfo = static_cast<filelump_t *>(
+                    malloc(length * sizeof(filelump_t)));
                 if (fseek(fp, header.infotableofs, SEEK_SET) ||
                     fread(fileinfo, sizeof(filelump_t), length, fp) != length ||
                     fclose(fp))
@@ -1259,8 +1260,8 @@ static void FindResponseFile(void)
             int index;
             int indexinfile;
             byte *file = nullptr;
-            const char **moreargs =
-                malloc<const char **>(myargc * sizeof(const char *));
+            const char **moreargs = static_cast<const char **>(
+                malloc(myargc * sizeof(const char *)));
             char **newargv;
             // proff 04/05/2000: Added for searching responsefile
             char *fname;
@@ -1301,7 +1302,8 @@ static void FindResponseFile(void)
                 int k;
                 lprintf(LO_ERROR, "\nResponse file empty!\n");
 
-                newargv = calloc<char **>(sizeof(newargv[0]), myargc);
+                newargv =
+                    static_cast<char **>(calloc(sizeof(newargv[0]), myargc));
                 newargv[0] = myargv[0];
                 for (k = 1, index = 1; k < myargc; k++)
                 {
@@ -1321,7 +1323,7 @@ static void FindResponseFile(void)
 
             {
                 char *firstargv = myargv[0];
-                newargv = calloc<char **>(sizeof(newargv[0]), 1);
+                newargv = static_cast<char **>(calloc(sizeof(newargv[0]), 1));
                 newargv[0] = firstargv;
             }
 
@@ -1532,7 +1534,7 @@ static void DoLooseFiles(void)
 
         // Now go back and redo the whole myargv array with our stuff in it.
         // First, create a new myargv array to copy into
-        tmyargv = calloc<char **>(sizeof(tmyargv[0]), myargc + n);
+        tmyargv = static_cast<char **>(calloc(sizeof(tmyargv[0]), myargc + n));
         tmyargv[0] = myargv[0]; // invocation
         tmyargc = 1;
 

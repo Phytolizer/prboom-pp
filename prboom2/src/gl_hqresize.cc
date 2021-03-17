@@ -204,8 +204,8 @@ static void scale4x(unsigned int *inputBuffer, unsigned int *outputBuffer,
                     int inWidth, int inHeight, int seamlessWidth,
                     int seamlessHeight)
 {
-    unsigned int *buffer2x = malloc<unsigned int *>(
-        (2 * inWidth) * (2 * inHeight) * sizeof(unsigned int));
+    unsigned int *buffer2x = static_cast<unsigned int *>(
+        malloc((2 * inWidth) * (2 * inHeight) * sizeof(unsigned int)));
     scale2x(inputBuffer, buffer2x, inWidth, inHeight, seamlessWidth,
             seamlessHeight);
     scale2x(buffer2x, outputBuffer, 2 * inWidth, 2 * inHeight, seamlessWidth,
@@ -223,8 +223,8 @@ static unsigned char *HQScaleHelper(
 
     (*outWidth) = N * inWidth;
     (*outHeight) = N * inHeight;
-    newBuffer = malloc<unsigned char *>((*outWidth) * (*outHeight) * 4 *
-                                        sizeof(unsigned char));
+    newBuffer = static_cast<unsigned char *>(
+        malloc((*outWidth) * (*outHeight) * 4 * sizeof(unsigned char)));
 
     scaleNxFunction((unsigned int *)inputBuffer, (unsigned int *)newBuffer,
                     inWidth, inHeight, seamlessWidth, seamlessHeight);

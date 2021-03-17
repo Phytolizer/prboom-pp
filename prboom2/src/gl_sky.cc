@@ -622,7 +622,7 @@ void gld_GetSkyCapColors(void)
     glGetTexLevelParameteriv(GL_TEXTURE_2D, 0, GL_TEXTURE_WIDTH, &width);
     glGetTexLevelParameteriv(GL_TEXTURE_2D, 0, GL_TEXTURE_HEIGHT, &height);
 
-    buffer = malloc<unsigned char *>(width * height * 4);
+    buffer = static_cast<unsigned char *>(malloc(width * height * 4));
     glGetTexImage(GL_TEXTURE_2D, 0, GL_RGBA, GL_UNSIGNED_BYTE, buffer);
 
     averageColor(ceiling_rgb, (unsigned int *)buffer, width * MIN(30, height),
@@ -744,10 +744,11 @@ static void gld_BuildSky(int row_count, int col_count, SkyBoxParams_t *sky,
     if (!vbo->data)
     {
         memset(vbo, 0, sizeof(vbo[0]));
-        vbo->loops =
-            malloc<GLSkyLoopDef *>((row_count * 2 + 2) * sizeof(vbo->loops[0]));
+        vbo->loops = static_cast<GLSkyLoopDef *>(
+            malloc((row_count * 2 + 2) * sizeof(vbo->loops[0])));
         // create vertex array
-        vbo->data = malloc<vbo_vertex_t *>(vertex_count * sizeof(vbo->data[0]));
+        vbo->data = static_cast<vbo_vertex_t *>(
+            malloc(vertex_count * sizeof(vbo->data[0])));
     }
 
     vbo->columns = col_count;
@@ -1122,8 +1123,8 @@ void gld_ParseSkybox(void)
                 if (ok)
                 {
                     BoxSkyboxCount++;
-                    BoxSkybox = realloc(BoxSkybox,
-                                        BoxSkyboxCount * sizeof(BoxSkybox[0]));
+                    BoxSkybox = static_cast<box_skybox_t *>(realloc(
+                        BoxSkybox, BoxSkyboxCount * sizeof(BoxSkybox[0])));
                     memcpy(&BoxSkybox[BoxSkyboxCount - 1], &sb, sizeof(sb));
                 }
             }

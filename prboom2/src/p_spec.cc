@@ -131,9 +131,10 @@ void MarkAnimatedTextures(void)
 #ifdef GL_DOOM
     anim_t *anim;
 
-    anim_textures =
-        calloc<TAnimItemParam *>(numtextures, sizeof(TAnimItemParam));
-    anim_flats = calloc<TAnimItemParam *>(numflats, sizeof(TAnimItemParam));
+    anim_textures = static_cast<TAnimItemParam *>(
+        calloc(numtextures, sizeof(TAnimItemParam)));
+    anim_flats =
+        static_cast<TAnimItemParam *>(calloc(numflats, sizeof(TAnimItemParam)));
 
     for (anim = anims; anim < lastanim; anim++)
     {
@@ -202,7 +203,8 @@ void P_InitPicAnims(void)
         if (lastanim >= anims + maxanims)
         {
             size_t newmax = maxanims ? maxanims * 2 : MAXANIMS;
-            anims = realloc(anims, newmax * sizeof(*anims)); // killough
+            anims = static_cast<anim_t *>(
+                realloc(anims, newmax * sizeof(*anims))); // killough
             lastanim = anims + maxanims;
             maxanims = newmax;
         }
@@ -453,8 +455,8 @@ fixed_t P_FindNextHighestFloor(sector_t *sec, int currentheight)
             {
                 heightlist_size = heightlist_size ? heightlist_size * 2 : 128;
             } while (sec->linecount > heightlist_size);
-            heightlist =
-                realloc(heightlist, heightlist_size * sizeof(heightlist[0]));
+            heightlist = static_cast<fixed_t *>(
+                realloc(heightlist, heightlist_size * sizeof(heightlist[0])));
         }
 
         for (i = 0, h = 0; i < sec->linecount; i++)

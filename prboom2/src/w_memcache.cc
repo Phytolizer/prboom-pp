@@ -44,7 +44,7 @@
 #pragma implementation "w_wad.h"
 #endif
 #include "w_wad.hh"
-#include "z_zone.hh"
+
 #include "lprintf.hh"
 
 static struct cachelump_t

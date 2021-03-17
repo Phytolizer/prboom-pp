@@ -299,13 +299,13 @@ int AddString(char **str, const char *val)
     if (*str)
     {
         size = strlen(*str) + strlen(val) + 1;
-        *str = realloc(*str, size);
+        *str = static_cast<char *>(realloc(*str, size));
         strcat(*str, val);
     }
     else
     {
         size = strlen(val) + 1;
-        *str = malloc<char *>(size);
+        *str = static_cast<char *>(malloc(size));
         strcpy(*str, val);
     }
 
@@ -361,8 +361,8 @@ void W_AddLump(wadtbl_t *wadtbl, const char *name, const byte *data,
 
     if (name)
     {
-        wadtbl->lumps =
-            realloc(wadtbl->lumps, (lumpnum + 1) * sizeof(wadtbl->lumps[0]));
+        wadtbl->lumps = static_cast<filelump_t *>(
+            realloc(wadtbl->lumps, (lumpnum + 1) * sizeof(wadtbl->lumps[0])));
 
         memcpy(wadtbl->lumps[lumpnum].name, name, 8);
         wadtbl->lumps[lumpnum].size = size;
@@ -373,7 +373,8 @@ void W_AddLump(wadtbl_t *wadtbl, const char *name, const byte *data,
 
     if (data && size > 0)
     {
-        wadtbl->data = realloc(wadtbl->data, wadtbl->datasize + size);
+        wadtbl->data =
+            static_cast<char *>(realloc(wadtbl->data, wadtbl->datasize + size));
 
         memcpy(wadtbl->data + wadtbl->datasize, data, size);
         wadtbl->datasize += size;
@@ -475,7 +476,7 @@ angle_t R_DemoEx_ReadMLook(void)
                 int size = W_LumpLength(mlook_lump.lump);
 
                 mlook_lump.maxtick = size / sizeof(mlook_lump.data[0]);
-                mlook_lump.data = malloc<short *>(size);
+                mlook_lump.data = static_cast<short *>(malloc(size));
                 memcpy(mlook_lump.data, data, size);
             }
         }
@@ -508,8 +509,8 @@ void R_DemoEx_WriteMLook(angle_t pitch)
         {
             mlook_lump.maxtick = mlook_lump.tick * 2;
         }
-        mlook_lump.data = realloc(
-            mlook_lump.data, mlook_lump.maxtick * sizeof(mlook_lump.data[0]));
+        mlook_lump.data = static_cast<short *>(realloc(
+            mlook_lump.data, mlook_lump.maxtick * sizeof(mlook_lump.data[0])));
         memset(mlook_lump.data + ticks, 0,
                (mlook_lump.maxtick - ticks) * sizeof(mlook_lump.data[0]));
     }
@@ -570,7 +571,7 @@ static void R_DemoEx_GetParams(const byte *pwad_p, waddata_t *waddata)
         return;
     }
 
-    str = calloc<char *>(size + 1, 1);
+    str = static_cast<char *>(calloc(size + 1, 1));
     if (!str)
     {
         return;
@@ -581,8 +582,8 @@ static void R_DemoEx_GetParams(const byte *pwad_p, waddata_t *waddata)
 
     M_ParseCmdLine(str, nullptr, nullptr, &paramscount, &i);
 
-    params =
-        malloc<char **>(paramscount * sizeof(char *) + i * sizeof(char) + 1);
+    params = static_cast<char **>(
+        malloc(paramscount * sizeof(char *) + i * sizeof(char) + 1));
     if (params)
     {
         struct
@@ -699,7 +700,8 @@ static void R_DemoEx_GetParams(const byte *pwad_p, waddata_t *waddata)
                 int value;
                 char *pstr, *mask;
 
-                mask = malloc<char *>(strlen(overflow_cfgname[overflow]) + 16);
+                mask = static_cast<char *>(
+                    malloc(strlen(overflow_cfgname[overflow]) + 16));
                 if (mask)
                 {
                     sprintf(mask, "-set %s", overflow_cfgname[overflow]);
@@ -938,7 +940,7 @@ byte *G_GetDemoFooter(const char *filename, const byte **footer, size_t *size)
     file_size = ftell(hfile);
     fseek(hfile, 0, SEEK_SET);
 
-    buffer = malloc<byte *>(file_size);
+    buffer = static_cast<byte *>(malloc(file_size));
 
     if (fread(buffer, file_size, 1, hfile) == 1)
     {
@@ -1087,7 +1089,8 @@ int CheckWadFileIntegrity(const char *filename)
             header.infotableofs = LittleLong(header.infotableofs);
             length = header.numlumps * sizeof(filelump_t);
 
-            fileinfo2free = fileinfo = malloc<filelump_t *>(length);
+            fileinfo2free = fileinfo =
+                static_cast<filelump_t *>(malloc(length));
             if (fileinfo)
             {
                 if (fseek(hfile, header.infotableofs, SEEK_SET) == 0 &&
@@ -1144,7 +1147,7 @@ static int G_ReadDemoFooter(const char *filename)
         tmp_dir = I_GetTempDir();
         if (tmp_dir && *tmp_dir != '\0')
         {
-            tmp_path = malloc<char *>(strlen(tmp_dir) + 2);
+            tmp_path = static_cast<char *>(malloc(strlen(tmp_dir) + 2));
             strcpy(tmp_path, tmp_dir);
             if (!HasTrailingSlash(tmp_dir))
             {
@@ -1345,8 +1348,8 @@ int WadDataAddItem(waddata_t *waddata, const char *filename,
         return false;
     }
 
-    waddata->wadfiles = realloc(waddata->wadfiles,
-                                sizeof(*wadfiles) * (waddata->numwadfiles + 1));
+    waddata->wadfiles = static_cast<wadfile_info_t *>(realloc(
+        waddata->wadfiles, sizeof(*wadfiles) * (waddata->numwadfiles + 1)));
     waddata->wadfiles[waddata->numwadfiles].name = strdup(filename);
     waddata->wadfiles[waddata->numwadfiles].src = source;
     waddata->wadfiles[waddata->numwadfiles].handle = handle;
@@ -1386,7 +1389,8 @@ int ParseDemoPattern(const char *str, waddata_t *waddata, char **missed,
         if ((token = I_FindFile(pToken, ".wad")))
 #endif
         {
-            wadfiles = realloc(wadfiles, sizeof(*wadfiles) * (numwadfiles + 1));
+            wadfiles = static_cast<wadfile_info_t *>(
+                realloc(wadfiles, sizeof(*wadfiles) * (numwadfiles + 1)));
             wadfiles[numwadfiles].name = token;
             wadfiles[numwadfiles].handle = 0;
 
@@ -1415,7 +1419,8 @@ int ParseDemoPattern(const char *str, waddata_t *waddata, char **missed,
             if (missed)
             {
                 int len = (*missed ? strlen(*missed) : 0);
-                *missed = realloc(*missed, len + strlen(pToken) + 100);
+                *missed = static_cast<char *>(
+                    realloc(*missed, len + strlen(pToken) + 100));
                 sprintf(*missed + len, " %s not found\n", pToken);
             }
         }
@@ -1452,7 +1457,7 @@ int DemoNameToWadData(const char *demoname, waddata_t *waddata,
         }
     }
 
-    pattern = malloc<char *>(maxlen + sizeof(char));
+    pattern = static_cast<char *>(malloc(maxlen + sizeof(char)));
     for (i = 0; i < demo_patterns_count; i++)
     {
         int result;
@@ -1498,9 +1503,9 @@ int DemoNameToWadData(const char *demoname, waddata_t *waddata,
                         buf + pmatch[3].rm_so, waddata,
                         (patterndata ? &patterndata->missed : nullptr), true);
 
-                    waddata->wadfiles =
-                        realloc(waddata->wadfiles,
-                                sizeof(*wadfiles) * (waddata->numwadfiles + 1));
+                    waddata->wadfiles = static_cast<wadfile_info_t *>(realloc(
+                        waddata->wadfiles,
+                        sizeof(*wadfiles) * (waddata->numwadfiles + 1)));
                     waddata->wadfiles[waddata->numwadfiles].name =
                         strdup(demoname);
                     waddata->wadfiles[waddata->numwadfiles].src = source_lmp;
@@ -1541,7 +1546,8 @@ void WadDataToWadFiles(waddata_t *waddata)
     size_t old_numwadfiles = numwadfiles;
 
     old_numwadfiles = numwadfiles;
-    old_wadfiles = malloc<wadfile_info_t *>(sizeof(*(wadfiles)) * numwadfiles);
+    old_wadfiles = static_cast<wadfile_info_t *>(
+        malloc(sizeof(*(wadfiles)) * numwadfiles));
     memcpy(old_wadfiles, wadfiles, sizeof(*(wadfiles)) * numwadfiles);
 
     free(wadfiles);
@@ -1568,7 +1574,8 @@ void WadDataToWadFiles(waddata_t *waddata)
         if (old_wadfiles[i].src == source_auto_load ||
             old_wadfiles[i].src == source_pre)
         {
-            wadfiles = realloc(wadfiles, sizeof(*wadfiles) * (numwadfiles + 1));
+            wadfiles = static_cast<wadfile_info_t *>(
+                realloc(wadfiles, sizeof(*wadfiles) * (numwadfiles + 1)));
             wadfiles[numwadfiles].name = strdup(old_wadfiles[i].name);
             wadfiles[numwadfiles].src = old_wadfiles[i].src;
             wadfiles[numwadfiles].handle = old_wadfiles[i].handle;
@@ -1580,7 +1587,8 @@ void WadDataToWadFiles(waddata_t *waddata)
     {
         if (waddata->wadfiles[i].src == source_auto_load)
         {
-            wadfiles = realloc(wadfiles, sizeof(*wadfiles) * (numwadfiles + 1));
+            wadfiles = static_cast<wadfile_info_t *>(
+                realloc(wadfiles, sizeof(*wadfiles) * (numwadfiles + 1)));
             wadfiles[numwadfiles].name = strdup(waddata->wadfiles[i].name);
             wadfiles[numwadfiles].src = waddata->wadfiles[i].src;
             wadfiles[numwadfiles].handle = waddata->wadfiles[i].handle;
@@ -1664,7 +1672,7 @@ int CheckDemoExDemo(void)
     {
         char *demoname, *filename;
 
-        filename = malloc<char *>(strlen(myargv[p + 1]) + 16);
+        filename = static_cast<char *>(malloc(strlen(myargv[p + 1]) + 16));
         strcpy(filename, myargv[p + 1]);
         AddDefaultExtension(filename, ".lmp");
 
@@ -1759,7 +1767,8 @@ dboolean D_TryGetWad(const char *name)
     strncpy(wadname, PathFindFileName(name), sizeof(wadname) - 4);
     AddDefaultExtension(wadname, ".wad");
 
-    cmdline = malloc<char *>(strlen(getwad_cmdline) + strlen(wadname) + 2);
+    cmdline = static_cast<char *>(
+        malloc(strlen(getwad_cmdline) + strlen(wadname) + 2));
     wadname_p = strstr(getwad_cmdline, "%wadname%");
     if (wadname_p)
     {
@@ -1772,7 +1781,8 @@ dboolean D_TryGetWad(const char *name)
         sprintf(cmdline, "%s %s", getwad_cmdline, wadname);
     }
 
-    msg = malloc<char *>(strlen(format) + strlen(wadname) + strlen(cmdline));
+    msg = static_cast<char *>(
+        malloc(strlen(format) + strlen(wadname) + strlen(cmdline)));
     sprintf(msg, format, wadname, cmdline);
 
     if (PRB_IDYES == I_MessageBox(msg, PRB_MB_DEFBUTTON2 | PRB_MB_YESNO))

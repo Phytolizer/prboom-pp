@@ -32,9 +32,9 @@
  *-----------------------------------------------------------------------------*/
 
 #include <string.h>
+#include <cstdlib>
 // CPhipps - include the correct header
-#include "doomtype.hh"
-#include "z_zone.hh"
+
 #include "m_argv.hh"
 
 int myargc;

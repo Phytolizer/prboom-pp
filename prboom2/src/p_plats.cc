@@ -462,7 +462,7 @@ int EV_StopPlat(line_t *line)
 //
 void P_AddActivePlat(plat_t *plat)
 {
-    platlist_t *list = malloc<platlist_t *>(sizeof *list);
+    platlist_t *list = static_cast<platlist_t *>(malloc(sizeof *list));
     list->plat = plat;
     plat->list = list;
     if ((list->next = activeplats))

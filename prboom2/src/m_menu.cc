@@ -902,7 +902,7 @@ void M_ReadSaveStrings(void)
         /* killough 3/22/98
          * cph - add not-demoplayback parameter */
         len = G_SaveGameName(nullptr, 0, i, false);
-        name = malloc<char *>(len + 1);
+        name = static_cast<char *>(malloc(len + 1));
         G_SaveGameName(name, len + 1, i, false);
         fp = fopen(name, "rb");
         free(name);
@@ -8460,7 +8460,8 @@ dboolean M_Responder(event_t *ev)
                 //
                 // killough 10/98: fix bugs, simplify
 
-                chat_string_buffer = malloc<char *>(CHAT_STRING_BFR_SIZE);
+                chat_string_buffer =
+                    static_cast<char *>(malloc(CHAT_STRING_BFR_SIZE));
                 strncpy(chat_string_buffer, *ptr1->var.def->location.ppsz,
                         CHAT_STRING_BFR_SIZE);
 

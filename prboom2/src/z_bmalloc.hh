@@ -35,7 +35,10 @@
 #ifndef __Z_BMALLOC__
 #define __Z_BMALLOC__
 
-struct block_memory_alloc_s
+#include <cstddef>
+#include <cstring>
+
+struct block_memory_alloc_t
 {
     void *firstpool;
     size_t size;
@@ -45,20 +48,20 @@ struct block_memory_alloc_s
 };
 
 #define DECLARE_BLOCK_MEMORY_ALLOC_ZONE(name)                                  \
-    extern struct block_memory_alloc_s name
+    extern struct block_memory_alloc_t name
 #define IMPLEMENT_BLOCK_MEMORY_ALLOC_ZONE(name, size, tag, num, desc)          \
-    struct block_memory_alloc_s name = {nullptr, size, num, tag, desc}
+    struct block_memory_alloc_t name = {nullptr, size, num, tag, desc}
 #define NULL_BLOCK_MEMORY_ALLOC_ZONE(name) name.firstpool = nullptr
 
-void *Z_BMalloc(struct block_memory_alloc_s *pzone);
+void *Z_BMalloc(struct block_memory_alloc_t *pzone);
 
-inline static void *Z_BCalloc(struct block_memory_alloc_s *pzone)
+inline static void *Z_BCalloc(struct block_memory_alloc_t *pzone)
 {
     void *p = Z_BMalloc(pzone);
     memset(p, 0, pzone->size);
     return p;
 }
 
-void Z_BFree(struct block_memory_alloc_s *pzone, void *p);
+void Z_BFree(struct block_memory_alloc_t *pzone, void *p);
 
 #endif //__Z_BMALLOC__

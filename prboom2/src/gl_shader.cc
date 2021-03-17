@@ -157,7 +157,7 @@ static GLShader *gld_LoadShader(const char *vpname, const char *fpname)
 
     if (vp_data && fp_data)
     {
-        shader = calloc<GLShader *>(1, sizeof(GLShader));
+        shader = static_cast<GLShader *>(calloc(1, sizeof(GLShader)));
 
         shader->hVertProg = GLEXT_glCreateShaderObjectARB(GL_VERTEX_SHADER_ARB);
         shader->hFragProg =

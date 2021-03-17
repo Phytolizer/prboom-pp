@@ -466,7 +466,7 @@ char *dsda_NewDemoName(void)
     static unsigned int j = 2;
 
     demo_name_size = strlen(dsda_demo_name_base) + 11; // 11 = -12345.lmp\0
-    demo_name = malloc<char *>(demo_name_size);
+    demo_name = static_cast<char *>(malloc(demo_name_size));
     snprintf(demo_name, demo_name_size, "%s.lmp", dsda_demo_name_base);
 
     for (; j <= 99999 && (fp = fopen(demo_name, "rb")) != nullptr; j++)
@@ -559,7 +559,7 @@ void dsda_WatchRecordDemo(const char *name)
     }
 
     base_size = strlen(name) - 3;
-    dsda_demo_name_base = malloc<char *>(base_size);
+    dsda_demo_name_base = static_cast<char *>(malloc(base_size));
     strncpy(dsda_demo_name_base, name, base_size);
     dsda_demo_name_base[base_size - 1] = '\0';
 

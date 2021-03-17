@@ -133,18 +133,19 @@ void R_InitSpritesRes(void)
         free(screenheightarray);
     }
 
-    xtoviewangle =
-        calloc<angle_t *>(1, (SCREENWIDTH + 1) * sizeof(*xtoviewangle));
-    negonearray = calloc<int *>(1, SCREENWIDTH * sizeof(*negonearray));
+    xtoviewangle = static_cast<angle_t *>(
+        calloc(1, (SCREENWIDTH + 1) * sizeof(*xtoviewangle)));
+    negonearray =
+        static_cast<int *>(calloc(1, SCREENWIDTH * sizeof(*negonearray)));
     screenheightarray =
-        calloc<int *>(1, SCREENWIDTH * sizeof(*screenheightarray));
+        static_cast<int *>(calloc(1, SCREENWIDTH * sizeof(*screenheightarray)));
 
     if (clipbot)
     {
         free(clipbot);
     }
 
-    clipbot = calloc<int *>(1, 2 * SCREENWIDTH * sizeof(*clipbot));
+    clipbot = static_cast<int *>(calloc(1, 2 * SCREENWIDTH * sizeof(*clipbot)));
     cliptop = clipbot + SCREENWIDTH;
 }
 
@@ -466,8 +467,8 @@ static vissprite_t *R_NewVisSprite(void)
 
         num_vissprite_alloc =
             num_vissprite_alloc ? num_vissprite_alloc * 2 : 128;
-        vissprites =
-            realloc(vissprites, num_vissprite_alloc * sizeof(*vissprites));
+        vissprites = static_cast<vissprite_t *>(
+            realloc(vissprites, num_vissprite_alloc * sizeof(*vissprites)));
 
         // e6y: set all fields to zero
         memset(vissprites + num_vissprite_alloc_prev, 0,
@@ -1360,9 +1361,9 @@ void R_SortVisSprites(void)
         if (num_vissprite_ptrs < num_vissprite * 2)
         {
             free(vissprite_ptrs); // better than realloc -- no preserving needed
-            vissprite_ptrs = malloc<vissprite_t **>(
-                (num_vissprite_ptrs = num_vissprite_alloc * 2) *
-                sizeof *vissprite_ptrs);
+            vissprite_ptrs = static_cast<vissprite_t **>(
+                malloc((num_vissprite_ptrs = num_vissprite_alloc * 2) *
+                       sizeof *vissprite_ptrs));
         }
 
         if (sprites_doom_order)
@@ -1604,9 +1605,10 @@ void R_DrawMasked(void)
             for (i = 0; i < DS_RANGES_COUNT; i++)
             {
                 drawsegs_xranges[i].items =
-                    realloc(drawsegs_xranges[i].items,
-                            drawsegs_xrange_size *
-                                sizeof(drawsegs_xranges[i].items[0]));
+                    static_cast<drawseg_xrange_item_t *>(
+                        realloc(drawsegs_xranges[i].items,
+                                drawsegs_xrange_size *
+                                    sizeof(drawsegs_xranges[i].items[0])));
             }
         }
         for (ds = ds_p; ds-- > drawsegs;)

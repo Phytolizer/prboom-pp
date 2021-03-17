@@ -36,7 +36,7 @@
 #include "config.h"
 #endif
 
-#include "z_zone.hh"
+
 #include "doomdef.hh"
 #include "i_video.hh"
 #include "v_video.hh"
@@ -73,7 +73,7 @@ void R_InitMeltRes(void)
         free(y_lookup);
     }
 
-    y_lookup = calloc<int *>(1, SCREENWIDTH * sizeof(*y_lookup));
+    y_lookup = static_cast<int *>(calloc(1, SCREENWIDTH * sizeof(*y_lookup)));
 }
 
 static int wipe_initMelt(int /* ticks */)

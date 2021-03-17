@@ -45,7 +45,7 @@
 
 #include "gl_opengl.hh"
 
-#include "z_zone.hh"
+
 #include "doomstat.hh"
 #include "gl_intern.hh"
 #include "gl_struct.hh"
@@ -1135,7 +1135,7 @@ static void gld_PreprocessSectors(void)
 
     if (numsegs)
     {
-        segrendered = calloc<byte *>(numsegs, sizeof(byte));
+        segrendered = static_cast<byte *>(calloc(numsegs, sizeof(byte)));
         if (!segrendered)
         {
             I_Error("gld_PreprocessSectors: Not enough memory for array "
@@ -1145,8 +1145,8 @@ static void gld_PreprocessSectors(void)
 
     if (numlines)
     {
-        linerendered[0] = calloc<byte *>(numlines, sizeof(byte));
-        linerendered[1] = calloc<byte *>(numlines, sizeof(byte));
+        linerendered[0] = static_cast<byte *>(calloc(numlines, sizeof(byte)));
+        linerendered[1] = static_cast<byte *>(calloc(numlines, sizeof(byte)));
         if (!linerendered[0] || !linerendered[1])
         {
             I_Error("gld_PreprocessSectors: Not enough memory for array "

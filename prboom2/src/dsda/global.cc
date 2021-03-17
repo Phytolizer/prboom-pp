@@ -122,7 +122,8 @@ static void dsda_AllocateMobjInfo(int zero, int max, int count)
     mobj_types_zero = zero;
     mobj_types_max = max;
 
-    mobjinfo = malloc<mobjinfo_t *>(sizeof(mobjinfo_t) * num_mobj_types);
+    mobjinfo =
+        static_cast<mobjinfo_t *>(malloc(sizeof(mobjinfo_t) * num_mobj_types));
     memset(mobjinfo, 0, sizeof(mobjinfo_t) * num_mobj_types);
 }
 

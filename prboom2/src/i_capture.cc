@@ -322,7 +322,7 @@ static int my_popen3(pipeinfo_t *p)
 
     puser_t *puser = nullptr;
 
-    puser = malloc<puser_t *>(sizeof(puser_t));
+    puser = static_cast<puser_t *>(malloc(sizeof(puser_t)));
     if (!puser)
     {
         return 0;

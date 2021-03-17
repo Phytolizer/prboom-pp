@@ -48,8 +48,6 @@
 #include "config.h"
 #endif
 
-#include "z_zone.hh" /* memory allocation wrappers -- killough */
-
 #include "doomstat.hh"
 #include "w_wad.hh"
 #include "r_main.hh"
@@ -137,14 +135,18 @@ void R_InitPlanesRes(void)
         free(distscale);
     }
 
-    floorclip = calloc<int *>(1, SCREENWIDTH * sizeof(*floorclip));
-    ceilingclip = calloc<int *>(1, SCREENWIDTH * sizeof(*ceilingclip));
-    spanstart = calloc<int *>(1, SCREENHEIGHT * sizeof(*spanstart));
+    floorclip = static_cast<int *>(calloc(1, SCREENWIDTH * sizeof(*floorclip)));
+    ceilingclip =
+        static_cast<int *>(calloc(1, SCREENWIDTH * sizeof(*ceilingclip)));
+    spanstart =
+        static_cast<int *>(calloc(1, SCREENHEIGHT * sizeof(*spanstart)));
 
-    cachedheight = calloc<int *>(1, SCREENHEIGHT * sizeof(*cachedheight));
+    cachedheight =
+        static_cast<fixed_t *>(calloc(1, SCREENHEIGHT * sizeof(*cachedheight)));
 
-    yslope = calloc<int *>(1, SCREENHEIGHT * sizeof(*yslope));
-    distscale = calloc<int *>(1, SCREENWIDTH * sizeof(*distscale));
+    yslope = static_cast<fixed_t *>(calloc(1, SCREENHEIGHT * sizeof(*yslope)));
+    distscale =
+        static_cast<fixed_t *>(calloc(1, SCREENWIDTH * sizeof(*distscale)));
 }
 
 void R_InitVisplanesRes(void)
@@ -298,8 +300,8 @@ static visplane_t *new_visplane(unsigned hash)
     if (!check)
     {
         // e6y: resolution limitation is removed
-        check = calloc<visplane_t *>(1, sizeof(*check) + sizeof(*check->top) *
-                                                             (SCREENWIDTH * 2));
+        check = static_cast<visplane_t *>(calloc(
+            1, sizeof(*check) + sizeof(*check->top) * (SCREENWIDTH * 2)));
         check->bottom = &check->top[SCREENWIDTH + 2];
     }
     else if (!(freetail = freetail->next))

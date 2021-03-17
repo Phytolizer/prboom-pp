@@ -451,7 +451,7 @@ int EV_CeilingCrushStop(line_t *line)
 //
 void P_AddActiveCeiling(ceiling_t *ceiling)
 {
-    ceilinglist_t *list = malloc<ceilinglist_t *>(sizeof *list);
+    ceilinglist_t *list = static_cast<ceilinglist_t *>(malloc(sizeof *list));
     list->ceiling = ceiling;
     ceiling->list = list;
     if ((list->next = activeceilings))

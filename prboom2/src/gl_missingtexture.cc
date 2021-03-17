@@ -133,8 +133,8 @@ static void gld_PreprocessFakeSector(int ceiling, sector_t *sector, int groupid)
         sector->fakegroup[ceiling] = groupid;
         if (groupid >= numfakeplanes)
         {
-            fakeplanes =
-                realloc(fakeplanes, (numfakeplanes + 1) * sizeof(fakegroup_t));
+            fakeplanes = static_cast<fakegroup_t *>(
+                realloc(fakeplanes, (numfakeplanes + 1) * sizeof(fakegroup_t)));
             memset(&fakeplanes[numfakeplanes], 0, sizeof(fakegroup_t));
             numfakeplanes++;
         }
@@ -198,7 +198,8 @@ void gld_PreprocessFakeSectors(void)
     {
         free(sectors2);
     }
-    sectors2 = malloc<sector_t **>(numsectors * sizeof(sector_t *));
+    sectors2 =
+        static_cast<sector_t **>(malloc(numsectors * sizeof(sector_t *)));
 
     // reset all groups with fake floors and ceils
     // 0 - floor; 1 - ceil;
@@ -227,8 +228,8 @@ void gld_PreprocessFakeSectors(void)
                 {
                     gld_PreprocessFakeSector(ceiling, &sectors[i], groupid);
                     fakeplanes[groupid].ceiling = ceiling;
-                    fakeplanes[groupid].list = malloc<sector_t **>(
-                        fakeplanes[groupid].count * sizeof(sector_t *));
+                    fakeplanes[groupid].list = static_cast<sector_t **>(
+                        malloc(fakeplanes[groupid].count * sizeof(sector_t *)));
                     for (j = 0, k = 0; k < fakeplanes[groupid].count; k++)
                     {
                         if (!(sectors2[k]->flags & no_texture_flag))

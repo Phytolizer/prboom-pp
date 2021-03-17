@@ -58,7 +58,7 @@
 **---------------------------------------------------------------------------
 */
 
-#include "z_zone.hh"
+
 #include "doomstat.hh"
 #include "w_wad.hh"
 #include "r_main.hh"
@@ -116,13 +116,14 @@ void R_InitPatches(void)
 {
     if (!patches)
     {
-        patches = malloc<rpatch_t *>(numlumps * sizeof(rpatch_t));
+        patches = static_cast<rpatch_t *>(malloc(numlumps * sizeof(rpatch_t)));
         // clear out new patches to signal they're uninitialized
         memset(patches, 0, sizeof(rpatch_t) * numlumps);
     }
     if (!texture_composites)
     {
-        texture_composites = malloc<rpatch_t *>(numtextures * sizeof(rpatch_t));
+        texture_composites =
+            static_cast<rpatch_t *>(malloc(numtextures * sizeof(rpatch_t)));
         // clear out new patches to signal they're uninitialized
         memset(texture_composites, 0, sizeof(rpatch_t) * numtextures);
     }

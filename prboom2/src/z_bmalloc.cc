@@ -35,8 +35,8 @@
 #include "config.h"
 #endif
 
+#include <cstdlib>
 #include "doomtype.hh"
-#include "z_zone.hh"
 #include "z_bmalloc.hh"
 #include "lprintf.hh"
 
@@ -75,7 +75,7 @@ enum
     used_block = 1
 };
 
-void *Z_BMalloc(struct block_memory_alloc_s *pzone)
+void *Z_BMalloc(struct block_memory_alloc_t *pzone)
 {
     bmalpool_t **pool = (bmalpool_t **)&(pzone->firstpool);
     while (*pool != nullptr)
@@ -118,7 +118,7 @@ void *Z_BMalloc(struct block_memory_alloc_s *pzone)
     }
 }
 
-void Z_BFree(struct block_memory_alloc_s *pzone, void *p)
+void Z_BFree(struct block_memory_alloc_t *pzone, void *p)
 {
     bmalpool_t **pool = (bmalpool_t **)&(pzone->firstpool);
 

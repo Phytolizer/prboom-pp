@@ -376,7 +376,8 @@ GLGenericImage *ReadDDSFile(const char *filename, int *bufsize, int *numMipmaps)
             (strncmp(filecode, "DDS ", 4) == 0) &&    // verify the type of file
             (fread(&ddsd, sizeof(ddsd), 1, fp) == 1)) // get the surface desc
         {
-            genericImage = malloc<GLGenericImage *>(sizeof(GLGenericImage));
+            genericImage =
+                static_cast<GLGenericImage *>(malloc(sizeof(GLGenericImage)));
             if (genericImage)
             {
                 memset(genericImage, 0, sizeof(GLGenericImage));
@@ -406,8 +407,8 @@ GLGenericImage *ReadDDSFile(const char *filename, int *bufsize, int *numMipmaps)
                     *bufsize = ddsd.u2.dwMipMapCount > 1
                                    ? ddsd.u1.dwLinearSize * factor
                                    : ddsd.u1.dwLinearSize;
-                    genericImage->pixels =
-                        malloc<GLubyte *>(*bufsize * sizeof(unsigned char));
+                    genericImage->pixels = static_cast<GLubyte *>(
+                        malloc(*bufsize * sizeof(unsigned char)));
 
                     if (fread(genericImage->pixels, 1, *bufsize, fp) > 0)
                     {
@@ -737,7 +738,7 @@ static int gld_HiRes_GetExternalName(GLTexture *gltexture, char *img_path,
 
     if (!hiresdir)
     {
-        hiresdir = malloc<char *>(PATH_MAX);
+        hiresdir = static_cast<char *>(malloc(PATH_MAX));
         if (strlen(gl_texture_hires_dir) > 0)
         {
             strncpy(hiresdir, gl_texture_hires_dir, PATH_MAX - 1);
@@ -999,7 +1000,7 @@ int gld_HiRes_BuildTables(void)
                 const byte *RGB2PAL_lump;
 
                 RGB2PAL_lump = static_cast<const byte *>(W_CacheLumpNum(lump));
-                RGB2PAL = malloc<byte *>(RGB2PAL_size);
+                RGB2PAL = static_cast<byte *>(malloc(RGB2PAL_size));
                 memcpy(RGB2PAL, RGB2PAL_lump, RGB2PAL_size);
                 W_UnlockLumpName(RGB2PAL_NAME);
                 return true;
@@ -1052,7 +1053,7 @@ int gld_HiRes_BuildTables(void)
             y = static_cast<int **>(NewIntDynArray(2, dims));
             z = static_cast<int **>(NewIntDynArray(2, dims));
 
-            RGB2PAL = malloc<byte *>(RGB2PAL_size);
+            RGB2PAL = static_cast<byte *>(malloc(RGB2PAL_size));
             palette = V_GetPlaypal();
 
             // create the RGB24to8 lookup table
@@ -1237,7 +1238,7 @@ static int gld_HiRes_LoadFromCache(GLTexture *gltexture, GLuint *texid,
     memset(&tex_stat, 0, sizeof(tex_stat));
     stat(img_path, &tex_stat);
 
-    cache_filename = malloc<char *>(strlen(img_path) + 16);
+    cache_filename = static_cast<char *>(malloc(strlen(img_path) + 16));
     sprintf(cache_filename, "%s.cache", img_path);
 
     cachefp = fopen(cache_filename, "rb");
@@ -1252,7 +1253,8 @@ static int gld_HiRes_LoadFromCache(GLTexture *gltexture, GLuint *texid,
             {
                 tex_buffer_size = tex_width * tex_height * 4;
 
-                tex_buffer = malloc<unsigned char *>(tex_buffer_size);
+                tex_buffer =
+                    static_cast<unsigned char *>(malloc(tex_buffer_size));
                 if (tex_buffer)
                 {
                     if (fread(tex_buffer, tex_buffer_size, 1, cachefp) == 1)

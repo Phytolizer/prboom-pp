@@ -38,7 +38,9 @@
 #ifdef HAVE_CONFIG_H
 #include "config.h"
 #endif
-#include "SDL.h"
+
+#include <cassert>
+#include <SDL.h>
 
 #include "doomdef.hh"
 #include "doomstat.hh"
@@ -192,7 +194,7 @@ void V_InitColorTranslation(void)
         }
         if (gamemission == chex || gamemission == hacx)
         {
-            byte *temp = malloc<byte *>(256);
+            byte *temp = static_cast<byte *>(malloc(256));
             memcpy(temp, *p->map, 256);
             if (gamemission == chex)
             {
@@ -889,8 +891,8 @@ void V_UpdateTrueColorPalette(video_mode_t mode)
         if (!playpal_data->Palettes32)
         {
             // set int palette
-            playpal_data->Palettes32 = malloc<unsigned int *>(
-                numPals * 256 * sizeof(int) * VID_NUMCOLORWEIGHTS);
+            playpal_data->Palettes32 = static_cast<unsigned int *>(
+                malloc(numPals * 256 * sizeof(int) * VID_NUMCOLORWEIGHTS));
             for (p = 0; p < numPals; p++)
             {
                 for (i = 0; i < 256; i++)
@@ -927,8 +929,8 @@ void V_UpdateTrueColorPalette(video_mode_t mode)
         if (!playpal_data->Palettes16)
         {
             // set short palette
-            playpal_data->Palettes16 = malloc<unsigned short *>(
-                numPals * 256 * sizeof(short) * VID_NUMCOLORWEIGHTS);
+            playpal_data->Palettes16 = static_cast<unsigned short *>(
+                malloc(numPals * 256 * sizeof(short) * VID_NUMCOLORWEIGHTS));
             for (p = 0; p < numPals; p++)
             {
                 for (i = 0; i < 256; i++)
@@ -965,8 +967,8 @@ void V_UpdateTrueColorPalette(video_mode_t mode)
         if (!playpal_data->Palettes15)
         {
             // set short palette
-            playpal_data->Palettes15 = malloc<unsigned short *>(
-                numPals * 256 * sizeof(short) * VID_NUMCOLORWEIGHTS);
+            playpal_data->Palettes15 = static_cast<unsigned short *>(
+                malloc(numPals * 256 * sizeof(short) * VID_NUMCOLORWEIGHTS));
             for (p = 0; p < numPals; p++)
             {
                 for (i = 0; i < 256; i++)
@@ -1408,7 +1410,8 @@ void V_AllocScreen(screeninfo_t *scrn)
         if ((scrn->byte_pitch * scrn->height) > 0)
         {
             // e6y: Clear the screen to black.
-            scrn->data = calloc<byte *>(scrn->byte_pitch * scrn->height, 1);
+            scrn->data =
+                static_cast<byte *>(calloc(scrn->byte_pitch * scrn->height, 1));
         }
     }
 }
@@ -1749,7 +1752,7 @@ const unsigned char *V_GetPlaypal(void)
         int lump = W_GetNumForName(playpal_data->lump_name);
         int len = W_LumpLength(lump);
         const byte *data = static_cast<const byte *>(W_CacheLumpNum(lump));
-        playpal_data->lump = malloc<unsigned char *>(len);
+        playpal_data->lump = static_cast<unsigned char *>(malloc(len));
         memcpy(playpal_data->lump, data, len);
         W_UnlockLumpNum(lump);
     }

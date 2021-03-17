@@ -1182,13 +1182,13 @@ void R_InitBuffersRes(void)
         free(int_tempbuf);
     }
 
-    solidcol = calloc<byte *>(1, SCREENWIDTH * sizeof(*solidcol));
-    byte_tempbuf =
-        calloc<byte *>(1, (SCREENHEIGHT * 4) * sizeof(*byte_tempbuf));
-    short_tempbuf = calloc<unsigned short *>(1, (SCREENHEIGHT * 4) *
-                                                    sizeof(*short_tempbuf));
-    int_tempbuf =
-        calloc<unsigned int *>(1, (SCREENHEIGHT * 4) * sizeof(*int_tempbuf));
+    solidcol = static_cast<byte *>(calloc(1, SCREENWIDTH * sizeof(*solidcol)));
+    byte_tempbuf = static_cast<byte *>(
+        calloc(1, (SCREENHEIGHT * 4) * sizeof(*byte_tempbuf)));
+    short_tempbuf = static_cast<unsigned short *>(
+        calloc(1, (SCREENHEIGHT * 4) * sizeof(*short_tempbuf)));
+    int_tempbuf = static_cast<unsigned int *>(
+        calloc(1, (SCREENHEIGHT * 4) * sizeof(*int_tempbuf)));
 }
 
 //

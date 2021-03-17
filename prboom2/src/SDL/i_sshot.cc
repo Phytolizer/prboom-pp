@@ -49,7 +49,7 @@
 #include "doomtype.hh"
 #include "v_video.hh"
 #include "i_video.hh"
-#include "z_zone.hh"
+
 #include "lprintf.hh"
 
 int renderW;
