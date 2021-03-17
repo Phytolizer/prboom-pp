@@ -12,7 +12,7 @@ cheat_when_t uint8_t
 
 midi_meta_event_type_t uint8_t
 {
-    MIDI_META_SEQUENCE_NUMBER = 0x0
+    SEQUENCE_NUMBER = 0x0
 
     TEXT = 0x1
     COPYRIGHT = 0x2

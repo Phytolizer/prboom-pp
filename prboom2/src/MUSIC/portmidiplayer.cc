@@ -254,10 +254,10 @@ void pm_render(void *vdest, unsigned int bufflen)
         case midi_event_type_t::META.value(): // tempo is the only meta message we're interested
                       // in
             if (currevent->data.meta.type ==
-                midi_meta_event_type_t::MIDI_META_SET_TEMPO)
+                midi_meta_event_type_t::SET_TEMPO)
                 spmc = MIDI_spmc(midifile, currevent, 1000);
             else if (currevent->data.meta.type ==
-                     midi_meta_event_type_t::MIDI_META_END_OF_TRACK)
+                     midi_meta_event_type_t::END_OF_TRACK)
             {
                 if (pm_looping)
                 {

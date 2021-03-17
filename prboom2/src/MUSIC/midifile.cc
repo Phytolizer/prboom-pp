@@ -91,7 +91,7 @@ typedef struct
 #pragma pack(pop)
 #endif
 
-typedef struct
+struct midi_track_t
 {
     // Length in bytes:
 
@@ -102,7 +102,7 @@ typedef struct
     midi_event_t *events;
     unsigned int num_events;
     unsigned int num_event_mem; // NSM track size of structure
-} midi_track_t;
+} ;
 
 struct midi_track_iter_s
 {
@@ -538,7 +538,7 @@ static dboolean ReadTrack(midi_track_t *track, midimem_t *mf)
 
         if (event->event_type == midi_event_type_t::META &&
             event->data.meta.type ==
-                midi_meta_event_type_t::MIDI_META_END_OF_TRACK)
+                midi_meta_event_type_t::END_OF_TRACK)
         {
             break;
         }
@@ -822,13 +822,13 @@ static void MIDI_PrintFlatListDBG(const midi_event_t **evs)
             break;
 
         case midi_event_type_t::META.value():
-            printf("\tMeta type: %i\n", event->data.meta.type);
+            printf("\tMeta type: %i\n", event->data.meta.type.value());
             printf("\tLength: %i\n", event->data.meta.length);
             break;
         }
         if (event->event_type == midi_event_type_t::META &&
             event->data.meta.type ==
-                midi_meta_event_type_t::MIDI_META_END_OF_TRACK)
+                midi_meta_event_type_t::END_OF_TRACK)
         {
             printf("gotta go!\n");
             return;
@@ -896,11 +896,11 @@ midi_event_t **MIDI_GenerateFlatList(midi_file_t *file)
 
         if (epos[0]->event_type == midi_event_type_t::META &&
             epos[0]->data.meta.type ==
-                midi_meta_event_type_t::MIDI_META_END_OF_TRACK)
+                midi_meta_event_type_t::END_OF_TRACK)
         { // change end of track into no op
             trackactive--;
             trackpos[nextrk] = -1;
-            epos[0]->data.meta.type = midi_meta_event_type_t::MIDI_META_TEXT;
+            epos[0]->data.meta.type = midi_meta_event_type_t::TEXT;
         }
         else if ((unsigned)trackpos[nextrk] == file->tracks[nextrk].num_events)
         {
@@ -925,7 +925,7 @@ midi_event_t **MIDI_GenerateFlatList(midi_file_t *file)
     }
 
     // last end of track event is preserved though
-    epos[-1]->data.meta.type = midi_meta_event_type_t::MIDI_META_END_OF_TRACK;
+    epos[-1]->data.meta.type = midi_meta_event_type_t::END_OF_TRACK;
 
     std::free(trackpos);
     std::free(tracktime);
@@ -1119,22 +1119,22 @@ midi_file_t *MIDI_LoadFileSpecial(midimem_t *mf)
 
         if (oldev->event_type == midi_event_type_t::META)
         {
-            if (oldev->data.meta.type == midi_meta_event_type_t::MIDI_META_SET_TEMPO)
+            if (oldev->data.meta.type == midi_meta_event_type_t::SET_TEMPO)
             { // adjust future tempo scaling
                 opi = MIDI_spmc(base, oldev, 20000);
                 // insert event as dummy
                 nextev->event_type = midi_event_type_t::META;
-                nextev->data.meta.type = midi_meta_event_type_t::MIDI_META_TEXT;
+                nextev->data.meta.type = midi_meta_event_type_t::TEXT;
                 nextev->data.meta.length = 0;
                 nextev->data.meta.data = (byte *)malloc(4);
                 epos++;
                 ret->tracks->num_events++;
                 continue;
             }
-            if (oldev->data.meta.type == midi_meta_event_type_t::MIDI_META_END_OF_TRACK)
+            if (oldev->data.meta.type == midi_meta_event_type_t::END_OF_TRACK)
             { // reproduce event and break
                 nextev->event_type = midi_event_type_t::META;
-                nextev->data.meta.type = midi_meta_event_type_t::MIDI_META_END_OF_TRACK;
+                nextev->data.meta.type = midi_meta_event_type_t::END_OF_TRACK;
                 nextev->data.meta.length = 0;
                 nextev->data.meta.data = (byte *)malloc(4);
                 epos++;

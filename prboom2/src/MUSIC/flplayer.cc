@@ -443,10 +443,10 @@ void fl_render(void *vdest, unsigned length)
             break;
         case midi_event_type_t::META.value():
             if (currevent->data.meta.type ==
-                midi_meta_event_type_t::MIDI_META_SET_TEMPO)
+                midi_meta_event_type_t::SET_TEMPO)
                 spmc = MIDI_spmc(midifile, currevent, f_soundrate);
             else if (currevent->data.meta.type ==
-                     midi_meta_event_type_t::MIDI_META_END_OF_TRACK)
+                     midi_meta_event_type_t::END_OF_TRACK)
             {
                 if (f_looping)
                 {

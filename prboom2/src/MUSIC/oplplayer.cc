@@ -1546,7 +1546,7 @@ static void ControllerEvent(opl_track_data_t *track, midi_event_t *event)
 
     switch (controller.value())
     {
-    case midi_controller_t::MIDI_CONTROLLER_MAIN_VOLUME.value():
+    case midi_controller_t::MAIN_VOLUME.value():
         SetChannelVolume(channel, param);
         break;
 
@@ -1590,21 +1590,21 @@ static void MetaEvent(opl_track_data_t *track, midi_event_t *event)
     {
         // Things we can just ignore.
 
-    case midi_meta_event_type_t::MIDI_META_SEQUENCE_NUMBER.value():
-    case midi_meta_event_type_t::MIDI_META_TEXT.value():
-    case midi_meta_event_type_t::MIDI_META_COPYRIGHT.value():
-    case midi_meta_event_type_t::MIDI_META_TRACK_NAME.value():
-    case midi_meta_event_type_t::MIDI_META_INSTR_NAME.value():
-    case midi_meta_event_type_t::MIDI_META_LYRICS.value():
-    case midi_meta_event_type_t::MIDI_META_MARKER.value():
-    case midi_meta_event_type_t::MIDI_META_CUE_POINT.value():
-    case midi_meta_event_type_t::MIDI_META_SEQUENCER_SPECIFIC.value():
+    case midi_meta_event_type_t::SEQUENCE_NUMBER.value():
+    case midi_meta_event_type_t::TEXT.value():
+    case midi_meta_event_type_t::COPYRIGHT.value():
+    case midi_meta_event_type_t::TRACK_NAME.value():
+    case midi_meta_event_type_t::INSTR_NAME.value():
+    case midi_meta_event_type_t::LYRICS.value():
+    case midi_meta_event_type_t::MARKER.value():
+    case midi_meta_event_type_t::CUE_POINT.value():
+    case midi_meta_event_type_t::SEQUENCER_SPECIFIC.value():
         break;
 
         // End of track - actually handled when we run out of events
         // in the track, see below.
 
-    case midi_meta_event_type_t::MIDI_META_END_OF_TRACK.value():
+    case midi_meta_event_type_t::END_OF_TRACK.value():
         break;
 
     default:
@@ -1708,7 +1708,7 @@ static void TrackTimerCallback(void *arg)
     // End of track?
 
     if (event->event_type == midi_event_type_t::META &&
-        event->data.meta.type == midi_meta_event_type_t::MIDI_META_END_OF_TRACK)
+        event->data.meta.type == midi_meta_event_type_t::END_OF_TRACK)
     {
         --running_tracks;
 

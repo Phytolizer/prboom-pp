@@ -40,12 +40,10 @@
 #include "m_argv.hh"
 #include "s_sound.hh"
 #include "sounds.hh"
-#include "dstrings.hh"
 #include "r_main.hh"
 #include "p_map.hh"
 #include "d_deh.hh" // Ty 03/27/98 - externalized strings
 /* cph 2006/07/23 - needs direct access to thinkercap */
-#include "p_tick.hh"
 
 #include "dsda/input.hh"
 #include "dsda/settings.hh"
@@ -542,7 +540,7 @@ static void cheat_massacre() // jff 2/01/98 kill all monsters
                 if (((mobj_t *)currentthinker)->health > 0)
                 {
                     killcount++;
-                    P_DamageMobj((mobj_t *)currentthinker, nullptr, NULL, 10000);
+                    P_DamageMobj((mobj_t *)currentthinker, nullptr, nullptr, 10000);
                 }
                 if (((mobj_t *)currentthinker)->type == MT_PAIN)
                 {
