@@ -59,3 +59,18 @@ midi_event_type_t uint8_t
     SYSEX_SPLIT = 0xf7
     META = 0xff
 }
+
+packet_type_e uint8_t
+{
+    PKT_INIT
+    PKT_SETUP
+    PKT_GO
+    PKT_TICC
+    PKT_TICS
+    PKT_RETRANS
+    PKT_EXTRA
+    PKT_QUIT
+    PKT_DOWN
+    PKT_WAD
+    PKT_BACKOFF
+}

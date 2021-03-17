@@ -36,31 +36,36 @@
 #include "doomtype.hh"
 #include "d_ticcmd.hh"
 #include "m_swap.hh"
+#include "cpp/enums/packet_type_e.hh"
 
-enum packet_type_e
+// enum packet_type_e
+//{
+//    PKT_INIT,    // initial packet to server
+//    PKT_SETUP,   // game information packet
+//    PKT_GO,      // game has started
+//    PKT_TICC,    // tics from client
+//    PKT_TICS,    // tics from server
+//    PKT_RETRANS, // Request for retransmission
+//    PKT_EXTRA,   // Extra info packet
+//    PKT_QUIT,    // Player quit game
+//    PKT_DOWN,    // Server downed
+//    PKT_WAD,     // Wad file request
+//    PKT_BACKOFF, // Request for client back-off
+//};
+
+struct packet_header_t
 {
-    PKT_INIT,    // initial packet to server
-    PKT_SETUP,   // game information packet
-    PKT_GO,      // game has started
-    PKT_TICC,    // tics from client
-    PKT_TICS,    // tics from server
-    PKT_RETRANS, // Request for retransmission
-    PKT_EXTRA,   // Extra info packet
-    PKT_QUIT,    // Player quit game
-    PKT_DOWN,    // Server downed
-    PKT_WAD,     // Wad file request
-    PKT_BACKOFF, // Request for client back-off
-};
+    // Simple checksum of the entire packet
+    byte checksum;
+    /* Type of packet */
+    packet_type_e::Type type{packet_type_e::PKT_INIT};
+    /* Was random in prboom <=2.2.4, now 0 */
+    byte reserved[2];
+    // Timestamp
+    unsigned tic;
+} PACKEDATTR;
 
-typedef struct
-{
-    byte checksum;    // Simple checksum of the entire packet
-    byte type;        /* Type of packet */
-    byte reserved[2]; /* Was random in prboom <=2.2.4, now 0 */
-    unsigned tic;     // Timestamp
-} PACKEDATTR packet_header_t;
-
-static inline void packet_set(packet_header_t *p, enum packet_type_e t,
+static inline void packet_set(packet_header_t *p, packet_type_e::Type t,
                               unsigned long tic)
 {
     p->tic = doom_htonl(tic);

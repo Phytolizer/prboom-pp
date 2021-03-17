@@ -131,13 +131,13 @@ void D_InitNetGame(void)
             {
                 // Send init packet
                 initpacket.pn = doom_htons(wanted_player_number);
-                packet_set(&initpacket.head, PKT_INIT, 0);
+                packet_set(&initpacket.head, packet_type_e::PKT_INIT, 0);
                 I_SendPacket(&initpacket.head, sizeof(initpacket));
                 I_WaitForPacket(5000);
             } while (!I_GetPacket(packet, 1000));
-            if (packet->type == PKT_DOWN)
+            if (packet->type == packet_type_e::PKT_DOWN)
                 I_Error("Server aborted the game");
-        } while (packet->type != PKT_SETUP);
+        } while (packet->type != packet_type_e::PKT_SETUP);
 
         // Once we have been accepted by the server, we should tell it when we
         // leave
@@ -212,12 +212,12 @@ void D_CheckNetGame(void)
         {
             while (!I_GetPacket(packet, sizeof(packet_header_t) + 1))
             {
-                packet_set(packet, PKT_GO, 0);
+                packet_set(packet, packet_type_e::PKT_GO, 0);
                 *(byte *)(packet + 1) = consoleplayer;
                 I_SendPacket(packet, sizeof(packet_header_t) + 1);
                 I_uSleep(100000);
             }
-        } while (packet->type != PKT_GO);
+        } while (packet->type != packet_type_e::PKT_GO);
     }
     std::free(packet);
 }
@@ -236,13 +236,14 @@ dboolean D_NetGetWad(const char *name)
     {
         // Send WAD request to remote
         packet = std::malloc(psize);
-        packet_set(packet, PKT_WAD, 0);
+        packet_set(packet, packet_type_e::PKT_WAD, 0);
         *(byte *)(packet + 1) = consoleplayer;
         strcpy(1 + (byte *)(packet + 1), name);
         I_SendPacket(packet, sizeof(packet_header_t) + strlen(name) + 2);
 
         I_uSleep(10000);
-    } while (!I_GetPacket(packet, psize) || (packet->type != PKT_WAD));
+    } while (!I_GetPacket(packet, psize) ||
+             (packet->type != packet_type_e::PKT_WAD));
     std::free(packet);
 
     if (!strcasecmp((void *)(packet + 1), name))
@@ -307,15 +308,15 @@ void NetUpdate(void)
 
         while ((recvlen = I_GetPacket(packet, 10000)))
         {
-            switch (packet->type)
+            switch (packet->type.value())
             {
-            case PKT_TICS: {
+            case packet_type_e::PKT_TICS.value(): {
                 byte *p = static_cast<byte *>((void *)(packet + 1));
                 int tics = *p++;
                 unsigned long ptic = doom_ntohl(packet->tic);
                 if (ptic > (unsigned)remotetic)
                 { // Missed some
-                    packet_set(packet, PKT_RETRANS, remotetic);
+                    packet_set(packet, packet_type_e::PKT_RETRANS, remotetic);
                     *(byte *)(packet + 1) = consoleplayer;
                     I_SendPacket(packet, sizeof(*packet) + 1);
                 }
@@ -338,11 +339,12 @@ void NetUpdate(void)
                 }
             }
             break;
-            case PKT_RETRANS: // Resend request
+                // Resend request
+            case packet_type_e::PKT_RETRANS.value():
                 remotesend = doom_ntohl(packet->tic);
                 break;
-            case PKT_DOWN: // Server downed
-            {
+                // Server downed
+            case packet_type_e::PKT_DOWN.value(): {
                 int j;
                 for (j = 0; j < MAXPLAYERS; j++)
                     if (j != consoleplayer)
@@ -352,8 +354,8 @@ void NetUpdate(void)
                             "in the game\n");
             }
             break;
-            case PKT_EXTRA: // Misc stuff
-            case PKT_QUIT:  // Player quit
+            case packet_type_e::PKT_EXTRA.value(): // Misc stuff
+            case packet_type_e::PKT_QUIT.value():  // Player quit
                 // Queue packet to be processed when its tic time is reached
                 queuedpacket = static_cast<packet_header_t **>(std::realloc(
                     queuedpacket, ++numqueuedpackets * sizeof *queuedpacket));
@@ -361,7 +363,7 @@ void NetUpdate(void)
                     static_cast<packet_header_t *>(std::malloc(recvlen));
                 memcpy(queuedpacket[numqueuedpackets - 1], packet, recvlen);
                 break;
-            case PKT_BACKOFF:
+            case packet_type_e::PKT_BACKOFF.value():
                 /* cph 2003-09-18 -
                  * The server sends this when we have got ahead of the other
                  * clients. We should stall the input side on this client, to
@@ -418,7 +420,7 @@ void NetUpdate(void)
                 packet_header_t *packet =
                     static_cast<packet_header_t *>(std::malloc(pkt_size));
 
-                packet_set(packet, PKT_TICC, maketic - sendtics);
+                packet_set(packet, packet_type_e::PKT_TICC, maketic - sendtics);
                 *(byte *)(packet + 1) = sendtics;
                 *(((byte *)(packet + 1)) + 1) = consoleplayer;
                 {
@@ -464,7 +466,7 @@ void D_NetSendMisc(netmisctype_t type, size_t len, void *data)
             static_cast<packet_header_t *>(std::malloc(size));
         int *p = static_cast<int *>((void *)(packet + 1));
 
-        packet_set(packet, PKT_EXTRA, gametic);
+        packet_set(packet, packet_type_e::PKT_EXTRA, gametic);
         *p++ = LittleLong(type);
         *p++ = LittleLong(consoleplayer);
         *p++ = LittleLong(len);
@@ -480,16 +482,16 @@ static void CheckQueuedPackets(void)
     int i;
     for (i = 0; (unsigned)i < numqueuedpackets; i++)
         if (doom_ntohl(queuedpacket[i]->tic) <= gametic)
-            switch (queuedpacket[i]->type)
+            switch (queuedpacket[i]->type.value())
             {
-            case PKT_QUIT: // Player quit the game
+            case packet_type_e::PKT_QUIT.value(): // Player quit the game
             {
                 int pn = *(byte *)(queuedpacket[i] + 1);
                 playeringame[pn] = false;
                 doom_printf("Player %d left the game\n", pn);
             }
             break;
-            case PKT_EXTRA: {
+            case packet_type_e::PKT_EXTRA.value(): {
                 int *p = (int *)(queuedpacket[i] + 1);
                 size_t len = LittleLong(*(p + 2));
                 switch (LittleLong(*p))
@@ -566,7 +568,8 @@ void TryRunTics(void)
                 {
                     char buf[sizeof(packet_header_t) + 1];
                     remotesend--;
-                    packet_set((packet_header_t *)buf, PKT_RETRANS, remotetic);
+                    packet_set((packet_header_t *)buf,
+                               packet_type_e::PKT_RETRANS, remotetic);
                     buf[sizeof(buf) - 1] = consoleplayer;
                     I_SendPacket((packet_header_t *)buf, sizeof buf);
                 }
@@ -619,7 +622,7 @@ static void D_QuitNetGame(void)
     if (!server)
         return;
     buf[sizeof(packet_header_t)] = consoleplayer;
-    packet_set(packet, PKT_QUIT, gametic);
+    packet_set(packet, packet_type_e::PKT_QUIT, gametic);
 
     for (i = 0; i < 4; i++)
     {

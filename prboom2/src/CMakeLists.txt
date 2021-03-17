@@ -394,15 +394,15 @@ function(AddGameExecutable TARGET SOURCES)
         target_include_directories(${TARGET} PRIVATE ${PORTMIDI_INCLUDE_DIR})
         target_link_libraries(${TARGET} PRIVATE ${PORTMIDI_LIBRARIES})
     endif()
-    add_dependencies(${TARGET} dsda-doom-wad)
+    add_dependencies(${TARGET} prboom-pp-wad)
 
     if(MSVC)
         set_target_properties(${TARGET} PROPERTIES
             LINK_FLAGS "/MANIFEST:NO"
         )
         add_custom_command(TARGET ${TARGET} POST_BUILD
-            COMMAND "mt.exe" -manifest \"${CMAKE_CURRENT_SOURCE_DIR}\\..\\ICONS\\prboom-plus.exe.manifest\" -outputresource:\"$<TARGET_FILE:dsda-doom>\"\;\#1
-            COMMAND ${CMAKE_COMMAND} -E copy_if_different ${WAD_DATA_PATH} $<TARGET_FILE_DIR:dsda-doom>
+            COMMAND "mt.exe" -manifest \"${CMAKE_CURRENT_SOURCE_DIR}\\..\\ICONS\\prboom-plus.exe.manifest\" -outputresource:\"$<TARGET_FILE:prboom-pp>\"\;\#1
+            COMMAND ${CMAKE_COMMAND} -E copy_if_different ${WAD_DATA_PATH} $<TARGET_FILE_DIR:prboom-pp>
         )
     endif()
 
@@ -424,12 +424,12 @@ function(AddGameExecutable TARGET SOURCES)
     endif()
 endfunction()
 
-AddGameExecutable(dsda-doom "${PRBOOM_PLUS_SOURCES}")
+AddGameExecutable(prboom-pp "${PRBOOM_PLUS_SOURCES}")
 
 
 # PrBoom-Plus server executable
 
-option(BUILD_SERVER "Build PrBoom-Plus server executable" ON)
+option(BUILD_SERVER "Build PrBoom-PP server executable" ON)
 
 if(BUILD_SERVER AND SDL2_NET_FOUND)
     set(PRBOOM_PLUS_GAME_SERVER_SOURCES
@@ -511,35 +511,35 @@ if(APPLE)
         MACOSX_PACKAGE_LOCATION Resources/English.lproj/MainMenu.nib
     )
 
-    add_executable(prboom-plus-launcher MACOSX_BUNDLE
+    add_executable(prboom-pp-launcher MACOSX_BUNDLE
         ${LAUNCHER_SOURCES}
         ${LAUNCHER_RESOURCES}
         ${LAUNCHER_MAINMENU_RESOURCES}
     )
-    target_include_directories(prboom-plus-launcher PRIVATE
+    target_include_directories(prboom-pp-launcher PRIVATE
         ${CMAKE_BINARY_DIR}
         ${CMAKE_CURRENT_SOURCE_DIR}
     )
-    set_target_properties(prboom-plus-launcher PROPERTIES
+    set_target_properties(prboom-pp-launcher PROPERTIES
         LINK_FLAGS "-framework Cocoa"
         MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/MAC/Info.plist"
         OUTPUT_NAME "Launcher"
         RUNTIME_OUTPUT_DIRECTORY ${PRBOOM_OUTPUT_PATH}
         XCODE_ATTRIBUTE_CODE_SIGN_IDENTITY ""
     )
-    add_dependencies(prboom-plus-launcher dsda-doom)
+    add_dependencies(prboom-plus-launcher prboom-pp)
 
-    set(BUNDLE_GAME_EXECUTABLE dsda-doom)
+    set(BUNDLE_GAME_EXECUTABLE prboom-pp)
 
-    add_custom_command(TARGET prboom-plus-launcher POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E copy_if_different $<TARGET_FILE:${BUNDLE_GAME_EXECUTABLE}> $<TARGET_FILE_DIR:prboom-plus-launcher>/PrBoom-Plus
+    add_custom_command(TARGET prboom-pp-launcher POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different $<TARGET_FILE:${BUNDLE_GAME_EXECUTABLE}> $<TARGET_FILE_DIR:prboom-pp-launcher>/PrBoom-PP
         COMMAND ${CMAKE_COMMAND} -E copy_if_different ${WAD_DATA_PATH} $<TARGET_FILE_DIR:prboom-plus-launcher>
     )
 
     if(BUILD_SERVER AND SDL2_NET_FOUND)
-        add_dependencies(prboom-plus-launcher prboom-plus-game-server)
-        add_custom_command(TARGET prboom-plus-launcher POST_BUILD
-            COMMAND ${CMAKE_COMMAND} -E copy_if_different $<TARGET_FILE:prboom-plus-game-server> $<TARGET_FILE_DIR:prboom-plus-launcher>
+        add_dependencies(prboom-pp-launcher prboom-pp-game-server)
+        add_custom_command(TARGET prboom-pp-launcher POST_BUILD
+            COMMAND ${CMAKE_COMMAND} -E copy_if_different $<TARGET_FILE:prboom-plus-game-server> $<TARGET_FILE_DIR:prboom-pp-launcher>
         )
     endif()
 endif()
