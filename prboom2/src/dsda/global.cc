@@ -113,7 +113,6 @@ int g_menu_cr_hilite;
 int g_menu_cr_select;
 int g_menu_cr_disable;
 
-extern const char **S_music_files;
 extern patchnum_t hu_font[HU_FONTSIZE];
 extern patchnum_t hu_font2[HU_FONTSIZE];
 
@@ -149,8 +148,6 @@ static void dsda_SetMusic(musicinfo_t *music_list, int count)
 {
     S_music = music_list;
     num_music = count;
-    S_music_files = malloc<const char **>(sizeof(char *) * num_music);
-    memset(S_music_files, 0, sizeof(char *) * num_music);
 }
 
 static void dsda_InitDoom(void)

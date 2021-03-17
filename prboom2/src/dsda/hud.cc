@@ -70,15 +70,26 @@ dsda_text_t dsda_exhud_timer;
 dsda_text_t dsda_exhud_max_totals;
 dsda_text_t dsda_intermission_time;
 
-static void dsda_InitExHud(patchnum_t *font)
-{
-    HUlib_initTextLine(&dsda_exhud_timer.text, DSDA_TEXT_X,
-                       200 - g_st_height - 16, font, HU_FONTSTART, g_cr_gray,
-                       VPT_ALIGN_LEFT);
+static void dsda_InitExHud(patchnum_t* font) {
+  HUlib_initTextLine(
+    &dsda_exhud_timer.text,
+    DSDA_TEXT_X,
+    200 - g_st_height - 16,
+    font,
+    HU_FONTSTART,
+    g_cr_gray,
+    VPT_ALIGN_LEFT_BOTTOM
+  );
 
-    HUlib_initTextLine(&dsda_exhud_max_totals.text, DSDA_TEXT_X,
-                       200 - g_st_height - 8, font, HU_FONTSTART, g_cr_gray,
-                       VPT_ALIGN_LEFT);
+  HUlib_initTextLine(
+    &dsda_exhud_max_totals.text,
+    DSDA_TEXT_X,
+    200 - g_st_height - 8,
+    font,
+    HU_FONTSTART,
+    g_cr_gray,
+    VPT_ALIGN_LEFT_BOTTOM
+  );
 }
 
 void dsda_InitHud(patchnum_t *font)
