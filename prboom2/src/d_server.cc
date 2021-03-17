@@ -347,7 +347,7 @@ void doexit(void)
     packet_header_t packet;
 
     // Send "downed" packet
-    packet_set(&packet, PKT_DOWN, 0);
+    packet_set(&packet, packet_type_e::PKT_DOWN, 0);
     BroadcastPacket(&packet, sizeof packet);
 }
 
@@ -580,14 +580,16 @@ int main(int argc, char **argv)
             {
                 if (verbose > 2)
                     printf("Received packet:");
-                switch (packet->type)
+                switch (packet->type.value())
                 {
-                case PKT_INIT:
+                case packet_type_e::PKT_INIT.value():
                     if (!ingame)
                     {
                         {
                             int n;
-                            struct setup_packet_s *sinfo = (void *)(packet + 1);
+                            struct setup_packet_s *sinfo =
+                                static_cast<setup_packet_s *>(
+                                    (void *)(packet + 1));
 
                             /* Find player number and add to the game */
                             n = *(short *)(packet + 1);
@@ -618,13 +620,14 @@ int main(int argc, char **argv)
                                 int i;
                                 size_t extrabytes = 0;
                                 // Send setup packet
-                                packet_set(packet, PKT_SETUP, 0);
+                                packet_set(packet, packet_type_e::PKT_SETUP, 0);
                                 memcpy(sinfo, &setupinfo, sizeof setupinfo);
                                 sinfo->yourplayer = n;
                                 sinfo->numwads = numwads;
                                 for (i = 0; i < numwads; i++)
                                 {
-                                    strcpy(sinfo->wadnames + extrabytes,
+                                    strcpy(reinterpret_cast<char *>(
+                                               sinfo->wadnames + extrabytes),
                                            wadname[i]);
                                     extrabytes += strlen(wadname[i]) + 1;
                                 }
@@ -643,7 +646,7 @@ int main(int argc, char **argv)
                         }
                     }
                     break;
-                case PKT_GO:
+                case packet_type_e::PKT_GO.value():
                     if (!ingame)
                     {
                         int from = *(byte *)(packet + 1);
@@ -660,7 +663,7 @@ int main(int argc, char **argv)
                             playerstate[from] = pc_ready;
                     }
                     break;
-                case PKT_TICC: {
+                case packet_type_e::PKT_TICC.value(): {
                     byte tics = *(byte *)(packet + 1);
                     int from = *(((byte *)(packet + 1)) + 1);
 
@@ -673,13 +676,15 @@ int main(int argc, char **argv)
                     if (ptic(packet) > remoteticfrom[from])
                     {
                         // Missed tics, so request a resend
-                        packet_set(packet, PKT_RETRANS, remoteticfrom[from]);
+                        packet_set(packet, packet_type_e::PKT_RETRANS,
+                                   remoteticfrom[from]);
                         I_SendPacketTo(packet, sizeof *packet,
                                        remoteaddr + from);
                     }
                     else
                     {
-                        ticcmd_t *newtic = (void *)(((byte *)(packet + 1)) + 2);
+                        ticcmd_t *newtic = static_cast<ticcmd_t *>(
+                            (void *)(((byte *)(packet + 1)) + 2));
                         if (ptic(packet) + tics < remoteticfrom[from])
                             break; // Won't help
                         remoteticfrom[from] = ptic(packet);
@@ -689,7 +694,7 @@ int main(int argc, char **argv)
                     }
                 }
                 break;
-                case PKT_RETRANS: {
+                case packet_type_e::PKT_RETRANS.value(): {
                     int from = *(byte *)(packet + 1);
                     if (badplayer(from))
                         break;
@@ -700,7 +705,7 @@ int main(int argc, char **argv)
                     remoteticto[from] = ptic(packet);
                 }
                 break;
-                case PKT_QUIT: {
+                case packet_type_e::PKT_QUIT.value(): {
                     int from = *(byte *)(packet + 1);
                     if (badplayer(from))
                         break;
@@ -728,16 +733,16 @@ int main(int argc, char **argv)
                 }
                     // fallthrough
                     // and broadcast it
-                case PKT_EXTRA:
+                case packet_type_e::PKT_EXTRA.value():
                     BroadcastPacket(packet, len);
-                    if (packet->type == PKT_EXTRA)
+                    if (packet->type == packet_type_e::PKT_EXTRA)
                     {
                         if (verbose > 2)
                             printf("misc from %d\n",
                                    *(((byte *)(packet + 1)) + 1));
                     }
                     break;
-                case PKT_WAD: {
+                case packet_type_e::PKT_WAD.value(): {
                     int i;
                     int from = *(byte *)(packet + 1);
                     char *name = 1 + (char *)(packet + 1);
@@ -763,8 +768,8 @@ int main(int argc, char **argv)
                     else
                     {
                         size += strlen(wadname[i]) + strlen(wadget[i]) + 2;
-                        reply = malloc(size);
-                        packet_set(reply, PKT_WAD, 0);
+                        reply = static_cast<packet_header_t *>(malloc(size));
+                        packet_set(reply, packet_type_e::PKT_WAD, 0);
                         strcpy((char *)(reply + 1), wadname[i]);
                         strcpy((char *)(reply + 1) + strlen(wadname[i]) + 1,
                                wadget[i]);
@@ -775,7 +780,8 @@ int main(int argc, char **argv)
                 }
                 break;
                 default:
-                    printf("Unrecognised packet type %d\n", packet->type);
+                    printf("Unrecognised packet type %d\n",
+                           packet->type.value());
                     break;
                 }
             }
@@ -796,7 +802,7 @@ int main(int argc, char **argv)
                         playerstate[i] = pc_playing;
                     }
                 }
-                packet_set(packet, PKT_GO, 0);
+                packet_set(packet, packet_type_e::PKT_GO, 0);
                 BroadcastPacket(packet, sizeof *packet);
                 I_uSleep(10000);
                 BroadcastPacket(packet, sizeof *packet);
@@ -857,12 +863,13 @@ int main(int argc, char **argv)
                             128); // limit number of sent tics (CVE-2019-20797)
                         {
                             byte *p;
-                            packet =
-                                malloc(sizeof(packet_header_t) + 1 +
-                                       tics * (1 + numplayers *
-                                                       (1 + sizeof(ticcmd_t))));
-                            p = (void *)(packet + 1);
-                            packet_set(packet, PKT_TICS, remoteticto[i]);
+                            packet = static_cast<packet_header_t *>(malloc(
+                                sizeof(packet_header_t) + 1 +
+                                tics *
+                                    (1 + numplayers * (1 + sizeof(ticcmd_t)))));
+                            p = static_cast<byte *>((void *)(packet + 1));
+                            packet_set(packet, packet_type_e::PKT_TICS,
+                                       remoteticto[i]);
                             *p++ = tics;
                             if (verbose > 1)
                                 printf("sending %d tics to %d\n", tics, i);
@@ -901,8 +908,10 @@ int main(int argc, char **argv)
                                     35)
                                 {
                                     packet_header_t *packet =
-                                        malloc(sizeof(packet_header_t));
-                                    packet_set(packet, PKT_BACKOFF,
+                                        static_cast<packet_header_t *>(
+                                            malloc(sizeof(packet_header_t)));
+                                    packet_set(packet,
+                                               packet_type_e::PKT_BACKOFF,
                                                remoteticto[i]);
                                     I_SendPacketTo(packet, sizeof *packet,
                                                    remoteaddr + i);
