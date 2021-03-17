@@ -1213,7 +1213,7 @@ static void StartTrack(const midi_file_t *file, unsigned int track_num)
 
 // Start playing a mid
 
-static void I_OPL_PlaySong(const void *handle, int looping)
+void I_OPL_PlaySong(const void *handle, int looping)
 {
     const midi_file_t *file;
     unsigned int i;
@@ -1239,7 +1239,7 @@ static void I_OPL_PlaySong(const void *handle, int looping)
     }
 }
 
-static void I_OPL_PauseSong(void)
+void I_OPL_PauseSong(void)
 {
     unsigned int i;
 
@@ -1265,7 +1265,7 @@ static void I_OPL_PauseSong(void)
     }
 }
 
-static void I_OPL_ResumeSong(void)
+void I_OPL_ResumeSong(void)
 {
     if (!music_initialized)
     {
@@ -1275,7 +1275,7 @@ static void I_OPL_ResumeSong(void)
     OPL_SetPaused(0);
 }
 
-static void I_OPL_StopSong(void)
+void I_OPL_StopSong(void)
 {
     unsigned int i;
 
@@ -1314,7 +1314,7 @@ static void I_OPL_StopSong(void)
 
 }
 
-static void I_OPL_UnRegisterSong(const void *handle)
+void I_OPL_UnRegisterSong(const void *handle)
 {
     if (!music_initialized)
     {
@@ -1335,7 +1335,7 @@ static dboolean IsMid(byte *mem, int len)
 }
 
 // now only takes files in MIDI format
-static const void *I_OPL_RegisterSong(const void *data, unsigned len)
+const void *I_OPL_RegisterSong(const void *data, unsigned len)
 {
     midi_file_t *result;
     midimem_t mf;
@@ -1372,7 +1372,7 @@ static const void *I_OPL_RegisterSong(const void *data, unsigned len)
 }
 
 
-static void I_OPL_ShutdownMusic(void)
+void I_OPL_ShutdownMusic(void)
 {
     if (music_initialized)
     {
@@ -1428,17 +1428,3 @@ void I_OPL_RenderSamples (void *dest, unsigned nsamp)
     OPL_Render_Samples (dest, nsamp);
 }
 
-const music_player_t opl_synth_player =
-{
-  I_OPL_SynthName,
-  I_OPL_InitMusic,
-  I_OPL_ShutdownMusic,
-  I_OPL_SetMusicVolume,
-  I_OPL_PauseSong,
-  I_OPL_ResumeSong,
-  I_OPL_RegisterSong,
-  I_OPL_UnRegisterSong,
-  I_OPL_PlaySong,
-  I_OPL_StopSong,
-  I_OPL_RenderSamples
-};

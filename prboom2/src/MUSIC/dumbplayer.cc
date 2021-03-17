@@ -88,30 +88,30 @@ static DUH_SIGRENDERER *dsren = NULL;
 static DUH *duh = NULL;
 static DUMBFILE *dfil = NULL;
 
-static const char *db_name (void)
+const char *db_name (void)
 {
   return "dumb tracker player";
 }
 
 
-static int db_init (int samplerate)
+int db_init (int samplerate)
 {
   db_delta = 65536.0f / samplerate;
 
   return 1;
 }
 
-static void db_shutdown (void)
+void db_shutdown (void)
 {
   dumb_exit ();
 }
 
-static void db_setvolume (int v)
+void db_setvolume (int v)
 {
   db_volume = (float) v / 15.0f;
 }
 
-static const void* db_registersong (const void *data, unsigned len)
+const void* db_registersong (const void *data, unsigned len)
 {
   // because dumbfiles don't have any concept of backward seek or
   // rewind, you have to reopen if any loader fails
@@ -177,7 +177,7 @@ static const void* db_registersong (const void *data, unsigned len)
   return data;
 }
 
-static void db_unregistersong (const void *handle)
+void db_unregistersong (const void *handle)
 {
   if (duh)
   {
@@ -192,7 +192,7 @@ static void db_unregistersong (const void *handle)
   }
 }
 
-static void db_play (const void *handle, int looping)
+void db_play (const void *handle, int looping)
 {
   dsren = duh_start_sigrenderer (duh, 0, 2, 0);
 
@@ -206,24 +206,24 @@ static void db_play (const void *handle, int looping)
   db_playing = 1;
 }
 
-static void db_stop (void)
+void db_stop (void)
 {
   duh_end_sigrenderer (dsren);
   dsren = NULL;
   db_playing = 0;
 }
 
-static void db_pause (void)
+void db_pause (void)
 {
   db_paused = 1;
 }
 
-static void db_resume (void)
+void db_resume (void)
 {
   db_paused = 0;
 }
 
-static void db_render (void *dest, unsigned nsamp)
+void db_render (void *dest, unsigned nsamp)
 {
   unsigned char *cdest = (unsigned char *)dest;
   unsigned nsampwrit = 0;
@@ -266,21 +266,6 @@ static void db_render (void *dest, unsigned nsamp)
   else
     memset (dest, 0, nsamp * 4);
 }
-
-const music_player_t db_player =
-{
-  db_name,
-  db_init,
-  db_shutdown,
-  db_setvolume,
-  db_pause,
-  db_resume,
-  db_registersong,
-  db_unregistersong,
-  db_play,
-  db_stop,
-  db_render
-};
 
 
 

@@ -1510,8 +1510,8 @@ void P_SlideMove(mobj_t *mo)
      * cph 2000/09//23: buggy code was only in Boom v2.01
      */
 
-    if (!P_TryMove(mo, mo->x, mo->y + mo->momy, true))
-      if (!P_TryMove(mo, mo->x + mo->momx, mo->y, true))
+    if (!P_TryMove(mo, mo->x, mo->y + mo->momy, 1))
+      if (!P_TryMove(mo, mo->x + mo->momx, mo->y, 1))
         if (compatibility_level == boom_201_compatibility)
     mo->momx = mo->momy = 0;
 
@@ -1527,7 +1527,7 @@ void P_SlideMove(mobj_t *mo)
 
     // killough 3/15/98: Allow objects to drop off ledges
 
-    if (!P_TryMove(mo, mo->x+newx, mo->y+newy, true))
+    if (!P_TryMove(mo, mo->x+newx, mo->y+newy, 1))
       goto stairstep;
   }
 
@@ -1561,7 +1561,7 @@ void P_SlideMove(mobj_t *mo)
       mo->player->momy = tmymove;
   }
     }  // killough 3/15/98: Allow objects to drop off ledges:
-  while (!P_TryMove(mo, mo->x+tmxmove, mo->y+tmymove, true));
+  while (!P_TryMove(mo, mo->x+tmxmove, mo->y+tmymove, 1));
 }
 
 //

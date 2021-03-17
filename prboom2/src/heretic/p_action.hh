@@ -28,7 +28,7 @@ void A_Light0();
 void A_WeaponReady();
 void A_Lower();
 void A_Raise();
-void A_ReFire(player_s *pS, pspdef_t *ptr);
+void A_ReFire(player_t *pS, pspdef_t *ptr);
 void A_Pain();
 void A_SkullPop();
 void A_FaceTarget();

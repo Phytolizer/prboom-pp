@@ -97,13 +97,13 @@ static int mp_leftoversamps = 0; // number of extra samples
 static int mp_leftoversamppos = 0;
 
 
-static const char *mp_name (void)
+const char *mp_name (void)
 {
   return "mad mp3 player";
 }
 
 
-static int mp_init (int samplerate)
+int mp_init (int samplerate)
 {
   mad_stream_init (&Stream);
   mad_frame_init (&Frame);
@@ -113,7 +113,7 @@ static int mp_init (int samplerate)
   return 1;
 }
 
-static void mp_shutdown (void)
+void mp_shutdown (void)
 {
 
   mad_synth_finish (&Synth);
@@ -122,7 +122,7 @@ static void mp_shutdown (void)
   mad_header_finish (&Header);
 }
 
-static const void *mp_registersong (const void *data, unsigned len)
+const void *mp_registersong (const void *data, unsigned len)
 {
   int i;
   int maxtry;
@@ -175,28 +175,28 @@ static const void *mp_registersong (const void *data, unsigned len)
   return data;
 }
 
-static void mp_setvolume (int v)
+void mp_setvolume (int v)
 {
   mp_volume = v;
 }
 
-static void mp_pause (void)
+void mp_pause (void)
 {
   mp_paused = 1;
 }
 
-static void mp_resume (void)
+void mp_resume (void)
 {
   mp_paused = 0;
 }
 
-static void mp_unregistersong (const void *handle)
+void mp_unregistersong (const void *handle)
 { // nothing to do
   mp_data = NULL;
   mp_playing = 0;
 }
 
-static void mp_play (const void *handle, int looping)
+void mp_play (const void *handle, int looping)
 {
   mad_stream_buffer (&Stream, (const unsigned char *)mp_data, mp_len);
 
@@ -206,7 +206,7 @@ static void mp_play (const void *handle, int looping)
   mp_leftoversamppos = 0;
 }
 
-static void mp_stop (void)
+void mp_stop (void)
 {
   mp_playing = 0;
 }
@@ -311,25 +311,10 @@ static void mp_render_ex (void *dest, unsigned nsamp)
   // NOT REACHED
 }
 
-static void mp_render (void *dest, unsigned nsamp)
+void mp_render (void *dest, unsigned nsamp)
 {
   I_ResampleStream (dest, nsamp, mp_render_ex, Header.samplerate, mp_samplerate_target);
 }
 
-
-const music_player_t mp_player =
-{
-  mp_name,
-  mp_init,
-  mp_shutdown,
-  mp_setvolume,
-  mp_pause,
-  mp_resume,
-  mp_registersong,
-  mp_unregistersong,
-  mp_play,
-  mp_stop,
-  mp_render
-};
 
 #endif // HAVE_LIBMAD

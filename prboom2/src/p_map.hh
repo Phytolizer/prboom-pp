@@ -46,7 +46,7 @@
 #define MAXRADIUS       (32*FRACUNIT)
 
 // killough 3/15/98: add fourth argument to P_TryMove
-dboolean P_TryMove(mobj_t *thing, fixed_t x, fixed_t y, dboolean dropoff);
+dboolean P_TryMove(mobj_t *thing, fixed_t x, fixed_t y, int dropoff);
 
 // killough 8/9/98: extra argument for telefragging
 dboolean P_TeleportMove(mobj_t *thing, fixed_t x, fixed_t y,dboolean boss);

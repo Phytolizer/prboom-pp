@@ -28,7 +28,31 @@
 #ifndef OPLPLAYER_H
 #define OPLPLAYER_H
 
-extern const music_player_t opl_synth_player;
+const char *I_OPL_SynthName(void);
+int I_OPL_InitMusic (int samplerate);
+void I_OPL_ShutdownMusic (void);
+void I_OPL_SetMusicVolume (int v);
+void I_OPL_PauseSong (void);
+void I_OPL_ResumeSong (void);
+const void *I_OPL_RegisterSong (const void *data, unsigned len);
+void I_OPL_UnRegisterSong (const void *handle);
+void I_OPL_PlaySong (const void *handle, int looping);
+void I_OPL_StopSong (void);
+void I_OPL_RenderSamples (void *vdest, unsigned bufflen);
 
+constexpr music_player_t opl_synth_player =
+    {
+        I_OPL_SynthName,
+        I_OPL_InitMusic,
+        I_OPL_ShutdownMusic,
+        I_OPL_SetMusicVolume,
+        I_OPL_PauseSong,
+        I_OPL_ResumeSong,
+        I_OPL_RegisterSong,
+        I_OPL_UnRegisterSong,
+        I_OPL_PlaySong,
+        I_OPL_StopSong,
+        I_OPL_RenderSamples
+    };
 
 #endif

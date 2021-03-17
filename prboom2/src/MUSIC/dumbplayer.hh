@@ -34,7 +34,34 @@
 
 
 
-extern const music_player_t db_player;
+const char *db_name(void);
+int db_init (int samplerate);
+void db_shutdown (void);
+void db_setvolume (int v);
+void db_pause (void);
+void db_resume (void);
+const void *db_registersong (const void *data, unsigned len);
+void db_unregistersong (const void *handle);
+void db_play (const void *handle, int looping);
+void db_stop (void);
+void db_render (void *vdest, unsigned bufflen);
+
+
+constexpr music_player_t db_player =
+    {
+        db_name,
+        db_init,
+        db_shutdown,
+        db_setvolume,
+        db_pause,
+        db_resume,
+        db_registersong,
+        db_unregistersong,
+        db_play,
+        db_stop,
+        db_render
+    };
+
 
 
 

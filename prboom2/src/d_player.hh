@@ -114,7 +114,7 @@ typedef enum
 //
 // Extended player object info: player_t
 //
-typedef struct player_s
+struct player_t
 {
   mobj_t*             mo;
   playerstate_t       playerstate;
@@ -229,7 +229,7 @@ typedef struct player_s
   int chickenPeck;            // chicken peck countdown
   mobj_t *rain1;              // active rain maker 1
   mobj_t *rain2;              // active rain maker 2
-} player_t;
+} ;
 
 
 //

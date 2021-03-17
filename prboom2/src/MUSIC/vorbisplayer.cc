@@ -153,7 +153,7 @@ ov_callbacks vcallback =
 };
 
 
-static const char *vorb_name (void)
+const char *vorb_name (void)
 {
   return "vorbis player";
 }
@@ -231,7 +231,7 @@ static unsigned parsetag (const char *str, int samplerate)
 #include <delayimp.h>
 #endif
 
-static int vorb_init (int samplerate)
+int vorb_init (int samplerate)
 {
   TESTDLLLOAD ("libogg-0.dll", FALSE)
   TESTDLLLOAD ("libvorbis-0.dll", FALSE)
@@ -240,14 +240,14 @@ static int vorb_init (int samplerate)
   return 1;
 }
 
-static void vorb_shutdown (void)
+void vorb_shutdown (void)
 {
   // nothing to do
 
 
 }
 
-static const void *vorb_registersong (const void *data, unsigned len)
+const void *vorb_registersong (const void *data, unsigned len)
 {
   int i;
   vorbis_info *vinfo;
@@ -301,29 +301,29 @@ static const void *vorb_registersong (const void *data, unsigned len)
   return data;
 }
 
-static void vorb_setvolume (int v)
+void vorb_setvolume (int v)
 {
   vorb_volume = v;
 }
 
-static void vorb_pause (void)
+void vorb_pause (void)
 {
   vorb_paused = 1;
 }
 
-static void vorb_resume (void)
+void vorb_resume (void)
 {
   vorb_paused = 0;
 }
 
-static void vorb_unregistersong (const void *handle)
+void vorb_unregistersong (const void *handle)
 {
   vorb_data = NULL;
   ov_clear (&vf);
   vorb_playing = 0;
 }
 
-static void vorb_play (const void *handle, int looping)
+void vorb_play (const void *handle, int looping)
 {
   ov_raw_seek_lap (&vf, 0);
 
@@ -335,7 +335,7 @@ static void vorb_play (const void *handle, int looping)
   #endif // ZDOOM_AUDIO_LOOP
 }
 
-static void vorb_stop (void)
+void vorb_stop (void)
 {
   vorb_playing = 0;
 }
@@ -444,25 +444,10 @@ static void vorb_render_ex (void *dest, unsigned nsamp)
 
 }
 
-static void vorb_render (void *dest, unsigned nsamp)
+void vorb_render (void *dest, unsigned nsamp)
 {
   I_ResampleStream (dest, nsamp, vorb_render_ex, vorb_samplerate_in, vorb_samplerate_target);
 }
 
-
-const music_player_t vorb_player =
-{
-  vorb_name,
-  vorb_init,
-  vorb_shutdown,
-  vorb_setvolume,
-  vorb_pause,
-  vorb_resume,
-  vorb_registersong,
-  vorb_unregistersong,
-  vorb_play,
-  vorb_stop,
-  vorb_render
-};
 
 #endif // HAVE_LIBVORBISFILE

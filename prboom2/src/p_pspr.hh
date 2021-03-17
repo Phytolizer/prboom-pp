@@ -91,53 +91,54 @@ extern int weapon_preferences[2][NUMWEAPONS+1];      /* killough 5/2/98 */
 extern int weapon_attack_alignment;
 int P_WeaponPreferred(int w1, int w2);
 
-struct player_s;
-int P_SwitchWeapon(struct player_s *player);
-dboolean P_CheckAmmo(struct player_s *player);
-void P_SetupPsprites(struct player_s *curplayer);
-void P_MovePsprites(struct player_s *curplayer);
-void P_DropWeapon(struct player_s *player);
+struct player_t;
+struct mobj_t;
+int P_SwitchWeapon(player_t *player);
+dboolean P_CheckAmmo(player_t *player);
+void P_SetupPsprites(player_t *curplayer);
+void P_MovePsprites(player_t *curplayer);
+void P_DropWeapon(player_t *player);
 
-void A_Light0();
-void A_WeaponReady();
-void A_Lower();
-void A_Raise();
-void A_Punch();
-void A_ReFire(player_s *pS, pspdef_t *ptr);
-void A_FirePistol();
-void A_Light1();
-void A_FireShotgun();
-void A_Light2();
-void A_FireShotgun2();
-void A_CheckReload();
-void A_OpenShotgun2();
-void A_LoadShotgun2();
-void A_CloseShotgun2();
-void A_FireCGun();
-void A_GunFlash();
-void A_FireMissile();
-void A_Saw();
-void A_FirePlasma();
-void A_BFGsound();
-void A_FireBFG();
-void A_BFGSpray();
-void A_FireOldBFG();
+void A_Light0(player_t*, pspdef_t*);
+void A_WeaponReady(player_t *, pspdef_t*);
+void A_Lower(player_t*, pspdef_t*);
+void A_Raise(player_t*, pspdef_t*);
+void A_Punch(player_t*, pspdef_t*);
+void A_ReFire(player_t *pS, pspdef_t *ptr);
+void A_FirePistol(player_t*, pspdef_t*);
+void A_Light1(player_t*, pspdef_t*);
+void A_FireShotgun(player_t*, pspdef_t*);
+void A_Light2(player_t*, pspdef_t*);
+void A_FireShotgun2(player_t*, pspdef_t*);
+void A_CheckReload(player_t*, pspdef_t*);
+void A_OpenShotgun2(player_t*, pspdef_t*);
+void A_LoadShotgun2(player_t*, pspdef_t*);
+void A_CloseShotgun2(player_t*, pspdef_t*);
+void A_FireCGun(player_t*, pspdef_t*);
+void A_GunFlash(player_t*, pspdef_t*);
+void A_FireMissile(player_t*, pspdef_t*);
+void A_Saw(player_t*, pspdef_t*);
+void A_FirePlasma(player_t*, pspdef_t*);
+void A_BFGsound(player_t*, pspdef_t*);
+void A_FireBFG(player_t*, pspdef_t*);
+void A_BFGSpray(mobj_t *);
+void A_FireOldBFG(player_t*, pspdef_t*);
 
 // heretic
 
 #include "p_mobj.hh"
 
-struct player_s;
+struct player_t;
 
 void P_RepositionMace(mobj_t * mo);
-void P_ActivateBeak(struct player_s * player);
-void P_PostChickenWeapon(struct player_s * player, weapontype_t weapon);
-void P_SetPsprite(struct player_s * player, int position, statenum_t stnum);
+void P_ActivateBeak(player_t * player);
+void P_PostChickenWeapon(player_t * player, weapontype_t weapon);
+void P_SetPsprite(player_t * player, int position, statenum_t stnum);
 void P_OpenWeapons(void);
 void P_CloseWeapons(void);
 void P_AddMaceSpot(const mapthing_t * mthing);
-void P_DropWeapon(struct player_s * player);
-void P_UpdateBeak(struct player_s * player, pspdef_t * psp);
-dboolean Heretic_P_CheckAmmo(struct player_s * player);
+void P_DropWeapon(player_t * player);
+void P_UpdateBeak(player_t * player, pspdef_t * psp);
+dboolean Heretic_P_CheckAmmo(player_t * player);
 
 #endif

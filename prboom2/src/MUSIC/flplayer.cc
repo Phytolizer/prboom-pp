@@ -92,7 +92,7 @@ static int f_soundrate;
 static unsigned char sysexbuff[SYSEX_BUFF_SIZE];
 static int sysexbufflen;
 
-static const char *fl_name (void)
+const char *fl_name (void)
 {
   return "fluidsynth midi player";
 }
@@ -105,7 +105,7 @@ static const char *fl_name (void)
 #include <delayimp.h>
 #endif
 
-static int fl_init (int samplerate)
+int fl_init (int samplerate)
 {
   const char *filename;
 
@@ -204,7 +204,7 @@ static int fl_init (int samplerate)
   return 1;
 }
 
-static void fl_shutdown (void)
+void fl_shutdown (void)
 {
   if (f_syn)
   {
@@ -225,7 +225,7 @@ static void fl_shutdown (void)
 
 
 
-static const void *fl_registersong (const void *data, unsigned len)
+const void *fl_registersong (const void *data, unsigned len)
 {
   midimem_t mf;
 
@@ -257,7 +257,7 @@ static const void *fl_registersong (const void *data, unsigned len)
   return data;
 }
 
-static void fl_unregistersong (const void *handle)
+void fl_unregistersong (const void *handle)
 {
   if (events)
   {
@@ -271,7 +271,7 @@ static void fl_unregistersong (const void *handle)
   }
 }
 
-static void fl_pause (void)
+void fl_pause (void)
 {
   //int i;
   f_paused = 1;
@@ -279,11 +279,11 @@ static void fl_pause (void)
   //for (i = 0; i < 16; i++)
   //  fluid_synth_cc (f_syn, i, 123, 0); // ALL NOTES OFF
 }
-static void fl_resume (void)
+void fl_resume (void)
 {
   f_paused = 0;
 }
-static void fl_play (const void *handle, int looping)
+void fl_play (const void *handle, int looping)
 {
   eventpos = 0;
   f_looping = looping;
@@ -294,7 +294,7 @@ static void fl_play (const void *handle, int looping)
   fluid_synth_system_reset (f_syn);
 }
 
-static void fl_stop (void)
+void fl_stop (void)
 {
   int i;
   f_playing = 0;
@@ -306,7 +306,7 @@ static void fl_stop (void)
   }
 }
 
-static void fl_setvolume (int v)
+void fl_setvolume (int v)
 {
   f_volume = v;
 }
@@ -369,7 +369,7 @@ static void writesysex (unsigned char *data, int len)
   }
 }
 
-static void fl_render (void *vdest, unsigned length)
+void fl_render (void *vdest, unsigned length)
 {
   short *dest = (short*)vdest;
 
@@ -508,21 +508,6 @@ static void fl_render (void *vdest, unsigned length)
 
 }
 
-
-const music_player_t fl_player =
-{
-  fl_name,
-  fl_init,
-  fl_shutdown,
-  fl_setvolume,
-  fl_pause,
-  fl_resume,
-  fl_registersong,
-  fl_unregistersong,
-  fl_play,
-  fl_stop,
-  fl_render
-};
 
 
 #endif // HAVE_LIBFLUIDSYNTH

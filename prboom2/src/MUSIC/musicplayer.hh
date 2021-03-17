@@ -47,7 +47,7 @@ synced.
 */
 
 
-typedef struct
+struct music_player_t
 {
   // descriptive name of the player, such as "OPL2 Synth"
   const char *(*name)(void);
@@ -82,7 +82,7 @@ typedef struct
   // s16 stereo, with samplerate as specified in init.  player needs to be able to handle
   // just about anything for nsamp.  render can be called even during pause+stop.
   void (*render)(void *dest, unsigned nsamp);
-} music_player_t;
+};
 
 
 

@@ -367,7 +367,7 @@ static dboolean P_Move(mobj_t *actor, dboolean dropoff) /* killough 9/12/98 */
   tryx = (origx = actor->x) + (deltax = speed * xspeed[actor->movedir]);
   tryy = (origy = actor->y) + (deltay = speed * yspeed[actor->movedir]);
 
-  try_ok = P_TryMove(actor, tryx, tryy, dropoff);
+  try_ok = P_TryMove(actor, tryx, tryy, dropoff ? 1 : 0);
 
   // killough 10/98:
   // Let normal momentum carry them, instead of steptoeing them across ice.
@@ -2190,7 +2190,7 @@ static void A_PainShootSkull(mobj_t *actor, angle_t angle)
   // Check for movements.
   // killough 3/15/98: don't jump over dropoffs:
 
-  if (!P_TryMove(newmobj, newmobj->x, newmobj->y, false))
+  if (!P_TryMove(newmobj, newmobj->x, newmobj->y, 0))
     {
       // kill it immediately
       P_DamageMobj(newmobj, actor, actor, 10000);

@@ -118,28 +118,28 @@ const char *doom_sprnames[NUMSPRITES+1] = {
 
 state_t doom_states[NUMSTATES] = {
   {SPR_TROO,0,-1,NULL,S_NULL,0,0},  // S_NULL
-  {SPR_SHTG,4,0,A_Light0,S_NULL,0,0}, // S_LIGHTDONE
-  {SPR_PUNG,0,1,A_WeaponReady,S_PUNCH,0,0}, // S_PUNCH
-  {SPR_PUNG,0,1,A_Lower,S_PUNCHDOWN,0,0}, // S_PUNCHDOWN
-  {SPR_PUNG,0,1,A_Raise,S_PUNCHUP,0,0}, // S_PUNCHUP
+  {SPR_SHTG,4,0,reinterpret_cast<actionf_t>(A_Light0),S_NULL,0,0}, // S_LIGHTDONE
+  {SPR_PUNG,0,1,reinterpret_cast<actionf_t>(A_WeaponReady),S_PUNCH,0,0}, // S_PUNCH
+  {SPR_PUNG,0,1,reinterpret_cast<actionf_t>(A_Lower),S_PUNCHDOWN,0,0}, // S_PUNCHDOWN
+  {SPR_PUNG,0,1,reinterpret_cast<actionf_t>(A_Raise),S_PUNCHUP,0,0}, // S_PUNCHUP
   {SPR_PUNG,1,4,NULL,S_PUNCH2,0,0},   // S_PUNCH1
-  {SPR_PUNG,2,4,A_Punch,S_PUNCH3,0,0},  // S_PUNCH2
+  {SPR_PUNG,2,4,reinterpret_cast<actionf_t>(A_Punch),S_PUNCH3,0,0},  // S_PUNCH2
   {SPR_PUNG,3,5,NULL,S_PUNCH4,0,0},   // S_PUNCH3
   {SPR_PUNG,2,4,NULL,S_PUNCH5,0,0},   // S_PUNCH4
   {SPR_PUNG,1,5,reinterpret_cast<actionf_t>(A_ReFire),S_PUNCH,0,0},  // S_PUNCH5
-  {SPR_PISG,0,1,A_WeaponReady,S_PISTOL,0,0},// S_PISTOL
-  {SPR_PISG,0,1,A_Lower,S_PISTOLDOWN,0,0},  // S_PISTOLDOWN
-  {SPR_PISG,0,1,A_Raise,S_PISTOLUP,0,0},  // S_PISTOLUP
+  {SPR_PISG,0,1,reinterpret_cast<actionf_t>(A_WeaponReady),S_PISTOL,0,0},// S_PISTOL
+  {SPR_PISG,0,1,reinterpret_cast<actionf_t>(A_Lower),S_PISTOLDOWN,0,0},  // S_PISTOLDOWN
+  {SPR_PISG,0,1,reinterpret_cast<actionf_t>(A_Raise),S_PISTOLUP,0,0},  // S_PISTOLUP
   {SPR_PISG,0,4,NULL,S_PISTOL2,0,0},  // S_PISTOL1
-  {SPR_PISG,1,6,A_FirePistol,S_PISTOL3,0,0},// S_PISTOL2
+  {SPR_PISG,1,6,reinterpret_cast<actionf_t>(A_FirePistol),S_PISTOL3,0,0},// S_PISTOL2
   {SPR_PISG,2,4,NULL,S_PISTOL4,0,0},  // S_PISTOL3
   {SPR_PISG,1,5,reinterpret_cast<actionf_t>(A_ReFire),S_PISTOL,0,0}, // S_PISTOL4
-  {SPR_PISF,32768,7,A_Light1,S_LIGHTDONE,0,0},  // S_PISTOLFLASH
-  {SPR_SHTG,0,1,A_WeaponReady,S_SGUN,0,0},  // S_SGUN
-  {SPR_SHTG,0,1,A_Lower,S_SGUNDOWN,0,0},  // S_SGUNDOWN
-  {SPR_SHTG,0,1,A_Raise,S_SGUNUP,0,0},  // S_SGUNUP
+  {SPR_PISF,32768,7,reinterpret_cast<actionf_t>(A_Light1),S_LIGHTDONE,0,0},  // S_PISTOLFLASH
+  {SPR_SHTG,0,1,reinterpret_cast<actionf_t>(A_WeaponReady),S_SGUN,0,0},  // S_SGUN
+  {SPR_SHTG,0,1,reinterpret_cast<actionf_t>(A_Lower),S_SGUNDOWN,0,0},  // S_SGUNDOWN
+  {SPR_SHTG,0,1,reinterpret_cast<actionf_t>(A_Raise),S_SGUNUP,0,0},  // S_SGUNUP
   {SPR_SHTG,0,3,NULL,S_SGUN2,0,0},  // S_SGUN1
-  {SPR_SHTG,0,7,A_FireShotgun,S_SGUN3,0,0}, // S_SGUN2
+  {SPR_SHTG,0,7,reinterpret_cast<actionf_t>(A_FireShotgun),S_SGUN3,0,0}, // S_SGUN2
   {SPR_SHTG,1,5,NULL,S_SGUN4,0,0},  // S_SGUN3
   {SPR_SHTG,2,5,NULL,S_SGUN5,0,0},  // S_SGUN4
   {SPR_SHTG,3,4,NULL,S_SGUN6,0,0},  // S_SGUN5
@@ -147,66 +147,66 @@ state_t doom_states[NUMSTATES] = {
   {SPR_SHTG,1,5,NULL,S_SGUN8,0,0},  // S_SGUN7
   {SPR_SHTG,0,3,NULL,S_SGUN9,0,0},  // S_SGUN8
   {SPR_SHTG,0,7,reinterpret_cast<actionf_t>(A_ReFire),S_SGUN,0,0}, // S_SGUN9
-  {SPR_SHTF,32768,4,A_Light1,S_SGUNFLASH2,0,0}, // S_SGUNFLASH1
-  {SPR_SHTF,32769,3,A_Light2,S_LIGHTDONE,0,0},  // S_SGUNFLASH2
-  {SPR_SHT2,0,1,A_WeaponReady,S_DSGUN,0,0}, // S_DSGUN
-  {SPR_SHT2,0,1,A_Lower,S_DSGUNDOWN,0,0}, // S_DSGUNDOWN
-  {SPR_SHT2,0,1,A_Raise,S_DSGUNUP,0,0}, // S_DSGUNUP
+  {SPR_SHTF,32768,4,reinterpret_cast<actionf_t>(A_Light1),S_SGUNFLASH2,0,0}, // S_SGUNFLASH1
+  {SPR_SHTF,32769,3,reinterpret_cast<actionf_t>(A_Light2),S_LIGHTDONE,0,0},  // S_SGUNFLASH2
+  {SPR_SHT2,0,1,reinterpret_cast<actionf_t>(A_WeaponReady),S_DSGUN,0,0}, // S_DSGUN
+  {SPR_SHT2,0,1,reinterpret_cast<actionf_t>(A_Lower),S_DSGUNDOWN,0,0}, // S_DSGUNDOWN
+  {SPR_SHT2,0,1,reinterpret_cast<actionf_t>(A_Raise),S_DSGUNUP,0,0}, // S_DSGUNUP
   {SPR_SHT2,0,3,NULL,S_DSGUN2,0,0}, // S_DSGUN1
-  {SPR_SHT2,0,7,A_FireShotgun2,S_DSGUN3,0,0}, // S_DSGUN2
+  {SPR_SHT2,0,7,reinterpret_cast<actionf_t>(A_FireShotgun2),S_DSGUN3,0,0}, // S_DSGUN2
   {SPR_SHT2,1,7,NULL,S_DSGUN4,0,0}, // S_DSGUN3
-  {SPR_SHT2,2,7,A_CheckReload,S_DSGUN5,0,0},  // S_DSGUN4
-  {SPR_SHT2,3,7,A_OpenShotgun2,S_DSGUN6,0,0}, // S_DSGUN5
+  {SPR_SHT2,2,7,reinterpret_cast<actionf_t>(A_CheckReload),S_DSGUN5,0,0},  // S_DSGUN4
+  {SPR_SHT2,3,7,reinterpret_cast<actionf_t>(A_OpenShotgun2),S_DSGUN6,0,0}, // S_DSGUN5
   {SPR_SHT2,4,7,NULL,S_DSGUN7,0,0}, // S_DSGUN6
-  {SPR_SHT2,5,7,A_LoadShotgun2,S_DSGUN8,0,0}, // S_DSGUN7
+  {SPR_SHT2,5,7,reinterpret_cast<actionf_t>(A_LoadShotgun2),S_DSGUN8,0,0}, // S_DSGUN7
   {SPR_SHT2,6,6,NULL,S_DSGUN9,0,0}, // S_DSGUN8
-  {SPR_SHT2,7,6,A_CloseShotgun2,S_DSGUN10,0,0}, // S_DSGUN9
+  {SPR_SHT2,7,6,reinterpret_cast<actionf_t>(A_CloseShotgun2),S_DSGUN10,0,0}, // S_DSGUN9
   {SPR_SHT2,0,5,reinterpret_cast<actionf_t>(A_ReFire),S_DSGUN,0,0},  // S_DSGUN10
   {SPR_SHT2,1,7,NULL,S_DSNR2,0,0},  // S_DSNR1
   {SPR_SHT2,0,3,NULL,S_DSGUNDOWN,0,0},  // S_DSNR2
-  {SPR_SHT2,32776,5,A_Light1,S_DSGUNFLASH2,0,0},  // S_DSGUNFLASH1
-  {SPR_SHT2,32777,4,A_Light2,S_LIGHTDONE,0,0},  // S_DSGUNFLASH2
-  {SPR_CHGG,0,1,A_WeaponReady,S_CHAIN,0,0}, // S_CHAIN
-  {SPR_CHGG,0,1,A_Lower,S_CHAINDOWN,0,0}, // S_CHAINDOWN
-  {SPR_CHGG,0,1,A_Raise,S_CHAINUP,0,0}, // S_CHAINUP
-  {SPR_CHGG,0,4,A_FireCGun,S_CHAIN2,0,0}, // S_CHAIN1
-  {SPR_CHGG,1,4,A_FireCGun,S_CHAIN3,0,0}, // S_CHAIN2
+  {SPR_SHT2,32776,5,reinterpret_cast<actionf_t>(A_Light1),S_DSGUNFLASH2,0,0},  // S_DSGUNFLASH1
+  {SPR_SHT2,32777,4,reinterpret_cast<actionf_t>(A_Light2),S_LIGHTDONE,0,0},  // S_DSGUNFLASH2
+  {SPR_CHGG,0,1,reinterpret_cast<actionf_t>(A_WeaponReady),S_CHAIN,0,0}, // S_CHAIN
+  {SPR_CHGG,0,1,reinterpret_cast<actionf_t>(A_Lower),S_CHAINDOWN,0,0}, // S_CHAINDOWN
+  {SPR_CHGG,0,1,reinterpret_cast<actionf_t>(A_Raise),S_CHAINUP,0,0}, // S_CHAINUP
+  {SPR_CHGG,0,4,reinterpret_cast<actionf_t>(A_FireCGun),S_CHAIN2,0,0}, // S_CHAIN1
+  {SPR_CHGG,1,4,reinterpret_cast<actionf_t>(A_FireCGun),S_CHAIN3,0,0}, // S_CHAIN2
   {SPR_CHGG,1,0,reinterpret_cast<actionf_t>(A_ReFire),S_CHAIN,0,0},  // S_CHAIN3
-  {SPR_CHGF,32768,5,A_Light1,S_LIGHTDONE,0,0},  // S_CHAINFLASH1
-  {SPR_CHGF,32769,5,A_Light2,S_LIGHTDONE,0,0},  // S_CHAINFLASH2
-  {SPR_MISG,0,1,A_WeaponReady,S_MISSILE,0,0}, // S_MISSILE
-  {SPR_MISG,0,1,A_Lower,S_MISSILEDOWN,0,0}, // S_MISSILEDOWN
-  {SPR_MISG,0,1,A_Raise,S_MISSILEUP,0,0}, // S_MISSILEUP
-  {SPR_MISG,1,8,A_GunFlash,S_MISSILE2,0,0}, // S_MISSILE1
-  {SPR_MISG,1,12,A_FireMissile,S_MISSILE3,0,0}, // S_MISSILE2
+  {SPR_CHGF,32768,5,reinterpret_cast<actionf_t>(A_Light1),S_LIGHTDONE,0,0},  // S_CHAINFLASH1
+  {SPR_CHGF,32769,5,reinterpret_cast<actionf_t>(A_Light2),S_LIGHTDONE,0,0},  // S_CHAINFLASH2
+  {SPR_MISG,0,1,reinterpret_cast<actionf_t>(A_WeaponReady),S_MISSILE,0,0}, // S_MISSILE
+  {SPR_MISG,0,1,reinterpret_cast<actionf_t>(A_Lower),S_MISSILEDOWN,0,0}, // S_MISSILEDOWN
+  {SPR_MISG,0,1,reinterpret_cast<actionf_t>(A_Raise),S_MISSILEUP,0,0}, // S_MISSILEUP
+  {SPR_MISG,1,8,reinterpret_cast<actionf_t>(A_GunFlash),S_MISSILE2,0,0}, // S_MISSILE1
+  {SPR_MISG,1,12,reinterpret_cast<actionf_t>(A_FireMissile),S_MISSILE3,0,0}, // S_MISSILE2
   {SPR_MISG,1,0,reinterpret_cast<actionf_t>(A_ReFire),S_MISSILE,0,0},  // S_MISSILE3
-  {SPR_MISF,32768,3,A_Light1,S_MISSILEFLASH2,0,0},  // S_MISSILEFLASH1
+  {SPR_MISF,32768,3,reinterpret_cast<actionf_t>(A_Light1),S_MISSILEFLASH2,0,0},  // S_MISSILEFLASH1
   {SPR_MISF,32769,4,NULL,S_MISSILEFLASH3,0,0},  // S_MISSILEFLASH2
-  {SPR_MISF,32770,4,A_Light2,S_MISSILEFLASH4,0,0},  // S_MISSILEFLASH3
-  {SPR_MISF,32771,4,A_Light2,S_LIGHTDONE,0,0},  // S_MISSILEFLASH4
-  {SPR_SAWG,2,4,A_WeaponReady,S_SAWB,0,0},  // S_SAW
-  {SPR_SAWG,3,4,A_WeaponReady,S_SAW,0,0}, // S_SAWB
-  {SPR_SAWG,2,1,A_Lower,S_SAWDOWN,0,0}, // S_SAWDOWN
-  {SPR_SAWG,2,1,A_Raise,S_SAWUP,0,0}, // S_SAWUP
-  {SPR_SAWG,0,4,A_Saw,S_SAW2,0,0}, // S_SAW1
-  {SPR_SAWG,1,4,A_Saw,S_SAW3,0,0},  // S_SAW2
+  {SPR_MISF,32770,4,reinterpret_cast<actionf_t>(A_Light2),S_MISSILEFLASH4,0,0},  // S_MISSILEFLASH3
+  {SPR_MISF,32771,4,reinterpret_cast<actionf_t>(A_Light2),S_LIGHTDONE,0,0},  // S_MISSILEFLASH4
+  {SPR_SAWG,2,4,reinterpret_cast<actionf_t>(A_WeaponReady),S_SAWB,0,0},  // S_SAW
+  {SPR_SAWG,3,4,reinterpret_cast<actionf_t>(A_WeaponReady),S_SAW,0,0}, // S_SAWB
+  {SPR_SAWG,2,1,reinterpret_cast<actionf_t>(A_Lower),S_SAWDOWN,0,0}, // S_SAWDOWN
+  {SPR_SAWG,2,1,reinterpret_cast<actionf_t>(A_Raise),S_SAWUP,0,0}, // S_SAWUP
+  {SPR_SAWG,0,4,reinterpret_cast<actionf_t>(A_Saw),S_SAW2,0,0}, // S_SAW1
+  {SPR_SAWG,1,4,reinterpret_cast<actionf_t>(A_Saw),S_SAW3,0,0},  // S_SAW2
   {SPR_SAWG,1,0,reinterpret_cast<actionf_t>(A_ReFire),S_SAW,0,0},  // S_SAW3
-  {SPR_PLSG,0,1,A_WeaponReady,S_PLASMA,0,0},  // S_PLASMA
-  {SPR_PLSG,0,1,A_Lower,S_PLASMADOWN,0,0},  // S_PLASMADOWN
-  {SPR_PLSG,0,1,A_Raise,S_PLASMAUP,0,0},  // S_PLASMAUP
-  {SPR_PLSG,0,3,A_FirePlasma,S_PLASMA2,0,0},  // S_PLASMA1
+  {SPR_PLSG,0,1,reinterpret_cast<actionf_t>(A_WeaponReady),S_PLASMA,0,0},  // S_PLASMA
+  {SPR_PLSG,0,1,reinterpret_cast<actionf_t>(A_Lower),S_PLASMADOWN,0,0},  // S_PLASMADOWN
+  {SPR_PLSG,0,1,reinterpret_cast<actionf_t>(A_Raise),S_PLASMAUP,0,0},  // S_PLASMAUP
+  {SPR_PLSG,0,3,reinterpret_cast<actionf_t>(A_FirePlasma),S_PLASMA2,0,0},  // S_PLASMA1
   {SPR_PLSG,1,20,reinterpret_cast<actionf_t>(A_ReFire),S_PLASMA,0,0},  // S_PLASMA2
-  {SPR_PLSF,32768,4,A_Light1,S_LIGHTDONE,0,0},  // S_PLASMAFLASH1
-  {SPR_PLSF,32769,4,A_Light1,S_LIGHTDONE,0,0},  // S_PLASMAFLASH2
-  {SPR_BFGG,0,1,A_WeaponReady,S_BFG,0,0}, // S_BFG
-  {SPR_BFGG,0,1,A_Lower,S_BFGDOWN,0,0}, // S_BFGDOWN
-  {SPR_BFGG,0,1,A_Raise,S_BFGUP,0,0}, // S_BFGUP
-  {SPR_BFGG,0,20,A_BFGsound,S_BFG2,0,0},  // S_BFG1
-  {SPR_BFGG,1,10,A_GunFlash,S_BFG3,0,0},  // S_BFG2
-  {SPR_BFGG,1,10,A_FireBFG,S_BFG4,0,0}, // S_BFG3
+  {SPR_PLSF,32768,4,reinterpret_cast<actionf_t>(A_Light1),S_LIGHTDONE,0,0},  // S_PLASMAFLASH1
+  {SPR_PLSF,32769,4,reinterpret_cast<actionf_t>(A_Light1),S_LIGHTDONE,0,0},  // S_PLASMAFLASH2
+  {SPR_BFGG,0,1,reinterpret_cast<actionf_t>(A_WeaponReady),S_BFG,0,0}, // S_BFG
+  {SPR_BFGG,0,1,reinterpret_cast<actionf_t>(A_Lower),S_BFGDOWN,0,0}, // S_BFGDOWN
+  {SPR_BFGG,0,1,reinterpret_cast<actionf_t>(A_Raise),S_BFGUP,0,0}, // S_BFGUP
+  {SPR_BFGG,0,20,reinterpret_cast<actionf_t>(A_BFGsound),S_BFG2,0,0},  // S_BFG1
+  {SPR_BFGG,1,10,reinterpret_cast<actionf_t>(A_GunFlash),S_BFG3,0,0},  // S_BFG2
+  {SPR_BFGG,1,10,reinterpret_cast<actionf_t>(A_FireBFG),S_BFG4,0,0}, // S_BFG3
   {SPR_BFGG,1,20,reinterpret_cast<actionf_t>(A_ReFire),S_BFG,0,0}, // S_BFG4
-  {SPR_BFGF,32768,11,A_Light1,S_BFGFLASH2,0,0}, // S_BFGFLASH1
-  {SPR_BFGF,32769,6,A_Light2,S_LIGHTDONE,0,0},  // S_BFGFLASH2
+  {SPR_BFGF,32768,11,reinterpret_cast<actionf_t>(A_Light1),S_BFGFLASH2,0,0}, // S_BFGFLASH1
+  {SPR_BFGF,32769,6,reinterpret_cast<actionf_t>(A_Light2),S_LIGHTDONE,0,0},  // S_BFGFLASH2
   {SPR_BLUD,2,8,NULL,S_BLOOD2,0,0}, // S_BLOOD1
   {SPR_BLUD,1,8,NULL,S_BLOOD3,0,0}, // S_BLOOD2
   {SPR_BLUD,0,8,NULL,S_NULL,0,0}, // S_BLOOD3
@@ -236,7 +236,7 @@ state_t doom_states[NUMSTATES] = {
   {SPR_BFS1,32769,4,NULL,S_BFGSHOT,0,0},  // S_BFGSHOT2
   {SPR_BFE1,32768,8,NULL,S_BFGLAND2,0,0}, // S_BFGLAND
   {SPR_BFE1,32769,8,NULL,S_BFGLAND3,0,0}, // S_BFGLAND2
-  {SPR_BFE1,32770,8,A_BFGSpray,S_BFGLAND4,0,0}, // S_BFGLAND3
+  {SPR_BFE1,32770,8,reinterpret_cast<actionf_t>(A_BFGSpray),S_BFGLAND4,0,0}, // S_BFGLAND3
   {SPR_BFE1,32771,8,NULL,S_BFGLAND5,0,0}, // S_BFGLAND4
   {SPR_BFE1,32772,8,NULL,S_BFGLAND6,0,0}, // S_BFGLAND5
   {SPR_BFE1,32773,8,NULL,S_NULL,0,0}, // S_BFGLAND6
@@ -1086,6 +1086,7 @@ state_t doom_states[NUMSTATES] = {
   {SPR_TLP2,32771,4,NULL,S_TECH2LAMP,0,0},  // S_TECH2LAMP4
   {SPR_TNT1,0,-1,NULL,S_TNT1,0,0},          // S_TNT1    // phares 3/8/98
 
+
     // killough 8/9/98: grenade
   {SPR_MISL,32768,1000,reinterpret_cast<actionf_t>(A_Die),S_GRENADE},      // S_GRENADE
 
@@ -1131,7 +1132,7 @@ state_t doom_states[NUMSTATES] = {
 #define OLDBFG_2FRAMES(x) OLDBFG_1FRAMES(x) OLDBFG_1FRAMES(x+1)
 #define OLDBFG_4FRAMES(x) OLDBFG_2FRAMES(x) OLDBFG_2FRAMES(x+2)
 #define OLDBFG_8FRAMES(x) OLDBFG_4FRAMES(x) OLDBFG_4FRAMES(x+4)
-  {SPR_BFGG,0,10,A_BFGsound,
+  {SPR_BFGG,0,10,reinterpret_cast<actionf_t>(A_BFGsound),
      static_cast<statenum_t>(S_OLDBFG1 + 1)},  // S_OLDBFG1
 
   OLDBFG_8FRAMES(0)
@@ -1141,7 +1142,7 @@ state_t doom_states[NUMSTATES] = {
   OLDBFG_8FRAMES(32)
 
   //{SPR_DOGS,7,2,A_Pain,S_DOGS_RUN1},
-  {SPR_BFGG,1,0,A_Light0,S_OLDBFG43}, // S_OLDBFG42
+  {SPR_BFGG,1,0,reinterpret_cast<actionf_t>(A_Light0),S_OLDBFG43}, // S_OLDBFG42
   {SPR_BFGG,1,20,reinterpret_cast<actionf_t>(A_ReFire),S_BFG},   // S_OLDBFG43
 
   // killough 7/11/98: end of beta BFG

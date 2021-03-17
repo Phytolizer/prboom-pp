@@ -19,6 +19,7 @@
 #include "p_saveg.hh"
 #include "lprintf.hh"
 #include "p_tick.hh"
+#include "p_mobj.hh"
 
 #include "msecnode.hh"
 

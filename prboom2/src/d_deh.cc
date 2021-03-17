@@ -1130,30 +1130,31 @@ typedef struct {
 
 static const deh_bexptr deh_bexptrs[] = // CPhipps - static const
 {
-  {A_Light0,          "A_Light0"},
-  {A_WeaponReady,     "A_WeaponReady"},
-  {A_Lower,           "A_Lower"},
-  {A_Raise,           "A_Raise"},
-  {A_Punch,           "A_Punch"},
-  {reinterpret_cast<actionf_t>(A_ReFire),          "A_ReFire"},
-  {A_FirePistol,      "A_FirePistol"},
-  {A_Light1,          "A_Light1"},
-  {A_FireShotgun,     "A_FireShotgun"},
-  {A_Light2,          "A_Light2"},
-  {A_FireShotgun2,    "A_FireShotgun2"},
-  {A_CheckReload,     "A_CheckReload"},
-  {A_OpenShotgun2,    "A_OpenShotgun2"},
-  {A_LoadShotgun2,    "A_LoadShotgun2"},
-  {A_CloseShotgun2,   "A_CloseShotgun2"},
-  {A_FireCGun,        "A_FireCGun"},
-  {A_GunFlash,        "A_GunFlash"},
-  {A_FireMissile,     "A_FireMissile"},
-  {A_Saw,             "A_Saw"},
-  {A_FirePlasma,      "A_FirePlasma"},
-  {A_BFGsound,        "A_BFGsound"},
-  {A_FireBFG,         "A_FireBFG"},
-  {A_BFGSpray,        "A_BFGSpray"},
-  {reinterpret_cast<actionf_t>(A_Explode),         "A_Explode"},
+    {reinterpret_cast<actionf_t>(A_Light0),          "A_Light0"},
+    {reinterpret_cast<actionf_t>(A_WeaponReady),     "A_WeaponReady"},
+    {reinterpret_cast<actionf_t>(A_Lower),           "A_Lower"},
+    {reinterpret_cast<actionf_t>(A_Raise),           "A_Raise"},
+    {reinterpret_cast<actionf_t>(A_Punch),           "A_Punch"},
+    {reinterpret_cast<actionf_t>(A_ReFire),          "reinterpret_cast<actionf_t>(A_ReFire)"},
+    {reinterpret_cast<actionf_t>(A_FirePistol),      "A_FirePistol"},
+    {reinterpret_cast<actionf_t>(A_Light1),          "A_Light1"},
+    {reinterpret_cast<actionf_t>(A_FireShotgun),     "A_FireShotgun"},
+    {reinterpret_cast<actionf_t>(A_Light2),          "A_Light2"},
+    {reinterpret_cast<actionf_t>(A_FireShotgun2),    "A_FireShotgun2"},
+    {reinterpret_cast<actionf_t>(A_CheckReload),     "A_CheckReload"},
+    {reinterpret_cast<actionf_t>(A_OpenShotgun2),    "A_OpenShotgun2"},
+    {reinterpret_cast<actionf_t>(A_LoadShotgun2),    "A_LoadShotgun2"},
+    {reinterpret_cast<actionf_t>(A_CloseShotgun2),   "A_CloseShotgun2"},
+    {reinterpret_cast<actionf_t>(A_FireCGun),        "A_FireCGun"},
+    {reinterpret_cast<actionf_t>(A_GunFlash),        "A_GunFlash"},
+    {reinterpret_cast<actionf_t>(A_FireMissile),     "A_FireMissile"},
+    {reinterpret_cast<actionf_t>(A_Saw),             "A_Saw"},
+    {reinterpret_cast<actionf_t>(A_FirePlasma),      "A_FirePlasma"},
+    {reinterpret_cast<actionf_t>(A_BFGsound),        "A_BFGsound"},
+    {reinterpret_cast<actionf_t>(A_FireBFG),         "A_FireBFG"},
+    {reinterpret_cast<actionf_t>(A_BFGSpray),        "A_BFGSpray"},
+
+    {reinterpret_cast<actionf_t>(A_Explode),         "A_Explode"},
   {reinterpret_cast<actionf_t>(A_Pain),            "A_Pain"},
   {reinterpret_cast<actionf_t>(A_PlayerScream),    "A_PlayerScream"},
   {reinterpret_cast<actionf_t>(A_Fall),            "A_Fall"},
@@ -1209,7 +1210,7 @@ static const deh_bexptr deh_bexptrs[] = // CPhipps - static const
   {reinterpret_cast<actionf_t>(A_RandomJump),      "A_RandomJump"},     // killough 11/98
 
   {reinterpret_cast<actionf_t>(A_LineEffect),      "A_LineEffect"},     // killough 11/98
-  {A_FireOldBFG,      "A_FireOldBFG"},      // killough 7/19/98: classic BFG firing function
+  {reinterpret_cast<actionf_t>(A_FireOldBFG),      "A_FireOldBFG"},      // killough 7/19/98: classic BFG firing function
   {reinterpret_cast<actionf_t>(A_BetaSkullAttack), "A_BetaSkullAttack"}, // killough 10/98: beta lost souls attacked different
   {reinterpret_cast<actionf_t>(A_Stop),            "A_Stop"},
 
