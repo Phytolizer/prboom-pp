@@ -36,7 +36,7 @@
 #ifndef __D_THINK__
 #define __D_THINK__
 
-#include "cpp/unions/actionf_t.hh"
+#include "cpp/unions/ActionFunction.hh"
 
 /*
  * Experimental stuff.
@@ -45,7 +45,7 @@
  *  action functions cleanly.
  */
 // killough 11/98: convert back to C instead of C++
-// typedef void (*actionf_t)();
+// typedef void (*thinker::types::ActionFunction)();
 
 // e6y: for boom's friction code
 typedef void (*actionf_v)();
@@ -62,14 +62,14 @@ typedef union
   actionf_v     acv;
   actionf_p2    acp2;
 
-} actionf_t;
+} thinker::types::ActionFunction;
 */
 
 /* Historically, "think_t" is yet another
  *  function pointer to a routine to handle
  *  an actor.
  */
-typedef actionf_t think_t;
+typedef thinker::types::ActionFunction think_t;
 
 /* Doubly linked list of actors. */
 struct thinker_t

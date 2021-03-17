@@ -2729,7 +2729,7 @@ void AM_Drawer(void)
 #endif
 
     if (!(automapmode & am_overlay))
-    {   // cph - If not overlay mode, clear
+    { // cph - If not overlay mode, clear
         // background for the automap
         V_FillRect(
             FB, f_x, f_y, f_w, f_h,

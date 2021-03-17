@@ -1421,7 +1421,7 @@ void P_CrossSpecialLine(line_t *line, int side, mobj_t *thing,
             }
             // 0
             if (!comperr(comperr_zerotag) && !line->tag)
-            {   // e6y //jff 2/27/98 all walk generalized types
+            { // e6y //jff 2/27/98 all walk generalized types
                 // require tag
                 return;
             }
@@ -1439,7 +1439,7 @@ void P_CrossSpecialLine(line_t *line, int side, mobj_t *thing,
             }
             // is 0
             if (!comperr(comperr_zerotag) && !line->tag)
-            {   // e6y //jff 2/27/98 all walk generalized types
+            { // e6y //jff 2/27/98 all walk generalized types
                 // require tag
                 return;
             }
@@ -1495,7 +1495,7 @@ void P_CrossSpecialLine(line_t *line, int side, mobj_t *thing,
                 }
             }
             if (!comperr(comperr_zerotag) && !line->tag)
-            {   // e6y //jff 2/27/98 all walk generalized types
+            { // e6y //jff 2/27/98 all walk generalized types
                 // require tag
                 return;
             }
@@ -1511,7 +1511,7 @@ void P_CrossSpecialLine(line_t *line, int side, mobj_t *thing,
                 }
             }
             if (!comperr(comperr_zerotag) && !line->tag)
-            {   // e6y //jff 2/27/98 all walk generalized types
+            { // e6y //jff 2/27/98 all walk generalized types
                 // require tag
                 return;
             }
@@ -2481,7 +2481,7 @@ void P_ShootSpecialLine(mobj_t *thing, line_t *line)
             }
             // 0
             if (!comperr(comperr_zerotag) && !line->tag)
-            {   // e6y //jff 2/27/98 all gun generalized types
+            { // e6y //jff 2/27/98 all gun generalized types
                 // require tag
                 return;
             }
@@ -2500,7 +2500,7 @@ void P_ShootSpecialLine(mobj_t *thing, line_t *line)
             }
             // is 0
             if (!comperr(comperr_zerotag) && !line->tag)
-            {   // e6y //jff 2/27/98 all gun generalized types
+            { // e6y //jff 2/27/98 all gun generalized types
                 // require tag
                 return;
             }
@@ -2520,7 +2520,7 @@ void P_ShootSpecialLine(mobj_t *thing, line_t *line)
                 }
             }
             if (!comperr(comperr_zerotag) && !line->tag)
-            {   // e6y //jff 3/2/98 all gun generalized types
+            { // e6y //jff 3/2/98 all gun generalized types
                 // require tag
                 return;
             }
@@ -2546,7 +2546,7 @@ void P_ShootSpecialLine(mobj_t *thing, line_t *line)
                 return;
             }
             if (!comperr(comperr_zerotag) && !line->tag)
-            {   // e6y //jff 2/27/98 all gun generalized types
+            { // e6y //jff 2/27/98 all gun generalized types
                 // require tag
                 return;
             }
@@ -2574,7 +2574,7 @@ void P_ShootSpecialLine(mobj_t *thing, line_t *line)
                 }
             }
             if (!comperr(comperr_zerotag) && !line->tag)
-            {   // e6y //jff 2/27/98 all gun generalized types
+            { // e6y //jff 2/27/98 all gun generalized types
                 // require tag
                 return;
             }
@@ -2590,7 +2590,7 @@ void P_ShootSpecialLine(mobj_t *thing, line_t *line)
                 }
             }
             if (!comperr(comperr_zerotag) && !line->tag)
-            {   // e6y //jff 2/27/98 all gun generalized types
+            { // e6y //jff 2/27/98 all gun generalized types
                 // require tag
                 return;
             }

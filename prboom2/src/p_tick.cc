@@ -263,7 +263,14 @@ static void P_RunThinkers(void)
         }
         if (currentthinker->function.notNull())
         {
-            currentthinker->function.thinker()(currentthinker);
+            if (currentthinker->function.isThinker())
+            {
+                currentthinker->function.thinker()(currentthinker);
+            }
+            else
+            {
+                currentthinker->function.reinterpretThinker()(currentthinker);
+            }
         }
     }
     newthinkerpresent = false;

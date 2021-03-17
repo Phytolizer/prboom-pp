@@ -1098,7 +1098,8 @@ static const char *deh_state[] = // CPhipps - static const*
         "Duration",         // .tics (long)
         "Next frame",       // .nextstate (statenum_t)
         // This is set in a separate "Pointer" block from Dehacked
-        "Codep Frame", // pointer to first use of action (actionf_t)
+        "Codep Frame", // pointer to first use of action
+                       // (thinker::types::ActionFunction)
         "Unknown 1",   // .misc1 (long)
         "Unknown 2"    // .misc2 (long)
 };
@@ -1206,7 +1207,7 @@ static const char *deh_misc[] = // CPhipps - static const*
 
 typedef struct
 {
-    actionf_t cptr;     // actual pointer to the subroutine
+    thinker::types::ActionFunction cptr; // actual pointer to the subroutine
     const char *lookup; // mnemonic lookup string to be specified in BEX
                         // CPhipps - const*
 } deh_bexptr;
@@ -1218,7 +1219,7 @@ static const deh_bexptr deh_bexptrs[] = // CPhipps - static const
         {A_Lower, "A_Lower"},
         {A_Raise, "A_Raise"},
         {A_Punch, "A_Punch"},
-        {A_ReFire, "reinterpret_cast<actionf_t>(A_ReFire"},
+        {A_ReFire, "reinterpret_cast<thinker::types::ActionFunction>(A_ReFire"},
         {A_FirePistol, "A_FirePistol"},
         {A_Light1, "A_Light1"},
         {A_FireShotgun, "A_FireShotgun"},
@@ -1305,7 +1306,7 @@ static const deh_bexptr deh_bexptrs[] = // CPhipps - static const
 
 // to hold startup code pointers from INFO.C
 // CPhipps - static
-static actionf_t deh_codeptr[NUMSTATES];
+static thinker::types::ActionFunction deh_codeptr[NUMSTATES];
 
 // haleyjd: support for BEX SPRITES, SOUNDS, and MUSIC
 char *deh_spritenames[NUMSPRITES + 1];
@@ -2326,7 +2327,7 @@ static void deh_procPointer(DEHFILE *fpin, FILE *fpout, char *line) // done
             for (i = 0; i < sizeof(deh_bexptrs) / sizeof(*deh_bexptrs); i++)
             {
                 if (!memcmp(&deh_bexptrs[i].cptr, &deh_codeptr[value],
-                            sizeof(actionf_t)))
+                            sizeof(thinker::types::ActionFunction)))
                 {
                     if (fpout)
                     {

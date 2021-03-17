@@ -2715,10 +2715,11 @@ typedef enum
 
 struct state_t
 {
-    spritenum_t sprite;        /* sprite number to show                       */
-    long frame;                /* which frame/subframe of the sprite is shown */
-    long tics;                 /* number of gametics this frame should last   */
-    actionf_t action;          /* code pointer to function for action if any  */
+    spritenum_t sprite; /* sprite number to show                       */
+    long frame;         /* which frame/subframe of the sprite is shown */
+    long tics;          /* number of gametics this frame should last   */
+    thinker::types::ActionFunction
+        action;                /* code pointer to function for action if any  */
     statenum_t nextstate;      /* linked list pointer to next state or zero   */
     long misc1 = 0, misc2 = 0; /* apparently never used in DOOM               */
 };

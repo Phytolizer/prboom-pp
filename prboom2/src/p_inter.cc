@@ -621,7 +621,7 @@ void P_TouchSpecialThing(mobj_t *special, mobj_t *toucher)
         }
 
         if (player->health < 50)
-        {   // cph - 25 + the 25 just added, thanks to
+        { // cph - 25 + the 25 just added, thanks to
             // Quasar for reporting this bug
             player->message = s_GOTMEDINEED; // Ty 03/22/98 - externalized
         }

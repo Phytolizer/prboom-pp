@@ -1,12 +1,13 @@
-actionf_t
+ActionFunction
 {
     #
     @pspdef_t,mobj_t,player_t,message_thinker_t,ceiling_t,vldoor_t,plat_t,fireflicker_t,lightflash_t,strobe_t,glow_t,elevator_t,floormove_t,thinker_t,scroll_t,friction_t,pusher_t
+    :thinker::types
     fn ( ) > void v
     fn ( mobj_t* ) > void mobj
     fn ( player_t* pspdef_t* ) > void player
     fn ( void* ) > void vfn
-    fn ( message_thinker_t* ) > void message_thinker
+    fn ( message_thinker_t* ) > void messageThinker
     fn ( ceiling_t* ) > void ceiling
     fn ( vldoor_t* ) > void vldoor
     fn ( plat_t* ) > void plat

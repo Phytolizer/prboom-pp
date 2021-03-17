@@ -921,7 +921,7 @@ static void WI_drawTime(int x, int y, int t)
         }
     }
     else
-    {   // "sucks" (maybe should be "addicted", even I've never had a 100 hour
+    { // "sucks" (maybe should be "addicted", even I've never had a 100 hour
         // game ;)
         V_DrawNamePatch(x - V_NamePatchWidth(sucks), y, FB, sucks, CR_DEFAULT,
                         VPT_STRETCH);
@@ -1980,7 +1980,7 @@ void WI_updateStats(void)
     else if (sp_state == 8)
     {
         if (!(bcnt & 3) && play_early_explosion)
-        {   // e6y: do not play count sound
+        { // e6y: do not play count sound
             // after explosion sound
             S_StartSound(nullptr, sfx_pistol);
         }
@@ -2037,7 +2037,7 @@ void WI_updateStats(void)
                 }
 
                 if (!modifiedgame)
-                {   // e6y: do not play explosion sound if it was
+                { // e6y: do not play explosion sound if it was
                     // already played
                     S_StartSound(nullptr, sfx_barexp);
                 }

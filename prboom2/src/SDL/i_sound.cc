@@ -479,7 +479,7 @@ int I_StartSound(int id, int channel, int vol, int sep, int pitch, int priority)
         int chan;
 
         if (snd_midiplayer == nullptr)
-        {   // This is but a temporary fix. Please do remove
+        { // This is but a temporary fix. Please do remove
             // after a more definitive one!
             memset(stream, 0, len);
         }
