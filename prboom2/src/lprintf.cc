@@ -133,7 +133,7 @@ int doom_vsnprintf(char *buf, size_t max, const char *fmt, va_list va)
     int rv;
     va_list vc;
 
-    assert((max == 0 && buf == nullptr) || (max != 0 && buf != NULL));
+    assert((max == 0 && buf == nullptr) || (max != 0 && buf != nullptr));
     assert(fmt != nullptr);
 
     va_copy(vc, va);

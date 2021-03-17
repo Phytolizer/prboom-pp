@@ -33,6 +33,8 @@
 #ifndef __PROTOCOL__
 #define __PROTOCOL__
 
+#include <cstring>
+
 #include "doomtype.hh"
 #include "d_ticcmd.hh"
 #include "m_swap.hh"
@@ -96,7 +98,7 @@ struct setup_packet_t
  */
 inline static void RawToTic(ticcmd_t *dst, const void *src)
 {
-    memcpy(dst, src, sizeof *dst);
+    std::memcpy(dst, src, sizeof *dst);
     dst->angleturn = doom_ntohs(dst->angleturn);
     dst->consistancy = doom_ntohs(dst->consistancy);
 }
@@ -110,7 +112,7 @@ inline static void TicToRaw(void *dst, const ticcmd_t *src)
     ticcmd_t tmp = *src;
     tmp.angleturn = doom_ntohs(tmp.angleturn);
     tmp.consistancy = doom_ntohs(tmp.consistancy);
-    memcpy(dst, &tmp, sizeof tmp);
+    std::memcpy(dst, &tmp, sizeof tmp);
 }
 
 #endif // __PROTOCOL__

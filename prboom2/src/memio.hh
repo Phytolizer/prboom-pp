@@ -27,6 +27,8 @@
 #ifndef MEMIO_H
 #define MEMIO_H
 
+#include <cstddef>
+
 typedef struct _MEMFILE MEMFILE;
 
 typedef enum
@@ -36,11 +38,13 @@ typedef enum
     MEM_SEEK_END,
 } mem_rel_t;
 
-MEMFILE *mem_fopen_read(const void *buf, size_t buflen);
-size_t mem_fread(void *buf, size_t size, size_t nmemb, MEMFILE *stream);
+MEMFILE *mem_fopen_read(const void *buf, std::size_t buflen);
+std::size_t mem_fread(void *buf, std::size_t size, std::size_t nmemb,
+                      MEMFILE *stream);
 MEMFILE *mem_fopen_write(void);
-size_t mem_fwrite(const void *ptr, size_t size, size_t nmemb, MEMFILE *stream);
-void mem_get_buf(MEMFILE *stream, void **buf, size_t *buflen);
+std::size_t mem_fwrite(const void *ptr, std::size_t size, std::size_t nmemb,
+                       MEMFILE *stream);
+void mem_get_buf(MEMFILE *stream, void **buf, std::size_t *buflen);
 void mem_fclose(MEMFILE *stream);
 long mem_ftell(MEMFILE *stream);
 int mem_fseek(MEMFILE *stream, signed long offset, mem_rel_t whence);

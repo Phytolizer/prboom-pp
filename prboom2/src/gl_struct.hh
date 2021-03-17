@@ -36,6 +36,10 @@
 
 #include <SDL_opengl.h>
 
+#include "doomtype.hh"
+#include "m_fixed.hh"
+#include "r_defs.hh"
+
 extern int nodesVersion;
 
 typedef enum
@@ -102,18 +106,18 @@ void gld_InitCommandLine(void);
 void gld_InitTextureParams(void);
 
 void gld_DrawNumPatch(int x, int y, int lump, int cm,
-                      enum patch_translation_e flags);
+                      patch_translation_e flags);
 void gld_DrawNumPatch_f(float x, float y, int lump, int cm,
-                        enum patch_translation_e flags);
+                        patch_translation_e flags);
 
 void gld_FillFlat(int lump, int x, int y, int width, int height,
-                  enum patch_translation_e flags);
+                  patch_translation_e flags);
 #define gld_FillFlatName(flatname, x, y, width, height, flags)                 \
     gld_FillFlat(R_FlatNumForName(flatname), (x), (y), (width), (height),      \
                  (flags))
 
 void gld_FillPatch(int lump, int x, int y, int width, int height,
-                   enum patch_translation_e flags);
+                   patch_translation_e flags);
 #define gld_FillPatchName(name, x, y, width, height, flags)                    \
     gld_FillPatch(W_GetNumForName(name), (x), (y), (width), (height), (flags))
 

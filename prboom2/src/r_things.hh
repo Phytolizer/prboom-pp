@@ -34,7 +34,9 @@
 #ifndef __R_THINGS__
 #define __R_THINGS__
 
+#include "m_fixed.hh"
 #include "r_draw.hh"
+#include "r_patch.hh"
 
 #define MINZ (FRACUNIT * 4)
 

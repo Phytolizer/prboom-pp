@@ -34,7 +34,8 @@
 #ifndef __LPRINTF__
 #define __LPRINTF__
 
-#include <stdarg.h>
+#include <cstdarg>
+#include <cstddef>
 
 typedef enum /* Logical output levels */
 {
@@ -61,7 +62,7 @@ extern int cons_error_mask;
  * cphipps 01/11- moved from i_system.h */
 void I_Error(const char *error, ...) __attribute__((format(printf, 1, 2)));
 
-int doom_vsnprintf(char *buf, size_t max, const char *fmt, va_list va);
-int doom_snprintf(char *buf, size_t max, const char *fmt, ...)
+int doom_vsnprintf(char *buf, std::size_t max, const char *fmt, std::va_list va);
+int doom_snprintf(char *buf, std::size_t max, const char *fmt, ...)
     __attribute__((format(printf, 3, 4)));
 #endif

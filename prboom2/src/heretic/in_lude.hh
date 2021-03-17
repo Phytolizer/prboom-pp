@@ -24,6 +24,7 @@
 #ifndef __IN_LUDE__
 #define __IN_LUDE__
 
+#include "d_player.hh"
 #include "doomdef.hh"
 
 void IN_Ticker(void);

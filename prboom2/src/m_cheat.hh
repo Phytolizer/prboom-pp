@@ -35,6 +35,7 @@
 #define __M_CHEAT__
 
 #include "d_event.hh"
+#include "doomtype.hh"
 #include "cpp/enums/cheat_when_t.hh"
 
 #define CHEAT(cheat, deh_cheat, when, func, arg)                               \
@@ -57,11 +58,11 @@ typedef struct cheatseq_s
     uint_64_t code = 0, mask = 0;
 
     // settings for this cheat
-    size_t sequence_len = 0;
-    size_t deh_sequence_len = 0;
+    std::size_t sequence_len = 0;
+    std::size_t deh_sequence_len = 0;
 
     // state used during the game
-    size_t chars_read = 0;
+    std::size_t chars_read = 0;
     int param_chars_read = 0;
     char parameter_buf[CHEAT_ARGS_MAX]{};
 } cheatseq_t;

@@ -18,6 +18,9 @@
 #ifndef TXT_MAIN_H
 #define TXT_MAIN_H
 
+#include <cstdarg>
+#include <cstddef>
+
 // For the moment, txt_sdl.c is the only implementation of the base
 // text mode screen API:
 
@@ -123,7 +126,7 @@ int TXT_GetModifierState(txt_modifier_t mod);
 
 // Provides a short description of a key code, placing into the
 // provided buffer.
-void TXT_GetKeyDescription(int key, char *buf, size_t buf_len);
+void TXT_GetKeyDescription(int key, char *buf, std::size_t buf_len);
 
 // Retrieve the current position of the mouse
 void TXT_GetMousePosition(int *x, int *y);
@@ -140,15 +143,16 @@ void TXT_EnableKeyMapping(int enable);
 void TXT_SetWindowTitle(char *title);
 
 // Safe string copy.
-void TXT_StringCopy(char *dest, const char *src, size_t dest_len);
+void TXT_StringCopy(char *dest, const char *src, std::size_t dest_len);
 
 // Safe string concatenate.
-void TXT_StringConcat(char *dest, const char *src, size_t dest_len);
+void TXT_StringConcat(char *dest, const char *src, std::size_t dest_len);
 
 // Safe version of vsnprintf().
-int TXT_vsnprintf(char *buf, size_t buf_len, const char *s, va_list args);
+int TXT_vsnprintf(char *buf, std::size_t buf_len, const char *s,
+                  std::va_list args);
 
 // Safe version of snprintf().
-int TXT_snprintf(char *buf, size_t buf_len, const char *s, ...);
+int TXT_snprintf(char *buf, std::size_t buf_len, const char *s, ...);
 
 #endif /* #ifndef TXT_MAIN_H */

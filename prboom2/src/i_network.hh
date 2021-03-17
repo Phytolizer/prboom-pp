@@ -34,6 +34,8 @@
 #include "config.h"
 #endif
 
+#include <cstddef>
+
 #ifdef USE_SDL_NET
 #include "SDL_net.h"
 #define UDP_SOCKET UDPsocket
@@ -50,8 +52,8 @@ extern UDP_SOCKET udp_socket;
 #endif
 
 void I_InitNetwork(void);
-size_t I_GetPacket(packet_header_t *buffer, size_t buflen);
-void I_SendPacket(packet_header_t *packet, size_t len);
+std::size_t I_GetPacket(packet_header_t *buffer, std::size_t buflen);
+void I_SendPacket(packet_header_t *packet, std::size_t len);
 void I_WaitForPacket(int ms);
 
 #ifdef USE_SDL_NET
@@ -63,12 +65,14 @@ extern IPaddress sentfrom_addr;
 #endif
 
 #ifdef AF_INET
-void I_SendPacketTo(packet_header_t *packet, size_t len, UDP_CHANNEL *to);
+void I_SendPacketTo(packet_header_t *packet, std::size_t len, UDP_CHANNEL *to);
 void I_SetupSocket(int sock, int port, int family);
 void I_PrintAddress(FILE *fp, UDP_CHANNEL *addr);
 
 extern UDP_CHANNEL sentfrom;
-extern int v4socket, v6socket;
+extern int v4socket;
+extern int v6socket;
 #endif
 
-extern size_t sentbytes, recvdbytes;
+extern std::size_t sentbytes;
+extern std::size_t recvdbytes;

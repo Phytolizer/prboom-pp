@@ -26,21 +26,55 @@
 #ifndef MIDIFILE_H
 #define MIDIFILE_H
 
+#include <cstddef>
+
 #include "doomtype.hh"
 #include "cpp/enums/midi_meta_event_type_t.hh"
 #include "cpp/enums/midi_controller_t.hh"
 #include "cpp/enums/midi_event_type_t.hh"
 
-typedef struct midi_file_s midi_file_t;
-typedef struct midi_track_iter_s midi_track_iter_t;
+struct midi_track_t;
+
+struct chunk_header_t
+{
+    byte chunk_id[4];
+    unsigned int chunk_size;
+} PACKEDATTR;
+
+struct midi_header_t
+{
+    chunk_header_t chunk_header;
+    unsigned short format_type;
+    unsigned short num_tracks;
+    unsigned short time_division;
+} PACKEDATTR;
+
+struct midi_track_iter_t
+{
+    midi_track_t *track;
+    unsigned int position;
+};
+
+struct midi_file_t
+{
+    midi_header_t header;
+
+    // All tracks in this file:
+    midi_track_t *tracks;
+    unsigned int num_tracks;
+
+    // Data buffer used to store data read for SysEx or meta events:
+    byte *buffer;
+    unsigned int buffer_size;
+};
 
 #define MIDI_CHANNELS_PER_TRACK 16
 
 typedef struct
 {
     const byte *data;
-    size_t len;
-    size_t pos;
+    std::size_t len;
+    std::size_t pos;
 } midimem_t;
 
 struct midi_meta_event_data_t

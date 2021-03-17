@@ -18,6 +18,10 @@
 #ifndef __DSDA__
 #define __DSDA__
 
+#include "d_player.hh"
+#include "doomdef.hh"
+#include "p_mobj.hh"
+
 void dsda_ReadCommandLine(void);
 void dsda_DisplayNotifications(void);
 void dsda_WatchCard(card_t card);

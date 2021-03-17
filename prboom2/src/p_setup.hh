@@ -36,6 +36,9 @@
 
 #include "p_mobj.hh"
 
+#include "doomdef.hh"
+#include "doomtype.hh"
+
 void P_SetupLevel(int episode, int map, int playermask, skill_t skill);
 void P_Init(void); /* Called by startup code. */
 

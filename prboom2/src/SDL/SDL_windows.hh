@@ -31,12 +31,11 @@
 #define UNICODE 1
 #endif
 #undef _WIN32_WINNT
-#define _WIN32_WINNT                                                           \
-    0x501 /* Need 0x410 for AlphaBlend() and 0x500 for EnumDisplayDevices(),   \
+/* Need 0x410 for AlphaBlend() and 0x500 for EnumDisplayDevices(),   \
              0x501 for raw input */
-#endif
-
+#define _WIN32_WINNT 0x501
 #include <windows.h>
+#endif
 
 /* Routines to convert from UTF8 to native Windows text */
 #if UNICODE

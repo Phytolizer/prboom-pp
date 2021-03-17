@@ -34,6 +34,8 @@
 #ifndef __I_SOUND__
 #define __I_SOUND__
 
+#include <cstddef>
+
 #include "sounds.hh"
 #include "doomtype.hh"
 
@@ -111,7 +113,7 @@ void I_PauseSong(int handle);
 void I_ResumeSong(int handle);
 
 // Registers a song handle to song data.
-int I_RegisterSong(const void *data, size_t len);
+int I_RegisterSong(const void *data, std::size_t len);
 
 // Called by anything that wishes to start music.
 //  plays a song, and when the song is done,

@@ -31,6 +31,8 @@
 #ifndef R_FILTER_H
 #define R_FILTER_H
 
+#include "doomtype.hh"
+
 #define DITHER_DIM 4
 
 extern byte filter_ditherMatrix[DITHER_DIM][DITHER_DIM];

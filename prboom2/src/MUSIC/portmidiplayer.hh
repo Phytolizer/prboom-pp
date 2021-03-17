@@ -31,6 +31,8 @@
 #ifndef PORTMIDIPLAYER_H
 #define PORTMIDIPLAYER_H
 
+#include "musicplayer.hh"
+
 const char *pm_name(void);
 int pm_init(int samplerate);
 void pm_shutdown(void);

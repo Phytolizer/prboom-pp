@@ -26,6 +26,8 @@
 #ifndef __SCANNER_H__
 #define __SCANNER_H__
 
+#include <cstdlib>
+
 //#include <string>
 
 enum
@@ -66,7 +68,7 @@ struct ParserState
     ~ParserState()
     {
         if (string != nullptr)
-            free(string);
+            std::free(string);
     }
 };
 

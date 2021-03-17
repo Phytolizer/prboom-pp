@@ -39,6 +39,7 @@
 #endif
 
 #include "d_event.hh"
+#include "m_fixed.hh"
 #include "m_misc.hh"
 
 typedef struct map_point_s

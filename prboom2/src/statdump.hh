@@ -17,6 +17,8 @@ GNU General Public License for more details.
 #ifndef DOOM_STATDUMP_H
 #define DOOM_STATDUMP_H
 
+#include "d_player.hh"
+
 void StatCopy(const wbstartstruct_t *stats);
 void StatDump(void);
 

@@ -31,6 +31,8 @@
 #ifndef MADPLAYER_H
 #define MADPLAYER_H
 
+#include "musicplayer.hh"
+
 const char *mp_name(void);
 int mp_init(int samplerate);
 void mp_shutdown(void);

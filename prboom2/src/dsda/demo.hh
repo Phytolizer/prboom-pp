@@ -18,10 +18,12 @@
 #ifndef __DSDA_DEMO__
 #define __DSDA_DEMO__
 
+#include <cstddef>
+
 #include "d_ticcmd.hh"
 
 void dsda_InitDemo(char *name);
-void dsda_WriteToDemo(void *buffer, size_t length);
+void dsda_WriteToDemo(void *buffer, std::size_t length);
 void dsda_WriteDemoToFile(void);
 int dsda_DemoBufferOffset(void);
 int dsda_CopyDemoBuffer(void *buffer);

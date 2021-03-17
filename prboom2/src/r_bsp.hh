@@ -34,9 +34,8 @@
 #ifndef __R_BSP__
 #define __R_BSP__
 
-#ifdef __GNUG__
-#pragma interface
-#endif
+#include "doomtype.hh"
+#include "r_defs.hh"
 
 extern seg_t *curline;
 extern side_t *sidedef;

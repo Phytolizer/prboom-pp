@@ -18,6 +18,8 @@
 #ifndef __DSDA_KEY_FRAME__
 #define __DSDA_KEY_FRAME__
 
+#include "doomtype.hh"
+
 void dsda_InitKeyFrame(void);
 void dsda_ContinueKeyFrame(void);
 void dsda_StoreKeyFrame(unsigned char **buffer, byte complete);

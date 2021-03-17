@@ -18,6 +18,8 @@
 #ifndef __DSDA_SETTINGS__
 #define __DSDA_SETTINGS__
 
+#include "doomtype.hh"
+
 #define UNSPECIFIED_COMPLEVEL -2
 
 extern int dsda_auto_key_frame_interval;

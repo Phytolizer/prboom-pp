@@ -34,6 +34,8 @@
 #define __HU_STUFF_H__
 
 #include "d_event.hh"
+#include "d_think.hh"
+#include "doomtype.hh"
 
 /*
  * Globally visible constants.

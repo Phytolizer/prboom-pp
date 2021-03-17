@@ -34,6 +34,10 @@
 #ifndef __P_SAVEG__
 #define __P_SAVEG__
 
+#include <cstddef>
+
+#include "doomtype.hh"
+
 /* Persistent storage/archiving.
  * These are the load / save game routines. */
 void P_ArchivePlayers(void);
@@ -56,7 +60,7 @@ void P_TrueArchiveThinkers(void);
 void P_TrueUnArchiveThinkers(void);
 
 extern byte *save_p;
-void CheckSaveGame(size_t, const char *, int); /* killough */
-#define CheckSaveGame(a) (CheckSaveGame)(a, __FILE__, __LINE__)
+void CheckSaveGame(std::size_t, const char *, int); /* killough */
+#define CheckSaveGame(a) CheckSaveGame((a), __FILE__, __LINE__)
 
 #endif

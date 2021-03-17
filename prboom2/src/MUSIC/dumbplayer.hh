@@ -31,6 +31,8 @@
 #ifndef DUMBPLAYER_H
 #define DUMBPLAYER_H
 
+#include "musicplayer.hh"
+
 const char *db_name(void);
 int db_init(int samplerate);
 void db_shutdown(void);

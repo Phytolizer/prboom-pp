@@ -73,20 +73,6 @@ typedef unsigned char byte;
 #pragma pack(push, 1)
 #endif
 
-typedef struct
-{
-    byte chunk_id[4];
-    unsigned int chunk_size;
-} PACKEDATTR chunk_header_t;
-
-typedef struct
-{
-    chunk_header_t chunk_header;
-    unsigned short format_type;
-    unsigned short num_tracks;
-    unsigned short time_division;
-} PACKEDATTR midi_header_t;
-
 #ifdef _MSC_VER
 #pragma pack(pop)
 #endif
@@ -102,25 +88,6 @@ struct midi_track_t
     midi_event_t *events;
     unsigned int num_events;
     unsigned int num_event_mem; // NSM track size of structure
-};
-
-struct midi_track_iter_s
-{
-    midi_track_t *track;
-    unsigned int position;
-};
-
-struct midi_file_s
-{
-    midi_header_t header;
-
-    // All tracks in this file:
-    midi_track_t *tracks;
-    unsigned int num_tracks;
-
-    // Data buffer used to store data read for SysEx or meta events:
-    byte *buffer;
-    unsigned int buffer_size;
 };
 
 // Check the header of a chunk:

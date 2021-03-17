@@ -31,13 +31,6 @@
 #define inline __inline
 #endif
 
-typedef struct
-{
-    unsigned char *data;
-    unsigned int w;
-    unsigned int h;
-} txt_font_t;
-
 // Fonts:
 
 #include "txt_font.hh"

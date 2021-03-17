@@ -31,6 +31,8 @@
 // scaled-down versions of the full-size DOS font (txt_font.h)
 //
 
+#include "txt_font.hh"
+
 static unsigned char small_font_data[] = {
 
     // ------ Characters 0-31 have been remade to match the ------

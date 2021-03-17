@@ -37,6 +37,7 @@
 /* Basic data types.
  * Needs fixed point, and BAM angles. */
 
+#include "doomdef.hh"
 #include "m_fixed.hh"
 #include "tables.hh"
 

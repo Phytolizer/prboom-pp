@@ -36,6 +36,7 @@
 
 //#include "v_video.hh"
 
+#include "d_player.hh"
 #include "doomdef.hh"
 
 // States for the intermission

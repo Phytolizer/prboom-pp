@@ -31,6 +31,8 @@
 #ifndef FLPLAYER_H
 #define FLPLAYER_H
 
+#include "musicplayer.hh"
+
 const char *fl_name(void);
 int fl_init(int samplerate);
 void fl_shutdown(void);

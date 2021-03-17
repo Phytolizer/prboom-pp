@@ -27,6 +27,8 @@
 #ifndef OPLPLAYER_H
 #define OPLPLAYER_H
 
+#include "musicplayer.hh"
+
 const char *I_OPL_SynthName(void);
 int I_OPL_InitMusic(int samplerate);
 void I_OPL_ShutdownMusic(void);

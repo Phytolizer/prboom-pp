@@ -31,6 +31,8 @@
 #ifndef VORBISPLAYER_H
 #define VORBISPLAYER_H
 
+#include "musicplayer.hh"
+
 const char *vorb_name(void);
 int vorb_init(int samplerate);
 void vorb_shutdown(void);

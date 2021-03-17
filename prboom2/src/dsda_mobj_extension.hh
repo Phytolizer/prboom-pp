@@ -18,6 +18,8 @@
 #ifndef __DSDA_MOBJ_EXTENSION__
 #define __DSDA_MOBJ_EXTENSION__
 
+#include "doomtype.hh"
+
 typedef struct dsda_mobj_extension_s
 {
     dboolean player_damaged_barrel;

@@ -34,6 +34,8 @@
 #ifndef __S_SOUND__
 #define __S_SOUND__
 
+#include "doomtype.hh"
+
 //
 // Initializes sound stuff, including volume
 // Sets channels, SFX and music volume,

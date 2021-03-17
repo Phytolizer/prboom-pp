@@ -19,7 +19,13 @@
 // has been doubled in size to 16x32, and then manually tweaked.
 //
 
-static uint8_t large_font_data[] = {
+#pragma once
+
+#include <cstdint>
+
+#include "txt_font.hh"
+
+static std::uint8_t large_font_data[] = {
     // 0:
     0x00,
     0x00,
