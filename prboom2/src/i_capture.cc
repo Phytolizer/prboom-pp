@@ -169,7 +169,7 @@ static int my_popen3(pipeinfo_t *p)
     STARTUPINFO siStartInfo;
     SECURITY_ATTRIBUTES sa;
 
-    puser = malloc(sizeof(puser_t));
+    puser = static_cast<puser_t *>(malloc(sizeof(puser_t)));
     if (!puser)
         return 0;
 
@@ -205,14 +205,14 @@ static int my_popen3(pipeinfo_t *p)
     siStartInfo.hStdError = child_herr;
     siStartInfo.dwFlags = STARTF_USESTDHANDLES;
 
-    if (!CreateProcess(nullptr,               // application name
+    if (!CreateProcess(nullptr,            // application name
                        (LPTSTR)p->command, // command line
-                       nullptr,               // process security attributes
-                       nullptr,               // primary thread security attributes
+                       nullptr,            // process security attributes
+                       nullptr,            // primary thread security attributes
                        TRUE,               // handles are inherited
                        DETACHED_PROCESS,   // creation flags
-                       nullptr,               // use parent's environment
-                       nullptr,               // use parent's current directory
+                       nullptr,            // use parent's environment
+                       nullptr,            // use parent's current directory
                        &siStartInfo,       // STARTUPINFO pointer
                        &piProcInfo))       // receives PROCESS_INFORMATION
     {
