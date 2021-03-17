@@ -113,8 +113,8 @@ void D_InitNetGame(void)
         // Get game info from server
         packet_header_t *packet =
             static_cast<packet_header_t *>(std::malloc(1000));
-        struct setup_packet_s *sinfo =
-            static_cast<setup_packet_s *>((void *)(packet + 1));
+        setup_packet_t *sinfo =
+            static_cast<setup_packet_t *>((void *)(packet + 1));
         struct
         {
             packet_header_t head;

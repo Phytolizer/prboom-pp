@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.0)
 
 project("PrBoom-PP" VERSION 0.1.0)
 
-#set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -pedantic -Wformat -pedantic-errors -Werror -Wimplicit-int-conversion -Warith-conversion -Wconversion")
+#set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -pedantic -Wformat -pedantic-errors -Werror -Wimplicit-int-conversion -Warith-conversion -Wconversion -Waddress")
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_CLANG_TIDY clang-tidy -checks=-*,modernize-use-nullptr)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)

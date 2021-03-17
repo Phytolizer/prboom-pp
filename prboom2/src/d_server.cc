@@ -372,7 +372,7 @@ long int ptic(packet_header_t *p)
     return doom_ntohl(p->tic);
 }
 
-void read_config_file(FILE *fp, struct setup_packet_s *sp)
+void read_config_file(FILE *fp, setup_packet_t *sp)
 {
     byte *gameopt = sp->game_options;
 
@@ -427,8 +427,7 @@ int main(int argc, char **argv)
 #endif
     int numplayers = 2, xtratics = 0, ticdup = 1;
     int exectics = 0; // gametics completed
-    struct setup_packet_s setupinfo = {2, 0, 1, 1, 1, 0, best_compatibility,
-                                       0, 0};
+    setup_packet_t setupinfo = {2, 0, 1, 1, 1, 0, best_compatibility, 0, 0};
     char **wadname = nullptr;
     char **wadget = nullptr;
     int numwads = 0;
@@ -587,8 +586,8 @@ int main(int argc, char **argv)
                     {
                         {
                             int n;
-                            struct setup_packet_s *sinfo =
-                                static_cast<setup_packet_s *>(
+                            setup_packet_t *sinfo =
+                                static_cast<setup_packet_t *>(
                                     (void *)(packet + 1));
 
                             /* Find player number and add to the game */

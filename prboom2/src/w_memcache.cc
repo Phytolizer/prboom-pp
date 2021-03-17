@@ -47,7 +47,7 @@
 #include "z_zone.hh"
 #include "lprintf.hh"
 
-static struct
+static struct cachelump_t
 {
     void *cache;
 #ifdef TIMEDIAG
@@ -93,7 +93,7 @@ static void W_ReportLocks(void)
 void W_InitCache(void)
 {
     // set up caching
-    cachelump = calloc(sizeof *cachelump, numlumps);
+    cachelump = static_cast<cachelump_t *>(calloc(sizeof *cachelump, numlumps));
     if (!cachelump)
         I_Error("W_Init: Couldn't allocate lumpcache");
 
@@ -121,13 +121,14 @@ const void *W_CacheLumpNum(int lump)
 #endif
 
     if (!cachelump[lump].cache) // read the lump in
-        W_ReadLump(lump, Z_Malloc(W_LumpLength(lump), PU_CACHE,
-                                  &cachelump[lump].cache));
+    {
+        cachelump[lump].cache = std::malloc(W_LumpLength(lump));
+        W_ReadLump(lump, cachelump[lump].cache);
+    }
 
     /* cph - if wasn't locked but now is, tell z_zone to hold it */
     if (!cachelump[lump].locks && locks)
     {
-        Z_ChangeTag(cachelump[lump].cache, PU_STATIC);
 #ifdef TIMEDIAG
         cachelump[lump].locktic = gametic;
 #endif
@@ -166,6 +167,4 @@ void W_UnlockLumpNum(int lump)
     /* cph - Note: must only tell z_zone to make purgeable if currently locked,
      * else it might already have been purged
      */
-    if (unlocks && !cachelump[lump].locks)
-        Z_ChangeTag(cachelump[lump].cache, PU_CACHE);
 }

@@ -98,7 +98,7 @@ int udp_socket(const char *ip)
 
 static byte ChecksumPacket(const packet_header_t *buffer, size_t len)
 {
-    const byte *p = (void *)buffer;
+    const byte *p = static_cast<byte *>((void *)buffer);
     byte sum = 0;
 
     if (len == 0)
@@ -148,10 +148,11 @@ int ExpandTics(int low, int maketic)
     exit(-2);
 }
 
-void send_udp_packet(enum packet_type_e type, unsigned tic, void *data,
+void send_udp_packet(packet_type_e::Type type, unsigned tic, void *data,
                      size_t len)
 {
-    packet_header_t *p = calloc(sizeof(packet_header_t) + len + 1, 1);
+    packet_header_t *p = static_cast<packet_header_t *>(
+        calloc(sizeof(packet_header_t) + len + 1, 1));
     p->tic = doom_htonl(basetic = tic);
     p->type = type;
     if (!data)
@@ -172,7 +173,7 @@ void ipx_receive(int s)
     ipxpacket_t buf;
     int rc;
     struct sockaddr from;
-    size_t sl = sizeof(from);
+    socklen_t sl = sizeof(from);
     rc = recvfrom(s, &buf, sizeof buf, 0, &from, &sl);
     if (rc == -1)
     {
@@ -187,7 +188,7 @@ void ipx_receive(int s)
             if (!connected++)
             {
                 connect(s, &from, sl);
-                send_udp_packet(PKT_INIT, 0, nullptr, 0);
+                send_udp_packet(packet_type_e::PKT_INIT, 0, nullptr, 0);
             }
         }
         else
@@ -198,7 +199,7 @@ void ipx_receive(int s)
             }
             else if (buf.u.d.checksum & NCMD_EXIT)
             {
-                send_udp_packet(PKT_QUIT, buf.u.d.starttic, nullptr, 0);
+                send_udp_packet(packet_type_e::PKT_QUIT, buf.u.d.starttic, nullptr, 0);
                 exit(0);
             }
             else if ((buf.u.d.checksum & NCMD_CHECKSUM) == buf.u.d.checksum)
@@ -211,7 +212,7 @@ void ipx_receive(int s)
                 for (int i = 0; i < tics; i++)
                     TicToRaw(outbuf + 2 + i * sizeof(ticcmd_t),
                              &buf.u.d.cmds[i]);
-                send_udp_packet(PKT_TICC, ExpandTics(buf.u.d.starttic, basetic),
+                send_udp_packet(packet_type_e::PKT_TICC, ExpandTics(buf.u.d.starttic, basetic),
                                 outbuf, 2 + tics * sizeof(ticcmd_t));
             }
         }
@@ -221,7 +222,7 @@ void ipx_receive(int s)
 void udp_receive(int s)
 {
     size_t len = 1024;
-    packet_header_t *p = malloc(len);
+    packet_header_t *p = static_cast<packet_header_t *>(malloc(len));
     int rc;
 
     rc = read(s, p, len);
@@ -232,19 +233,19 @@ void udp_receive(int s)
     }
     if (rc > 0)
     {
-        switch (p->type)
+        switch (p->type.value())
         {
-        case PKT_SETUP: {
-            struct setup_packet_s *sinfo = (void *)(p + 1);
+        case packet_type_e::PKT_SETUP.value(): {
+            setup_packet_t *sinfo = static_cast<setup_packet_t *>((void *)(p + 1));
             consoleplayer = sinfo->yourplayer;
-            send_udp_packet(PKT_GO, 0, nullptr, 0);
+            send_udp_packet(packet_type_e::PKT_GO, 0, nullptr, 0);
             write(ipxs,
                   "\xff\xff\xff\xff\x00\x00\x00\x00\x02\x00\x02\x00\x00\x00\x00"
                   "\x00",
                   16);
         }
         break;
-        case PKT_GO: {
+        case packet_type_e::PKT_GO.value(): {
             ipxpacket_t pkt;
             memset(&pkt, 0, sizeof(pkt));
             pkt.tic = ipxcounter++;
@@ -256,10 +257,10 @@ void udp_receive(int s)
             write(ipxs, &pkt, 16);
         }
         break;
-        case PKT_TICS: {
+        case packet_type_e::PKT_TICS.value(): {
             ipxpacket_t pkt;
             int tic = doom_ntohl(p->tic);
-            byte *pp = (void *)(p + 1);
+            byte *pp = static_cast<byte *>((void *)(p + 1));
             int tics = *pp++;
             memset(&pkt, 0, sizeof(pkt));
             size_t len;

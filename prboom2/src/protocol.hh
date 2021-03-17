@@ -79,7 +79,7 @@ static inline void packet_set(packet_header_t *p, packet_type_e::Type t,
 #define GAME_OPTIONS_SIZE 64
 #endif
 
-struct setup_packet_s
+struct setup_packet_t
 {
     byte players, yourplayer, skill, episode, level, deathmatch, complevel,
         ticdup, extratic;
