@@ -179,7 +179,7 @@ set(COMMON_SRC
         r_state.hh
         r_things.cc
         r_things.hh
-        scanner.cpp
+        scanner.cc
         scanner.hh
         sc_man.cc
         sc_man.hh
