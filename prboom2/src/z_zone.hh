@@ -70,17 +70,17 @@ enum {PU_FREE, PU_STATIC, PU_SOUND, PU_MUSIC, PU_LEVEL, PU_LEVSPEC, PU_CACHE,
 #define DAC(x,y)
 #endif
 
-void *(Z_Malloc)(size_t size, int tag, void **ptr DA(const char *, int));
-void (Z_Free)(void *ptr DA(const char *, int));
-void (Z_FreeTags)(int lowtag, int hightag DA(const char *, int));
-void (Z_ChangeTag)(void *ptr, int tag DA(const char *, int));
-void (Z_Init)(void);
-void Z_Close(void);
-void *(Z_Calloc)(size_t n, size_t n2, int tag, void **user DA(const char *, int));
-void *(Z_Realloc)(void *p, size_t n, int tag, void **user DA(const char *, int));
-char *(Z_Strdup)(const char *s, int tag, void **user DA(const char *, int));
-void (Z_CheckHeap)(DAC(const char *,int));   // killough 3/22/98: add file/line info
-void Z_DumpHistory(char *);
+//void *(Z_Malloc)(size_t size, int tag, void **ptr DA(const char *, int));
+//void (Z_Free)(void *ptr DA(const char *, int));
+//void (Z_FreeTags)(int lowtag, int hightag DA(const char *, int));
+//void (Z_ChangeTag)(void *ptr, int tag DA(const char *, int));
+//void (Z_Init)(void);
+//void Z_Close(void);
+//void *(Z_Calloc)(size_t n, size_t n2, int tag, void **user DA(const char *, int));
+//void *(Z_Realloc)(void *p, size_t n, int tag, void **user DA(const char *, int));
+//char *(Z_Strdup)(const char *s, int tag, void **user DA(const char *, int));
+//void (Z_CheckHeap)(DAC(const char *,int));   // killough 3/22/98: add file/line info
+//void Z_DumpHistory(char *);
 
 #ifdef INSTRUMENTED
 /* cph - save space if not debugging, don't require file
@@ -115,24 +115,18 @@ void Z_DumpHistory(char *);
 template <typename T, typename = std::enable_if_t<std::is_pointer_v<T>>>
 constexpr T malloc(size_t n)
 {
-    return static_cast<T>(Z_Malloc(n, PU_STATIC, nullptr));
-}
-template <typename T, typename = std::enable_if_t<std::is_pointer_v<T>>>
-constexpr void free(T p)
-{
-    Z_Free(p);
+    return static_cast<T>(std::malloc(n));
 }
 template <typename T, typename = std::enable_if_t<std::is_pointer_v<T>>>
 constexpr T realloc(T p, size_t n)
 {
-    return static_cast<T>(Z_Realloc(p, n, PU_STATIC, nullptr));
+    return static_cast<T>(std::realloc(p, n));
 }
 template <typename T, typename = std::enable_if_t<std::is_pointer_v<T>>>
 constexpr T calloc(size_t n1, size_t n2)
 {
-    return static_cast<T>(Z_Calloc(n1, n2, PU_STATIC, nullptr));
+    return static_cast<T>(std::calloc(n1, n2));
 }
-#define strdup(s)          Z_Strdup(s,PU_STATIC,0)
 
 #else
 

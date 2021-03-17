@@ -340,7 +340,7 @@ void RejectOverrun(int rejectlump, const byte **rejectmatrix, int totallines)
   {
     // allocate a new block and copy the reject table into it; zero the rest
     // PU_LEVEL => will be freed on level exit
-    newreject = static_cast<byte *>(Z_Malloc(required, PU_LEVEL, NULL));
+    newreject = static_cast<byte *>(std::malloc(required));
     *rejectmatrix =
         static_cast<const byte *>(memmove(newreject, *rejectmatrix, length));
 

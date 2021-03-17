@@ -89,9 +89,9 @@ void* Z_BMalloc(struct block_memory_alloc_s *pzone)
 
     // CPhipps: Allocate new memory, initialised to 0
 
-    *pool = newpool = static_cast<bmalpool_t *>(Z_Calloc(
-        sizeof(*newpool) + (sizeof(byte) + pzone->size) * (pzone->perpool), 1,
-        pzone->tag, NULL));
+    *pool = newpool = static_cast<bmalpool_t *>(std::calloc(
+        sizeof(*newpool) + (sizeof(byte) + pzone->size) * (pzone->perpool), 1
+        ));
     newpool->nextpool = NULL; // NULL = (void*)0 so this is redundant
 
     // Return element 0 from this pool to satisfy the request
@@ -117,7 +117,7 @@ void Z_BFree(struct block_memory_alloc_s *pzone, void* p)
   // Block is all unused, can be freed
   bmalpool_t *oldpool = *pool;
   *pool = (*pool)->nextpool;
-  Z_Free(oldpool);
+  std::free(oldpool);
       }
       return;
     } else pool = &((*pool)->nextpool);

@@ -243,12 +243,13 @@ static void R_InitSpriteDefs(const char * const * namelist)
   numsprites = i;
 
   sprites = static_cast<spritedef_t *>(
-      Z_Calloc(numsprites, sizeof(*sprites), PU_STATIC, NULL));
+      std::calloc(numsprites, sizeof(*sprites)));
 
   // Create hash table based on just the first four letters of each sprite
   // killough 1/31/98
 
-  hash = malloc<hash_t *>(sizeof(*hash)*numentries); // allocate hash table
+  hash = static_cast<hash_t *>(
+      std::malloc(sizeof(*hash) * numentries)); // allocate hash table
 
   for (i=0; (size_t)i<numentries; i++)             // initialize hash table as empty
     hash[i].index = -1;
@@ -376,13 +377,13 @@ static void R_InitSpriteDefs(const char * const * namelist)
 
               // allocate space for the frames present and copy sprtemp to it
               sprites[i].spriteframes = static_cast<spriteframe_t *>(
-                  Z_Malloc(maxframe * sizeof(spriteframe_t), PU_STATIC, NULL));
+                  std::malloc(maxframe * sizeof(spriteframe_t)));
               memcpy (sprites[i].spriteframes, sprtemp,
                       maxframe*sizeof(spriteframe_t));
             }
         }
     }
-  free(hash);             // free hash table
+  std::free(hash);             // free hash table
 }
 
 //

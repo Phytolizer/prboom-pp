@@ -33,6 +33,7 @@
  *
  *-----------------------------------------------------------------------------*/
 
+#include <array>
 #include "doomdef.hh"
 #include "doomstat.hh"
 #include "m_random.hh"
@@ -394,7 +395,7 @@ static int      keyboxes[3];
 // a random number per tick
 static int      st_randomnumber;
 
-extern char     *mapnames[];
+extern const char     **const mapnames[];
 
 //
 // STATUS BAR CODE

@@ -172,8 +172,6 @@ static void I_SignalHandler(int s)
   /* If corrupted memory could cause crash, dump memory
    * allocation history, which points out probable causes
    */
-  if (s==SIGSEGV || s==SIGILL || s==SIGFPE)
-    Z_DumpHistory(buf);
 
   I_Error("I_SignalHandler: %s", buf);
 }
@@ -536,7 +534,6 @@ int main(int argc, char **argv)
   PrintVer();
 
   /* cph - Z_Close must be done after I_Quit, so we register it first. */
-  atexit(Z_Close);
   /*
      killough 1/98:
 
@@ -553,7 +550,6 @@ int main(int argc, char **argv)
      left in an unstable state.
   */
 
-  Z_Init();                  /* 1/18/98 killough: start up memory stuff first */
 
   atexit(I_Quit);
 #ifndef PRBOOM_DEBUG

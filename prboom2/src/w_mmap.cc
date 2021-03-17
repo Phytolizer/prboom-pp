@@ -300,13 +300,12 @@ const void* W_LockLumpNum(int lump)
 
   if (!cachelump[lump].cache) {
     // read the lump in
-    Z_Malloc(len, PU_CACHE, &cachelump[lump].cache);
+    cachelump[lump].cache = std::malloc(len);
     memcpy(cachelump[lump].cache, data, len);
   }
 
   /* cph - if wasn't locked but now is, tell z_zone to hold it */
   if (cachelump[lump].locks <= 0) {
-    Z_ChangeTag(cachelump[lump].cache,PU_STATIC);
 #ifdef TIMEDIAG
     cachelump[lump].locktic = gametic;
 #endif
@@ -339,6 +338,4 @@ void W_UnlockLumpNum(int lump) {
   /* cph - Note: must only tell z_zone to make purgeable if currently locked,
    * else it might already have been purged
    */
-  if (cachelump[lump].locks == 0)
-    Z_ChangeTag(cachelump[lump].cache, PU_CACHE);
 }

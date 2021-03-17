@@ -54,7 +54,7 @@ MEMFILE *mem_fopen_read(const void *buf, size_t buflen)
 {
   MEMFILE *file;
 
-  file = static_cast<MEMFILE *>(Z_Malloc(sizeof(MEMFILE), PU_STATIC, 0));
+  file = static_cast<MEMFILE *>(std::malloc(sizeof(MEMFILE)));
 
   file->buf = (unsigned char *) buf;
   file->buflen = buflen;
@@ -102,11 +102,11 @@ MEMFILE *mem_fopen_write(void)
 {
   MEMFILE *file;
 
-  file = static_cast<MEMFILE *>(Z_Malloc(sizeof(MEMFILE), PU_STATIC, 0));
+  file = static_cast<MEMFILE *>(std::malloc(sizeof(MEMFILE)));
 
   file->alloced = 1024;
   file->buf =
-      static_cast<unsigned char *>(Z_Malloc(file->alloced, PU_STATIC, 0));
+      static_cast<unsigned char *>(std::malloc(file->alloced));
   file->buflen = 0;
   file->position = 0;
   file->mode = MODE_WRITE;
@@ -135,9 +135,9 @@ size_t mem_fwrite(const void *ptr, size_t size, size_t nmemb, MEMFILE *stream)
     unsigned char *newbuf;
 
     newbuf = static_cast<unsigned char *>(
-        Z_Malloc(stream->alloced * 2, PU_STATIC, 0));
+        std::malloc(stream->alloced * 2));
     memcpy(newbuf, stream->buf, stream->alloced);
-    Z_Free(stream->buf);
+    std::free(stream->buf);
     stream->buf = newbuf;
     stream->alloced *= 2;
   }
@@ -163,10 +163,10 @@ void mem_fclose(MEMFILE *stream)
 {
   if (stream->mode == MODE_WRITE)
   {
-    Z_Free(stream->buf);
+    std::free(stream->buf);
   }
 
-  Z_Free(stream);
+  std::free(stream);
 }
 
 long mem_ftell(MEMFILE *stream)

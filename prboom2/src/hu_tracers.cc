@@ -246,7 +246,7 @@ void TracerAddDeathmatchStart(int num, int index)
   {
     num_deathmatchstarts_indexes = num + 1;
 
-    deathmatchstarts_indexes = static_cast<tracer_mapthing_t *>(realloc(
+    deathmatchstarts_indexes = static_cast<tracer_mapthing_t *>(std::realloc(
       deathmatchstarts_indexes,
       num_deathmatchstarts_indexes * sizeof(deathmatchstarts_indexes[0])));
   }

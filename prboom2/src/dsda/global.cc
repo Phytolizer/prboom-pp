@@ -28,14 +28,13 @@
 #include "v_video.hh"
 #include "hu_stuff.hh"
 #include "heretic/def.hh"
+#include "heretic/d_main.hh"
 
 #include "global.hh"
 
 #define IGNORE_VALUE -1
 
 const demostate_t (*demostates)[4];
-extern const demostate_t doom_demostates[][4];
-extern const demostate_t heretic_demostates[][4];
 
 state_t* states;
 int num_states;

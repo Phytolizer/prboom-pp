@@ -292,7 +292,7 @@ manual_ceiling://e6y
     // create a new ceiling thinker
     rtn = 1;
     ceiling =
-        static_cast<ceiling_t *>(Z_Malloc(sizeof(*ceiling), PU_LEVSPEC, 0));
+        static_cast<ceiling_t *>(std::malloc(sizeof(*ceiling)));
     memset(ceiling, 0, sizeof(*ceiling));
     P_AddThinker (&ceiling->thinker);
     sec->ceilingdata = ceiling;               //jff 2/22/98

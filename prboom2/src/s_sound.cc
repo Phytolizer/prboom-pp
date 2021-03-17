@@ -178,7 +178,7 @@ void S_Init(int sfxVolume, int musicVolume)
 
   if (!heretic) return;
 
-  soundCurve = static_cast<byte *>(Z_Malloc(MAX_SND_DIST, PU_STATIC, NULL));
+  soundCurve = static_cast<byte *>(std::malloc(MAX_SND_DIST));
   S_SetSoundCurve(true);
 }
 

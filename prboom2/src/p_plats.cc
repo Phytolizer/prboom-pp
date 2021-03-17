@@ -244,7 +244,7 @@ manual_plat://e6y
 
     // Create a thinker
     rtn = 1;
-    plat = static_cast<plat_t *>(Z_Malloc(sizeof(*plat), PU_LEVSPEC, 0));
+    plat = static_cast<plat_t *>(std::malloc(sizeof(*plat)));
     memset(plat, 0, sizeof(*plat));
     P_AddThinker(&plat->thinker);
 

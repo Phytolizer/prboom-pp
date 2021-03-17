@@ -968,7 +968,7 @@ void P_TrueUnArchiveThinkers(void) {
         P_RemoveThinkerDelayed(th); // fix mobj leak
       }
       else
-        Z_Free (th);
+        std::free (th);
       th = next;
     }
   P_InitThinkers ();
@@ -1016,7 +1016,7 @@ void P_TrueUnArchiveThinkers(void) {
         PADSAVEP();
         {
           ceiling_t *ceiling = static_cast<ceiling_t *>(
-                Z_Malloc(sizeof(*ceiling), PU_LEVEL, NULL));
+                std::malloc(sizeof(*ceiling)));
           memcpy (ceiling, save_p, sizeof(*ceiling));
           save_p += sizeof(*ceiling);
           ceiling->sector = &sectors[(size_t)ceiling->sector];
@@ -1035,7 +1035,7 @@ void P_TrueUnArchiveThinkers(void) {
         PADSAVEP();
         {
           vldoor_t *door = static_cast<vldoor_t *>(
-                Z_Malloc(sizeof(*door), PU_LEVEL, NULL));
+                std::malloc(sizeof(*door)));
           memcpy (door, save_p, sizeof(*door));
           save_p += sizeof(*door);
           door->sector = &sectors[(size_t)door->sector];
@@ -1053,7 +1053,7 @@ void P_TrueUnArchiveThinkers(void) {
         PADSAVEP();
         {
           floormove_t *floor = static_cast<floormove_t *>(
-                Z_Malloc(sizeof(*floor), PU_LEVEL, NULL));
+                std::malloc(sizeof(*floor)));
           memcpy (floor, save_p, sizeof(*floor));
           save_p += sizeof(*floor);
           floor->sector = &sectors[(size_t)floor->sector];
@@ -1067,7 +1067,7 @@ void P_TrueUnArchiveThinkers(void) {
         PADSAVEP();
         {
           plat_t *plat =
-                static_cast<plat_t *>(Z_Malloc(sizeof(*plat), PU_LEVEL, NULL));
+                static_cast<plat_t *>(std::malloc(sizeof(*plat)));
           memcpy (plat, save_p, sizeof(*plat));
           save_p += sizeof(*plat);
           plat->sector = &sectors[(size_t)plat->sector];
@@ -1085,7 +1085,7 @@ void P_TrueUnArchiveThinkers(void) {
         PADSAVEP();
         {
           lightflash_t *flash = static_cast<lightflash_t *>(
-                Z_Malloc(sizeof(*flash), PU_LEVEL, NULL));
+                std::malloc(sizeof(*flash)));
           memcpy (flash, save_p, sizeof(*flash));
           save_p += sizeof(*flash);
           flash->sector = &sectors[(size_t)flash->sector];
@@ -1098,7 +1098,7 @@ void P_TrueUnArchiveThinkers(void) {
         PADSAVEP();
         {
           strobe_t *strobe = static_cast<strobe_t *>(
-                Z_Malloc(sizeof(*strobe), PU_LEVEL, NULL));
+                std::malloc(sizeof(*strobe)));
           memcpy (strobe, save_p, sizeof(*strobe));
           save_p += sizeof(*strobe);
           strobe->sector = &sectors[(size_t)strobe->sector];
@@ -1111,7 +1111,7 @@ void P_TrueUnArchiveThinkers(void) {
         PADSAVEP();
         {
           glow_t *glow =
-                static_cast<glow_t *>(Z_Malloc(sizeof(*glow), PU_LEVEL, NULL));
+                static_cast<glow_t *>(std::malloc(sizeof(*glow)));
           memcpy (glow, save_p, sizeof(*glow));
           save_p += sizeof(*glow);
           glow->sector = &sectors[(size_t)glow->sector];
@@ -1124,7 +1124,7 @@ void P_TrueUnArchiveThinkers(void) {
         PADSAVEP();
         {
           fireflicker_t *flicker = static_cast<fireflicker_t *>(
-                Z_Malloc(sizeof(*flicker), PU_LEVEL, NULL));
+                std::malloc(sizeof(*flicker)));
           memcpy (flicker, save_p, sizeof(*flicker));
           save_p += sizeof(*flicker);
           flicker->sector = &sectors[(size_t)flicker->sector];
@@ -1138,7 +1138,7 @@ void P_TrueUnArchiveThinkers(void) {
         PADSAVEP();
         {
           elevator_t *elevator = static_cast<elevator_t *>(
-                Z_Malloc(sizeof(*elevator), PU_LEVEL, NULL));
+                std::malloc(sizeof(*elevator)));
           memcpy (elevator, save_p, sizeof(*elevator));
           save_p += sizeof(*elevator);
           elevator->sector = &sectors[(size_t)elevator->sector];
@@ -1154,7 +1154,7 @@ void P_TrueUnArchiveThinkers(void) {
         PADSAVEP();
         {
           scroll_t *scroll = static_cast<scroll_t *>(
-                Z_Malloc(sizeof(scroll_t), PU_LEVEL, NULL));
+                std::malloc(sizeof(scroll_t)));
           memcpy (scroll, save_p, sizeof(scroll_t));
           save_p += sizeof(scroll_t);
           scroll->thinker.function = reinterpret_cast<think_t>(T_Scroll);
@@ -1166,7 +1166,7 @@ void P_TrueUnArchiveThinkers(void) {
         PADSAVEP();
         {
           pusher_t *pusher = static_cast<pusher_t *>(
-                Z_Malloc(sizeof(pusher_t), PU_LEVEL, NULL));
+                std::malloc(sizeof(pusher_t)));
           memcpy (pusher, save_p, sizeof(pusher_t));
           save_p += sizeof(pusher_t);
           pusher->thinker.function = reinterpret_cast<think_t>(T_Pusher);
@@ -1179,7 +1179,7 @@ void P_TrueUnArchiveThinkers(void) {
         PADSAVEP();
         {
           friction_t *friction = static_cast<friction_t *>(
-                Z_Malloc(sizeof(friction_t), PU_LEVEL, NULL));
+                std::malloc(sizeof(friction_t)));
           memcpy (friction, save_p, sizeof(friction_t));
           save_p += sizeof(friction_t);
           friction->thinker.function = reinterpret_cast<think_t>(T_Friction);
@@ -1191,7 +1191,7 @@ void P_TrueUnArchiveThinkers(void) {
         PADSAVEP();
         {
           mobj_t *mobj =
-                static_cast<mobj_t *>(Z_Malloc(sizeof(mobj_t), PU_LEVEL, NULL));
+                static_cast<mobj_t *>(std::malloc(sizeof(mobj_t)));
 
           // killough 2/14/98 -- insert pointers to thinkers into table, in order:
           mobj_count++;

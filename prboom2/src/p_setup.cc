@@ -1178,7 +1178,7 @@ static void P_LoadZNodes(int lump, int glnodes, int compressed)
 	// first estimate for compression rate:
 	// output buffer size == 2.5 * input size
 	outlen = 2.5 * len;
-	output = static_cast<byte *>(Z_Malloc(outlen, PU_STATIC, 0));
+	output = static_cast<byte *>(std::malloc(outlen));
 
 	// initialize stream state for decompression
 	zstream = malloc<z_stream *>(sizeof(*zstream));
@@ -1365,7 +1365,7 @@ static void P_LoadZNodes(int lump, int glnodes, int compressed)
 
 #ifdef HAVE_LIBZ
   if (compressed == ZDOOM_ZNOD_NODES)
-    Z_Free(output);
+    std::free(output);
   else
 #endif
   W_UnlockLumpNum(lump); // cph - release the data
@@ -1401,7 +1401,8 @@ static void P_LoadThings (int lump)
 
   mobj_t *mobj;
   int mobjcount = 0;
-  mobj_t **mobjlist = malloc<mobj_t **>(numthings * sizeof(mobjlist[0]));
+  mobj_t **mobjlist =
+      static_cast<mobj_t **>(std::malloc(numthings * sizeof(mobjlist[0])));
 
   if ((!data) || (!numthings))
     I_Error("P_LoadThings: no things in level");
@@ -1468,7 +1469,7 @@ static void P_LoadThings (int lump)
   }
 #endif
 
-  free(mobjlist);
+  std::free(mobjlist);
 }
 
 //
@@ -2248,7 +2249,7 @@ static int P_GroupLines (void)
 
   {  // allocate line tables for each sector
     line_t **linebuffer = static_cast<line_t **>(
-          Z_Malloc(total * sizeof(line_t *), PU_LEVEL, 0));
+          std::malloc(total * sizeof(line_t *)));
     // e6y: REJECT overrun emulation code
     // moved to P_LoadReject
 
@@ -2364,7 +2365,7 @@ static int P_GroupLines (void)
 static void P_RemoveSlimeTrails(void)         // killough 10/98
 {
   byte *hit =
-        static_cast<byte *>(calloc(1, numvertexes));         // Hitlist for vertices
+        static_cast<byte *>(std::calloc(1, numvertexes));         // Hitlist for vertices
   int i;
   // Correction of desync on dv04-423.lmp/dv.wad
   // http://www.doomworld.com/vb/showthread.php?s=&postid=627257#post627257
@@ -2421,7 +2422,7 @@ static void P_RemoveSlimeTrails(void)         // killough 10/98
     while ((v != segs[i].v2) && (v = segs[i].v2));
   }
     }
-  free(hit);
+  std::free(hit);
 }
 
 static void R_CalcSegsLength(void)
@@ -2659,7 +2660,6 @@ void P_SetupLevel(int episode, int map, int playermask, skill_t skill)
   // Make sure all sounds are stopped before Z_FreeTags.
   S_Start();
 
-  Z_FreeTags(PU_LEVEL, PU_PURGELEVEL-1);
   if (rejectlump != -1) { // cph - unlock the reject table
     W_UnlockLumpNum(rejectlump);
     rejectlump = -1;

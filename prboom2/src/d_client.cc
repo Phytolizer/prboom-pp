@@ -108,7 +108,7 @@ void D_InitNetGame (void)
   } else {
     // Get game info from server
     packet_header_t *packet =
-        static_cast<packet_header_t *>(Z_Malloc(1000, PU_STATIC, NULL));
+        static_cast<packet_header_t *>(std::malloc(1000));
     struct setup_packet_s *sinfo =
         static_cast<setup_packet_s *>((void *)(packet + 1));
   struct { packet_header_t head; short pn; } PACKEDATTR initpacket;
@@ -155,7 +155,7 @@ void D_InitNetGame (void)
   p += strlen(p) + 1;
       }
     }
-    Z_Free(packet);
+    std::free(packet);
   }
   localcmds = netcmds[displayplayer = consoleplayer];
   for (i=0; i<numplayers; i++)
@@ -169,7 +169,7 @@ void D_InitNetGame (void)
 {
   int i;
 
-  doomcom = Z_Malloc(sizeof *doomcom, PU_STATIC, NULL);
+  doomcom = std::malloc(sizeof *doomcom);
   doomcom->consoleplayer = 0;
   doomcom->numnodes = 0; doomcom->numplayers = 1;
   localcmds = netcmds[consoleplayer];
@@ -188,7 +188,7 @@ void D_InitNetGame (void)
 void D_CheckNetGame(void)
 {
   packet_header_t *packet = static_cast<packet_header_t *>(
-        Z_Malloc(sizeof(packet_header_t) + 1, PU_STATIC, NULL));
+        std::malloc(sizeof(packet_header_t) + 1));
 
   if (server) {
     lprintf(LO_INFO, "D_CheckNetGame: waiting for server to signal game start\n");
@@ -201,7 +201,7 @@ void D_CheckNetGame(void)
       }
     } while (packet->type != PKT_GO);
   }
-  Z_Free(packet);
+  std::free(packet);
 }
 
 dboolean D_NetGetWad(const char* name)
@@ -215,7 +215,7 @@ dboolean D_NetGetWad(const char* name)
 
   do {
     // Send WAD request to remote
-    packet = Z_Malloc(psize, PU_STATIC, NULL);
+    packet = std::malloc(psize);
     packet_set(packet, PKT_WAD, 0);
     *(byte*)(packet+1) = consoleplayer;
     strcpy(1+(byte*)(packet+1), name);
@@ -223,7 +223,7 @@ dboolean D_NetGetWad(const char* name)
 
     I_uSleep(10000);
   } while (!I_GetPacket(packet, psize) || (packet->type != PKT_WAD));
-  Z_Free(packet);
+  std::free(packet);
 
   if (!strcasecmp((void*)(packet+1), name)) {
     pid_t pid;
@@ -259,7 +259,7 @@ dboolean D_NetGetWad(const char* name)
       }
       /* Add more decompression protocols here as desired */
     }
-    Z_Free(buffer);
+    std::free(buffer);
   }
   return done;
 #else /* HAVE_WAIT_H */
@@ -277,7 +277,7 @@ void NetUpdate(void)
   if (server) { // Receive network packets
     size_t recvlen;
     packet_header_t *packet =
-        static_cast<packet_header_t *>(Z_Malloc(10000, PU_STATIC, NULL));
+        static_cast<packet_header_t *>(std::malloc(10000));
 
     while ((recvlen = I_GetPacket(packet, 10000))) {
       switch(packet->type) {
@@ -321,10 +321,10 @@ void NetUpdate(void)
         case PKT_QUIT: // Player quit
           // Queue packet to be processed when its tic time is reached
           queuedpacket = static_cast<packet_header_t **>(
-              Z_Realloc(queuedpacket, ++numqueuedpackets * sizeof *queuedpacket,
-                        PU_STATIC, NULL));
+              std::realloc(queuedpacket, ++numqueuedpackets * sizeof *queuedpacket
+                        ));
           queuedpacket[numqueuedpackets-1] = static_cast<packet_header_t *>(
-              Z_Malloc(recvlen, PU_STATIC, NULL));
+              std::malloc(recvlen));
           memcpy(queuedpacket[numqueuedpackets-1], packet, recvlen);
           break;
         case PKT_BACKOFF:
@@ -339,7 +339,7 @@ void NetUpdate(void)
       }
     }
 
-    Z_Free(packet);
+    std::free(packet);
   }
 
   { // Build new ticcmds
@@ -373,7 +373,7 @@ void NetUpdate(void)
       {
         size_t pkt_size = sizeof(packet_header_t) + 2 + sendtics * sizeof(ticcmd_t);
         packet_header_t *packet =
-            static_cast<packet_header_t *>(Z_Malloc(pkt_size, PU_STATIC, NULL));
+            static_cast<packet_header_t *>(std::malloc(pkt_size));
 
         packet_set(packet, PKT_TICC, maketic - sendtics);
         *(byte*)(packet+1) = sendtics;
@@ -386,7 +386,7 @@ void NetUpdate(void)
           }
         }
         I_SendPacket(packet, pkt_size);
-        Z_Free(packet);
+std::free(packet);
       }
     }
   }
@@ -415,7 +415,7 @@ void D_NetSendMisc(netmisctype_t type, size_t len, void* data)
   if (server) {
     size_t size = sizeof(packet_header_t) + 3*sizeof(int) + len;
     packet_header_t *packet =
-        static_cast<packet_header_t *>(Z_Malloc(size, PU_STATIC, NULL));
+        static_cast<packet_header_t *>(std::malloc(size));
     int *p = static_cast<int *>((void *)(packet + 1));
 
     packet_set(packet, PKT_EXTRA, gametic);
@@ -423,7 +423,7 @@ void D_NetSendMisc(netmisctype_t type, size_t len, void* data)
     memcpy(p, data, len);
     I_SendPacket(packet, size);
 
-    Z_Free(packet);
+    std::free(packet);
   }
 }
 
@@ -468,12 +468,12 @@ static void CheckQueuedPackets(void)
 
     for (i=0; (unsigned)i<numqueuedpackets; i++)
       if (doom_ntohl(queuedpacket[i]->tic) > gametic) {
-  newqueue = static_cast<packet_header_t **>(Z_Realloc(
-              newqueue, ++newnum * sizeof *newqueue, PU_STATIC, NULL));
+  newqueue = static_cast<packet_header_t **>(std::realloc(
+              newqueue, ++newnum * sizeof *newqueue));
   newqueue[newnum-1] = queuedpacket[i];
-      } else Z_Free(queuedpacket[i]);
+      } else std::free(queuedpacket[i]);
 
-    Z_Free(queuedpacket);
+    std::free(queuedpacket);
     numqueuedpackets = newnum; queuedpacket = newqueue;
   }
 }

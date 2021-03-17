@@ -230,10 +230,6 @@ static char hud_monsecstr[80];
 // Ty 03/27/98 - externalized map name arrays - now in d_deh.c
 // and converted to arrays of pointers to char *
 // See modified HUTITLEx macros
-extern char **mapnames[];
-extern char **mapnames2[];
-extern char **mapnamesp[];
-extern char **mapnamest[];
 
 extern int map_point_coordinates;
 extern int map_level_stat;
@@ -1152,7 +1148,7 @@ void HU_LoadHUDDefs(void)
 
         // setup new hud
         huds_count++;
-        huds = static_cast<hud_widgets_list_t *>(realloc(huds, huds_count * sizeof(huds[0])));
+        huds = static_cast<hud_widgets_list_t *>(std::realloc(huds, huds_count * sizeof(huds[0])));
         list = &huds[huds_count - 1];
         list->items = NULL;
         list->count = 0;
@@ -1185,7 +1181,7 @@ void HU_LoadHUDDefs(void)
             hud_widget_t *item;
 
             list->count++;
-            list->items = static_cast<hud_widget_t *>(realloc(list->items, list->count * sizeof(list->items[0])));
+            list->items = static_cast<hud_widget_t *>(std::realloc(list->items, list->count * sizeof(list->items[0])));
 
             item = &list->items[list->count - 1];
 
@@ -2969,7 +2965,7 @@ int SetCustomMessage(int player, const char *msg, int delay, int ticks, int cm, 
   else
   {
     message_thinker_t *message = static_cast<message_thinker_t *>(
-          Z_Calloc(1, sizeof(*message), PU_LEVEL, NULL));
+          std::calloc(1, sizeof(*message)));
     message->thinker.function = reinterpret_cast<think_t>(T_ShowMessage);
     message->delay = delay;
     message->plr = player;

@@ -92,7 +92,7 @@ static int ReadLump(const char *filename, const char *lumpname, unsigned char **
     fseek(file, 0, SEEK_END);
     size = ftell(file);
     fseek(file, 0, SEEK_SET);
-    *buffer = malloc<unsigned char *>(size + 1);
+    *buffer = static_cast<unsigned char *>(std::malloc(size + 1));
     size = fread(*buffer, 1, size, file);
     if (size > 0)
     {
@@ -116,7 +116,7 @@ static int ReadLump(const char *filename, const char *lumpname, unsigned char **
     {
       size = W_LumpLength(lump);
       data = static_cast<const unsigned char *>(W_CacheLumpNum(lump));
-      *buffer = calloc<unsigned char *>(1, size + 1);
+      *buffer = static_cast<unsigned char *>(std::calloc(1, size + 1));
       memcpy (*buffer, data, size);
       (*buffer)[size] = 0;
       W_UnlockLumpNum(lump);
@@ -141,7 +141,7 @@ static GLShader* gld_LoadShader(const char *vpname, const char *fpname)
 
   vp_fnlen = doom_snprintf(NULL, 0, "%s/shaders/%s.txt", I_DoomExeDir(), vpname);
   fp_fnlen = doom_snprintf(NULL, 0, "%s/shaders/%s.txt", I_DoomExeDir(), fpname);
-  filename = malloc<char *>(MAX(vp_fnlen, fp_fnlen) + 1);
+  filename = static_cast<char *>(std::malloc(MAX(vp_fnlen, fp_fnlen) + 1));
 
   sprintf(filename, "%s/shaders/%s.txt", I_DoomExeDir(), vpname);
   vp_size = ReadLump(filename, vpname, reinterpret_cast<unsigned char **>(&vp_data));
@@ -196,9 +196,9 @@ static GLShader* gld_LoadShader(const char *vpname, const char *fpname)
     }
   }
 
-  free(filename);
-  free(vp_data);
-  free(fp_data);
+  std::free(filename);
+  std::free(vp_data);
+  std::free(fp_data);
 
   return shader;
 }

@@ -50,6 +50,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
+#include <cstdlib>
 
 #include "doomdef.hh"
 #include "doomtype.hh"
@@ -629,11 +630,89 @@ void D_SetPage(const char* name, int tics, int music)
   D_SetPageName(name);
 }
 
+static void D_DrawTitle1(const char *name)
+{
+    D_SetPage(name, TICRATE * 170 / 35, mus_intro);
+}
+
+static void D_DrawTitle2(const char *name)
+{
+    D_SetPage(name, 0, mus_dm2ttl);
+}
+
 /* killough 11/98: tabulate demo sequences
  */
 
 extern const demostate_t (*demostates)[4];
 
+const demostate_t doom_demostates[][4] =
+    {
+        {
+            {D_DrawTitle1, "TITLEPIC"},
+            {D_DrawTitle1, "TITLEPIC"},
+            {D_DrawTitle2, "TITLEPIC"},
+            {D_DrawTitle1, "TITLEPIC"},
+        },
+
+        {
+            {G_DeferedPlayDemo, "demo1"},
+            {G_DeferedPlayDemo, "demo1"},
+            {G_DeferedPlayDemo, "demo1"},
+            {G_DeferedPlayDemo, "demo1"},
+        },
+
+        {
+            {D_SetPageName, NULL},
+            {D_SetPageName, NULL},
+            {D_SetPageName, NULL},
+            {D_SetPageName, NULL},
+        },
+
+        {
+            {G_DeferedPlayDemo, "demo2"},
+            {G_DeferedPlayDemo, "demo2"},
+            {G_DeferedPlayDemo, "demo2"},
+            {G_DeferedPlayDemo, "demo2"},
+        },
+
+        {
+            {D_SetPageName, "HELP2"},
+            {D_SetPageName, "HELP2"},
+            {D_SetPageName, "CREDIT"},
+            {D_DrawTitle1,  "TITLEPIC"},
+        },
+
+        {
+            {G_DeferedPlayDemo, "demo3"},
+            {G_DeferedPlayDemo, "demo3"},
+            {G_DeferedPlayDemo, "demo3"},
+            {G_DeferedPlayDemo, "demo3"},
+        },
+
+        {
+            {NULL},
+            {NULL},
+            // e6y
+            // Both Plutonia and TNT are commercial like Doom2,
+            // but in difference from  Doom2, they have demo4 in demo cycle.
+            {G_DeferedPlayDemo, "demo4"},
+            {D_SetPageName, "CREDIT"},
+        },
+
+        {
+            {NULL},
+            {NULL},
+            {NULL},
+            {G_DeferedPlayDemo, "demo4"},
+        },
+
+        {
+            {NULL},
+            {NULL},
+            {NULL},
+            {NULL},
+        }
+    };
 
 /*
  * This cycles through the demo sequences.
@@ -681,7 +760,7 @@ void D_AddFile (const char *file, wad_source_t source)
   char *gwa_filename=NULL;
   int len;
 
-  wadfiles = static_cast<wadfile_info_t *>(realloc(wadfiles, sizeof(*wadfiles)*(numwadfiles+1)));
+  wadfiles = static_cast<wadfile_info_t *>(std::realloc(wadfiles, sizeof(*wadfiles)*(numwadfiles+1)));
   wadfiles[numwadfiles].name =
     AddDefaultExtension(strcpy(malloc<char *>(strlen(file) + 5), file), ".wad");
   wadfiles[numwadfiles].src = source; // Ty 08/29/98
@@ -702,8 +781,8 @@ void D_AddFile (const char *file, wad_source_t source)
       char *ext;
       ext = &gwa_filename[strlen(gwa_filename)-4];
       ext[1] = 'g'; ext[2] = 'w'; ext[3] = 'a';
-      wadfiles = realloc<wadfile_info_t *>(wadfiles, sizeof(*wadfiles) *
-                                                         (numwadfiles + 1));
+      wadfiles = static_cast<wadfile_info_t *>(
+          std::realloc(wadfiles, sizeof(*wadfiles) * (numwadfiles + 1)));
       wadfiles[numwadfiles].name = gwa_filename;
       wadfiles[numwadfiles].src = source; // Ty 08/29/98
       wadfiles[numwadfiles].handle = 0;
@@ -806,7 +885,7 @@ void CheckIWAD(const char *iwadname,GameMode_t *gmode,dboolean *hassec)
               !strncmp(fileinfo[length].name,"POSSH0M0",8))
             cq++;
         }
-        free(fileinfo);
+//        free(fileinfo);
 
         if (noiwad && !bfgedition && cq < 2)
           I_Error("CheckIWAD: IWAD tag %s not present", iwadname);
@@ -1011,7 +1090,7 @@ static void IdentifyVersion (void)
   if (iwad && *iwad)
   {
     AddIWAD(iwad);
-    free(iwad);
+    std::free(iwad);
   }
   else
     I_Error("IdentifyVersion: IWAD not found\n");
@@ -1302,10 +1381,10 @@ static void DoLooseFiles(void)
     myargc = tmyargc;
   }
 
-  free(wads);
-  free(lmps);
-  free(dehs);
-  free(skip);
+//  free(wads);
+//  free(lmps);
+//  free(dehs);
+//  free(skip);
 }
 
 /* cph - MBF-like wad/deh/bex autoload code */
@@ -1613,7 +1692,7 @@ static void D_DoomMainSetup(void)
         lprintf(LO_WARN, "Failed to autoload %s\n", fname);
       else {
         D_AddFile(fpath,source_auto_load);
-        free(fpath);
+        std::free(fpath);
       }
     }
   }
@@ -1641,7 +1720,7 @@ static void D_DoomMainSetup(void)
         if (file)
         {
           D_AddFile(file,source_pwad);
-          free(file);
+          std::free(file);
         }
       }
     }
@@ -1797,7 +1876,7 @@ static void D_DoomMainSetup(void)
       {
         // during the beta we have debug output to dehout.txt
         ProcessDehFile(file,D_dehout(),0);
-        free(file);
+        std::free(file);
       }
       else
       {

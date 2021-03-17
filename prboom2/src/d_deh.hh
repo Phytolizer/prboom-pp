@@ -1119,6 +1119,11 @@ extern const char* startup5;
 // from g_game.c, prefix for savegame name like "boomsav"
 extern const char* savegamename;
 
+extern const char **const mapnames[];
+extern const char **const mapnames2[];
+extern const char **const mapnamesp[];
+extern const char **const mapnamest[];
+
 void D_BuildBEXTables(void);
 void deh_changeCompTranslucency(void);
 void deh_applyCompatibility(void);

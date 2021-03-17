@@ -379,9 +379,9 @@ void *(Z_Malloc)(size_t size, int tag, void **user
       {
         memblock_t *next = block->next;
 #ifdef INSTRUMENTED
-        (Z_Free)((char *) block + HEADER_SIZE, file, line);
+        (std::free)((char *) block + HEADER_SIZE, file, line);
 #else
-        (Z_Free)((char *) block + HEADER_SIZE);
+        (std::free)((char *) block + HEADER_SIZE);
 #endif
         if (((free_memory + memory_size) >= (int)(size + HEADER_SIZE)) || (block == end_block))
           break;
@@ -406,7 +406,6 @@ void *(Z_Malloc)(size_t size, int tag, void **user
                , file, line
 #endif
       );
-    Z_FreeTags(PU_CACHE,PU_CACHE);
   }
 
   if (!blockbytag[tag])

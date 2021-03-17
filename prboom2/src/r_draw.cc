@@ -710,7 +710,7 @@ void R_InitTranslationTables (void)
 
   if (translationtables == NULL) // CPhipps - allow multiple calls
     translationtables =
-          static_cast<byte *>(Z_Malloc(256 * MAXTRANS, PU_STATIC, 0));
+          static_cast<byte *>(std::malloc(256 * MAXTRANS));
 
   for (i=0; i<MAXTRANS; i++) transtocolour[i] = 255;
 

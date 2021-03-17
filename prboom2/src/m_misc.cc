@@ -137,7 +137,7 @@ int M_ReadFile(char const *name, byte **buffer)
       fseek(fp, 0, SEEK_END);
       length = ftell(fp);
       fseek(fp, 0, SEEK_SET);
-      *buffer = static_cast<byte *>(Z_Malloc(length, PU_STATIC, 0));
+      *buffer = static_cast<byte *>(std::malloc(length));
       if (fread(*buffer, 1, length, fp) == length)
         {
           fclose(fp);
@@ -1723,7 +1723,7 @@ void M_LoadDefaults (void)
             {
               if ((*arr)[(*index)])
               {
-                free((*arr)[(*index)]);
+//                free((*arr)[(*index)]);
                 (*arr)[(*index)] = NULL;
               }
             }
@@ -1746,7 +1746,7 @@ void M_LoadDefaults (void)
                 union { const char **c; char **s; } u; // type punning via unions
 
                 u.c = defaults[i].location.ppsz;
-                free(*(u.s));
+//                free(*(u.s));
                 *(u.s) = newstring;
 
                 item = &defaults[i];
@@ -1813,7 +1813,7 @@ void M_LoadDefaults (void)
                 union { const char **c; char **s; } u; // type punning via unions
 
                 u.c = defaults[i].location.ppsz;
-                free(*(u.s));
+//                std::free(*(u.s));
                 *(u.s) = newstring;
               }
             break;
@@ -1824,8 +1824,8 @@ void M_LoadDefaults (void)
     fclose (f);
     }
 
-  free(strparm);
-  free(cfgline);
+//  free(strparm);
+//  free(cfgline);
 
   //jff 3/4/98 redundant range checks for hud deleted here
   /* proff 2001/7/1 - added prboom.wad as last entry so it's always loaded and

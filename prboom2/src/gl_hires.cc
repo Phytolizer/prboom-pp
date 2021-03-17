@@ -1032,9 +1032,9 @@ int gld_HiRes_BuildTables(void)
       }
       gld_ProgressEnd();
 
-      free(z);
-      free(y);
-      free(x);
+      std::free(z);
+      std::free(y);
+      std::free(x);
 
       if (gl_hires_24bit_colormap)
       {

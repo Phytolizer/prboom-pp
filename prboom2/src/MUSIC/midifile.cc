@@ -512,7 +512,7 @@ static dboolean ReadTrack(midi_track_t *track, midimem_t *mf)
         { // depending on the state of the heap and the malloc implementation, realloc()
           // one more event at a time can be VERY slow.  10sec+ in MSVC
           track->num_event_mem += 100;
-          new_events = (midi_event_t*)realloc (track->events, sizeof (midi_event_t) * track->num_event_mem);
+          new_events = (midi_event_t*)std::realloc (track->events, sizeof (midi_event_t) * track->num_event_mem);
         }
 
         if (new_events == NULL)
@@ -838,8 +838,8 @@ midi_event_t **MIDI_GenerateFlatList (midi_file_t *file)
 
   int totaldelta = 0;
 
-  int *trackpos = (int*)calloc (file->num_tracks, sizeof (int));
-  int *tracktime = (int*)calloc (file->num_tracks, sizeof (int));
+  int *trackpos = (int*)std::calloc (file->num_tracks, sizeof (int));
+  int *tracktime = (int*)std::calloc (file->num_tracks, sizeof (int));
   int trackactive = file->num_tracks;
 
   midi_event_t **ret;
@@ -893,9 +893,9 @@ midi_event_t **MIDI_GenerateFlatList (midi_file_t *file)
     else if ((unsigned) trackpos[nextrk] == file->tracks[nextrk].num_events)
     {
       lprintf (LO_WARN, "MIDI_GenerateFlatList: Unexpected end of track\n");
-      free (trackpos);
-      free (tracktime);
-      free (ret);
+      std::free (trackpos);
+      std::free (tracktime);
+      std::free (ret);
       return NULL;
     }
     epos++;
@@ -904,17 +904,17 @@ midi_event_t **MIDI_GenerateFlatList (midi_file_t *file)
   if (trackactive)
   { // unexpected EOF
     lprintf (LO_WARN, "MIDI_GenerateFlatList: Unexpected end of midi file\n");
-    free (trackpos);
-    free (tracktime);
-    free (ret);
+    std::free (trackpos);
+    std::free (tracktime);
+    std::free (ret);
     return NULL;
   }
 
   // last end of track event is preserved though
   epos[-1]->data.meta.type = MIDI_META_END_OF_TRACK;
 
-  free (trackpos);
-  free (tracktime);
+  std::free (trackpos);
+  std::free (tracktime);
 
   if (totaldelta < 100)
   {

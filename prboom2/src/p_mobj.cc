@@ -1133,7 +1133,7 @@ mobj_t* P_SpawnMobj(fixed_t x,fixed_t y,fixed_t z,mobjtype_t type)
   state_t*    st;
   mobjinfo_t* info;
 
-  mobj = static_cast<mobj_t *>(Z_Malloc(sizeof(*mobj), PU_LEVEL, NULL));
+  mobj = static_cast<mobj_t *>(std::malloc(sizeof(*mobj)));
   memset (mobj, 0, sizeof (*mobj));
   info = &mobjinfo[type];
   mobj->type = type;
@@ -1333,7 +1333,7 @@ static PUREFUNC int P_FindDoomedNum(unsigned type)
 
   if (!hash)
     {
-      hash = static_cast<hash_t *>(Z_Malloc(sizeof *hash * num_mobj_types, PU_CACHE, (void **) &hash));
+      hash = static_cast<hash_t *>(std::malloc(sizeof *hash * num_mobj_types));
       for (i=0; i<num_mobj_types; i++)
   hash[i].first = num_mobj_types;
       for (i=mobj_types_zero; i<mobj_types_max; i++)

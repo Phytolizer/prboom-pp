@@ -221,7 +221,7 @@ void dsda_SpawnGhost(void) {
       continue;
     }
 
-    mobj = static_cast<mobj_t *>(Z_Malloc(sizeof(*mobj), PU_LEVEL, NULL));
+    mobj = static_cast<mobj_t *>(std::malloc(sizeof(*mobj)));
     memset(mobj, 0, sizeof(*mobj));
     mobj->type = MT_NULL;
     mobj->info = &dsda_ghost_info;
@@ -274,7 +274,7 @@ void dsda_SpawnGhost(void) {
 
   if (dsda_ghost_import.count > 0) {
     dsda_ghost_import.thinker =
-          static_cast<thinker_t *>(Z_Malloc(sizeof(thinker_t), PU_LEVEL, NULL));
+          static_cast<thinker_t *>(std::malloc(sizeof(thinker_t)));
     memset(dsda_ghost_import.thinker, 0, sizeof(thinker_t));
     dsda_ghost_import.thinker->function =
         reinterpret_cast<think_t>(dsda_UpdateGhosts);

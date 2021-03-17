@@ -150,7 +150,7 @@ struct player_t
   // Is wp_nochange if not changing.
   weapontype_t        pendingweapon;
 
-  dboolean           weaponowned[NUMWEAPONS];
+  int           weaponowned[NUMWEAPONS];
   int                 ammo[NUMAMMO];
   int                 maxammo[NUMAMMO];
 

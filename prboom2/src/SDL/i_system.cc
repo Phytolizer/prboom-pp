@@ -554,7 +554,7 @@ char* I_FindFileInternal(const char* wfname, const char* ext, dboolean isStatic)
     s = search[i].sub;
 
     if (!isStatic)
-      p = (char*)malloc((d ? strlen(d) : 0) + (s ? strlen(s) : 0) + pl);
+      p = (char*)std::malloc((d ? strlen(d) : 0) + (s ? strlen(s) : 0) + pl);
     sprintf(p, "%s%s%s%s%s", d ? d : "", (d && !HasTrailingSlash(d)) ? "/" : "",
                              s ? s : "", (s && !HasTrailingSlash(s)) ? "/" : "",
                              wfname);
@@ -566,8 +566,8 @@ char* I_FindFileInternal(const char* wfname, const char* ext, dboolean isStatic)
         lprintf(LO_INFO, " found %s\n", p);
       return p;
     }
-    if (!isStatic)
-      free(p);
+//    if (!isStatic)
+//      free(p);
   }
   return NULL;
 }

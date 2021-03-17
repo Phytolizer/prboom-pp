@@ -821,6 +821,186 @@ const char *deh_newlevel = "NEWLEVEL"; // CPhipps - const
 
 // DOOM shareware/registered/retail (Ultimate) names.
 // CPhipps - const**const
+const char **const mapnames[] =
+    {
+        &s_HUSTR_E1M1,
+        &s_HUSTR_E1M2,
+        &s_HUSTR_E1M3,
+        &s_HUSTR_E1M4,
+        &s_HUSTR_E1M5,
+        &s_HUSTR_E1M6,
+        &s_HUSTR_E1M7,
+        &s_HUSTR_E1M8,
+        &s_HUSTR_E1M9,
+
+        &s_HUSTR_E2M1,
+        &s_HUSTR_E2M2,
+        &s_HUSTR_E2M3,
+        &s_HUSTR_E2M4,
+        &s_HUSTR_E2M5,
+        &s_HUSTR_E2M6,
+        &s_HUSTR_E2M7,
+        &s_HUSTR_E2M8,
+        &s_HUSTR_E2M9,
+
+        &s_HUSTR_E3M1,
+        &s_HUSTR_E3M2,
+        &s_HUSTR_E3M3,
+        &s_HUSTR_E3M4,
+        &s_HUSTR_E3M5,
+        &s_HUSTR_E3M6,
+        &s_HUSTR_E3M7,
+        &s_HUSTR_E3M8,
+        &s_HUSTR_E3M9,
+
+        &s_HUSTR_E4M1,
+        &s_HUSTR_E4M2,
+        &s_HUSTR_E4M3,
+        &s_HUSTR_E4M4,
+        &s_HUSTR_E4M5,
+        &s_HUSTR_E4M6,
+        &s_HUSTR_E4M7,
+        &s_HUSTR_E4M8,
+        &s_HUSTR_E4M9,
+
+        &deh_newlevel,  // spares?  Unused.
+        &deh_newlevel,
+        &deh_newlevel,
+        &deh_newlevel,
+        &deh_newlevel,
+        &deh_newlevel,
+        &deh_newlevel,
+        &deh_newlevel,
+        &deh_newlevel,
+
+        &deh_newlevel,  // spares?  Unused.
+        &deh_newlevel,
+        &deh_newlevel,
+        &deh_newlevel,
+        &deh_newlevel,
+        &deh_newlevel,
+        &deh_newlevel,
+        &deh_newlevel,
+        &deh_newlevel
+    };
+
+// CPhipps - const**const
+const char **const mapnames2[] = // DOOM 2 map names.
+    {
+        &s_HUSTR_1,
+        &s_HUSTR_2,
+        &s_HUSTR_3,
+        &s_HUSTR_4,
+        &s_HUSTR_5,
+        &s_HUSTR_6,
+        &s_HUSTR_7,
+        &s_HUSTR_8,
+        &s_HUSTR_9,
+        &s_HUSTR_10,
+        &s_HUSTR_11,
+
+        &s_HUSTR_12,
+        &s_HUSTR_13,
+        &s_HUSTR_14,
+        &s_HUSTR_15,
+        &s_HUSTR_16,
+        &s_HUSTR_17,
+        &s_HUSTR_18,
+        &s_HUSTR_19,
+        &s_HUSTR_20,
+
+        &s_HUSTR_21,
+        &s_HUSTR_22,
+        &s_HUSTR_23,
+        &s_HUSTR_24,
+        &s_HUSTR_25,
+        &s_HUSTR_26,
+        &s_HUSTR_27,
+        &s_HUSTR_28,
+        &s_HUSTR_29,
+        &s_HUSTR_30,
+        &s_HUSTR_31,
+        &s_HUSTR_32,
+        &s_HUSTR_33,
+    };
+
+// CPhipps - const**const
+const char **const mapnamesp[] = // Plutonia WAD map names.
+    {
+        &s_PHUSTR_1,
+        &s_PHUSTR_2,
+        &s_PHUSTR_3,
+        &s_PHUSTR_4,
+        &s_PHUSTR_5,
+        &s_PHUSTR_6,
+        &s_PHUSTR_7,
+        &s_PHUSTR_8,
+        &s_PHUSTR_9,
+        &s_PHUSTR_10,
+        &s_PHUSTR_11,
+
+        &s_PHUSTR_12,
+        &s_PHUSTR_13,
+        &s_PHUSTR_14,
+        &s_PHUSTR_15,
+        &s_PHUSTR_16,
+        &s_PHUSTR_17,
+        &s_PHUSTR_18,
+        &s_PHUSTR_19,
+        &s_PHUSTR_20,
+
+        &s_PHUSTR_21,
+        &s_PHUSTR_22,
+        &s_PHUSTR_23,
+        &s_PHUSTR_24,
+        &s_PHUSTR_25,
+        &s_PHUSTR_26,
+        &s_PHUSTR_27,
+        &s_PHUSTR_28,
+        &s_PHUSTR_29,
+        &s_PHUSTR_30,
+        &s_PHUSTR_31,
+        &s_PHUSTR_32,
+    };
+
+// CPhipps - const**const
+const char **const mapnamest[] = // TNT WAD map names.
+    {
+        &s_THUSTR_1,
+        &s_THUSTR_2,
+        &s_THUSTR_3,
+        &s_THUSTR_4,
+        &s_THUSTR_5,
+        &s_THUSTR_6,
+        &s_THUSTR_7,
+        &s_THUSTR_8,
+        &s_THUSTR_9,
+        &s_THUSTR_10,
+        &s_THUSTR_11,
+
+        &s_THUSTR_12,
+        &s_THUSTR_13,
+        &s_THUSTR_14,
+        &s_THUSTR_15,
+        &s_THUSTR_16,
+        &s_THUSTR_17,
+        &s_THUSTR_18,
+        &s_THUSTR_19,
+        &s_THUSTR_20,
+
+        &s_THUSTR_21,
+        &s_THUSTR_22,
+        &s_THUSTR_23,
+        &s_THUSTR_24,
+        &s_THUSTR_25,
+        &s_THUSTR_26,
+        &s_THUSTR_27,
+        &s_THUSTR_28,
+        &s_THUSTR_29,
+        &s_THUSTR_30,
+        &s_THUSTR_31,
+        &s_THUSTR_32,
+    };
 
 // CPhipps - const**const
 
@@ -2612,13 +2792,13 @@ static void deh_procText(DEHFILE *fpin, FILE* fpout, char *line)
       if (fpout) fprintf(fpout,"Checking text area through strings for '%.12s%s' from=%d to=%d\n",inbuffer, (strlen(inbuffer) > 12) ? "..." : "",fromlen,tolen);
       if ((size_t)fromlen <= strlen(inbuffer))
         {
-          line2 = strdup(&inbuffer[fromlen]);
+          line2 = (strdup)(&inbuffer[fromlen]);
           inbuffer[fromlen] = '\0';
         }
 
       deh_procStringSub(NULL, inbuffer, line2, fpout);
     }
-  free(line2); // may be NULL, ignored by free()
+  std::free(line2); // may be NULL, ignored by free()
   return;
 }
 
@@ -2654,7 +2834,8 @@ static void deh_procStrings(DEHFILE *fpin, FILE* fpout, char *line)
   if (fpout) fprintf(fpout,"Processing extended string substitution\n");
 
   if (!holdstring)
-      holdstring = malloc<char *>(maxstrlen * sizeof(*holdstring));
+      holdstring =
+          static_cast<char *>(std::malloc(maxstrlen * sizeof(*holdstring)));
 
   *holdstring = '\0';  // empty string to start with
   strncpy(inbuffer,line,DEH_BUFFERMAX-1);
@@ -2681,7 +2862,7 @@ static void deh_procStrings(DEHFILE *fpin, FILE* fpout, char *line)
           if (fpout) fprintf(fpout,
                              "* increased buffer from to %ld for buffer size %d\n",
                              (long)maxstrlen,(int)strlen(inbuffer));
-          holdstring = static_cast<char *>(realloc(holdstring,maxstrlen*sizeof(*holdstring)));
+          holdstring = static_cast<char *>(std::realloc(holdstring,maxstrlen*sizeof(*holdstring)));
         }
       // concatenate the whole buffer if continuation or the value iffirst
       strcat(holdstring,ptr_lstrip(((*holdstring) ? inbuffer : strval)));

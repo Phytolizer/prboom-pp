@@ -248,7 +248,7 @@ static void FillEmptySpace(rpatch_t *patch)
 
   // alternate between two buffers to avoid "overlapping memcpy"-like symptoms
   orig = patch->pixels;
-  copy = malloc<byte *>(numpix);
+  copy = static_cast<byte *>(std::malloc(numpix));
 
   for (pass = 0; pass < 8; pass++) // arbitrarily chosen limit (must be even)
   {
@@ -300,7 +300,7 @@ static void FillEmptySpace(rpatch_t *patch)
       break; // avoid infinite loop on entirely transparent patches (STBR127)
   }
 
-  free(copy);
+  std::free(copy);
 
   // copy top row of patch into any space at bottom, and vice versa
   // a hack to fix erroneous row of pixels at top of firing chaingun
@@ -436,7 +436,8 @@ static void createPatch(int id) {
   columnsDataSize = sizeof(rcolumn_t) * patch->width;
 
   // count the number of posts in each column
-  numPostsInColumn = malloc<int *>(sizeof(int) * patch->width);
+  numPostsInColumn =
+      static_cast<int *>(std::malloc(sizeof(int) * patch->width));
   numPostsTotal = 0;
 
   for (x=0; x<patch->width; x++) {
@@ -453,7 +454,7 @@ static void createPatch(int id) {
 
   // allocate our data chunk
   dataSize = pixelDataSize + columnsDataSize + postsDataSize;
-  patch->data = (unsigned char*)Z_Malloc(dataSize, PU_CACHE, (void **)&patch->data);
+  patch->data = (unsigned char*)std::malloc(dataSize);
   memset(patch->data, 0, dataSize);
 
   // set out pixel, column, and post pointers into our data array
@@ -544,7 +545,7 @@ static void createPatch(int id) {
   FillEmptySpace(patch);
 
   W_UnlockLumpNum(patchNum);
-  free(numPostsInColumn);
+  std::free(numPostsInColumn);
 }
 
 typedef struct {
@@ -625,7 +626,7 @@ static void createTextureCompositePatch(int id) {
   columnsDataSize = sizeof(rcolumn_t) * composite_patch->width;
 
   // count the number of posts in each column
-  countsInColumn = (count_t *)calloc(sizeof(count_t), composite_patch->width);
+  countsInColumn = (count_t *)std::calloc(sizeof(count_t), composite_patch->width);
   numPostsTotal = 0;
 
   for (i=0; i<texture->patchcount; i++) {
@@ -658,7 +659,7 @@ static void createTextureCompositePatch(int id) {
 
   // allocate our data chunk
   dataSize = pixelDataSize + columnsDataSize + postsDataSize;
-  composite_patch->data = (unsigned char*)Z_Malloc(dataSize, PU_STATIC, (void **)&composite_patch->data);
+  composite_patch->data = (unsigned char*)std::malloc(dataSize);
   memset(composite_patch->data, 0, dataSize);
 
   // set out pixel, column, and post pointers into our data array
@@ -830,7 +831,7 @@ static void createTextureCompositePatch(int id) {
 
   FillEmptySpace(composite_patch);
 
-  free(countsInColumn);
+  std::free(countsInColumn);
 }
 
 //---------------------------------------------------------------------------
@@ -850,7 +851,6 @@ const rpatch_t *R_CachePatchNum(int id) {
 
   /* cph - if wasn't locked but now is, tell z_zone to hold it */
   if (!patches[id].locks && locks) {
-    Z_ChangeTag(patches[id].data,PU_STATIC);
 #ifdef TIMEDIAG
     patches[id].locktic = gametic;
 #endif
@@ -878,8 +878,6 @@ void R_UnlockPatchNum(int id)
   /* cph - Note: must only tell z_zone to make purgeable if currently locked,
    * else it might already have been purged
    */
-  if (unlocks && !patches[id].locks)
-    Z_ChangeTag(patches[id].data, PU_CACHE);
 }
 
 //---------------------------------------------------------------------------
@@ -899,7 +897,6 @@ const rpatch_t *R_CacheTextureCompositePatchNum(int id) {
 
   /* cph - if wasn't locked but now is, tell z_zone to hold it */
   if (!texture_composites[id].locks && locks) {
-    Z_ChangeTag(texture_composites[id].data,PU_STATIC);
 #ifdef TIMEDIAG
     texture_composites[id].locktic = gametic;
 #endif
@@ -928,8 +925,6 @@ void R_UnlockTextureCompositePatchNum(int id)
   /* cph - Note: must only tell z_zone to make purgeable if currently locked,
    * else it might already have been purged
    */
-  if (unlocks && !texture_composites[id].locks)
-    Z_ChangeTag(texture_composites[id].data, PU_CACHE);
 }
 
 //---------------------------------------------------------------------------

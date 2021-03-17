@@ -110,7 +110,7 @@ manual_floor:
 
     // new floor thinker
     rtn = 1;
-    floor = static_cast<floormove_t *>(Z_Malloc(sizeof(*floor), PU_LEVSPEC, 0));
+    floor = static_cast<floormove_t *>(std::malloc(sizeof(*floor)));
     memset(floor, 0, sizeof(*floor));
     P_AddThinker (&floor->thinker);
     sec->floordata = floor;
@@ -316,7 +316,7 @@ manual_ceiling:
     // new ceiling thinker
     rtn = 1;
     ceiling =
-        static_cast<ceiling_t *>(Z_Malloc(sizeof(*ceiling), PU_LEVSPEC, 0));
+        static_cast<ceiling_t *>(std::malloc(sizeof(*ceiling)));
     memset(ceiling, 0, sizeof(*ceiling));
     P_AddThinker (&ceiling->thinker);
     sec->ceilingdata = ceiling; //jff 2/22/98
@@ -524,7 +524,7 @@ manual_lift:
 
     // Setup the plat thinker
     rtn = 1;
-    plat = static_cast<plat_t *>(Z_Malloc(sizeof(*plat), PU_LEVSPEC, 0));
+    plat = static_cast<plat_t *>(std::malloc(sizeof(*plat)));
     memset(plat, 0, sizeof(*plat));
     P_AddThinker(&plat->thinker);
 
@@ -686,7 +686,7 @@ manual_stair:
 
     // new floor thinker
     rtn = 1;
-    floor = static_cast<floormove_t *>(Z_Malloc(sizeof(*floor), PU_LEVSPEC, 0));
+    floor = static_cast<floormove_t *>(std::malloc(sizeof(*floor)));
     memset(floor, 0, sizeof(*floor));
     P_AddThinker (&floor->thinker);
     sec->floordata = floor;
@@ -788,7 +788,7 @@ manual_stair:
         sec = tsec;
         secnum = newsecnum;
         floor =
-            static_cast<floormove_t *>(Z_Malloc(sizeof(*floor), PU_LEVSPEC, 0));
+            static_cast<floormove_t *>(std::malloc(sizeof(*floor)));
 
         memset(floor, 0, sizeof(*floor));
         P_AddThinker (&floor->thinker);
@@ -875,7 +875,7 @@ manual_crusher:
     // new ceiling thinker
     rtn = 1;
     ceiling =
-        static_cast<ceiling_t *>(Z_Malloc(sizeof(*ceiling), PU_LEVSPEC, 0));
+        static_cast<ceiling_t *>(std::malloc(sizeof(*ceiling)));
     memset(ceiling, 0, sizeof(*ceiling));
     P_AddThinker (&ceiling->thinker);
     sec->ceilingdata = ceiling; //jff 2/22/98
@@ -972,7 +972,7 @@ manual_locked:
 
     // new door thinker
     rtn = 1;
-    door = static_cast<vldoor_t *>(Z_Malloc(sizeof(*door), PU_LEVSPEC, 0));
+    door = static_cast<vldoor_t *>(std::malloc(sizeof(*door)));
     memset(door, 0, sizeof(*door));
     P_AddThinker (&door->thinker);
     sec->ceilingdata = door; //jff 2/22/98
@@ -1083,7 +1083,7 @@ manual_door:
 
     // new door thinker
     rtn = 1;
-    door = static_cast<vldoor_t *>(Z_Malloc(sizeof(*door), PU_LEVSPEC, 0));
+    door = static_cast<vldoor_t *>(std::malloc(sizeof(*door)));
     memset(door, 0, sizeof(*door));
     P_AddThinker (&door->thinker);
     sec->ceilingdata = door; //jff 2/22/98

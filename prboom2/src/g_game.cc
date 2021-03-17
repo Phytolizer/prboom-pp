@@ -987,7 +987,6 @@ static void G_DoLoadLevel (void)
   if (!demoplayback) // Don't switch views if playing a demo
     displayplayer = consoleplayer;    // view the guy you are playing
   gameaction = ga_nothing;
-  Z_CheckHeap ();
 
   // clear cmd building stuff
   dsda_InputFlush();
@@ -2127,7 +2126,7 @@ void G_LoadGame(int slot, dboolean command)
 
 static void G_LoadGameErr(const char *msg)
 {
-  Z_Free(savebuffer);                // Free the savegame buffer
+  free(savebuffer);                // Free the savegame buffer
   M_ForcedLoadGame(msg);             // Print message asking for 'Y' to force
   if (command_loadgame)              // If this was a command-line -loadgame
     {
@@ -2396,7 +2395,7 @@ void G_DoLoadGame(void)
     time/3600, (time%3600)/60, time%60, ttime/3600, (ttime%3600)/60, ttime%60);
 
   // done
-  Z_Free (savebuffer);
+  free (savebuffer);
 
   if (setsizeneeded)
     R_ExecuteSetViewSize ();
@@ -2461,7 +2460,7 @@ void (CheckSaveGame)(size_t size, const char* /* file */, int /* line */)
 
   size += 1024;  // breathing room
   if (pos+size > savegamesize)
-    save_p = (savebuffer = static_cast<byte *>(realloc(savebuffer,
+    save_p = (savebuffer = static_cast<byte *>(std::realloc(savebuffer,
            savegamesize += (size+1023) & ~1023))) + pos;
 }
 
@@ -2573,9 +2572,7 @@ static void G_DoSaveGame (dboolean menu)
   *save_p++ = (gametic-basetic) & 255;
 
   // killough 3/22/98: add Z_CheckHeap after each call to ensure consistency
-  Z_CheckHeap();
   P_ArchivePlayers();
-  Z_CheckHeap();
 
   // phares 9/13/98: Move mobj_t->index out of P_ArchiveThinkers so the
   // indices can be used by P_ArchiveWorld when the sectors are saved.
@@ -2584,7 +2581,6 @@ static void G_DoSaveGame (dboolean menu)
   P_ThinkerToIndex();
 
   P_ArchiveWorld();
-  Z_CheckHeap();
   P_TrueArchiveThinkers();
 
   // phares 9/13/98: Move index->mobj_t out of P_ArchiveThinkers, simply
@@ -2592,14 +2588,11 @@ static void G_DoSaveGame (dboolean menu)
 
   P_IndexToThinker();
 
-  Z_CheckHeap();
   P_ArchiveRNG();    // killough 1/18/98: save RNG information
-  Z_CheckHeap();
   P_ArchiveMap();    // killough 1/22/98: save automap information
 
   *save_p++ = 0xe6;   // consistancy marker
 
-  Z_CheckHeap();
   doom_printf( "%s", M_WriteFile(name, savebuffer, save_p - savebuffer)
          ? s_GGSAVED /* Ty - externalised */
          : "Game save failed!"); // CPhipps - not externalised

@@ -142,7 +142,8 @@ static void R_InitTextures (void)
       W_CacheLumpNum(names_lump = W_GetNumForName("PNAMES")));
   nummappatches = LittleLong(*((const int *)names));
   name_p = names+4;
-  patchlookup = malloc<int *>(nummappatches*sizeof(*patchlookup));  // killough
+  patchlookup = static_cast<int *>(
+      std::malloc(nummappatches * sizeof(*patchlookup)));  // killough
 
   for (i=0 ; i<nummappatches ; i++)
     {
@@ -196,9 +197,9 @@ static void R_InitTextures (void)
   // clean up malloc-ing to use sizeof
 
   textures = static_cast<texture_t **>(
-      Z_Malloc(numtextures * sizeof *textures, PU_STATIC, 0));
+      std::malloc(numtextures * sizeof *textures));
   textureheight = static_cast<fixed_t *>(
-      Z_Malloc(numtextures * sizeof *textureheight, PU_STATIC, 0));
+      std::malloc(numtextures * sizeof *textureheight));
 
   for (i=0 ; i<numtextures ; i++, directory++)
     {
@@ -217,10 +218,9 @@ static void R_InitTextures (void)
 
       mtexture = (const maptexture_t *) ( (const byte *)maptex + offset);
 
-      texture = textures[i] = static_cast<texture_t *>(Z_Malloc(
+      texture = textures[i] = static_cast<texture_t *>(std::malloc(
           sizeof(texture_t) +
-              sizeof(texpatch_t) * (LittleShort(mtexture->patchcount) - 1),
-          PU_STATIC, 0));
+              sizeof(texpatch_t) * (LittleShort(mtexture->patchcount) - 1)));
 
       texture->width = LittleShort(mtexture->width);
       texture->height = LittleShort(mtexture->height);
@@ -286,7 +286,7 @@ static void R_InitTextures (void)
       textureheight[i] = texture->height<<FRACBITS;
     }
 
-  free(patchlookup);         // killough
+  std::free(patchlookup);         // killough
 
   for (i=0; i<2; i++) // cph - release the TEXTUREx lumps
     if (maptex_lump[i] != -1)
@@ -321,7 +321,7 @@ static void R_InitTextures (void)
   // clean up malloc-ing to use sizeof
 
   texturetranslation = static_cast<int *>(
-      Z_Malloc((numtextures + 1) * sizeof *texturetranslation, PU_STATIC, 0));
+      std::malloc((numtextures + 1) * sizeof *texturetranslation));
 
   for (i=0 ; i<numtextures ; i++)
     texturetranslation[i] = i;
@@ -353,7 +353,7 @@ static void R_InitFlats(void)
   // clean up malloc-ing to use sizeof
 
   flattranslation = static_cast<int *>(
-      Z_Malloc((numflats + 1) * sizeof(*flattranslation), PU_STATIC, 0));
+      std::malloc((numflats + 1) * sizeof(*flattranslation)));
 
   for (i=0 ; i<numflats ; i++)
     flattranslation[i] = i;
@@ -388,7 +388,7 @@ static void R_InitColormaps(void)
   lastcolormaplump  = W_GetNumForName("C_END");
   numcolormaps = lastcolormaplump - firstcolormaplump;
   colormaps = static_cast<const lighttable_t **>(
-      Z_Malloc(sizeof(*colormaps) * numcolormaps, PU_STATIC, 0));
+      std::malloc(sizeof(*colormaps) * numcolormaps));
   colormaps[0] = W_CacheLumpName<const lighttable_t *>("COLORMAP");
   for (i=1; i<numcolormaps; i++)
     colormaps[i] = (const lighttable_t *)W_CacheLumpNum(i+firstcolormaplump);
@@ -443,12 +443,12 @@ void R_InitTranMap(int progress)
       FILE *cachefp;
 
       fnlen = doom_snprintf(NULL, 0, "%s/tranmap.dat", I_DoomExeDir());
-      fname = malloc<char *>(fnlen+1);
+      fname = static_cast<char *>(std::malloc(fnlen + 1));
       doom_snprintf(fname, fnlen+1, "%s/tranmap.dat", I_DoomExeDir());
       cachefp = fopen(fname, "rb");
 
       main_tranmap = my_tranmap = static_cast<byte *>(
-          Z_Malloc(256 * 256, PU_STATIC, 0));  // killough 4/11/98
+          std::malloc(256 * 256));  // killough 4/11/98
 
       // Use cached translucency filter if it's available
 
@@ -529,7 +529,7 @@ void R_InitTranMap(int progress)
       if (cachefp)              // killough 11/98: fix filehandle leak
         fclose(cachefp);
 
-      free(fname);
+      std::free(fname);
 
       W_UnlockLumpName("PLAYPAL");
     }
@@ -661,7 +661,8 @@ void R_PrecacheLevel(void)
 
   {
     int size = numflats > numsprites  ? numflats : numsprites;
-    hitlist = malloc<byte *>(numtextures > size ? numtextures : size);
+    hitlist = static_cast<byte *>(
+        std::malloc(numtextures > size ? numtextures : size));
   }
 
   // Precache flats.
@@ -725,7 +726,7 @@ void R_PrecacheLevel(void)
             while (--k >= 0);
           }
       }
-  free(hitlist);
+  std::free(hitlist);
 }
 
 // Proff - Added for OpenGL

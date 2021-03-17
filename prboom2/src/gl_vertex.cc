@@ -296,7 +296,8 @@ static void AddToVertex(const sector_t *sec, int **list, unsigned int *size)
     if ((*list)[i] == secno)
       return;
   }
-  (*list) = realloc((*list), sizeof(*list) * ((*size) + 1));
+  (*list) =
+      static_cast<int *>(std::realloc((*list), sizeof(*list) * ((*size) + 1)));
   (*list)[(*size)] = secno;
   (*size)++;
 }
@@ -314,9 +315,9 @@ static void AddToSplitBySector(vertexsplit_info_t *vi, splitsbysector_t *splitsb
     if (splitsbysector->splits[i] == vi)
       return;
   }
-  splitsbysector->splits = realloc(
-    splitsbysector->splits,
-    sizeof(splitsbysector->splits) * (splitsbysector->numsplits + 1));
+  splitsbysector->splits = static_cast<vertexsplit_info_t **>(std::realloc(
+      splitsbysector->splits,
+      sizeof(splitsbysector->splits) * (splitsbysector->numsplits + 1)));
   splitsbysector->splits[splitsbysector->numsplits] = vi;
   splitsbysector->numsplits++;
 }
@@ -336,8 +337,10 @@ void gld_InitVertexData()
   if (gl_vertexsplit)
     return;
 
-  vt_sectorlists = calloc<int **>(sizeof(vt_sectorlists[0]), numvertexes);
-  vt_sectorlists_size = calloc<unsigned int *>(sizeof(vt_sectorlists_size[0]), numvertexes);
+  vt_sectorlists =
+      static_cast<int **>(std::calloc(sizeof(vt_sectorlists[0]), numvertexes));
+  vt_sectorlists_size = static_cast<unsigned int *>(
+      std::calloc(sizeof(vt_sectorlists_size[0]), numvertexes));
 
   for(i = 0; i < numlines; i++)
   {
@@ -429,8 +432,8 @@ void gld_InitVertexData()
   for(i = 0; i < numvertexes; i++)
     gld_RecalcVertexHeights(&vertexes[i]);
 
-  free(vt_sectorlists);
-  free(vt_sectorlists_size);
+  std::free(vt_sectorlists);
+  std::free(vt_sectorlists_size);
 }
 
 //==========================================================================

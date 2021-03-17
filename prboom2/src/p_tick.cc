@@ -161,7 +161,7 @@ void P_RemoveThinkerDelayed(thinker_t *thinker)
         thinker_t *th = thinker->cnext;
         (th->cprev = thinker->cprev)->cnext = th;
       }
-      Z_Free(thinker);
+      std::free(thinker);
     }
 }
 
