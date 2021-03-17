@@ -71,7 +71,7 @@ void gld_InitShadows(void)
     if (lump != -1)
     {
         SDL_PixelFormat fmt;
-        SDL_Surface *surf = NULL;
+        SDL_Surface *surf = nullptr;
         SDL_Surface *surf_raw;
         surf_raw = SDL_LoadBMP_RW(
             SDL_RWFromConstMem(W_CacheLumpNum(lump), W_LumpLength(lump)), 1);

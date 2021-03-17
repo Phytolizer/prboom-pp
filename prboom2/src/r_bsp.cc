@@ -340,8 +340,8 @@ static dboolean CheckClip(seg_t *seg, sector_t *frontsector,
 {
     static sector_t tempsec_back, tempsec_front;
 
-    backsector = R_FakeFlat(backsector, &tempsec_back, NULL, NULL, true);
-    frontsector = R_FakeFlat(frontsector, &tempsec_front, NULL, NULL, false);
+    backsector = R_FakeFlat(backsector, &tempsec_back, nullptr, NULL, true);
+    frontsector = R_FakeFlat(frontsector, &tempsec_front, nullptr, NULL, false);
 
     // check for closed sectors!
     if (backsector->ceilingheight <= frontsector->floorheight)
@@ -529,7 +529,7 @@ static void R_AddLine(seg_t *line)
     // Single sided line?
     if (backsector)
         // killough 3/8/98, 4/4/98: hack for invisible ceilings / deep water
-        backsector = R_FakeFlat(backsector, &tempsec, NULL, NULL, true);
+        backsector = R_FakeFlat(backsector, &tempsec, nullptr, NULL, true);
 
     /* cph - roll up linedef properties in flags */
     if ((linedef = curline->linedef)->r_validcount != gametic)
@@ -694,7 +694,7 @@ static void R_Subsector(int num)
                               floorlightlevel,          // killough 3/16/98
                               frontsector->floor_xoffs, // killough 3/7/98
                               frontsector->floor_yoffs)
-                : NULL;
+                : nullptr;
 
         ceilingplane =
             frontsector->ceilingheight > viewz ||
@@ -710,7 +710,7 @@ static void R_Subsector(int num)
                               ceilinglightlevel,          // killough 4/11/98
                               frontsector->ceiling_xoffs, // killough 3/7/98
                               frontsector->ceiling_yoffs)
-                : NULL;
+                : nullptr;
     }
 
     // e6y
@@ -791,7 +791,7 @@ static void R_Subsector(int num)
             R_AddLine(line);
         line++;
         curline =
-            NULL; /* cph 2001/11/18 - must clear curline now we're done with it,
+            nullptr; /* cph 2001/11/18 - must clear curline now we're done with it,
                      so R_ColourMap doesn't try using it for other things */
     }
 }

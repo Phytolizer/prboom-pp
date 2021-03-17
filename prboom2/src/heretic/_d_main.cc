@@ -99,7 +99,7 @@ void D_ProcessEvents(void)
 {
     event_t *ev;
 
-    while ((ev = D_PopEvent()) != NULL)
+    while ((ev = D_PopEvent()) != nullptr)
     {
         if (F_Responder(ev))
         {
@@ -344,7 +344,7 @@ void D_DoomLoop(void)
         if (crispy->post_rendering_hook)
         {
             crispy->post_rendering_hook();
-            crispy->post_rendering_hook = NULL;
+            crispy->post_rendering_hook = nullptr;
         }
     }
 }
@@ -478,7 +478,7 @@ boolean D_AddFile(char *file)
 
     handle = W_AddFile(file);
 
-    return handle != NULL;
+    return handle != nullptr;
 }
 
 //==========================================================
@@ -896,7 +896,7 @@ void D_DoomMain(void)
     }
     else
     {
-        M_SetConfigDir(NULL);
+        M_SetConfigDir(nullptr);
     }
 
     // Load defaults before initing other systems
@@ -914,7 +914,7 @@ void D_DoomMain(void)
 
     iwadfile = D_FindIWAD(IWAD_MASK_HERETIC, &gamemission);
 
-    if (iwadfile == NULL)
+    if (iwadfile == nullptr)
     {
         I_Error("Game mode indeterminate. No IWAD was found. Try specifying\n"
                 "one with the '-iwad' command line parameter.");

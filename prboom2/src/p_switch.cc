@@ -202,7 +202,7 @@ void P_ChangeSwitchTexture(line_t *line, int useAgain)
     soundorg = (mobj_t *)&line->soundorg;
     if (comp[comp_sound] || compatibility_level < prboom_6_compatibility)
     {
-        /* usually NULL, unless there is another button already pressed in,
+        /* usually nullptr, unless there is another button already pressed in,
          * in which case it's the sound origin of that button press... */
         soundorg = buttonlist->soundorg;
     }
@@ -212,7 +212,7 @@ void P_ChangeSwitchTexture(line_t *line, int useAgain)
         line->special = 0;
 
     /* search for a texture to change */
-    texture = NULL;
+    texture = nullptr;
     position = static_cast<bwhere_e>(0);
     for (i = 0; i < numswitches * 2; i++)
     { /* this could be more efficient... */
@@ -235,7 +235,7 @@ void P_ChangeSwitchTexture(line_t *line, int useAgain)
             break;
         }
     }
-    if (texture == NULL)
+    if (texture == nullptr)
         return; /* no switch texture was found to change */
     *texture = switchlist[i ^ 1];
 
@@ -258,7 +258,7 @@ int GetPairForSwitchTexture(side_t *side)
     tbot = &side->bottomtexture;
 
     /* search for a texture to change */
-    texture = NULL;
+    texture = nullptr;
     for (i = 0; i < numswitches * 2; i++)
     {
         if (switchlist[i] == *ttop)
@@ -278,7 +278,7 @@ int GetPairForSwitchTexture(side_t *side)
         }
     }
 
-    if (texture == NULL)
+    if (texture == nullptr)
         return -1;
 
     return switchlist[i ^ 1];
@@ -311,9 +311,9 @@ dboolean P_UseSpecialLine(mobj_t *thing, line_t *line, int side,
     // jff 02/04/98 add check here for generalized floor/ceil mover
     if (!demo_compatibility)
     {
-        // pointer to line function is NULL by default, set non-null if
+        // pointer to line function is nullptr by default, set non-null if
         // line special is push or switch generalized linedef type
-        int (*linefunc)(line_t * line) = NULL;
+        int (*linefunc)(line_t * line) = nullptr;
 
         // check each range of generalized linedefs
         if ((unsigned)line->special >= GenEnd)

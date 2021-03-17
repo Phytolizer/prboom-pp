@@ -98,16 +98,16 @@ void M_AddParam(const char *param)
 // On entry, cmdstart should point to the command line,
 // argv should point to memory for the argv array, args
 // points to memory to place the text of the arguments.
-// If these are NULL, then no storing (only counting)
+// If these are nullptr, then no storing (only counting)
 // is done.  On exit, *numargs has the number of
-// arguments (plus one for a final NULL argument),
+// arguments (plus one for a final nullptr argument),
 // and *numchars has the number of bytes used in the buffer
 // pointed to by args.
 //
 // Entry:
 //  char *cmdstart - pointer to command line
-//  char **argv - where to build argv array; NULL means don't build array
-//  char *args - where to place argument text; NULL means don't store text
+//  char **argv - where to build argv array; nullptr means don't build array
+//  char *args - where to place argument text; nullptr means don't store text
 //
 // Exit:
 //  no return value

@@ -240,7 +240,7 @@ void MN_Drawer(void)
     //   {
     //     BorderNeedRefresh = true;
     //   }
-    //   if (CurrentMenu->drawFunc != NULL)
+    //   if (CurrentMenu->drawFunc != nullptr)
     //   {
     //     CurrentMenu->drawFunc();
     //   }

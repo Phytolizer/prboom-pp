@@ -89,68 +89,68 @@ int active_texture_enabled[32];
 int clieant_active_texture_enabled[32];
 
 // obsolete?
-PFNGLCOLORTABLEEXTPROC GLEXT_glColorTableEXT = NULL;
+PFNGLCOLORTABLEEXTPROC GLEXT_glColorTableEXT = nullptr;
 
 /* EXT_framebuffer_object */
-PFNGLBINDFRAMEBUFFEREXTPROC GLEXT_glBindFramebufferEXT = NULL;
-PFNGLGENFRAMEBUFFERSEXTPROC GLEXT_glGenFramebuffersEXT = NULL;
-PFNGLGENRENDERBUFFERSEXTPROC GLEXT_glGenRenderbuffersEXT = NULL;
-PFNGLBINDRENDERBUFFEREXTPROC GLEXT_glBindRenderbufferEXT = NULL;
-PFNGLRENDERBUFFERSTORAGEEXTPROC GLEXT_glRenderbufferStorageEXT = NULL;
-PFNGLFRAMEBUFFERRENDERBUFFEREXTPROC GLEXT_glFramebufferRenderbufferEXT = NULL;
-PFNGLFRAMEBUFFERTEXTURE2DEXTPROC GLEXT_glFramebufferTexture2DEXT = NULL;
-PFNGLCHECKFRAMEBUFFERSTATUSEXTPROC GLEXT_glCheckFramebufferStatusEXT = NULL;
-PFNGLDELETEFRAMEBUFFERSEXTPROC GLEXT_glDeleteFramebuffersEXT = NULL;
-PFNGLDELETERENDERBUFFERSEXTPROC GLEXT_glDeleteRenderbuffersEXT = NULL;
+PFNGLBINDFRAMEBUFFEREXTPROC GLEXT_glBindFramebufferEXT = nullptr;
+PFNGLGENFRAMEBUFFERSEXTPROC GLEXT_glGenFramebuffersEXT = nullptr;
+PFNGLGENRENDERBUFFERSEXTPROC GLEXT_glGenRenderbuffersEXT = nullptr;
+PFNGLBINDRENDERBUFFEREXTPROC GLEXT_glBindRenderbufferEXT = nullptr;
+PFNGLRENDERBUFFERSTORAGEEXTPROC GLEXT_glRenderbufferStorageEXT = nullptr;
+PFNGLFRAMEBUFFERRENDERBUFFEREXTPROC GLEXT_glFramebufferRenderbufferEXT = nullptr;
+PFNGLFRAMEBUFFERTEXTURE2DEXTPROC GLEXT_glFramebufferTexture2DEXT = nullptr;
+PFNGLCHECKFRAMEBUFFERSTATUSEXTPROC GLEXT_glCheckFramebufferStatusEXT = nullptr;
+PFNGLDELETEFRAMEBUFFERSEXTPROC GLEXT_glDeleteFramebuffersEXT = nullptr;
+PFNGLDELETERENDERBUFFERSEXTPROC GLEXT_glDeleteRenderbuffersEXT = nullptr;
 
 /* ARB_multitexture command function pointers */
-PFNGLACTIVETEXTUREARBPROC GLEXT_glActiveTextureARB = NULL;
-PFNGLCLIENTACTIVETEXTUREARBPROC GLEXT_glClientActiveTextureARB = NULL;
-PFNGLMULTITEXCOORD2FARBPROC GLEXT_glMultiTexCoord2fARB = NULL;
-PFNGLMULTITEXCOORD2FVARBPROC GLEXT_glMultiTexCoord2fvARB = NULL;
+PFNGLACTIVETEXTUREARBPROC GLEXT_glActiveTextureARB = nullptr;
+PFNGLCLIENTACTIVETEXTUREARBPROC GLEXT_glClientActiveTextureARB = nullptr;
+PFNGLMULTITEXCOORD2FARBPROC GLEXT_glMultiTexCoord2fARB = nullptr;
+PFNGLMULTITEXCOORD2FVARBPROC GLEXT_glMultiTexCoord2fvARB = nullptr;
 
 /* ARB_texture_compression */
-PFNGLCOMPRESSEDTEXIMAGE2DARBPROC GLEXT_glCompressedTexImage2DARB = NULL;
+PFNGLCOMPRESSEDTEXIMAGE2DARBPROC GLEXT_glCompressedTexImage2DARB = nullptr;
 
-PFNGLBLENDCOLOREXTPROC GLEXT_glBlendColorEXT = NULL;
+PFNGLBLENDCOLOREXTPROC GLEXT_glBlendColorEXT = nullptr;
 
 /* VBO */
-PFNGLGENBUFFERSARBPROC GLEXT_glGenBuffersARB = NULL;
-PFNGLDELETEBUFFERSARBPROC GLEXT_glDeleteBuffersARB = NULL;
-PFNGLBINDBUFFERARBPROC GLEXT_glBindBufferARB = NULL;
-PFNGLBUFFERDATAARBPROC GLEXT_glBufferDataARB = NULL;
+PFNGLGENBUFFERSARBPROC GLEXT_glGenBuffersARB = nullptr;
+PFNGLDELETEBUFFERSARBPROC GLEXT_glDeleteBuffersARB = nullptr;
+PFNGLBINDBUFFERARBPROC GLEXT_glBindBufferARB = nullptr;
+PFNGLBUFFERDATAARBPROC GLEXT_glBufferDataARB = nullptr;
 
 /* PBO */
-PFNGLBUFFERSUBDATAARBPROC GLEXT_glBufferSubDataARB = NULL;
-PFNGLGETBUFFERPARAMETERIVARBPROC GLEXT_glGetBufferParameterivARB = NULL;
-PFNGLMAPBUFFERARBPROC GLEXT_glMapBufferARB = NULL;
-PFNGLUNMAPBUFFERARBPROC GLEXT_glUnmapBufferARB = NULL;
+PFNGLBUFFERSUBDATAARBPROC GLEXT_glBufferSubDataARB = nullptr;
+PFNGLGETBUFFERPARAMETERIVARBPROC GLEXT_glGetBufferParameterivARB = nullptr;
+PFNGLMAPBUFFERARBPROC GLEXT_glMapBufferARB = nullptr;
+PFNGLUNMAPBUFFERARBPROC GLEXT_glUnmapBufferARB = nullptr;
 
 /* GL_ARB_shader_objects */
 #ifdef USE_SHADERS
-PFNGLDELETEOBJECTARBPROC GLEXT_glDeleteObjectARB = NULL;
-PFNGLGETHANDLEARBPROC GLEXT_glGetHandleARB = NULL;
-PFNGLDETACHOBJECTARBPROC GLEXT_glDetachObjectARB = NULL;
-PFNGLCREATESHADEROBJECTARBPROC GLEXT_glCreateShaderObjectARB = NULL;
-PFNGLSHADERSOURCEARBPROC GLEXT_glShaderSourceARB = NULL;
-PFNGLCOMPILESHADERARBPROC GLEXT_glCompileShaderARB = NULL;
-PFNGLCREATEPROGRAMOBJECTARBPROC GLEXT_glCreateProgramObjectARB = NULL;
-PFNGLATTACHOBJECTARBPROC GLEXT_glAttachObjectARB = NULL;
-PFNGLLINKPROGRAMARBPROC GLEXT_glLinkProgramARB = NULL;
-PFNGLUSEPROGRAMOBJECTARBPROC GLEXT_glUseProgramObjectARB = NULL;
-PFNGLVALIDATEPROGRAMARBPROC GLEXT_glValidateProgramARB = NULL;
+PFNGLDELETEOBJECTARBPROC GLEXT_glDeleteObjectARB = nullptr;
+PFNGLGETHANDLEARBPROC GLEXT_glGetHandleARB = nullptr;
+PFNGLDETACHOBJECTARBPROC GLEXT_glDetachObjectARB = nullptr;
+PFNGLCREATESHADEROBJECTARBPROC GLEXT_glCreateShaderObjectARB = nullptr;
+PFNGLSHADERSOURCEARBPROC GLEXT_glShaderSourceARB = nullptr;
+PFNGLCOMPILESHADERARBPROC GLEXT_glCompileShaderARB = nullptr;
+PFNGLCREATEPROGRAMOBJECTARBPROC GLEXT_glCreateProgramObjectARB = nullptr;
+PFNGLATTACHOBJECTARBPROC GLEXT_glAttachObjectARB = nullptr;
+PFNGLLINKPROGRAMARBPROC GLEXT_glLinkProgramARB = nullptr;
+PFNGLUSEPROGRAMOBJECTARBPROC GLEXT_glUseProgramObjectARB = nullptr;
+PFNGLVALIDATEPROGRAMARBPROC GLEXT_glValidateProgramARB = nullptr;
 
-PFNGLUNIFORM1FARBPROC GLEXT_glUniform1fARB = NULL;
-PFNGLUNIFORM2FARBPROC GLEXT_glUniform2fARB = NULL;
-PFNGLUNIFORM1IARBPROC GLEXT_glUniform1iARB = NULL;
+PFNGLUNIFORM1FARBPROC GLEXT_glUniform1fARB = nullptr;
+PFNGLUNIFORM2FARBPROC GLEXT_glUniform2fARB = nullptr;
+PFNGLUNIFORM1IARBPROC GLEXT_glUniform1iARB = nullptr;
 
-PFNGLGETOBJECTPARAMETERFVARBPROC GLEXT_glGetObjectParameterfvARB = NULL;
-PFNGLGETOBJECTPARAMETERIVARBPROC GLEXT_glGetObjectParameterivARB = NULL;
-PFNGLGETINFOLOGARBPROC GLEXT_glGetInfoLogARB = NULL;
-PFNGLGETATTACHEDOBJECTSARBPROC GLEXT_glGetAttachedObjectsARB = NULL;
-PFNGLGETUNIFORMLOCATIONARBPROC GLEXT_glGetUniformLocationARB = NULL;
-PFNGLGETACTIVEUNIFORMARBPROC GLEXT_glGetActiveUniformARB = NULL;
-PFNGLGETUNIFORMFVARBPROC GLEXT_glGetUniformfvARB = NULL;
+PFNGLGETOBJECTPARAMETERFVARBPROC GLEXT_glGetObjectParameterfvARB = nullptr;
+PFNGLGETOBJECTPARAMETERIVARBPROC GLEXT_glGetObjectParameterivARB = nullptr;
+PFNGLGETINFOLOGARBPROC GLEXT_glGetInfoLogARB = nullptr;
+PFNGLGETATTACHEDOBJECTSARBPROC GLEXT_glGetAttachedObjectsARB = nullptr;
+PFNGLGETUNIFORMLOCATIONARBPROC GLEXT_glGetUniformLocationARB = nullptr;
+PFNGLGETACTIVEUNIFORMARBPROC GLEXT_glGetActiveUniformARB = nullptr;
+PFNGLGETUNIFORMFVARBPROC GLEXT_glGetUniformfvARB = nullptr;
 #endif
 
 void gld_InitOpenGLVersion(void)
@@ -194,39 +194,39 @@ void gld_InitOpenGL(dboolean compatibility_mode)
 
     gl_ext_texture_filter_anisotropic =
         gl_ext_texture_filter_anisotropic_default &&
-        isExtensionSupported("GL_EXT_texture_filter_anisotropic") != NULL;
+        isExtensionSupported("GL_EXT_texture_filter_anisotropic") != nullptr;
     if (gl_ext_texture_filter_anisotropic)
         lprintf(LO_INFO, "using GL_EXT_texture_filter_anisotropic\n");
 
     // Any textures sizes are allowed
     gl_arb_texture_non_power_of_two =
         gl_arb_texture_non_power_of_two_default &&
-        isExtensionSupported("GL_ARB_texture_non_power_of_two") != NULL;
+        isExtensionSupported("GL_ARB_texture_non_power_of_two") != nullptr;
     if (gl_arb_texture_non_power_of_two)
         lprintf(LO_INFO, "using GL_ARB_texture_non_power_of_two\n");
 
     // Paletted textures
-    if (isExtensionSupported("GL_EXT_paletted_texture") != NULL)
+    if (isExtensionSupported("GL_EXT_paletted_texture") != nullptr)
     {
         if (gl_use_paletted_texture)
         {
             gl_paletted_texture = true;
             GLEXT_glColorTableEXT = reinterpret_cast<PFNGLCOLORTABLEEXTPROC>(
                 SDL_GL_GetProcAddress("glColorTableEXT"));
-            if (GLEXT_glColorTableEXT == NULL)
+            if (GLEXT_glColorTableEXT == nullptr)
                 gl_paletted_texture = false;
             else
                 lprintf(LO_INFO, "using GL_EXT_paletted_texture\n");
         }
     }
-    else if (isExtensionSupported("GL_EXT_shared_texture_palette") != NULL)
+    else if (isExtensionSupported("GL_EXT_shared_texture_palette") != nullptr)
     {
         if (gl_use_shared_texture_palette)
         {
             gl_shared_texture_palette = true;
             GLEXT_glColorTableEXT = reinterpret_cast<PFNGLCOLORTABLEEXTPROC>(
                 SDL_GL_GetProcAddress("glColorTableEXT"));
-            if (GLEXT_glColorTableEXT == NULL)
+            if (GLEXT_glColorTableEXT == nullptr)
                 gl_shared_texture_palette = false;
             else
                 lprintf(LO_INFO, "using GL_EXT_shared_texture_palette\n");
@@ -238,7 +238,7 @@ void gld_InitOpenGL(dboolean compatibility_mode)
     //
 
     gl_arb_multitexture = gl_arb_multitexture_default &&
-                          isExtensionSupported("GL_ARB_multitexture") != NULL;
+                          isExtensionSupported("GL_ARB_multitexture") != nullptr;
     if (gl_arb_multitexture)
     {
         GLEXT_glActiveTextureARB = reinterpret_cast<PFNGLACTIVETEXTUREARBPROC>(
@@ -266,7 +266,7 @@ void gld_InitOpenGL(dboolean compatibility_mode)
 
     gl_arb_texture_compression =
         gl_arb_texture_compression_default &&
-        isExtensionSupported("GL_ARB_texture_compression") != NULL;
+        isExtensionSupported("GL_ARB_texture_compression") != nullptr;
     if (gl_arb_texture_compression)
     {
         GLEXT_glCompressedTexImage2DARB =
@@ -284,7 +284,7 @@ void gld_InitOpenGL(dboolean compatibility_mode)
     //
     gl_ext_framebuffer_object =
         gl_ext_framebuffer_object_default &&
-        isExtensionSupported("GL_EXT_framebuffer_object") != NULL;
+        isExtensionSupported("GL_EXT_framebuffer_object") != nullptr;
     if (gl_ext_framebuffer_object)
     {
         GLEXT_glGenFramebuffersEXT =
@@ -332,7 +332,7 @@ void gld_InitOpenGL(dboolean compatibility_mode)
 
     gl_ext_packed_depth_stencil =
         gl_ext_packed_depth_stencil_default &&
-        isExtensionSupported("GL_EXT_packed_depth_stencil") != NULL;
+        isExtensionSupported("GL_EXT_packed_depth_stencil") != nullptr;
     if (gl_ext_packed_depth_stencil)
         lprintf(LO_INFO, "using GL_EXT_packed_depth_stencil\n");
 
@@ -341,7 +341,7 @@ void gld_InitOpenGL(dboolean compatibility_mode)
     //
 
     gl_ext_blend_color = gl_ext_blend_color_default &&
-                         isExtensionSupported("GL_EXT_blend_color") != NULL;
+                         isExtensionSupported("GL_EXT_blend_color") != nullptr;
     if (gl_ext_blend_color)
     {
         GLEXT_glBlendColorEXT = reinterpret_cast<PFNGLBLENDCOLOREXTPROC>(
@@ -357,7 +357,7 @@ void gld_InitOpenGL(dboolean compatibility_mode)
 #ifdef USE_VBO
     gl_ext_arb_vertex_buffer_object =
         gl_ext_arb_vertex_buffer_object_default &&
-        isExtensionSupported("GL_ARB_vertex_buffer_object") != NULL;
+        isExtensionSupported("GL_ARB_vertex_buffer_object") != nullptr;
     if (gl_ext_arb_vertex_buffer_object)
     {
         GLEXT_glGenBuffersARB = SDL_GL_GetProcAddress("glGenBuffersARB");
@@ -377,7 +377,7 @@ void gld_InitOpenGL(dboolean compatibility_mode)
 
     gl_arb_pixel_buffer_object =
         gl_arb_pixel_buffer_object_default &&
-        isExtensionSupported("GL_ARB_pixel_buffer_object") != NULL;
+        isExtensionSupported("GL_ARB_pixel_buffer_object") != nullptr;
     if (gl_arb_pixel_buffer_object)
     {
         GLEXT_glGenBuffersARB = reinterpret_cast<PFNGLGENBUFFERSARBPROC>(

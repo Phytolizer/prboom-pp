@@ -272,8 +272,8 @@ static void R_CopyBakToInterp(int i)
 static void R_DoAnInterpolation(int i, fixed_t smoothratio)
 {
     fixed_t pos;
-    fixed_t *adr1 = NULL;
-    fixed_t *adr2 = NULL;
+    fixed_t *adr1 = nullptr;
+    fixed_t *adr2 = nullptr;
 
     switch (curipos[i].type)
     {
@@ -369,7 +369,7 @@ static void R_SetInterpolation(interpolation_type_e type, void *posptr)
                                                           interpolations_max);
     }
 
-    i = NULL;
+    i = nullptr;
     switch (type)
     {
     case INTERP_SectorFloor:
@@ -389,7 +389,7 @@ static void R_SetInterpolation(interpolation_type_e type, void *posptr)
         break;
     }
 
-    if (i != NULL && (*i) == 0)
+    if (i != nullptr && (*i) == 0)
     {
         curipos[numinterpolations].address = posptr;
         curipos[numinterpolations].type = type;
@@ -407,7 +407,7 @@ static void R_StopInterpolation(interpolation_type_e type, void *posptr)
     if (!movement_smooth)
         return;
 
-    i = NULL;
+    i = nullptr;
     switch (type)
     {
     case INTERP_SectorFloor:
@@ -427,7 +427,7 @@ static void R_StopInterpolation(interpolation_type_e type, void *posptr)
         break;
     }
 
-    if (i != NULL && (*i) != 0)
+    if (i != nullptr && (*i) != 0)
     {
         numinterpolations--;
 
@@ -440,7 +440,7 @@ static void R_StopInterpolation(interpolation_type_e type, void *posptr)
 
         // swap indexes
         posptr_last = curipos[numinterpolations].address;
-        j = NULL;
+        j = nullptr;
         switch (curipos[numinterpolations].type)
         {
         case INTERP_SectorFloor:
@@ -461,7 +461,7 @@ static void R_StopInterpolation(interpolation_type_e type, void *posptr)
         }
 
         // swap
-        if (j != NULL)
+        if (j != nullptr)
         {
             *j = *i;
         }
@@ -540,8 +540,8 @@ static void R_InterpolationGetData(thinker_t *th, interpolation_type_e *type1,
                                    interpolation_type_e *type2, void **posptr1,
                                    void **posptr2)
 {
-    *posptr1 = NULL;
-    *posptr2 = NULL;
+    *posptr1 = nullptr;
+    *posptr2 = nullptr;
 
     if (th->function == T_MoveFloor)
     {

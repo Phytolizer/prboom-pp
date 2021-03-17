@@ -47,8 +47,8 @@ static int fl_init(int samplerate)
     return 0;
 }
 
-const music_player_t fl_player = {fl_name, fl_init, NULL, NULL, NULL, NULL,
-                                  NULL,    NULL,    NULL, NULL, NULL};
+const music_player_t fl_player = {fl_name, fl_init, nullptr, NULL, NULL, NULL,
+                                  nullptr,    NULL,    NULL, NULL, NULL};
 
 #else // HAVE_LIBFLUIDSYNTH
 
@@ -203,14 +203,14 @@ void fl_shutdown(void)
     {
         fluid_synth_sfunload(f_syn, f_font, 1);
         delete_fluid_synth(f_syn);
-        f_syn = NULL;
+        f_syn = nullptr;
         f_font = 0;
     }
 
     if (f_set)
     {
         delete_fluid_settings(f_set);
-        f_set = NULL;
+        f_set = nullptr;
     }
 }
 
@@ -227,21 +227,21 @@ const void *fl_registersong(const void *data, unsigned len)
     if (!midifile)
     {
         lprintf(LO_WARN, "fl_registersong: Failed to load MIDI.\n");
-        return NULL;
+        return nullptr;
     }
 
     events = MIDI_GenerateFlatList(midifile);
     if (!events)
     {
         MIDI_FreeFile(midifile);
-        return NULL;
+        return nullptr;
     }
     eventpos = 0;
 
     // implicit 120BPM (this is correct to spec)
     // spmc = compute_spmc (MIDI_GetFileTimeDivision (midifile), 500000,
     // f_soundrate);
-    spmc = MIDI_spmc(midifile, NULL, f_soundrate);
+    spmc = MIDI_spmc(midifile, nullptr, f_soundrate);
 
     // handle not used
     return data;
@@ -252,12 +252,12 @@ void fl_unregistersong(const void *handle)
     if (events)
     {
         MIDI_DestroyFlatList(events);
-        events = NULL;
+        events = nullptr;
     }
     if (midifile)
     {
         MIDI_FreeFile(midifile);
-        midifile = NULL;
+        midifile = nullptr;
     }
 }
 
@@ -306,7 +306,7 @@ static void fl_writesamples_ex(short *dest, int nsamp)
     int i;
     float multiplier = 16384.0f / 15.0f * f_volume;
 
-    static float *fbuff = NULL;
+    static float *fbuff = nullptr;
     static int fbuff_siz = 0;
 
     if (nsamp * 2 > fbuff_siz)
@@ -352,7 +352,7 @@ static void writesysex(unsigned char *data, int len)
     if (sysexbuff[sysexbufflen - 1] == 0xf7) // terminator
     { // pass len-1 because fluidsynth does NOT want the final F7
         fluid_synth_sysex(f_syn, (const char *)sysexbuff, sysexbufflen - 1,
-                          NULL, NULL, &didrespond, 0);
+                          nullptr, NULL, &didrespond, 0);
         sysexbufflen = 0;
     }
     if (!didrespond)

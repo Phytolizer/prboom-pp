@@ -311,7 +311,7 @@ void R_InitTextures(void)
     nummappatches = LONG(*((int *)names));
     name_p = names + 4;
     patchlookup =
-        Z_Malloc(nummappatches * sizeof(*patchlookup), PU_STATIC, NULL);
+        Z_Malloc(nummappatches * sizeof(*patchlookup), PU_STATIC, nullptr);
     for (i = 0; i < nummappatches; i++)
     {
         M_StringCopy(name, name_p + i * 8, sizeof(name));
@@ -335,7 +335,7 @@ void R_InitTextures(void)
     }
     else
     {
-        maptex2 = NULL;
+        maptex2 = nullptr;
         numtextures2 = 0;
         maxoff2 = 0;
     }
@@ -529,7 +529,7 @@ void R_InitColormaps(void)
                                boolean keepgray109);
 
         if (!crstr)
-            crstr = I_Realloc(NULL, CRMAX * sizeof(*crstr));
+            crstr = I_Realloc(nullptr, CRMAX * sizeof(*crstr));
 
         // [crispy] CRMAX - 2: don't override the original GREN and BLUE2 Boom
         // tables
@@ -668,7 +668,7 @@ void R_PrecacheLevel(void)
     //
     // precache flats
     //
-    flatpresent = Z_Malloc(numflats, PU_STATIC, NULL);
+    flatpresent = Z_Malloc(numflats, PU_STATIC, nullptr);
     memset(flatpresent, 0, numflats);
     for (i = 0; i < numsectors; i++)
     {
@@ -690,7 +690,7 @@ void R_PrecacheLevel(void)
     //
     // precache textures
     //
-    texturepresent = Z_Malloc(numtextures, PU_STATIC, NULL);
+    texturepresent = Z_Malloc(numtextures, PU_STATIC, nullptr);
     memset(texturepresent, 0, numtextures);
 
     for (i = 0; i < numsides; i++)
@@ -721,7 +721,7 @@ void R_PrecacheLevel(void)
     //
     // precache sprites
     //
-    spritepresent = Z_Malloc(numsprites, PU_STATIC, NULL);
+    spritepresent = Z_Malloc(numsprites, PU_STATIC, nullptr);
     memset(spritepresent, 0, numsprites);
 
     for (th = thinkercap.next; th != &thinkercap; th = th->next)

@@ -95,7 +95,7 @@ void P_UpdateThinker(thinker_t *thinker)
 
     {
         /* Remove from current thread, if in one */
-        if ((th = thinker->cnext) != NULL)
+        if ((th = thinker->cnext) != nullptr)
             (th->cprev = thinker->cprev)->cnext = th;
     }
 
@@ -122,7 +122,7 @@ void P_AddThinker(thinker_t *thinker)
     thinker->references = 0; // killough 11/98: init reference counter to 0
 
     // killough 8/29/98: set sentinel pointers, and then add to appropriate list
-    thinker->cnext = thinker->cprev = NULL;
+    thinker->cnext = thinker->cprev = nullptr;
     P_UpdateThinker(thinker);
     newthinkerpresent = true;
 }
@@ -197,7 +197,7 @@ thinker_t *P_NextThinker(thinker_t *th, th_class cl)
     if (!th)
         th = top;
     th = cl == th_all ? th->next : th->cnext;
-    return th == top ? NULL : th;
+    return th == top ? nullptr : th;
 }
 
 /*
@@ -216,7 +216,7 @@ void P_SetTarget(mobj_t **mop, mobj_t *targ)
 {
     if (*mop) // If there was a target already, decrease its refcount
         (*mop)->thinker.references--;
-    if ((*mop = targ)) // Set new target and if non-NULL, increase its counter
+    if ((*mop = targ)) // Set new target and if non-nullptr, increase its counter
         targ->thinker.references++;
 }
 

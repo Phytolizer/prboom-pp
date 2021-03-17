@@ -51,7 +51,7 @@ static void dsda_EnsureDemoBufferSpace(size_t length)
     dsda_demo_write_buffer =
         (byte *)realloc(dsda_demo_write_buffer, dsda_demo_write_buffer_length);
 
-    if (dsda_demo_write_buffer == NULL)
+    if (dsda_demo_write_buffer == nullptr)
         I_Error("dsda_EnsureDemoBufferSpace: out of memory!");
 
     dsda_demo_write_buffer_p = dsda_demo_write_buffer + offset;
@@ -69,7 +69,7 @@ void dsda_InitDemo(char *name)
     memcpy(dsda_demo_name, name, name_size);
 
     dsda_demo_write_buffer = malloc<byte *>(INITIAL_DEMO_BUFFER_SIZE);
-    if (dsda_demo_write_buffer == NULL)
+    if (dsda_demo_write_buffer == nullptr)
         I_Error("dsda_InitDemo: unable to initialize demo buffer!");
 
     dsda_demo_write_buffer_p = dsda_demo_write_buffer;
@@ -96,10 +96,10 @@ void dsda_WriteDemoToFile(void)
 
     free(dsda_demo_write_buffer);
     free(dsda_demo_name);
-    dsda_demo_write_buffer = NULL;
-    dsda_demo_write_buffer_p = NULL;
+    dsda_demo_write_buffer = nullptr;
+    dsda_demo_write_buffer_p = nullptr;
     dsda_demo_write_buffer_length = 0;
-    dsda_demo_name = NULL;
+    dsda_demo_name = nullptr;
 }
 
 int dsda_DemoBufferOffset(void)
@@ -119,7 +119,7 @@ int dsda_CopyDemoBuffer(void *buffer)
 
 void dsda_SetDemoBufferOffset(int offset)
 {
-    if (dsda_demo_write_buffer == NULL)
+    if (dsda_demo_write_buffer == nullptr)
         return;
 
     // Cannot load forward (demo buffer would desync)

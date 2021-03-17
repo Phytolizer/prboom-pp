@@ -47,8 +47,8 @@
 
 #define BASEYCENTER 100
 
-static int *clipbot = NULL; // killough 2/8/98: // dropoff overflow
-static int *cliptop = NULL; // change to MAX_*  // dropoff overflow
+static int *clipbot = nullptr; // killough 2/8/98: // dropoff overflow
+static int *cliptop = nullptr; // change to MAX_*  // dropoff overflow
 
 //
 // Sprite rotation 0 is facing the viewer,
@@ -552,7 +552,7 @@ static void R_DrawVisSprite(vissprite_t *vis)
     // killough 4/11/98: rearrange and handle translucent sprites
     // mixed with translucent/non-translucenct 2s normals
 
-    if (!dcvars.colormap) // NULL colormap = shadow draw
+    if (!dcvars.colormap) // nullptr colormap = shadow draw
         colfunc = R_GetDrawColumnFunc(RDC_PIPELINE_FUZZ, filter,
                                       filterz); // killough 3/14/98
     else
@@ -854,7 +854,7 @@ static void R_ProjectSprite(mobj_t *thing, int lightlevel)
 
     // get light level
     if (thing->flags & g_mf_shadow)
-        vis->colormap = NULL; // shadow draw
+        vis->colormap = nullptr; // shadow draw
     else if (fixedcolormap)
         vis->colormap = fixedcolormap; // fixed map
     else if (thing->frame & FF_FULLBRIGHT)
@@ -1005,13 +1005,13 @@ static void R_DrawPSprite(pspdef_t *psp)
         const int state = viewplayer->psprites[ps_weapon].state - states;
 
         R_ApplyWeaponBob(&psp_sx, weapon_attack_alignment == CENTERWEAPON_BOB,
-                         NULL, false);
+                         nullptr, false);
 
         // [crispy] don't center vertically during lowering and raising states
         if (weapon_attack_alignment >= CENTERWEAPON_HORVER &&
             state != winfo->downstate && state != winfo->upstate)
         {
-            R_ApplyWeaponBob(NULL, false, &psp_sy,
+            R_ApplyWeaponBob(nullptr, false, &psp_sy,
                              weapon_attack_alignment == CENTERWEAPON_BOB);
         }
     }
@@ -1078,7 +1078,7 @@ static void R_DrawPSprite(pspdef_t *psp)
         }
         else
         {
-            vis->colormap = NULL; // shadow draw
+            vis->colormap = nullptr; // shadow draw
         }
     }
     else if (fixedcolormap)

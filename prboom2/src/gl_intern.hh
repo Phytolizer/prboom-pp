@@ -522,7 +522,7 @@ typedef struct vbo_vertex_s
     float u, v;
     unsigned char r, g, b, a;
 } PACKEDATTR vbo_vertex_t;
-#define NULL_VBO_VERTEX ((vbo_vertex_t *)NULL)
+#define NULL_VBO_VERTEX ((vbo_vertex_t *)nullptr)
 #define sky_vbo_x                                                              \
     (gl_ext_arb_vertex_buffer_object ? &NULL_VBO_VERTEX->x : &vbo->data[0].x)
 #define sky_vbo_u                                                              \
@@ -536,7 +536,7 @@ typedef struct vbo_xyz_uv_s
     float u, v;
 } PACKEDATTR vbo_xyz_uv_t;
 extern vbo_xyz_uv_t *flats_vbo;
-#define NULL_VBO_XYZ_UV ((vbo_xyz_uv_t *)NULL)
+#define NULL_VBO_XYZ_UV ((vbo_xyz_uv_t *)nullptr)
 #define flats_vbo_x                                                            \
     (gl_ext_arb_vertex_buffer_object ? &NULL_VBO_XYZ_UV->x : &flats_vbo[0].x)
 #define flats_vbo_u                                                            \

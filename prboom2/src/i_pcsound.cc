@@ -40,8 +40,8 @@ static dboolean pcs_initialised = false;
 
 static SDL_mutex *sound_lock;
 
-static const uint8_t *current_sound_lump = NULL;
-static const uint8_t *current_sound_pos = NULL;
+static const uint8_t *current_sound_lump = nullptr;
+static const uint8_t *current_sound_pos = nullptr;
 static unsigned int current_sound_remaining = 0;
 static int current_sound_handle = 0;
 
@@ -76,7 +76,7 @@ void PCSCallbackFunc(int *duration, int *freq)
         return;
     }
 
-    if (current_sound_lump != NULL && current_sound_remaining > 0)
+    if (current_sound_lump != nullptr && current_sound_remaining > 0)
     {
         // Read the next tone
 
@@ -113,10 +113,10 @@ static dboolean CachePCSLump(int sound_id)
 
     // Free the current sound lump back to the cache
 
-    if (current_sound_lump != NULL)
+    if (current_sound_lump != nullptr)
     {
         // e6y Z_ChangeTag(current_sound_lump, PU_CACHE);
-        current_sound_lump = NULL;
+        current_sound_lump = nullptr;
     }
 
     // Load from WAD
@@ -225,7 +225,7 @@ int I_PCS_SoundIsPlaying(int handle)
         return false;
     }
 
-    return current_sound_lump != NULL && current_sound_remaining > 0;
+    return current_sound_lump != nullptr && current_sound_remaining > 0;
 }
 
 void I_PCS_InitSound(void)

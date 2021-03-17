@@ -119,7 +119,7 @@ void W_DoneCache(void)
     if (cachelump)
     {
         free(cachelump);
-        cachelump = NULL;
+        cachelump = nullptr;
     }
 
     if (!mapped_wad)
@@ -129,21 +129,21 @@ void W_DoneCache(void)
         if (mapped_wad[i].data)
         {
             UnmapViewOfFile(mapped_wad[i].data);
-            mapped_wad[i].data = NULL;
+            mapped_wad[i].data = nullptr;
         }
         if (mapped_wad[i].hnd_map)
         {
             CloseHandle(mapped_wad[i].hnd_map);
-            mapped_wad[i].hnd_map = NULL;
+            mapped_wad[i].hnd_map = nullptr;
         }
         if (mapped_wad[i].hnd)
         {
             CloseHandle(mapped_wad[i].hnd);
-            mapped_wad[i].hnd = NULL;
+            mapped_wad[i].hnd = nullptr;
         }
     }
     free(mapped_wad);
-    mapped_wad = NULL;
+    mapped_wad = nullptr;
 }
 
 void W_InitCache(void)
@@ -177,21 +177,21 @@ void W_InitCache(void)
             {
                 mapped_wad[wad_index].hnd =
                     CreateFile(wadfiles[wad_index].name, GENERIC_READ,
-                               FILE_SHARE_READ | FILE_SHARE_WRITE, NULL,
-                               OPEN_EXISTING, 0, NULL);
+                               FILE_SHARE_READ | FILE_SHARE_WRITE, nullptr,
+                               OPEN_EXISTING, 0, nullptr);
                 if (mapped_wad[wad_index].hnd == INVALID_HANDLE_VALUE)
                     I_Error("W_InitCache: CreateFile for memory mapping failed "
                             "(LastError %i)",
                             GetLastError());
                 mapped_wad[wad_index].hnd_map = CreateFileMapping(
-                    mapped_wad[wad_index].hnd, NULL, PAGE_READONLY, 0, 0, NULL);
-                if (mapped_wad[wad_index].hnd_map == NULL)
+                    mapped_wad[wad_index].hnd, nullptr, PAGE_READONLY, 0, 0, NULL);
+                if (mapped_wad[wad_index].hnd_map == nullptr)
                     I_Error("W_InitCache: CreateFileMapping for memory mapping "
                             "failed (LastError %i)",
                             GetLastError());
                 mapped_wad[wad_index].data = MapViewOfFile(
                     mapped_wad[wad_index].hnd_map, FILE_MAP_READ, 0, 0, 0);
-                if (mapped_wad[wad_index].data == NULL)
+                if (mapped_wad[wad_index].data == nullptr)
                     I_Error("W_InitCache: MapViewOfFile for memory mapping "
                             "failed (LastError %i)",
                             GetLastError());
@@ -210,7 +210,7 @@ const void *W_CacheLumpNum(int lump)
         I_Error("W_CacheLumpNum: %i >= numlumps", lump);
 #endif
     if (!lumpinfo[lump].wadfile)
-        return NULL;
+        return nullptr;
     return (void *)((unsigned char *)mapped_wad[wad_index].data +
                     lumpinfo[lump].position);
 }
@@ -248,7 +248,7 @@ void W_InitCache(void)
             {
                 int fd = lumpinfo[i].wadfile->handle;
                 if (!mapped_wad[fd])
-                    if ((mapped_wad[fd] = mmap(NULL, I_Filelength(fd),
+                    if ((mapped_wad[fd] = mmap(nullptr, I_Filelength(fd),
                                                PROT_READ, MAP_SHARED, fd, 0)) ==
                         MAP_FAILED)
                         I_Error("W_InitCache: failed to mmap");
@@ -269,12 +269,12 @@ void W_DoneCache(void)
                 {
                     if (munmap(mapped_wad[fd], I_Filelength(fd)))
                         I_Error("W_DoneCache: failed to munmap");
-                    mapped_wad[fd] = NULL;
+                    mapped_wad[fd] = nullptr;
                 }
             }
     }
     free(mapped_wad);
-    mapped_wad = NULL;
+    mapped_wad = nullptr;
 }
 
 const void *W_CacheLumpNum(int lump)
@@ -284,7 +284,7 @@ const void *W_CacheLumpNum(int lump)
         I_Error("W_CacheLumpNum: %i >= numlumps", lump);
 #endif
     if (!lumpinfo[lump].wadfile)
-        return NULL;
+        return nullptr;
 
     return (
         const void

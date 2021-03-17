@@ -48,8 +48,8 @@ static mobj_t *P_TeleportDestination(line_t *line)
     int i;
     for (i = -1; (i = P_FindSectorFromLineTag(line, i)) >= 0;)
     {
-        thinker_t *th = NULL;
-        while ((th = P_NextThinker(th, th_misc)) != NULL)
+        thinker_t *th = nullptr;
+        while ((th = P_NextThinker(th, th_misc)) != nullptr)
             if (th->function == P_MobjThinker)
             {
                 mobj_t *m = (mobj_t *)th;
@@ -58,7 +58,7 @@ static mobj_t *P_TeleportDestination(line_t *line)
                     return m;
             }
     }
-    return NULL;
+    return nullptr;
 }
 //
 // TELEPORTATION
@@ -81,14 +81,14 @@ int EV_Teleport(line_t *line, int side, mobj_t *thing)
     // killough 1/31/98: improve performance by using
     // P_FindSectorFromLineTag instead of simple linear search.
 
-    if ((m = P_TeleportDestination(line)) != NULL)
+    if ((m = P_TeleportDestination(line)) != nullptr)
     {
         fixed_t oldx = thing->x, oldy = thing->y, oldz = thing->z;
         player_t *player = thing->player;
 
         // killough 5/12/98: exclude voodoo dolls:
         if (player && player->mo != thing)
-            player = NULL;
+            player = nullptr;
 
         if (!P_TeleportMove(thing, m->x, m->y, false)) /* killough 8/9/98 */
             return 0;
@@ -148,7 +148,7 @@ int EV_SilentTeleport(line_t *line, int side, mobj_t *thing)
     if (side || thing->flags & MF_MISSILE)
         return 0;
 
-    if ((m = P_TeleportDestination(line)) != NULL)
+    if ((m = P_TeleportDestination(line)) != nullptr)
     {
         // Height of thing above ground, in case of mid-air teleports:
         fixed_t z = thing->z - thing->floorz;
@@ -263,7 +263,7 @@ int EV_SilentLineTeleport(line_t *line, int side, mobj_t *thing,
             // thing->player->mo==thing.
             player_t *player = thing->player && thing->player->mo == thing
                                    ? thing->player
-                                   : NULL;
+                                   : nullptr;
 
             // Whether walking towards first side of exit linedef steps down
             int stepdown =

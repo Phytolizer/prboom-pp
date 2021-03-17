@@ -301,18 +301,18 @@ int twoSided(int sector, int line)
 //
 // Return sector_t * of sector next to current across line.
 //
-// Note: returns NULL if not two-sided line, or both sides refer to sector
+// Note: returns nullptr if not two-sided line, or both sides refer to sector
 //
 sector_t *getNextSector(line_t *line, sector_t *sec)
 {
     // jff 1/26/98 check unneeded since line->backsector already
-    // returns NULL if the line is not two sided, and does so from
+    // returns nullptr if the line is not two sided, and does so from
     // the actual two-sidedness of the line, rather than its 2S flag
 
     if (comp[comp_model])
     {
         if (!(line->flags & ML_TWOSIDED))
-            return NULL;
+            return nullptr;
     }
 
     if (line->frontsector == sec)
@@ -321,7 +321,7 @@ sector_t *getNextSector(line_t *line, sector_t *sec)
             return line
                 ->backsector; // jff 5/3/98 don't retn sec unless compatibility
         else                  // fixes an intra-sector line breaking functions
-            return NULL;      // like floor->highest floor
+            return nullptr;      // like floor->highest floor
     }
     return line->frontsector;
 }
@@ -412,7 +412,7 @@ fixed_t P_FindNextHighestFloor(sector_t *sec, int currentheight)
         int h;
         int min;
         static int MAX_ADJOINING_SECTORS = 0;
-        static fixed_t *heightlist = NULL;
+        static fixed_t *heightlist = nullptr;
         static int heightlist_size = 0;
         line_t *check;
         fixed_t height = currentheight;
@@ -781,7 +781,7 @@ fixed_t P_FindShortestUpperAround(int secnum)
 // a sector with that floor height across the lowest numbered two sided
 // line surrounding the sector.
 //
-// Note: If no sector at that height bounds the sector passed, return NULL
+// Note: If no sector at that height bounds the sector passed, return nullptr
 //
 // jff 02/03/98 Add routine to find numeric model floor
 //  around a sector specified by sector number
@@ -791,7 +791,7 @@ fixed_t P_FindShortestUpperAround(int secnum)
 sector_t *P_FindModelFloorSector(fixed_t floordestheight, int secnum)
 {
     int i;
-    sector_t *sec = NULL;
+    sector_t *sec = nullptr;
     int linecount;
 
     sec = &sectors[secnum]; // jff 3/2/98 woops! better do this
@@ -814,7 +814,7 @@ sector_t *P_FindModelFloorSector(fixed_t floordestheight, int secnum)
                 return sec;
         }
     }
-    return NULL;
+    return nullptr;
 }
 
 //
@@ -824,7 +824,7 @@ sector_t *P_FindModelFloorSector(fixed_t floordestheight, int secnum)
 // a sector with that ceiling height across the lowest numbered two sided
 // line surrounding the sector.
 //
-// Note: If no sector at that height bounds the sector passed, return NULL
+// Note: If no sector at that height bounds the sector passed, return nullptr
 //
 // jff 02/03/98 Add routine to find numeric model ceiling
 //  around a sector specified by sector number
@@ -835,7 +835,7 @@ sector_t *P_FindModelFloorSector(fixed_t floordestheight, int secnum)
 sector_t *P_FindModelCeilingSector(fixed_t ceildestheight, int secnum)
 {
     int i;
-    sector_t *sec = NULL;
+    sector_t *sec = nullptr;
     int linecount;
 
     sec = &sectors[secnum]; // jff 3/2/98 woops! better do this
@@ -858,7 +858,7 @@ sector_t *P_FindModelCeilingSector(fixed_t ceildestheight, int secnum)
                 return sec;
         }
     }
-    return NULL;
+    return nullptr;
 }
 
 //
@@ -1089,17 +1089,17 @@ dboolean P_CanUnlockGenDoor(line_t *line, player_t *player)
 dboolean PUREFUNC P_SectorActive(special_e t, const sector_t *sec)
 {
     if (demo_compatibility) // return whether any thinker is active
-        return sec->floordata != NULL || sec->ceilingdata != NULL ||
-               sec->lightingdata != NULL;
+        return sec->floordata != nullptr || sec->ceilingdata != NULL ||
+               sec->lightingdata != nullptr;
     else
         switch (t) // return whether thinker of same type is active
         {
         case floor_special:
-            return sec->floordata != NULL;
+            return sec->floordata != nullptr;
         case ceiling_special:
-            return sec->ceilingdata != NULL;
+            return sec->ceilingdata != nullptr;
         case lighting_special:
-            return sec->lightingdata != NULL;
+            return sec->lightingdata != nullptr;
         }
     return true; // don't know which special, must be active, shouldn't be here
 }
@@ -1277,9 +1277,9 @@ void P_CrossSpecialLine(line_t *line, int side, mobj_t *thing,
     // jff 02/04/98 add check here for generalized lindef types
     if (!demo_compatibility) // generalized types not recognized if old demo
     {
-        // pointer to line function is NULL by default, set non-null if
+        // pointer to line function is nullptr by default, set non-null if
         // line special is walkover generalized linedef type
-        int (*linefunc)(line_t * line) = NULL;
+        int (*linefunc)(line_t * line) = nullptr;
 
         // check each range of generalized linedefs
         if ((unsigned)line->special >= GenEnd)
@@ -2170,9 +2170,9 @@ void P_ShootSpecialLine(mobj_t *thing, line_t *line)
     // jff 02/04/98 add check here for generalized linedef
     if (!demo_compatibility)
     {
-        // pointer to line function is NULL by default, set non-null if
+        // pointer to line function is nullptr by default, set non-null if
         // line special is gun triggered generalized linedef type
-        int (*linefunc)(line_t * line) = NULL;
+        int (*linefunc)(line_t * line) = nullptr;
 
         // check each range of generalized linedefs
         if ((unsigned)line->special >= GenEnd)
@@ -2390,14 +2390,14 @@ void P_PlayerInSpecialSector(player_t *player)
             // 5/10 unit damage per 31 ticks
             if (!player->powers[pw_ironfeet])
                 if (!(leveltime & 0x1f))
-                    P_DamageMobj(player->mo, NULL, NULL, 10);
+                    P_DamageMobj(player->mo, nullptr, NULL, 10);
             break;
 
         case 7:
             // 2/5 unit damage per 31 ticks
             if (!player->powers[pw_ironfeet])
                 if (!(leveltime & 0x1f))
-                    P_DamageMobj(player->mo, NULL, NULL, 5);
+                    P_DamageMobj(player->mo, nullptr, NULL, 5);
             break;
 
         case 16:
@@ -2408,7 +2408,7 @@ void P_PlayerInSpecialSector(player_t *player)
                 (P_Random(pr_slimehurt) < 5)) // even with suit, take damage
             {
                 if (!(leveltime & 0x1f))
-                    P_DamageMobj(player->mo, NULL, NULL, 20);
+                    P_DamageMobj(player->mo, nullptr, NULL, 20);
             }
             break;
 
@@ -2437,7 +2437,7 @@ void P_PlayerInSpecialSector(player_t *player)
                     ~CF_GODMODE; // on godmode cheat clearing
                                  // does not affect invulnerability
             if (!(leveltime & 0x1f))
-                P_DamageMobj(player->mo, NULL, NULL, 20);
+                P_DamageMobj(player->mo, nullptr, NULL, 20);
 
             if (player->health <= 10)
                 G_ExitLevel();
@@ -2457,19 +2457,19 @@ void P_PlayerInSpecialSector(player_t *player)
         case 1: // 2/5 damage per 31 ticks
             if (!player->powers[pw_ironfeet])
                 if (!(leveltime & 0x1f))
-                    P_DamageMobj(player->mo, NULL, NULL, 5);
+                    P_DamageMobj(player->mo, nullptr, NULL, 5);
             break;
         case 2: // 5/10 damage per 31 ticks
             if (!player->powers[pw_ironfeet])
                 if (!(leveltime & 0x1f))
-                    P_DamageMobj(player->mo, NULL, NULL, 10);
+                    P_DamageMobj(player->mo, nullptr, NULL, 10);
             break;
         case 3: // 10/20 damage per 31 ticks
             if (!player->powers[pw_ironfeet] ||
                 (P_Random(pr_slimehurt) < 5)) // take damage even with suit
             {
                 if (!(leveltime & 0x1f))
-                    P_DamageMobj(player->mo, NULL, NULL, 20);
+                    P_DamageMobj(player->mo, nullptr, NULL, 20);
             }
             break;
         }
@@ -3560,7 +3560,7 @@ void T_Pusher(pusher_t *p)
 /////////////////////////////
 //
 // P_GetPushThing() returns a pointer to an MT_PUSH or MT_PULL thing,
-// NULL otherwise.
+// nullptr otherwise.
 
 mobj_t *P_GetPushThing(int s)
 {
@@ -3581,7 +3581,7 @@ mobj_t *P_GetPushThing(int s)
         }
         thing = thing->snext;
     }
-    return NULL;
+    return nullptr;
 }
 
 /////////////////////////////
@@ -3601,11 +3601,11 @@ static void P_SpawnPushers(void)
         {
         case 224: // wind
             for (s = -1; (s = P_FindSectorFromLineTag(l, s)) >= 0;)
-                Add_Pusher(pusher_t::p_wind, l->dx, l->dy, NULL, s);
+                Add_Pusher(pusher_t::p_wind, l->dx, l->dy, nullptr, s);
             break;
         case 225: // current
             for (s = -1; (s = P_FindSectorFromLineTag(l, s)) >= 0;)
-                Add_Pusher(pusher_t::p_current, l->dx, l->dy, NULL, s);
+                Add_Pusher(pusher_t::p_current, l->dx, l->dy, nullptr, s);
             break;
         case 226: // push/pull
             for (s = -1; (s = P_FindSectorFromLineTag(l, s)) >= 0;)
@@ -3858,12 +3858,12 @@ void P_AmbientSound(void)
         {
         case afxcmd_play:
             AmbSfxVolume = P_Random(pr_heretic) >> 2;
-            S_StartSoundAtVolume(NULL, *AmbSfxPtr++, AmbSfxVolume);
+            S_StartSoundAtVolume(nullptr, *AmbSfxPtr++, AmbSfxVolume);
             break;
         case afxcmd_playabsvol:
             sound = *AmbSfxPtr++;
             AmbSfxVolume = *AmbSfxPtr++;
-            S_StartSoundAtVolume(NULL, sound, AmbSfxVolume);
+            S_StartSoundAtVolume(nullptr, sound, AmbSfxVolume);
             break;
         case afxcmd_playrelvol:
             sound = *AmbSfxPtr++;
@@ -3876,7 +3876,7 @@ void P_AmbientSound(void)
             {
                 AmbSfxVolume = 127;
             }
-            S_StartSoundAtVolume(NULL, sound, AmbSfxVolume);
+            S_StartSoundAtVolume(nullptr, sound, AmbSfxVolume);
             break;
         case afxcmd_delay:
             AmbSfxTics = *AmbSfxPtr++;
@@ -4187,20 +4187,20 @@ void Heretic_P_PlayerInSpecialSector(player_t *player)
     case 7: // Damage_Sludge
         if (!(leveltime & 31))
         {
-            P_DamageMobj(player->mo, NULL, NULL, 4);
+            P_DamageMobj(player->mo, nullptr, NULL, 4);
         }
         break;
     case 5: // Damage_LavaWimpy
         if (!(leveltime & 15))
         {
-            P_DamageMobj(player->mo, &LavaInflictor, NULL, 5);
+            P_DamageMobj(player->mo, &LavaInflictor, nullptr, 5);
             P_HitFloor(player->mo);
         }
         break;
     case 16: // Damage_LavaHefty
         if (!(leveltime & 15))
         {
-            P_DamageMobj(player->mo, &LavaInflictor, NULL, 8);
+            P_DamageMobj(player->mo, &LavaInflictor, nullptr, 8);
             P_HitFloor(player->mo);
         }
         break;
@@ -4208,7 +4208,7 @@ void Heretic_P_PlayerInSpecialSector(player_t *player)
         P_Thrust(player, 0, 2048 * 28);
         if (!(leveltime & 15))
         {
-            P_DamageMobj(player->mo, &LavaInflictor, NULL, 5);
+            P_DamageMobj(player->mo, &LavaInflictor, nullptr, 5);
             P_HitFloor(player->mo);
         }
         break;

@@ -151,7 +151,7 @@ void R_FlushAllPatches(void)
             if (patches[i].locks > 0)
                 I_Error("R_FlushAllPatches: patch number %i still locked", i);
         free(patches);
-        patches = NULL;
+        patches = nullptr;
     }
     if (texture_composites)
     {
@@ -159,7 +159,7 @@ void R_FlushAllPatches(void)
             if (texture_composites[i].data)
                 free(texture_composites[i].data);
         free(texture_composites);
-        texture_composites = NULL;
+        texture_composites = nullptr;
     }
 }
 
@@ -439,7 +439,7 @@ static void createPatch(int id)
     if (!CheckIfPatch(patchNum))
     {
         I_Error("createPatch: Unknown patch format %s.",
-                (patchNum < numlumps ? lumpinfo[patchNum].name : NULL));
+                (patchNum < numlumps ? lumpinfo[patchNum].name : nullptr));
     }
 
     oldPatch = (const patch_t *)W_CacheLumpNum(patchNum);

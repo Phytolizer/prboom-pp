@@ -332,7 +332,7 @@ void T_MoveFloor(floormove_t *floor)
             }
         }
 
-        floor->sector->floordata = NULL; // jff 2/22/98
+        floor->sector->floordata = nullptr; // jff 2/22/98
         P_RemoveThinker(
             &floor->thinker); // remove this floor from list of movers
 
@@ -420,8 +420,8 @@ void T_MoveElevator(elevator_t *elevator)
 
     if (res == pastdest) // if destination height acheived
     {
-        elevator->sector->floordata = NULL;   // jff 2/22/98
-        elevator->sector->ceilingdata = NULL; // jff 2/22/98
+        elevator->sector->floordata = nullptr;   // jff 2/22/98
+        elevator->sector->ceilingdata = nullptr; // jff 2/22/98
         P_RemoveThinker(&elevator->thinker);  // remove elevator from actives
 
         // make floor stop sound

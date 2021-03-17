@@ -150,7 +150,7 @@ void T_VerticalDoor(vldoor_t *door)
             case blazeClose:
             case genBlazeRaise:
             case genBlazeClose:
-                door->sector->ceilingdata = NULL; // jff 2/22/98
+                door->sector->ceilingdata = nullptr; // jff 2/22/98
                 P_RemoveThinker(&door->thinker);  // unlink and free
                 // killough 4/15/98: remove double-closing sound of blazing
                 // doors
@@ -162,13 +162,13 @@ void T_VerticalDoor(vldoor_t *door)
             case closeDoor:
             case genRaise:
             case genClose:
-                door->sector->ceilingdata = NULL; // jff 2/22/98
+                door->sector->ceilingdata = nullptr; // jff 2/22/98
                 P_RemoveThinker(&door->thinker);  // unlink and free
                 break;
 
             case vld_normal:
             case vld_close:
-                door->sector->ceilingdata = NULL;
+                door->sector->ceilingdata = nullptr;
                 P_RemoveThinker(&door->thinker); // unlink and free
                 S_StartSound((mobj_t *)&door->sector->soundorg, g_sfx_dorcls);
                 break;
@@ -267,13 +267,13 @@ void T_VerticalDoor(vldoor_t *door)
             case genOpen:
             case genCdO:
             case genBlazeCdO:
-                door->sector->ceilingdata = NULL; // jff 2/22/98
+                door->sector->ceilingdata = nullptr; // jff 2/22/98
                 P_RemoveThinker(&door->thinker);  // unlink and free
                 break;
 
             case vld_close30ThenOpen:
             case vld_open:
-                door->sector->ceilingdata = NULL;
+                door->sector->ceilingdata = nullptr;
                 P_RemoveThinker(&door->thinker); // unlink and free
                 S_StopSound(&door->sector->soundorg);
                 break;
@@ -737,7 +737,7 @@ void P_SpawnDoorCloseIn30(sector_t *sec)
     door->type = static_cast<vldoor_e>(g_door_normal);
     door->speed = VDOORSPEED;
     door->topcountdown = 30 * 35;
-    door->line = NULL;  // jff 1/31/98 remember line that triggered us
+    door->line = nullptr;  // jff 1/31/98 remember line that triggered us
     door->lighttag = 0; /* killough 10/98: no lighting changes */
 }
 
@@ -770,7 +770,7 @@ void P_SpawnDoorRaiseIn5Mins(sector_t *sec, int /* secnum */)
     door->topheight -= 4 * FRACUNIT;
     door->topwait = VDOORWAIT;
     door->topcountdown = 5 * 60 * 35;
-    door->line = NULL;  // jff 1/31/98 remember line that triggered us
+    door->line = nullptr;  // jff 1/31/98 remember line that triggered us
     door->lighttag = 0; /* killough 10/98: no lighting changes */
 }
 
@@ -802,7 +802,7 @@ void Heretic_EV_VerticalDoor(line_t *line, mobj_t *thing)
         if (!player->cards[key_blue])
         {
             P_SetMessage(player, DEH_String(HERETIC_TXT_NEEDBLUEKEY), false);
-            S_StartSound(NULL, heretic_sfx_plroof);
+            S_StartSound(nullptr, heretic_sfx_plroof);
             return;
         }
         break;
@@ -815,7 +815,7 @@ void Heretic_EV_VerticalDoor(line_t *line, mobj_t *thing)
         if (!player->cards[key_yellow])
         {
             P_SetMessage(player, DEH_String(HERETIC_TXT_NEEDYELLOWKEY), false);
-            S_StartSound(NULL, heretic_sfx_plroof);
+            S_StartSound(nullptr, heretic_sfx_plroof);
             return;
         }
         break;
@@ -828,7 +828,7 @@ void Heretic_EV_VerticalDoor(line_t *line, mobj_t *thing)
         if (!player->cards[key_green])
         {
             P_SetMessage(player, DEH_String(HERETIC_TXT_NEEDGREENKEY), false);
-            S_StartSound(NULL, heretic_sfx_plroof);
+            S_StartSound(nullptr, heretic_sfx_plroof);
             return;
         }
         break;

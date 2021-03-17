@@ -102,12 +102,12 @@ void P_UnArchivePlayers(void)
             save_p += sizeof(player_t);
 
             // will be set when unarc thinker
-            players[i].mo = NULL;
-            players[i].message = NULL;
-            players[i].attacker = NULL;
+            players[i].mo = nullptr;
+            players[i].message = nullptr;
+            players[i].attacker = nullptr;
             // HERETIC_TODO: does the rain need to be remembered?
-            players[i].rain1 = NULL;
-            players[i].rain2 = NULL;
+            players[i].rain1 = nullptr;
+            players[i].rain2 = nullptr;
 
             for (j = 0; j < NUMPSPRITES; j++)
                 if (players[i].psprites[j].state)
@@ -335,7 +335,7 @@ void P_IndexToThinker(void)
 
 static void P_SetNewTarget(mobj_t **mop, mobj_t *targ)
 {
-    *mop = NULL;
+    *mop = nullptr;
     P_SetTarget(mop, targ);
 }
 
@@ -508,7 +508,7 @@ void P_UnArchiveThinkerSubclass(th_class cls, mobj_t **mobj_p, int mobj_count)
         {
             // remove mobj from current subclass list
             th = mobj->thinker.cnext;
-            if (th != NULL)
+            if (th != nullptr)
             {
                 th->cprev = mobj->thinker.cprev;
                 th->cprev->cnext = th;
@@ -600,7 +600,7 @@ void P_UnArchiveBlockLinks(mobj_t **mobj_p, int mobj_count)
             {
                 *bprev = mobj;
                 mobj->bprev = bprev;
-                mobj->bnext = NULL;
+                mobj->bnext = nullptr;
                 bprev = &mobj->bnext;
             }
             else
@@ -690,7 +690,7 @@ void P_TrueArchiveThinkers(void)
             ceilinglist_t *cl; // jff 2/22/98 add iter variable for ceilings
 
             // killough 2/8/98: fix plat original height bug.
-            // Since acv==NULL, this could be a plat in stasis.
+            // Since acv==nullptr, this could be a plat in stasis.
             // so check the active plats list, and save this
             // plat (jff: or ceiling) even if it is in stasis.
 
@@ -878,19 +878,19 @@ void P_TrueArchiveThinkers(void)
 
             // killough 2/14/98: convert pointers into indices.
             // Fixes many savegame problems, by properly saving
-            // target and tracer fields. Note: we store NULL if
+            // target and tracer fields. Note: we store nullptr if
             // the thinker pointed to by these fields is not a
             // mobj thinker.
 
             if (mobj->target)
                 mobj->target = P_IsMobjThinker(&mobj->target->thinker)
                                    ? (mobj_t *)mobj->target->thinker.prev
-                                   : NULL;
+                                   : nullptr;
 
             if (mobj->tracer)
                 mobj->tracer = P_IsMobjThinker(&mobj->tracer->thinker)
                                    ? (mobj_t *)mobj->tracer->thinker.prev
-                                   : NULL;
+                                   : nullptr;
 
             // killough 2/14/98: new field: save last known enemy. Prevents
             // monsters from going to sleep after killing monsters and not
@@ -899,7 +899,7 @@ void P_TrueArchiveThinkers(void)
             if (mobj->lastenemy)
                 mobj->lastenemy = P_IsMobjThinker(&mobj->lastenemy->thinker)
                                       ? (mobj_t *)mobj->lastenemy->thinker.prev
-                                      : NULL;
+                                      : nullptr;
 
             // killough 2/14/98: end changes
 
@@ -917,7 +917,7 @@ void P_TrueArchiveThinkers(void)
                         mobj->special1.m =
                             P_IsMobjThinker(&mobj->special1.m->thinker)
                                 ? (mobj_t *)mobj->special1.m->thinker.prev
-                                : NULL;
+                                : nullptr;
                     }
                     break;
                 case HERETIC_MT_POD:
@@ -926,7 +926,7 @@ void P_TrueArchiveThinkers(void)
                         mobj->special2.m =
                             P_IsMobjThinker(&mobj->special2.m->thinker)
                                 ? (mobj_t *)mobj->special2.m->thinker.prev
-                                : NULL;
+                                : nullptr;
                     }
                     break;
                 default:
@@ -954,7 +954,7 @@ void P_TrueArchiveThinkers(void)
             if (target && P_IsMobjThinker(&target->thinker))
                 target = (mobj_t *)target->thinker.prev;
             else
-                target = NULL;
+                target = nullptr;
             memcpy(save_p, &target, sizeof target);
             save_p += sizeof target;
         }
@@ -1029,7 +1029,7 @@ void P_TrueUnArchiveThinkers(void)
                 "P_TrueUnArchiveThinkers: Unknown tc %i in size calculation",
                 *save_p);
 
-        // first table entry special: 0 maps to NULL
+        // first table entry special: 0 maps to nullptr
         *(mobj_p = static_cast<mobj_t **>(malloc(
               (mobj_count + 1) * sizeof *mobj_p))) = 0; // table of pointers
         save_p = sp;                                    // restore save pointer
@@ -1070,7 +1070,7 @@ void P_TrueUnArchiveThinkers(void)
                 // jff 1/31/98 unarchive line remembered by door as well
                 door->line = (intptr_t)door->line != -1
                                  ? &lines[(size_t)door->line]
-                                 : NULL;
+                                 : nullptr;
 
                 door->sector->ceilingdata = door; // jff 2/22/98
                 door->thinker.function = T_VerticalDoor;
@@ -1274,7 +1274,7 @@ void P_TrueUnArchiveThinkers(void)
 
     // killough 2/14/98: adjust target and tracer fields, plus
     // lastenemy field, to correctly point to mobj thinkers.
-    // NULL entries automatically handled by first table entry.
+    // nullptr entries automatically handled by first table entry.
     //
     // killough 11/98: use P_SetNewTarget() to set fields
 

@@ -356,14 +356,14 @@ static void L_CommandOnChange(void)
         if (launcher.files)
         {
             free(launcher.files);
-            launcher.files = NULL;
+            launcher.files = nullptr;
         }
         launcher.filescount = 0;
 
         if (launcher.cache)
         {
             free(launcher.cache);
-            launcher.cache = NULL;
+            launcher.cache = nullptr;
         }
         launcher.cachesize = 0;
 
@@ -428,8 +428,8 @@ static void L_CommandOnChange(void)
 
             if (FormatMessage(
                     FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM,
-                    NULL, result, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
-                    (char *)&msg, 512, NULL))
+                    nullptr, result, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
+                    (char *)&msg, 512, nullptr))
             {
                 MessageBox(launcher.HWNDServer, msg, LAUNCHER_CAPTION,
                            MB_OK |
@@ -580,7 +580,7 @@ static dboolean L_GUISelect(waddata_t *waddata)
 
     for (k = 0; !processed && k < waddata->numwadfiles; k++)
     {
-        if (GetFullPath(waddata->wadfiles[k].name, NULL, fullpath, PATH_MAX))
+        if (GetFullPath(waddata->wadfiles[k].name, nullptr, fullpath, PATH_MAX))
         {
             switch (waddata->wadfiles[k].src)
             {
@@ -622,7 +622,7 @@ static dboolean L_GUISelect(waddata_t *waddata)
 
     for (k = 0; k < waddata->numwadfiles; k++)
     {
-        if (GetFullPath(waddata->wadfiles[k].name, NULL, fullpath, PATH_MAX))
+        if (GetFullPath(waddata->wadfiles[k].name, nullptr, fullpath, PATH_MAX))
         {
             switch (waddata->wadfiles[k].src)
             {
@@ -665,10 +665,10 @@ static dboolean L_GUISelect(waddata_t *waddata)
 static dboolean L_PrepareToLaunch(void)
 {
     int i, index, listPWADCount;
-    char *history = NULL;
-    wadfile_info_t *new_wadfiles = NULL;
+    char *history = nullptr;
+    wadfile_info_t *new_wadfiles = nullptr;
     size_t new_numwadfiles = 0;
-    int *selection = NULL;
+    int *selection = nullptr;
     int selectioncount = 0;
 
     new_numwadfiles = numwadfiles;
@@ -676,7 +676,7 @@ static dboolean L_PrepareToLaunch(void)
     memcpy(new_wadfiles, wadfiles, sizeof(*wadfiles) * numwadfiles);
     numwadfiles = 0;
     free(wadfiles);
-    wadfiles = NULL;
+    wadfiles = nullptr;
 
     listPWADCount = (int)SendMessage(launcher.listPWAD, LB_GETCOUNT, 0, 0);
 
@@ -843,7 +843,7 @@ static void L_SelAdd(int index)
 static void L_SelClearAndFree(void)
 {
     free(launcher.selection);
-    launcher.selection = NULL;
+    launcher.selection = nullptr;
     launcher.selectioncount = 0;
 }
 
@@ -852,7 +852,7 @@ static int L_SelGetList(int **list)
     int i, j, count = 0;
     int listPWADCount = (int)SendMessage(launcher.listPWAD, LB_GETCOUNT, 0, 0);
 
-    *list = NULL;
+    *list = nullptr;
 
     for (i = launcher.selectioncount - 1; i >= 0; i--)
     {
@@ -984,7 +984,7 @@ char *e6y_I_FindFile(const char *ext)
     {
         char *p;
         char d[PATH_MAX];
-        const char *s = NULL;
+        const char *s = nullptr;
         strcpy(d, "");
         switch (i)
         {
@@ -1063,22 +1063,22 @@ char *e6y_I_FindFile(const char *ext)
 
         free(p);
     }
-    return NULL;
+    return nullptr;
 }
 
 static char *L_HistoryGetStr(waddata_t *data)
 {
     size_t i;
-    char *iwad = NULL;
-    char *pwad = NULL;
-    char *deh = NULL;
+    char *iwad = nullptr;
+    char *pwad = nullptr;
+    char *deh = nullptr;
     char **str;
     char *result;
     size_t len;
 
     for (i = 0; i < data->numwadfiles; i++)
     {
-        str = NULL;
+        str = nullptr;
         switch (data->wadfiles[i].src)
         {
         case source_iwad:
@@ -1159,7 +1159,7 @@ static void L_HistoryFreeData(void)
 static void L_FillHistoryList(void)
 {
     int i;
-    char *p = NULL;
+    char *p = nullptr;
 
     L_HistoryFreeData();
 
@@ -1174,7 +1174,7 @@ static void L_FillHistoryList(void)
             waddata_t *waddata = malloc(sizeof(*waddata));
             memset(waddata, 0, sizeof(*waddata));
 
-            ParseDemoPattern(str, waddata, NULL, false);
+            ParseDemoPattern(str, waddata, nullptr, false);
             p = L_HistoryGetStr(waddata);
 
             if (p)
@@ -1186,7 +1186,7 @@ static void L_FillHistoryList(void)
                                 (LPARAM)waddata);
 
                 free(p);
-                p = NULL;
+                p = nullptr;
             }
 
             free(str);
@@ -1370,7 +1370,7 @@ BOOL CALLBACK LauncherServerCallback(HWND hWnd, UINT message, WPARAM wParam,
 
     case WM_INITDIALOG:
         launcher.HWNDServer = hWnd;
-        CreateDialogParam(GetModuleHandle(NULL),
+        CreateDialogParam(GetModuleHandle(nullptr),
                           MAKEINTRESOURCE(IDD_LAUNCHERCLIENTDIALOG),
                           launcher.HWNDServer, LauncherClientCallback, 0);
         break;
@@ -1396,12 +1396,12 @@ BOOL DoCreateDialogTooltip(void)
 {
     // Ensure that the common control DLL is loaded, and create a tooltip
     // control.
-    g_hwndTT = CreateWindowEx(0, TOOLTIPS_CLASS, (LPSTR)NULL, TTS_ALWAYSTIP,
+    g_hwndTT = CreateWindowEx(0, TOOLTIPS_CLASS, (LPSTR)nullptr, TTS_ALWAYSTIP,
                               CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT,
-                              CW_USEDEFAULT, launcher.HWNDClient, (HMENU)NULL,
-                              GetModuleHandle(NULL), NULL);
+                              CW_USEDEFAULT, launcher.HWNDClient, (HMENU)nullptr,
+                              GetModuleHandle(nullptr), NULL);
 
-    if (g_hwndTT == NULL)
+    if (g_hwndTT == nullptr)
         return FALSE;
 
     // Enumerate the child windows to register them with the tooltip control.
@@ -1410,10 +1410,10 @@ BOOL DoCreateDialogTooltip(void)
 
     // Install a hook procedure to monitor the message stream for mouse
     // messages intended for the controls in the dialog box.
-    g_hhk = SetWindowsHookEx(WH_GETMESSAGE, GetMsgProc, (HINSTANCE)NULL,
+    g_hhk = SetWindowsHookEx(WH_GETMESSAGE, GetMsgProc, (HINSTANCE)nullptr,
                              GetCurrentThreadId());
 
-    if (g_hhk == (HHOOK)NULL)
+    if (g_hhk == (HHOOK)nullptr)
         return FALSE;
 
     return TRUE;
@@ -1466,7 +1466,7 @@ LRESULT CALLBACK GetMsgProc(int nCode, WPARAM wParam, LPARAM lParam)
     case WM_LBUTTONUP:
     case WM_RBUTTONDOWN:
     case WM_RBUTTONUP:
-        if (g_hwndTT != NULL)
+        if (g_hwndTT != nullptr)
         {
             MSG msg;
 
@@ -1489,7 +1489,7 @@ LRESULT CALLBACK GetMsgProc(int nCode, WPARAM wParam, LPARAM lParam)
 // lParam - second message parameter of the WM_NOTIFY message
 VOID OnWMNotify(LPARAM lParam)
 {
-    static char *tooltip_str = NULL;
+    static char *tooltip_str = nullptr;
     static int tooltip_maxlen = 0;
 
     LPTOOLTIPTEXT lpttt;
@@ -1506,7 +1506,7 @@ VOID OnWMNotify(LPARAM lParam)
         case IDC_PWADLIST: {
             int i;
             int count = 0;
-            int *selection = NULL;
+            int *selection = nullptr;
             int selectioncount = 0;
 
             SendMessage(launcher.listPWAD, LB_GETCOUNT, 0, 0);
@@ -1545,7 +1545,7 @@ static dboolean L_LauncherIsNeeded(void)
 {
     int i;
     dboolean pwad = false;
-    char *iwad = NULL;
+    char *iwad = nullptr;
 
     //  SHIFT for invert
     //  if (GetAsyncKeyState(VK_SHIFT) ? launcher_enable : !launcher_enable)
@@ -1582,8 +1582,8 @@ void LauncherShow(unsigned int params)
     InitCommonControls();
     sprintf(launchercachefile, "%s/" PACKAGE_TARNAME ".cache", I_DoomExeDir());
 
-    result = DialogBox(GetModuleHandle(NULL),
-                       MAKEINTRESOURCE(IDD_LAUNCHERSERVERDIALOG), NULL,
+    result = DialogBox(GetModuleHandle(nullptr),
+                       MAKEINTRESOURCE(IDD_LAUNCHERSERVERDIALOG), nullptr,
                        (DLGPROC)LauncherServerCallback);
 
     switch (result)

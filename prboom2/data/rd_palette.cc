@@ -52,7 +52,7 @@ static void make_hash(void)
 
 static void loadpal(const char *filename)
 {
-  void *data = NULL;
+  void *data = nullptr;
   size_t size = read_or_die(&data, filename);
 
   if (size != 3*PAL_SIZE)

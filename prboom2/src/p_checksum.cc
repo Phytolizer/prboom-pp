@@ -22,7 +22,7 @@ void (*P_Checksum)(int) = p_checksum_nop;
  * P_RecordChecksum
  * sets up the file and function pointers to write out checksum data
  */
-static FILE *outfile = NULL;
+static FILE *outfile = nullptr;
 static struct MD5Context md5global;
 
 void P_RecordChecksum(const char *file)
@@ -37,7 +37,7 @@ void P_RecordChecksum(const char *file)
     else
     {
         outfile = fopen(file, "wb");
-        if (NULL == outfile)
+        if (nullptr == outfile)
         {
             I_Error("cannot open %s for writing checksum:\n%s\n", file,
                     strerror(errno));

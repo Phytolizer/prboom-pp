@@ -77,7 +77,7 @@ int I_ScreenShot(const char *fname)
 {
     int result = -1;
     unsigned char *pixels = I_GrabScreen();
-    SDL_Surface *screenshot = NULL;
+    SDL_Surface *screenshot = nullptr;
 
     if (pixels)
     {
@@ -107,7 +107,7 @@ int I_ScreenShot(const char *fname)
 
 unsigned char *I_GrabScreen(void)
 {
-    static unsigned char *pixels = NULL;
+    static unsigned char *pixels = nullptr;
     static int pixels_size = 0;
     int size;
 

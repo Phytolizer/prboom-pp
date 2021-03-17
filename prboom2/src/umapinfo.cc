@@ -71,7 +71,7 @@ static const char *const ActorNames[] = {
     "SmallBloodPool", "BrainStem",
     // Boom/MBF additions
     "PointPusher", "PointPuller", "MBFHelperDog", "PlasmaBall1", "PlasmaBall2",
-    "EvilSceptre", "UnholyBible", NULL};
+    "EvilSceptre", "UnholyBible", nullptr};
 
 // -----------------------------------------------
 //
@@ -93,8 +93,8 @@ static void FreeMap(MapEntry *mape)
     if (mape->bossactions)
         free(mape->bossactions);
     mape->propertycount = 0;
-    mape->mapname = NULL;
-    mape->properties = NULL;
+    mape->mapname = nullptr;
+    mape->properties = nullptr;
 }
 
 void FreeMapList()
@@ -106,13 +106,13 @@ void FreeMapList()
         FreeMap(&Maps.maps[i]);
     }
     free(Maps.maps);
-    Maps.maps = NULL;
+    Maps.maps = nullptr;
     Maps.mapcount = 0;
 }
 
 void ReplaceString(char **pptr, const char *newstring)
 {
-    if (*pptr != NULL)
+    if (*pptr != nullptr)
         free(*pptr);
     *pptr = strdup(newstring);
 }
@@ -125,7 +125,7 @@ void ReplaceString(char **pptr, const char *newstring)
 
 static char *ParseMultiString(Scanner &scanner, int error)
 {
-    char *build = NULL;
+    char *build = nullptr;
 
     if (scanner.CheckToken(TK_Identifier))
     {
@@ -143,7 +143,7 @@ static char *ParseMultiString(Scanner &scanner, int error)
     do
     {
         scanner.MustGetToken(TK_StringConst);
-        if (build == NULL)
+        if (build == nullptr)
             build = strdup(scanner.string);
         else
         {
@@ -207,7 +207,7 @@ static int ParseStandardProperty(Scanner &scanner, MapEntry *mape)
     else if (!stricmp(pname, "next"))
     {
         ParseLumpName(scanner, mape->nextmap);
-        if (!G_ValidateMapName(mape->nextmap, NULL, NULL))
+        if (!G_ValidateMapName(mape->nextmap, nullptr, NULL))
         {
             scanner.ErrorF("Invalid map name %s.", mape->nextmap);
             return 0;
@@ -216,7 +216,7 @@ static int ParseStandardProperty(Scanner &scanner, MapEntry *mape)
     else if (!stricmp(pname, "nextsecret"))
     {
         ParseLumpName(scanner, mape->nextsecret);
-        if (!G_ValidateMapName(mape->nextsecret, NULL, NULL))
+        if (!G_ValidateMapName(mape->nextsecret, nullptr, NULL))
         {
             scanner.ErrorF("Invalid map name %s", mape->nextmap);
             return 0;
@@ -285,7 +285,7 @@ static int ParseStandardProperty(Scanner &scanner, MapEntry *mape)
         char *lname = ParseMultiString(scanner, 1);
         if (!lname)
             return 0;
-        if (mape->intertext != NULL)
+        if (mape->intertext != nullptr)
             free(mape->intertext);
         mape->intertext = lname;
     }
@@ -294,7 +294,7 @@ static int ParseStandardProperty(Scanner &scanner, MapEntry *mape)
         char *lname = ParseMultiString(scanner, 1);
         if (!lname)
             return 0;
-        if (mape->intertextsecret != NULL)
+        if (mape->intertextsecret != nullptr)
             free(mape->intertextsecret);
         mape->intertextsecret = lname;
     }
@@ -323,7 +323,7 @@ static int ParseStandardProperty(Scanner &scanner, MapEntry *mape)
             classnum = special = tag = -1;
             if (mape->bossactions)
                 free(mape->bossactions);
-            mape->bossactions = NULL;
+            mape->bossactions = nullptr;
             mape->numbossactions = -1;
         }
         else
@@ -334,7 +334,7 @@ static int ParseStandardProperty(Scanner &scanner, MapEntry *mape)
                 if (!stricmp(scanner.string, ActorNames[i]))
                     break;
             }
-            if (ActorNames[i] == NULL)
+            if (ActorNames[i] == nullptr)
             {
                 scanner.ErrorF("Unknown thing type %s", scanner.string);
                 return 0;
@@ -388,13 +388,13 @@ static int ParseStandardProperty(Scanner &scanner, MapEntry *mape)
 
 static int ParseMapEntry(Scanner &scanner, MapEntry *val)
 {
-    val->mapname = NULL;
+    val->mapname = nullptr;
     val->propertycount = 0;
-    val->properties = NULL;
+    val->properties = nullptr;
 
     scanner.MustGetIdentifier("map");
     scanner.MustGetToken(TK_Identifier);
-    if (!G_ValidateMapName(scanner.string, NULL, NULL))
+    if (!G_ValidateMapName(scanner.string, nullptr, NULL))
     {
         scanner.ErrorF("Invalid map name %s", scanner.string);
         return 0;
@@ -487,5 +487,5 @@ int ParseUMapInfo(const unsigned char *buffer, size_t length,
 
 MapProperty *FindProperty(MapEntry *map, const char *name)
 {
-    return NULL;
+    return nullptr;
 }

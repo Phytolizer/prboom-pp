@@ -39,10 +39,10 @@ static void Heretic_D_DrawOrder(const char *_x)
 }
 
 const demostate_t heretic_demostates[][4] = {{
-                                                 {Heretic_D_DrawTitle, NULL},
-                                                 {Heretic_D_DrawTitle, NULL},
-                                                 {Heretic_D_DrawTitle, NULL},
-                                                 {Heretic_D_DrawTitle, NULL},
+                                                 {Heretic_D_DrawTitle, nullptr},
+                                                 {Heretic_D_DrawTitle, nullptr},
+                                                 {Heretic_D_DrawTitle, nullptr},
+                                                 {Heretic_D_DrawTitle, nullptr},
                                              },
 
                                              {
@@ -53,10 +53,10 @@ const demostate_t heretic_demostates[][4] = {{
                                              },
 
                                              {
-                                                 {Heretic_D_DrawCredits, NULL},
-                                                 {Heretic_D_DrawCredits, NULL},
-                                                 {Heretic_D_DrawCredits, NULL},
-                                                 {Heretic_D_DrawCredits, NULL},
+                                                 {Heretic_D_DrawCredits, nullptr},
+                                                 {Heretic_D_DrawCredits, nullptr},
+                                                 {Heretic_D_DrawCredits, nullptr},
+                                                 {Heretic_D_DrawCredits, nullptr},
                                              },
 
                                              {
@@ -67,10 +67,10 @@ const demostate_t heretic_demostates[][4] = {{
                                              },
 
                                              {
-                                                 {Heretic_D_DrawOrder, NULL},
-                                                 {Heretic_D_DrawCredits, NULL},
-                                                 {Heretic_D_DrawCredits, NULL},
-                                                 {Heretic_D_DrawCredits, NULL},
+                                                 {Heretic_D_DrawOrder, nullptr},
+                                                 {Heretic_D_DrawCredits, nullptr},
+                                                 {Heretic_D_DrawCredits, nullptr},
+                                                 {Heretic_D_DrawCredits, nullptr},
                                              },
 
                                              {
@@ -81,8 +81,8 @@ const demostate_t heretic_demostates[][4] = {{
                                              },
 
                                              {
-                                                 {NULL},
-                                                 {NULL},
-                                                 {NULL},
-                                                 {NULL},
+                                                 {nullptr},
+                                                 {nullptr},
+                                                 {nullptr},
+                                                 {nullptr},
                                              }};

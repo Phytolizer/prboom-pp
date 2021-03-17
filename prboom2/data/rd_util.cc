@@ -57,14 +57,14 @@ char *xstrdup(const char *s)
   return static_cast<char *>(ptr);
 }
 
-static const char **search_paths = NULL;
+static const char **search_paths = nullptr;
 static size_t num_search_paths = 0;
 
 // slurp an entire file into memory or kill yourself
 size_t read_or_die(void **ptr, const char *file)
 {
   size_t size = 0, length = 0;
-  void *buffer = NULL, *pos = buffer;
+  void *buffer = nullptr, *pos = buffer;
   FILE *f;
 
   f = fopen(file, "rb");

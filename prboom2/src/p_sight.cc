@@ -481,7 +481,7 @@ dboolean P_CrossSubsector_PrBoom(int num)
     ssline_t *ssline = &sslines[sslines_indexes[num]];
     const ssline_t *ssline_last = &sslines[sslines_indexes[num + 1]];
     fixed_t open_top = 0, open_bottom = 0;
-    const sector_t *front = NULL, *back = NULL;
+    const sector_t *front = nullptr, *back = NULL;
 
 #ifdef RANGECHECK
     if (num >= numsubsectors)

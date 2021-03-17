@@ -47,8 +47,8 @@ static int db_init(int samplerate)
     return 0;
 }
 
-const music_player_t db_player = {db_name, db_init, NULL, NULL, NULL, NULL,
-                                  NULL,    NULL,    NULL, NULL, NULL};
+const music_player_t db_player = {db_name, db_init, nullptr, NULL, NULL, NULL,
+                                  nullptr,    NULL,    NULL, NULL, NULL};
 
 #else // HAVE_DUMB
 
@@ -70,9 +70,9 @@ static int db_looping;
 static int db_playing = 0;
 static int db_paused = 0;
 
-static DUH_SIGRENDERER *dsren = NULL;
-static DUH *duh = NULL;
-static DUMBFILE *dfil = NULL;
+static DUH_SIGRENDERER *dsren = nullptr;
+static DUH *duh = nullptr;
+static DUMBFILE *dfil = nullptr;
 
 const char *db_name(void)
 {
@@ -146,7 +146,7 @@ const void *db_registersong(const void *data, unsigned len)
                 if (n_samples == 15)
                 {
                     unload_duh(duh);
-                    duh = NULL;
+                    duh = nullptr;
                 }
             }
         }
@@ -154,9 +154,9 @@ const void *db_registersong(const void *data, unsigned len)
     if (!duh)
     {
         dumbfile_close(dfil);
-        dfil = NULL;
+        dfil = nullptr;
         lprintf(LO_WARN, "db_registersong: couldn't load as tracker\n");
-        return NULL;
+        return nullptr;
     }
     // handle not used
     return data;
@@ -167,13 +167,13 @@ void db_unregistersong(const void *handle)
     if (duh)
     {
         unload_duh(duh);
-        duh = NULL;
+        duh = nullptr;
     }
 
     if (dfil)
     {
         dumbfile_close(dfil);
-        dfil = NULL;
+        dfil = nullptr;
     }
 }
 
@@ -194,7 +194,7 @@ void db_play(const void *handle, int looping)
 void db_stop(void)
 {
     duh_end_sigrenderer(dsren);
-    dsren = NULL;
+    dsren = nullptr;
     db_playing = 0;
 }
 
@@ -240,7 +240,7 @@ void db_render(void *dest, unsigned nsamp)
                 // im not sure if this is the best way to seek, but there isn't
                 // a sigrenderer_rewind type function
                 db_stop();
-                db_play(NULL, 1);
+                db_play(nullptr, 1);
                 db_render(cdest, nsamp - nsampwrit);
             }
             else

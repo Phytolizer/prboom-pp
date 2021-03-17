@@ -101,7 +101,7 @@ static void cheat_fly();
 //
 // The first argument is the cheat code.
 //
-// The second argument is its DEH name, or NULL if it's not supported by -deh.
+// The second argument is its DEH name, or nullptr if it's not supported by -deh.
 //
 // The third argument is a combination of the bitmasks:
 // {always, not_dm, not_coop, not_net, not_menu, not_demo, not_deh},
@@ -149,69 +149,69 @@ cheatseq_t cheat[] = {
     CHEAT("idmypos", "Player Position", cheat_when_t::not_dm, cheat_mypos, 0),
     CHEAT("idrate", "Frame rate", cheat_when_t::always, cheat_rate, 0),
     // phares
-    CHEAT("tntcomp", NULL, cheat_when_t::cht_never, cheat_comp, 0),
+    CHEAT("tntcomp", nullptr, cheat_when_t::cht_never, cheat_comp, 0),
     // jff 2/01/98 kill all monsters
-    CHEAT("tntem", NULL, cheat_when_t::cht_never, cheat_massacre, 0),
+    CHEAT("tntem", nullptr, cheat_when_t::cht_never, cheat_massacre, 0),
     // killough 2/07/98: moved from am_map.c
     CHEAT("iddt", "Map cheat", cheat_when_t::not_dm, cheat_ddt, 0),
     // killough 2/07/98: HOM autodetector
-    CHEAT("tnthom", NULL, cheat_when_t::always, cheat_hom, 0),
+    CHEAT("tnthom", nullptr, cheat_when_t::always, cheat_hom, 0),
     // killough 2/16/98: generalized key cheats
-    CHEAT("tntkey", NULL, cheat_when_t::cht_never, cheat_tntkey, 0),
-    CHEAT("tntkeyr", NULL, cheat_when_t::cht_never, cheat_tntkeyx, 0),
-    CHEAT("tntkeyy", NULL, cheat_when_t::cht_never, cheat_tntkeyx, 0),
-    CHEAT("tntkeyb", NULL, cheat_when_t::cht_never, cheat_tntkeyx, 0),
-    CHEAT("tntkeyrc", NULL, cheat_when_t::cht_never,
+    CHEAT("tntkey", nullptr, cheat_when_t::cht_never, cheat_tntkey, 0),
+    CHEAT("tntkeyr", nullptr, cheat_when_t::cht_never, cheat_tntkeyx, 0),
+    CHEAT("tntkeyy", nullptr, cheat_when_t::cht_never, cheat_tntkeyx, 0),
+    CHEAT("tntkeyb", nullptr, cheat_when_t::cht_never, cheat_tntkeyx, 0),
+    CHEAT("tntkeyrc", nullptr, cheat_when_t::cht_never,
           reinterpret_cast<void (*)()>(cheat_tntkeyxx), it_redcard),
-    CHEAT("tntkeyyc", NULL, cheat_when_t::cht_never,
+    CHEAT("tntkeyyc", nullptr, cheat_when_t::cht_never,
           reinterpret_cast<void (*)()>(cheat_tntkeyxx), it_yellowcard),
-    CHEAT("tntkeybc", NULL, cheat_when_t::cht_never,
+    CHEAT("tntkeybc", nullptr, cheat_when_t::cht_never,
           reinterpret_cast<void (*)()>(cheat_tntkeyxx), it_bluecard),
-    CHEAT("tntkeyrs", NULL, cheat_when_t::cht_never,
+    CHEAT("tntkeyrs", nullptr, cheat_when_t::cht_never,
           reinterpret_cast<void (*)()>(cheat_tntkeyxx), it_redskull),
-    CHEAT("tntkeyys", NULL, cheat_when_t::cht_never,
+    CHEAT("tntkeyys", nullptr, cheat_when_t::cht_never,
           reinterpret_cast<void (*)()>(cheat_tntkeyxx), it_yellowskull),
     // killough 2/16/98: end generalized keys
-    CHEAT("tntkeybs", NULL, cheat_when_t::cht_never,
+    CHEAT("tntkeybs", nullptr, cheat_when_t::cht_never,
           reinterpret_cast<void (*)()>(cheat_tntkeyxx), it_blueskull),
 
     // Ty 04/11/98 - Added TNTKA
-    CHEAT("tntka", NULL, cheat_when_t::cht_never, cheat_k, 0),
+    CHEAT("tntka", nullptr, cheat_when_t::cht_never, cheat_k, 0),
     // killough 2/16/98: generalized weapon cheats
-    CHEAT("tntweap", NULL, cheat_when_t::cht_never, cheat_tntweap, 0),
-    CHEAT("tntweap", NULL, cheat_when_t::cht_never,
+    CHEAT("tntweap", nullptr, cheat_when_t::cht_never, cheat_tntweap, 0),
+    CHEAT("tntweap", nullptr, cheat_when_t::cht_never,
           reinterpret_cast<void (*)()>(cheat_tntweapx), -1),
-    CHEAT("tntammo", NULL, cheat_when_t::cht_never, cheat_tntammo, 0),
+    CHEAT("tntammo", nullptr, cheat_when_t::cht_never, cheat_tntammo, 0),
     // killough 2/16/98: end generalized weapons
-    CHEAT("tntammo", NULL, cheat_when_t::cht_never,
+    CHEAT("tntammo", nullptr, cheat_when_t::cht_never,
           reinterpret_cast<void (*)()>(cheat_tntammox), -1),
     // invoke translucency         // phares
-    CHEAT("tnttran", NULL, cheat_when_t::always, cheat_tnttran, 0),
+    CHEAT("tnttran", nullptr, cheat_when_t::always, cheat_tnttran, 0),
     // killough 2/21/98: smart monster toggle
-    CHEAT("tntsmart", NULL, cheat_when_t::cht_never, cheat_smart, 0),
+    CHEAT("tntsmart", nullptr, cheat_when_t::cht_never, cheat_smart, 0),
     // killough 2/21/98: pitched sound toggle
-    CHEAT("tntpitch", NULL, cheat_when_t::always, cheat_pitch, 0),
+    CHEAT("tntpitch", nullptr, cheat_when_t::always, cheat_pitch, 0),
     // killough 2/21/98: reduce RSI injury by adding simpler alias sequences:
     // killough 2/21/98: same as tnttran
-    CHEAT("tntran", NULL, cheat_when_t::always, cheat_tnttran, 0),
+    CHEAT("tntran", nullptr, cheat_when_t::always, cheat_tnttran, 0),
     // killough 2/21/98: same as tntammo
-    CHEAT("tntamo", NULL, cheat_when_t::cht_never, cheat_tntammo, 0),
+    CHEAT("tntamo", nullptr, cheat_when_t::cht_never, cheat_tntammo, 0),
     // killough 2/21/98: same as tntammo
-    CHEAT("tntamo", NULL, cheat_when_t::cht_never,
+    CHEAT("tntamo", nullptr, cheat_when_t::cht_never,
           reinterpret_cast<void (*)()>(cheat_tntammox), -1),
     // killough 3/6/98: -fast toggle
-    CHEAT("tntfast", NULL, cheat_when_t::cht_never, cheat_fast, 0),
+    CHEAT("tntfast", nullptr, cheat_when_t::cht_never, cheat_fast, 0),
     // phares 3/10/98: toggle variable friction effects
-    CHEAT("tntice", NULL, cheat_when_t::cht_never, cheat_friction, 0),
+    CHEAT("tntice", nullptr, cheat_when_t::cht_never, cheat_friction, 0),
     // phares 3/10/98: toggle pushers
-    CHEAT("tntpush", NULL, cheat_when_t::cht_never, cheat_pushers, 0),
+    CHEAT("tntpush", nullptr, cheat_when_t::cht_never, cheat_pushers, 0),
 
     // [RH] Monsters don't target
-    CHEAT("notarget", NULL, cheat_when_t::cht_never, cheat_notarget, 0),
+    CHEAT("notarget", nullptr, cheat_when_t::cht_never, cheat_notarget, 0),
     // fly mode is active
-    CHEAT("fly", NULL, cheat_when_t::cht_never, cheat_fly, 0),
+    CHEAT("fly", nullptr, cheat_when_t::cht_never, cheat_fly, 0),
     // end-of-list marker
-    {NULL}};
+    {nullptr}};
 
 //-----------------------------------------------------------------------------
 
@@ -525,14 +525,14 @@ static void cheat_massacre() // jff 2/01/98 kill all monsters
     // fixed lost soul bug (LSs left behind when PEs are killed)
 
     int killcount = 0;
-    thinker_t *currentthinker = NULL;
+    thinker_t *currentthinker = nullptr;
     extern void A_PainDie(mobj_t *);
 
     // killough 7/20/98: kill friendly monsters only if no others to kill
     uint_64_t mask = MF_FRIEND;
     P_MapStart();
     do
-        while ((currentthinker = P_NextThinker(currentthinker, th_all)) != NULL)
+        while ((currentthinker = P_NextThinker(currentthinker, th_all)) != nullptr)
             if (currentthinker->function == P_MobjThinker &&
                 !(((mobj_t *)currentthinker)->flags &
                   mask) && // killough 7/20/98
@@ -542,7 +542,7 @@ static void cheat_massacre() // jff 2/01/98 kill all monsters
                 if (((mobj_t *)currentthinker)->health > 0)
                 {
                     killcount++;
-                    P_DamageMobj((mobj_t *)currentthinker, NULL, NULL, 10000);
+                    P_DamageMobj((mobj_t *)currentthinker, nullptr, NULL, 10000);
                 }
                 if (((mobj_t *)currentthinker)->type == MT_PAIN)
                 {
@@ -688,7 +688,7 @@ static void cheat_notarget()
 
 static void cheat_fly()
 {
-    if (plyr->mo != NULL)
+    if (plyr->mo != nullptr)
     {
         plyr->cheats ^= CF_FLY;
         if (plyr->cheats & CF_FLY)

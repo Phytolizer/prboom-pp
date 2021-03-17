@@ -52,8 +52,8 @@
 #include "e6y.hh"
 #include "r_things.hh"
 
-GLShader *sh_main = NULL;
-static GLShader *active_shader = NULL;
+GLShader *sh_main = nullptr;
+static GLShader *active_shader = nullptr;
 
 static GLShader *gld_LoadShader(const char *vpname, const char *fpname);
 
@@ -75,13 +75,13 @@ int glsl_Init(void)
         }
     }
 
-    return (sh_main != NULL);
+    return (sh_main != nullptr);
 }
 
 static int ReadLump(const char *filename, const char *lumpname,
                     unsigned char **buffer)
 {
-    FILE *file = NULL;
+    FILE *file = nullptr;
     int size = 0;
     const unsigned char *data;
     int lump;
@@ -132,17 +132,17 @@ static GLShader *gld_LoadShader(const char *vpname, const char *fpname)
     int idx;
     int linked;
     char buffer[buffer_size];
-    char *vp_data = NULL;
-    char *fp_data = NULL;
+    char *vp_data = nullptr;
+    char *fp_data = nullptr;
     int vp_size, fp_size;
     size_t vp_fnlen, fp_fnlen;
-    char *filename = NULL;
-    GLShader *shader = NULL;
+    char *filename = nullptr;
+    GLShader *shader = nullptr;
 
     vp_fnlen =
-        doom_snprintf(NULL, 0, "%s/shaders/%s.txt", I_DoomExeDir(), vpname);
+        doom_snprintf(nullptr, 0, "%s/shaders/%s.txt", I_DoomExeDir(), vpname);
     fp_fnlen =
-        doom_snprintf(NULL, 0, "%s/shaders/%s.txt", I_DoomExeDir(), fpname);
+        doom_snprintf(nullptr, 0, "%s/shaders/%s.txt", I_DoomExeDir(), fpname);
     filename = static_cast<char *>(std::malloc(MAX(vp_fnlen, fp_fnlen) + 1));
 
     sprintf(filename, "%s/shaders/%s.txt", I_DoomExeDir(), vpname);
@@ -178,7 +178,7 @@ static GLShader *gld_LoadShader(const char *vpname, const char *fpname)
 
         GLEXT_glLinkProgramARB(shader->hShader);
 
-        GLEXT_glGetInfoLogARB(shader->hShader, buffer_size, NULL, buffer);
+        GLEXT_glGetInfoLogARB(shader->hShader, buffer_size, nullptr, buffer);
 
         GLEXT_glGetObjectParameterivARB(shader->hShader,
                                         GL_OBJECT_LINK_STATUS_ARB, &linked);
@@ -205,7 +205,7 @@ static GLShader *gld_LoadShader(const char *vpname, const char *fpname)
                     "gld_LoadShader: Error compiling shader \"%s+%s\": %s\n",
                     vpname, fpname, buffer);
             free(shader);
-            shader = NULL;
+            shader = nullptr;
         }
     }
 

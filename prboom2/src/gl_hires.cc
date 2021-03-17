@@ -68,7 +68,7 @@ unsigned int gl_has_hires = 0;
 int gl_texture_external_hires = -1;
 int gl_texture_internal_hires = -1;
 int gl_hires_override_pwads;
-const char *gl_texture_hires_dir = NULL;
+const char *gl_texture_hires_dir = nullptr;
 int gl_hires_24bit_colormap = false;
 
 static GLuint progress_texid = 0;
@@ -353,16 +353,16 @@ typedef struct
 
 GLGenericImage *ReadDDSFile(const char *filename, int *bufsize, int *numMipmaps)
 {
-    GLGenericImage *genericImage = NULL;
+    GLGenericImage *genericImage = nullptr;
     DDRAW_H_DDSURFACEDESC2 ddsd;
     char filecode[4];
-    FILE *fp = NULL;
+    FILE *fp = nullptr;
     int factor;
     int result = false;
 
     /* try to open the file */
     fp = fopen(filename, "rb");
-    if (fp != NULL)
+    if (fp != nullptr)
     {
         if ((fread(filecode, 4, 1, fp) == 1) &&
             (strncmp(filecode, "DDS ", 4) == 0) &&    // verify the type of file
@@ -432,16 +432,16 @@ GLGenericImage *ReadDDSFile(const char *filename, int *bufsize, int *numMipmaps)
         if (genericImage)
             free(genericImage);
 
-        return NULL;
+        return nullptr;
     }
 }
 
-static byte *RGB2PAL = NULL;
+static byte *RGB2PAL = nullptr;
 
 static const char *gld_HiRes_GetInternalName(GLTexture *gltexture)
 {
     static char texname[9];
-    char *texname_p = NULL;
+    char *texname_p = nullptr;
 
     switch (gltexture->textype)
     {
@@ -455,7 +455,7 @@ static const char *gld_HiRes_GetInternalName(GLTexture *gltexture)
     }
 
     if (!texname_p)
-        return NULL;
+        return nullptr;
 
     strncpy(texname, texname_p, 8);
     texname[8] = 0;
@@ -490,7 +490,7 @@ static int gld_HiRes_GetExternalName(GLTexture *gltexture, char *img_path,
           {"%stextures/doom/%s-ck.%s", -1},
           {"%stextures/%s.%s", -1},
           {"%stextures/%s-ck.%s", -1},
-          {NULL, 0}}},
+          {nullptr, 0}}},
         {doom,
          GLDT_FLAT,
          {{"%sflats/doom/doom1/%s.%s", -1},
@@ -500,14 +500,14 @@ static int gld_HiRes_GetExternalName(GLTexture *gltexture, char *img_path,
           {"%stextures/doom/flat-%s.%s", -1},
           {"%sflats/%s.%s", -1},
           {"%stextures/flat-%s.%s", -1},
-          {NULL}}},
+          {nullptr}}},
         {doom,
          GLDT_PATCH,
          {{"%spatches/doom/doom1/%s.%s", -1},
           {"%spatches/doom1-ultimate/%s.%s", -1},
           {"%spatches/doom/%s.%s", -1},
           {"%spatches/%s.%s", -1},
-          {NULL}}},
+          {nullptr}}},
 
         {doom2,
          GLDT_TEXTURE,
@@ -517,7 +517,7 @@ static int gld_HiRes_GetExternalName(GLTexture *gltexture, char *img_path,
           {"%stextures/doom/%s-ck.%s", -1},
           {"%stextures/%s.%s", -1},
           {"%stextures/%s-ck.%s", -1},
-          {NULL}}},
+          {nullptr}}},
         {doom2,
          GLDT_FLAT,
          {{"%sflats/doom/doom2/%s.%s", -1},
@@ -526,14 +526,14 @@ static int gld_HiRes_GetExternalName(GLTexture *gltexture, char *img_path,
           {"%stextures/doom/flat-%s.%s", -1},
           {"%sflats/%s.%s", -1},
           {"%stextures/flat-%s.%s", -1},
-          {NULL}}},
+          {nullptr}}},
         {doom2,
          GLDT_PATCH,
          {{"%spatches/doom/doom2/%s.%s", -1},
           {"%spatches/doom2/%s.%s", -1},
           {"%spatches/doom/%s.%s", -1},
           {"%spatches/%s.%s", -1},
-          {NULL}}},
+          {nullptr}}},
 
         {pack_tnt,
          GLDT_TEXTURE,
@@ -546,7 +546,7 @@ static int gld_HiRes_GetExternalName(GLTexture *gltexture, char *img_path,
           {"%stextures/doom/%s-ck.%s", -1},
           {"%stextures/%s.%s", -1},
           {"%stextures/%s-ck.%s", -1},
-          {NULL}}},
+          {nullptr}}},
         {pack_tnt,
          GLDT_FLAT,
          {{"%sflats/doom/tnt/%s.%s", -1},
@@ -558,7 +558,7 @@ static int gld_HiRes_GetExternalName(GLTexture *gltexture, char *img_path,
           {"%stextures/doom/flat-%s.%s", -1},
           {"%sflats/%s.%s", -1},
           {"%stextures/flat-%s.%s", -1},
-          {NULL}}},
+          {nullptr}}},
         {pack_tnt,
          GLDT_PATCH,
          {{"%spatches/doom/tnt/%s.%s", -1},
@@ -566,7 +566,7 @@ static int gld_HiRes_GetExternalName(GLTexture *gltexture, char *img_path,
           {"%spatches/tnt/%s.%s", -1},
           {"%spatches/doom/%s.%s", -1},
           {"%spatches/%s.%s", -1},
-          {NULL}}},
+          {nullptr}}},
 
         {pack_plut,
          GLDT_TEXTURE,
@@ -579,7 +579,7 @@ static int gld_HiRes_GetExternalName(GLTexture *gltexture, char *img_path,
           {"%stextures/doom/%s-ck.%s", -1},
           {"%stextures/%s.%s", -1},
           {"%stextures/%s-ck.%s", -1},
-          {NULL}}},
+          {nullptr}}},
         {pack_plut,
          GLDT_FLAT,
          {{"%sflats/doom/plut/%s.%s", -1},
@@ -591,7 +591,7 @@ static int gld_HiRes_GetExternalName(GLTexture *gltexture, char *img_path,
           {"%stextures/doom/flat-%s.%s", -1},
           {"%sflats/%s.%s", -1},
           {"%stextures/flat-%s.%s", -1},
-          {NULL}}},
+          {nullptr}}},
         {pack_plut,
          GLDT_PATCH,
          {{"%spatches/doom/plut/%s.%s", -1},
@@ -599,7 +599,7 @@ static int gld_HiRes_GetExternalName(GLTexture *gltexture, char *img_path,
           {"%spatches/plutonia/%s.%s", -1},
           {"%spatches/doom/%s.%s", -1},
           {"%spatches/%s.%s", -1},
-          {NULL}}},
+          {nullptr}}},
 
         {hacx,
          GLDT_TEXTURE,
@@ -607,17 +607,17 @@ static int gld_HiRes_GetExternalName(GLTexture *gltexture, char *img_path,
           {"%stextures/hacx/%s-ck.%s", -1},
           {"%stextures/%s.%s", -1},
           {"%stextures/%s-ck.%s", -1},
-          {NULL}}},
+          {nullptr}}},
         {hacx,
          GLDT_FLAT,
          {{"%sflats/hacx/%s.%s", -1},
           {"%stextures/hacx/flat-%s.%s", -1},
           {"%sflats/%s.%s", -1},
           {"%stextures/flat-%s.%s", -1},
-          {NULL}}},
+          {nullptr}}},
         {hacx,
          GLDT_PATCH,
-         {{"%spatches/hacx/%s.%s", -1}, {"%spatches/%s.%s", -1}, {NULL}}},
+         {{"%spatches/hacx/%s.%s", -1}, {"%spatches/%s.%s", -1}, {nullptr}}},
 
         {chex,
          GLDT_TEXTURE,
@@ -625,28 +625,28 @@ static int gld_HiRes_GetExternalName(GLTexture *gltexture, char *img_path,
           {"%stextures/chex/%s-ck.%s", -1},
           {"%stextures/%s.%s", -1},
           {"%stextures/%s-ck.%s", -1},
-          {NULL}}},
+          {nullptr}}},
         {chex,
          GLDT_FLAT,
          {{"%sflats/chex/%s.%s", -1},
           {"%stextures/chex/flat-%s.%s", -1},
           {"%sflats/%s.%s", -1},
           {"%stextures/flat-%s.%s", -1},
-          {NULL}}},
+          {nullptr}}},
         {chex,
          GLDT_PATCH,
-         {{"%spatches/chex/%s.%s", -1}, {"%spatches/%s.%s", -1}, {NULL}}},
+         {{"%spatches/chex/%s.%s", -1}, {"%spatches/%s.%s", -1}, {nullptr}}},
 
-        {none, GLDT_UNREGISTERED, {{NULL}}},
+        {none, GLDT_UNREGISTERED, {{nullptr}}},
     };
 
-    static char *hiresdir = NULL;
+    static char *hiresdir = nullptr;
 
     char texname[9];
-    char *texname_p = NULL;
+    char *texname_p = nullptr;
     int i;
 
-    hires_path_item_t *checklist = NULL;
+    hires_path_item_t *checklist = nullptr;
     GLTexType useType = gltexture->textype;
 
     dboolean supported = (gl_texture_external_hires &&
@@ -747,7 +747,7 @@ static int gld_HiRes_GetExternalName(GLTexture *gltexture, char *img_path,
         if (checklist->exists == 1) // dir exists
         {
             static const char *extensions[] = {"png", "jpg", "tga", "pcx",
-                                               "gif", "bmp", NULL};
+                                               "gif", "bmp", nullptr};
             const char **extp;
 
             if (GLEXT_glCompressedTexImage2DARB && dds_path[0] == '\0')
@@ -973,7 +973,7 @@ int gld_HiRes_BuildTables(void)
     if (1 || M_CheckParm("-" RGB2PAL_NAME))
     {
         int ok = true;
-        FILE *RGB2PAL_fp = NULL;
+        FILE *RGB2PAL_fp = nullptr;
         char fname[PATH_MAX + 1];
 
         if (gl_hires_24bit_colormap)
@@ -981,7 +981,7 @@ int gld_HiRes_BuildTables(void)
             doom_snprintf(fname, sizeof(fname), "%s/" RGB2PAL_NAME ".dat",
                           I_DoomExeDir());
             RGB2PAL_fp = fopen(fname, "wb");
-            ok = RGB2PAL_fp != NULL;
+            ok = RGB2PAL_fp != nullptr;
         }
 
         if (ok)
@@ -1001,7 +1001,7 @@ int gld_HiRes_BuildTables(void)
 
             // create the RGB24to8 lookup table
             gld_ProgressStart();
-            gld_ProgressUpdate(NULL, 0, numcolors_per_chanel);
+            gld_ProgressUpdate(nullptr, 0, numcolors_per_chanel);
             for (k = 0; k < numcolors_per_chanel; k++)
             {
                 int color_p = 0;
@@ -1020,7 +1020,7 @@ int gld_HiRes_BuildTables(void)
             k = 0;
             for (r = 0; r < numcolors_per_chanel; r++)
             {
-                gld_ProgressUpdate(NULL, r, numcolors_per_chanel);
+                gld_ProgressUpdate(nullptr, r, numcolors_per_chanel);
                 for (g = 0; g < numcolors_per_chanel; g++)
                 {
                     int xy[256];
@@ -1257,8 +1257,8 @@ static int gld_HiRes_LoadFromFile(GLTexture *gltexture, GLuint *texid,
                                   const char *img_path)
 {
     int result = false;
-    SDL_Surface *surf = NULL;
-    SDL_Surface *surf_tmp = NULL;
+    SDL_Surface *surf = nullptr;
+    SDL_Surface *surf_tmp = nullptr;
 
     surf_tmp = IMG_Load(img_path);
 
@@ -1481,7 +1481,7 @@ int gld_PrecacheGUIPatches(void)
         "M_KEYBND", "M_LOKSEN", "M_MESS", "M_PALNO", "M_PALSEL", "M_SETUP",
         "M_STAT", "M_STAT", "M_VBOX", "M_VERSEN", "M_WEAP",
 
-        NULL};
+        nullptr};
 
     const char **patch_p;
     int count, total;

@@ -86,7 +86,7 @@ SkyBoxParams_t SkyBox;
 float y_offset_saved;
 
 // skybox
-box_skybox_t *BoxSkybox = NULL;
+box_skybox_t *BoxSkybox = nullptr;
 int BoxSkyboxCount = 0;
 
 box_skybox_t *BoxSkybox_default;
@@ -101,12 +101,12 @@ void gld_InitSky(void)
 void gld_InitFrameSky(void)
 {
     SkyBox.type = SKY_NONE;
-    SkyBox.wall.gltexture = NULL;
+    SkyBox.wall.gltexture = nullptr;
     SkyBox.x_scale = 0;
     SkyBox.y_scale = 0;
     SkyBox.x_offset = 0;
     SkyBox.y_offset = 0;
-    SkyBox.side = NULL;
+    SkyBox.side = nullptr;
 }
 
 void gld_DrawFakeSkyStrips(void)
@@ -175,9 +175,9 @@ void gld_GetScreenSkyScale(GLWall *wall, float *scale_x, float *scale_y)
 // See third episode of requiem.wad
 void gld_AddSkyTexture(GLWall *wall, int sky1, int sky2, int skytype)
 {
-    side_t *s = NULL;
-    line_t *l = NULL;
-    wall->gltexture = NULL;
+    side_t *s = nullptr;
+    line_t *l = nullptr;
+    wall->gltexture = nullptr;
 
     if ((sky1)&PL_SKYFLAT)
     {
@@ -281,7 +281,7 @@ void gld_DrawStripsSky(void)
 {
     int i;
     float skyymid_multiplier;
-    GLTexture *gltexture = NULL;
+    GLTexture *gltexture = nullptr;
 
     if (gl_drawskys == skytype_standard)
     {
@@ -313,7 +313,7 @@ void gld_DrawStripsSky(void)
     {
         GLWall *wall = gld_drawinfo.items[GLDIT_SWALL][i].item.wall;
 
-        gltexture = (gl_drawskys == skytype_none ? NULL : wall->gltexture);
+        gltexture = (gl_drawskys == skytype_none ? nullptr : wall->gltexture);
         gld_BindTexture(gltexture, 0);
 
         if (!gltexture)
@@ -591,7 +591,7 @@ void gld_GetSkyCapColors(void)
 {
     int color, width, height;
     int frame_fixedcolormap_saved;
-    unsigned char *buffer = NULL;
+    unsigned char *buffer = nullptr;
     const unsigned char *playpal = V_GetPlaypal();
     const lighttable_t *colormap;
     const lighttable_t *fixedcolormap_saved;
@@ -1016,7 +1016,7 @@ void R_SetBoxSkybox(int texture)
 {
     int i;
 
-    BoxSkybox_default = NULL;
+    BoxSkybox_default = nullptr;
 
     for (i = 0; i < BoxSkyboxCount; i++)
     {
@@ -1033,7 +1033,7 @@ box_skybox_t *R_GetBoxSkybox(int index)
     if (index >= 0 && index < BoxSkyboxCount)
         return &BoxSkybox[index];
     else
-        return NULL;
+        return nullptr;
 }
 
 void gld_ParseSkybox(void)

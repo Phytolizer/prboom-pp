@@ -73,14 +73,14 @@ Scanner::Scanner(const char* data, int length) : line(1), lineStart(0), logicalP
 	this->length = length;
 	this->data = new char[length];
 	memcpy(this->data, data, length);
-	string = NULL;
+	string = nullptr;
 
 	CheckForWhitespace();
 }
 
 Scanner::~Scanner()
 {
-	if (string != NULL) delete[] string;
+	if (string != nullptr) delete[] string;
 	delete[] data;
 }
 
@@ -88,7 +88,7 @@ void Scanner::SetString(char **ptr, const char *start, unsigned int length)
 {
 	if (length == -1)
 		length = strlen(start);
-	if (*ptr != NULL) free(*ptr);
+	if (*ptr != nullptr) free(*ptr);
 	*ptr = (char*)malloc(length + 1);
 	memcpy(*ptr, start, length);
 	(*ptr)[length] = 0;
@@ -202,17 +202,17 @@ void Scanner::ExpandState()
 void Scanner::SaveState(Scanner &savedstate)
 {
 	// This saves the entire parser state except for the data pointer.
-	if (savedstate.string != NULL) free(savedstate.string);
-	if (savedstate.nextState.string != NULL) free(savedstate.nextState.string);
+	if (savedstate.string != nullptr) free(savedstate.string);
+	if (savedstate.nextState.string != nullptr) free(savedstate.nextState.string);
 	memcpy(&savedstate, this, sizeof(*this));
 	savedstate.string = strdup(string);
 	savedstate.nextState.string = strdup(nextState.string);
-	savedstate.data = NULL;
+	savedstate.data = nullptr;
 }
 
 void Scanner::RestoreState(Scanner &savedstate)
 {
-	if (savedstate.data == NULL)
+	if (savedstate.data == nullptr)
 	{
 		char *saveddata = data;
 		savedstate.SaveState(*this);
@@ -409,7 +409,7 @@ bool Scanner::GetNextToken(bool expandState)
 		}
 		else if(nextState.token == TK_IntConst)
 		{
-			nextState.number = strtol(nextState.string, NULL, integerBase);
+			nextState.number = strtol(nextState.string, nullptr, integerBase);
 			nextState.decimal = nextState.number;
 			nextState.boolean = (nextState.number != 0);
 		}

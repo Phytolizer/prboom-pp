@@ -112,7 +112,7 @@ static int spechit_max; // killough
 int numspechit;
 
 // Temporary holder for thing_sectorlist threads
-msecnode_t *sector_list = NULL; // phares 3/16/98
+msecnode_t *sector_list = nullptr; // phares 3/16/98
 
 //
 // TELEPORT MOVE
@@ -314,7 +314,7 @@ dboolean P_TeleportMove(mobj_t *thing, fixed_t x, fixed_t y, dboolean boss)
     tmbbox[BOXLEFT] = x - tmthing->radius;
 
     newsubsec = R_PointInSubsector(x, y);
-    ceilingline = NULL;
+    ceilingline = nullptr;
 
     // The base floor/ceiling is from the subsector
     // that contains the point.
@@ -560,7 +560,7 @@ static dboolean PIT_CheckThing(mobj_t *thing) // killough 3/26/98: make static
         (thing->type ^ MT_SKULL) |        // (but Barons & Knights
             (tmthing->type ^ MT_PAIN))    // are intentionally not)
     {
-        P_DamageMobj(thing, NULL, NULL, thing->health); // kill object
+        P_DamageMobj(thing, nullptr, NULL, thing->health); // kill object
         return true;
     }
 
@@ -851,7 +851,7 @@ dboolean P_CheckPosition(mobj_t *thing, fixed_t x, fixed_t y)
     tmbbox[BOXLEFT] = x - tmthing->radius;
 
     newsubsec = R_PointInSubsector(x, y);
-    floorline = blockline = ceilingline = NULL; // killough 8/1/98
+    floorline = blockline = ceilingline = nullptr; // killough 8/1/98
 
     // Whether object can get out of a sticky situation:
     tmunstuck = thing->player &&              /* only players */
@@ -1307,7 +1307,7 @@ void P_HitSlideLine(line_t *ld)
             P_AproxDistance(tmxmove, tmymove) > 4 * FRACUNIT &&
             variable_friction && // killough 8/28/98: calc friction on demand
             slidemo->z <= slidemo->floorz &&
-            P_GetFriction(slidemo, NULL) > ORIG_FRICTION;
+            P_GetFriction(slidemo, nullptr) > ORIG_FRICTION;
     }
     else
     {
@@ -1558,7 +1558,7 @@ void P_SlideMove(mobj_t *mo)
 //
 // P_LineAttack
 //
-mobj_t *linetarget; // who got hit (or NULL)
+mobj_t *linetarget; // who got hit (or nullptr)
 mobj_t *crosshair_target;
 static mobj_t *shootthing;
 
@@ -1611,7 +1611,7 @@ dboolean PTR_AimTraverse(intercept_t *in)
         dist = FixedMul(attackrange, in->frac);
 
         // e6y: emulation of missed back side on two-sided lines.
-        // backsector can be NULL if overrun_missedbackside_emulate is 1
+        // backsector can be nullptr if overrun_missedbackside_emulate is 1
         if (!li->backsector ||
             li->frontsector->floorheight != li->backsector->floorheight)
         {
@@ -1715,7 +1715,7 @@ dboolean PTR_ShootTraverse(intercept_t *in)
             // killough 11/98: simplify
 
             // e6y: emulation of missed back side on two-sided lines.
-            // backsector can be NULL if overrun_missedbackside_emulate is 1
+            // backsector can be nullptr if overrun_missedbackside_emulate is 1
             if (!li->backsector)
             {
                 if ((slope = FixedDiv(openbottom - shootz, dist)) <= aimslope &&
@@ -1856,7 +1856,7 @@ fixed_t P_AimLineAttack(mobj_t *t1, angle_t angle, fixed_t distance,
     bottomslope = -100 * FRACUNIT / 160;
 
     attackrange = distance;
-    linetarget = NULL;
+    linetarget = nullptr;
 
     /* killough 8/2/98: prevent friends from aiming at friends */
     aim_flags_mask = mask;
@@ -2146,7 +2146,7 @@ dboolean PIT_ChangeSector(mobj_t *thing)
     if (thing->flags & MF_TOUCHY &&
         (thing->intflags & MIF_ARMED || sentient(thing)))
     {
-        P_DamageMobj(thing, NULL, NULL, thing->health); // kill object
+        P_DamageMobj(thing, nullptr, NULL, thing->health); // kill object
         return true;                                    // keep checking
     }
 
@@ -2161,7 +2161,7 @@ dboolean PIT_ChangeSector(mobj_t *thing)
     if (crushchange && !(leveltime & 3))
     {
         int t;
-        P_DamageMobj(thing, NULL, NULL, 10);
+        P_DamageMobj(thing, nullptr, NULL, 10);
         dsda_WatchCrush(thing, 10);
 
         // spray blood in a random direction
@@ -2286,14 +2286,14 @@ inline static void P_PutSecnode(msecnode_t *node)
 //
 // Maintain a freelist of msecnode_t's to reduce memory allocs and frees.
 
-msecnode_t *headsecnode = NULL;
+msecnode_t *headsecnode = nullptr;
 
 //
 // P_FreeSecNodeList
 //
 void P_FreeSecNodeList(void)
 {
-    headsecnode = NULL; // this is all thats needed to fix the bug
+    headsecnode = nullptr; // this is all thats needed to fix the bug
 }
 
 //
@@ -2310,7 +2310,7 @@ msecnode_t *P_GetSecnode(void)
 
     return headsecnode ? node = headsecnode, headsecnode = node->m_snext,
                          node
-                       : (msecnode_t *)(Z_Malloc(sizeof *node, PU_LEVEL, NULL));
+                       : (msecnode_t *)(Z_Malloc(sizeof *node, PU_LEVEL, nullptr));
 }
 
 //
@@ -2357,14 +2357,14 @@ msecnode_t *P_AddSecnode(sector_t *s, mobj_t *thing, msecnode_t *nextnode)
 
     node->m_sector = s;       // sector
     node->m_thing = thing;    // mobj
-    node->m_tprev = NULL;     // prev node on Thing thread
+    node->m_tprev = nullptr;     // prev node on Thing thread
     node->m_tnext = nextnode; // next node on Thing thread
     if (nextnode)
         nextnode->m_tprev = node; // set back link on Thing
 
     // Add new node at head of sector thread starting at s->touching_thinglist
 
-    node->m_sprev = NULL;                  // prev node on sector thread
+    node->m_sprev = nullptr;                  // prev node on sector thread
     node->m_snext = s->touching_thinglist; // next node on sector thread
     if (s->touching_thinglist)
         node->m_snext->m_sprev = node;
@@ -2374,7 +2374,7 @@ msecnode_t *P_AddSecnode(sector_t *s, mobj_t *thing, msecnode_t *nextnode)
 
 // P_DelSecnode() deletes a sector node from the list of
 // sectors this object appears in. Returns a pointer to the next node
-// on the linked list, or NULL.
+// on the linked list, or nullptr.
 
 msecnode_t *P_DelSecnode(msecnode_t *node)
 {
@@ -2413,7 +2413,7 @@ msecnode_t *P_DelSecnode(msecnode_t *node)
         P_PutSecnode(node);
         return (tn);
     }
-    return (NULL);
+    return (nullptr);
 } // phares 3/13/98
 
 // Delete an entire sector list
@@ -2487,13 +2487,13 @@ void P_CreateSecNodeList(mobj_t *thing, fixed_t x, fixed_t y)
 
     // First, clear out the existing m_thing fields. As each node is
     // added or verified as needed, m_thing will be set properly. When
-    // finished, delete all nodes where m_thing is still NULL. These
+    // finished, delete all nodes where m_thing is still nullptr. These
     // represent the sectors the Thing has vacated.
 
     node = sector_list;
     while (node)
     {
-        node->m_thing = NULL;
+        node->m_thing = nullptr;
         node = node->m_tnext;
     }
 
@@ -2523,12 +2523,12 @@ void P_CreateSecNodeList(mobj_t *thing, fixed_t x, fixed_t y)
     sector_list = P_AddSecnode(thing->subsector->sector, thing, sector_list);
 
     // Now delete any nodes that won't be used. These are the ones where
-    // m_thing is still NULL.
+    // m_thing is still nullptr.
 
     node = sector_list;
     while (node)
     {
-        if (node->m_thing == NULL)
+        if (node->m_thing == nullptr)
         {
             if (node == sector_list)
                 sector_list = node->m_tnext;
@@ -2578,7 +2578,7 @@ void P_MapStart(void)
 }
 void P_MapEnd(void)
 {
-    tmthing = NULL;
+    tmthing = nullptr;
 }
 
 // heretic
@@ -2663,7 +2663,7 @@ mobj_t *P_CheckOnmobj(mobj_t *thing)
     tmbbox[BOXLEFT] = x - tmthing->radius;
 
     newsubsec = R_PointInSubsector(x, y);
-    ceilingline = NULL;
+    ceilingline = nullptr;
 
     //
     // the base floor / ceiling is from the subsector that contains the
@@ -2676,7 +2676,7 @@ mobj_t *P_CheckOnmobj(mobj_t *thing)
     numspechit = 0;
 
     if (tmflags & MF_NOCLIP)
-        return NULL;
+        return nullptr;
 
     //
     // check things first, possibly picking things up
@@ -2697,7 +2697,7 @@ mobj_t *P_CheckOnmobj(mobj_t *thing)
                 return onmobj;
             }
     *tmthing = oldmo;
-    return NULL;
+    return nullptr;
 }
 
 void P_FakeZMovement(mobj_t *mo)
@@ -2786,7 +2786,7 @@ void P_AppendSpecHit(line_t *ld)
     if (numspechit > 8 && demo_compatibility)
     {
         static spechit_overrun_param_t spechit_overrun_param = {
-            NULL, // line_t *line;
+            nullptr, // line_t *line;
 
             &spechit,    // line_t **spechit;
             &numspechit, // int *numspechit;

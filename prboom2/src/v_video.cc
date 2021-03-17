@@ -120,7 +120,7 @@ static const crdef_t crdefs[] = {
     {"CRBROWN", &colrngs[CR_BROWN]},   {"CRGOLD", &colrngs[CR_GOLD]},
     {"CRRED", &colrngs[CR_RED]},       {"CRBLUE", &colrngs[CR_BLUE]},
     {"CRORANGE", &colrngs[CR_ORANGE]}, {"CRYELLOW", &colrngs[CR_YELLOW]},
-    {"CRBLUE2", &colrngs[CR_BLUE2]},   {NULL}};
+    {"CRBLUE2", &colrngs[CR_BLUE2]},   {nullptr}};
 
 // haleyjd: DOSDoom-style single translucency lookup-up table
 // generation code. This code has a 32k (plus a bit more)
@@ -382,7 +382,7 @@ void V_Init(void)
     // reset the all
     for (i = 0; i < NUM_SCREENS; i++)
     {
-        screens[i].data = NULL;
+        screens[i].data = nullptr;
         screens[i].not_on_heap = false;
         screens[i].width = 0;
         screens[i].height = 0;
@@ -763,9 +763,9 @@ static void FUNC_V_DrawNumPatchPrecise(float x, float y, int scrn, int lump,
     R_UnlockPatchNum(lump);
 }
 
-unsigned short *V_Palette15 = NULL;
-unsigned short *V_Palette16 = NULL;
-unsigned int *V_Palette32 = NULL;
+unsigned short *V_Palette15 = nullptr;
+unsigned short *V_Palette16 = nullptr;
+unsigned int *V_Palette32 = nullptr;
 static int currentPaletteIndex = 0;
 
 //
@@ -816,9 +816,9 @@ void V_UpdateTrueColorPalette(video_mode_t mode)
             free(playpal_data->Palettes16);
         if (playpal_data->Palettes32)
             free(playpal_data->Palettes32);
-        playpal_data->Palettes15 = NULL;
-        playpal_data->Palettes16 = NULL;
-        playpal_data->Palettes32 = NULL;
+        playpal_data->Palettes15 = nullptr;
+        playpal_data->Palettes16 = nullptr;
+        playpal_data->Palettes32 = nullptr;
         usegammaOnLastPaletteGeneration = usegamma;
     }
 
@@ -945,11 +945,11 @@ void V_DestroyUnusedTrueColorPalettes(void)
 {
     dsda_FreeTrueColorPlayPal();
     if (V_GetMode() != VID_MODE15)
-        V_Palette15 = NULL;
+        V_Palette15 = nullptr;
     if (V_GetMode() != VID_MODE16)
-        V_Palette16 = NULL;
+        V_Palette16 = nullptr;
     if (V_GetMode() != VID_MODE32)
-        V_Palette32 = NULL;
+        V_Palette32 = nullptr;
 }
 
 //
@@ -1358,7 +1358,7 @@ void V_FreeScreen(screeninfo_t *scrn)
     if (!scrn->not_on_heap)
     {
         free(scrn->data);
-        scrn->data = NULL;
+        scrn->data = nullptr;
     }
 }
 

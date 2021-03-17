@@ -370,7 +370,7 @@ int EV_DoPlat(line_t *line, plattype_e type, int amount)
 // to use the new structure which places no limits
 // on active plats. It also avoids spending as much
 // time searching for active plats. Previously a
-// fixed-size array was used, with NULL indicating
+// fixed-size array was used, with nullptr indicating
 // empty entries, while now a doubly-linked list
 // is used.
 
@@ -456,7 +456,7 @@ void P_AddActivePlat(plat_t *plat)
 void P_RemoveActivePlat(plat_t *plat)
 {
     platlist_t *list = plat->list;
-    plat->sector->floordata = NULL; // jff 2/23/98 multiple thinkers
+    plat->sector->floordata = nullptr; // jff 2/23/98 multiple thinkers
     P_RemoveThinker(&plat->thinker);
     if ((*list->prev = list->next))
         list->next->prev = list->prev;

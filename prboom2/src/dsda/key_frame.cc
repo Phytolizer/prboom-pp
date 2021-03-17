@@ -66,7 +66,7 @@ void dsda_InitKeyFrame(void)
     if (dsda_auto_key_frames_size == 0)
         return;
 
-    if (dsda_auto_key_frames != NULL)
+    if (dsda_auto_key_frames != nullptr)
         free(dsda_auto_key_frames);
 
     dsda_auto_key_frames = calloc<dsda_key_frame_t *>(dsda_auto_key_frames_size,
@@ -77,17 +77,17 @@ void dsda_InitKeyFrame(void)
 void dsda_ExportKeyFrame(byte *buffer, int length)
 {
     char name[40];
-    FILE *fp = NULL;
+    FILE *fp = nullptr;
     int timestamp;
 
     timestamp = totalleveltimes + leveltime;
 
     snprintf(name, 40, "backup-%010d.kf", timestamp);
 
-    if ((fp = fopen(name, "rb")) != NULL)
+    if ((fp = fopen(name, "rb")) != nullptr)
     {
         fclose(fp);
-        snprintf(name, 40, "backup-%010d-%ld.kf", timestamp, time(NULL));
+        snprintf(name, 40, "backup-%010d-%ld.kf", timestamp, time(nullptr));
     }
 
     if (!M_WriteFile(name, buffer, length))
@@ -159,13 +159,13 @@ void dsda_StoreKeyFrame(byte **buffer, byte complete)
     P_ArchiveRNG();
     P_ArchiveMap();
 
-    if (*buffer != NULL)
+    if (*buffer != nullptr)
         free(*buffer);
 
     length = save_p - savebuffer;
 
     *buffer = savebuffer;
-    savebuffer = save_p = NULL;
+    savebuffer = save_p = nullptr;
 
     if (complete)
     {
@@ -182,7 +182,7 @@ void dsda_RestoreKeyFrame(byte *buffer, byte complete)
 {
     int demo_write_buffer_offset, i;
 
-    if (buffer == NULL)
+    if (buffer == nullptr)
     {
         doom_printf("No key frame found");
         return;
@@ -250,7 +250,7 @@ void dsda_RestoreKeyFrame(byte *buffer, byte complete)
     P_UnArchiveMap();
     P_MapEnd();
     R_ActivateSectorInterpolations();
-    R_SmoothPlaying_Reset(NULL);
+    R_SmoothPlaying_Reset(nullptr);
 
     if (musinfo.current_item != -1)
         S_ChangeMusInfoMusic(musinfo.current_item, true);

@@ -83,13 +83,13 @@ int *openings, *lastopening; // dropoff overflow
 
 // dropoff overflow
 // e6y: resolution limitation is removed
-int *floorclip = NULL;
-int *ceilingclip = NULL;
+int *floorclip = nullptr;
+int *ceilingclip = nullptr;
 
 // spanstart holds the start of a plane span; initialized to 0 at start
 
 // e6y: resolution limitation is removed
-static int *spanstart = NULL; // killough 2/8/98
+static int *spanstart = nullptr; // killough 2/8/98
 
 //
 // texture mapping
@@ -101,12 +101,12 @@ static fixed_t planeheight;
 // killough 2/8/98: make variables static
 
 static fixed_t basexscale, baseyscale;
-static fixed_t *cachedheight = NULL;
+static fixed_t *cachedheight = nullptr;
 static fixed_t xoffs, yoffs; // killough 2/28/98: flat offsets
 
 // e6y: resolution limitation is removed
-fixed_t *yslope = NULL;
-fixed_t *distscale = NULL;
+fixed_t *yslope = nullptr;
+fixed_t *distscale = nullptr;
 
 void R_InitPlanesRes(void)
 {
@@ -139,7 +139,7 @@ void R_InitVisplanesRes(void)
 {
     int i;
 
-    freetail = NULL;
+    freetail = nullptr;
     freehead = &freetail;
 
     for (i = 0; i < MAXVISPLANES; i++)
@@ -253,7 +253,7 @@ void R_ClearPlanes(void)
         floorclip[i] = viewheight, ceilingclip[i] = -1;
 
     for (i = 0; i < MAXVISPLANES; i++) // new code -- killough
-        for (*freehead = visplanes[i], visplanes[i] = NULL; *freehead;)
+        for (*freehead = visplanes[i], visplanes[i] = nullptr; *freehead;)
             freehead = &(*freehead)->next;
 
     lastopening = openings;

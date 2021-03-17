@@ -191,7 +191,7 @@ void dsda_UnArchiveMSecNodes(mobj_t **mobj_p, int mobj_count)
         //   this value can differ from the one stored originally.
         existing_count = 0;
 
-        msecnode_prev = NULL;
+        msecnode_prev = nullptr;
         msecnode_next = &sectors[sector_i].touching_thinglist;
         msecnode = sectors[sector_i].touching_thinglist;
 
@@ -211,7 +211,7 @@ void dsda_UnArchiveMSecNodes(mobj_t **mobj_p, int mobj_count)
                     if (msecnode_prev)
                         msecnode = msecnode_prev->m_snext;
                     else
-                        msecnode = NULL;
+                        msecnode = nullptr;
                 }
 
                 break;
@@ -234,12 +234,12 @@ void dsda_UnArchiveMSecNodes(mobj_t **mobj_p, int mobj_count)
             dsda_UnArchiveMSecNodeMobj(msecnode, mobj_p, mobj_count);
 
             // This will be filled in below
-            msecnode->m_tprev = NULL;
-            msecnode->m_tnext = NULL;
+            msecnode->m_tprev = nullptr;
+            msecnode->m_tnext = nullptr;
 
             // Hook into the chain
             msecnode->m_sprev = msecnode_prev;
-            msecnode->m_snext = NULL;
+            msecnode->m_snext = nullptr;
             *msecnode_next = msecnode;
             msecnode_prev = msecnode;
             msecnode_next = &msecnode->m_snext;
@@ -260,8 +260,8 @@ void dsda_UnArchiveMSecNodes(mobj_t **mobj_p, int mobj_count)
         memcpy(&count, save_p, sizeof(count));
         save_p += sizeof(count);
 
-        mobj->touching_sectorlist = NULL;
-        msecnode_prev = NULL;
+        mobj->touching_sectorlist = nullptr;
+        msecnode_prev = nullptr;
         msecnode_next = &mobj->touching_sectorlist;
 
         for (i = 0; i < count; ++i)
@@ -290,7 +290,7 @@ void dsda_UnArchiveMSecNodes(mobj_t **mobj_p, int mobj_count)
 
             // Rewrite the m_tnext chain with the new msecnodes
             msecnode->m_tprev = msecnode_prev;
-            msecnode->m_tnext = NULL;
+            msecnode->m_tnext = nullptr;
             *msecnode_next = msecnode;
             msecnode_prev = msecnode;
             msecnode_next = &msecnode->m_tnext;

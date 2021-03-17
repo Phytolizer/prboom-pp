@@ -189,7 +189,7 @@ static void R_InitTextures(void)
     }
     else
     {
-        maptex2 = NULL;
+        maptex2 = nullptr;
         numtextures2 = 0;
         maxoff2 = 0;
     }
@@ -451,7 +451,7 @@ void R_InitTranMap(int progress)
         } cache;
         FILE *cachefp;
 
-        fnlen = doom_snprintf(NULL, 0, "%s/tranmap.dat", I_DoomExeDir());
+        fnlen = doom_snprintf(nullptr, 0, "%s/tranmap.dat", I_DoomExeDir());
         fname = static_cast<char *>(std::malloc(fnlen + 1));
         doom_snprintf(fname, fnlen + 1, "%s/tranmap.dat", I_DoomExeDir());
         cachefp = fopen(fname, "rb");
@@ -526,7 +526,7 @@ void R_InitTranMap(int progress)
                 }
             }
             if ((cachefp = fopen(fname, "wb")) !=
-                NULL) // write out the cached translucency map
+                nullptr) // write out the cached translucency map
             {
                 cache.pct = tran_filter_pct;
                 memcpy(cache.playpal, playpal, sizeof cache.playpal);
@@ -721,8 +721,8 @@ void R_PrecacheLevel(void)
     memset(hitlist, 0, numsprites);
 
     {
-        thinker_t *th = NULL;
-        while ((th = P_NextThinker(th, th_all)) != NULL)
+        thinker_t *th = nullptr;
+        while ((th = P_NextThinker(th, th_all)) != nullptr)
             if (th->function == P_MobjThinker)
                 hitlist[((mobj_t *)th)->sprite] = 1;
     }

@@ -183,7 +183,7 @@ UDP_SOCKET I_Socket(Uint16 port)
     {
         UDP_SOCKET sock;
         port = IPPORT_RESERVED;
-        while ((sock = SDLNet_UDP_Open(port)) == NULL)
+        while ((sock = SDLNet_UDP_Open(port)) == nullptr)
             port++;
         return sock;
     }
@@ -279,7 +279,7 @@ void I_PrintAddress(FILE *fp, UDP_CHANNEL *addr)
       addy = SDLNet_ResolveIP(address);
       port = address->port;
 
-      if(addy != NULL)
+      if(addy != nullptr)
           fprintf(fp, "%s:%d", addy, port);
       else
         fprintf(fp, "Error");

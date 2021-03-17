@@ -171,7 +171,7 @@ void Z_DumpMemory(void)
     size_t total_cache = 0, total_free = 0, total_malloc = 0;
     int tag;
 
-    len = doom_snprintf(NULL, 0, "%s/memdump.%d", HEAPDUMP_DIR, dump);
+    len = doom_snprintf(nullptr, 0, "%s/memdump.%d", HEAPDUMP_DIR, dump);
     buf = malloc(len + 1);
     doom_snprintf(buf, len + 1, "%s/memdump.%d", HEAPDUMP_DIR, dump);
     fp = fopen(buf, "w");
@@ -273,7 +273,7 @@ void Z_Close(void)
 {
 #if 0
   (free)(zonebase);
-  zone = rover = zonebase = NULL;
+  zone = rover = zonebase = nullptr;
 #endif
 }
 
@@ -329,7 +329,7 @@ void Z_Init(void)
 }
 
 /* Z_Malloc
- * You can pass a NULL user if the tag is < PU_PURGELEVEL.
+ * You can pass a nullptr user if the tag is < PU_PURGELEVEL.
  *
  * cph - the algorithm here was a very simple first-fit round-robin
  *  one - just keep looping around, freeing everything we can until
@@ -347,7 +347,7 @@ void *(Z_Malloc)(size_t size, int tag, void **user
 #endif
 )
 {
-    memblock_t *block = NULL;
+    memblock_t *block = nullptr;
 
 #ifdef INSTRUMENTED
 #ifdef CHECKHEAP
@@ -370,7 +370,7 @@ void *(Z_Malloc)(size_t size, int tag, void **user
 #endif
 
     if (!size)
-        return user ? *user = NULL : NULL; // malloc(0) returns NULL
+        return user ? *user = nullptr : NULL; // malloc(0) returns NULL
 
     size = (size + CHUNK_SIZE - 1) & ~(CHUNK_SIZE - 1); // round to chunk size
 
@@ -397,7 +397,7 @@ void *(Z_Malloc)(size_t size, int tag, void **user
                 block = next; // Advance to next block
             }
         }
-        block = NULL;
+        block = nullptr;
     }
 
 #ifdef HAVE_LIBDMALLOC
@@ -502,10 +502,10 @@ void(Z_Free)(void *p
 #endif
 
     if (block->user) // Nullify user if one exists
-        *block->user = NULL;
+        *block->user = nullptr;
 
     if (block == block->next)
-        blockbytag[block->tag] = NULL;
+        blockbytag[block->tag] = nullptr;
     else if (blockbytag[block->tag] == block)
         blockbytag[block->tag] = block->next;
     block->prev->next = block->next;
@@ -616,7 +616,7 @@ void(Z_ChangeTag)(void *ptr, int tag
 #endif // ZONEIDCHECK
 
     if (block == block->next)
-        blockbytag[block->tag] = NULL;
+        blockbytag[block->tag] = nullptr;
     else if (blockbytag[block->tag] == block)
         blockbytag[block->tag] = block->next;
     block->prev->next = block->next;
@@ -678,7 +678,7 @@ void *(Z_Calloc)(size_t n1, size_t n2, int tag, void **user
 )
 {
     return (n1 *= n2) ? memset((Z_Malloc)(n1, tag, user DA(file, line)), 0, n1)
-                      : NULL;
+                      : nullptr;
 }
 
 char *(Z_Strdup)(const char *s, int tag, void **user
@@ -718,8 +718,8 @@ void(Z_CheckHeap)(
 //#ifdef INSTRUMENTED
 // shouldn't be needed anymore, was just for testing
 #if 0
-    if (((int)block->file < 0x00001000) && (block->file != NULL) && (block->tag != 0)) {
-      block->file = NULL;
+    if (((int)block->file < 0x00001000) && (block->file != nullptr) && (block->tag != 0)) {
+      block->file = nullptr;
     }
 #endif
   } while ((block=block->next) != zone);

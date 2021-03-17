@@ -65,7 +65,7 @@ struct music_player_t
     // undo pause
     void (*resume)(void);
 
-    // return a player-specific handle, or NULL on failure.
+    // return a player-specific handle, or nullptr on failure.
     // data does not belong to player, but it will persist as long as unregister
     // is not called
     const void *(*registersong)(const void *data, unsigned len);

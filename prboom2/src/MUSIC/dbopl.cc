@@ -1660,7 +1660,7 @@ static int doneTables = FALSE;
 void DBOPL_InitTables(void)
 {
     int i, oct;
-    Chip *chip = NULL;
+    Chip *chip = nullptr;
 
     if (doneTables)
         return;
@@ -1795,7 +1795,7 @@ void DBOPL_InitTables(void)
     for (i = 0; i < 64; i++)
     {
         Bitu chNum, opNum, blah;
-        Channel *chan = NULL;
+        Channel *chan = nullptr;
         if (i % 8 >= 6 || ((i / 8) % 4 == 3))
         {
             OpOffsetTable[i] = 0;

@@ -28,7 +28,7 @@
 static BOOL OutOfMemory(void)
 {
     SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Fatal Error",
-                             "Out of memory - aborting", NULL);
+                             "Out of memory - aborting", nullptr);
     return FALSE;
 }
 
@@ -49,7 +49,7 @@ static int main_getcmdline(void)
     int i, argc, result;
 
     argvw = CommandLineToArgvW(GetCommandLineW(), &argc);
-    if (argvw == NULL)
+    if (argvw == nullptr)
     {
         return OutOfMemory();
     }
@@ -68,7 +68,7 @@ static int main_getcmdline(void)
             return OutOfMemory();
         }
     }
-    argv[i] = NULL;
+    argv[i] = nullptr;
     LocalFree(argvw);
 
     SDL_SetMainReady();

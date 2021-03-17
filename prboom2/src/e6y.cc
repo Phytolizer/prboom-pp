@@ -173,7 +173,7 @@ int minViewPitch;
 #ifdef _WIN32
 const char *WINError(void)
 {
-    static char *WinEBuff = NULL;
+    static char *WinEBuff = nullptr;
     DWORD err = GetLastError();
     char *ch;
 
@@ -184,8 +184,8 @@ const char *WINError(void)
 
     if (FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER |
                           FORMAT_MESSAGE_FROM_SYSTEM,
-                      NULL, err, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
-                      (LPTSTR)&WinEBuff, 0, NULL) == 0)
+                      nullptr, err, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
+                      (LPTSTR)&WinEBuff, 0, nullptr) == 0)
     {
         return "Unknown error";
     }
@@ -203,7 +203,7 @@ const char *WINError(void)
 
 void e6y_assert(const char *format, ...)
 {
-    static FILE *f = NULL;
+    static FILE *f = nullptr;
     va_list argptr;
     va_start(argptr, format);
     // if (!f)
@@ -407,7 +407,7 @@ int G_GotoNextLevel(void)
     int map = -1;
 
     int changed = false;
-    if (gamemapinfo != NULL)
+    if (gamemapinfo != nullptr)
     {
         const char *n;
         if (gamemapinfo->nextsecret[0])
@@ -812,11 +812,11 @@ int I_MessageBox(const char * /* text */, unsigned int /* type */)
       {PRB_MB_YESNOCANCEL      , "(y - yes, n - no, esc - cancel"},
       {PRB_MB_YESNO            , "(y - yes, n - no)"},
       {PRB_MB_RETRYCANCEL      , "(r - retry, <esc> - cancel)"},
-      {0, NULL}
+      {0, nullptr}
     };
 
     int i, c;
-    char* hotkeys_str = NULL;
+    char* hotkeys_str = nullptr;
 
     type &= 0x000000ff;
 
@@ -866,7 +866,7 @@ int stats_level;
 int stroller;
 int numlevels = 0;
 int levels_max = 0;
-timetable_t *stats = NULL;
+timetable_t *stats = nullptr;
 
 void e6y_G_DoCompleted(void)
 {
@@ -1191,7 +1191,7 @@ unsigned int AfxGetFileName(const char *lpszPathName, char *lpszTitle,
 {
     char *lpszTemp = PathFindFileName(lpszPathName);
 
-    if (lpszTitle == NULL)
+    if (lpszTitle == nullptr)
         return strlen(lpszTemp) + 1;
 
     strncpy(lpszTitle, lpszTemp, nMax - 1);
@@ -1208,7 +1208,7 @@ void AbbreviateName(char *lpszCanon, int cchMax, int bAtLeastName)
     lpszBase = lpszCanon;
     cchFullPath = strlen(lpszCanon);
 
-    cchFileName = AfxGetFileName(lpszCanon, NULL, 0) - 1;
+    cchFileName = AfxGetFileName(lpszCanon, nullptr, 0) - 1;
     lpszFileName = lpszBase + (cchFullPath - cchFileName);
 
     if (cchMax >= cchFullPath)

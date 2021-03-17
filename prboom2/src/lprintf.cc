@@ -131,8 +131,8 @@ int doom_vsnprintf(char *buf, size_t max, const char *fmt, va_list va)
     int rv;
     va_list vc;
 
-    assert((max == 0 && buf == NULL) || (max != 0 && buf != NULL));
-    assert(fmt != NULL);
+    assert((max == 0 && buf == nullptr) || (max != 0 && buf != NULL));
+    assert(fmt != nullptr);
 
     va_copy(vc, va);
     rv = vsnprintf(buf, max, fmt, vc);
@@ -150,7 +150,7 @@ int doom_vsnprintf(char *buf, size_t max, const char *fmt, va_list va)
                 continue;
 
             backbuffer = static_cast<char *>((realloc)(backbuffer, backsize));
-            assert(backbuffer != NULL);
+            assert(backbuffer != nullptr);
 
             va_copy(vc, va);
             rv = vsnprintf(backbuffer, backsize, fmt, vc);

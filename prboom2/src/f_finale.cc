@@ -380,7 +380,7 @@ static const castinfo_t castorder[] =
         {&s_CC_PAIN, MT_PAIN},        {&s_CC_REVEN, MT_UNDEAD},
         {&s_CC_MANCU, MT_FATSO},      {&s_CC_ARCH, MT_VILE},
         {&s_CC_SPIDER, MT_SPIDER},    {&s_CC_CYBER, MT_CYBORG},
-        {&s_CC_HERO, MT_PLAYER},      {NULL, static_cast<mobjtype_t>(0)}};
+        {&s_CC_HERO, MT_PLAYER},      {nullptr, static_cast<mobjtype_t>(0)}};
 
 int castnum;
 int casttics;
@@ -424,10 +424,10 @@ void F_CastTicker(void)
         // switch from deathstate to next monster
         castnum++;
         castdeath = false;
-        if (castorder[castnum].name == NULL)
+        if (castorder[castnum].name == nullptr)
             castnum = 0;
         if (mobjinfo[castorder[castnum].type].seesound)
-            S_StartSound(NULL, mobjinfo[castorder[castnum].type].seesound);
+            S_StartSound(nullptr, mobjinfo[castorder[castnum].type].seesound);
         caststate = &states[mobjinfo[castorder[castnum].type].seestate];
         castframes = 0;
     }
@@ -509,7 +509,7 @@ void F_CastTicker(void)
         }
 
         if (sfx)
-            S_StartSound(NULL, sfx);
+            S_StartSound(nullptr, sfx);
     }
 
     if (castframes == 12)
@@ -568,7 +568,7 @@ dboolean F_CastResponder(event_t *ev)
     castframes = 0;
     castattacking = false;
     if (mobjinfo[castorder[castnum].type].deathsound)
-        S_StartSound(NULL, mobjinfo[castorder[castnum].type].deathsound);
+        S_StartSound(nullptr, mobjinfo[castorder[castnum].type].deathsound);
 
     return true;
 }
@@ -701,7 +701,7 @@ static void F_BunnyScroll(void)
         stage = 6;
     if (stage > laststage)
     {
-        S_StartSound(NULL, sfx_pistol);
+        S_StartSound(nullptr, sfx_pistol);
         laststage = stage;
     }
 

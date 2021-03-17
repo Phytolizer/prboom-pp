@@ -63,7 +63,7 @@ static screeninfo_t wipe_scr_end;
 static screeninfo_t wipe_scr;
 
 // e6y: resolution limitation is removed
-static int *y_lookup = NULL;
+static int *y_lookup = nullptr;
 
 // e6y: resolution limitation is removed
 void R_InitMeltRes(void)

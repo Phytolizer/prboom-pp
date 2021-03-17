@@ -138,7 +138,7 @@ static void W_AddFile(wadfile_info_t *wadfile)
     unsigned i;
     int length;
     int startlump;
-    filelump_t *fileinfo, *fileinfo2free = NULL; // killough
+    filelump_t *fileinfo, *fileinfo2free = nullptr; // killough
     filelump_t singleinfo;
     int flags = 0;
 
@@ -282,7 +282,7 @@ static int W_CoalesceMarkedResource(const char *start_marker,
                 strncpy(marked->name, start_marker, 8);
                 marked->size = 0; // killough 3/20/98: force size to be 0
                 marked->li_namespace = ns_global; // killough 4/17/98
-                marked->wadfile = NULL;
+                marked->wadfile = nullptr;
                 num_marked = 1;
             }
             is_marked = 1; // start marking lumps
@@ -323,7 +323,7 @@ static int W_CoalesceMarkedResource(const char *start_marker,
     if (mark_end) // add end marker
     {
         lumpinfo[numlumps].size = 0; // killough 3/20/98: force size to be 0
-        lumpinfo[numlumps].wadfile = NULL;
+        lumpinfo[numlumps].wadfile = nullptr;
         lumpinfo[numlumps].li_namespace = ns_global; // killough 4/17/98
         strncpy(lumpinfo[numlumps++].name, end_marker, 8);
     }
@@ -503,7 +503,7 @@ int W_ListNumFromName(const char *name, int lump)
 //
 // CPhipps - modified to use the new wadfiles array
 //
-wadfile_info_t *wadfiles = NULL;
+wadfile_info_t *wadfiles = nullptr;
 
 size_t numwadfiles =
     0; // CPhipps - size of the wadfiles array (dynamic, no limit)
@@ -513,7 +513,7 @@ void W_Init(void)
     // CPhipps - start with nothing
 
     numlumps = 0;
-    lumpinfo = NULL;
+    lumpinfo = nullptr;
 
     { // CPhipps - new wadfiles array used
         // open all the files, load headers, and count lumps
@@ -564,10 +564,10 @@ void W_ReleaseAllWads(void)
 
     numwadfiles = 0;
     free(wadfiles);
-    wadfiles = NULL;
+    wadfiles = nullptr;
     numlumps = 0;
     free(lumpinfo);
-    lumpinfo = NULL;
+    lumpinfo = nullptr;
 
     V_FreePlaypal();
 }

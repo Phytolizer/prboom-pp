@@ -64,7 +64,7 @@ void I_uSleep(unsigned long usecs)
 #else
     /* Fall back on select(2) */
     struct timeval tv = {usecs / 1000000, usecs % 1000000};
-    select(0, NULL, NULL, NULL, &tv);
+    select(0, nullptr, NULL, NULL, &tv);
 #endif
 }
 

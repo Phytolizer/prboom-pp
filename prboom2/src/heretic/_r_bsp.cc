@@ -26,7 +26,7 @@ side_t *sidedef;
 line_t *linedef;
 sector_t *frontsector, *backsector;
 
-drawseg_t *drawsegs = NULL, *ds_p;
+drawseg_t *drawsegs = nullptr, *ds_p;
 int numdrawsegs = 0;
 
 // [AM] Fractional part of the current tic, in the half-open
@@ -457,14 +457,14 @@ void R_Subsector(int num)
             R_FindPlane(frontsector->interpfloorheight, frontsector->floorpic,
                         frontsector->lightlevel, frontsector->special);
     else
-        floorplane = NULL;
+        floorplane = nullptr;
     if (frontsector->interpceilingheight > viewz ||
         frontsector->ceilingpic == skyflatnum)
         ceilingplane =
             R_FindPlane(frontsector->interpceilingheight,
                         frontsector->ceilingpic, frontsector->lightlevel, 0);
     else
-        ceilingplane = NULL;
+        ceilingplane = nullptr;
 
     R_AddSprites(frontsector);
 

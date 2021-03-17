@@ -74,10 +74,10 @@
 int imageformats[5] = {0, GL_LUMINANCE, GL_LUMINANCE_ALPHA, GL_RGB, GL_RGBA};
 
 /* TEXTURES */
-static GLTexture **gld_GLTextures = NULL;
+static GLTexture **gld_GLTextures = nullptr;
 /* PATCHES FLATS SPRITES */
-static GLTexture **gld_GLPatchTextures = NULL;
-static GLTexture **gld_GLStaticPatchTextures = NULL;
+static GLTexture **gld_GLPatchTextures = nullptr;
+static GLTexture **gld_GLStaticPatchTextures = nullptr;
 
 tex_filter_t tex_filter[MIP_COUNT];
 
@@ -93,14 +93,14 @@ int gl_color_mip_levels;
 int gl_boom_colormaps = -1;
 int gl_boom_colormaps_default;
 
-GLuint *last_glTexID = NULL;
+GLuint *last_glTexID = nullptr;
 
 int transparent_pal_index;
 unsigned char gld_palmap[256];
 
 void gld_ResetLastTexture(void)
 {
-    last_glTexID = NULL;
+    last_glTexID = nullptr;
 }
 
 void gld_InitPalettedTextures(void)
@@ -237,9 +237,9 @@ void gld_GetTextureTexID(GLTexture *gltexture, int cm)
 static GLTexture *gld_AddNewGLTexItem(int num, int count, GLTexture ***items)
 {
     if (num < 0)
-        return NULL;
+        return nullptr;
     if (num >= count)
-        return NULL;
+        return nullptr;
     if (!(*items))
     {
         (*items) =
@@ -622,18 +622,18 @@ GLTexture *gld_RegisterTexture(int texture_num, dboolean mipmap, dboolean force)
 
     // e6y: textures with zero index should be loaded sometimes
     if (texture_num == NO_TEXTURE && !force)
-        return NULL;
+        return nullptr;
     gltexture = gld_AddNewGLTexture(texture_num);
     if (!gltexture)
-        return NULL;
+        return nullptr;
     if (gltexture->textype == GLDT_UNREGISTERED)
     {
-        texture_t *texture = NULL;
+        texture_t *texture = nullptr;
 
         if ((texture_num >= 0) || (texture_num < numtextures))
             texture = textures[texture_num];
         if (!texture)
-            return NULL;
+            return nullptr;
         gltexture->textype = GLDT_BROKEN;
         gltexture->index = texture_num;
 
@@ -691,7 +691,7 @@ unsigned char *gld_GetTextureBuffer(GLuint texid, int miplevel, int *width,
                                     int *height)
 {
     int w, h;
-    static unsigned char *buf = NULL;
+    static unsigned char *buf = nullptr;
     static int buf_size = 512 * 256 * 4;
 
     if (!buf)
@@ -757,7 +757,7 @@ static void gld_RecolorMipLevels(byte *data)
     if (gl_color_mip_levels)
     {
         int miplevel = 0;
-        unsigned char *buf = NULL;
+        unsigned char *buf = nullptr;
 
         for (miplevel = 1; miplevel < 16; miplevel++)
         {
@@ -873,7 +873,7 @@ int gld_BuildTexture(GLTexture *gltexture, void *data, dboolean readonly,
     int result = false;
 
     int tex_width, tex_height, tex_buffer_size;
-    unsigned char *tex_buffer = NULL;
+    unsigned char *tex_buffer = nullptr;
 
     tex_width = gld_GetTexDimension(width);
     tex_height = gld_GetTexDimension(height);
@@ -985,13 +985,13 @@ l_exit:
     if (tex_buffer && tex_buffer != data)
     {
         free(tex_buffer);
-        tex_buffer = NULL;
+        tex_buffer = nullptr;
     }
 
     if (!readonly)
     {
         std::free(data);
-        data = NULL;
+        data = nullptr;
     }
 
     return result;
@@ -1006,7 +1006,7 @@ void gld_BindTexture(GLTexture *gltexture, unsigned int flags)
     if (!gltexture || gltexture->textype != GLDT_TEXTURE)
     {
         glBindTexture(GL_TEXTURE_2D, 0);
-        last_glTexID = NULL;
+        last_glTexID = nullptr;
         return;
     }
 
@@ -1070,12 +1070,12 @@ GLTexture *gld_RegisterPatch(int lump, int cm, dboolean is_sprite)
 
     gltexture = gld_AddNewGLPatchTexture(lump);
     if (!gltexture)
-        return NULL;
+        return nullptr;
     if (gltexture->textype == GLDT_UNREGISTERED)
     {
         patch = R_CachePatchNum(lump);
         if (!patch)
-            return NULL;
+            return nullptr;
         gltexture->textype = GLDT_BROKEN;
         gltexture->index = lump;
 
@@ -1150,7 +1150,7 @@ void gld_BindPatch(GLTexture *gltexture, int cm)
     if (!gltexture || gltexture->textype != GLDT_PATCH)
     {
         glBindTexture(GL_TEXTURE_2D, 0);
-        last_glTexID = NULL;
+        last_glTexID = nullptr;
         return;
     }
 
@@ -1227,7 +1227,7 @@ GLTexture *gld_RegisterFlat(int lump, dboolean mipmap)
 
     gltexture = gld_AddNewGLPatchTexture(firstflat + lump);
     if (!gltexture)
-        return NULL;
+        return nullptr;
     if (gltexture->textype == GLDT_UNREGISTERED)
     {
         gltexture->textype = GLDT_BROKEN;
@@ -1292,7 +1292,7 @@ void gld_BindFlat(GLTexture *gltexture, unsigned int flags)
     if (!gltexture || gltexture->textype != GLDT_FLAT)
     {
         glBindTexture(GL_TEXTURE_2D, 0);
-        last_glTexID = NULL;
+        last_glTexID = nullptr;
         return;
     }
 
@@ -1376,7 +1376,7 @@ static void gld_CleanTexItems(int count, GLTexture ***items)
             }
 
             std::free((*items)[i]->glTexExID);
-            (*items)[i]->glTexExID = NULL;
+            (*items)[i]->glTexExID = nullptr;
 
             std::free((*items)[i]);
         }

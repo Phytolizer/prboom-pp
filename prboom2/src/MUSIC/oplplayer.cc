@@ -941,9 +941,9 @@ static opl_voice_t *GetFreeVoice(void)
 
     // None available?
 
-    if (voice_free_list == NULL)
+    if (voice_free_list == nullptr)
     {
-        return NULL;
+        return nullptr;
     }
 
     // Remove from free list
@@ -969,12 +969,12 @@ static void RemoveVoiceFromAllocedList(opl_voice_t *voice)
 
     // Search the list until we find the voice, then remove it.
 
-    while (*rover != NULL)
+    while (*rover != nullptr)
     {
         if (*rover == voice)
         {
             *rover = voice->next;
-            voice->next = NULL;
+            voice->next = nullptr;
             break;
         }
 
@@ -988,7 +988,7 @@ static void ReleaseVoice(opl_voice_t *voice)
 {
     opl_voice_t **rover;
 
-    voice->channel = NULL;
+    voice->channel = nullptr;
     voice->note = 0;
 
     // Remove from alloced list.
@@ -999,13 +999,13 @@ static void ReleaseVoice(opl_voice_t *voice)
 
     rover = &voice_free_list;
 
-    while (*rover != NULL)
+    while (*rover != nullptr)
     {
         rover = &(*rover)->next;
     }
 
     *rover = voice;
-    voice->next = NULL;
+    voice->next = nullptr;
 }
 
 // Load data to the specified Operator
@@ -1132,7 +1132,7 @@ static void InitVoices(void)
 
     // Start with an empty free list.
 
-    voice_free_list = NULL;
+    voice_free_list = nullptr;
 
     // Initialize each voice.
 
@@ -1141,7 +1141,7 @@ static void InitVoices(void)
         voices[i].index = i;
         voices[i].op1 = voice_operators[0][i];
         voices[i].op2 = voice_operators[1][i];
-        voices[i].current_instr = NULL;
+        voices[i].current_instr = nullptr;
 
         // Add this voice to the freelist.
 
@@ -1165,7 +1165,7 @@ void I_OPL_SetMusicVolume(int volume)
 
     for (i = 0; i < OPL_NUM_VOICES; ++i)
     {
-        if (voices[i].channel != NULL)
+        if (voices[i].channel != nullptr)
         {
             SetVoiceVolume(&voices[i], voices[i].note_volume);
         }
@@ -1239,9 +1239,9 @@ static opl_voice_t *ReplaceExistingVoice(opl_channel_data_t *channel)
     // than higher-numbered channels, eg. MIDI channel 1 is never
     // discarded for MIDI channel 2.
 
-    result = NULL;
+    result = nullptr;
 
-    for (rover = voice_alloced_list; rover != NULL; rover = rover->next)
+    for (rover = voice_alloced_list; rover != nullptr; rover = rover->next)
     {
         if (rover->current_instr_voice != 0 ||
             (rover->channel > channel &&
@@ -1255,9 +1255,9 @@ static opl_voice_t *ReplaceExistingVoice(opl_channel_data_t *channel)
     // If we didn't find a voice, find an existing voice being used to
     // play a note on the same channel, and use that.
 
-    if (result == NULL)
+    if (result == nullptr)
     {
-        for (rover = voice_alloced_list; rover != NULL; rover = rover->next)
+        for (rover = voice_alloced_list; rover != nullptr; rover = rover->next)
         {
             if (rover->channel == channel)
             {
@@ -1270,7 +1270,7 @@ static opl_voice_t *ReplaceExistingVoice(opl_channel_data_t *channel)
     // Still nothing found?  Give up and just use the first voice in
     // the list.
 
-    if (result == NULL)
+    if (result == nullptr)
     {
         result = voice_alloced_list;
     }
@@ -1399,7 +1399,7 @@ static void VoiceKeyOn(opl_channel_data_t *channel,
     // voice and use that.  Otherwise, if this is the second voice,
     // it isn't as important; just discard it.
 
-    if (voice == NULL)
+    if (voice == nullptr)
     {
         if (instrument_voice == 0)
         {
@@ -1674,7 +1674,7 @@ static void RestartSong(void)
     // sdl_mixer does this as well
     for (i = 0; i < OPL_NUM_VOICES; ++i)
     {
-        if (voices[i].channel != NULL &&
+        if (voices[i].channel != nullptr &&
             voices[i].current_instr < percussion_instrs)
         {
             VoiceKeyOff(&voices[i]);
@@ -1789,7 +1789,7 @@ void I_OPL_PlaySong(const void *handle, int looping)
     const midi_file_t *file;
     unsigned int i;
 
-    if (!music_initialized || handle == NULL)
+    if (!music_initialized || handle == nullptr)
     {
         return;
     }
@@ -1829,7 +1829,7 @@ void I_OPL_PauseSong(void)
 
     for (i = 0; i < OPL_NUM_VOICES; ++i)
     {
-        if (voices[i].channel != NULL &&
+        if (voices[i].channel != nullptr &&
             voices[i].current_instr < percussion_instrs)
         {
             VoiceKeyOff(&voices[i]);
@@ -1864,7 +1864,7 @@ void I_OPL_StopSong(void)
 
     for (i = 0; i < OPL_NUM_VOICES; ++i)
     {
-        if (voices[i].channel != NULL)
+        if (voices[i].channel != nullptr)
         {
             VoiceKeyOff(&voices[i]);
             ReleaseVoice(&voices[i]);
@@ -1880,7 +1880,7 @@ void I_OPL_StopSong(void)
 
     free(tracks);
 
-    tracks = NULL;
+    tracks = nullptr;
     num_tracks = 0;
 }
 
@@ -1891,7 +1891,7 @@ void I_OPL_UnRegisterSong(const void *handle)
         return;
     }
 
-    if (handle != NULL)
+    if (handle != nullptr)
     {
         MIDI_FreeFile((midi_file_t *)handle);
     }
@@ -1912,7 +1912,7 @@ const void *I_OPL_RegisterSong(const void *data, unsigned len)
 
     if (!music_initialized)
     {
-        return NULL;
+        return nullptr;
     }
     mf.len = len;
     mf.pos = 0;
@@ -1928,12 +1928,12 @@ const void *I_OPL_RegisterSong(const void *data, unsigned len)
     {
         lprintf(LO_WARN, "I_OPL_RegisterSong: Very short MIDI (%li bytes)\n",
                 mf.len);
-        return NULL;
+        return nullptr;
     }
 
     result = MIDI_LoadFileSpecial(&mf);
 
-    if (result == NULL)
+    if (result == nullptr)
     {
         lprintf(LO_WARN, "I_OPL_RegisterSong: Failed to load MID.\n");
     }
@@ -1980,7 +1980,7 @@ int I_OPL_InitMusic(int samplerate)
 
     InitVoices();
 
-    tracks = NULL;
+    tracks = nullptr;
     num_tracks = 0;
     music_initialized = true;
 

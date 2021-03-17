@@ -61,11 +61,11 @@ struct ParserState
 
     ParserState()
     {
-        string = NULL;
+        string = nullptr;
     }
     ~ParserState()
     {
-        if (string != NULL)
+        if (string != nullptr)
             free(string);
     }
 };
@@ -121,9 +121,9 @@ class Scanner
   protected:
     Scanner()
     {
-        data = NULL;
-        string = NULL;
-        nextState.string = NULL;
+        data = nullptr;
+        string = nullptr;
+        nextState.string = nullptr;
     }
 
     void IncrementLine();

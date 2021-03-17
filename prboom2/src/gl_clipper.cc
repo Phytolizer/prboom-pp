@@ -114,7 +114,7 @@ static clipnode_t *gld_clipnode_NewRange(angle_t start, angle_t end)
     clipnode_t *c = gld_clipnode_GetNew();
     c->start = start;
     c->end = end;
-    c->next = c->prev = NULL;
+    c->next = c->prev = nullptr;
     return c;
 }
 
@@ -137,7 +137,7 @@ static dboolean gld_clipper_IsRangeVisible(angle_t startAngle, angle_t endAngle)
     if (endAngle == 0 && ci && ci->start == 0)
         return false;
 
-    while (ci != NULL && ci->start < endAngle)
+    while (ci != nullptr && ci->start < endAngle)
     {
         if (startAngle >= ci->start && endAngle <= ci->end)
         {
@@ -219,7 +219,7 @@ static void gld_clipper_AddClipRange(angle_t start, angle_t end)
     {
         // check to see if range contains any old ranges
         node = cliphead;
-        while (node != NULL && node->start < end)
+        while (node != nullptr && node->start < end)
         {
             if (node->start >= start && node->end <= end)
             {
@@ -242,7 +242,7 @@ static void gld_clipper_AddClipRange(angle_t start, angle_t end)
 
         // check to see if range overlaps a range (or possibly 2)
         node = cliphead;
-        while (node != NULL && node->start <= end)
+        while (node != nullptr && node->start <= end)
         {
             if (node->end >= start)
             {
@@ -276,15 +276,15 @@ static void gld_clipper_AddClipRange(angle_t start, angle_t end)
 
         // just add range
         node = cliphead;
-        prevNode = NULL;
+        prevNode = nullptr;
         temp = gld_clipnode_NewRange(start, end);
-        while (node != NULL && node->start < end)
+        while (node != nullptr && node->start < end)
         {
             prevNode = node;
             node = node->next;
         }
         temp->next = node;
-        if (node == NULL)
+        if (node == nullptr)
         {
             temp->prev = prevNode;
             if (prevNode)
@@ -324,14 +324,14 @@ void gld_clipper_Clear(void)
     clipnode_t *node = cliphead;
     clipnode_t *temp;
 
-    while (node != NULL)
+    while (node != nullptr)
     {
         temp = node;
         node = node->next;
         gld_clipnode_Free(temp);
     }
 
-    cliphead = NULL;
+    cliphead = nullptr;
 }
 
 angle_t gld_FrustumAngle(void)

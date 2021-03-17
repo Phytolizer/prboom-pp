@@ -62,8 +62,8 @@ typedef struct
 } fakegroup_t;
 
 static int numfakeplanes = 0;
-static fakegroup_t *fakeplanes = NULL;
-static sector_t **sectors2 = NULL;
+static fakegroup_t *fakeplanes = nullptr;
+static sector_t **sectors2 = nullptr;
 
 static void gld_PrepareSectorSpecialEffects(void);
 static void gld_PreprocessFakeSector(int ceiling, sector_t *sector,
@@ -83,8 +83,8 @@ static void gld_PrepareSectorSpecialEffects(void)
             unsigned short sidenum0 = sectors[num].lines[i]->sidenum[0];
             unsigned short sidenum1 = sectors[num].lines[i]->sidenum[1];
 
-            side_t *side0 = (sidenum0 == NO_INDEX ? NULL : &sides[sidenum0]);
-            side_t *side1 = (sidenum1 == NO_INDEX ? NULL : &sides[sidenum1]);
+            side_t *side0 = (sidenum0 == NO_INDEX ? nullptr : &sides[sidenum0]);
+            side_t *side1 = (sidenum1 == NO_INDEX ? nullptr : &sides[sidenum1]);
 
             if (side0 && side1)
             {
@@ -135,7 +135,7 @@ static void gld_PreprocessFakeSector(int ceiling, sector_t *sector, int groupid)
 
     for (i = 0; i < sector->linecount; i++)
     {
-        sector_t *sec = NULL;
+        sector_t *sec = nullptr;
         line_t *line = sector->lines[i];
 
         if (line->frontsector && line->frontsector != sector)
@@ -178,11 +178,11 @@ void gld_PreprocessFakeSectors(void)
         {
             fakeplanes[i].count = 0;
             free(fakeplanes[i].list);
-            fakeplanes[i].list = NULL;
+            fakeplanes[i].list = nullptr;
         }
         numfakeplanes = 0;
         free(fakeplanes);
-        fakeplanes = NULL;
+        fakeplanes = nullptr;
     }
     if (sectors2)
     {
@@ -246,12 +246,12 @@ sector_t *GetBestFake(sector_t *sector, int ceiling, int validcount)
     int groupid = sector->fakegroup[ceiling];
 
     if (groupid == -1)
-        return NULL;
+        return nullptr;
 
     if (fakeplanes[groupid].validcount != validcount)
     {
         fakeplanes[groupid].validcount = validcount;
-        fakeplanes[groupid].sector = NULL;
+        fakeplanes[groupid].sector = nullptr;
 
         if (fakeplanes[groupid].ceiling)
         {

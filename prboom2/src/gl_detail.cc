@@ -76,13 +76,13 @@ typedef enum
 } tag_detail_e;
 
 static const char *DetailItem_Keywords[TAG_DETAIL_MAX + 1] = {"walls", "flats",
-                                                              NULL};
+                                                              nullptr};
 
 static GLuint last_detail_texid = -1;
 
 float xCamera, yCamera, zCamera;
-TAnimItemParam *anim_flats = NULL;
-TAnimItemParam *anim_textures = NULL;
+TAnimItemParam *anim_flats = nullptr;
+TAnimItemParam *anim_textures = nullptr;
 
 void gld_ShutdownDetail(void);
 
@@ -160,7 +160,7 @@ void gld_ShutdownDetail(void)
         }
 
         free(details);
-        details = NULL;
+        details = nullptr;
         details_count = 0;
         details_size = 0;
     }
@@ -683,7 +683,7 @@ void gld_SetTexDetail(GLTexture *gltexture)
 {
     int i;
 
-    gltexture->detail = NULL;
+    gltexture->detail = nullptr;
 
     if (details_count > 0)
     {
@@ -732,7 +732,7 @@ GLuint gld_LoadDetailName(const char *name)
     if (lump != -1)
     {
         SDL_PixelFormat fmt;
-        SDL_Surface *surf = NULL;
+        SDL_Surface *surf = nullptr;
         SDL_Surface *surf_raw;
 
 #ifdef HAVE_LIBSDL2_IMAGE

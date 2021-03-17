@@ -215,7 +215,7 @@ static void *ReadByteSequence(unsigned int num_bytes, midimem_t *mf)
     unsigned int i;
     byte *result;
 
-    // events can be length 0.  malloc(0) is not portable (can return NULL)
+    // events can be length 0.  malloc(0) is not portable (can return nullptr)
     if (!num_bytes)
         return malloc(4);
 
@@ -223,12 +223,12 @@ static void *ReadByteSequence(unsigned int num_bytes, midimem_t *mf)
 
     result = (byte *)malloc(num_bytes);
 
-    if (result == NULL)
+    if (result == nullptr)
     {
         lprintf(LO_WARN,
                 "ReadByteSequence: Failed to allocate buffer %u bytes\n",
                 num_bytes);
-        return NULL;
+        return nullptr;
     }
 
     // Read the data:
@@ -240,7 +240,7 @@ static void *ReadByteSequence(unsigned int num_bytes, midimem_t *mf)
             lprintf(LO_WARN, "ReadByteSequence: Error while reading byte %u\n",
                     i);
             free(result);
-            return NULL;
+            return nullptr;
         }
     }
 
@@ -308,7 +308,7 @@ static dboolean ReadSysExEvent(midi_event_t *event, int event_type,
     event->data.sysex.data =
         (byte *)ReadByteSequence(event->data.sysex.length, mf);
 
-    if (event->data.sysex.data == NULL)
+    if (event->data.sysex.data == nullptr)
     {
         lprintf(LO_WARN, "ReadSysExEvent: Failed while reading SysEx event\n");
         return false;
@@ -349,7 +349,7 @@ static dboolean ReadMetaEvent(midi_event_t *event, midimem_t *mf)
     event->data.meta.data =
         (byte *)ReadByteSequence(event->data.meta.length, mf);
 
-    if (event->data.meta.data == NULL)
+    if (event->data.meta.data == nullptr)
     {
         lprintf(LO_WARN, "ReadMetaEvent: Failed while reading MetaEvent\n");
         return false;
@@ -482,12 +482,12 @@ static dboolean ReadTrackHeader(midi_track_t *track, midimem_t *mf)
 
 static dboolean ReadTrack(midi_track_t *track, midimem_t *mf)
 {
-    midi_event_t *new_events = NULL;
+    midi_event_t *new_events = nullptr;
     midi_event_t *event;
     unsigned int last_event_type;
 
     track->num_events = 0;
-    track->events = NULL;
+    track->events = nullptr;
     track->num_event_mem = 0; // NSM
 
     // Read the header:
@@ -517,7 +517,7 @@ static dboolean ReadTrack(midi_track_t *track, midimem_t *mf)
                 track->events, sizeof(midi_event_t) * track->num_event_mem);
         }
 
-        if (new_events == NULL)
+        if (new_events == nullptr)
         {
             return false;
         }
@@ -569,7 +569,7 @@ static dboolean ReadAllTracks(midi_file_t *file, midimem_t *mf)
     file->tracks =
         (midi_track_t *)malloc(sizeof(midi_track_t) * file->num_tracks);
 
-    if (file->tracks == NULL)
+    if (file->tracks == nullptr)
     {
         return false;
     }
@@ -632,7 +632,7 @@ void MIDI_FreeFile(midi_file_t *file)
 {
     unsigned i;
 
-    if (file->tracks != NULL)
+    if (file->tracks != nullptr)
     {
         for (i = 0; i < file->num_tracks; ++i)
         {
@@ -651,14 +651,14 @@ midi_file_t *MIDI_LoadFile(midimem_t *mf)
 
     file = (midi_file_t *)malloc(sizeof(midi_file_t));
 
-    if (file == NULL)
+    if (file == nullptr)
     {
-        return NULL;
+        return nullptr;
     }
 
-    file->tracks = NULL;
+    file->tracks = nullptr;
     file->num_tracks = 0;
-    file->buffer = NULL;
+    file->buffer = nullptr;
     file->buffer_size = 0;
 
     // Read MIDI file header
@@ -666,7 +666,7 @@ midi_file_t *MIDI_LoadFile(midimem_t *mf)
     if (!ReadFileHeader(file, mf))
     {
         MIDI_FreeFile(file);
-        return NULL;
+        return nullptr;
     }
 
     // Read all tracks:
@@ -674,7 +674,7 @@ midi_file_t *MIDI_LoadFile(midimem_t *mf)
     if (!ReadAllTracks(file, mf))
     {
         MIDI_FreeFile(file);
-        return NULL;
+        return nullptr;
     }
 
     return file;
@@ -906,7 +906,7 @@ midi_event_t **MIDI_GenerateFlatList(midi_file_t *file)
             std::free(trackpos);
             std::free(tracktime);
             std::free(ret);
-            return NULL;
+            return nullptr;
         }
         epos++;
     }
@@ -918,7 +918,7 @@ midi_event_t **MIDI_GenerateFlatList(midi_file_t *file)
         std::free(trackpos);
         std::free(tracktime);
         std::free(ret);
-        return NULL;
+        return nullptr;
     }
 
     // last end of track event is preserved though
@@ -932,7 +932,7 @@ midi_event_t **MIDI_GenerateFlatList(midi_file_t *file)
         lprintf(LO_WARN, "MIDI_GeneratFlatList: very short file %i\n",
                 totaldelta);
         free(ret);
-        return NULL;
+        return nullptr;
     }
 
     // MIDI_PrintFlatListDBG (ret);
@@ -1006,7 +1006,7 @@ static double compute_spmc_smpte(unsigned smpte_fps, unsigned mpf,
     return (double)sndrate / fps / mpf;
 }
 
-// if event is NULL, compute with default starting tempo (120BPM)
+// if event is nullptr, compute with default starting tempo (120BPM)
 
 double MIDI_spmc(const midi_file_t *file, const midi_event_t *ev,
                  unsigned sndrate)
@@ -1062,13 +1062,13 @@ midi_file_t *MIDI_LoadFileSpecial(midimem_t *mf)
     int epos = 0;
 
     if (!base)
-        return NULL;
+        return nullptr;
 
     flatlist = MIDI_GenerateFlatList(base);
     if (!flatlist)
     {
         MIDI_FreeFile(base);
-        return NULL;
+        return nullptr;
     }
 
     ret = (midi_file_t *)malloc(sizeof(midi_file_t));
@@ -1078,14 +1078,14 @@ midi_file_t *MIDI_LoadFileSpecial(midimem_t *mf)
     ret->header.time_division = 10000;
     ret->num_tracks = 1;
     ret->buffer_size = 0;
-    ret->buffer = NULL;
+    ret->buffer = nullptr;
     ret->tracks = (midi_track_t *)malloc(sizeof(midi_track_t));
 
     ret->tracks->num_events = 0;
     ret->tracks->num_event_mem = 0;
-    ret->tracks->events = NULL;
+    ret->tracks->events = nullptr;
 
-    opi = MIDI_spmc(base, NULL, 20000);
+    opi = MIDI_spmc(base, nullptr, 20000);
 
     while (1)
     {
@@ -1258,7 +1258,7 @@ int main(int argc, char *argv[])
 
     file = MIDI_LoadFile(&mf);
 
-    if (file == NULL)
+    if (file == nullptr)
     {
         fprintf(stderr, "Failed to open %s\n", argv[1]);
         exit(1);

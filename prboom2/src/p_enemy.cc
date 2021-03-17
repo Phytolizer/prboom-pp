@@ -132,7 +132,7 @@ static void P_RecursiveSound(sector_t *sec, int soundblocks,
 //
 void P_NoiseAlert(mobj_t *target, mobj_t *emitter)
 {
-    if (target != NULL && target->player &&
+    if (target != nullptr && target->player &&
         (target->player->cheats & CF_NOTARGET))
         return;
 
@@ -920,7 +920,7 @@ static dboolean P_LookForPlayers(mobj_t *actor, dboolean allaround)
                 if (actor->lastenemy && actor->lastenemy->health > 0)
                 {
                     actor->target = actor->lastenemy;
-                    actor->lastenemy = NULL;
+                    actor->lastenemy = nullptr;
                     return true;
                 }
             }
@@ -970,7 +970,7 @@ static dboolean P_LookForMonsters(mobj_t *actor, dboolean allaround)
         !(actor->lastenemy->flags & actor->flags & MF_FRIEND)) // not friends
     {
         P_SetTarget(&actor->target, actor->lastenemy);
-        P_SetTarget(&actor->lastenemy, NULL);
+        P_SetTarget(&actor->lastenemy, nullptr);
         return true;
     }
 
@@ -1172,7 +1172,7 @@ void A_Look(mobj_t *actor)
 
         if (actor->type == MT_SPIDER || actor->type == MT_CYBORG ||
             actor->flags2 & MF2_BOSS)
-            S_StartSound(NULL, sound); // full volume
+            S_StartSound(nullptr, sound); // full volume
         else
             S_StartSound(actor, sound);
     }
@@ -1345,7 +1345,7 @@ void A_Chase(mobj_t *actor)
         }
         else if (actor->type == HERETIC_MT_SORCERER2)
         {
-            S_StartSound(NULL, actor->info->activesound);
+            S_StartSound(nullptr, actor->info->activesound);
         }
         else
         {
@@ -1543,7 +1543,7 @@ void A_HeadAttack(mobj_t *actor)
     // Distance threshold = 8 cells
 
     target = actor->target;
-    if (target == NULL)
+    if (target == nullptr)
         return;
 
     A_FaceTarget(actor);
@@ -1573,7 +1573,7 @@ void A_HeadAttack(mobj_t *actor)
     else if (randAttack < atkResolve2[dist])
     { // Fire column
         baseFire = P_SpawnMissile(actor, target, HERETIC_MT_HEADFX3);
-        if (baseFire != NULL)
+        if (baseFire != nullptr)
         {
             P_SetMobjState(baseFire, HERETIC_S_HEADFX3_4); // Don't grow
             for (i = 0; i < 5; i++)
@@ -1598,7 +1598,7 @@ void A_HeadAttack(mobj_t *actor)
     else
     { // Whirlwind
         mo = P_SpawnMissile(actor, target, HERETIC_MT_WHIRLWIND);
-        if (mo != NULL)
+        if (mo != nullptr)
         {
             mo->z -= 32 * FRACUNIT;
             mo->special1.m = target;
@@ -1898,11 +1898,11 @@ void A_VileChase(mobj_t *actor)
                         totallive++;
 
                     corpsehit->health = info->spawnhealth;
-                    P_SetTarget(&corpsehit->target, NULL); // killough 11/98
+                    P_SetTarget(&corpsehit->target, nullptr); // killough 11/98
 
                     if (mbf_features)
                     { /* kilough 9/9/98 */
-                        P_SetTarget(&corpsehit->lastenemy, NULL);
+                        P_SetTarget(&corpsehit->lastenemy, nullptr);
                         corpsehit->flags &= ~MF_JUSTHIT;
                     }
 
@@ -2190,8 +2190,8 @@ static void A_PainShootSkull(mobj_t *actor, angle_t angle)
     {
         // count total number of skulls currently on the level
         int count = 0;
-        thinker_t *currentthinker = NULL;
-        while ((currentthinker = P_NextThinker(currentthinker, th_all)) != NULL)
+        thinker_t *currentthinker = nullptr;
+        while ((currentthinker = P_NextThinker(currentthinker, th_all)) != nullptr)
             if ((currentthinker->function == P_MobjThinker) &&
                 ((mobj_t *)currentthinker)->type == MT_SKULL)
                 count++;
@@ -2309,7 +2309,7 @@ void A_Scream(mobj_t *actor)
 
     // Check for bosses.
     if (actor->type == MT_SPIDER || actor->type == MT_CYBORG)
-        S_StartSound(NULL, sound); // full volume
+        S_StartSound(nullptr, sound); // full volume
     else
         S_StartSound(actor, sound);
 }
@@ -2344,7 +2344,7 @@ void A_SkullPop(mobj_t *actor)
     mo->momz = FRACUNIT * 2 + (P_Random(pr_heretic) << 6);
     // Attach player mobj to bloody skull
     player = actor->player;
-    actor->player = NULL;
+    actor->player = nullptr;
     mo->player = player;
     mo->health = actor->health;
     mo->angle = actor->angle;
@@ -2698,13 +2698,13 @@ void A_BrainAwake(mobj_t * /* mo */)
         brain.easy = 0;
     }
 
-    S_StartSound(NULL,
+    S_StartSound(nullptr,
                  sfx_bossit); // killough 3/26/98: only generates sound now
 }
 
 void A_BrainPain(mobj_t * /* mo */)
 {
-    S_StartSound(NULL, sfx_bospn);
+    S_StartSound(nullptr, sfx_bospn);
 }
 
 void A_BrainScream(mobj_t *mo)
@@ -2722,7 +2722,7 @@ void A_BrainScream(mobj_t *mo)
         if (th->tics < 1)
             th->tics = 1;
     }
-    S_StartSound(NULL, sfx_bosdth);
+    S_StartSound(nullptr, sfx_bosdth);
 }
 
 void A_BrainExplode(mobj_t *mo)
@@ -2777,7 +2777,7 @@ void A_BrainSpit(mobj_t *mo)
     // killough 8/29/98: add to appropriate thread
     P_UpdateThinker(&newmobj->thinker);
 
-    S_StartSound(NULL, sfx_bospit);
+    S_StartSound(nullptr, sfx_bospit);
 }
 
 // travelling cube sound
@@ -2873,7 +2873,7 @@ void A_Die(mobj_t *actor)
         !prboom_comp[PC_APPLY_MBF_CODEPOINTERS_TO_ANY_COMPLEVEL].state)
         return;
 
-    P_DamageMobj(actor, NULL, NULL, actor->health);
+    P_DamageMobj(actor, nullptr, NULL, actor->health);
 }
 
 //
@@ -2993,7 +2993,7 @@ void A_PlaySound(mobj_t *mo)
         !prboom_comp[PC_APPLY_MBF_CODEPOINTERS_TO_ANY_COMPLEVEL].state)
         return;
 
-    S_StartSound(mo->state->misc2 ? NULL : mo, mo->state->misc1);
+    S_StartSound(mo->state->misc2 ? nullptr : mo, mo->state->misc1);
 }
 
 void A_RandomJump(mobj_t *mo)
@@ -3364,7 +3364,7 @@ void A_MummyAttack2(mobj_t *actor)
     }
     mo = P_SpawnMissile(actor, actor->target, HERETIC_MT_MUMMYFX1);
 
-    if (mo != NULL)
+    if (mo != nullptr)
     {
         mo->special1.m = actor->target;
     }
@@ -3517,7 +3517,7 @@ void A_Srcr2Attack(mobj_t *actor)
     {
         return;
     }
-    S_StartSound(NULL, actor->info->attacksound);
+    S_StartSound(nullptr, actor->info->attacksound);
     if (P_CheckMeleeRange(actor))
     {
         P_DamageMobj(actor->target, actor, actor, HITDICE(20));
@@ -3586,7 +3586,7 @@ void P_Massacre(void)
         mo = (mobj_t *)think;
         if ((mo->flags & MF_COUNTKILL) && (mo->health > 0))
         {
-            P_DamageMobj(mo, NULL, NULL, 10000);
+            P_DamageMobj(mo, nullptr, NULL, 10000);
         }
     }
 }
@@ -3607,32 +3607,32 @@ void A_Sor2DthLoop(mobj_t *actor)
 
 void A_SorZap(mobj_t * /* actor */)
 {
-    S_StartSound(NULL, heretic_sfx_sorzap);
+    S_StartSound(nullptr, heretic_sfx_sorzap);
 }
 
 void A_SorRise(mobj_t * /* actor */)
 {
-    S_StartSound(NULL, heretic_sfx_sorrise);
+    S_StartSound(nullptr, heretic_sfx_sorrise);
 }
 
 void A_SorDSph(mobj_t * /* actor */)
 {
-    S_StartSound(NULL, heretic_sfx_sordsph);
+    S_StartSound(nullptr, heretic_sfx_sordsph);
 }
 
 void A_SorDExp(mobj_t * /* actor */)
 {
-    S_StartSound(NULL, heretic_sfx_sordexp);
+    S_StartSound(nullptr, heretic_sfx_sordexp);
 }
 
 void A_SorDBon(mobj_t * /* actor */)
 {
-    S_StartSound(NULL, heretic_sfx_sordbon);
+    S_StartSound(nullptr, heretic_sfx_sordbon);
 }
 
 void A_SorSightSnd(mobj_t * /* actor */)
 {
-    S_StartSound(NULL, heretic_sfx_sorsit);
+    S_StartSound(nullptr, heretic_sfx_sorsit);
 }
 
 void A_MinotaurAtk1(mobj_t *actor)
@@ -3647,7 +3647,7 @@ void A_MinotaurAtk1(mobj_t *actor)
     if (P_CheckMeleeRange(actor))
     {
         P_DamageMobj(actor->target, actor, actor, HITDICE(4));
-        if ((player = actor->target->player) != NULL)
+        if ((player = actor->target->player) != nullptr)
         { // Squish the player
             player->deltaviewheight = -16 * FRACUNIT;
         }
@@ -3760,7 +3760,7 @@ void A_MinotaurAtk3(mobj_t *actor)
     if (P_CheckMeleeRange(actor))
     {
         P_DamageMobj(actor->target, actor, actor, HITDICE(5));
-        if ((player = actor->target->player) != NULL)
+        if ((player = actor->target->player) != nullptr)
         { // Squish the player
             player->deltaviewheight = -16 * FRACUNIT;
         }
@@ -3768,7 +3768,7 @@ void A_MinotaurAtk3(mobj_t *actor)
     else
     {
         mo = P_SpawnMissile(actor, actor->target, HERETIC_MT_MNTRFX2);
-        if (mo != NULL)
+        if (mo != nullptr)
         {
             S_StartSound(mo, heretic_sfx_minat1);
         }
@@ -4243,7 +4243,7 @@ void A_FreeTargMobj(mobj_t *mo)
     mo->flags &= ~(MF_SHOOTABLE | MF_FLOAT | MF_SKULLFLY | MF_SOLID);
     mo->flags |= MF_CORPSE | MF_DROPOFF | MF_NOGRAVITY;
     mo->flags2 &= ~(MF2_PASSMOBJ | MF2_LOGRAV);
-    mo->player = NULL;
+    mo->player = nullptr;
 }
 
 extern int bodyqueslot, bodyquesize;
@@ -4293,7 +4293,7 @@ void Heretic_A_Scream(mobj_t *actor)
     case HERETIC_MT_SORCERER1:
     case HERETIC_MT_MINOTAUR:
         // Make boss death sounds full volume
-        S_StartSound(NULL, actor->info->deathsound);
+        S_StartSound(nullptr, actor->info->deathsound);
         break;
     case HERETIC_MT_PLAYER:
         // Handle the different player death screams

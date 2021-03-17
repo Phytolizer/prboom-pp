@@ -229,7 +229,7 @@ static unsigned char *HQScaleHelper(
     scaleNxFunction((unsigned int *)inputBuffer, (unsigned int *)newBuffer,
                     inWidth, inHeight, seamlessWidth, seamlessHeight);
     free(inputBuffer);
-    inputBuffer = NULL;
+    inputBuffer = nullptr;
     return newBuffer;
 }
 

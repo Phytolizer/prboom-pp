@@ -113,7 +113,7 @@ static void gld_AddDrawRange(int size)
 void gld_AddDrawItem(GLDrawItemType itemtype, void *itemdata)
 {
     int itemsize = 0;
-    byte *item_p = NULL;
+    byte *item_p = nullptr;
 
     static int itemsizes[GLDIT_TYPES] = {0,
                                          SIZEOF8(GLWall),

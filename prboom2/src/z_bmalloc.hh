@@ -47,8 +47,8 @@ struct block_memory_alloc_s
 #define DECLARE_BLOCK_MEMORY_ALLOC_ZONE(name)                                  \
     extern struct block_memory_alloc_s name
 #define IMPLEMENT_BLOCK_MEMORY_ALLOC_ZONE(name, size, tag, num, desc)          \
-    struct block_memory_alloc_s name = {NULL, size, num, tag, desc}
-#define NULL_BLOCK_MEMORY_ALLOC_ZONE(name) name.firstpool = NULL
+    struct block_memory_alloc_s name = {nullptr, size, num, tag, desc}
+#define NULL_BLOCK_MEMORY_ALLOC_ZONE(name) name.firstpool = nullptr
 
 void *Z_BMalloc(struct block_memory_alloc_s *pzone);
 

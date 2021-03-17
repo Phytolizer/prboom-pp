@@ -98,7 +98,7 @@ static unsigned int *int_tempbuf;
 static int startx = 0;
 static int temptype = COL_NONE;
 static int commontop, commonbot;
-static const byte *temptranmap = NULL;
+static const byte *temptranmap = nullptr;
 // SoM 7-28-04: Fix the fuzz problem.
 static const byte *tempfuzzmap;
 
@@ -138,9 +138,9 @@ static int fuzzpos = 0;
 #define RDC_ROUNDED 128
 
 draw_vars_t drawvars = {
-    NULL,               // byte_topleft
-    NULL,               // short_topleft
-    NULL,               // int_topleft
+    nullptr,               // byte_topleft
+    nullptr,               // short_topleft
+    nullptr,               // int_topleft
     0,                  // byte_pitch
     0,                  // short_pitch
     0,                  // int_pitch
@@ -487,10 +487,10 @@ static R_DrawColumn_f
                        {
                            {
                                {
-                                   NULL,
-                                   NULL,
-                                   NULL,
-                                   NULL,
+                                   nullptr,
+                                   nullptr,
+                                   nullptr,
+                                   nullptr,
                                },
                                {
                                    R_DrawColumn8_PointUV,
@@ -513,10 +513,10 @@ static R_DrawColumn_f
                            },
                            {
                                {
-                                   NULL,
-                                   NULL,
-                                   NULL,
-                                   NULL,
+                                   nullptr,
+                                   nullptr,
+                                   nullptr,
+                                   nullptr,
                                },
                                {
                                    R_DrawColumn8_PointUV_PointZ,
@@ -539,10 +539,10 @@ static R_DrawColumn_f
                            },
                            {
                                {
-                                   NULL,
-                                   NULL,
-                                   NULL,
-                                   NULL,
+                                   nullptr,
+                                   nullptr,
+                                   nullptr,
+                                   nullptr,
                                },
                                {
                                    R_DrawColumn8_PointUV_LinearZ,
@@ -567,10 +567,10 @@ static R_DrawColumn_f
                        {
                            {
                                {
-                                   NULL,
-                                   NULL,
-                                   NULL,
-                                   NULL,
+                                   nullptr,
+                                   nullptr,
+                                   nullptr,
+                                   nullptr,
                                },
                                {
                                    R_DrawColumn15_PointUV,
@@ -593,10 +593,10 @@ static R_DrawColumn_f
                            },
                            {
                                {
-                                   NULL,
-                                   NULL,
-                                   NULL,
-                                   NULL,
+                                   nullptr,
+                                   nullptr,
+                                   nullptr,
+                                   nullptr,
                                },
                                {
                                    R_DrawColumn15_PointUV_PointZ,
@@ -619,10 +619,10 @@ static R_DrawColumn_f
                            },
                            {
                                {
-                                   NULL,
-                                   NULL,
-                                   NULL,
-                                   NULL,
+                                   nullptr,
+                                   nullptr,
+                                   nullptr,
+                                   nullptr,
                                },
                                {
                                    R_DrawColumn15_PointUV_LinearZ,
@@ -647,10 +647,10 @@ static R_DrawColumn_f
                        {
                            {
                                {
-                                   NULL,
-                                   NULL,
-                                   NULL,
-                                   NULL,
+                                   nullptr,
+                                   nullptr,
+                                   nullptr,
+                                   nullptr,
                                },
                                {
                                    R_DrawColumn16_PointUV,
@@ -673,10 +673,10 @@ static R_DrawColumn_f
                            },
                            {
                                {
-                                   NULL,
-                                   NULL,
-                                   NULL,
-                                   NULL,
+                                   nullptr,
+                                   nullptr,
+                                   nullptr,
+                                   nullptr,
                                },
                                {
                                    R_DrawColumn16_PointUV_PointZ,
@@ -699,10 +699,10 @@ static R_DrawColumn_f
                            },
                            {
                                {
-                                   NULL,
-                                   NULL,
-                                   NULL,
-                                   NULL,
+                                   nullptr,
+                                   nullptr,
+                                   nullptr,
+                                   nullptr,
                                },
                                {
                                    R_DrawColumn16_PointUV_LinearZ,
@@ -727,10 +727,10 @@ static R_DrawColumn_f
                        {
                            {
                                {
-                                   NULL,
-                                   NULL,
-                                   NULL,
-                                   NULL,
+                                   nullptr,
+                                   nullptr,
+                                   nullptr,
+                                   nullptr,
                                },
                                {
                                    R_DrawColumn32_PointUV,
@@ -753,10 +753,10 @@ static R_DrawColumn_f
                            },
                            {
                                {
-                                   NULL,
-                                   NULL,
-                                   NULL,
-                                   NULL,
+                                   nullptr,
+                                   nullptr,
+                                   nullptr,
+                                   nullptr,
                                },
                                {
                                    R_DrawColumn32_PointUV_PointZ,
@@ -779,10 +779,10 @@ static R_DrawColumn_f
                            },
                            {
                                {
-                                   NULL,
-                                   NULL,
-                                   NULL,
-                                   NULL,
+                                   nullptr,
+                                   nullptr,
+                                   nullptr,
+                                   nullptr,
                                },
                                {
                                    R_DrawColumn32_PointUV_LinearZ,
@@ -811,7 +811,7 @@ R_DrawColumn_f R_GetDrawColumnFunc(enum column_pipeline_e type,
                                    enum draw_filter_type_e filterz)
 {
     R_DrawColumn_f result = drawcolumnfuncs[V_GetMode()][filterz][filter][type];
-    if (result == NULL)
+    if (result == nullptr)
         I_Error("R_GetDrawColumnFunc: undefined function (%d, %d, %d)", type,
                 filter, filterz);
     return result;
@@ -821,9 +821,9 @@ void R_SetDefaultDrawColumnVars(draw_column_vars_t *dcvars)
 {
     dcvars->x = dcvars->yl = dcvars->yh = dcvars->z = 0;
     dcvars->iscale = dcvars->texturemid = dcvars->texheight = dcvars->texu = 0;
-    dcvars->source = dcvars->prevsource = dcvars->nextsource = NULL;
+    dcvars->source = dcvars->prevsource = dcvars->nextsource = nullptr;
     dcvars->colormap = dcvars->nextcolormap = colormaps[0];
-    dcvars->translation = NULL;
+    dcvars->translation = nullptr;
     dcvars->edgeslope = dcvars->drawingmasked = 0;
     dcvars->edgetype = drawvars.sprite_edges;
     dcvars->flags = 0;
@@ -848,7 +848,7 @@ void R_InitTranslationTables(void)
     // killough 5/2/98:
     // Remove dependency of colormaps aligned on 256-byte boundary
 
-    if (translationtables == NULL) // CPhipps - allow multiple calls
+    if (translationtables == nullptr) // CPhipps - allow multiple calls
         translationtables = static_cast<byte *>(std::malloc(256 * MAXTRANS));
 
     for (i = 0; i < MAXTRANS; i++)
@@ -1022,106 +1022,106 @@ static R_DrawSpan_f drawspanfuncs[VID_MODEMAX][RDRAW_FILTER_MAXFILTERS]
                                  [RDRAW_FILTER_MAXFILTERS] = {
                                      {
                                          {
-                                             NULL,
-                                             NULL,
-                                             NULL,
-                                             NULL,
+                                             nullptr,
+                                             nullptr,
+                                             nullptr,
+                                             nullptr,
                                          },
                                          {
-                                             NULL,
+                                             nullptr,
                                              R_DrawSpan8_PointUV_PointZ,
                                              R_DrawSpan8_LinearUV_PointZ,
                                              R_DrawSpan8_RoundedUV_PointZ,
                                          },
                                          {
-                                             NULL,
+                                             nullptr,
                                              R_DrawSpan8_PointUV_LinearZ,
                                              R_DrawSpan8_LinearUV_LinearZ,
                                              R_DrawSpan8_RoundedUV_LinearZ,
                                          },
                                          {
-                                             NULL,
-                                             NULL,
-                                             NULL,
-                                             NULL,
+                                             nullptr,
+                                             nullptr,
+                                             nullptr,
+                                             nullptr,
                                          },
                                      },
                                      {
                                          {
-                                             NULL,
-                                             NULL,
-                                             NULL,
-                                             NULL,
+                                             nullptr,
+                                             nullptr,
+                                             nullptr,
+                                             nullptr,
                                          },
                                          {
-                                             NULL,
+                                             nullptr,
                                              R_DrawSpan15_PointUV_PointZ,
                                              R_DrawSpan15_LinearUV_PointZ,
                                              R_DrawSpan15_RoundedUV_PointZ,
                                          },
                                          {
-                                             NULL,
+                                             nullptr,
                                              R_DrawSpan15_PointUV_LinearZ,
                                              R_DrawSpan15_LinearUV_LinearZ,
                                              R_DrawSpan15_RoundedUV_LinearZ,
                                          },
                                          {
-                                             NULL,
-                                             NULL,
-                                             NULL,
-                                             NULL,
+                                             nullptr,
+                                             nullptr,
+                                             nullptr,
+                                             nullptr,
                                          },
                                      },
                                      {
                                          {
-                                             NULL,
-                                             NULL,
-                                             NULL,
-                                             NULL,
+                                             nullptr,
+                                             nullptr,
+                                             nullptr,
+                                             nullptr,
                                          },
                                          {
-                                             NULL,
+                                             nullptr,
                                              R_DrawSpan16_PointUV_PointZ,
                                              R_DrawSpan16_LinearUV_PointZ,
                                              R_DrawSpan16_RoundedUV_PointZ,
                                          },
                                          {
-                                             NULL,
+                                             nullptr,
                                              R_DrawSpan16_PointUV_LinearZ,
                                              R_DrawSpan16_LinearUV_LinearZ,
                                              R_DrawSpan16_RoundedUV_LinearZ,
                                          },
                                          {
-                                             NULL,
-                                             NULL,
-                                             NULL,
-                                             NULL,
+                                             nullptr,
+                                             nullptr,
+                                             nullptr,
+                                             nullptr,
                                          },
                                      },
                                      {
                                          {
-                                             NULL,
-                                             NULL,
-                                             NULL,
-                                             NULL,
+                                             nullptr,
+                                             nullptr,
+                                             nullptr,
+                                             nullptr,
                                          },
                                          {
-                                             NULL,
+                                             nullptr,
                                              R_DrawSpan32_PointUV_PointZ,
                                              R_DrawSpan32_LinearUV_PointZ,
                                              R_DrawSpan32_RoundedUV_PointZ,
                                          },
                                          {
-                                             NULL,
+                                             nullptr,
                                              R_DrawSpan32_PointUV_LinearZ,
                                              R_DrawSpan32_LinearUV_LinearZ,
                                              R_DrawSpan32_RoundedUV_LinearZ,
                                          },
                                          {
-                                             NULL,
-                                             NULL,
-                                             NULL,
-                                             NULL,
+                                             nullptr,
+                                             nullptr,
+                                             nullptr,
+                                             nullptr,
                                          },
                                      },
 };
@@ -1130,7 +1130,7 @@ R_DrawSpan_f R_GetDrawSpanFunc(enum draw_filter_type_e filter,
                                enum draw_filter_type_e filterz)
 {
     R_DrawSpan_f result = drawspanfuncs[V_GetMode()][filterz][filter];
-    if (result == NULL)
+    if (result == nullptr)
         I_Error("R_GetDrawSpanFunc: undefined function (%d, %d)", filter,
                 filterz);
     return result;

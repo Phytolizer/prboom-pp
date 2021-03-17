@@ -728,7 +728,7 @@ int S_AdjustSoundParams(mobj_t *listener, mobj_t *source, int *vol, int *sep,
     // \ P_SpawnPlayer(players[0]) - P_SetupPsprites() - P_BringUpWeapon() -
     // S_StartSound(players[0]->mo, sfx_sawup) - S_StartSoundAtVolume() -
     // S_AdjustSoundParams(players[displayplayer]->mo, ...);
-    // players[displayplayer]->mo is NULL
+    // players[displayplayer]->mo is nullptr
     //
     // There is no more crash on e1cmnet3.lmp between e1m2 and e1m3
     // http://competn.doom2.net/pub/compet-n/doom/coop/movies/e1cmnet3.zip
@@ -850,7 +850,7 @@ static mobj_t *GetSoundListener(void)
     // If we are at the title screen, the display player doesn't have an
     // object yet, so return a pointer to a static dummy listener instead.
 
-    if (players[displayplayer].mo != NULL)
+    if (players[displayplayer].mo != nullptr)
     {
         return players[displayplayer].mo;
     }
@@ -901,7 +901,7 @@ static dboolean S_StopSoundInfo(sfxinfo_t *sfx, int priority)
             if (I_SoundIsPlaying(channel->handle))
                 I_StopSound(channel->handle);
 
-            channel->origin = NULL;
+            channel->origin = nullptr;
         }
 
         return true;
@@ -936,7 +936,7 @@ static void Heretic_S_StartSound(void *_origin, int sound_id)
     if (sound_id == heretic_sfx_None)
         return;
 
-    if (origin == NULL)
+    if (origin == nullptr)
         origin = listener;
 
     sfx = &S_sfx[sound_id];
@@ -985,7 +985,7 @@ static void Heretic_S_StartSound(void *_origin, int sound_id)
         }
 
         for (i = 0; i < numChannels; i++)
-            if (channels[i].origin == NULL)
+            if (channels[i].origin == nullptr)
                 break;
 
         if (i >= numChannels)
@@ -1066,7 +1066,7 @@ static void Heretic_S_StartSoundAtVolume(void *_origin, int sound_id,
     if (sound_id == heretic_sfx_None || volume == 0)
         return;
 
-    if (origin == NULL)
+    if (origin == nullptr)
         origin = listener;
 
     sfx = &S_sfx[sound_id];
@@ -1075,7 +1075,7 @@ static void Heretic_S_StartSoundAtVolume(void *_origin, int sound_id,
 
     // no priority checking, as ambient sounds would be the LOWEST.
     for (i = 0; i < numChannels; i++)
-        if (channels[i].origin == NULL)
+        if (channels[i].origin == nullptr)
             break;
 
     if (i >= numChannels)
@@ -1109,7 +1109,7 @@ static void Heretic_S_StopSound(void *_origin)
             I_StopSound(channels[i].handle);
 
             channels[i].handle = 0;
-            channels[i].origin = NULL;
+            channels[i].origin = nullptr;
 
             if (AmbChan == i)
                 AmbChan = -1;
@@ -1150,14 +1150,14 @@ void Heretic_S_UpdateSounds(mobj_t *listener)
         if (!I_SoundIsPlaying(channels[i].handle))
         {
             channels[i].handle = 0;
-            channels[i].origin = NULL;
-            channels[i].sfxinfo = NULL;
+            channels[i].origin = nullptr;
+            channels[i].sfxinfo = nullptr;
             if (AmbChan == i)
                 AmbChan = -1;
         }
 
-        if (channels[i].origin == NULL || channels[i].sfxinfo == NULL ||
-            channels[i].origin == listener || listener == NULL)
+        if (channels[i].origin == nullptr || channels[i].sfxinfo == NULL ||
+            channels[i].origin == listener || listener == nullptr)
             continue;
 
         origin = (mobj_t *)channels[i].origin;

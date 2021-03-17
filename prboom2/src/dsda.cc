@@ -404,14 +404,14 @@ char *dsda_NewDemoName(void)
 {
     char *demo_name;
     size_t demo_name_size;
-    FILE *fp = NULL;
+    FILE *fp = nullptr;
     static unsigned int j = 2;
 
     demo_name_size = strlen(dsda_demo_name_base) + 11; // 11 = -12345.lmp\0
     demo_name = malloc<char *>(demo_name_size);
     snprintf(demo_name, demo_name_size, "%s.lmp", dsda_demo_name_base);
 
-    for (; j <= 99999 && (fp = fopen(demo_name, "rb")) != NULL; j++)
+    for (; j <= 99999 && (fp = fopen(demo_name, "rb")) != nullptr; j++)
     {
         snprintf(demo_name, demo_name_size, "%s-%05d.lmp", dsda_demo_name_base,
                  j);
@@ -489,7 +489,7 @@ void dsda_WatchLevelReload(int *reloaded)
 void dsda_WatchRecordDemo(const char *name)
 {
     size_t base_size;
-    if (dsda_demo_name_base != NULL)
+    if (dsda_demo_name_base != nullptr)
         return;
 
     base_size = strlen(name) - 3;
@@ -505,14 +505,14 @@ void dsda_WatchRecordDemo(const char *name)
 
 void dsda_WriteAnalysis(void)
 {
-    FILE *fstream = NULL;
+    FILE *fstream = nullptr;
 
     if (!dsda_analysis)
         return;
 
     fstream = fopen("analysis.txt", "w");
 
-    if (fstream == NULL)
+    if (fstream == nullptr)
     {
         fprintf(stderr, "Unable to open analysis.txt for writing!\n");
         return;

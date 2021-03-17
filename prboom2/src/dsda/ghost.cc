@@ -106,7 +106,7 @@ void dsda_InitGhostExport(const char *name)
 
     dsda_ghost_export = fopen(filename, "wb");
 
-    if (dsda_ghost_export == NULL)
+    if (dsda_ghost_export == nullptr)
         I_Error("dsda_InitGhostExport: failed to open %s", name);
 
     version = DSDA_GHOST_VERSION;
@@ -126,7 +126,7 @@ void dsda_OpenGhostFile(int arg_i, dsda_ghost_file_t *ghost_file)
 
     ghost_file->fstream = fopen(filename, "rb");
 
-    if (ghost_file->fstream == NULL)
+    if (ghost_file->fstream == nullptr)
         I_Error("dsda_OpenGhostImport: failed to open %s", myargv[arg_i]);
 
     fread(&ghost_file->version, sizeof(int), 1, ghost_file->fstream);
@@ -189,7 +189,7 @@ void dsda_ExportGhostFrame(void)
     mobj_t *player;
     int i;
 
-    if (dsda_ghost_export == NULL)
+    if (dsda_ghost_export == nullptr)
         return;
 
     // just write the number of players on the zeroth tic
@@ -213,7 +213,7 @@ void dsda_ExportGhostFrame(void)
 
         player = players[i].mo;
 
-        if (player == NULL)
+        if (player == nullptr)
             continue;
 
         ghost_frame.x = player->x;
@@ -239,9 +239,9 @@ void dsda_SpawnGhost(void)
 
     for (ghost_i = 0; ghost_i < dsda_ghost_import.count; ++ghost_i)
     {
-        if (dsda_ghost_import.ghosts[ghost_i].fstream == NULL)
+        if (dsda_ghost_import.ghosts[ghost_i].fstream == nullptr)
         {
-            dsda_ghost_import.ghosts[ghost_i].mobj = NULL;
+            dsda_ghost_import.ghosts[ghost_i].mobj = nullptr;
             continue;
         }
 
@@ -280,7 +280,7 @@ void dsda_SpawnGhost(void)
         mobj->tics = ghost_state->tics;
         mobj->sprite = ghost_state->sprite;
         mobj->frame = ghost_state->frame;
-        mobj->touching_sectorlist = NULL;
+        mobj->touching_sectorlist = nullptr;
 
         P_SetThingPosition(mobj);
 
@@ -320,13 +320,13 @@ void dsda_UpdateGhosts(void * /* _void */)
     {
         ghost = &dsda_ghost_import.ghosts[ghost_i];
 
-        if (ghost->fstream == NULL)
+        if (ghost->fstream == nullptr)
             continue;
 
         mobj = ghost->mobj;
 
         // Ghost removed from map (finished map already)
-        if (mobj->touching_sectorlist == NULL)
+        if (mobj->touching_sectorlist == nullptr)
             continue;
 
         mobj->PrevX = mobj->x;
@@ -344,12 +344,12 @@ void dsda_UpdateGhosts(void * /* _void */)
             if (read_result != 1)
             {
                 fclose(ghost->fstream);
-                ghost->fstream = NULL;
+                ghost->fstream = nullptr;
                 break;
             }
         } while (ghost_was_behind && ghost->frame.map != gamemap);
 
-        if (ghost->fstream == NULL)
+        if (ghost->fstream == nullptr)
             continue;
 
         P_UnsetThingPosition(mobj);

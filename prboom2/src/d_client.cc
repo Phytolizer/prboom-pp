@@ -262,7 +262,7 @@ dboolean D_NetGetWad(const char *name)
         else if (!pid)
         {
             /* Child chains to wget, does the download */
-            execlp("wget", "wget", p, NULL);
+            execlp("wget", "wget", p, nullptr);
         }
         /* This is the parent, i.e. main LxDoom process */
         wait(&rv);
@@ -276,7 +276,7 @@ dboolean D_NetGetWad(const char *name)
                 else if (!pid)
                 {
                     /* Child executes decompressor */
-                    execlp("unzip", "unzip", p, name, NULL);
+                    execlp("unzip", "unzip", p, name, nullptr);
                 }
                 /* Parent waits for the file */
                 wait(&rv);
@@ -515,7 +515,7 @@ static void CheckQueuedPackets(void)
 
     { // Requeue remaining packets
         int newnum = 0;
-        packet_header_t **newqueue = NULL;
+        packet_header_t **newqueue = nullptr;
 
         for (i = 0; (unsigned)i < numqueuedpackets; i++)
             if (doom_ntohl(queuedpacket[i]->tic) > gametic)

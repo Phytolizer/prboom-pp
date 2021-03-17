@@ -552,7 +552,7 @@ static void D_DoomLoop(void)
             int len;
             char *avi_shot_curr_fname;
             avi_shot_num++;
-            len = snprintf(NULL, 0, "%s%06d.tga", avi_shot_fname, avi_shot_num);
+            len = snprintf(nullptr, 0, "%s%06d.tga", avi_shot_fname, avi_shot_num);
             avi_shot_curr_fname = malloc<char *>(len + 1);
             sprintf(avi_shot_curr_fname, "%s%06d.tga", avi_shot_fname,
                     avi_shot_num);
@@ -671,10 +671,10 @@ const demostate_t doom_demostates[][4] = {
     },
 
     {
-        {D_SetPageName, NULL},
-        {D_SetPageName, NULL},
-        {D_SetPageName, NULL},
-        {D_SetPageName, NULL},
+        {D_SetPageName, nullptr},
+        {D_SetPageName, nullptr},
+        {D_SetPageName, nullptr},
+        {D_SetPageName, nullptr},
     },
 
     {
@@ -699,8 +699,8 @@ const demostate_t doom_demostates[][4] = {
     },
 
     {
-        {NULL},
-        {NULL},
+        {nullptr},
+        {nullptr},
         // e6y
         // Both Plutonia and TNT are commercial like Doom2,
         // but in difference from  Doom2, they have demo4 in demo cycle.
@@ -709,17 +709,17 @@ const demostate_t doom_demostates[][4] = {
     },
 
     {
-        {NULL},
-        {NULL},
-        {NULL},
+        {nullptr},
+        {nullptr},
+        {nullptr},
         {G_DeferedPlayDemo, "demo4"},
     },
 
     {
-        {NULL},
-        {NULL},
-        {NULL},
-        {NULL},
+        {nullptr},
+        {nullptr},
+        {nullptr},
+        {nullptr},
     }};
 
 /*
@@ -766,7 +766,7 @@ void D_StartTitle(void)
 //         - modified to allocate & use new wadfiles array
 void D_AddFile(const char *file, wad_source_t source)
 {
-    char *gwa_filename = NULL;
+    char *gwa_filename = nullptr;
     int len;
 
     wadfiles = static_cast<wadfile_info_t *>(
@@ -812,7 +812,7 @@ const char *D_dehout(void)
     int p = M_CheckParm("-dehout");
     if (!p)
         p = M_CheckParm("-bexout");
-    return (p && ++p < myargc ? myargv[p] : NULL);
+    return (p && ++p < myargc ? myargv[p] : nullptr);
 }
 
 //
@@ -1020,7 +1020,7 @@ static void NormalizeSlashes(char *str)
 static char *FindIWADFile(void)
 {
     int i;
-    char *iwad = NULL;
+    char *iwad = nullptr;
 
     i = M_CheckParm("-iwad");
     if (i && (++i < myargc))
@@ -1070,7 +1070,7 @@ static void IdentifyVersion(void)
         // CPhipps - use DOOMSAVEDIR if defined
         const char *p = getenv("DOOMSAVEDIR");
 
-        if (p == NULL)
+        if (p == nullptr)
             p = I_DoomExeDir();
 
         free(basesavegame);
@@ -1134,7 +1134,7 @@ static void FindResponseFile(void)
             int size;
             int index;
             int indexinfile;
-            byte *file = NULL;
+            byte *file = nullptr;
             const char **moreargs =
                 malloc<const char **>(myargc * sizeof(const char *));
             char **newargv;
@@ -1152,7 +1152,7 @@ static void FindResponseFile(void)
             // proff 04/05/2000: Added for searching responsefile
             if (size < 0)
             {
-                size_t fnlen = doom_snprintf(NULL, 0, "%s/%s", I_DoomExeDir(),
+                size_t fnlen = doom_snprintf(nullptr, 0, "%s/%s", I_DoomExeDir(),
                                              &myargv[i][1]);
                 fname = static_cast<char *>(realloc(fname, fnlen + 4 + 1));
                 doom_snprintf(fname, fnlen + 1, "%s/%s", I_DoomExeDir(),
@@ -1480,7 +1480,7 @@ static void L_SetupConsoleMasks(void)
 //
 // CPhipps - the old contents of D_DoomMain, but moved out of the main
 //  line of execution so its stack space can be freed
-const char *doomverstr = NULL;
+const char *doomverstr = nullptr;
 
 static void D_DoomMainSetup(void)
 {
@@ -1488,7 +1488,7 @@ static void D_DoomMainSetup(void)
 
     L_SetupConsoleMasks();
 
-    setbuf(stdout, NULL);
+    setbuf(stdout, nullptr);
 
     // proff 04/05/2000: Added support for include response files
     /* proff 2001/7/1 - Moved up, so -config can be in response files */
@@ -1870,7 +1870,7 @@ static void D_DoomMainSetup(void)
             if (lumpinfo[p].source == source_iwad ||
                 lumpinfo[p].source == source_pre ||
                 lumpinfo[p].source == source_auto_load)
-                ProcessDehFile(NULL, D_dehout(),
+                ProcessDehFile(nullptr, D_dehout(),
                                p); // cph - add dehacked-in-a-wad support
 
         if (bfgedition)
@@ -1878,7 +1878,7 @@ static void D_DoomMainSetup(void)
             int lump = (W_CheckNumForName)("BFGBEX", ns_prboom);
             if (lump != -1)
             {
-                ProcessDehFile(NULL, D_dehout(), lump);
+                ProcessDehFile(nullptr, D_dehout(), lump);
             }
         }
         if (gamemission == pack_nerve)
@@ -1886,7 +1886,7 @@ static void D_DoomMainSetup(void)
             int lump = (W_CheckNumForName)("NERVEBEX", ns_prboom);
             if (lump != -1)
             {
-                ProcessDehFile(NULL, D_dehout(), lump);
+                ProcessDehFile(nullptr, D_dehout(), lump);
             }
         }
         if (gamemission == chex)
@@ -1894,7 +1894,7 @@ static void D_DoomMainSetup(void)
             int lump = (W_CheckNumForName)("CHEXDEH", ns_prboom);
             if (lump != -1)
             {
-                ProcessDehFile(NULL, D_dehout(), lump);
+                ProcessDehFile(nullptr, D_dehout(), lump);
             }
         }
     }
@@ -1930,7 +1930,7 @@ static void D_DoomMainSetup(void)
             if (!(lumpinfo[p].source == source_iwad ||
                   lumpinfo[p].source == source_pre ||
                   lumpinfo[p].source == source_auto_load))
-                ProcessDehFile(NULL, D_dehout(), p);
+                ProcessDehFile(nullptr, D_dehout(), p);
 
     // Load command line dehacked patches after WAD dehacked patches
 
@@ -1953,7 +1953,7 @@ static void D_DoomMainSetup(void)
         // in all standard dirs (%DOOMWADDIR%, etc)
         while (++p != myargc && *myargv[p] != '-')
         {
-            char *file = NULL;
+            char *file = nullptr;
             if ((file = I_FindFile(myargv[p], ".bex")) ||
                 (file = I_FindFile(myargv[p], ".deh")))
             {

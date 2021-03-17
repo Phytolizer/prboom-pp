@@ -853,10 +853,10 @@ static void P_LoadGLSegs(int lump)
             segs[i].miniseg = true;
             segs[i].angle = 0;
             segs[i].offset = 0;
-            segs[i].linedef = NULL;
-            segs[i].sidedef = NULL;
-            segs[i].frontsector = NULL;
-            segs[i].backsector = NULL;
+            segs[i].linedef = nullptr;
+            segs[i].sidedef = nullptr;
+            segs[i].frontsector = nullptr;
+            segs[i].backsector = nullptr;
         }
         ml++;
     }
@@ -948,8 +948,8 @@ static void P_LoadSectors(int lump)
         ss->special = LittleShort(ms->special);
         ss->oldspecial = LittleShort(ms->special);
         ss->tag = LittleShort(ms->tag);
-        ss->thinglist = NULL;
-        ss->touching_thinglist = NULL; // phares 3/14/98
+        ss->thinglist = nullptr;
+        ss->touching_thinglist = nullptr; // phares 3/14/98
 
         ss->nextsec = -1; // jff 2/26/98 add fields to support locking out
         ss->prevsec = -1; // stair retriggering until build completes
@@ -1208,7 +1208,7 @@ static void P_LoadZNodes(int lump, int glnodes, int compressed)
     unsigned int numSubs, currSeg;
     unsigned int numSegs;
     unsigned int numNodes;
-    vertex_t *newvertarray = NULL;
+    vertex_t *newvertarray = nullptr;
 #ifdef HAVE_LIBZ
     byte *output;
 #endif
@@ -1848,9 +1848,9 @@ static void P_CreateBlockMap(void)
 {
     int xorg, yorg;                 // blockmap origin (lower left)
     int nrows, ncols;               // blockmap dimensions
-    linelist_t **blocklists = NULL; // array of pointers to lists of lines
-    int *blockcount = NULL;         // array of counters of line lists
-    int *blockdone = NULL;          // array keeping track of blocks/line
+    linelist_t **blocklists = nullptr; // array of pointers to lists of lines
+    int *blockcount = nullptr;         // array of counters of line lists
+    int *blockdone = nullptr;          // array keeping track of blocks/line
     int NBlocks;                    // number of cells = nrows*ncols
     long linetotal = 0;             // total length of all blocklists
     int i, j;
@@ -1905,7 +1905,7 @@ static void P_CreateBlockMap(void)
     {
         blocklists[i] = malloc<linelist_t *>(sizeof(linelist_t));
         blocklists[i]->num = -1;
-        blocklists[i]->next = NULL;
+        blocklists[i]->next = nullptr;
         blockcount[i]++;
     }
 
@@ -2318,7 +2318,7 @@ static int P_GroupLines(void)
     for (i = 0; i < numsubsectors; i++)
     {
         seg_t *seg = &segs[subsectors[i].firstline];
-        subsectors[i].sector = NULL;
+        subsectors[i].sector = nullptr;
         for (j = 0; j < subsectors[i].numlines; j++)
         {
             if (seg->sidedef)
@@ -2328,7 +2328,7 @@ static int P_GroupLines(void)
             }
             seg++;
         }
-        if (subsectors[i].sector == NULL)
+        if (subsectors[i].sector == nullptr)
             I_Error("P_GroupLines: Subsector a part of no sector!\n");
     }
 
@@ -2649,13 +2649,13 @@ void P_InitSubsectorsLines(void)
     if (sslines_indexes)
     {
         free(sslines_indexes);
-        sslines_indexes = NULL;
+        sslines_indexes = nullptr;
     }
 
     if (sslines)
     {
         free(sslines);
-        sslines = NULL;
+        sslines = nullptr;
     }
 
     count = 0;
@@ -2936,7 +2936,7 @@ void P_SetupLevel(int episode, int map, int playermask, skill_t skill)
     memset(playerstarts, 0, sizeof(playerstarts));
     deathmatch_p = deathmatchstarts;
     for (i = 0; i < MAXPLAYERS; i++)
-        players[i].mo = NULL;
+        players[i].mo = nullptr;
     TracerClearStarts();
 
     P_MapStart();
@@ -2953,7 +2953,7 @@ void P_SetupLevel(int episode, int map, int playermask, skill_t skill)
         for (i = 0; i < MAXPLAYERS; i++)
             if (playeringame[i])
             {
-                players[i].mo = NULL; // not needed? - done before P_LoadThings
+                players[i].mo = nullptr; // not needed? - done before P_LoadThings
                 G_DeathMatchSpawnPlayer(i);
             }
     }
@@ -3008,7 +3008,7 @@ void P_SetupLevel(int episode, int map, int playermask, skill_t skill)
 #endif
     // e6y
     P_SyncWalkcam(true, true);
-    R_SmoothPlaying_Reset(NULL);
+    R_SmoothPlaying_Reset(nullptr);
 }
 
 //

@@ -71,7 +71,7 @@ static Chip opl_chip;
 
 // Temporary mixing buffer used by the mixing callback.
 
-static int *mix_buffer = NULL;
+static int *mix_buffer = nullptr;
 
 // Register number that was written.
 
@@ -124,8 +124,8 @@ void OPL_Shutdown(void)
         OPL_Queue_Destroy(callback_queue);
         free(mix_buffer);
 
-        callback_queue = NULL;
-        mix_buffer = NULL;
+        callback_queue = nullptr;
+        mix_buffer = nullptr;
     }
 }
 

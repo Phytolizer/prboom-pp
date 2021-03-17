@@ -268,7 +268,7 @@ void P_UnsetThingPosition(mobj_t *thing)
 
         sector_list = thing->touching_sectorlist;
         thing->touching_sectorlist =
-            NULL; // to be restored by P_SetThingPosition
+            nullptr; // to be restored by P_SetThingPosition
     }
 
     if (!(thing->flags & MF_NOBLOCKMAP))
@@ -318,7 +318,7 @@ void P_SetThingPosition(mobj_t *thing)
 
         // phares 3/16/98
         //
-        // If sector_list isn't NULL, it has a collection of sector
+        // If sector_list isn't nullptr, it has a collection of sector
         // nodes that were just removed from this Thing.
 
         // Collect the sectors the object will live in by looking at
@@ -331,7 +331,7 @@ void P_SetThingPosition(mobj_t *thing)
 
         P_CreateSecNodeList(thing, thing->x, thing->y);
         thing->touching_sectorlist = sector_list; // Attach to Thing's mobj_t
-        sector_list = NULL;                       // clear for next time
+        sector_list = nullptr;                       // clear for next time
     }
 
     // link into blockmap
@@ -354,7 +354,7 @@ void P_SetThingPosition(mobj_t *thing)
             *link = thing;
         }
         else // thing is off the map
-            thing->bnext = NULL, thing->bprev = NULL;
+            thing->bnext = nullptr, thing->bprev = NULL;
     }
 }
 
@@ -565,7 +565,7 @@ dboolean PIT_AddThingIntercepts(mobj_t *thing)
 
 dboolean P_TraverseIntercepts(traverser_t func, fixed_t maxfrac)
 {
-    intercept_t *in = NULL;
+    intercept_t *in = nullptr;
     int count = intercept_p - intercepts;
     while (count--)
     {
@@ -774,27 +774,27 @@ int P_GetSafeBlockY(int coord)
 extern fixed_t bulletslope;
 
 intercepts_overrun_t intercepts_overrun[] = {
-    {4, NULL, false},
-    {4, NULL, /* &earlyout, */ false},
-    {4, NULL, /* &intercept_p, */ false},
+    {4, nullptr, false},
+    {4, nullptr, /* &earlyout, */ false},
+    {4, nullptr, /* &intercept_p, */ false},
     {4, &lowfloor, false},
     {4, &openbottom, false},
     {4, &opentop, false},
     {4, &openrange, false},
-    {4, NULL, false},
-    {120, NULL, /* &activeplats, */ false},
-    {8, NULL, false},
+    {4, nullptr, false},
+    {120, nullptr, /* &activeplats, */ false},
+    {8, nullptr, false},
     {4, &bulletslope, false},
-    {4, NULL, /* &swingx, */ false},
-    {4, NULL, /* &swingy, */ false},
-    {4, NULL, false},
+    {4, nullptr, /* &swingx, */ false},
+    {4, nullptr, /* &swingy, */ false},
+    {4, nullptr, false},
     {40, &playerstarts, true},
-    {4, NULL, /* &blocklinks, */ false},
+    {4, nullptr, /* &blocklinks, */ false},
     {4, &bmapwidth, false},
-    {4, NULL, /* &blockmap, */ false},
+    {4, nullptr, /* &blockmap, */ false},
     {4, &bmaporgx, false},
     {4, &bmaporgy, false},
-    {4, NULL, /* &blockmaplump, */ false},
+    {4, nullptr, /* &blockmaplump, */ false},
     {4, &bmapheight, false},
-    {0, NULL, false},
+    {0, nullptr, false},
 };

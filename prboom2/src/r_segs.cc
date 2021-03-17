@@ -290,7 +290,7 @@ void R_RenderMaskedSegRange(drawseg_t *ds, int x1, int x2)
 
     // killough 4/13/98: get correct lightlevel for 2s normal textures
     rw_lightlevel =
-        R_FakeFlat(frontsector, &tempsec, NULL, NULL, false)->lightlevel;
+        R_FakeFlat(frontsector, &tempsec, nullptr, NULL, false)->lightlevel;
     walllights = GetLightTable(rw_lightlevel);
     walllightsnext = GetLightTable(rw_lightlevel + 1);
 
@@ -406,7 +406,7 @@ void R_RenderMaskedSegRange(drawseg_t *ds, int x1, int x2)
     R_UnlockTextureCompositePatchNum(texnum);
 
     curline =
-        NULL; /* cph 2001/11/18 - must clear curline now we're done with it, so
+        nullptr; /* cph 2001/11/18 - must clear curline now we're done with it, so
                  R_ColourMap doesn't try using it for other things */
 }
 
@@ -532,7 +532,7 @@ static void R_RenderSegLoop(void)
             dcvars.texheight = midtexheight;
             colfunc(&dcvars);
             R_UnlockTextureCompositePatchNum(midtexture);
-            tex_patch = NULL;
+            tex_patch = nullptr;
             ceilingclip[rw_x] = viewheight;
             floorclip[rw_x] = -1;
         }
@@ -564,7 +564,7 @@ static void R_RenderSegLoop(void)
                     dcvars.texheight = toptexheight;
                     colfunc(&dcvars);
                     R_UnlockTextureCompositePatchNum(toptexture);
-                    tex_patch = NULL;
+                    tex_patch = nullptr;
                     ceilingclip[rw_x] = mid;
                 }
                 else
@@ -601,7 +601,7 @@ static void R_RenderSegLoop(void)
                     dcvars.texheight = bottomtexheight;
                     colfunc(&dcvars);
                     R_UnlockTextureCompositePatchNum(bottomtexture);
-                    tex_patch = NULL;
+                    tex_patch = nullptr;
                     floorclip[rw_x] = mid;
                 }
                 else
@@ -773,7 +773,7 @@ void R_StoreWallRange(const int start, const int stop)
     //  and decide if floor / ceiling marks are needed
 
     midtexture = toptexture = bottomtexture = maskedtexture = 0;
-    ds_p->maskedtexturecol = NULL;
+    ds_p->maskedtexturecol = nullptr;
 
     if (!backsector)
     {
@@ -806,7 +806,7 @@ void R_StoreWallRange(const int start, const int stop)
     }
     else // two sided line
     {
-        ds_p->sprtopclip = ds_p->sprbottomclip = NULL;
+        ds_p->sprtopclip = ds_p->sprbottomclip = nullptr;
         ds_p->silhouette = 0;
 
         if (linedef->r_flags & line_t::RF_CLOSED)
@@ -1010,7 +1010,7 @@ void R_StoreWallRange(const int start, const int stop)
     // render it
     if (markceiling)
     {
-        if (ceilingplane) // killough 4/11/98: add NULL ptr checks
+        if (ceilingplane) // killough 4/11/98: add nullptr ptr checks
             ceilingplane = R_CheckPlane(ceilingplane, rw_x, rw_stopx - 1);
         else
             markceiling = 0;
@@ -1018,7 +1018,7 @@ void R_StoreWallRange(const int start, const int stop)
 
     if (markfloor)
     {
-        if (floorplane) // killough 4/11/98: add NULL ptr checks
+        if (floorplane) // killough 4/11/98: add nullptr ptr checks
             /* cph 2003/04/18  - ceilingplane and floorplane might be the same
              * visplane (e.g. if both skies); R_CheckPlane doesn't know about
              * modifications to the plane that might happen in parallel with the

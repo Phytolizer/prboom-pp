@@ -90,7 +90,7 @@
 #include "dsda/palette.hh"
 
 // e6y: new mouse code
-static SDL_Cursor *cursors[2] = {NULL, NULL};
+static SDL_Cursor *cursors[2] = {nullptr, NULL};
 
 dboolean window_focused;
 int mouse_currently_grabbed = true;
@@ -391,7 +391,7 @@ static void I_GetEvent(void)
             {
                 event.type = ev_mouse;
                 event.data1 =
-                    I_SDLtoDoomMouseState(SDL_GetMouseState(NULL, NULL));
+                    I_SDLtoDoomMouseState(SDL_GetMouseState(nullptr, NULL));
                 event.data2 = event.data3 = 0;
                 D_PostEvent(&event);
             }
@@ -440,7 +440,7 @@ static void I_GetEvent(void)
             break;
 
         case SDL_QUIT:
-            S_StartSound(NULL, sfx_swtchn);
+            S_StartSound(nullptr, sfx_swtchn);
             M_QuitDOOM(0);
 
         default:
@@ -536,7 +536,7 @@ static void I_UploadNewPalette(int pal, int force)
 
     playpal_data = dsda_PlayPalData();
 
-    if ((playpal_data->colours == NULL) || (cachedgamma != usegamma) || force)
+    if ((playpal_data->colours == nullptr) || (cachedgamma != usegamma) || force)
     {
         int pplump;
         int gtlump;
@@ -673,7 +673,7 @@ void I_FinishUpdate(void)
     // Make sure the pillarboxes are kept clear each frame.
     SDL_RenderClear(sdl_renderer);
 
-    SDL_RenderCopy(sdl_renderer, sdl_texture, &src_rect, NULL);
+    SDL_RenderCopy(sdl_renderer, sdl_texture, &src_rect, nullptr);
 
     // Draw!
     SDL_RenderPresent(sdl_renderer);
@@ -744,8 +744,8 @@ void I_InitBuffersRes(void)
 }
 
 #define MAX_RESOLUTIONS_COUNT 128
-const char *screen_resolutions_list[MAX_RESOLUTIONS_COUNT] = {NULL};
-const char *screen_resolution = NULL;
+const char *screen_resolutions_list[MAX_RESOLUTIONS_COUNT] = {nullptr};
+const char *screen_resolution = nullptr;
 
 //
 // I_GetScreenResolution
@@ -815,7 +815,7 @@ static void I_FillScreenResolutionsList(void)
     // on success, SDL_GetNumDisplayModes() always returns at least 1
     if (count > 0)
     {
-        // -2 for the desired resolution and for NULL
+        // -2 for the desired resolution and for nullptr
         count = MIN(count, MAX_RESOLUTIONS_COUNT - 2 - num_canonicals);
 
         for (i = count - 1 + num_canonicals; i >= 0; i--)
@@ -858,7 +858,7 @@ static void I_FillScreenResolutionsList(void)
                 list_size++;
             }
         }
-        screen_resolutions_list[list_size] = NULL;
+        screen_resolutions_list[list_size] = nullptr;
     }
 
     if (list_size == 0)
@@ -885,7 +885,7 @@ static void I_FillScreenResolutionsList(void)
         current_resolution_index = 0;
     }
 
-    screen_resolutions_list[list_size] = NULL;
+    screen_resolutions_list[list_size] = nullptr;
     screen_resolution = screen_resolutions_list[current_resolution_index];
 }
 
@@ -1051,7 +1051,7 @@ void I_InitScreenResolution(void)
     int i, p, w, h;
     char c, x;
     video_mode_t mode;
-    int init = (sdl_window == NULL);
+    int init = (sdl_window == nullptr);
 
     I_GetScreenResolution();
 
@@ -1172,7 +1172,7 @@ void I_InitScreenResolution(void)
 
 void I_SetWindowCaption(void)
 {
-    SDL_SetWindowTitle(NULL, PACKAGE_NAME " " PACKAGE_VERSION);
+    SDL_SetWindowTitle(nullptr, PACKAGE_NAME " " PACKAGE_VERSION);
 }
 
 //
@@ -1183,7 +1183,7 @@ void I_SetWindowCaption(void)
 
 void I_SetWindowIcon(void)
 {
-    static SDL_Surface *surface = NULL;
+    static SDL_Surface *surface = nullptr;
 
     // do it only once, because of crash in SDL_InitVideoMode in SDL 1.3
     if (!surface)
@@ -1195,7 +1195,7 @@ void I_SetWindowIcon(void)
 
     if (surface)
     {
-        SDL_SetWindowIcon(NULL, surface);
+        SDL_SetWindowIcon(nullptr, surface);
     }
 }
 
@@ -1307,12 +1307,12 @@ void I_UpdateVideoMode(void)
             SDL_DestroyRenderer(sdl_renderer);
         SDL_DestroyWindow(sdl_window);
 
-        sdl_renderer = NULL;
-        sdl_window = NULL;
-        sdl_glcontext = NULL;
-        screen = NULL;
-        buffer = NULL;
-        sdl_texture = NULL;
+        sdl_renderer = nullptr;
+        sdl_window = nullptr;
+        sdl_glcontext = nullptr;
+        screen = nullptr;
+        buffer = nullptr;
+        sdl_texture = nullptr;
     }
 
     // e6y: initialisation of screen_multiply
@@ -1413,11 +1413,11 @@ void I_UpdateVideoMode(void)
                                       V_GetNumPixelBits(), 0, 0, 0, 0);
         buffer =
             SDL_CreateRGBSurface(0, SCREENWIDTH, SCREENHEIGHT, 32, 0, 0, 0, 0);
-        SDL_FillRect(buffer, NULL, 0);
+        SDL_FillRect(buffer, nullptr, 0);
 
         sdl_texture = SDL_CreateTextureFromSurface(sdl_renderer, buffer);
 
-        if (screen == NULL)
+        if (screen == nullptr)
         {
             I_Error("Couldn't set %dx%d video mode [%s]", SCREENWIDTH,
                     SCREENHEIGHT, SDL_GetError());
@@ -1554,7 +1554,7 @@ void I_UpdateVideoMode(void)
 static void ActivateMouse(void)
 {
     SDL_SetRelativeMouseMode(SDL_TRUE);
-    SDL_GetRelativeMouseState(NULL, NULL);
+    SDL_GetRelativeMouseState(nullptr, NULL);
 }
 
 static void DeactivateMouse(void)

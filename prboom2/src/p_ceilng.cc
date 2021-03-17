@@ -370,7 +370,7 @@ int EV_DoCeiling(line_t *line, ceiling_e type)
 // to use the new structure which places no limits
 // on active ceilings. It also avoids spending as much
 // time searching for active ceilings. Previously a
-// fixed-size array was used, with NULL indicating
+// fixed-size array was used, with nullptr indicating
 // empty entries, while now a doubly-linked list
 // is used.
 
@@ -460,7 +460,7 @@ void P_AddActiveCeiling(ceiling_t *ceiling)
 void P_RemoveActiveCeiling(ceiling_t *ceiling)
 {
     ceilinglist_t *list = ceiling->list;
-    ceiling->sector->ceilingdata = NULL; // jff 2/22/98
+    ceiling->sector->ceilingdata = nullptr; // jff 2/22/98
     P_RemoveThinker(&ceiling->thinker);
     if ((*list->prev = list->next))
         list->next->prev = list->prev;

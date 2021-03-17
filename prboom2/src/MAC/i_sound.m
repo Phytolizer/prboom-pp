@@ -64,7 +64,7 @@
 // placeholder for unused option
 const char *snd_mididev;
 
-const char *midiplayers[2] = {"quicktime", NULL};
+const char *midiplayers[2] = {"quicktime", nullptr};
 const char *snd_midiplayer = "quicktime";
 const char *snd_soundfont;
 void M_ChangeMIDIPlayer(void)
@@ -160,10 +160,10 @@ int I_RegisterSong(const void *data, size_t len)
   FILE *midfile;
   bool MidiIsReady = false;
 
-  if ( music_tmp == NULL )
+  if ( music_tmp == nullptr )
     return 0;
   midfile = fopen(music_tmp, "wb");
-  if ( midfile == NULL ) {
+  if ( midfile == nullptr ) {
     lprintf(LO_ERROR,"Couldn't write MIDI to %s\n", music_tmp);
     return 0;
   }

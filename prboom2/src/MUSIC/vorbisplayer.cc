@@ -48,7 +48,7 @@ static int vorb_init(int samplerate)
 }
 
 const music_player_t vorb_player = {
-    vorb_name, vorb_init, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL};
+    vorb_name, vorb_init, nullptr, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL};
 
 #else // HAVE_LIBVORBISFILE
 
@@ -127,7 +127,7 @@ static long vtell(void *src)
     return (long)vorb_pos;
 }
 
-ov_callbacks vcallback = {vread, vseek, NULL, vtell};
+ov_callbacks vcallback = {vread, vseek, nullptr, vtell};
 
 const char *vorb_name(void)
 {
@@ -233,12 +233,12 @@ const void *vorb_registersong(const void *data, unsigned len)
     vorb_len = len;
     vorb_pos = 0;
 
-    i = ov_test_callbacks((void *)data, &vf, NULL, 0, vcallback);
+    i = ov_test_callbacks((void *)data, &vf, nullptr, 0, vcallback);
 
     if (i != 0)
     {
         lprintf(LO_WARN, "vorb_registersong: failed\n");
-        return NULL;
+        return nullptr;
     }
     i = ov_test_open(&vf);
 
@@ -246,7 +246,7 @@ const void *vorb_registersong(const void *data, unsigned len)
     {
         lprintf(LO_WARN, "vorb_registersong: failed\n");
         ov_clear(&vf);
-        return NULL;
+        return nullptr;
     }
 
     vinfo = ov_info(&vf, -1);
@@ -294,7 +294,7 @@ void vorb_resume(void)
 
 void vorb_unregistersong(const void *handle)
 {
-    vorb_data = NULL;
+    vorb_data = nullptr;
     ov_clear(&vf);
     vorb_playing = 0;
 }

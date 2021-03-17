@@ -47,8 +47,8 @@ static int mp_init(int samplerate)
     return 0;
 }
 
-const music_player_t mp_player = {mp_name, mp_init, NULL, NULL, NULL, NULL,
-                                  NULL,    NULL,    NULL, NULL, NULL};
+const music_player_t mp_player = {mp_name, mp_init, nullptr, NULL, NULL, NULL,
+                                  nullptr,    NULL,    NULL, NULL, NULL};
 
 #else // HAVE_LIBMAD
 
@@ -133,7 +133,7 @@ const void *mp_registersong(const void *data, unsigned len)
             {
                 lprintf(LO_WARN, "mad_registersong failed: %s\n",
                         mad_stream_errorstr(&Stream));
-                return NULL;
+                return nullptr;
             }
         }
         else
@@ -146,7 +146,7 @@ const void *mp_registersong(const void *data, unsigned len)
     if (success < maxtry * 8 / 10)
     {
         lprintf(LO_WARN, "mad_registersong failed\n");
-        return NULL;
+        return nullptr;
     }
 
     lprintf(LO_INFO, "mad_registersong succeed. bitrate %lu samplerate %d\n",
@@ -175,7 +175,7 @@ void mp_resume(void)
 
 void mp_unregistersong(const void *handle)
 { // nothing to do
-    mp_data = NULL;
+    mp_data = nullptr;
     mp_playing = 0;
 }
 

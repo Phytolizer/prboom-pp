@@ -341,7 +341,7 @@ menuitem_t MainMenu[] = {{1, "M_NGAME", M_NewGame, 'n', "NEW GAME"},
 
 menu_t MainDef = {
     main_end,       // number of menu items
-    NULL,           // previous menu screen
+    nullptr,           // previous menu screen
     MainMenu,       // table that defines menu items
     M_DrawMainMenu, // drawing routine
     97,
@@ -521,8 +521,8 @@ void M_AddEpisode(const char *map, char *def)
     {
         int epi, mapnum;
         const char *gfx = strtok(def, "\n");
-        const char *txt = strtok(NULL, "\n");
-        const char *alpha = strtok(NULL, "\n");
+        const char *txt = strtok(nullptr, "\n");
+        const char *alpha = strtok(nullptr, "\n");
         if (EpiDef.numitems >= 8)
             return;
         G_ValidateMapName(map, &epi, &mapnum);
@@ -559,7 +559,7 @@ void M_Episode(int choice)
     {
         if ((gamemode == shareware) && choice)
         {
-            M_StartMessage(s_SWSTRING, NULL,
+            M_StartMessage(s_SWSTRING, nullptr,
                            false); // Ty 03/27/98 - externalized
             M_SetupNextMenu(&ReadDef1);
             return;
@@ -644,7 +644,7 @@ void M_NewGame(int /* choice */)
     if (netgame && !demoplayback)
     {
         if (compatibility_level < lxdoom_1_compatibility)
-            M_StartMessage(s_NEWGAME, NULL,
+            M_StartMessage(s_NEWGAME, nullptr,
                            false); // Ty 03/27/98 - externalized
         else                       // CPhipps - query restarting the level
             M_StartMessage(s_RESTARTLEVEL,
@@ -657,7 +657,7 @@ void M_NewGame(int /* choice */)
     { /* killough 5/26/98: exclude during demo recordings */
         M_StartMessage("you can't start a new game\n"
                        "while recording a demo!\n\n" PRESSKEY,
-                       NULL, false); // killough 5/26/98: not externalized
+                       nullptr, false); // killough 5/26/98: not externalized
         return;
     }
 
@@ -823,7 +823,7 @@ void M_LoadGame(int /* choice */)
     {
         M_StartMessage("you can't load a game\n"
                        "while recording an old demo!\n\n" PRESSKEY,
-                       NULL, false); // killough 5/26/98: not externalized
+                       nullptr, false); // killough 5/26/98: not externalized
         return;
     }
 
@@ -867,7 +867,7 @@ void M_ReadSaveStrings(void)
 
         /* killough 3/22/98
          * cph - add not-demoplayback parameter */
-        len = G_SaveGameName(NULL, 0, i, false);
+        len = G_SaveGameName(nullptr, 0, i, false);
         name = malloc<char *>(len + 1);
         G_SaveGameName(name, len + 1, i, false);
         fp = fopen(name, "rb");
@@ -949,7 +949,7 @@ void M_SaveGame(int /* choice */)
     // killough 10/6/98: allow savegames during single-player demo playback
     if (!usergame && (!demoplayback || netgame))
     {
-        M_StartMessage(s_SAVEDEAD, NULL, false); // Ty 03/27/98 - externalized
+        M_StartMessage(s_SAVEDEAD, nullptr, false); // Ty 03/27/98 - externalized
         return;
     }
 
@@ -1060,9 +1060,9 @@ static void M_QuitResponse(int ch)
         int i;
 
         if (gamemode == commercial)
-            S_StartSound(NULL, quitsounds2[(gametic >> 2) & 7]);
+            S_StartSound(nullptr, quitsounds2[(gametic >> 2) & 7]);
         else
-            S_StartSound(NULL, quitsounds[(gametic >> 2) & 7]);
+            S_StartSound(nullptr, quitsounds[(gametic >> 2) & 7]);
 
         // wait till all sounds stopped or 3 seconds are over
         i = 30;
@@ -1298,7 +1298,7 @@ static void M_QuickSaveResponse(int ch)
     if (ch == 'y')
     {
         M_DoSave(quickSaveSlot);
-        S_StartSound(NULL, g_sfx_swtchx);
+        S_StartSound(nullptr, g_sfx_swtchx);
     }
 }
 
@@ -1306,7 +1306,7 @@ void M_QuickSave(void)
 {
     if (!usergame && (!demoplayback || netgame))
     { /* killough 10/98 */
-        S_StartSound(NULL, g_sfx_oof);
+        S_StartSound(nullptr, g_sfx_oof);
         return;
     }
 
@@ -1337,7 +1337,7 @@ static void M_QuickLoadResponse(int ch)
     if (ch == 'y')
     {
         M_LoadSelect(quickSaveSlot);
-        S_StartSound(NULL, g_sfx_swtchx);
+        S_StartSound(nullptr, g_sfx_swtchx);
     }
 }
 
@@ -1349,13 +1349,13 @@ void M_QuickLoad(void)
     { // killough 5/26/98: exclude during demo recordings
         M_StartMessage("you can't quickload\n"
                        "while recording a demo!\n\n" PRESSKEY,
-                       NULL, false); // killough 5/26/98: not externalized
+                       nullptr, false); // killough 5/26/98: not externalized
         return;
     }
 
     if (quickSaveSlot < 0)
     {
-        M_StartMessage(s_QSAVESPOT, NULL, false); // Ty 03/27/98 - externalized
+        M_StartMessage(s_QSAVESPOT, nullptr, false); // Ty 03/27/98 - externalized
         return;
     }
     sprintf(tempstring, s_QLPROMPT,
@@ -1387,7 +1387,7 @@ void M_EndGame(int /* choice */)
 {
     if (netgame)
     {
-        M_StartMessage(s_NETEND, NULL, false); // Ty 03/27/98 - externalized
+        M_StartMessage(s_NETEND, nullptr, false); // Ty 03/27/98 - externalized
         return;
     }
     M_StartMessage(s_ENDGAME, reinterpret_cast<void *>(M_EndGameResponse),
@@ -1803,7 +1803,7 @@ static void M_DrawItem(const setup_menu_t *s)
          * This supports multiline items on horizontally-crowded menus.
          */
 
-        for (p = t = strdup(s->m_text); (p = strtok(p, "\n")); y += 8, p = NULL)
+        for (p = t = strdup(s->m_text); (p = strtok(p, "\n")); y += 8, p = nullptr)
         { /* killough 10/98: support left-justification: */
             strcpy(menu_buffer, p);
             if (!(flags & S_LEFTJUST))
@@ -2033,7 +2033,7 @@ static void M_DrawSetting(const setup_menu_t *s)
             char_width = M_GetPixelWidth(c);
             if (char_width == 1)
                 char_width = 7;   // default for end of line
-            text[chat_index] = 0; // NULL to get cursor position
+            text[chat_index] = 0; // nullptr to get cursor position
             cursor_start = M_GetPixelWidth(text);
             text[chat_index] = *c; // replace stored char
 
@@ -2065,7 +2065,7 @@ static void M_DrawSetting(const setup_menu_t *s)
     {
         if (s->var.def->type == default_t::def_int)
         {
-            if (s->selectstrings == NULL)
+            if (s->selectstrings == nullptr)
             {
                 sprintf(menu_buffer, "%d", *s->var.def->location.pi);
             }
@@ -2290,7 +2290,7 @@ setup_menu_t *keys_settings[] = {
     keys_settings1,         keys_settings2,     keys_settings3,
     keys_settings4,         keys_settings5,     keys_settings6,
     keys_settings7,         keys_settings8,     heretic_keys_settings1,
-    heretic_keys_settings2, dsda_keys_settings, NULL};
+    heretic_keys_settings2, dsda_keys_settings, nullptr};
 
 int mult_screens_index; // the index of the current screen in a set
 
@@ -3168,7 +3168,7 @@ void M_DrawKeybnd(void)
 #define WP_Y 33
 
 static const char *weapon_attack_alignment_strings[] = {
-    "OFF", "HORIZONTAL", "CENTERED", "BOBBING", NULL};
+    "OFF", "HORIZONTAL", "CENTERED", "BOBBING", nullptr};
 
 // There's only one weapon settings screen (for now). But since we're
 // trying to fit a common description for screens, it gets a setup_menu_t,
@@ -3199,7 +3199,7 @@ enum
 
 extern setup_menu_t weap_settings1[];
 
-setup_menu_t *weap_settings[] = {weap_settings1, NULL};
+setup_menu_t *weap_settings[] = {weap_settings1, nullptr};
 
 setup_menu_t weap_settings1[] = // Weapons Settings screen
     {{"ENABLE RECOIL",
@@ -3221,7 +3221,7 @@ setup_menu_t weap_settings1[] = // Weapons Settings screen
       WP_Y + weap_attack_alignment * 8,
       {"weapon_attack_alignment"},
       0,
-      NULL,
+      nullptr,
       weapon_attack_alignment_strings},
 
      {"1ST CHOICE WEAPON",
@@ -3352,7 +3352,7 @@ extern setup_menu_t stat_settings2[];
 
 setup_menu_t *stat_settings[] = {stat_settings1,
                                  // e6y
-                                 stat_settings2, NULL};
+                                 stat_settings2, nullptr};
 
 setup_menu_t stat_settings1[] = // Status Bar and HUD Settings screen
     {{"STATUS BAR", S_SKIP | S_TITLE, m_null, SB_X, SB_Y + 1 * 8},
@@ -3394,7 +3394,7 @@ setup_menu_t stat_settings1[] = // Status Bar and HUD Settings screen
       SB_Y + 16 * 8,
       {"ammo_colour_behaviour"},
       0,
-      NULL,
+      nullptr,
       ammo_colour_behaviour_list},
 
      // Button for resetting to defaults
@@ -3564,7 +3564,7 @@ extern setup_menu_t auto_settings2[];
 extern setup_menu_t auto_settings3[];
 
 setup_menu_t *auto_settings[] = {auto_settings1, auto_settings2, auto_settings3,
-                                 NULL};
+                                 nullptr};
 
 setup_menu_t auto_settings1[] = // 1st AutoMap Settings screen
     {{"Show Kills/Secrts/Items statistics",
@@ -3635,7 +3635,7 @@ setup_menu_t auto_settings1[] = // 1st AutoMap Settings screen
       AU_Y + 9 * 8,
       {"map_things_appearance"},
       0,
-      NULL,
+      nullptr,
       map_things_appearance_list},
      {"Translucency percentage", S_SKIP | S_TITLE, m_null, AU_X, AU_Y + 10 * 8},
      {"Textured automap",
@@ -3915,7 +3915,7 @@ void M_DrawAutoMap(void)
 
 extern setup_menu_t enem_settings1[];
 
-setup_menu_t *enem_settings[] = {enem_settings1, NULL};
+setup_menu_t *enem_settings[] = {enem_settings1, nullptr};
 
 enum
 {
@@ -4094,7 +4094,7 @@ extern setup_menu_t dsda_gen_settings[];
 setup_menu_t *gen_settings[] = {gen_settings1, gen_settings2, gen_settings3,
                                 gen_settings4, gen_settings5, gen_settings6,
                                 gen_settings7, gen_settings8, dsda_gen_settings,
-                                NULL};
+                                nullptr};
 
 #define G_X 226
 #define GF_X 76
@@ -4105,9 +4105,9 @@ static const char *videomodes[] = {"8bit",   "15bit", "16bit", "32bit",
 #ifdef GL_DOOM
                                    "OpenGL",
 #endif
-                                   NULL};
+                                   nullptr};
 
-static const char *gltexformats[] = {"GL_RGBA", "GL_RGB5_A1", "GL_RGBA4", NULL};
+static const char *gltexformats[] = {"GL_RGBA", "GL_RGB5_A1", "GL_RGBA4", nullptr};
 
 setup_menu_t gen_settings1[] = { // General Settings screen1
 
@@ -4232,7 +4232,7 @@ setup_menu_t gen_settings1[] = { // General Settings screen1
 
 static const char *gen_skillstrings[] = {
     // Dummy first option because defaultskill is 1-based
-    "", "ITYTD", "HNTR", "HMP", "UV", "NM", NULL};
+    "", "ITYTD", "HNTR", "HMP", "UV", "NM", nullptr};
 
 static const char *gen_compstrings[] = {"Default",
                                         "Doom v1.2",
@@ -4253,7 +4253,7 @@ static const char *gen_compstrings[] = {"Default",
                                         "PrBoom 2.3.x",
                                         "PrBoom 2.4.0",
                                         "Latest PrBoom+",
-                                        NULL};
+                                        nullptr};
 
 setup_menu_t gen_settings2[] = { // General Settings screen2
 
@@ -4288,7 +4288,7 @@ setup_menu_t gen_settings2[] = { // General Settings screen2
      G_Y + 14 * 8,
      {"default_skill"},
      0,
-     NULL,
+     nullptr,
      gen_skillstrings},
     {"Default compatibility level",
      S_CHOICE,
@@ -4297,7 +4297,7 @@ setup_menu_t gen_settings2[] = { // General Settings screen2
      G_Y + 15 * 8,
      {"default_compatibility_level"},
      0,
-     NULL,
+     nullptr,
      &gen_compstrings[1]},
     {"Show ENDOOM screen", S_YESNO, m_null, G_X, G_Y + 16 * 8, {"showendoom"}},
     {"Fullscreen menu background",
@@ -4314,7 +4314,7 @@ setup_menu_t gen_settings2[] = { // General Settings screen2
      G_Y + 18 * 8,
      {"launcher_enable"},
      0,
-     NULL,
+     nullptr,
      launcher_enable_states},
 #endif
 
@@ -4465,7 +4465,7 @@ setup_menu_t gen_settings4[] = { // General Settings screen3
      G_Y + 2 * 8,
      {"filter_wall"},
      0,
-     NULL,
+     nullptr,
      renderfilters},
     {"Filter for floors/ceilings",
      S_CHOICE,
@@ -4474,7 +4474,7 @@ setup_menu_t gen_settings4[] = { // General Settings screen3
      G_Y + 3 * 8,
      {"filter_floor"},
      0,
-     NULL,
+     nullptr,
      renderfilters},
     {"Filter for sprites",
      S_CHOICE,
@@ -4483,7 +4483,7 @@ setup_menu_t gen_settings4[] = { // General Settings screen3
      G_Y + 4 * 8,
      {"filter_sprite"},
      0,
-     NULL,
+     nullptr,
      renderfilters},
     {"Filter for patches",
      S_CHOICE,
@@ -4492,7 +4492,7 @@ setup_menu_t gen_settings4[] = { // General Settings screen3
      G_Y + 5 * 8,
      {"filter_patch"},
      0,
-     NULL,
+     nullptr,
      renderfilters},
     {"Filter for lighting",
      S_CHOICE,
@@ -4501,7 +4501,7 @@ setup_menu_t gen_settings4[] = { // General Settings screen3
      G_Y + 6 * 8,
      {"filter_z"},
      0,
-     NULL,
+     nullptr,
      renderfilters},
 
     {"Drawing of sprite edges",
@@ -4511,7 +4511,7 @@ setup_menu_t gen_settings4[] = { // General Settings screen3
      G_Y + 8 * 8,
      {"sprite_edges"},
      0,
-     NULL,
+     nullptr,
      edgetypes},
     {"Drawing of patch edges",
      S_CHOICE,
@@ -4520,7 +4520,7 @@ setup_menu_t gen_settings4[] = { // General Settings screen3
      G_Y + 9 * 8,
      {"patch_edges"},
      0,
-     NULL,
+     nullptr,
      edgetypes},
     {"Flashing HOM indicator",
      S_YESNO,
@@ -4767,7 +4767,7 @@ setup_menu_t gen_settings6[] = {
      {gen_settings7}},
     {0, S_SKIP | S_END, m_null}};
 
-static const char *jumpheights[] = {"No", "Low", "High", NULL};
+static const char *jumpheights[] = {"No", "Low", "High", nullptr};
 
 setup_menu_t gen_settings7[] = {{"COMPATIBILITY WITH COMMON MAPPING ERRORS",
                                  S_SKIP | S_TITLE, m_null, G_X2, G_Y + 1 * 8},
@@ -4802,7 +4802,7 @@ setup_menu_t gen_settings7[] = {{"COMPATIBILITY WITH COMMON MAPPING ERRORS",
                                  G_Y + 6 * 8,
                                  {"comperr_allowjump"},
                                  0,
-                                 NULL,
+                                 nullptr,
                                  jumpheights},
                                 {"ALLOW VERTICAL AIMING",
                                  S_YESNO,
@@ -4836,10 +4836,10 @@ setup_menu_t gen_settings7[] = {{"COMPATIBILITY WITH COMMON MAPPING ERRORS",
 
 static const char *gltexfilters[] = {
     "None",      "Linear", "Nearest Mipmap", "Linear Mipmap", "Bilinear",
-    "Trilinear", NULL};
+    "Trilinear", nullptr};
 
 static const char *gltexfilters_anisotropics[] = {"Off", "2x",  "4x",
-                                                  "8x",  "16x", NULL};
+                                                  "8x",  "16x", nullptr};
 
 setup_menu_t gen_settings8[] = { // General Settings screen4
 #ifdef GL_DOOM
@@ -5082,7 +5082,7 @@ void M_ChangeUseGLSurface(void)
 
 void M_ChangeDemoSmoothTurns(void)
 {
-    R_SmoothPlaying_Reset(NULL);
+    R_SmoothPlaying_Reset(nullptr);
 }
 
 void M_ChangeTextureParams(void)
@@ -5153,7 +5153,7 @@ extern setup_menu_t comp_settings1[], comp_settings2[], comp_settings3[];
 extern setup_menu_t comp_settings3[]; // e6y
 
 setup_menu_t *comp_settings[] = {comp_settings1, comp_settings2, comp_settings3,
-                                 NULL};
+                                 nullptr};
 
 enum
 {
@@ -5492,7 +5492,7 @@ enum
 
 extern setup_menu_t mess_settings1[];
 
-setup_menu_t *mess_settings[] = {mess_settings1, NULL};
+setup_menu_t *mess_settings[] = {mess_settings1, nullptr};
 
 setup_menu_t mess_settings1[] = // Messages screen
     {{"Message Color During Play",
@@ -5608,7 +5608,7 @@ void M_DrawMessages(void)
 
 extern setup_menu_t chat_settings1[];
 
-setup_menu_t *chat_settings[] = {chat_settings1, NULL};
+setup_menu_t *chat_settings[] = {chat_settings1, nullptr};
 
 setup_menu_t chat_settings1[] = // Chat Strings screen
     {{"1", S_CHAT, m_null, CS_X, CS_Y + 1 * 8, {"chatmacro1"}},
@@ -5687,7 +5687,7 @@ static void M_SelectDone(setup_menu_t *ptr)
 {
     ptr->m_flags &= ~S_SELECT;
     ptr->m_flags |= S_HILITE;
-    S_StartSound(NULL, g_sfx_itemup);
+    S_StartSound(nullptr, g_sfx_itemup);
     setup_select = false;
     colorbox_active = false;
     if (print_warning_about_changes) // killough 8/15/98
@@ -6671,7 +6671,7 @@ static int M_IndexInChoices(const char *str, const char **choices)
 {
     int i = 0;
 
-    while (*choices != NULL)
+    while (*choices != nullptr)
     {
         if (!strcmp(str, *choices))
             return i;
@@ -6912,7 +6912,7 @@ dboolean M_Responder(event_t *ev)
             messageRoutine(ch);
 
         menuactive = mnact_inactive;
-        S_StartSound(NULL, g_sfx_swtchx);
+        S_StartSound(nullptr, g_sfx_swtchx);
         return true;
     }
 
@@ -6940,14 +6940,14 @@ dboolean M_Responder(event_t *ev)
             currentMenu = &HelpDef; // killough 10/98: new help screen
 
             itemOn = 0;
-            S_StartSound(NULL, g_sfx_swtchn);
+            S_StartSound(nullptr, g_sfx_swtchn);
             return true;
         }
 
         if (dsda_InputActivated(dsda_input_savegame))
         {
             M_StartControlPanel();
-            S_StartSound(NULL, g_sfx_swtchn);
+            S_StartSound(nullptr, g_sfx_swtchn);
             M_SaveGame(0);
             return true;
         }
@@ -6955,7 +6955,7 @@ dboolean M_Responder(event_t *ev)
         if (dsda_InputActivated(dsda_input_loadgame))
         {
             M_StartControlPanel();
-            S_StartSound(NULL, g_sfx_swtchn);
+            S_StartSound(nullptr, g_sfx_swtchn);
             M_LoadGame(0);
             return true;
         }
@@ -6965,20 +6965,20 @@ dboolean M_Responder(event_t *ev)
             M_StartControlPanel();
             currentMenu = &SoundDef;
             itemOn = sfx_vol;
-            S_StartSound(NULL, g_sfx_swtchn);
+            S_StartSound(nullptr, g_sfx_swtchn);
             return true;
         }
 
         if (dsda_InputActivated(dsda_input_quicksave))
         {
-            S_StartSound(NULL, g_sfx_swtchn);
+            S_StartSound(nullptr, g_sfx_swtchn);
             M_QuickSave();
             return true;
         }
 
         if (dsda_InputActivated(dsda_input_endgame))
         {
-            S_StartSound(NULL, g_sfx_swtchn);
+            S_StartSound(nullptr, g_sfx_swtchn);
             M_EndGame(0);
             return true;
         }
@@ -6987,20 +6987,20 @@ dboolean M_Responder(event_t *ev)
         if (dsda_InputActivated(dsda_input_messages))
         {
             M_ChangeMessages(0);
-            S_StartSound(NULL, g_sfx_swtchn);
+            S_StartSound(nullptr, g_sfx_swtchn);
             return true;
         }
 
         if (dsda_InputActivated(dsda_input_quickload))
         {
-            S_StartSound(NULL, g_sfx_swtchn);
+            S_StartSound(nullptr, g_sfx_swtchn);
             M_QuickLoad();
             return true;
         }
 
         if (dsda_InputActivated(dsda_input_quit))
         {
-            S_StartSound(NULL, g_sfx_swtchn);
+            S_StartSound(nullptr, g_sfx_swtchn);
             M_QuitDOOM(0);
             return true;
         }
@@ -7042,7 +7042,7 @@ dboolean M_Responder(event_t *ev)
             if ((automapmode & am_active) || chat_on)
                 return false;
             M_SizeDisplay(0);
-            S_StartSound(NULL, g_sfx_stnmov);
+            S_StartSound(nullptr, g_sfx_stnmov);
             return true;
         }
 
@@ -7051,7 +7051,7 @@ dboolean M_Responder(event_t *ev)
             if ((automapmode & am_active) || chat_on) // allow
                 return false;                         // key_hud==key_zoomin
             M_SizeDisplay(1);                         //  ^
-            S_StartSound(NULL, g_sfx_stnmov);         //  |
+            S_StartSound(nullptr, g_sfx_stnmov);         //  |
             return true;                              // phares
         }
 
@@ -7156,7 +7156,7 @@ dboolean M_Responder(event_t *ev)
         {
             dsda_InputCycleProfile();
             doom_printf("Input Profile %d", dsda_input_profile);
-            S_StartSound(NULL, g_sfx_swtchn);
+            S_StartSound(nullptr, g_sfx_swtchn);
             return true;
         }
 
@@ -7164,7 +7164,7 @@ dboolean M_Responder(event_t *ev)
         {
             dsda_CyclePlayPal();
             doom_printf("Palette %s", dsda_PlayPalData()->lump_name);
-            S_StartSound(NULL, g_sfx_swtchn);
+            S_StartSound(nullptr, g_sfx_swtchn);
             return true;
         }
 
@@ -7176,7 +7176,7 @@ dboolean M_Responder(event_t *ev)
                 P_SyncWalkcam(true, (walkcamera.type != 2));
                 R_ResetViewInterpolation();
                 if (walkcamera.type == 0)
-                    R_SmoothPlaying_Reset(NULL);
+                    R_SmoothPlaying_Reset(nullptr);
                 // Don't eat the keypress in this case.
                 // return true;
             }
@@ -7231,7 +7231,7 @@ dboolean M_Responder(event_t *ev)
         if (dsda_InputActivated(dsda_input_setup))
         {
             M_StartControlPanel();
-            S_StartSound(NULL, g_sfx_swtchn);
+            S_StartSound(nullptr, g_sfx_swtchn);
             M_SetupNextMenu(&SetupDef);
             return true;
         }
@@ -7243,7 +7243,7 @@ dboolean M_Responder(event_t *ev)
         if (ch == KEYD_ESCAPE) // phares
         {
             M_StartControlPanel();
-            S_StartSound(NULL, g_sfx_swtchn);
+            S_StartSound(nullptr, g_sfx_swtchn);
             return true;
         }
         return false;
@@ -7258,7 +7258,7 @@ dboolean M_Responder(event_t *ev)
     if (setup_active)
     {
         setup_menu_t *ptr1 = current_setup_menu + set_menu_itemon;
-        setup_menu_t *ptr2 = NULL;
+        setup_menu_t *ptr2 = nullptr;
 
         // phares 4/19/98:
         // Catch the response to the 'reset to default?' verification
@@ -7432,7 +7432,7 @@ dboolean M_Responder(event_t *ev)
                              value > ptr1->var.def->maxvalue))
                             value = ptr1->var.def->maxvalue;
                         if (*ptr1->var.def->location.pi != value)
-                            S_StartSound(NULL, g_sfx_menu);
+                            S_StartSound(nullptr, g_sfx_menu);
                         *ptr1->var.def->location.pi = value;
                     }
                     if (ptr1->var.def->type == default_t::def_str)
@@ -7445,7 +7445,7 @@ dboolean M_Responder(event_t *ev)
                         if (value < 0)
                             value = 0;
                         if (old_value != value)
-                            S_StartSound(NULL, g_sfx_menu);
+                            S_StartSound(nullptr, g_sfx_menu);
                         *ptr1->var.def->location.ppsz =
                             ptr1->selectstrings[value];
                     }
@@ -7464,7 +7464,7 @@ dboolean M_Responder(event_t *ev)
                              value > ptr1->var.def->maxvalue))
                             value = ptr1->var.def->maxvalue;
                         if (*ptr1->var.def->location.pi != value)
-                            S_StartSound(NULL, g_sfx_menu);
+                            S_StartSound(nullptr, g_sfx_menu);
                         *ptr1->var.def->location.pi = value;
                     }
                     if (ptr1->var.def->type == default_t::def_str)
@@ -7474,10 +7474,10 @@ dboolean M_Responder(event_t *ev)
                         old_value = M_IndexInChoices(
                             *ptr1->var.def->location.ppsz, ptr1->selectstrings);
                         value = old_value + 1;
-                        if (ptr1->selectstrings[value] == NULL)
+                        if (ptr1->selectstrings[value] == nullptr)
                             value = old_value;
                         if (old_value != value)
-                            S_StartSound(NULL, g_sfx_menu);
+                            S_StartSound(nullptr, g_sfx_menu);
                         *ptr1->var.def->location.ppsz =
                             ptr1->selectstrings[value];
                     }
@@ -7667,7 +7667,7 @@ dboolean M_Responder(event_t *ev)
                 {
                     if (++color_palette_y == 16)
                         color_palette_y = 0;
-                    S_StartSound(NULL, g_sfx_itemup);
+                    S_StartSound(nullptr, g_sfx_itemup);
                     return true;
                 }
 
@@ -7675,7 +7675,7 @@ dboolean M_Responder(event_t *ev)
                 {
                     if (--color_palette_y < 0)
                         color_palette_y = 15;
-                    S_StartSound(NULL, g_sfx_itemup);
+                    S_StartSound(nullptr, g_sfx_itemup);
                     return true;
                 }
 
@@ -7683,7 +7683,7 @@ dboolean M_Responder(event_t *ev)
                 {
                     if (--color_palette_x < 0)
                         color_palette_x = 15;
-                    S_StartSound(NULL, g_sfx_itemup);
+                    S_StartSound(nullptr, g_sfx_itemup);
                     return true;
                 }
 
@@ -7691,7 +7691,7 @@ dboolean M_Responder(event_t *ev)
                 {
                     if (++color_palette_x == 16)
                         color_palette_x = 0;
-                    S_StartSound(NULL, g_sfx_itemup);
+                    S_StartSound(nullptr, g_sfx_itemup);
                     return true;
                 }
 
@@ -7875,7 +7875,7 @@ dboolean M_Responder(event_t *ev)
 
             ptr1->m_flags |= S_SELECT;
             setup_select = true;
-            S_StartSound(NULL, g_sfx_itemup);
+            S_StartSound(nullptr, g_sfx_itemup);
             return true;
         }
 
@@ -7889,7 +7889,7 @@ dboolean M_Responder(event_t *ev)
             {
                 currentMenu = currentMenu->prevMenu;
                 itemOn = currentMenu->lastOn;
-                S_StartSound(NULL, g_sfx_swtchn);
+                S_StartSound(nullptr, g_sfx_swtchn);
             }
             ptr1->m_flags &= ~(S_HILITE | S_SELECT); // phares 4/19/98
             setup_active = false;
@@ -7905,7 +7905,7 @@ dboolean M_Responder(event_t *ev)
             set_general_active = false; // killough 10/98
             set_compat_active = false;  // killough 10/98
             HU_Start(); // catch any message changes // phares 4/19/98
-            S_StartSound(NULL, g_sfx_swtchx);
+            S_StartSound(nullptr, g_sfx_swtchx);
             return true;
         }
 
@@ -7934,7 +7934,7 @@ dboolean M_Responder(event_t *ev)
                            S_SKIP)
                         ;
                     current_setup_menu[--set_menu_itemon].m_flags |= S_HILITE;
-                    S_StartSound(NULL, g_sfx_menu); // killough 10/98
+                    S_StartSound(nullptr, g_sfx_menu); // killough 10/98
                     return true;
                 }
             } while (!(ptr2->m_flags & S_END));
@@ -7958,7 +7958,7 @@ dboolean M_Responder(event_t *ev)
                            S_SKIP)
                         ;
                     current_setup_menu[--set_menu_itemon].m_flags |= S_HILITE;
-                    S_StartSound(NULL, g_sfx_menu); // killough 10/98
+                    S_StartSound(nullptr, g_sfx_menu); // killough 10/98
                     return true;
                 }
             } while (!(ptr2->m_flags & S_END));
@@ -7977,7 +7977,7 @@ dboolean M_Responder(event_t *ev)
                 itemOn = 0;
             else
                 itemOn++;
-            S_StartSound(NULL, g_sfx_menu);
+            S_StartSound(nullptr, g_sfx_menu);
         } while (currentMenu->menuitems[itemOn].status == -1);
         return true;
     }
@@ -7990,7 +7990,7 @@ dboolean M_Responder(event_t *ev)
                 itemOn = currentMenu->numitems - 1;
             else
                 itemOn--;
-            S_StartSound(NULL, g_sfx_menu);
+            S_StartSound(nullptr, g_sfx_menu);
         } while (currentMenu->menuitems[itemOn].status == -1);
         return true;
     }
@@ -8000,7 +8000,7 @@ dboolean M_Responder(event_t *ev)
         if (currentMenu->menuitems[itemOn].routine &&
             currentMenu->menuitems[itemOn].status == 2)
         {
-            S_StartSound(NULL, g_sfx_stnmov);
+            S_StartSound(nullptr, g_sfx_stnmov);
             currentMenu->menuitems[itemOn].routine(0);
         }
         return true;
@@ -8011,7 +8011,7 @@ dboolean M_Responder(event_t *ev)
         if (currentMenu->menuitems[itemOn].routine &&
             currentMenu->menuitems[itemOn].status == 2)
         {
-            S_StartSound(NULL, g_sfx_stnmov);
+            S_StartSound(nullptr, g_sfx_stnmov);
             currentMenu->menuitems[itemOn].routine(1);
         }
         return true;
@@ -8026,12 +8026,12 @@ dboolean M_Responder(event_t *ev)
             if (currentMenu->menuitems[itemOn].status == 2)
             {
                 currentMenu->menuitems[itemOn].routine(1); // right arrow
-                S_StartSound(NULL, g_sfx_stnmov);
+                S_StartSound(nullptr, g_sfx_stnmov);
             }
             else
             {
                 currentMenu->menuitems[itemOn].routine(itemOn);
-                S_StartSound(NULL, g_sfx_pistol);
+                S_StartSound(nullptr, g_sfx_pistol);
             }
         }
         // jff 3/24/98 remember last skill selected
@@ -8043,7 +8043,7 @@ dboolean M_Responder(event_t *ev)
     {
         currentMenu->lastOn = itemOn;
         M_ClearMenus();
-        S_StartSound(NULL, g_sfx_swtchx);
+        S_StartSound(nullptr, g_sfx_swtchx);
         return true;
     }
 
@@ -8070,7 +8070,7 @@ dboolean M_Responder(event_t *ev)
             else
                 currentMenu = currentMenu->prevMenu;
             itemOn = currentMenu->lastOn;
-            S_StartSound(NULL, g_sfx_swtchn);
+            S_StartSound(nullptr, g_sfx_swtchn);
         }
         return true;
     }
@@ -8081,14 +8081,14 @@ dboolean M_Responder(event_t *ev)
             if (currentMenu->menuitems[i].alphaKey == ch)
             {
                 itemOn = i;
-                S_StartSound(NULL, g_sfx_menu);
+                S_StartSound(nullptr, g_sfx_menu);
                 return true;
             }
         for (i = 0; i <= itemOn; i++)
             if (currentMenu->menuitems[i].alphaKey == ch)
             {
                 itemOn = i;
-                S_StartSound(NULL, g_sfx_menu);
+                S_StartSound(nullptr, g_sfx_menu);
                 return true;
             }
     }
@@ -8533,7 +8533,7 @@ void M_Init(void)
     skullAnimCounter = 10;
     screenSize = screenblocks - 3;
     messageToPrint = 0;
-    messageString = NULL;
+    messageString = nullptr;
     messageLastMenuActive = menuactive;
     quickSaveSlot = -1;
 

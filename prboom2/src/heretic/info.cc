@@ -33,7 +33,7 @@ const char *heretic_sprnames[HERETIC_NUMSPRITES + 1] = {
     "CLNK", "WZRD", "FX11", "FX10", "KNIG", "SPAX", "RAXE", "SRCR", "FX14",
     "SOR2", "SDTH", "FX16", "MNTR", "FX12", "FX13", "AKYY", "BKYY", "CKYY",
     "AMG2", "AMM1", "AMM2", "AMC1", "AMC2", "AMS1", "AMS2", "AMP1", "AMP2",
-    "AMB1", "AMB2", NULL};
+    "AMB1", "AMB2", nullptr};
 
 state_t heretic_states[HERETIC_NUMSTATES] = {
     {HERETIC_SPR_IMPX, 0, -1, {}, HERETIC_S_NULL, 0, 0}, // HERETIC_S_NULL

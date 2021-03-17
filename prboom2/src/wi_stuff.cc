@@ -478,7 +478,7 @@ void WI_drawLF(void)
     int y = WI_TITLEY;
     char lname[9];
 
-    if (wbs->lastmapinfo != NULL && wbs->lastmapinfo->levelname != NULL &&
+    if (wbs->lastmapinfo != nullptr && wbs->lastmapinfo->levelname != NULL &&
         wbs->lastmapinfo->levelpic[0] == 0)
     {
         // The level defines a new name but no texture for the name.
@@ -489,7 +489,7 @@ void WI_drawLF(void)
     {
         // draw <LevelName>
         /* cph - get the graphic lump name and use it */
-        if (wbs->lastmapinfo != NULL && wbs->lastmapinfo->levelpic[0])
+        if (wbs->lastmapinfo != nullptr && wbs->lastmapinfo->levelpic[0])
             strcpy(lname, wbs->lastmapinfo->levelpic);
         else
             WI_levelNameLump(wbs->epsd, wbs->last, lname);
@@ -522,7 +522,7 @@ void WI_drawEL(void)
     V_DrawNamePatch((320 - V_NamePatchWidth(entering)) / 2, y, FB, entering,
                     CR_DEFAULT, VPT_STRETCH);
 
-    if (wbs->nextmapinfo != NULL && wbs->nextmapinfo->levelname != NULL &&
+    if (wbs->nextmapinfo != nullptr && wbs->nextmapinfo->levelname != NULL &&
         wbs->nextmapinfo->levelpic[0] == 0)
     {
         y += (5 * V_NamePatchHeight(entering)) / 4;
@@ -533,7 +533,7 @@ void WI_drawEL(void)
     else
     {
         /* cph - get the graphic lump name */
-        if (wbs->nextmapinfo != NULL && wbs->nextmapinfo->levelpic[0])
+        if (wbs->nextmapinfo != nullptr && wbs->nextmapinfo->levelpic[0])
             strcpy(lname, wbs->nextmapinfo->levelpic);
         else
             WI_levelNameLump(wbs->nextep, wbs->next, lname);
@@ -945,7 +945,7 @@ static dboolean snl_pointeron = false;
 //
 void WI_initShowNextLoc(void)
 {
-    if (gamemapinfo != NULL)
+    if (gamemapinfo != nullptr)
     {
         if (gamemapinfo->endpic[0])
         {
@@ -1388,13 +1388,13 @@ static int ng_state;
 static void WI_endNetgameStats(void)
 {
     free(cnt_frags);
-    cnt_frags = NULL;
+    cnt_frags = nullptr;
     free(cnt_secret);
-    cnt_secret = NULL;
+    cnt_secret = nullptr;
     free(cnt_items);
-    cnt_items = NULL;
+    cnt_items = nullptr;
     free(cnt_kills);
-    cnt_kills = NULL;
+    cnt_kills = nullptr;
 }
 
 // ====================================================================
@@ -2135,10 +2135,10 @@ void WI_Start(wbstartstruct_t *wbstartstruct)
 
     exitpic = (wbs->lastmapinfo && wbs->lastmapinfo->exitpic[0])
                   ? wbs->lastmapinfo->exitpic
-                  : NULL;
+                  : nullptr;
     enterpic = (wbs->nextmapinfo && wbs->nextmapinfo->enterpic[0])
                    ? wbs->nextmapinfo->enterpic
-                   : NULL;
+                   : nullptr;
 
     if (deathmatch)
         WI_initDeathmatchStats();

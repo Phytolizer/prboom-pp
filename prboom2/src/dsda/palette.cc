@@ -76,7 +76,7 @@ void dsda_FreePlayPal(void)
         if (playpal_data[playpal_i].lump)
         {
             free(playpal_data[playpal_i].lump);
-            playpal_data[playpal_i].lump = NULL;
+            playpal_data[playpal_i].lump = nullptr;
         }
 }
 
@@ -94,7 +94,7 @@ void dsda_FreeTrueColorPlayPal(void)
             if (playpal_data[playpal_i].Palettes15)
                 free(playpal_data[playpal_i].Palettes15);
 
-            playpal_data[playpal_i].Palettes15 = NULL;
+            playpal_data[playpal_i].Palettes15 = nullptr;
         }
 
         if (mode != VID_MODE16)
@@ -102,7 +102,7 @@ void dsda_FreeTrueColorPlayPal(void)
             if (playpal_data[playpal_i].Palettes16)
                 free(playpal_data[playpal_i].Palettes16);
 
-            playpal_data[playpal_i].Palettes16 = NULL;
+            playpal_data[playpal_i].Palettes16 = nullptr;
         }
 
         if (mode != VID_MODE32)
@@ -110,7 +110,7 @@ void dsda_FreeTrueColorPlayPal(void)
             if (playpal_data[playpal_i].Palettes32)
                 free(playpal_data[playpal_i].Palettes32);
 
-            playpal_data[playpal_i].Palettes32 = NULL;
+            playpal_data[playpal_i].Palettes32 = nullptr;
         }
     }
 }

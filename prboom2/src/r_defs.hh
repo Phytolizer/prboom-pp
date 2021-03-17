@@ -261,7 +261,7 @@ typedef struct line_s
 // As an mobj moves through the world, these nodes are created and
 // destroyed, with the links changed appropriately.
 //
-// For the links, NULL means top or end of list.
+// For the links, nullptr means top or end of list.
 
 struct mobj_t;
 
@@ -295,7 +295,7 @@ typedef struct
     // Sector references.
     // Could be retrieved from linedef, too
     // (but that would be slower -- killough)
-    // backsector is NULL for one sided lines
+    // backsector is nullptr for one sided lines
 
     sector_t *frontsector, *backsector;
 } seg_t;

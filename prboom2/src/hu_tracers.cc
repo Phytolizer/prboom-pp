@@ -59,9 +59,9 @@ void InitTracers(void)
     int value, count;
 
     traceslistinit_t traces_init[NUMTRACES] = {
-        {"-trace_thingshealth", "health ", TracerApply, NULL},
-        {"-trace_thingspickup", "pickup ", TracerApply, NULL},
-        {"-trace_linescross", "lcross ", TracerApply, NULL},
+        {"-trace_thingshealth", "health ", TracerApply, nullptr},
+        {"-trace_thingspickup", "pickup ", TracerApply, nullptr},
+        {"-trace_linescross", "lcross ", TracerApply, nullptr},
         {"-trace_givendamage", "damage ", GivenDamageApply, GivenDamageReset},
     };
 
@@ -241,7 +241,7 @@ typedef struct
     int index;
 } PACKEDATTR tracer_mapthing_t;
 
-static tracer_mapthing_t *deathmatchstarts_indexes = NULL;
+static tracer_mapthing_t *deathmatchstarts_indexes = nullptr;
 static tracer_mapthing_t playerstarts_indexes[MAXPLAYERS];
 int num_deathmatchstarts_indexes = 0;
 
@@ -307,6 +307,6 @@ void TracerClearStarts(void)
     if (deathmatchstarts_indexes)
     {
         free(deathmatchstarts_indexes);
-        deathmatchstarts_indexes = NULL;
+        deathmatchstarts_indexes = nullptr;
     }
 }

@@ -76,7 +76,7 @@ enum
 void *Z_BMalloc(struct block_memory_alloc_s *pzone)
 {
     bmalpool_t **pool = (bmalpool_t **)&(pzone->firstpool);
-    while (*pool != NULL)
+    while (*pool != nullptr)
     {
         byte *p = static_cast<byte *>(
             memchr((*pool)->used, unused_block,
@@ -103,7 +103,7 @@ void *Z_BMalloc(struct block_memory_alloc_s *pzone)
         *pool = newpool = static_cast<bmalpool_t *>(std::calloc(
             sizeof(*newpool) + (sizeof(byte) + pzone->size) * (pzone->perpool),
             1));
-        newpool->nextpool = NULL; // NULL = (void*)0 so this is redundant
+        newpool->nextpool = nullptr; // NULL = (void*)0 so this is redundant
 
         // Return element 0 from this pool to satisfy the request
         newpool->used[0] = used_block;
@@ -116,7 +116,7 @@ void Z_BFree(struct block_memory_alloc_s *pzone, void *p)
 {
     bmalpool_t **pool = (bmalpool_t **)&(pzone->firstpool);
 
-    while (*pool != NULL)
+    while (*pool != nullptr)
     {
         int n = iselem(*pool, pzone->size, p);
         if (n >= 0)
@@ -126,7 +126,7 @@ void Z_BFree(struct block_memory_alloc_s *pzone, void *p)
                 I_Error("Z_BFree: Refree in zone %s", pzone->desc);
 #endif
             (*pool)->used[n] = unused_block;
-            if (memchr(((*pool)->used), used_block, (*pool)->blocks) == NULL)
+            if (memchr(((*pool)->used), used_block, (*pool)->blocks) == nullptr)
             {
                 // Block is all unused, can be freed
                 bmalpool_t *oldpool = *pool;

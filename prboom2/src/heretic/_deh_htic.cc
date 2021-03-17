@@ -26,7 +26,7 @@
 #include "m_argv.hh"
 
 const char *deh_signatures[] = {"Patch File for HHE v1.0",
-                                "Patch File for HHE v1.1", NULL};
+                                "Patch File for HHE v1.1", nullptr};
 
 static const char *hhe_versions[] = {"1.0", "1.2", "1.3"};
 
@@ -57,7 +57,7 @@ deh_section_t *deh_section_types[] = {
     &deh_section_ammo, &deh_section_frame,
     //    &deh_section_pointer, TODO
     &deh_section_sound, &deh_section_heretic_text, &deh_section_thing,
-    &deh_section_weapon, NULL};
+    &deh_section_weapon, nullptr};
 
 static void SetHHEVersionByName(const char *name)
 {

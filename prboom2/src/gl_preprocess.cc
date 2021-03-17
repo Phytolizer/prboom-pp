@@ -517,7 +517,7 @@ static void CALLBACK ntessEnd(void)
 static void gld_PrecalculateSector(int num)
 {
     int i;
-    dboolean *lineadded = NULL;
+    dboolean *lineadded = nullptr;
     int linecount;
     int currentline;
     int oldline;
@@ -526,12 +526,12 @@ static void gld_PrecalculateSector(int num)
     int bestlinecount;
     vertex_t *startvertex;
     vertex_t *currentvertex =
-        NULL; // e6y: fix use of uninitialized local variable below
+        nullptr; // e6y: fix use of uninitialized local variable below
     angle_t lineangle;
     angle_t angle;
     angle_t bestangle;
     GLUtesselator *tess;
-    double *v = NULL;
+    double *v = nullptr;
     int maxvertexnum;
     int vertexnum;
 
@@ -617,7 +617,7 @@ static void gld_PrecalculateSector(int num)
     // start tesselator
     if (levelinfo)
         fprintf(levelinfo, "gluTessBeginPolygon\n");
-    gluTessBeginPolygon(tess, NULL);
+    gluTessBeginPolygon(tess, nullptr);
     if (levelinfo)
         fprintf(levelinfo, "\tgluTessBeginContour\n");
     gluTessBeginContour(tess);
@@ -740,7 +740,7 @@ static void gld_PrecalculateSector(int num)
         /*if (sectors[num].lines[currentline]->sidenum[1]!=NO_INDEX)
           backsector=sides[sectors[num].lines[currentline]->sidenum[1]].sector;
         else
-          backsector=NULL;*/
+          backsector=nullptr;*/
         // search through all lines of the current sector
         for (i = 0; i < sectors[num].linecount; i++)
             if (!lineadded[i]) // if the line isn't already added ...
@@ -1002,8 +1002,8 @@ static void gld_MarkSectorsForClamp(void)
 static void gld_PreprocessSectors(void)
 {
 #ifdef USE_GLU_TESS // figgi
-    char *vertexcheck = NULL;
-    char *vertexcheck2 = NULL;
+    char *vertexcheck = nullptr;
+    char *vertexcheck2 = nullptr;
     int v1num;
     int v2num;
     int i;
@@ -1058,7 +1058,7 @@ static void gld_PreprocessSectors(void)
                     "linerendered");
     }
 
-    flats_vbo = NULL;
+    flats_vbo = nullptr;
     gld_max_vertexes = 0;
     gld_num_vertexes = 0;
     if (numvertexes)
@@ -1228,7 +1228,7 @@ void gld_PreprocessLevel(void)
         free(gl_lines);
 
         free(flats_vbo);
-        flats_vbo = NULL;
+        flats_vbo = nullptr;
 
         free(segrendered);
         free(linerendered[0]);
@@ -1286,7 +1286,7 @@ void gld_PreprocessLevel(void)
                                   flats_vbo, GL_STATIC_DRAW_ARB);
 
             free(flats_vbo);
-            flats_vbo = NULL;
+            flats_vbo = nullptr;
 
             // bind VBO in order to use
             GLEXT_glBindBufferARB(GL_ARRAY_BUFFER, flats_vbo_id);
@@ -1322,7 +1322,7 @@ void gld_PreprocessLevel(void)
 
 void gld_ProcessTexturedMap(void)
 {
-    if (map_textured && subsectorloops && subsectorloops[0].loops == NULL)
+    if (map_textured && subsectorloops && subsectorloops[0].loops == nullptr)
     {
         triangulate_subsectors = 1;
         if (nodesVersion == 0)

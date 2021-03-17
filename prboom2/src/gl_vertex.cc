@@ -91,14 +91,14 @@ typedef struct vertexsplit_info_s
     byte validcount;
 } vertexsplit_info_t;
 
-static vertexsplit_info_t *gl_vertexsplit = NULL;
+static vertexsplit_info_t *gl_vertexsplit = nullptr;
 
 typedef struct splitsbysector_s
 {
     int numsplits;
     vertexsplit_info_t **splits;
 } splitsbysector_t;
-static splitsbysector_t *gl_splitsbysector = NULL;
+static splitsbysector_t *gl_splitsbysector = nullptr;
 
 //==========================================================================
 //
@@ -112,7 +112,7 @@ void gld_SplitLeftEdge(const GLWall *wall, dboolean detail)
 
     v = wall->seg->linedef->v1;
 
-    if (v == NULL)
+    if (v == nullptr)
         return;
 
     vi = &gl_vertexsplit[v - vertexes];
@@ -174,7 +174,7 @@ void gld_SplitRightEdge(const GLWall *wall, dboolean detail)
 
     v = wall->seg->linedef->v2;
 
-    if (v == NULL)
+    if (v == nullptr)
         return;
 
     vi = &gl_vertexsplit[v - vertexes];
@@ -474,7 +474,7 @@ void gld_CleanVertexData()
     if (gl_vertexsplit)
     {
         free(gl_vertexsplit);
-        gl_vertexsplit = NULL;
+        gl_vertexsplit = nullptr;
     }
 
     if (gl_splitsbysector)
@@ -488,6 +488,6 @@ void gld_CleanVertexData()
             }
         }
         free(gl_splitsbysector);
-        gl_splitsbysector = NULL;
+        gl_splitsbysector = nullptr;
     }
 }

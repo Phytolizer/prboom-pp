@@ -336,7 +336,7 @@ struct mobj_t
     short movecount;   // when 0, select a new dir
     short strafecount; // killough 9/8/98: monster strafing
 
-    // Thing being chased/attacked (or NULL),
+    // Thing being chased/attacked (or nullptr),
     // also the originator for missiles.
     mobj_t *target;
 

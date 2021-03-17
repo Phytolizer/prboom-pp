@@ -371,7 +371,7 @@ static player_t *plr; // the player represented by an arrow
 // killough 2/22/98: Remove limit on automap marks,
 // and make variables external for use in savegames.
 
-markpoint_t *markpoints = NULL; // where the points are
+markpoint_t *markpoints = nullptr; // where the points are
 int markpointnum = 0; // next point to be assigned (also number of points now)
 int markpointnum_max = 0; // killough 2/22/98
 

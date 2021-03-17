@@ -153,9 +153,9 @@ typedef struct
 // NB: stdin is opened as "wb", stdout, stderr as "r"
 static int my_popen3(pipeinfo_t *p)
 {
-    FILE *fin = NULL;
-    FILE *fout = NULL;
-    FILE *ferr = NULL;
+    FILE *fin = nullptr;
+    FILE *fout = nullptr;
+    FILE *ferr = nullptr;
     HANDLE child_hin = INVALID_HANDLE_VALUE;
     HANDLE child_hout = INVALID_HANDLE_VALUE;
     HANDLE child_herr = INVALID_HANDLE_VALUE;
@@ -163,7 +163,7 @@ static int my_popen3(pipeinfo_t *p)
     HANDLE parent_hout = INVALID_HANDLE_VALUE;
     HANDLE parent_herr = INVALID_HANDLE_VALUE;
 
-    puser_t *puser = NULL;
+    puser_t *puser = nullptr;
 
     PROCESS_INFORMATION piProcInfo;
     STARTUPINFO siStartInfo;
@@ -180,7 +180,7 @@ static int my_popen3(pipeinfo_t *p)
 
     sa.nLength = sizeof(sa);
     sa.bInheritHandle = 1;
-    sa.lpSecurityDescriptor = NULL;
+    sa.lpSecurityDescriptor = nullptr;
     if (!CreatePipe(&child_hin, &parent_hin, &sa, 0))
         goto fail;
     if (!CreatePipe(&parent_hout, &child_hout, &sa, 0))
@@ -205,14 +205,14 @@ static int my_popen3(pipeinfo_t *p)
     siStartInfo.hStdError = child_herr;
     siStartInfo.dwFlags = STARTF_USESTDHANDLES;
 
-    if (!CreateProcess(NULL,               // application name
+    if (!CreateProcess(nullptr,               // application name
                        (LPTSTR)p->command, // command line
-                       NULL,               // process security attributes
-                       NULL,               // primary thread security attributes
+                       nullptr,               // process security attributes
+                       nullptr,               // primary thread security attributes
                        TRUE,               // handles are inherited
                        DETACHED_PROCESS,   // creation flags
-                       NULL,               // use parent's environment
-                       NULL,               // use parent's current directory
+                       nullptr,               // use parent's environment
+                       nullptr,               // use parent's current directory
                        &siStartInfo,       // STARTUPINFO pointer
                        &piProcInfo))       // receives PROCESS_INFORMATION
     {
@@ -223,11 +223,11 @@ static int my_popen3(pipeinfo_t *p)
     puser->thread = piProcInfo.hThread;
 
     // what the hell is this cast for
-    if (NULL == (fin = _fdopen(_open_osfhandle((int)parent_hin, 0), "wb")))
+    if (nullptr == (fin = _fdopen(_open_osfhandle((int)parent_hin, 0), "wb")))
         goto fail;
-    if (NULL == (fout = _fdopen(_open_osfhandle((int)parent_hout, 0), "r")))
+    if (nullptr == (fout = _fdopen(_open_osfhandle((int)parent_hout, 0), "r")))
         goto fail;
-    if (NULL == (ferr = _fdopen(_open_osfhandle((int)parent_herr, 0), "r")))
+    if (nullptr == (ferr = _fdopen(_open_osfhandle((int)parent_herr, 0), "r")))
         goto fail;
     // after fdopen(osf()), we don't need to keep track of parent handles
     // anymore fclose on the FILE struct will automatically free them
@@ -306,9 +306,9 @@ typedef struct
 
 static int my_popen3(pipeinfo_t *p)
 {
-    FILE *fin = NULL;
-    FILE *fout = NULL;
-    FILE *ferr = NULL;
+    FILE *fin = nullptr;
+    FILE *fout = nullptr;
+    FILE *ferr = nullptr;
     int child_hin = -1;
     int child_hout = -1;
     int child_herr = -1;
@@ -320,7 +320,7 @@ static int my_popen3(pipeinfo_t *p)
 
     int pid;
 
-    puser_t *puser = NULL;
+    puser_t *puser = nullptr;
 
     puser = malloc<puser_t *>(sizeof(puser_t));
     if (!puser)
@@ -356,16 +356,16 @@ static int my_popen3(pipeinfo_t *p)
 
         // does this work? otherwise we have to parse cmd into an **argv style
         // array
-        execl("/bin/sh", "sh", "-c", p->command, NULL);
+        execl("/bin/sh", "sh", "-c", p->command, nullptr);
         // exit forked process if command failed
         _exit(0);
     }
 
-    if (NULL == (fin = fdopen(parent_hin, "wb")))
+    if (nullptr == (fin = fdopen(parent_hin, "wb")))
         goto fail;
-    if (NULL == (fout = fdopen(parent_hout, "r")))
+    if (nullptr == (fout = fdopen(parent_hout, "r")))
         goto fail;
-    if (NULL == (ferr = fdopen(parent_herr, "r")))
+    if (nullptr == (ferr = fdopen(parent_herr, "r")))
         goto fail;
 
     close(child_hin);
