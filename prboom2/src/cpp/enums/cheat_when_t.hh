@@ -3,14 +3,14 @@
 #include "../smart_enum.hh"
 namespace cheat_when_t
 {
-class Type final : public SmartEnum<short, Type>
+class Type final : public SmartEnum<uint8_t, Type>
 {
   public:
-    explicit constexpr Type(short value) : SmartEnum<short, Type>(value)
+    explicit constexpr Type(uint8_t value) : SmartEnum<uint8_t, Type>(value)
     {
     }
-    constexpr Type(SmartEnum<short, Type> value)
-        : SmartEnum<short, Type>(value.value())
+    constexpr Type(SmartEnum<uint8_t, Type> value)
+        : SmartEnum<uint8_t, Type>(value.value())
     {
     }
 };

@@ -52,7 +52,7 @@ static int pm_init(int samplerate)
 }
 
 const music_player_t pm_player = {pm_name, pm_init, nullptr, NULL, NULL, NULL,
-                                  nullptr,    NULL,    NULL, NULL, NULL};
+                                  nullptr, NULL,    NULL,    NULL, NULL};
 
 #else // HAVE_LIBPORTMIDI
 
@@ -101,11 +101,13 @@ static int sysexbufflen;
 
 void pm_stop(void);
 
-static void writeevent(unsigned long when, int eve, int channel, int v1, int v2)
+static void writeevent(unsigned long when, midi_event_type_t::Type eve,
+                       int channel, int v1, int v2)
 {
     PmMessage m;
 
-    m = Pm_Message(eve | channel, v1, v2);
+    // FIXME
+    m = Pm_Message(eve.value() | channel, v1, v2);
     Pm_WriteShort(pm_stream, when, m);
 }
 
@@ -125,7 +127,7 @@ static int channelvol[16];
 static void pm_setchvolume(int ch, int v, unsigned long when)
 {
     channelvol[ch] = v;
-    writeevent(when, MIDI_EVENT_CONTROLLER, ch, 7,
+    writeevent(when, midi_event_type_t::CONTROLLER, ch, 7,
                channelvol[ch] * pm_volume / 15);
 }
 
@@ -135,7 +137,7 @@ static void pm_refreshvolume(void)
     unsigned long when = Pt_Time();
 
     for (i = 0; i < 16; i++)
-        writeevent(when, MIDI_EVENT_CONTROLLER, i, 7,
+        writeevent(when, midi_event_type_t::CONTROLLER, i, 7,
                    channelvol[i] * pm_volume / 15);
 }
 
@@ -146,8 +148,7 @@ static void pm_clearchvolume(void)
         channelvol[i] = 127; // default: max
 }
 
-static void writesysex(unsigned long when, int etype, unsigned char *data,
-                       int len)
+static void writesysex(unsigned long when, unsigned char *data, int len)
 {
     // sysex code is untested
     // it's possible to use an auto-resizing buffer here, but a malformed
@@ -178,19 +179,26 @@ void pm_stop(void)
     // songs can be stopped at any time, so reset everything
     for (i = 0; i < 16; i++)
     {
-        writeevent(when, MIDI_EVENT_CONTROLLER, i, 123, 0); // all notes off
-        writeevent(when, MIDI_EVENT_CONTROLLER, i, 121,
+        writeevent(when, midi_event_type_t::CONTROLLER, i, 123,
+                   0); // all notes off
+        writeevent(when, midi_event_type_t::CONTROLLER, i, 121,
                    0); // reset all parameters
 
         // RPN sequence to adjust pitch bend range (RPN value 0x0000)
-        writeevent(when, MIDI_EVENT_CONTROLLER, i, 0x65, 0x00);
-        writeevent(when, MIDI_EVENT_CONTROLLER, i, 0x64, 0x00);
+        writeevent(when, midi_event_type_t::CONTROLLER, i, 0x65,
+                   0x00);
+        writeevent(when, midi_event_type_t::CONTROLLER, i, 0x64,
+                   0x00);
         // reset pitch bend range to central tuning +/- 2 semitones and 0 cents
-        writeevent(when, MIDI_EVENT_CONTROLLER, i, 0x06, 0x02);
-        writeevent(when, MIDI_EVENT_CONTROLLER, i, 0x26, 0x00);
+        writeevent(when, midi_event_type_t::CONTROLLER, i, 0x06,
+                   0x02);
+        writeevent(when, midi_event_type_t::CONTROLLER, i, 0x26,
+                   0x00);
         // end of RPN sequence
-        writeevent(when, MIDI_EVENT_CONTROLLER, i, 0x64, 0x7f);
-        writeevent(when, MIDI_EVENT_CONTROLLER, i, 0x65, 0x7f);
+        writeevent(when, midi_event_type_t::CONTROLLER, i, 0x64,
+                   0x7f);
+        writeevent(when, midi_event_type_t::CONTROLLER, i, 0x65,
+                   0x7f);
     }
     // abort any partial sysex
     sysexbufflen = 0;
@@ -236,18 +244,20 @@ void pm_render(void *vdest, unsigned int bufflen)
 
         // process event
         when = trackstart + sampleswritten;
-        switch (currevent->event_type)
+        switch (currevent->event_type.value())
         {
-        case MIDI_EVENT_SYSEX:
-        case MIDI_EVENT_SYSEX_SPLIT:
-            writesysex(when, currevent->event_type, currevent->data.sysex.data,
+        case midi_event_type_t::SYSEX.value():
+        case midi_event_type_t::SYSEX_SPLIT.value():
+            writesysex(when, currevent->data.sysex.data,
                        currevent->data.sysex.length);
             break;
-        case MIDI_EVENT_META: // tempo is the only meta message we're interested
-                              // in
-            if (currevent->data.meta.type == MIDI_META_SET_TEMPO)
+        case midi_event_type_t::META.value(): // tempo is the only meta message we're interested
+                      // in
+            if (currevent->data.meta.type ==
+                midi_meta_event_type_t::MIDI_META_SET_TEMPO)
                 spmc = MIDI_spmc(midifile, currevent, 1000);
-            else if (currevent->data.meta.type == MIDI_META_END_OF_TRACK)
+            else if (currevent->data.meta.type ==
+                     midi_meta_event_type_t::MIDI_META_END_OF_TRACK)
             {
                 if (pm_looping)
                 {
@@ -257,7 +267,9 @@ void pm_render(void *vdest, unsigned int bufflen)
                     // fix buggy songs that forget to terminate notes held over
                     // loop point sdl_mixer does this as well
                     for (i = 0; i < 16; i++)
-                        writeevent(when, MIDI_EVENT_CONTROLLER, i, 123,
+                        writeevent(when,
+                                   midi_event_type_t::CONTROLLER, i,
+                                   123,
                                    0); // all notes off
                     continue;
                 }
@@ -266,7 +278,7 @@ void pm_render(void *vdest, unsigned int bufflen)
                 return;
             }
             break; // not interested in most metas
-        case MIDI_EVENT_CONTROLLER:
+        case midi_event_type_t::CONTROLLER.value():
             if (currevent->data.channel.param1 == 7)
             { // volume event
 #ifdef _WIN32
@@ -286,7 +298,7 @@ void pm_render(void *vdest, unsigned int bufflen)
         }
         // if the event was a "reset all controllers", we need to additionally
         // re-fix the volume (which itself was reset)
-        if (currevent->event_type == MIDI_EVENT_CONTROLLER &&
+        if (currevent->event_type == midi_event_type_t::CONTROLLER &&
             currevent->data.channel.param1 == 121)
             pm_setchvolume(currevent->data.channel.channel, 127, when);
 
@@ -340,7 +352,7 @@ void pm_pause(void)
     pm_paused = 1;
     for (i = 0; i < 16; i++)
     {
-        writeevent(when, MIDI_EVENT_CONTROLLER, i, 123, 0); // all notes off
+        writeevent(when, midi_event_type_t::CONTROLLER, i, 123, 0); // all notes off
     }
 }
 void pm_setvolume(int v)
@@ -484,8 +496,8 @@ int pm_init(int samplerate)
     lprintf(LO_INFO, "portmidiplayer: Opening device %s:%s for output\n",
             oinfo->interf, oinfo->name);
 
-    if (Pm_OpenOutput(&pm_stream, outputdevice, nullptr, DRIVER_BUFFER, NULL, NULL,
-                      DRIVER_LATENCY) != pmNoError)
+    if (Pm_OpenOutput(&pm_stream, outputdevice, nullptr, DRIVER_BUFFER, nullptr,
+                      nullptr, DRIVER_LATENCY) != pmNoError)
     {
         lprintf(LO_WARN, "portmidiplayer: Pm_OpenOutput () failed\n");
         Pm_Terminate();

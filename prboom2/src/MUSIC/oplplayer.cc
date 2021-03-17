@@ -1529,7 +1529,7 @@ static void SetChannelVolume(opl_channel_data_t *channel, unsigned int volume)
 
 static void ControllerEvent(opl_track_data_t *track, midi_event_t *event)
 {
-    unsigned int controller;
+    midi_controller_t::Type controller{0};
     unsigned int param;
     opl_channel_data_t *channel;
 
@@ -1541,12 +1541,12 @@ static void ControllerEvent(opl_track_data_t *track, midi_event_t *event)
     */
 
     channel = &track->channels[event->data.channel.channel];
-    controller = event->data.channel.param1;
+    controller = midi_controller_t::Type{event->data.channel.param1};
     param = event->data.channel.param2;
 
-    switch (controller)
+    switch (controller.value())
     {
-    case MIDI_CONTROLLER_MAIN_VOLUME:
+    case midi_controller_t::MIDI_CONTROLLER_MAIN_VOLUME.value():
         SetChannelVolume(channel, param);
         break;
 
@@ -1586,25 +1586,25 @@ static void PitchBendEvent(opl_track_data_t *track, midi_event_t *event)
 
 static void MetaEvent(opl_track_data_t *track, midi_event_t *event)
 {
-    switch (event->data.meta.type)
+    switch (event->data.meta.type.value())
     {
         // Things we can just ignore.
 
-    case MIDI_META_SEQUENCE_NUMBER:
-    case MIDI_META_TEXT:
-    case MIDI_META_COPYRIGHT:
-    case MIDI_META_TRACK_NAME:
-    case MIDI_META_INSTR_NAME:
-    case MIDI_META_LYRICS:
-    case MIDI_META_MARKER:
-    case MIDI_META_CUE_POINT:
-    case MIDI_META_SEQUENCER_SPECIFIC:
+    case midi_meta_event_type_t::MIDI_META_SEQUENCE_NUMBER.value():
+    case midi_meta_event_type_t::MIDI_META_TEXT.value():
+    case midi_meta_event_type_t::MIDI_META_COPYRIGHT.value():
+    case midi_meta_event_type_t::MIDI_META_TRACK_NAME.value():
+    case midi_meta_event_type_t::MIDI_META_INSTR_NAME.value():
+    case midi_meta_event_type_t::MIDI_META_LYRICS.value():
+    case midi_meta_event_type_t::MIDI_META_MARKER.value():
+    case midi_meta_event_type_t::MIDI_META_CUE_POINT.value():
+    case midi_meta_event_type_t::MIDI_META_SEQUENCER_SPECIFIC.value():
         break;
 
         // End of track - actually handled when we run out of events
         // in the track, see below.
 
-    case MIDI_META_END_OF_TRACK:
+    case midi_meta_event_type_t::MIDI_META_END_OF_TRACK.value():
         break;
 
     default:
@@ -1620,36 +1620,36 @@ static void MetaEvent(opl_track_data_t *track, midi_event_t *event)
 
 static void ProcessEvent(opl_track_data_t *track, midi_event_t *event)
 {
-    switch (event->event_type)
+    switch (event->event_type.value())
     {
-    case MIDI_EVENT_NOTE_OFF:
+    case midi_event_type_t::NOTE_OFF.value():
         KeyOffEvent(track, event);
         break;
 
-    case MIDI_EVENT_NOTE_ON:
+    case midi_event_type_t::NOTE_ON.value():
         KeyOnEvent(track, event);
         break;
 
-    case MIDI_EVENT_CONTROLLER:
+    case midi_event_type_t::CONTROLLER.value():
         ControllerEvent(track, event);
         break;
 
-    case MIDI_EVENT_PROGRAM_CHANGE:
+    case midi_event_type_t::PROGRAM_CHANGE.value():
         ProgramChangeEvent(track, event);
         break;
 
-    case MIDI_EVENT_PITCH_BEND:
+    case midi_event_type_t::PITCH_BEND.value():
         PitchBendEvent(track, event);
         break;
 
-    case MIDI_EVENT_META:
+    case midi_event_type_t::META.value():
         MetaEvent(track, event);
         break;
 
         // SysEx events can be ignored.
 
-    case MIDI_EVENT_SYSEX:
-    case MIDI_EVENT_SYSEX_SPLIT:
+    case midi_event_type_t::SYSEX.value():
+    case midi_event_type_t::SYSEX_SPLIT.value():
         break;
 
     default:
@@ -1707,8 +1707,8 @@ static void TrackTimerCallback(void *arg)
 
     // End of track?
 
-    if (event->event_type == MIDI_EVENT_META &&
-        event->data.meta.type == MIDI_META_END_OF_TRACK)
+    if (event->event_type == midi_event_type_t::META &&
+        event->data.meta.type == midi_meta_event_type_t::MIDI_META_END_OF_TRACK)
     {
         --running_tracks;
 

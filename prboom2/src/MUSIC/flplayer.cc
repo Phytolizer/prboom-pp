@@ -48,12 +48,12 @@ static int fl_init(int samplerate)
 }
 
 const music_player_t fl_player = {fl_name, fl_init, nullptr, NULL, NULL, NULL,
-                                  nullptr,    NULL,    NULL, NULL, NULL};
+                                  nullptr, NULL,    NULL,    NULL, NULL};
 
 #else // HAVE_LIBFLUIDSYNTH
 
 #include <fluidsynth.h>
-#include "i_sound.hh"  // for snd_soundfont, mus_fluidsynth_gain
+#include "i_sound.hh" // for snd_soundfont, mus_fluidsynth_gain
 #include "i_system.hh" // for I_FindFile()
 #include "lprintf.hh"
 #include "midifile.hh"
@@ -352,7 +352,7 @@ static void writesysex(unsigned char *data, int len)
     if (sysexbuff[sysexbufflen - 1] == 0xf7) // terminator
     { // pass len-1 because fluidsynth does NOT want the final F7
         fluid_synth_sysex(f_syn, (const char *)sysexbuff, sysexbufflen - 1,
-                          nullptr, NULL, &didrespond, 0);
+                          nullptr, nullptr, &didrespond, 0);
         sysexbufflen = 0;
     }
     if (!didrespond)
@@ -404,47 +404,49 @@ void fl_render(void *vdest, unsigned length)
         }
 
         // process event
-        switch (currevent->event_type)
+        switch (currevent->event_type.value())
         {
-        case MIDI_EVENT_NOTE_OFF:
+        case midi_event_type_t::NOTE_OFF.value():
             fluid_synth_noteoff(f_syn, currevent->data.channel.channel,
                                 currevent->data.channel.param1);
             break;
-        case MIDI_EVENT_NOTE_ON:
+        case midi_event_type_t::NOTE_ON.value():
             fluid_synth_noteon(f_syn, currevent->data.channel.channel,
                                currevent->data.channel.param1,
                                currevent->data.channel.param2);
             break;
-        case MIDI_EVENT_AFTERTOUCH:
+        case midi_event_type_t::AFTERTOUCH.value():
             // not suipported?
             break;
-        case MIDI_EVENT_CONTROLLER:
+        case midi_event_type_t::CONTROLLER.value():
             fluid_synth_cc(f_syn, currevent->data.channel.channel,
                            currevent->data.channel.param1,
                            currevent->data.channel.param2);
             break;
-        case MIDI_EVENT_PROGRAM_CHANGE:
+        case midi_event_type_t::PROGRAM_CHANGE.value():
             fluid_synth_program_change(f_syn, currevent->data.channel.channel,
                                        currevent->data.channel.param1);
             break;
-        case MIDI_EVENT_CHAN_AFTERTOUCH:
+        case midi_event_type_t::CHAN_AFTERTOUCH.value():
             fluid_synth_channel_pressure(f_syn, currevent->data.channel.channel,
                                          currevent->data.channel.param1);
             break;
-        case MIDI_EVENT_PITCH_BEND:
+        case midi_event_type_t::PITCH_BEND.value():
             fluid_synth_pitch_bend(f_syn, currevent->data.channel.channel,
                                    currevent->data.channel.param1 |
                                        currevent->data.channel.param2 << 7);
             break;
-        case MIDI_EVENT_SYSEX:
-        case MIDI_EVENT_SYSEX_SPLIT:
+        case midi_event_type_t::SYSEX.value():
+        case midi_event_type_t::SYSEX_SPLIT.value():
             writesysex(currevent->data.sysex.data,
                        currevent->data.sysex.length);
             break;
-        case MIDI_EVENT_META:
-            if (currevent->data.meta.type == MIDI_META_SET_TEMPO)
+        case midi_event_type_t::META.value():
+            if (currevent->data.meta.type ==
+                midi_meta_event_type_t::MIDI_META_SET_TEMPO)
                 spmc = MIDI_spmc(midifile, currevent, f_soundrate);
-            else if (currevent->data.meta.type == MIDI_META_END_OF_TRACK)
+            else if (currevent->data.meta.type ==
+                     midi_meta_event_type_t::MIDI_META_END_OF_TRACK)
             {
                 if (f_looping)
                 {
