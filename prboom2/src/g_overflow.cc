@@ -183,9 +183,9 @@ void InterceptsOverrun(int num_intercepts, intercept_t *intercept)
 // it detects and emulates overflows on vex6d.wad\bug_wald(toke).lmp, etc.
 // http://www.doom2.net/doom2/research/runningbody.zip
 
-int PlayeringameOverrun(const mapthing_t *mthing)
+int PlayeringameOverrun(const mapthing_t &mthing)
 {
-    if (mthing->type == 0 && PROCESS(OVERFLOW_PLYERINGAME))
+    if (mthing.type == 0 && PROCESS(OVERFLOW_PLYERINGAME))
     {
         // playeringame[-1] == players[3].didsecret
         ShowOverflowWarning(OVERFLOW_PLYERINGAME, (players + 3)->didsecret, "");

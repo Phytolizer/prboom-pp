@@ -544,12 +544,14 @@ void gld_DrawScreenSkybox(void)
 
         if (wall->flag == GLDWF_SKYFLIP)
         {
-            fU1 = -((float)angle + SkyBox.x_offset) / (WRAPANGLE - 1);
+            fU1 = -((float)angle + static_cast<float>(SkyBox.x_offset)) /
+                  static_cast<float>(WRAPANGLE - 1);
             fU2 = fU1 + 1.0f / k;
         }
         else
         {
-            fU2 = ((float)angle + SkyBox.x_offset) / (WRAPANGLE - 1);
+            fU2 = ((float)angle + static_cast<float>(SkyBox.x_offset)) /
+                  static_cast<float>(WRAPANGLE - 1);
             fU1 = fU2 + 1.0f / k;
         }
 
@@ -668,7 +670,7 @@ static void SkyVertex(vbo_vertex_t *vbo, int r, int c)
     static fixed_t scale = 10000 << FRACBITS;
     static angle_t maxSideAngle = ANG180 / 3;
 
-    angle_t topAngle = (angle_t)(c / (float)columns * ANGLE_MAX);
+    angle_t topAngle = (angle_t)(c / (float)columns * static_cast<float>(ANGLE_MAX));
     angle_t sideAngle = maxSideAngle * (rows - r) / rows;
     fixed_t height = finesine[sideAngle >> ANGLETOFINESHIFT];
     fixed_t realRadius =

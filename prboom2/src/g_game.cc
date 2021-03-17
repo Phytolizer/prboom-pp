@@ -1873,13 +1873,13 @@ void G_DeathMatchSpawnPlayer(int playernum)
         if (G_CheckSpot(playernum, &deathmatchstarts[i]))
         {
             deathmatchstarts[i].type = static_cast<short>(playernum + 1);
-            P_SpawnPlayer(playernum, &deathmatchstarts[i]);
+            P_SpawnPlayer(playernum, deathmatchstarts[i]);
             return;
         }
     }
 
     // no good spot, so the player will probably get stuck
-    P_SpawnPlayer(playernum, &playerstarts[playernum]);
+    P_SpawnPlayer(playernum, playerstarts[playernum]);
 }
 
 //
@@ -1908,7 +1908,7 @@ void G_DoReborn(int playernum)
 
         if (G_CheckSpot(playernum, &playerstarts[playernum]))
         {
-            P_SpawnPlayer(playernum, &playerstarts[playernum]);
+            P_SpawnPlayer(playernum, playerstarts[playernum]);
             return;
         }
 
@@ -1917,12 +1917,12 @@ void G_DoReborn(int playernum)
         {
             if (G_CheckSpot(playernum, &playerstarts[i]))
             {
-                P_SpawnPlayer(playernum, &playerstarts[i]);
+                P_SpawnPlayer(playernum, playerstarts[i]);
                 return;
             }
             // he's going to be inside something.  Too bad.
         }
-        P_SpawnPlayer(playernum, &playerstarts[playernum]);
+        P_SpawnPlayer(playernum, playerstarts[playernum]);
     }
 }
 

@@ -458,7 +458,7 @@ angle_t R_DemoEx_ReadMLook(void)
     }
 
     // mlook data must be initialised here
-    if ((mlook_lump.lump == -2))
+    if (mlook_lump.lump == -2)
     {
         if (R_DemoEx_GetVersion() < 2)
         {

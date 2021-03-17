@@ -462,6 +462,8 @@ static const char *gld_HiRes_GetInternalName(GLTexture *gltexture)
     case GLDT_PATCH:
         texname_p = lumpinfo[gltexture->index].name;
         break;
+    default:
+        break;
     }
 
     if (!texname_p)
@@ -720,6 +722,8 @@ static int gld_HiRes_GetExternalName(GLTexture *gltexture, char *img_path,
         texname_p = lumpinfo[gltexture->index].name;
     }
     break;
+    default:
+        break;
     }
 
     if (!texname_p)
@@ -824,6 +828,8 @@ static void gld_HiRes_Bind(GLTexture *gltexture, GLuint *glTexID)
         break;
     case GLDT_PATCH:
         gl_has_hires |= 4;
+        break;
+    default:
         break;
     }
 

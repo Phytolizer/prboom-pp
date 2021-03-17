@@ -306,6 +306,8 @@ unsigned char *gld_HQResize(GLTexture *gltexture, unsigned char *inputBuffer,
         scale_mode =
             static_cast<gl_hqresizemode_t>(gl_texture_hqresize_textures);
         break;
+    default:
+        break;
     }
 
     switch (scale_mode)
@@ -321,6 +323,8 @@ unsigned char *gld_HQResize(GLTexture *gltexture, unsigned char *inputBuffer,
     case hq_scale_4x:
         result = HQScaleHelper(&scale4x, 4, inputBuffer, inWidth, inHeight, &w,
                                &h, sw, sh);
+        break;
+    default:
         break;
     }
 

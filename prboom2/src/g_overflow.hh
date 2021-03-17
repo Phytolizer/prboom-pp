@@ -97,7 +97,7 @@ void InterceptsOverrun(int num_intercepts, intercept_t *intercept);
 // playeringame overrun emulation
 //
 
-int PlayeringameOverrun(const mapthing_t *mthing);
+int PlayeringameOverrun(const mapthing_t &mthing);
 
 //
 // spechit overrun emulation

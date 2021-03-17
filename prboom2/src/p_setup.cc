@@ -1561,7 +1561,7 @@ static void P_LoadThings(int lump)
         }
 
         // Do spawn all other stuff.
-        mobj = P_SpawnMapThing(&mt, i);
+        mobj = P_SpawnMapThing(mt, i);
         if (mobj && mobj->info->speed == 0)
         {
             mobjlist[mobjcount++] = mobj;

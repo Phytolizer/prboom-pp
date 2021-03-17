@@ -1549,7 +1549,7 @@ void P_RespawnSpecials(void)
 
 extern byte playernumtotrans[MAXPLAYERS];
 
-void P_SpawnPlayer(int n, const mapthing_t *mthing)
+void P_SpawnPlayer(int n, const mapthing_t &mthing)
 {
     player_t *p;
     fixed_t x;
@@ -1584,14 +1584,14 @@ void P_SpawnPlayer(int n, const mapthing_t *mthing)
     /* cph 2001/08/14 - use the options field of memorised player starts to
      * indicate whether the start really exists in the level.
      */
-    if (!mthing->options)
+    if (!mthing.options)
     {
         I_Error("P_SpawnPlayer: attempt to spawn player at unavailable start "
                 "point");
     }
 
-    x = mthing->x << FRACBITS;
-    y = mthing->y << FRACBITS;
+    x = mthing.x << FRACBITS;
+    y = mthing.y << FRACBITS;
     z = ONFLOORZ;
     mobj = P_SpawnMobj(x, y, z, static_cast<mobjtype_t>(g_mt_player));
 
@@ -1601,14 +1601,14 @@ void P_SpawnPlayer(int n, const mapthing_t *mthing)
     }
     else
     {
-        mobj->index = TracerGetPlayerStart(mthing->type - 1);
+        mobj->index = TracerGetPlayerStart(mthing.type - 1);
     }
 
     // set color translations for player sprites
 
     mobj->flags |= playernumtotrans[n] << MF_TRANSSHIFT;
 
-    mobj->angle = ANG45 * (mthing->angle / 45);
+    mobj->angle = ANG45 * (mthing.angle / 45);
     mobj->player = p;
     mobj->health = p->health;
     mobj->player->prev_viewangle = mobj->angle + viewangleoffset;
@@ -1650,7 +1650,7 @@ void P_SpawnPlayer(int n, const mapthing_t *mthing)
         playerkeys = 0;
     }
 
-    if (mthing->type - 1 == consoleplayer)
+    if (mthing.type - 1 == consoleplayer)
     {
         ST_Start(); // wake up the status bar
         HU_Start(); // wake up the heads up text
@@ -1694,7 +1694,7 @@ dboolean P_IsDoomnumAllowed(int doomnum)
 // already be in host byte order.
 //
 
-mobj_t *P_SpawnMapThing(const mapthing_t *mthing, int index)
+mobj_t *P_SpawnMapThing(const mapthing_t &mthing, int index)
 {
     int i;
     // int     bit;
@@ -1702,8 +1702,8 @@ mobj_t *P_SpawnMapThing(const mapthing_t *mthing, int index)
     fixed_t x;
     fixed_t y;
     fixed_t z;
-    int options = mthing->options; /* cph 2001/07/07 - make writable copy */
-    short thingtype = mthing->type;
+    int options = mthing.options; /* cph 2001/07/07 - make writable copy */
+    short thingtype = mthing.type;
     int iden_num = 0;
 
     // killough 2/26/98: Ignore type-0 things as NOPs
@@ -1765,7 +1765,7 @@ mobj_t *P_SpawnMapThing(const mapthing_t *mthing, int index)
                             num_deathmatchstarts * sizeof(*deathmatchstarts)));
                 deathmatch_p = deathmatchstarts + offset;
             }
-            memcpy(deathmatch_p++, mthing, sizeof(*mthing));
+            memcpy(deathmatch_p++, &mthing, sizeof(mthing));
             (deathmatch_p - 1)->options = 1;
 
             TracerAddDeathmatchStart(deathmatch_p - deathmatchstarts - 1,
@@ -1809,7 +1809,7 @@ mobj_t *P_SpawnMapThing(const mapthing_t *mthing, int index)
         }
 
         // save spots for respawning in coop games
-        playerstarts[thingtype - 1] = *mthing;
+        playerstarts[thingtype - 1] = mthing;
         /* cph 2006/07/24 - use the otherwise-unused options field to flag that
          * this start is present (so we know which elements of the array are
          * filled in, in effect). Also note that the call below to P_SpawnPlayer
@@ -1820,7 +1820,7 @@ mobj_t *P_SpawnMapThing(const mapthing_t *mthing, int index)
 
         if (!deathmatch)
         {
-            P_SpawnPlayer(thingtype - 1, &playerstarts[thingtype - 1]);
+            P_SpawnPlayer(thingtype - 1, playerstarts[thingtype - 1]);
         }
         return nullptr;
     }
@@ -1828,17 +1828,17 @@ mobj_t *P_SpawnMapThing(const mapthing_t *mthing, int index)
     if (heretic)
     {
         // Ambient sound sequences
-        if (mthing->type >= 1200 && mthing->type < 1300)
+        if (mthing.type >= 1200 && mthing.type < 1300)
         {
-            P_AddAmbientSfx(mthing->type - 1200);
+            P_AddAmbientSfx(mthing.type - 1200);
             return nullptr;
         }
 
         // Check for boss spots
-        if (mthing->type == 56) // Monster_BossSpot
+        if (mthing.type == 56) // Monster_BossSpot
         {
-            P_AddBossSpot(mthing->x << FRACBITS, mthing->y << FRACBITS,
-                          ANG45 * (mthing->angle / 45));
+            P_AddBossSpot(mthing.x << FRACBITS, mthing.y << FRACBITS,
+                          ANG45 * (mthing.angle / 45));
             return nullptr;
         }
     }
@@ -1893,7 +1893,7 @@ mobj_t *P_SpawnMapThing(const mapthing_t *mthing, int index)
     if (i == num_mobj_types)
     {
         lprintf(LO_INFO, "P_SpawnMapThing: Unknown Thing type %i at (%i, %i)\n",
-                thingtype, mthing->x, mthing->y);
+                thingtype, mthing.x, mthing.y);
         return nullptr;
     }
 
@@ -1920,8 +1920,8 @@ spawnit:
         return nullptr;
     }
 
-    x = mthing->x << FRACBITS;
-    y = mthing->y << FRACBITS;
+    x = mthing.x << FRACBITS;
+    y = mthing.y << FRACBITS;
 
     if (mobjinfo[i].flags & MF_SPAWNCEILING)
     {
@@ -1938,7 +1938,7 @@ spawnit:
 
     mobj = P_SpawnMobj(x, y, z, static_cast<mobjtype_t>(i));
     mobj->spawnpoint =
-        *mthing; // heretic_note: this is only done with totalkills++ in heretic
+        mthing; // heretic_note: this is only done with totalkills++ in heretic
     mobj->index = index; // e6y
     mobj->iden_nums = iden_num;
 
@@ -1969,7 +1969,7 @@ spawnit:
         totalitems++;
     }
 
-    mobj->angle = ANG45 * (mthing->angle / 45);
+    mobj->angle = ANG45 * (mthing.angle / 45);
     if (options & MTF_AMBUSH)
     {
         mobj->flags |= MF_AMBUSH;
@@ -1994,7 +1994,7 @@ spawnit:
         lprintf(LO_WARN,
                 "P_SpawnMapThing: solid hanging body in tall sector at "
                 "%d,%d (type=%d)\n",
-                mthing->x, mthing->y, thingtype);
+                mthing.x, mthing.y, thingtype);
     }
 
     return mobj;

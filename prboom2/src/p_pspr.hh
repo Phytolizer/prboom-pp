@@ -136,7 +136,7 @@ void P_PostChickenWeapon(player_t *player, weapontype_t weapon);
 void P_SetPsprite(player_t *player, int position, statenum_t stnum);
 void P_OpenWeapons(void);
 void P_CloseWeapons(void);
-void P_AddMaceSpot(const mapthing_t *mthing);
+void P_AddMaceSpot(const mapthing_t &mthing);
 void P_DropWeapon(player_t *player);
 void P_UpdateBeak(player_t *player, pspdef_t *psp);
 dboolean Heretic_P_CheckAmmo(player_t *player);

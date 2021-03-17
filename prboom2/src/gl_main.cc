@@ -1553,6 +1553,8 @@ static void gld_AddDrawWallItem(GLDrawItemType itemtype, void *itemdata)
                 }
             }
             break;
+        default:
+            break;
         }
     }
 

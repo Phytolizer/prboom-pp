@@ -723,6 +723,8 @@ void gld_SetTexDetail(GLTexture *gltexture)
                     gltexture->detail = &details[TAG_DETAIL_FLAT];
                 }
                 break;
+            default:
+                break;
             }
         }
 
@@ -890,6 +892,8 @@ void gld_ParseDetailItem(tag_detail_e item)
                 case TAG_DETAIL_FLAT:
                     detail.texture_num =
                         (W_CheckNumForName)(sc_String, ns_flats);
+                    break;
+                default:
                     break;
                 }
 

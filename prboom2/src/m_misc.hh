@@ -35,6 +35,8 @@
 #ifndef __M_MISC__
 #define __M_MISC__
 
+#include <cstdint>
+
 #include "doomtype.hh"
 
 #include "dsda/input.hh"
@@ -43,7 +45,7 @@
 // MISC
 //
 
-dboolean M_WriteFile(char const *name, const void *source, size_t length);
+dboolean M_WriteFile(char const *name, const void *source, std::size_t length);
 
 int M_ReadFile(char const *name, byte **buffer);
 

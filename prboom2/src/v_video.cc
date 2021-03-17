@@ -1336,6 +1336,8 @@ void V_InitMode(video_mode_t mode)
         current_videomode = VID_MODEGL;
         break;
 #endif
+    default:
+        break;
     }
     R_FilterInit();
 }
