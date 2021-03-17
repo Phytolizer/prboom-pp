@@ -1,0 +1,23 @@
+actionf_t
+{
+    #
+    @pspdef_t,mobj_t,player_t,message_thinker_t,ceiling_t,vldoor_t,plat_t,fireflicker_t,lightflash_t,strobe_t,glow_t,elevator_t,floormove_t,thinker_t,scroll_t,friction_t,pusher_t
+    fn ( ) > void v
+    fn ( mobj_t* ) > void mobj
+    fn ( player_t* pspdef_t* ) > void player
+    fn ( void* ) > void vfn
+    fn ( message_thinker_t* ) > void message_thinker
+    fn ( ceiling_t* ) > void ceiling
+    fn ( vldoor_t* ) > void vldoor
+    fn ( plat_t* ) > void plat
+    fn ( fireflicker_t* ) > void fireflicker
+    fn ( lightflash_t* ) > void lightflash
+    fn ( strobe_t* ) > void strobe
+    fn ( glow_t* ) > void glow
+    fn ( elevator_t* ) > void elevator
+    fn ( floormove_t* ) > void floormove
+    fn ( thinker_t* ) > void thinker
+    fn ( scroll_t* ) > void scroll
+    fn ( friction_t* ) > void friction
+    fn ( pusher_t* ) > void pusher
+}
