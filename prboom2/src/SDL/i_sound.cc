@@ -349,8 +349,8 @@ int I_StartSound(int id, int channel, int vol, int sep, int pitch, int priority)
         I_Error("I_StartSound: handle out of range");
 #else
         return -1;
-    }
 #endif
+    }
 
         if (snd_pcspeaker)
         {
