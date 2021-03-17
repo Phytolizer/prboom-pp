@@ -47,21 +47,24 @@ static int fl_init(int samplerate)
     return 0;
 }
 
-const music_player_t fl_player = {fl_name, fl_init, nullptr, NULL, NULL, NULL,
-                                  nullptr, NULL,    NULL,    NULL, NULL};
+const music_player_t fl_player = {fl_name, fl_init, nullptr, nullptr,
+                                  nullptr, nullptr, nullptr, nullptr,
+                                  nullptr, nullptr, nullptr};
 
 #else // HAVE_LIBFLUIDSYNTH
 
 #include <fluidsynth.h>
-#include "i_sound.hh"  // for snd_soundfont, mus_fluidsynth_gain
+#include "i_sound.hh" // for snd_soundfont, mus_fluidsynth_gain
 #include "i_system.hh" // for I_FindFile()
 #include "lprintf.hh"
 #include "midifile.hh"
+#include "fl_settings.hh"
+#include "fl_object.hh"
 #include <stdlib.h>
 #include <string.h>
 
-static fluid_settings_t *f_set;
-static fluid_synth_t *f_syn;
+static fl::FluidSynthSettings *f_set;
+static fl::FluidSynthObject *f_syn;
 static int f_font;
 static midi_event_t **events;
 static int eventpos;
@@ -128,7 +131,7 @@ int fl_init(int samplerate)
         }
     }
 
-    f_set = new_fluid_settings();
+    f_set = new fl::FluidSynthSettings;
 
 #if FLUIDSYNTH_VERSION_MAJOR == 1
 #define FSET(a, b, c)                                                          \
@@ -136,7 +139,7 @@ int fl_init(int samplerate)
     lprintf(LO_INFO, "fl_init: Couldn't set " b "\n")
 #else
 #define FSET(a, b, c)                                                          \
-    if (fluid_settings_set##a(f_set, b, c) == FLUID_FAILED)                    \
+    if (fluid_settings_set##a(f_set->get(), b, c) == FLUID_FAILED)             \
     lprintf(LO_INFO, "fl_init: Couldn't set " b "\n")
 #endif
 
@@ -178,23 +181,15 @@ int fl_init(int samplerate)
 
 #undef FSET
 
-    f_syn = new_fluid_synth(f_set);
-    if (!f_syn)
-    {
-        lprintf(LO_WARN, "fl_init: error creating fluidsynth object\n");
-        delete_fluid_settings(f_set);
-        return 0;
-    }
+    f_syn = new fl::FluidSynthObject(f_set);
 
     filename = I_FindFile2(snd_soundfont, ".sf2");
-    f_font = fluid_synth_sfload(f_syn, filename, 1);
+    f_font = fluid_synth_sfload(f_syn->get(), filename, 1);
 
     if (f_font == FLUID_FAILED)
     {
         lprintf(LO_WARN, "fl_init: error loading soundfont %s\n",
                 snd_soundfont);
-        delete_fluid_synth(f_syn);
-        delete_fluid_settings(f_set);
         return 0;
     }
 
@@ -205,15 +200,15 @@ void fl_shutdown(void)
 {
     if (f_syn)
     {
-        fluid_synth_sfunload(f_syn, f_font, 1);
-        delete_fluid_synth(f_syn);
+        fluid_synth_sfunload(f_syn->get(), f_font, 1);
+        delete f_syn;
         f_syn = nullptr;
         f_font = 0;
     }
 
     if (f_set)
     {
-        delete_fluid_settings(f_set);
+        delete f_set;
         f_set = nullptr;
     }
 }
@@ -284,8 +279,8 @@ void fl_play(const void *handle, int looping)
     f_playing = 1;
     // f_paused = 0;
     f_delta = 0.0;
-    fluid_synth_program_reset(f_syn);
-    fluid_synth_system_reset(f_syn);
+    fluid_synth_program_reset(f_syn->get());
+    fluid_synth_system_reset(f_syn->get());
 }
 
 void fl_stop(void)
@@ -295,8 +290,8 @@ void fl_stop(void)
 
     for (i = 0; i < 16; i++)
     {
-        fluid_synth_cc(f_syn, i, 123, 0); // ALL NOTES OFF
-        fluid_synth_cc(f_syn, i, 121, 0); // RESET ALL CONTROLLERS
+        fluid_synth_cc(f_syn->get(), i, 123, 0); // ALL NOTES OFF
+        fluid_synth_cc(f_syn->get(), i, 121, 0); // RESET ALL CONTROLLERS
     }
 }
 
@@ -324,7 +319,7 @@ static void fl_writesamples_ex(short *dest, int nsamp)
         fbuff_siz = nsamp * 2;
     }
 
-    fluid_synth_write_float(f_syn, nsamp, fbuff, 0, 2, fbuff, 1, 2);
+    fluid_synth_write_float(f_syn->get(), nsamp, fbuff, 0, 2, fbuff, 1, 2);
 
     for (i = 0; i < nsamp * 2; i++)
     {
@@ -361,8 +356,8 @@ static void writesysex(unsigned char *data, int len)
     sysexbufflen += len;
     if (sysexbuff[sysexbufflen - 1] == 0xf7) // terminator
     { // pass len-1 because fluidsynth does NOT want the final F7
-        fluid_synth_sysex(f_syn, (const char *)sysexbuff, sysexbufflen - 1,
-                          nullptr, nullptr, &didrespond, 0);
+        fluid_synth_sysex(f_syn->get(), (const char *)sysexbuff,
+                          sysexbufflen - 1, nullptr, nullptr, &didrespond, 0);
         sysexbufflen = 0;
     }
     if (!didrespond)
@@ -417,11 +412,11 @@ void fl_render(void *vdest, unsigned length)
         switch (currevent->event_type.value())
         {
         case midi_event_type_t::NOTE_OFF.value():
-            fluid_synth_noteoff(f_syn, currevent->data.channel.channel,
+            fluid_synth_noteoff(f_syn->get(), currevent->data.channel.channel,
                                 currevent->data.channel.param1);
             break;
         case midi_event_type_t::NOTE_ON.value():
-            fluid_synth_noteon(f_syn, currevent->data.channel.channel,
+            fluid_synth_noteon(f_syn->get(), currevent->data.channel.channel,
                                currevent->data.channel.param1,
                                currevent->data.channel.param2);
             break;
@@ -429,20 +424,23 @@ void fl_render(void *vdest, unsigned length)
             // not suipported?
             break;
         case midi_event_type_t::CONTROLLER.value():
-            fluid_synth_cc(f_syn, currevent->data.channel.channel,
+            fluid_synth_cc(f_syn->get(), currevent->data.channel.channel,
                            currevent->data.channel.param1,
                            currevent->data.channel.param2);
             break;
         case midi_event_type_t::PROGRAM_CHANGE.value():
-            fluid_synth_program_change(f_syn, currevent->data.channel.channel,
+            fluid_synth_program_change(f_syn->get(),
+                                       currevent->data.channel.channel,
                                        currevent->data.channel.param1);
             break;
         case midi_event_type_t::CHAN_AFTERTOUCH.value():
-            fluid_synth_channel_pressure(f_syn, currevent->data.channel.channel,
+            fluid_synth_channel_pressure(f_syn->get(),
+                                         currevent->data.channel.channel,
                                          currevent->data.channel.param1);
             break;
         case midi_event_type_t::PITCH_BEND.value():
-            fluid_synth_pitch_bend(f_syn, currevent->data.channel.channel,
+            fluid_synth_pitch_bend(f_syn->get(),
+                                   currevent->data.channel.channel,
                                    currevent->data.channel.param1 |
                                        currevent->data.channel.param2 << 7);
             break;
@@ -468,9 +466,10 @@ void fl_render(void *vdest, unsigned length)
                     // loop point sdl_mixer does this as well
                     for (i = 0; i < 16; i++)
                     {
-                        fluid_synth_cc(f_syn, i, 123, 0); // ALL NOTES OFF
-                        fluid_synth_cc(f_syn, i, 121,
-                                       0); // RESET ALL CONTROLLERS
+                        // ALL NOTES OFF
+                        fluid_synth_cc(f_syn->get(), i, 123, 0);
+                        // RESET ALL CONTROLLERS
+                        fluid_synth_cc(f_syn->get(), i, 121, 0);
                     }
                     continue;
                 }
@@ -506,10 +505,6 @@ void fl_render(void *vdest, unsigned length)
             f_delta -= samples; // save offset
             dest += samples * 2;
         }
-    }
-    else
-    { // huh?
-        return;
     }
 }
 
