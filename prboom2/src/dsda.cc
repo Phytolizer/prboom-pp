@@ -15,8 +15,8 @@
 //	DSDA Tools
 //
 
-#include <stdlib.h>
-#include <stdio.h>
+#include <cstdlib>
+#include <cstdio>
 
 #include "m_argv.hh"
 #include "doomstat.hh"

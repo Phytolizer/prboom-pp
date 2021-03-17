@@ -52,8 +52,8 @@ const music_player_t mp_player = {mp_name, mp_init, nullptr, NULL, NULL, NULL,
 
 #else // HAVE_LIBMAD
 
-#include <stdlib.h>
-#include <string.h>
+#include <cstdlib>
+#include <cstring>
 #include "lprintf.hh"
 
 #include <mad.h>

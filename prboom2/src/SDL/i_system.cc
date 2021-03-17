@@ -38,14 +38,14 @@
 #include <windows.h>
 #endif
 
-#include <stdio.h>
+#include <cstdio>
 
-#include <stdarg.h>
-#include <stdlib.h>
-#include <ctype.h>
-#include <time.h>
-#include <signal.h>
-#include <string.h>
+#include <cstdarg>
+#include <cstdlib>
+#include <cctype>
+#include <ctime>
+#include <csignal>
+#include <cstring>
 #ifdef _MSC_VER
 #define F_OK 0 /* Check for file existence */
 #define W_OK 2 /* Check for write permission */
@@ -70,7 +70,7 @@
 #endif
 #include <fcntl.h>
 #include <sys/stat.h>
-#include <errno.h>
+#include <cerrno>
 
 #ifndef PRBOOM_SERVER
 #include "m_argv.hh"

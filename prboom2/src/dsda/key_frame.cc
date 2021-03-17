@@ -15,7 +15,7 @@
 //	DSDA Key Frame
 //
 
-#include <time.h>
+#include <ctime>
 
 #include "doomstat.hh"
 #include "s_advsound.hh"

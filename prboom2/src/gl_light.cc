@@ -37,7 +37,7 @@
 
 #include <SDL.h>
 
-#include <math.h>
+#include <cmath>
 
 #include "doomstat.hh"
 #include "lprintf.hh"

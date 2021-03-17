@@ -37,15 +37,15 @@
 #include "config.h"
 #endif
 
-#include <stdio.h>
+#include <cstdio>
 
-#include <stdarg.h>
-#include <stdlib.h>
+#include <cstdarg>
+#include <cstdlib>
 #include <unistd.h>
 #include <sys/time.h>
-#include <ctype.h>
-#include <signal.h>
-#include <string.h>
+#include <cctype>
+#include <csignal>
+#include <cstring>
 
 #include "doomtype.hh"
 #include "m_fixed.hh"

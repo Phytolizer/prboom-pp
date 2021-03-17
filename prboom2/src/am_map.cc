@@ -36,7 +36,7 @@
 #include "config.h"
 #endif
 
-#include <math.h>
+#include <cmath>
 
 #ifdef GL_DOOM
 #include "gl_opengl.hh"

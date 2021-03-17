@@ -58,9 +58,9 @@ const music_player_t pm_player = {pm_name, pm_init, nullptr, NULL, NULL, NULL,
 
 #include <portmidi.h>
 #include <porttime.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include <cstdio>
+#include <cstdlib>
+#include <cstring>
 #include "lprintf.hh"
 #include "midifile.hh"
 #include "i_sound.hh" // for snd_mididev

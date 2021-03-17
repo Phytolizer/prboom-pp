@@ -49,7 +49,7 @@
 #include "config.h"
 #endif
 
-#include <stddef.h>
+#include <cstddef>
 #include "w_wad.hh"
 #include "tables.hh"
 

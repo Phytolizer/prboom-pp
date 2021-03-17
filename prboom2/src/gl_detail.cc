@@ -44,7 +44,7 @@
 #include <SDL_image.h>
 #endif
 
-#include <math.h>
+#include <cmath>
 
 #include "v_video.hh"
 #include "r_main.hh"

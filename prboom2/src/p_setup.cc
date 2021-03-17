@@ -32,7 +32,7 @@
  *
  *-----------------------------------------------------------------------------*/
 
-#include <math.h>
+#include <cmath>
 
 #include "doomstat.hh"
 #include "m_bbox.hh"

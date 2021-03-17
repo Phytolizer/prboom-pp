@@ -39,7 +39,7 @@
 
 #include <SDL.h>
 #include <SDL_opengl.h>
-#include <math.h>
+#include <cmath>
 #include "doomstat.hh"
 #include "v_video.hh"
 #include "gl_opengl.hh"

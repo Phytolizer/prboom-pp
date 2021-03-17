@@ -35,7 +35,7 @@
 #include "config.h"
 #endif
 
-#include <math.h>
+#include <cmath>
 #include <sys/stat.h>
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>

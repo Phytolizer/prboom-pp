@@ -31,8 +31,8 @@
 #include "SDL.h"
 #include "SDL_thread.h"
 
-#include <stdio.h>
-#include <stdlib.h>
+#include <cstdio>
+#include <cstdlib>
 #include "i_sound.hh"
 #include "i_video.hh"
 #include "lprintf.hh"

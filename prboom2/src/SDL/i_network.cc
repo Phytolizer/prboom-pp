@@ -39,14 +39,14 @@
 #ifdef HAVE_NETINET_IN_H
 #include <netinet/in.h>
 #endif
-#include <stdlib.h>
-#include <errno.h>
+#include <cstdlib>
+#include <cerrno>
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif
-#include <stdio.h>
+#include <cstdio>
 #include <fcntl.h>
-#include <string.h>
+#include <cstring>
 
 #ifdef HAVE_NET
 

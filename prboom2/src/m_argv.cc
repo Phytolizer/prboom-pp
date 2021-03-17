@@ -31,7 +31,7 @@
  *
  *-----------------------------------------------------------------------------*/
 
-#include <string.h>
+#include <cstring>
 #include <cstdlib>
 // CPhipps - include the correct header
 

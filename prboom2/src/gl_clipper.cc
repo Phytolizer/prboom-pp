@@ -69,7 +69,7 @@
  */
 
 #include <SDL_opengl.h>
-#include <math.h>
+#include <cmath>
 #include "v_video.hh"
 #include "gl_intern.hh"
 #include "r_main.hh"

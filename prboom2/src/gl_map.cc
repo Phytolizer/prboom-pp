@@ -31,7 +31,7 @@
 #include "config.h"
 #endif
 
-#include <math.h>
+#include <cmath>
 
 #include "SDL.h"
 #ifdef HAVE_LIBSDL2_IMAGE

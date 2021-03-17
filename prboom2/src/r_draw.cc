@@ -33,7 +33,7 @@
  *
  *-----------------------------------------------------------------------------*/
 
-#include <stdint.h>
+#include <cstdint>
 
 #include "doomstat.hh"
 #include "w_wad.hh"

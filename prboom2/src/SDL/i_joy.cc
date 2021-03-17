@@ -35,7 +35,7 @@
 #ifndef lint
 #endif /* lint */
 
-#include <stdlib.h>
+#include <cstdlib>
 
 #include "SDL.h"
 #include "doomdef.hh"

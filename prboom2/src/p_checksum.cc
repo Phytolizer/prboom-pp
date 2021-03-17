@@ -1,7 +1,7 @@
-#include <stdio.h>
-#include <string.h>
-#include <errno.h>
-#include <stdlib.h> /* exit(), atexit() */
+#include <cstdio>
+#include <cstring>
+#include <cerrno>
+#include <cstdlib> /* exit(), atexit() */
 
 #include "p_checksum.hh"
 #include "md5.hh"

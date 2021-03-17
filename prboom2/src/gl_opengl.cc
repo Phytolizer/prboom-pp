@@ -35,7 +35,7 @@
 #include "config.h"
 #endif
 
-#include <stdio.h>
+#include <cstdio>
 
 #include <SDL.h>
 #include "gl_opengl.hh"

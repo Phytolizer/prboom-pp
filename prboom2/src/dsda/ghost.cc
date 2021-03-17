@@ -15,7 +15,7 @@
 //	DSDA Ghost
 //
 
-#include <stdio.h>
+#include <cstdio>
 
 #include "m_argv.hh"
 #include "lprintf.hh"

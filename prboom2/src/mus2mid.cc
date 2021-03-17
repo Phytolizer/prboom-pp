@@ -27,7 +27,7 @@
 // All tabs are replaced with spaces.
 // Fixed eol style of files.
 
-#include <stdio.h>
+#include <cstdio>
 
 #include "doomtype.hh"
 #include "m_swap.hh"

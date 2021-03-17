@@ -50,7 +50,7 @@ typedef BOOL(WINAPI *SetAffinityFunc)(HANDLE hProcess, DWORD mask);
 #include <sched.h>
 #endif
 
-#include <errno.h>
+#include <cerrno>
 
 #include "TEXTSCREEN/txt_main.hh"
 
@@ -71,9 +71,9 @@ typedef BOOL(WINAPI *SetAffinityFunc)(HANDLE hProcess, DWORD mask);
 #include "r_fps.hh"
 #include "lprintf.hh"
 
-#include <signal.h>
-#include <stdio.h>
-#include <stdlib.h>
+#include <csignal>
+#include <cstdio>
+#include <cstdlib>
 
 #include "e6y.hh"
 #include "dsda.hh"

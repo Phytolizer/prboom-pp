@@ -47,8 +47,8 @@
 #ifndef CALLBACK
 #define CALLBACK
 #endif
-#include <stdio.h>
-#include <string.h>
+#include <cstdio>
+#include <cstring>
 #include <SDL.h>
 #include "doomtype.hh"
 #include "w_wad.hh"

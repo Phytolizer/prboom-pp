@@ -31,7 +31,7 @@
  *
  *-----------------------------------------------------------------------------*/
 
-#include <stdint.h>
+#include <cstdint>
 
 #include "doomstat.hh"
 #include "r_main.hh"

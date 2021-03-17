@@ -24,8 +24,8 @@
 //
 //-----------------------------------------------------------------------------
 
-#include <stdlib.h>
-#include <string.h>
+#include <cstdlib>
+#include <cstring>
 #include "lprintf.hh"
 
 #include "opl_queue.hh"

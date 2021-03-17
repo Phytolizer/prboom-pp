@@ -56,7 +56,7 @@
 #include "g_game.hh"
 #include "r_demo.hh"
 #include "r_fps.hh"
-#include <math.h>
+#include <cmath>
 #include "e6y.hh" //e6y
 #include "xs_Float.hh"
 

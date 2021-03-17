@@ -71,7 +71,7 @@
 #include "lprintf.hh"
 #include "r_patch.hh"
 #include "v_video.hh"
-#include <assert.h>
+#include <cassert>
 
 #include "dsda/palette.hh"
 

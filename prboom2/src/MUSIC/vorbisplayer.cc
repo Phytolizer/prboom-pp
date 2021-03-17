@@ -53,8 +53,8 @@ const music_player_t vorb_player = {vorb_name, vorb_init, nullptr, NULL,
 
 #else // HAVE_LIBVORBISFILE
 
-#include <stdlib.h>
-#include <string.h>
+#include <cstdlib>
+#include <cstring>
 #include "lprintf.hh"
 
 #include <vorbis/vorbisfile.h>

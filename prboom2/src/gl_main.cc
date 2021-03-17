@@ -40,7 +40,7 @@
 #include "gl_opengl.hh"
 
 
-#include <math.h>
+#include <cmath>
 #include <SDL.h>
 #include "doomtype.hh"
 #include "w_wad.hh"

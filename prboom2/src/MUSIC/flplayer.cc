@@ -60,8 +60,8 @@ const music_player_t fl_player = {fl_name, fl_init, nullptr, nullptr,
 #include "midifile.hh"
 #include "fl_settings.hh"
 #include "fl_object.hh"
-#include <stdlib.h>
-#include <string.h>
+#include <cstdlib>
+#include <cstring>
 
 static fl::FluidSynthSettings *f_set;
 static fl::FluidSynthObject *f_syn;

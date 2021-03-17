@@ -43,7 +43,7 @@
 #include <unistd.h>
 #endif
 
-#include <errno.h>
+#include <cerrno>
 #include <fcntl.h>
 
 #include "doomdef.hh"

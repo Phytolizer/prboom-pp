@@ -35,9 +35,9 @@
 #include "config.h"
 #endif
 
-#include <stdio.h>
-#include <stdarg.h>
-#include <stdint.h>
+#include <cstdio>
+#include <cstdarg>
+#include <cstdint>
 
 #include "g_overflow.hh"
 

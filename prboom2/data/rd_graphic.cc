@@ -5,10 +5,10 @@
 
 #include "config.h"
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
-#include <ctype.h>
+#include <cstdlib>
+#include <cstdio>
+#include <cstring>
+#include <cctype>
 
 #include "rd_util.hh"
 #include "rd_palette.hh"

@@ -37,8 +37,8 @@
 #include "config.h"
 #endif
 
-#include <stdio.h>
-#include <errno.h>
+#include <cstdio>
+#include <cerrno>
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif

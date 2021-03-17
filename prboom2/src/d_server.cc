@@ -37,17 +37,17 @@
 #include "config.h"
 #endif
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <time.h>
-#include <limits.h>
-#include <string.h>
+#include <cstdio>
+#include <cstdlib>
+#include <ctime>
+#include <climits>
+#include <cstring>
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif
-#include <stdarg.h>
+#include <cstdarg>
 #include <fcntl.h>
-#include <signal.h>
+#include <csignal>
 #include <sys/types.h>
 
 #ifdef USE_SDL_NET

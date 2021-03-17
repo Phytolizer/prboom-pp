@@ -43,12 +43,12 @@
 #ifdef GL_DOOM
 #include <SDL_opengl.h>
 #endif
-#include <string.h>
-#include <math.h>
+#include <cstring>
+#include <cmath>
 
-#include <stdio.h>
-#include <stdarg.h>
-#include <stdlib.h>
+#include <cstdio>
+#include <cstdarg>
+#include <cstdlib>
 
 #include "SDL.h"
 #ifdef _WIN32

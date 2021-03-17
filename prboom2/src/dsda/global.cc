@@ -15,8 +15,8 @@
 //	DSDA Global - define top level globals for doom vs heretic
 //
 
-#include <stdlib.h>
-#include <string.h>
+#include <cstdlib>
+#include <cstring>
 
 #include "m_argv.hh"
 #include "info.hh"

@@ -61,7 +61,7 @@ const music_player_t db_player = {db_name, db_init, nullptr, NULL, NULL, NULL,
 #endif
 
 #include <dumb.h>
-#include <string.h>
+#include <cstring>
 #include "lprintf.hh"
 
 static float db_delta;

@@ -15,8 +15,8 @@
 //	DSDA Input
 //
 
-#include <string.h>
-#include <stdlib.h>
+#include <cstring>
+#include <cstdlib>
 
 #include "input.hh"
 

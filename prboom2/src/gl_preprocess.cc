@@ -41,7 +41,7 @@
 #define CALLBACK
 #endif
 
-#include <math.h>
+#include <cmath>
 
 #include "gl_opengl.hh"
 
