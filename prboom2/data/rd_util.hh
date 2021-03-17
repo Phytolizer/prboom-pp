@@ -20,7 +20,9 @@
 #define SHORT(x) ((((x)&0x00FF) << 8) + (((x)&0xFF00) >> 8))
 #endif
 #else
+#define ULONG(x) static_cast<unsigned long>(x)
 #define LONG(x) static_cast<long>(x)
+#define USHORT(x) static_cast<unsigned short>(x)
 #define SHORT(x) static_cast<short>(x)
 #endif
 

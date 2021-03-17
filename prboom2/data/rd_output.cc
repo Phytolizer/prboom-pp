@@ -94,8 +94,6 @@ void output_add(const char *filename, const void *data, size_t size)
 // write a uint32_t, byteswapping if necessary
 static void write_u32(FILE *f, unsigned int n)
 {
-    n = LONG(n);
-
     fwrite(&n, 4, 1, f);
 }
 
@@ -149,7 +147,7 @@ void output_write(const char *filename)
     for (i = numlumps, lump = dir; i; i--, lump++)
     {
         write_u32(out, lump->offset);
-        write_u32(out, lump->size);
+        write_u32(out, static_cast<uint32_t>(lump->size));
         write_ch8(out, lump->name);
     }
 
