@@ -180,7 +180,8 @@ dboolean P_SightTraverseIntercepts(void)
 {
     int count;
     fixed_t dist;
-    intercept_t *scan, *in;
+    intercept_t *scan = nullptr;
+    intercept_t *in = nullptr;
     divline_t dl;
 
     count = intercept_p - intercepts;
@@ -196,7 +197,6 @@ dboolean P_SightTraverseIntercepts(void)
     //
     // go through in order
     //
-    in = nullptr; // shut up compiler warning
 
     while (count--)
     {

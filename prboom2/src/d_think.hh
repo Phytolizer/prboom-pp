@@ -55,15 +55,6 @@ typedef void (*actionf_p2)(void *, void *);
 /* Note: In d_deh.c you will find references to these
  * wherever code pointers and function handlers exist
  */
-/*
-typedef union
-{
-  actionf_p1    acp1;
-  actionf_v     acv;
-  actionf_p2    acp2;
-
-} thinker::types::ActionFunction;
-*/
 
 /* Historically, "think_t" is yet another
  *  function pointer to a routine to handle
