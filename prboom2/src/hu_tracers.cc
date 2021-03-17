@@ -35,6 +35,8 @@
 #include "config.h"
 #endif
 
+#include <vector>
+
 #include "doomdef.hh"
 #include "doomstat.hh"
 #include "m_argv.hh"
@@ -241,20 +243,14 @@ typedef struct
     int index;
 } PACKEDATTR tracer_mapthing_t;
 
-static tracer_mapthing_t *deathmatchstarts_indexes = nullptr;
+static std::vector<tracer_mapthing_t> deathmatchstarts_indexes;
 static tracer_mapthing_t playerstarts_indexes[MAXPLAYERS];
-int num_deathmatchstarts_indexes = 0;
 
 void TracerAddDeathmatchStart(int num, int index)
 {
-    if (num >= num_deathmatchstarts_indexes)
+    if (num >= deathmatchstarts_indexes.size())
     {
-        num_deathmatchstarts_indexes = num + 1;
-
-        deathmatchstarts_indexes = static_cast<tracer_mapthing_t *>(
-            std::realloc(deathmatchstarts_indexes,
-                         num_deathmatchstarts_indexes *
-                             sizeof(deathmatchstarts_indexes[0])));
+        deathmatchstarts_indexes.resize(num + 1);
     }
 
     deathmatchstarts_indexes[num].index = index;
@@ -280,7 +276,7 @@ void TracerAddPlayerStart(int num, int index)
 
 int TracerGetDeathmatchStart(int index)
 {
-    if (index >= num_deathmatchstarts_indexes)
+    if (index >= deathmatchstarts_indexes.size())
         I_Error("TracerGetDeathmatchStart: index out of bounds");
 
     return deathmatchstarts_indexes[index].index;
@@ -301,12 +297,5 @@ void TracerClearStarts(void)
     for (i = 0; i < MAXPLAYERS; i++)
     {
         playerstarts_indexes[i].index = 0;
-    }
-
-    num_deathmatchstarts_indexes = 0;
-    if (deathmatchstarts_indexes)
-    {
-        free(deathmatchstarts_indexes);
-        deathmatchstarts_indexes = nullptr;
     }
 }
