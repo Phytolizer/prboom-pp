@@ -178,7 +178,7 @@ def finish_namespace(union, namespace):
 
 if __name__ == '__main__':
     with open("unions.data") as unions_data:
-        words = unions_data.read().split()
+        lines = unions_data.readlines()
 
     if exists("unions"):
         for f in listdir("unions"):
@@ -191,11 +191,20 @@ if __name__ == '__main__':
     union = Union()
     field = UnionField()
     fn = FunctionType()
+    words = []
     while True:
+        if len(words) == 0:
+            print("Grabbing next line...")
+            if len(lines) == 0:
+                print("No more lines.")
+                break
+            line = lines.pop(0)
+            words = list(map(lambda w: w.strip(), line.split()))
+            print(f"Words: {words}")
         try:
             word = words.pop(0)
         except IndexError:
-            break
+            continue
         if state == State.Name:
             union.reset()
             union.name = word
@@ -246,7 +255,9 @@ if __name__ == '__main__':
                 run(["clang-format", "-i", f"unions/{union.name}.hh"])
                 state = State.Name
             else:
-                field.ty = word
+                id = words.pop()
+                field.ty = ' '.join(w for sl in [[word], words] for w in sl)
+                words = [id]
                 print(f"Field type is '{field.ty}'")
                 state = State.FieldName
         elif state == State.FnOpenParen:
