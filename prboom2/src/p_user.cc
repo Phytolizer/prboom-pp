@@ -129,7 +129,9 @@ static void P_Bob(player_t *player, angle_t angle, fixed_t move)
 {
     // e6y
     if (!mbf_features && !prboom_comp[PC_PRBOOM_FRICTION].state)
+    {
         return;
+    }
 
     player->momx += FixedMul(move, finecosine[angle >>= ANGLETOFINESHIFT]);
     player->momy += FixedMul(move, finesine[angle]);
@@ -193,12 +195,16 @@ void P_CalcHeight(player_t *player)
         player->mo->friction > ORIG_FRICTION) // ice?
     {
         if (player->bob > (MAXBOB >> 2))
+        {
             player->bob = MAXBOB >> 2;
+        }
     }
     else
     {
         if (player->bob > MAXBOB)
+        {
             player->bob = MAXBOB;
+        }
     }
 
     if (player->mo->flags2 & MF2_FLY && !onground)
@@ -211,7 +217,9 @@ void P_CalcHeight(player_t *player)
         player->viewz = player->mo->z + VIEWHEIGHT;
 
         if (player->viewz > player->mo->ceilingz - 4 * FRACUNIT)
+        {
             player->viewz = player->mo->ceilingz - 4 * FRACUNIT;
+        }
 
         return;
     }
@@ -235,14 +243,18 @@ void P_CalcHeight(player_t *player)
         {
             player->viewheight = VIEWHEIGHT / 2;
             if (player->deltaviewheight <= 0)
+            {
                 player->deltaviewheight = 1;
+            }
         }
 
         if (player->deltaviewheight)
         {
             player->deltaviewheight += FRACUNIT / 4;
             if (!player->deltaviewheight)
+            {
                 player->deltaviewheight = 1;
+            }
         }
     }
 
@@ -262,10 +274,14 @@ void P_CalcHeight(player_t *player)
     }
 
     if (player->viewz > player->mo->ceilingz - 4 * FRACUNIT)
+    {
         player->viewz = player->mo->ceilingz - 4 * FRACUNIT;
+    }
 
     if (heretic && player->viewz < player->mo->floorz + 4 * FRACUNIT)
+    {
         player->viewz = player->mo->floorz + 4 * FRACUNIT;
+    }
 }
 
 //
@@ -321,7 +337,9 @@ void P_MovePlayer(player_t *player)
     mobj_t *mo;
 
     if (heretic)
+    {
         return Heretic_P_MovePlayer(player);
+    }
 
     cmd = &player->cmd;
     mo = player->mo;
@@ -405,7 +423,9 @@ void P_MovePlayer(player_t *player)
             }
         }
         if (mo->state == states + S_PLAY)
+        {
             P_SetMobjState(mo, S_PLAY_RUN1);
+        }
     }
 }
 
@@ -458,10 +478,14 @@ void P_DeathThink(player_t *player)
     else
     {
         if (player->viewheight > 6 * FRACUNIT)
+        {
             player->viewheight -= FRACUNIT;
+        }
 
         if (player->viewheight < 6 * FRACUNIT)
+        {
             player->viewheight = 6 * FRACUNIT;
+        }
 
         player->deltaviewheight = 0;
 
@@ -496,15 +520,23 @@ void P_DeathThink(player_t *player)
             player->mo->angle = angle;
 
             if (player->damagecount)
+            {
                 player->damagecount--;
+            }
         }
         else if (delta < ANG180)
+        {
             player->mo->angle += ANG5;
+        }
         else
+        {
             player->mo->angle -= ANG5;
+        }
     }
     else if (player->damagecount)
+    {
         player->damagecount--;
+    }
 
     if (player->cmd.buttons & BT_USE)
     {
@@ -552,9 +584,13 @@ void P_PlayerThink(player_t *player)
 
     // killough 2/8/98, 3/21/98:
     if (player->cheats & CF_NOCLIP)
+    {
         player->mo->flags |= MF_NOCLIP;
+    }
     else
+    {
         player->mo->flags &= ~MF_NOCLIP;
+    }
 
     // chain saw run forward
 
@@ -587,9 +623,13 @@ void P_PlayerThink(player_t *player)
     //  for a bit after a teleport.
 
     if (player->mo->reactiontime)
+    {
         player->mo->reactiontime--;
+    }
     else
+    {
         P_MovePlayer(player);
+    }
 
     P_SetPitch(player);
 
@@ -599,7 +639,9 @@ void P_PlayerThink(player_t *player)
     // going to affect you, like painful floors.
 
     if (player->mo->subsector->sector->special)
+    {
         P_PlayerInSpecialSector(player);
+    }
 
     if (cmd->arti)
     { // Use an artifact
@@ -637,23 +679,30 @@ void P_PlayerThink(player_t *player)
         { // compatibility mode -- required for old demos -- killough
             // e6y
             if (!prboom_comp[PC_ALLOW_SSG_DIRECT].state)
+            {
                 newweapon = static_cast<weapontype_t>(
                     (cmd->buttons & BT_WEAPONMASK_OLD) >> BT_WEAPONSHIFT);
+            }
 
             if (newweapon == g_wp_fist && player->weaponowned[g_wp_chainsaw] &&
                 (player->readyweapon != g_wp_chainsaw ||
                  (!heretic && !player->powers[pw_strength])))
+            {
                 newweapon = static_cast<weapontype_t>(g_wp_chainsaw);
+            }
 
             if (!heretic && gamemode == commercial && newweapon == wp_shotgun &&
                 player->weaponowned[wp_supershotgun] &&
                 player->readyweapon != wp_supershotgun)
+            {
                 newweapon = wp_supershotgun;
+            }
         }
 
         // killough 2/8/98, 3/22/98 -- end of weapon selection changes
 
         if (player->weaponowned[newweapon] && newweapon != player->readyweapon)
+        {
 
             // Do not go to plasma or BFG in shareware,
             //  even if cheated.
@@ -661,7 +710,10 @@ void P_PlayerThink(player_t *player)
             // heretic_note: ignoring this...not sure it's worth worrying about
             if ((newweapon != wp_plasma && newweapon != wp_bfg) ||
                 (gamemode != shareware))
+            {
                 player->pendingweapon = newweapon;
+            }
+        }
     }
 
     // check for use
@@ -675,7 +727,9 @@ void P_PlayerThink(player_t *player)
         }
     }
     else
+    {
         player->usedown = false;
+    }
 
     // Chicken counter
     if (player->chickenTics)
@@ -698,22 +752,34 @@ void P_PlayerThink(player_t *player)
     // Strength counts up to diminish fade.
 
     if (player->powers[pw_strength])
+    {
         player->powers[pw_strength]++;
+    }
 
     // killough 1/98: Make idbeholdx toggle:
 
-    if (player->powers[pw_invulnerability] > 0) // killough
+    if (player->powers[pw_invulnerability] > 0)
+    { // killough
         player->powers[pw_invulnerability]--;
+    }
 
-    if (player->powers[pw_invisibility] > 0) // killough
+    if (player->powers[pw_invisibility] > 0)
+    { // killough
         if (!--player->powers[pw_invisibility])
+        {
             player->mo->flags &= ~MF_SHADOW;
+        }
+    }
 
-    if (player->powers[pw_infrared] > 0) // killough
+    if (player->powers[pw_infrared] > 0)
+    { // killough
         player->powers[pw_infrared]--;
+    }
 
-    if (player->powers[pw_ironfeet] > 0) // killough
+    if (player->powers[pw_ironfeet] > 0)
+    { // killough
         player->powers[pw_ironfeet]--;
+    }
 
     if (player->powers[pw_flight])
     {
@@ -754,14 +820,19 @@ void P_PlayerThink(player_t *player)
     }
 
     if (player->damagecount)
+    {
         player->damagecount--;
+    }
 
     if (player->bonuscount)
+    {
         player->bonuscount--;
+    }
 
     // Handling colormaps.
     // killough 3/20/98: reformat to terse C syntax
     if (!heretic)
+    {
         player->fixedcolormap =
             dsda_PowerPalette() &&
                     (player->powers[pw_invulnerability] > 4 * 32 ||
@@ -769,6 +840,7 @@ void P_PlayerThink(player_t *player)
                 ? INVERSECOLORMAP
                 : player->powers[pw_infrared] > 4 * 32 ||
                       player->powers[pw_infrared] & 8;
+    }
     else
     {
         if (player->powers[pw_invulnerability])
@@ -1157,16 +1229,24 @@ void Heretic_P_MovePlayer(player_t *player)
     if (player->chickenTics)
     { // Chicken speed
         if (cmd->forwardmove && (onground || player->mo->flags2 & MF2_FLY))
+        {
             P_Thrust(player, player->mo->angle, cmd->forwardmove * 2500);
+        }
         if (cmd->sidemove && (onground || player->mo->flags2 & MF2_FLY))
+        {
             P_Thrust(player, player->mo->angle - ANG90, cmd->sidemove * 2500);
+        }
     }
     else
     { // Normal speed
         if (cmd->forwardmove && (onground || player->mo->flags2 & MF2_FLY))
+        {
             P_Thrust(player, player->mo->angle, cmd->forwardmove * 2048);
+        }
         if (cmd->sidemove && (onground || player->mo->flags2 & MF2_FLY))
+        {
             P_Thrust(player, player->mo->angle - ANG90, cmd->sidemove * 2048);
+        }
     }
 
     if (cmd->forwardmove || cmd->sidemove)

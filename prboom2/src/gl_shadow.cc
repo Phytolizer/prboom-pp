@@ -96,8 +96,10 @@ void gld_InitShadows(void)
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
             if (gl_ext_texture_filter_anisotropic)
+            {
                 glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT,
                                 (GLfloat)(1 << gl_texture_filter_anisotropic));
+            }
 
             simple_shadows.loaded = true;
             simple_shadows.width = surf->w;
@@ -150,33 +152,49 @@ void gld_ProcessThingShadow(mobj_t *mo)
     GLShadow shadow;
 
     if (!simple_shadows.enable || !simple_shadows.loaded)
+    {
         return;
+    }
 
     // Should this mobj have a shadow?
     if (mo->flags & (MF_SHADOW | MF_NOBLOCKMAP | MF_NOSECTOR))
+    {
         return;
+    }
 
     if (mo->frame & FF_FULLBRIGHT)
+    {
         return;
+    }
 
     // Don't render mobj shadows on sky floors.
     if (mo->subsector->sector->floorpic == skyflatnum)
+    {
         return;
+    }
 
     if (sectorloops[sec->iSectorID].loopcount <= 0)
+    {
         return;
+    }
 
     // Is this too far?
     dist = P_AproxDistance((mo->x >> 16) - (viewx >> 16),
                            (mo->y >> 16) - (viewy >> 16));
     if (dist > simple_shadows.max_dist)
+    {
         return;
+    }
 
     // Check the height.
     if (sec->heightsec != -1)
+    {
         z = sectors[sec->heightsec].floorheight;
+    }
     else
+    {
         z = sec->floorheight;
+    }
 
     // below visible floor
     if (!paused && movement_smooth)
@@ -188,16 +206,22 @@ void gld_ProcessThingShadow(mobj_t *mo)
         fz = mo->z;
     }
     if (fz < z)
+    {
         return;
+    }
 
     height = (fz - z) / (float)FRACUNIT;
     moh = mo->height / (float)FRACUNIT;
     if (!moh)
+    {
         moh = 1;
+    }
 
     // Too high above floor.
     if (height > moh)
+    {
         return;
+    }
 
     // Calculate the strength of the shadow.
 
@@ -205,23 +229,35 @@ void gld_ProcessThingShadow(mobj_t *mo)
 
     halfmoh = moh * 0.5f;
     if (height > halfmoh)
+    {
         shadow.light *= 1 - (height - halfmoh) / (moh - halfmoh);
+    }
 
     // Can't be seen.
     if (shadow.light <= 0)
+    {
         return;
+    }
 
     if (shadow.light > 1)
+    {
         shadow.light = 1;
+    }
 
     // Calculate the radius of the shadow.
     radius = mo->info->radius >> 16;
     if (radius > mo->patch_width >> 1)
+    {
         radius = mo->patch_width >> 1;
+    }
     if (radius > simple_shadows.max_radius)
+    {
         radius = simple_shadows.max_radius;
+    }
     if (!radius)
+    {
         return;
+    }
 
     shadow.radius = radius / MAP_COEFF;
     shadow.x = -mo->x / MAP_SCALE;
@@ -241,10 +277,14 @@ void gld_RenderShadows(void)
 
     if (!simple_shadows.enable || !simple_shadows.loaded ||
         players[displayplayer].fixedcolormap)
+    {
         return;
+    }
 
     if (gld_drawinfo.num_items[GLDIT_SHADOW] <= 0)
+    {
         return;
+    }
 
     if (!gl_ztrick)
     {

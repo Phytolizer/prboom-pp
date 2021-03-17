@@ -133,14 +133,18 @@ static vertex_t *gld_FlatEdgeClipper(int *numpoints, vertex_t *points,
         // First we'll determine the side of each vertex. Points are allowed
         // to be on the line.
         for (k = 0; k < num; k++)
+        {
             sidelist[k] = gld_PointOnSide(&points[k], curclip);
+        }
 
         for (k = 0; k < num; k++)
         {
             int startIdx = k, endIdx = k + 1;
             // Check the end index.
             if (endIdx == num)
+            {
                 endIdx = 0; // Wrap-around.
+            }
             // Clipping will happen when the ends are on different sides.
             if (sidelist[startIdx] != sidelist[endIdx])
             {
@@ -153,7 +157,9 @@ static vertex_t *gld_FlatEdgeClipper(int *numpoints, vertex_t *points,
                 points = (vertex_t *)std::realloc(points,
                                                   (++num) * sizeof(vertex_t));
                 if (num >= MAX_CC_SIDES)
+                {
                     I_Error("gld_FlatEdgeClipper: Too many points in carver");
+                }
 
                 // Make room for the new vertex.
                 memmove(&points[endIdx + 1], &points[endIdx],
@@ -171,6 +177,7 @@ static vertex_t *gld_FlatEdgeClipper(int *numpoints, vertex_t *points,
 
         // Now we must discard the points that are on the wrong side.
         for (k = 0; k < num; k++)
+        {
             if (!sidelist[k])
             {
                 memmove(&points[k], &points[k + 1],
@@ -179,13 +186,16 @@ static vertex_t *gld_FlatEdgeClipper(int *numpoints, vertex_t *points,
                 num--;
                 k--;
             }
+        }
     }
     // Screen out consecutive identical points.
     for (i = 0; i < num; i++)
     {
         int previdx = i - 1;
         if (previdx < 0)
+        {
             previdx = num - 1;
+        }
         if (points[i].x == points[previdx].x &&
             points[i].y == points[previdx].y)
         {
@@ -210,7 +220,9 @@ static void gld_FlatConvexCarver(int ssidx, int num, divline_t *list)
 
     clippers = (divline_t *)std::malloc(numclippers * sizeof(divline_t));
     if (!clippers)
+    {
         return;
+    }
     for (i = 0; i < num; i++)
     {
         clippers[i].x = list[num - i - 1].x;
@@ -250,8 +262,10 @@ static void gld_FlatConvexCarver(int ssidx, int num, divline_t *list)
     if (!numedgepoints)
     {
         if (levelinfo)
+        {
             fprintf(levelinfo, "All carved away: subsector %li - sector %i\n",
                     ssec - subsectors, ssec->sector->iSectorID);
+        }
     }
     else
     {
@@ -321,7 +335,9 @@ static void gld_CarveFlats(int bspnode, int numdivlines, divline_t *divlines)
 
         if (!(subsectors[ssidx].sector->flags & SECTOR_IS_CLOSED) ||
             triangulate_subsectors)
+        {
             gld_FlatConvexCarver(ssidx, numdivlines, divlines);
+        }
         return;
     }
 
@@ -333,7 +349,9 @@ static void gld_CarveFlats(int bspnode, int numdivlines, divline_t *divlines)
 
     // Copy the previous lines.
     if (divlines)
+    {
         memcpy(childlist, divlines, numdivlines * sizeof(divline_t));
+    }
 
     dl = childlist + numdivlines;
     dl->x = nod->x;
@@ -541,7 +559,9 @@ static void gld_PrecalculateSector(int num)
     if (!lineadded)
     {
         if (levelinfo)
+        {
             fclose(levelinfo);
+        }
         return;
     }
     // init tesselator
@@ -549,7 +569,9 @@ static void gld_PrecalculateSector(int num)
     if (!tess)
     {
         if (levelinfo)
+        {
             fclose(levelinfo);
+        }
         std::free(lineadded);
         return;
     }
@@ -564,25 +586,33 @@ static void gld_PrecalculateSector(int num)
                     reinterpret_cast<_GLUfuncptr>(ntessCombine));
     gluTessCallback(tess, GLU_TESS_END, ntessEnd);
     if (levelinfo)
+    {
         fprintf(levelinfo, "sector %i, %i lines in sector\n", num,
                 sectors[num].linecount);
+    }
     // remove any line which has both sides in the same sector (i.e. Doom2 Map01
     // Sector 1)
     for (i = 0; i < sectors[num].linecount; i++)
     {
         lineadded[i] = false;
         if (sectors[num].lines[i]->sidenum[0] != NO_INDEX)
+        {
             if (sectors[num].lines[i]->sidenum[1] != NO_INDEX)
+            {
                 if (sides[sectors[num].lines[i]->sidenum[0]].sector ==
                     sides[sectors[num].lines[i]->sidenum[1]].sector)
                 {
                     lineadded[i] = true;
                     if (levelinfo)
+                    {
                         fprintf(levelinfo,
                                 "line %4i (iLineID %4i) has both sides in same "
                                 "sector (removed)\n",
                                 i, sectors[num].lines[i]->iLineID);
+                    }
                 }
+            }
+        }
     }
     // e6y
     // Remove any line which has a clone with the same vertexes and orientation
@@ -616,10 +646,14 @@ static void gld_PrecalculateSector(int num)
     maxvertexnum = 0;
     // start tesselator
     if (levelinfo)
+    {
         fprintf(levelinfo, "gluTessBeginPolygon\n");
+    }
     gluTessBeginPolygon(tess, nullptr);
     if (levelinfo)
+    {
         fprintf(levelinfo, "\tgluTessBeginContour\n");
+    }
     gluTessBeginContour(tess);
     while (linecount)
     {
@@ -628,6 +662,7 @@ static void gld_PrecalculateSector(int num)
         {
             currentline = -1;
             for (i = 0; i < sectors[num].linecount; i++)
+            {
                 if (!lineadded[i])
                 {
                     currentline = i;
@@ -638,28 +673,41 @@ static void gld_PrecalculateSector(int num)
                                    [sectors[num].lines[currentline]->sidenum[0]]
                                        .sector == &sectors[num])
                             : false)
+                    {
                         startvertex = sectors[num].lines[currentline]->v1;
+                    }
                     else
+                    {
                         startvertex = sectors[num].lines[currentline]->v2;
+                    }
                     if (levelinfo)
+                    {
                         fprintf(levelinfo, "\tNew Loop %3i\n", currentloop);
+                    }
                     if (oldline != 0)
                     {
                         if (levelinfo)
+                        {
                             fprintf(levelinfo, "\tgluTessEndContour\n");
+                        }
                         gluTessEndContour(tess);
                         //            if (levelinfo) fprintf(levelinfo,
                         //            "\tgluNextContour\n");
                         //            gluNextContour(tess, GLU_CW);
                         if (levelinfo)
+                        {
                             fprintf(levelinfo, "\tgluTessBeginContour\n");
+                        }
                         gluTessBeginContour(tess);
                     }
                     break;
                 }
+            }
         }
         if (currentline == -1)
+        {
             break;
+        }
         // add current line
         lineadded[currentline] = true;
         // check if currentsector is on the front side of the line ...
@@ -682,11 +730,13 @@ static void gld_PrecalculateSector(int num)
             //  lineangle=lineangle-360;
 
             if (levelinfo)
+            {
                 fprintf(levelinfo,
                         "\t\tAdded Line %4i to Loop, iLineID %5i, Angle: %4i, "
                         "flipped false\n",
                         currentline, sectors[num].lines[currentline]->iLineID,
                         lineangle);
+            }
         }
         else // ... or on the back side
         {
@@ -704,11 +754,13 @@ static void gld_PrecalculateSector(int num)
             //  lineangle=lineangle-360;
 
             if (levelinfo)
+            {
                 fprintf(levelinfo,
                         "\t\tAdded Line %4i to Loop, iLineID %5i, Angle: %4i, "
                         "flipped true\n",
                         currentline, sectors[num].lines[currentline]->iLineID,
                         lineangle);
+            }
         }
         if (vertexnum >= maxvertexnum)
         {
@@ -724,8 +776,10 @@ static void gld_PrecalculateSector(int num)
         // vertexlist of doom v[vertexnum] is the GLdouble array of the current
         // vertex
         if (levelinfo)
+        {
             fprintf(levelinfo, "\t\tgluTessVertex(%i, %i)\n",
                     currentvertex->x >> FRACBITS, currentvertex->y >> FRACBITS);
+        }
         gluTessVertex(tess, &v[vertexnum * 3], currentvertex);
         // increase vertexindex
         vertexnum++;
@@ -743,7 +797,9 @@ static void gld_PrecalculateSector(int num)
           backsector=nullptr;*/
         // search through all lines of the current sector
         for (i = 0; i < sectors[num].linecount; i++)
-            if (!lineadded[i]) // if the line isn't already added ...
+        {
+            if (!lineadded[i])
+            { // if the line isn't already added ...
                 // check if one of the vertexes is the same as the current
                 // vertex
                 if ((sectors[num].lines[i]->v1 == currentvertex) ||
@@ -754,15 +810,19 @@ static void gld_PrecalculateSector(int num)
                             ? (sides[sectors[num].lines[i]->sidenum[0]]
                                    .sector == &sectors[num])
                             : false)
+                    {
                         angle = R_PointToAngle2(sectors[num].lines[i]->v1->x,
                                                 sectors[num].lines[i]->v1->y,
                                                 sectors[num].lines[i]->v2->x,
                                                 sectors[num].lines[i]->v2->y);
+                    }
                     else
+                    {
                         angle = R_PointToAngle2(sectors[num].lines[i]->v2->x,
                                                 sectors[num].lines[i]->v2->y,
                                                 sectors[num].lines[i]->v1->x,
                                                 sectors[num].lines[i]->v1->y);
+                    }
                     angle = (angle >> ANGLETOFINESHIFT) * 360 / 8192;
 
                     // e6y: direction of a line shouldn't be changed
@@ -778,14 +838,18 @@ static void gld_PrecalculateSector(int num)
                         // when the line is not flipped and startvertex is not
                         // the currentvertex then skip this line
                         if (sectors[num].lines[i]->v1 != currentvertex)
+                        {
                             continue;
+                        }
                     }
                     else
                     {
                         // when the line is flipped and endvertex is not the
                         // currentvertex then skip this line
                         if (sectors[num].lines[i]->v2 != currentvertex)
+                        {
                             continue;
+                        }
                     }
                     // set new best line candidate
                     if (bestline == -1) // if this is the first one ...
@@ -808,21 +872,31 @@ static void gld_PrecalculateSector(int num)
                         bestlinecount++;
                     }
                 }
+            }
+        }
         if (bestline != -1) // if a line is found, make it the current line
         {
             currentline = bestline;
             if (bestlinecount > 1)
+            {
                 if (levelinfo)
+                {
                     fprintf(levelinfo, "\t\tBestlinecount: %4i\n",
                             bestlinecount);
+                }
+            }
         }
     }
     // let the tesselator calculate the loops
     if (levelinfo)
+    {
         fprintf(levelinfo, "\tgluTessEndContour\n");
+    }
     gluTessEndContour(tess);
     if (levelinfo)
+    {
         fprintf(levelinfo, "gluTessEndPolygon\n");
+    }
     gluTessEndPolygon(tess);
     // clean memory
     gluDeleteTess(tess);
@@ -853,7 +927,9 @@ static void gld_GetSubSectorVertices(void)
 
         if ((ssector->sector->flags & SECTOR_IS_CLOSED) &&
             !triangulate_subsectors)
+        {
             continue;
+        }
 
         numedgepoints = ssector->numlines;
 
@@ -953,7 +1029,9 @@ static void gld_MarkSectorsForClamp(void)
             // set the current loop
             currentloop = &sectorloops[i].loops[loopnum];
             if (!currentloop)
+            {
                 continue;
+            }
             for (vertexnum = currentloop->vertexindex;
                  !fail && vertexnum < (currentloop->vertexindex +
                                        currentloop->vertexcount);
@@ -963,13 +1041,21 @@ static void gld_MarkSectorsForClamp(void)
                 vbo = &flats_vbo[vertexnum];
 
                 if (vbo->u < minu)
+                {
                     minu = (float)floor(vbo->u);
+                }
                 if (vbo->v < minv)
+                {
                     minv = (float)floor(vbo->v);
+                }
                 if (vbo->u > maxu)
+                {
                     maxu = vbo->u;
+                }
                 if (vbo->v > maxv)
+                {
                     maxv = vbo->v;
+                }
 
                 fail = (maxu - minu > 1.0f || maxv - minv > 1.0f);
             }
@@ -985,7 +1071,9 @@ static void gld_MarkSectorsForClamp(void)
                 // set the current loop
                 currentloop = &sectorloops[i].loops[loopnum];
                 if (!currentloop)
+                {
                     continue;
+                }
                 for (vertexnum = currentloop->vertexindex;
                      vertexnum <
                      (currentloop->vertexindex + currentloop->vertexcount);
@@ -1026,8 +1114,10 @@ static void gld_PreprocessSectors(void)
         sectorloops =
             static_cast<GLSector *>(std::malloc(sizeof(GLSector) * numsectors));
         if (!sectorloops)
+        {
             I_Error("gld_PreprocessSectors: Not enough memory for array "
                     "sectorloops");
+        }
         memset(sectorloops, 0, sizeof(GLSector) * numsectors);
     }
 
@@ -1036,8 +1126,10 @@ static void gld_PreprocessSectors(void)
         subsectorloops = static_cast<GLMapSubsector *>(
             std::malloc(sizeof(GLMapSubsector) * numsubsectors));
         if (!subsectorloops)
+        {
             I_Error("gld_PreprocessSectors: Not enough memory for array "
                     "subsectorloops");
+        }
         memset(subsectorloops, 0, sizeof(GLMapSubsector) * numsubsectors);
     }
 
@@ -1045,8 +1137,10 @@ static void gld_PreprocessSectors(void)
     {
         segrendered = calloc<byte *>(numsegs, sizeof(byte));
         if (!segrendered)
+        {
             I_Error("gld_PreprocessSectors: Not enough memory for array "
                     "segrendered");
+        }
     }
 
     if (numlines)
@@ -1054,8 +1148,10 @@ static void gld_PreprocessSectors(void)
         linerendered[0] = calloc<byte *>(numlines, sizeof(byte));
         linerendered[1] = calloc<byte *>(numlines, sizeof(byte));
         if (!linerendered[0] || !linerendered[1])
+        {
             I_Error("gld_PreprocessSectors: Not enough memory for array "
                     "linerendered");
+        }
     }
 
     flats_vbo = nullptr;
@@ -1076,7 +1172,9 @@ static void gld_PreprocessSectors(void)
         if (!vertexcheck || !vertexcheck2)
         {
             if (levelinfo)
+            {
                 fclose(levelinfo);
+            }
             I_Error("gld_PreprocessSectors: Not enough memory for array "
                     "vertexcheck");
             return;
@@ -1094,7 +1192,9 @@ static void gld_PreprocessSectors(void)
             v2num = ((intptr_t)sectors[i].lines[j]->v2 - (intptr_t)vertexes) /
                     sizeof(vertex_t);
             if ((v1num >= numvertexes) || (v2num >= numvertexes))
+            {
                 continue;
+            }
 
             // e6y: for correct handling of missing textures.
             // We do not need to apply some algos for isolated lines.
@@ -1102,19 +1202,23 @@ static void gld_PreprocessSectors(void)
             vertexcheck2[v2num]++;
 
             if (sectors[i].lines[j]->sidenum[0] != NO_INDEX)
+            {
                 if (sides[sectors[i].lines[j]->sidenum[0]].sector ==
                     &sectors[i])
                 {
                     vertexcheck[v1num] |= 1;
                     vertexcheck[v2num] |= 2;
                 }
+            }
             if (sectors[i].lines[j]->sidenum[1] != NO_INDEX)
+            {
                 if (sides[sectors[i].lines[j]->sidenum[1]].sector ==
                     &sectors[i])
                 {
                     vertexcheck[v1num] |= 2;
                     vertexcheck[v2num] |= 1;
                 }
+            }
         }
         if (sectors[i].linecount < 3)
         {
@@ -1123,9 +1227,11 @@ static void gld_PreprocessSectors(void)
                     i, sectors[i].linecount);
 #endif
             if (levelinfo)
+            {
                 fprintf(levelinfo,
                         "sector %i is not closed! %i lines in sector\n", i,
                         sectors[i].linecount);
+            }
             sectors[i].flags &= ~SECTOR_IS_CLOSED;
         }
         else
@@ -1142,10 +1248,12 @@ static void gld_PreprocessSectors(void)
                             i, j, sectors[i].linecount);
 #endif
                     if (levelinfo)
+                    {
                         fprintf(levelinfo,
                                 "sector %i is not closed at vertex %i ! %i "
                                 "lines in sector\n",
                                 i, j, sectors[i].linecount);
+                    }
                     sectors[i].flags &= ~SECTOR_IS_CLOSED;
                 }
             }
@@ -1167,7 +1275,9 @@ static void gld_PreprocessSectors(void)
 
         // figgi -- adapted for glnodes
         if (sectors[i].flags & SECTOR_IS_CLOSED)
+        {
             gld_PrecalculateSector(i);
+        }
     }
     std::free(vertexcheck);
     std::free(vertexcheck2);
@@ -1177,15 +1287,21 @@ static void gld_PreprocessSectors(void)
     if (numnodes)
     {
         if (nodesVersion == 0)
+        {
             gld_CarveFlats(numnodes - 1, 0, nullptr);
+        }
         else
+        {
             gld_GetSubSectorVertices();
+        }
     }
 
     gld_ProcessTexturedMap();
 
     if (levelinfo)
+    {
         fclose(levelinfo);
+    }
 
     // e6y: for seamless rendering
     gld_MarkSectorsForClamp();
@@ -1326,9 +1442,13 @@ void gld_ProcessTexturedMap(void)
     {
         triangulate_subsectors = 1;
         if (nodesVersion == 0)
+        {
             gld_CarveFlats(numnodes - 1, 0, nullptr);
+        }
         else
+        {
             gld_GetSubSectorVertices();
+        }
         triangulate_subsectors = 0;
     }
 }

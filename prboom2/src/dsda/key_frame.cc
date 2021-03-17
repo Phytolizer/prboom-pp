@@ -64,10 +64,14 @@ void dsda_InitKeyFrame(void)
     dsda_auto_key_frames_size = dsda_AutoKeyFrameDepth();
 
     if (dsda_auto_key_frames_size == 0)
+    {
         return;
+    }
 
     if (dsda_auto_key_frames != nullptr)
+    {
         free(dsda_auto_key_frames);
+    }
 
     dsda_auto_key_frames = calloc<dsda_key_frame_t *>(dsda_auto_key_frames_size,
                                                       sizeof(dsda_key_frame_t));
@@ -91,7 +95,9 @@ void dsda_ExportKeyFrame(byte *buffer, int length)
     }
 
     if (!M_WriteFile(name, buffer, length))
+    {
         I_Error("dsda_ExportKeyFrame: Failed to write key frame.");
+    }
 }
 
 // Stripped down version of G_DoSaveGame
@@ -109,10 +115,14 @@ void dsda_StoreKeyFrame(byte **buffer, byte complete)
     *save_p++ = static_cast<byte>(gamemap);
 
     for (i = 0; i < MAXPLAYERS; i++)
+    {
         *save_p++ = playeringame[i];
+    }
 
     for (; i < MIN_MAXPLAYERS; i++)
+    {
         *save_p++ = 0;
+    }
 
     *save_p++ = static_cast<byte>(idmusnum);
 
@@ -160,7 +170,9 @@ void dsda_StoreKeyFrame(byte **buffer, byte complete)
     P_ArchiveMap();
 
     if (*buffer != nullptr)
+    {
         free(*buffer);
+    }
 
     length = save_p - savebuffer;
 
@@ -170,7 +182,9 @@ void dsda_StoreKeyFrame(byte **buffer, byte complete)
     if (complete)
     {
         if (demo_write_buffer_offset)
+        {
             dsda_ExportKeyFrame(*buffer, length);
+        }
 
         doom_printf("Stored key frame");
     }
@@ -197,12 +211,16 @@ void dsda_RestoreKeyFrame(byte *buffer, byte complete)
     gamemapinfo = G_LookupMapinfo(gameepisode, gamemap);
 
     for (i = 0; i < MAXPLAYERS; i++)
+    {
         playeringame[i] = *save_p++;
+    }
     save_p += MIN_MAXPLAYERS - MAXPLAYERS;
 
     idmusnum = *save_p++;
     if (idmusnum == 255)
+    {
         idmusnum = -1;
+    }
 
     save_p += (G_ReadOptions(save_p) - save_p);
 
@@ -253,12 +271,16 @@ void dsda_RestoreKeyFrame(byte *buffer, byte complete)
     R_SmoothPlaying_Reset(nullptr);
 
     if (musinfo.current_item != -1)
+    {
         S_ChangeMusInfoMusic(musinfo.current_item, true);
+    }
 
     RecalculateDrawnSubsectors();
 
     if (setsizeneeded)
+    {
         R_ExecuteSetViewSize();
+    }
 
     R_FillBackScreen();
 
@@ -272,7 +294,9 @@ void dsda_RestoreKeyFrame(byte *buffer, byte complete)
 int dsda_KeyFrameRestored(void)
 {
     if (!dsda_key_frame_restored)
+    {
         return 0;
+    }
 
     dsda_key_frame_restored = 0;
     return 1;
@@ -303,7 +327,9 @@ void dsda_RestoreKeyFrameFile(const char *name)
         free(buffer);
     }
     else
+    {
         I_Error("dsda_RestoreKeyFrameFile: cannot find %s", name);
+    }
 }
 
 void dsda_ContinueKeyFrame(void)
@@ -337,7 +363,9 @@ void dsda_RewindAutoKeyFrame(void)
 
     history_index = dsda_last_auto_key_frame - 1;
     if (history_index < 0)
+    {
         history_index = dsda_auto_key_frames_size - 1;
+    }
 
     if (dsda_auto_key_frames[history_index].index <= key_frame_index)
     {
@@ -346,7 +374,9 @@ void dsda_RewindAutoKeyFrame(void)
         dsda_RestoreKeyFrame(dsda_auto_key_frames[history_index].buffer, false);
     }
     else
+    {
         doom_printf("No key frame found"); // rewind past the depth limit
+    }
 }
 
 void dsda_UpdateAutoKeyFrames(void)
@@ -358,7 +388,9 @@ void dsda_UpdateAutoKeyFrames(void)
 
     if (dsda_auto_key_frames_size == 0 || gamestate != GS_LEVEL ||
         gameaction != ga_nothing)
+    {
         return;
+    }
 
     current_time = totalleveltimes + leveltime;
     interval_tics = 35 * dsda_AutoKeyFrameInterval();
@@ -370,11 +402,15 @@ void dsda_UpdateAutoKeyFrames(void)
 
         // Don't duplicate on rewind
         if (key_frame_index == restore_key_frame_index)
+        {
             return;
+        }
 
         dsda_last_auto_key_frame += 1;
         if (dsda_last_auto_key_frame >= dsda_auto_key_frames_size)
+        {
             dsda_last_auto_key_frame = 0;
+        }
 
         current_key_frame = &dsda_auto_key_frames[dsda_last_auto_key_frame];
         current_key_frame->index = key_frame_index;

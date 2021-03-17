@@ -107,7 +107,9 @@ void dsda_InitGhostExport(const char *name)
     dsda_ghost_export = fopen(filename, "wb");
 
     if (dsda_ghost_export == nullptr)
+    {
         I_Error("dsda_InitGhostExport: failed to open %s", name);
+    }
 
     version = DSDA_GHOST_VERSION;
     fwrite(&version, sizeof(int), 1, dsda_ghost_export);
@@ -127,18 +129,26 @@ void dsda_OpenGhostFile(int arg_i, dsda_ghost_file_t *ghost_file)
     ghost_file->fstream = fopen(filename, "rb");
 
     if (ghost_file->fstream == nullptr)
+    {
         I_Error("dsda_OpenGhostImport: failed to open %s", myargv[arg_i]);
+    }
 
     fread(&ghost_file->version, sizeof(int), 1, ghost_file->fstream);
     if (ghost_file->version < DSDA_GHOST_MIN_VERSION ||
         ghost_file->version > DSDA_GHOST_VERSION)
+    {
         I_Error("dsda_OpenGhostImport: unsupported ghost version %s",
                 myargv[arg_i]);
+    }
 
     if (ghost_file->version == 1)
+    {
         ghost_file->count = 1;
+    }
     else
+    {
         fread(&ghost_file->count, sizeof(int), 1, ghost_file->fstream);
+    }
 
     free(filename);
 }
@@ -165,7 +175,9 @@ void dsda_InitGhostImport(int option_i)
 
     arg_i = option_i;
     while (++arg_i != myargc && *myargv[arg_i] != '-')
+    {
         dsda_ghost_import.count += dsda_GhostCount(arg_i);
+    }
 
     dsda_ghost_import.ghosts =
         calloc<dsda_ghost_t *>(dsda_ghost_import.count, sizeof(dsda_ghost_t));
@@ -190,7 +202,9 @@ void dsda_ExportGhostFrame(void)
     int i;
 
     if (dsda_ghost_export == nullptr)
+    {
         return;
+    }
 
     // just write the number of players on the zeroth tic
     if (gametic == 0)
@@ -198,8 +212,12 @@ void dsda_ExportGhostFrame(void)
         int count = 0;
 
         for (i = 0; i < MAXPLAYERS; ++i)
+        {
             if (playeringame[i])
+            {
                 ++count;
+            }
+        }
 
         fwrite(&count, sizeof(int), 1, dsda_ghost_export);
 
@@ -209,12 +227,16 @@ void dsda_ExportGhostFrame(void)
     for (i = 0; i < MAXPLAYERS; ++i)
     {
         if (!playeringame[i])
+        {
             break;
+        }
 
         player = players[i].mo;
 
         if (player == nullptr)
+        {
             continue;
+        }
 
         ghost_frame.x = player->x;
         ghost_frame.y = player->y;
@@ -302,8 +324,7 @@ void dsda_SpawnGhost(void)
         dsda_ghost_import.thinker =
             static_cast<thinker_t *>(std::malloc(sizeof(thinker_t)));
         memset(dsda_ghost_import.thinker, 0, sizeof(thinker_t));
-        dsda_ghost_import.thinker->function =
-            dsda_UpdateGhosts;
+        dsda_ghost_import.thinker->function = dsda_UpdateGhosts;
         P_AddThinker(dsda_ghost_import.thinker);
     }
 }
@@ -321,13 +342,17 @@ void dsda_UpdateGhosts(void * /* _void */)
         ghost = &dsda_ghost_import.ghosts[ghost_i];
 
         if (ghost->fstream == nullptr)
+        {
             continue;
+        }
 
         mobj = ghost->mobj;
 
         // Ghost removed from map (finished map already)
         if (mobj->touching_sectorlist == nullptr)
+        {
             continue;
+        }
 
         mobj->PrevX = mobj->x;
         mobj->PrevY = mobj->y;
@@ -350,7 +375,9 @@ void dsda_UpdateGhosts(void * /* _void */)
         } while (ghost_was_behind && ghost->frame.map != gamemap);
 
         if (ghost->fstream == nullptr)
+        {
             continue;
+        }
 
         P_UnsetThingPosition(mobj);
 

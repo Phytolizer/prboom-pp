@@ -251,18 +251,26 @@ unsigned char *gld_HQResize(GLTexture *gltexture, unsigned char *inputBuffer,
     int sh = 0;
 
     if (outWidth)
+    {
         *outWidth = inWidth;
+    }
     if (outHeight)
+    {
         *outHeight = inHeight;
+    }
 
     if (!gl_texture_hqresize || !gltexture || !inputBuffer)
+    {
         return result;
+    }
 
     // [BB] Don't resample if the width or height of the input texture is bigger
     // than gl_texture_hqresize_maxinputsize.
     if ((inWidth > gl_texture_hqresize_maxinputsize) ||
         (inHeight > gl_texture_hqresize_maxinputsize))
+    {
         return result;
+    }
 
     // [BB] The hqnx upsampling (not the scaleN one) destroys partial
     // transparency, don't upsamle textures using it.
@@ -274,11 +282,15 @@ unsigned char *gld_HQResize(GLTexture *gltexture, unsigned char *inputBuffer,
     case GLDT_PATCH:
         sw = sh = 0;
         if (gltexture->flags & GLTEXTURE_SPRITE)
+        {
             scale_mode =
                 static_cast<gl_hqresizemode_t>(gl_texture_hqresize_sprites);
+        }
         else
+        {
             scale_mode =
                 static_cast<gl_hqresizemode_t>(gl_texture_hqresize_patches);
+        }
         break;
 
     case GLDT_FLAT:
@@ -318,9 +330,13 @@ unsigned char *gld_HQResize(GLTexture *gltexture, unsigned char *inputBuffer,
         gltexture->tex_height = h;
 
         if (outWidth)
+        {
             *outWidth = w;
+        }
         if (outHeight)
+        {
             *outHeight = h;
+        }
     }
 
     return result;

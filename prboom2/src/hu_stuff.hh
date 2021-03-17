@@ -109,7 +109,7 @@ struct message_thinker_t
     int plr;
     int delay;
     custom_message_t msg;
-} ;
+};
 
 typedef struct crosshair_s
 {

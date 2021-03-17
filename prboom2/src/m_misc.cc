@@ -108,16 +108,20 @@ dboolean M_WriteFile(char const *name, const void *source, size_t length)
 
     errno = 0;
 
-    if (!(fp = fopen(name, "wb"))) // Try opening file
-        return 0;                  // Could not open file for writing
+    if (!(fp = fopen(name, "wb")))
+    {             // Try opening file
+        return 0; // Could not open file for writing
+    }
 
     I_BeginRead();                                            // Disk icon on
     length = fwrite(source, 1, length, fp) == (size_t)length; // Write data
     fclose(fp);
     I_EndRead(); // Disk icon off
 
-    if (!length) // Remove partially written file
+    if (!length)
+    { // Remove partially written file
         remove(name);
+    }
 
     return length;
 }
@@ -3484,7 +3488,13 @@ default_t defaults[] = {
      default_t::def_int,
      ss_stat},
 
-    {"DSDA-Doom settings", {nullptr}, {0}, UL, UL, default_t::def_none, ss_none},
+    {"DSDA-Doom settings",
+     {nullptr},
+     {0},
+     UL,
+     UL,
+     default_t::def_none,
+     ss_none},
     {"dsda_strict_mode",
      {&dsda_strict_mode},
      {1},
@@ -4284,7 +4294,13 @@ default_t defaults[] = {
      default_t::def_str,
      ss_none},
 
-    {"Weapon preferences", {nullptr}, {0}, UL, UL, default_t::def_none, ss_none},
+    {"Weapon preferences",
+     {nullptr},
+     {0},
+     UL,
+     UL,
+     default_t::def_none,
+     ss_none},
     // killough 2/8/98: weapon preferences set by user:
     {"weapon_choice_1",
      {&weapon_preferences[0][0]},
@@ -4366,7 +4382,9 @@ void M_SaveDefaults(void)
 
     f = fopen(defaultfile, "w");
     if (!f)
+    {
         return; // can't write the file, but don't complain
+    }
 
     // get maximum config key string length
     for (i = 0; i < numdefaults; i++)
@@ -4425,8 +4443,10 @@ void M_SaveDefaults(void)
             // killough 3/6/98: use spaces instead of tabs for uniform
             // justification
             if (defaults[i].type == default_t::def_hex)
+            {
                 fprintf(f, "%-*s 0x%x\n", maxlen, defaults[i].name,
                         *(defaults[i].location.pi));
+            }
             else if (defaults[i].type == default_t::def_input)
             {
                 int a, j;
@@ -4446,19 +4466,25 @@ void M_SaveDefaults(void)
                         }
                     }
                     else
+                    {
                         fprintf(f, " 0");
+                    }
 
                     fprintf(f, " %i %i", input[a]->mouseb, input[a]->joyb);
 
                     if (a != DSDA_INPUT_PROFILE_COUNT - 1)
+                    {
                         fprintf(f, " |");
+                    }
                 }
 
                 fprintf(f, "\n");
             }
             else
+            {
                 fprintf(f, "%-*s %i\n", maxlen, defaults[i].name,
                         *(defaults[i].location.pi));
+            }
         }
         else
         {
@@ -4483,7 +4509,9 @@ struct default_s *M_LookupDefault(const char *name)
     {
         if ((defaults[i].type != default_t::def_none) &&
             !strcmp(name, defaults[i].name))
+        {
             return &defaults[i];
+        }
     }
 
     I_Error("M_LookupDefault: %s not found", name);
@@ -4521,16 +4549,22 @@ void M_LoadDefaults(void)
         {
             int c;
             for (c = 0; c < DSDA_INPUT_PROFILE_COUNT; ++c)
+            {
                 dsda_InputSetSpecific(c, defaults[i].identifier,
                                       defaults[i].input);
+            }
         }
         else
         {
             if (defaults[i].location.ppsz)
+            {
                 *defaults[i].location.ppsz =
                     strdup(defaults[i].defaultvalue.psz);
+            }
             if (defaults[i].location.pi)
+            {
                 *defaults[i].location.pi = defaults[i].defaultvalue.i;
+            }
         }
     }
 
@@ -4574,9 +4608,13 @@ void M_LoadDefaults(void)
             for (k = 0; k < item->defaultvalue.array_size; k++)
             {
                 if (item->defaultvalue.array_data[k])
+                {
                     (*arr)[k] = strdup(item->defaultvalue.array_data[k]);
+                }
                 else
+                {
                     (*arr)[k] = strdup("");
+                }
             }
         }
     }
@@ -4617,7 +4655,9 @@ void M_LoadDefaults(void)
                 // jff 3/3/98 skip lines not starting with an alphanum
 
                 if (!isalnum(def[0]))
+                {
                     continue;
+                }
 
                 if (strparm[0] == '"')
                 {
@@ -4677,6 +4717,7 @@ void M_LoadDefaults(void)
                 }
 
                 for (i = 0; i < numdefaults; i++)
+                {
                     if ((defaults[i].type != default_t::def_none) &&
                         !strcmp(def, defaults[i].name))
                     {
@@ -4723,7 +4764,9 @@ void M_LoadDefaults(void)
                                                    keys, &mouseb, &joyb);
 
                                     if (count != 3)
+                                    {
                                         break;
+                                    }
 
                                     dsda_InputResetSpecific(
                                         index, defaults[i].identifier);
@@ -4739,7 +4782,9 @@ void M_LoadDefaults(void)
                                         count = sscanf(key_scan_p, "%d,", &key);
 
                                         if (count != 1)
+                                        {
                                             break;
+                                        }
 
                                         dsda_InputAddSpecificKey(
                                             index, defaults[i].identifier, key);
@@ -4750,7 +4795,9 @@ void M_LoadDefaults(void)
                                     index++;
                                     config_scan_p = strchr(config_scan_p, '|');
                                     if (config_scan_p)
+                                    {
                                         config_scan_p++;
+                                    }
                                 } while (config_scan_p &&
                                          index < DSDA_INPUT_PROFILE_COUNT);
                             }
@@ -4761,7 +4808,9 @@ void M_LoadDefaults(void)
                                       defaults[i].minvalue <= parm) &&
                                      (defaults[i].maxvalue == UL ||
                                       defaults[i].maxvalue >= parm))
+                            {
                                 *(defaults[i].location.pi) = parm;
+                            }
                         }
                         else
                         {
@@ -4776,6 +4825,7 @@ void M_LoadDefaults(void)
                         }
                         break;
                     }
+                }
             }
         }
 
@@ -4790,7 +4840,9 @@ void M_LoadDefaults(void)
        doesn't overlap with the cfg settings */
     // e6y: Check on existence of prboom.wad
     if (!(wad_files[0] = I_FindFile(WAD_DATA, "")))
+    {
         I_Error("prboom-pp.wad not found. Can't continue.");
+    }
 }
 
 //
@@ -4818,7 +4870,9 @@ const char *screenshot_dir;
 void M_DoScreenShot(const char *fname)
 {
     if (I_ScreenShot(fname) != 0)
+    {
         doom_printf("M_ScreenShot: Error writing screenshot\n");
+    }
 }
 
 #ifndef SCREENSHOT_DIR
@@ -4855,7 +4909,9 @@ const char *M_CheckWritableDir(const char *dir)
         strcpy(base, dir);
 
         if (base[len - 1] != '\\' && base[len - 1] != '/')
+        {
             strcat(base, "/");
+        }
         if (!access(base, O_RDWR))
         {
             base[strlen(base) - 1] = 0;
@@ -4876,141 +4932,155 @@ void M_ScreenShot(void)
     int success = 0;
 
     if ((p = M_CheckParm("-shotdir")) && (p < myargc - 1))
+    {
         shot_dir = M_CheckWritableDir(myargv[p + 1]);
+    }
     if (!shot_dir)
+    {
         shot_dir = M_CheckWritableDir(screenshot_dir);
+    }
     if (!shot_dir)
+    {
 #ifdef _WIN32
         shot_dir = M_CheckWritableDir(I_DoomExeDir());
 #else
         shot_dir = (!access(SCREENSHOT_DIR, 2) ? SCREENSHOT_DIR : nullptr);
+    }
 #endif
 
-    if (shot_dir)
-    {
-        startshot = shot; // CPhipps - prevent infinite loop
-
-        do
+        if (shot_dir)
         {
-            int size = doom_snprintf(nullptr, 0, "%s/doom%02d" SCREENSHOT_EXT,
-                                     shot_dir, shot);
-            lbmname = realloc(lbmname, size + 1);
-            doom_snprintf(lbmname, size + 1, "%s/doom%02d" SCREENSHOT_EXT,
-                          shot_dir, shot);
-            shot++;
-        } while (!access(lbmname, 0) && (shot != startshot) && (shot < 10000));
+            startshot = shot; // CPhipps - prevent infinite loop
 
-        if (access(lbmname, 0))
-        {
-            S_StartSound(nullptr, gamemode == commercial ? sfx_radio : sfx_tink);
-            M_DoScreenShot(lbmname); // cph
-            success = 1;
+            do
+            {
+                int size = doom_snprintf(
+                    nullptr, 0, "%s/doom%02d" SCREENSHOT_EXT, shot_dir, shot);
+                lbmname = realloc(lbmname, size + 1);
+                doom_snprintf(lbmname, size + 1, "%s/doom%02d" SCREENSHOT_EXT,
+                              shot_dir, shot);
+                shot++;
+            } while (!access(lbmname, 0) && (shot != startshot) &&
+                     (shot < 10000));
+
+            if (access(lbmname, 0))
+            {
+                S_StartSound(nullptr,
+                             gamemode == commercial ? sfx_radio : sfx_tink);
+                M_DoScreenShot(lbmname); // cph
+                success = 1;
+            }
+            free(lbmname);
+            if (success)
+            {
+                return;
+            }
         }
-        free(lbmname);
-        if (success)
-            return;
+
+        doom_printf("M_ScreenShot: Couldn't create screenshot");
+        return;
     }
 
-    doom_printf("M_ScreenShot: Couldn't create screenshot");
-    return;
-}
+    int M_StrToInt(const char *s, int *l)
+    {
+        return ((sscanf(s, " 0x%x", l) == 1) || (sscanf(s, " 0X%x", l) == 1) ||
+                (sscanf(s, " 0%o", l) == 1) || (sscanf(s, " %d", l) == 1));
+    }
 
-int M_StrToInt(const char *s, int *l)
-{
-    return ((sscanf(s, " 0x%x", l) == 1) || (sscanf(s, " 0X%x", l) == 1) ||
-            (sscanf(s, " 0%o", l) == 1) || (sscanf(s, " %d", l) == 1));
-}
+    int M_StrToFloat(const char *s, float *f)
+    {
+        return ((sscanf(s, " %f", f) == 1));
+    }
 
-int M_StrToFloat(const char *s, float *f)
-{
-    return ((sscanf(s, " %f", f) == 1));
-}
-
-int M_DoubleToInt(double x)
-{
+    int M_DoubleToInt(double x)
+    {
 #ifdef __GNUC__
-    double tmp = x;
-    return (int)tmp;
+        double tmp = x;
+        return (int)tmp;
 #else
     return (int)x;
 #endif
-}
+    }
 
-char *M_Strlwr(char *str)
-{
-    char *p;
-    for (p = str; *p; p++)
-        *p = tolower(*p);
-    return str;
-}
-
-char *M_Strupr(char *str)
-{
-    char *p;
-    for (p = str; *p; p++)
-        *p = toupper(*p);
-    return str;
-}
-
-char *M_StrRTrim(char *str)
-{
-    char *end;
-
-    if (str)
+    char *M_Strlwr(char *str)
     {
-        // Trim trailing space
-        end = str + strlen(str) - 1;
-        while (end > str && isspace(*end))
+        char *p;
+        for (p = str; *p; p++)
         {
-            end--;
+            *p = tolower(*p);
+        }
+        return str;
+    }
+
+    char *M_Strupr(char *str)
+    {
+        char *p;
+        for (p = str; *p; p++)
+        {
+            *p = toupper(*p);
+        }
+        return str;
+    }
+
+    char *M_StrRTrim(char *str)
+    {
+        char *end;
+
+        if (str)
+        {
+            // Trim trailing space
+            end = str + strlen(str) - 1;
+            while (end > str && isspace(*end))
+            {
+                end--;
+            }
+
+            // Write new null terminator
+            *(end + 1) = 0;
         }
 
-        // Write new null terminator
-        *(end + 1) = 0;
+        return str;
     }
 
-    return str;
-}
-
-void M_ArrayClear(array_t *data)
-{
-    data->count = 0;
-}
-
-void M_ArrayFree(array_t *data)
-{
-    if (data->data)
+    void M_ArrayClear(array_t * data)
     {
-        free(data->data);
-        data->data = nullptr;
+        data->count = 0;
     }
 
-    data->capacity = 0;
-    data->count = 0;
-}
-
-void M_ArrayAddItem(array_t *data, void *item, int itemsize)
-{
-    if (data->count + 1 >= data->capacity)
+    void M_ArrayFree(array_t * data)
     {
-        data->capacity = (data->capacity ? data->capacity * 2 : 128);
-        data->data = realloc(data->data, data->capacity * itemsize);
+        if (data->data)
+        {
+            free(data->data);
+            data->data = nullptr;
+        }
+
+        data->capacity = 0;
+        data->count = 0;
     }
 
-    memcpy((unsigned char *)data->data + data->count * itemsize, item,
-           itemsize);
-    data->count++;
-}
-
-void *M_ArrayGetNewItem(array_t *data, int itemsize)
-{
-    if (data->count + 1 >= data->capacity)
+    void M_ArrayAddItem(array_t * data, void *item, int itemsize)
     {
-        data->capacity = (data->capacity ? data->capacity * 2 : 128);
-        data->data = realloc(data->data, data->capacity * itemsize);
+        if (data->count + 1 >= data->capacity)
+        {
+            data->capacity = (data->capacity ? data->capacity * 2 : 128);
+            data->data = realloc(data->data, data->capacity * itemsize);
+        }
+
+        memcpy((unsigned char *)data->data + data->count * itemsize, item,
+               itemsize);
+        data->count++;
     }
 
-    data->count++;
+    void *M_ArrayGetNewItem(array_t * data, int itemsize)
+    {
+        if (data->count + 1 >= data->capacity)
+        {
+            data->capacity = (data->capacity ? data->capacity * 2 : 128);
+            data->data = realloc(data->data, data->capacity * itemsize);
+        }
 
-    return (unsigned char *)data->data + (data->count - 1) * itemsize;
-}
+        data->count++;
+
+        return (unsigned char *)data->data + (data->count - 1) * itemsize;
+    }

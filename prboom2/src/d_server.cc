@@ -242,8 +242,12 @@ dboolean n_players_in_state(int n, int ps)
 {
     int i, j;
     for (i = j = 0; i < MAXPLAYERS; i++)
+    {
         if (playerstate[i] == ps)
+        {
             j++;
+        }
+    }
     return (j == n);
 }
 
@@ -251,8 +255,12 @@ void BroadcastPacket(packet_header_t *packet, size_t len)
 {
     int i;
     for (i = 0; i < MAXPLAYERS; i++)
+    {
         if (playerstate[i] != pc_unused && playerstate[i] != pc_quit)
+        {
             I_SendPacketTo(packet, len, &remoteaddr[i]);
+        }
+    }
 }
 
 byte def_game_options[GAME_OPTIONS_SIZE] = {
@@ -363,7 +371,9 @@ static void I_InitSockets(Uint16 port)
     I_InitNetwork();
     udp_socket = I_Socket(port);
     if (!udp_socket)
+    {
         I_Error("I_InitSockets: failed to open UDP port %d\n", port);
+    }
 }
 #endif
 
@@ -386,15 +396,21 @@ void read_config_file(FILE *fp, setup_packet_t *sp)
             if (!strcmp(def, "default_skill"))
             {
                 if (verbose)
+                {
                     printf("config file sets default_skill to %d\n", v);
+                }
                 sp->skill = v - 1;
             }
             else if (!strcmp(def, "default_compatibility_level"))
             {
                 if (verbose)
+                {
                     printf("config file sets compatibility_level to %d\n", v);
+                }
                 if (v == -1)
+                {
                     v = MAX_COMPATIBILITY_LEVEL - 1; // e6y: -1 => maxcompat
+                }
                 sp->complevel = v;
             }
             else
@@ -403,9 +419,13 @@ void read_config_file(FILE *fp, setup_packet_t *sp)
                 for (i = 0; i < num_gameopts; i++)
                 {
                     if (!!strcmp(gameopt_config_names[i], def))
+                    {
                         continue;
+                    }
                     if (verbose)
+                    {
                         printf("config file sets %s to %d\n", def, v);
+                    }
                     gameopt[i] = v;
                 }
             }
@@ -437,6 +457,7 @@ int main(int argc, char **argv)
 
         memcpy(gameopt, &def_game_options, sizeof(setupinfo.game_options));
         while ((opt = getopt(argc, argv, "c:t:x:p:e:l:adrfns:N:vw:")) != EOF)
+        {
             switch (opt)
             {
             case 'c': {
@@ -452,23 +473,33 @@ int main(int argc, char **argv)
             break;
             case 't':
                 if (optarg)
+                {
                     ticdup = atoi(optarg);
+                }
                 break;
             case 'x':
                 if (optarg)
+                {
                     xtratics = atoi(optarg);
+                }
                 break;
             case 'p':
                 if (optarg)
+                {
                     localport = atoi(optarg);
+                }
                 break;
             case 'e':
                 if (optarg)
+                {
                     setupinfo.episode = atoi(optarg);
+                }
                 break;
             case 'l':
                 if (optarg)
+                {
                     setupinfo.level = atoi(optarg);
+                }
                 break;
             case 'a':
                 setupinfo.deathmatch = 2;
@@ -487,11 +518,15 @@ int main(int argc, char **argv)
                 break;
             case 's':
                 if (optarg)
+                {
                     setupinfo.skill = atoi(optarg) - 1;
+                }
                 break;
             case 'N':
                 if (optarg)
+                {
                     setupinfo.players = numplayers = atoi(optarg);
+                }
                 break;
             case 'v':
                 verbose++;
@@ -511,10 +546,13 @@ int main(int argc, char **argv)
                         wadget[numwads - 1] = p;
                     }
                     else
+                    {
                         wadget[numwads - 1] = nullptr;
+                    }
                 }
                 break;
             }
+        }
     }
 
     setupinfo.ticdup = ticdup;
@@ -546,7 +584,9 @@ int main(int argc, char **argv)
 
         // Print wads
         for (i = 0; i < numwads; i++)
+        {
             printf("Wad %s (%s)\n", wadname[i], wadget[i] ? wadget[i] : "");
+        }
     }
 
     // Exit and signal handling
@@ -578,7 +618,9 @@ int main(int argc, char **argv)
             while ((len = I_GetPacket(packet, 10000)))
             {
                 if (verbose > 2)
+                {
                     printf("Received packet:");
+                }
                 switch (packet->type.value())
                 {
                 case packet_type_e::PKT_INIT.value():
@@ -594,19 +636,29 @@ int main(int argc, char **argv)
                             n = *(short *)(packet + 1);
 
                             if (badplayer(n) || playerstate[n] != pc_unused)
+                            {
                                 for (n = 0; n < numplayers; n++)
+                                {
                                     if (playerstate[n] == pc_unused)
+                                    {
                                         break;
+                                    }
+                                }
+                            }
 
                             if (n == numplayers)
+                            {
                                 break; // Full game
+                            }
                             playerstate[n] = pc_connected;
 #ifndef USE_SDL_NET
                             remoteaddr[n] = sentfrom;
 #else
                             if (sentfrom == -1)
+                            {
                                 remoteaddr[n] =
                                     I_RegisterPlayer(&sentfrom_addr);
+                            }
 #endif
 
                             printf("Join by ");
@@ -651,15 +703,21 @@ int main(int argc, char **argv)
                         int from = *(byte *)(packet + 1);
 
                         if (badplayer(from) || playerstate[from] == pc_unused)
+                        {
                             break;
+                        }
                         if (confirming)
                         {
                             if (playerstate[from] != pc_confirmedready)
+                            {
                                 curplayers++;
+                            }
                             playerstate[from] = pc_confirmedready;
                         }
                         else
+                        {
                             playerstate[from] = pc_ready;
+                        }
                     }
                     break;
                 case packet_type_e::PKT_TICC.value(): {
@@ -667,11 +725,15 @@ int main(int argc, char **argv)
                     int from = *(((byte *)(packet + 1)) + 1);
 
                     if (badplayer(from))
+                    {
                         break;
+                    }
 
                     if (verbose > 2)
+                    {
                         printf("tics %ld - %ld from %d\n", ptic(packet),
                                ptic(packet) + tics - 1, from);
+                    }
                     if (ptic(packet) > remoteticfrom[from])
                     {
                         // Missed tics, so request a resend
@@ -685,29 +747,39 @@ int main(int argc, char **argv)
                         ticcmd_t *newtic = static_cast<ticcmd_t *>(
                             (void *)(((byte *)(packet + 1)) + 2));
                         if (ptic(packet) + tics < remoteticfrom[from])
+                        {
                             break; // Won't help
+                        }
                         remoteticfrom[from] = ptic(packet);
                         while (tics--)
+                        {
                             netcmds[from][remoteticfrom[from]++ % BACKUPTICS] =
                                 *newtic++;
+                        }
                     }
                 }
                 break;
                 case packet_type_e::PKT_RETRANS.value(): {
                     int from = *(byte *)(packet + 1);
                     if (badplayer(from))
+                    {
                         break;
+                    }
 
                     if (verbose > 2)
+                    {
                         printf("%d requests resend from %ld\n", from,
                                ptic(packet));
+                    }
                     remoteticto[from] = ptic(packet);
                 }
                 break;
                 case packet_type_e::PKT_QUIT.value(): {
                     int from = *(byte *)(packet + 1);
                     if (badplayer(from))
+                    {
                         break;
+                    }
 
                     if (!ingame && playerstate[from] != pc_unused)
                     {
@@ -716,7 +788,9 @@ int main(int argc, char **argv)
                         // flag this player slot as vacant.
                         printf("player %d pulls out\n", from);
                         if (playerstate[from] == pc_confirmedready)
+                        {
                             curplayers--;
+                        }
                         playerstate[from] = pc_unused;
                     }
                     else if (playerleftgame[from] == INT_MAX)
@@ -724,10 +798,14 @@ int main(int argc, char **argv)
                         playerleftgame[from] = ptic(packet);
                         --curplayers;
                         if (verbose)
+                        {
                             printf("%d quits at %ld (%d left)\n", from,
                                    ptic(packet), curplayers);
+                        }
                         if (ingame && !curplayers)
+                        {
                             exit(0); // All players have exited
+                        }
                     }
                 }
                     // fallthrough
@@ -737,8 +815,10 @@ int main(int argc, char **argv)
                     if (packet->type == packet_type_e::PKT_EXTRA)
                     {
                         if (verbose > 2)
+                        {
                             printf("misc from %d\n",
                                    *(((byte *)(packet + 1)) + 1));
+                        }
                     }
                     break;
                 case packet_type_e::PKT_WAD.value(): {
@@ -749,18 +829,28 @@ int main(int argc, char **argv)
                     packet_header_t *reply;
 
                     if (badplayer(from) || playerstate[from] != pc_unused)
+                    {
                         break;
+                    }
 
                     if (verbose)
+                    {
                         printf("Request for %s ", name);
+                    }
                     for (i = 0; i < numwads; i++)
+                    {
                         if (!strcasecmp(name, wadname[i]))
+                        {
                             break;
+                        }
+                    }
 
                     if ((i == numwads) || !wadget[i])
                     {
                         if (verbose)
+                        {
                             printf("n/a\n");
+                        }
                         *(char *)(packet + 1) = 0;
                         I_SendPacketTo(packet, size + 1, remoteaddr + from);
                     }
@@ -821,7 +911,9 @@ int main(int argc, char **argv)
                                i);
                     }
                     if (playerstate[i] == pc_confirmedready)
+                    {
                         playerstate[i] = pc_ready;
+                    }
                 }
             }
             if (!ingame && n_players_in_state(numplayers, pc_ready))
@@ -835,28 +927,41 @@ int main(int argc, char **argv)
                 int lowtic = INT_MAX;
                 int i;
                 for (i = 0; i < MAXPLAYERS; i++)
+                {
                     if (playerstate[i] == pc_playing ||
                         playerstate[i] == pc_quit)
                     {
                         if (remoteticfrom[i] < playerleftgame[i] - 1 &&
                             remoteticfrom[i] < lowtic)
+                        {
                             lowtic = remoteticfrom[i];
+                        }
                     }
+                }
 
                 if (verbose > 1)
+                {
                     printf("%d new tics can be run\n", lowtic - exectics);
+                }
 
                 if (lowtic > exectics)
+                {
                     exectics = lowtic; // count exec'ed tics
+                }
                 // Now send all tics up to lowtic
                 for (i = 0; i < MAXPLAYERS; i++)
+                {
                     if (playerstate[i] == pc_playing)
                     {
                         int tics;
                         if (lowtic <= remoteticto[i])
+                        {
                             continue;
+                        }
                         if ((remoteticto[i] -= xtratics) < 0)
+                        {
                             remoteticto[i] = 0;
+                        }
                         tics = MIN(
                             lowtic - remoteticto[i],
                             128); // limit number of sent tics (CVE-2019-20797)
@@ -871,12 +976,15 @@ int main(int argc, char **argv)
                                        remoteticto[i]);
                             *p++ = tics;
                             if (verbose > 1)
+                            {
                                 printf("sending %d tics to %d\n", tics, i);
+                            }
                             while (tics--)
                             {
                                 int j, playersthistic = 0;
                                 byte *q = p++;
                                 for (j = 0; j < MAXPLAYERS; j++)
+                                {
                                     if ((playerjoingame[j] <= remoteticto[i]) &&
                                         (playerleftgame[j] > remoteticto[i]))
                                     {
@@ -888,6 +996,7 @@ int main(int argc, char **argv)
                                         p += sizeof(ticcmd_t);
                                         playersthistic++;
                                     }
+                                }
                                 *q = playersthistic;
                                 remoteticto[i]++;
                             }
@@ -916,14 +1025,17 @@ int main(int argc, char **argv)
                                                    remoteaddr + i);
                                     backoffcounter[i] = 0;
                                     if (verbose)
+                                    {
                                         printf(
                                             "telling client %d to back off\n",
                                             i);
+                                    }
                                     free(packet);
                                 }
                             }
                         }
                     }
+                }
             }
             if (!((ingame ? 0xff : 0xf) & displaycounter++))
             {

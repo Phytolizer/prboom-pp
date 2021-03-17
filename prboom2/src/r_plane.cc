@@ -111,19 +111,31 @@ fixed_t *distscale = nullptr;
 void R_InitPlanesRes(void)
 {
     if (floorclip)
+    {
         free(floorclip);
+    }
     if (ceilingclip)
+    {
         free(ceilingclip);
+    }
     if (spanstart)
+    {
         free(spanstart);
+    }
 
     if (cachedheight)
+    {
         free(cachedheight);
+    }
 
     if (yslope)
+    {
         free(yslope);
+    }
     if (distscale)
+    {
         free(distscale);
+    }
 
     floorclip = calloc<int *>(1, SCREENWIDTH * sizeof(*floorclip));
     ceilingclip = calloc<int *>(1, SCREENWIDTH * sizeof(*ceilingclip));
@@ -195,7 +207,9 @@ static void R_MapPlane(int y, int x1, int x2, draw_span_vars_t *dsvars)
     //
     // See cchest2.wad/map02/room with sector #265
     if (centery == y)
+    {
         return;
+    }
     den = (int_64_t)FRACUNIT * FRACUNIT * D_abs(centery - y);
     distance = FixedMul(planeheight, yslope[y]);
 
@@ -221,7 +235,9 @@ static void R_MapPlane(int y, int x1, int x2, draw_span_vars_t *dsvars)
         dsvars->z = distance;
         index = distance >> LIGHTZSHIFT;
         if (index >= MAXLIGHTZ)
+        {
             index = MAXLIGHTZ - 1;
+        }
         dsvars->colormap = planezlight[index];
         dsvars->nextcolormap =
             planezlight[index + 1 >= MAXLIGHTZ ? MAXLIGHTZ - 1 : index + 1];
@@ -236,7 +252,9 @@ static void R_MapPlane(int y, int x1, int x2, draw_span_vars_t *dsvars)
     dsvars->x2 = x2;
 
     if (V_GetMode() != VID_MODEGL)
+    {
         R_DrawSpan(dsvars);
+    }
 }
 
 //
@@ -250,11 +268,17 @@ void R_ClearPlanes(void)
 
     // opening / clipping determination
     for (i = 0; i < viewwidth; i++)
+    {
         floorclip[i] = viewheight, ceilingclip[i] = -1;
+    }
 
-    for (i = 0; i < MAXVISPLANES; i++) // new code -- killough
+    for (i = 0; i < MAXVISPLANES; i++)
+    { // new code -- killough
         for (*freehead = visplanes[i], visplanes[i] = nullptr; *freehead;)
+        {
             freehead = &(*freehead)->next;
+        }
+    }
 
     lastopening = openings;
 
@@ -279,7 +303,9 @@ static visplane_t *new_visplane(unsigned hash)
         check->bottom = &check->top[SCREENWIDTH + 2];
     }
     else if (!(freetail = freetail->next))
+    {
         freehead = &freetail;
+    }
     check->next = visplanes[hash];
     visplanes[hash] = check;
     return check;
@@ -304,7 +330,9 @@ visplane_t *R_DupPlane(const visplane_t *pl, int start, int stop)
     new_pl->minx = start;
     new_pl->maxx = stop;
     for (i = 0; i != SCREENWIDTH; i++)
+    {
         new_pl->top[i] = SHRT_MAX;
+    }
     return new_pl;
 }
 //
@@ -319,17 +347,23 @@ visplane_t *R_FindPlane(fixed_t height, int picnum, int lightlevel,
     unsigned hash; // killough
 
     if (picnum == skyflatnum || picnum & PL_SKYFLAT)
+    {
         height = lightlevel = 0; // killough 7/19/98: most skies map together
+    }
 
     // New visplane algorithm uses hash table -- killough
     hash = visplane_hash(picnum, lightlevel, height);
 
-    for (check = visplanes[hash]; check; check = check->next) // killough
+    for (check = visplanes[hash]; check; check = check->next)
+    { // killough
         if (height == check->height && picnum == check->picnum &&
             lightlevel == check->lightlevel &&
             xoffs == check->xoffs && // killough 2/28/98: Add offset checks
             yoffs == check->yoffs)
+        {
             return check;
+        }
+    }
 
     check = new_visplane(hash); // killough
 
@@ -347,7 +381,9 @@ visplane_t *R_FindPlane(fixed_t height, int picnum, int lightlevel,
         check->maxx = -1;
 
         for (i = 0; i != SCREENWIDTH; i++)
+        {
             check->top[i] = SHRT_MAX;
+        }
     }
 
     return check;
@@ -361,18 +397,27 @@ visplane_t *R_CheckPlane(visplane_t *pl, int start, int stop)
     int intrl, intrh, unionl, unionh, x;
 
     if (start < pl->minx)
+    {
         intrl = pl->minx, unionl = start;
+    }
     else
+    {
         unionl = pl->minx, intrl = start;
+    }
 
     if (stop > pl->maxx)
+    {
         intrh = pl->maxx, unionh = stop;
+    }
     else
+    {
         unionh = pl->maxx, intrh = stop;
+    }
 
-    for (x = intrl; x <= intrh && pl->top[x] == SHRT_MAX;
-         x++) // dropoff overflow
+    for (x = intrl; x <= intrh && pl->top[x] == SHRT_MAX; x++)
+    { // dropoff overflow
         ;
+    }
 
     if (x > intrh)
     { /* Can use existing plane; extend range */
@@ -380,8 +425,10 @@ visplane_t *R_CheckPlane(visplane_t *pl, int start, int stop)
         pl->maxx = unionh;
         return pl;
     }
-    else /* Cannot use existing plane; create a new one */
+    else
+    { /* Cannot use existing plane; create a new one */
         return R_DupPlane(pl, start, stop);
+    }
 }
 
 //
@@ -393,13 +440,21 @@ static void R_MakeSpans(int x, unsigned int t1, unsigned int b1,
                         draw_span_vars_t *dsvars)
 {
     for (; t1 < t2 && t1 <= b1; t1++)
+    {
         R_MapPlane(t1, spanstart[t1], x - 1, dsvars);
+    }
     for (; b1 > b2 && b1 >= t1; b1--)
+    {
         R_MapPlane(b1, spanstart[b1], x - 1, dsvars);
+    }
     while (t2 < t1 && t2 <= b2)
+    {
         spanstart[t2++] = x;
+    }
     while (b2 > b1 && b2 >= t2)
+    {
         spanstart[b2--] = x;
+    }
 }
 
 // New function, by Lee Killough
@@ -477,7 +532,9 @@ static void R_DoDrawPlane(visplane_t *pl)
              * mapping. Until Boom fixed this. Compat option added in MBF. */
 
             if (comp[comp_skymap] || !(dcvars.colormap = fixedcolormap))
+            {
                 dcvars.colormap = fullcolormap; // killough 3/20/98
+            }
 
             dcvars.nextcolormap = dcvars.colormap; // for filtering -- POPE
 
@@ -496,6 +553,7 @@ static void R_DoDrawPlane(visplane_t *pl)
             // killough 10/98: Use sky scrolling offset, and possibly flip
             // picture
             for (x = pl->minx; (dcvars.x = x) <= pl->maxx; x++)
+            {
                 if ((dcvars.yl = pl->top[x]) != SHRT_MAX &&
                     dcvars.yl <=
                         (dcvars.yh = pl->bottom[x])) // dropoff overflow
@@ -511,6 +569,7 @@ static void R_DoDrawPlane(visplane_t *pl)
                         ((an + xtoviewangle[x + 1]) ^ flip) >> ANGLETOSKYSHIFT);
                     colfunc(&dcvars);
                 }
+            }
 
             R_UnlockTextureCompositePatchNum(texture);
         }
@@ -529,16 +588,24 @@ static void R_DoDrawPlane(visplane_t *pl)
 
             // SoM 10/19/02: deep water colormap fix
             if (fixedcolormap)
+            {
                 light = (255 >> LIGHTSEGSHIFT);
+            }
             else
+            {
                 light = (pl->lightlevel >> LIGHTSEGSHIFT) +
                         (extralight * LIGHTBRIGHT);
+            }
 
             if (light >= LIGHTLEVELS)
+            {
                 light = LIGHTLEVELS - 1;
+            }
 
             if (light < 0)
+            {
                 light = 0;
+            }
 
             stop = pl->maxx + 1;
             planezlight = zlight[light];
@@ -546,8 +613,10 @@ static void R_DoDrawPlane(visplane_t *pl)
                 SHRT_MAX; // dropoff overflow
 
             for (x = pl->minx; x <= stop; x++)
+            {
                 R_MakeSpans(x, pl->top[x - 1], pl->bottom[x - 1], pl->top[x],
                             pl->bottom[x], &dsvars);
+            }
 
             W_UnlockLumpNum(firstflat + flattranslation[pl->picnum]);
         }
@@ -564,6 +633,10 @@ void R_DrawPlanes(void)
     visplane_t *pl;
     int i;
     for (i = 0; i < MAXVISPLANES; i++)
+    {
         for (pl = visplanes[i]; pl; pl = pl->next, rendered_visplanes++)
+        {
             R_DoDrawPlane(pl);
+        }
+    }
 }

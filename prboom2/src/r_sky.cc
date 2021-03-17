@@ -73,7 +73,9 @@ void R_InitSkyMap(void)
         int skyheight;
 
         if (!textureheight)
+        {
             return;
+        }
 
         // There are various combinations for sky rendering depending on how
         // tall the sky is:
@@ -85,8 +87,8 @@ void R_InitSkyMap(void)
         //                  looking straight ahead. When stretched, it is scaled
         //                  to 228 pixels with the baseline in the same location
         //                  as an unstretched 128-tall sky, so the top
-        //					of the texture aligns with the top of the screen when
-        //looking
+        //					of the texture aligns with the top of the screen
+        //when looking
         //                  fully up.
         //        h == 200: Unstretched, baseline is on horizon, and top is at
         //        the top of

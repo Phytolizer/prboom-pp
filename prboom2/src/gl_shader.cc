@@ -108,7 +108,9 @@ static int ReadLump(const char *filename, const char *lumpname,
         strncpy(name, lumpname, 9);
         name[8] = 0;
         for (p = name; *p; p++)
+        {
             *p = toupper(*p);
+        }
 
         lump = (W_CheckNumForName)(name, ns_prboom);
 

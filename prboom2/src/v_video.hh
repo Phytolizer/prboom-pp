@@ -135,15 +135,15 @@ typedef enum
 
 typedef struct
 {
-    byte *data; // pointer to the screen content
-    dboolean
-        not_on_heap; // if set, no malloc or free is preformed and
-                     // data never set to nullptr. Used i.e. with SDL doublebuffer.
-    int width;       // the width of the surface
-    int height;      // the height of the surface, used when mallocing
-    int byte_pitch;  // tha actual width of one line, used when mallocing
-    int short_pitch; // tha actual width of one line, used when mallocing
-    int int_pitch;   // tha actual width of one line, used when mallocing
+    byte *data;           // pointer to the screen content
+    dboolean not_on_heap; // if set, no malloc or free is preformed and
+                          // data never set to nullptr. Used i.e. with SDL
+                          // doublebuffer.
+    int width;            // the width of the surface
+    int height;           // the height of the surface, used when mallocing
+    int byte_pitch;       // tha actual width of one line, used when mallocing
+    int short_pitch;      // tha actual width of one line, used when mallocing
+    int int_pitch;        // tha actual width of one line, used when mallocing
 } screeninfo_t;
 
 #define NUM_SCREENS 6

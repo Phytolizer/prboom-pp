@@ -119,8 +119,8 @@ struct _Operator
 
     Bit32u chanData; // Frequency/octave and derived data coming from whatever
                      // channel controls this
-    Bit32u freqMul; // Scale channel frequency with this, TODO maybe remove?
-    Bit32u vibrato; // Scaled up vibrato strength
+    Bit32u freqMul;  // Scale channel frequency with this, TODO maybe remove?
+    Bit32u vibrato;  // Scaled up vibrato strength
     Bit32s sustainLevel; // When stopping at sustain level stop here
     Bit32s totalLevel;   // totalLevel is added to every generated volume
     Bit32u currentLevel; // totalLevel + tremolo
@@ -133,7 +133,7 @@ struct _Operator
 
     Bit8u rateZero; // Bits for the different states of the envelope having no
                     // changes
-    Bit8u keyOn; // Bitmask of different values that can generate keyon
+    Bit8u keyOn;    // Bitmask of different values that can generate keyon
     // Registers, also used to check for changes
     Bit8u reg20, reg40, reg60, reg80, regE0;
     // Active part of the envelope we're in

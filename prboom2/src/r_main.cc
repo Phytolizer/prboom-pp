@@ -173,17 +173,23 @@ int extralight; // bumped light from gun blasts
 PUREFUNC int R_PointOnSide(fixed_t x, fixed_t y, const node_t *node)
 {
     if (!node->dx)
+    {
         return x <= node->x ? node->dy > 0 : node->dy < 0;
+    }
 
     if (!node->dy)
+    {
         return y <= node->y ? node->dx < 0 : node->dx > 0;
+    }
 
     x -= node->x;
     y -= node->y;
 
     // Try to quickly decide by looking at sign bits.
     if ((node->dy ^ node->dx ^ x ^ y) < 0)
+    {
         return (node->dy ^ x) < 0; // (left is negative)
+    }
     return FixedMul(y, node->dx >> FRACBITS) >=
            FixedMul(node->dy >> FRACBITS, x);
 }
@@ -198,17 +204,23 @@ PUREFUNC int R_PointOnSegSide(fixed_t x, fixed_t y, const seg_t *line)
     fixed_t ldy = line->v2->y - ly;
 
     if (!ldx)
+    {
         return x <= lx ? ldy > 0 : ldy < 0;
+    }
 
     if (!ldy)
+    {
         return y <= ly ? ldx < 0 : ldx > 0;
+    }
 
     x -= lx;
     y -= ly;
 
     // Try to quickly decide by looking at sign bits.
     if ((ldy ^ ldx ^ x ^ y) < 0)
+    {
         return (ldy ^ x) < 0; // (left is negative)
+    }
     return FixedMul(y, ldx >> FRACBITS) >= FixedMul(ldy >> FRACBITS, x);
 }
 
@@ -332,7 +344,9 @@ static void R_InitTextureMapping(void)
                                  (double)wide_centerx) *
                             FINEANGLES / M_PI);
         if (FieldOfView > 160 * FINEANGLES / 360)
+        {
             FieldOfView = 160 * FINEANGLES / 360;
+        }
     }
 
     // Use tangent table to generate viewangletox:
@@ -352,17 +366,25 @@ static void R_InitTextureMapping(void)
         int t;
         int limit = finetangent[FINEANGLES / 4 + FieldOfView / 2];
         if (finetangent[i] > limit)
+        {
             t = -1;
+        }
         else if (finetangent[i] < -limit)
+        {
             t = viewwidth + 1;
+        }
         else
         {
             t = FixedMul(finetangent[i], focallength);
             t = (centerxfrac - t + FRACUNIT - 1) >> FRACBITS;
             if (t < -1)
+            {
                 t = -1;
+            }
             else if (t > viewwidth + 1)
+            {
                 t = viewwidth + 1;
+            }
         }
         viewangletox[i] = t;
     }
@@ -374,16 +396,24 @@ static void R_InitTextureMapping(void)
     for (x = 0; x <= viewwidth; x++)
     {
         for (i = 0; viewangletox[i] > x; i++)
+        {
             ;
+        }
         xtoviewangle[x] = (i << ANGLETOFINESHIFT) - ANG90;
     }
 
     // Take out the fencepost cases from viewangletox.
     for (i = 0; i < FINEANGLES / 2; i++)
+    {
         if (viewangletox[i] == -1)
+        {
             viewangletox[i] = 0;
+        }
         else if (viewangletox[i] == viewwidth + 1)
+        {
             viewangletox[i] = viewwidth;
+        }
+    }
 
     clipangle = xtoviewangle[0];
 }
@@ -428,14 +458,20 @@ static void R_InitLightTables(void)
             int t, level = startmap - (scale >>= LIGHTSCALESHIFT) / DISTMAP;
 
             if (level < 0)
+            {
                 level = 0;
+            }
             else if (level >= NUMCOLORMAPS)
+            {
                 level = NUMCOLORMAPS - 1;
+            }
 
             // killough 3/20/98: Initialize multiple colormaps
             level *= 256;
-            for (t = 0; t < numcolormaps; t++) // killough 4/4/98
+            for (t = 0; t < numcolormaps; t++)
+            { // killough 4/4/98
                 c_zlight[t][i][j] = colormaps[t] + level;
+            }
         }
     }
 }
@@ -643,7 +679,9 @@ int R_Project(float objx, float objy, float objz, float *winx, float *winy,
     R_MultMatrixVecd(projMatrix, out, in);
 
     if (in[3] == 0.0f)
+    {
         return false;
+    }
 
     in[0] /= in[3];
     in[1] /= in[3];
@@ -671,11 +709,17 @@ void R_SetupViewport(void)
     int height;
 
     if (screenblocks == 11)
+    {
         height = SCREENHEIGHT;
+    }
     else if (screenblocks == 10)
+    {
         height = SCREENHEIGHT;
+    }
     else
+    {
         height = (screenblocks * SCREENHEIGHT / 10) & ~7;
+    }
 
     viewport[0] = viewwindowx;
     viewport[1] =
@@ -691,7 +735,9 @@ void R_SetupPerspective(float fovy, float aspect, float znear)
     float *m = projMatrix;
 
     for (i = 0; i < 16; i++)
+    {
         m[i] = 0.0f;
+    }
 
     m[0] = focallength / aspect;
     m[5] = focallength;
@@ -842,7 +888,9 @@ void R_ExecuteSetViewSize(void)
     //      fix garbage lines at the top of weapon sprites
     pspriteiyscale = FixedDiv(FRACUNIT, pspriteyscale);
     while (FixedMul(pspriteiyscale, pspriteyscale) < FRACUNIT)
+    {
         pspriteiyscale++;
+    }
 
     // e6y: added for GL
     pspritexscale_f = (float)wide_centerx / 160.0f;
@@ -857,7 +905,9 @@ void R_ExecuteSetViewSize(void)
 
     // thing clipping
     for (i = 0; i < viewwidth; i++)
+    {
         screenheightarray[i] = viewheight;
+    }
 
     for (i = 0; i < viewwidth; i++)
     {
@@ -879,16 +929,22 @@ void R_ExecuteSetViewSize(void)
             int t, level = startmap - j /**320/viewwidth*/ / DISTMAP;
 
             if (level < 0)
+            {
                 level = 0;
+            }
 
             if (level >= NUMCOLORMAPS)
+            {
                 level = NUMCOLORMAPS - 1;
+            }
 
             // killough 3/20/98: initialize multiple colormaps
             level *= 256;
 
-            for (t = 0; t < numcolormaps; t++) // killough 4/4/98
+            for (t = 0; t < numcolormaps; t++)
+            { // killough 4/4/98
                 c_scalelight[t][i][j] = colormaps[t] + level;
+            }
         }
     }
 }
@@ -932,10 +988,14 @@ subsector_t *R_PointInSubsector(fixed_t x, fixed_t y)
 
     // special case for trivial maps (single subsector, no nodes)
     if (numnodes == 0)
+    {
         return subsectors;
+    }
 
     while (!(nodenum & NF_SUBSECTOR))
+    {
         nodenum = nodes[nodenum].children[R_PointOnSide(x, y, nodes + nodenum)];
+    }
     return &subsectors[nodenum & ~NF_SUBSECTOR];
 }
 
@@ -1031,10 +1091,14 @@ static void R_SetupFrame(player_t *player)
              : viewz > s->ceilingheight ? s->topmap
                                         : s->midmap;
         if (cm < 0 || cm > numcolormaps)
+        {
             cm = 0;
+        }
     }
     else
+    {
         cm = 0;
+    }
 
     // e6y: save previous and current colormap
     boom_cm = cm;
@@ -1063,15 +1127,21 @@ static void R_SetupFrame(player_t *player)
         walllightsnext = scalelightfixed;
 
         for (i = 0; i < MAXLIGHTSCALE; i++)
+        {
             scalelightfixed[i] = fixedcolormap;
+        }
     }
     else
+    {
         fixedcolormap = nullptr;
+    }
 
     R_SetClipPlanes();
 
     if (V_GetMode() == VID_MODEGL || hudadd_crosshair)
+    {
         R_SetupMatrix();
+    }
 
     validcount++;
 }
@@ -1179,7 +1249,9 @@ void R_RenderPlayerView(player_t *player)
 #endif
 
     if (V_GetMode() != VID_MODEGL)
+    {
         R_DrawPlanes();
+    }
 
     R_ResetColumnBuffer();
 

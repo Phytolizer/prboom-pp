@@ -82,8 +82,10 @@ int lprintf(OutputLevels pri, const char *s, ...)
 #endif
             r = fprintf(stdout, "%s", msg);
     }
-    if (!isatty(1) && lvl & cons_error_mask) /* if stdout redirected     */
-        r = fprintf(stderr, "%s", msg);      /* select output at console */
+    if (!isatty(1) && lvl & cons_error_mask)
+    {                                   /* if stdout redirected     */
+        r = fprintf(stderr, "%s", msg); /* select output at console */
+    }
 
     return r;
 }
@@ -147,7 +149,9 @@ int doom_vsnprintf(char *buf, size_t max, const char *fmt, va_list va)
         for (; rv < 0; backsize *= 2)
         {
             if (backsize <= max)
+            {
                 continue;
+            }
 
             backbuffer = static_cast<char *>((realloc)(backbuffer, backsize));
             assert(backbuffer != nullptr);
@@ -165,8 +169,10 @@ int doom_vsnprintf(char *buf, size_t max, const char *fmt, va_list va)
         }
     }
 
-    if (buf && (size_t)rv >= max && buf[max - 1]) // ensure null-termination
+    if (buf && (size_t)rv >= max && buf[max - 1])
+    { // ensure null-termination
         buf[max - 1] = '\0';
+    }
 
     return rv;
 }

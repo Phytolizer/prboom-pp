@@ -102,7 +102,7 @@ struct midi_track_t
     midi_event_t *events;
     unsigned int num_events;
     unsigned int num_event_mem; // NSM track size of structure
-} ;
+};
 
 struct midi_track_iter_s
 {
@@ -217,7 +217,9 @@ static void *ReadByteSequence(unsigned int num_bytes, midimem_t *mf)
 
     // events can be length 0.  malloc(0) is not portable (can return nullptr)
     if (!num_bytes)
+    {
         return malloc(4);
+    }
 
     // Allocate a buffer:
 
@@ -537,8 +539,7 @@ static dboolean ReadTrack(midi_track_t *track, midimem_t *mf)
         // End of track?
 
         if (event->event_type == midi_event_type_t::META &&
-            event->data.meta.type ==
-                midi_meta_event_type_t::END_OF_TRACK)
+            event->data.meta.type == midi_meta_event_type_t::END_OF_TRACK)
         {
             break;
         }
@@ -763,7 +764,9 @@ static void MIDI_PrintFlatListDBG(const midi_event_t **evs)
         event = *evs++;
 
         if (event->delta_time > 0)
+        {
             printf("Delay: %i ticks\n", event->delta_time);
+        }
 
         switch (event->event_type.value())
         {
@@ -827,8 +830,7 @@ static void MIDI_PrintFlatListDBG(const midi_event_t **evs)
             break;
         }
         if (event->event_type == midi_event_type_t::META &&
-            event->data.meta.type ==
-                midi_meta_event_type_t::END_OF_TRACK)
+            event->data.meta.type == midi_meta_event_type_t::END_OF_TRACK)
         {
             printf("gotta go!\n");
             return;
@@ -854,7 +856,9 @@ midi_event_t **MIDI_GenerateFlatList(midi_file_t *file)
     midi_event_t **epos;
 
     for (i = 0; i < file->num_tracks; i++)
+    {
         totalevents += file->tracks[i].num_events;
+    }
 
     ret = (midi_event_t **)malloc(totalevents * sizeof(midi_event_t **));
 
@@ -875,8 +879,10 @@ midi_event_t **MIDI_GenerateFlatList(midi_file_t *file)
                 nextrk = i;
             }
         }
-        if (nextrk == -1) // unexpected EOF (not every track got end track)
+        if (nextrk == -1)
+        { // unexpected EOF (not every track got end track)
             break;
+        }
 
         *epos = file->tracks[nextrk].events + trackpos[nextrk];
 
@@ -888,15 +894,16 @@ midi_event_t **MIDI_GenerateFlatList(midi_file_t *file)
                 trackpos[i]++;
             }
             else
+            {
                 tracktime[i] += delta;
+            }
         }
         // yes, this clobbers the original timecodes
         epos[0]->delta_time = delta;
         totaldelta += delta;
 
         if (epos[0]->event_type == midi_event_type_t::META &&
-            epos[0]->data.meta.type ==
-                midi_meta_event_type_t::END_OF_TRACK)
+            epos[0]->data.meta.type == midi_meta_event_type_t::END_OF_TRACK)
         { // change end of track into no op
             trackactive--;
             trackpos[nextrk] = -1;
@@ -1037,11 +1044,15 @@ double MIDI_spmc(const midi_file_t *file, const midi_event_t *ev,
                         (unsigned)ev->data.meta.data[2];
             }
             else
+            {
                 lprintf(LO_WARN, "MIDI_spmc: wrong length tempo meta message "
                                  "in midi file\n");
+            }
         }
         else
+        {
             lprintf(LO_WARN, "MIDI_spmc: passed non-meta event\n");
+        }
     }
 
     return compute_spmc_normal(headerval, tempo, sndrate);
@@ -1065,7 +1076,9 @@ midi_file_t *MIDI_LoadFileSpecial(midimem_t *mf)
     int epos = 0;
 
     if (!base)
+    {
         return nullptr;
+    }
 
     flatlist = MIDI_GenerateFlatList(base);
     if (!flatlist)

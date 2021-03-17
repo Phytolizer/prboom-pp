@@ -47,11 +47,15 @@ void dsda_CyclePlayPal(void)
         cycle_playpal_index++;
 
         if (cycle_playpal_index > playpal_9)
+        {
             cycle_playpal_index = playpal_default;
+        }
 
         // Looped around and found nothing
         if (cycle_playpal_index == playpal_index)
+        {
             return;
+        }
 
         lump_num =
             W_CheckNumForName(playpal_data[cycle_playpal_index].lump_name);
@@ -63,7 +67,9 @@ void dsda_CyclePlayPal(void)
 void dsda_SetPlayPal(int index)
 {
     if (index < 0 || index >= NUMPALETTES)
+    {
         index = playpal_default;
+    }
 
     playpal_index = index;
 }
@@ -73,11 +79,13 @@ void dsda_FreePlayPal(void)
     int playpal_i;
 
     for (playpal_i = 0; playpal_i < NUMPALETTES; ++playpal_i)
+    {
         if (playpal_data[playpal_i].lump)
         {
             free(playpal_data[playpal_i].lump);
             playpal_data[playpal_i].lump = nullptr;
         }
+    }
 }
 
 void dsda_FreeTrueColorPlayPal(void)
@@ -92,7 +100,9 @@ void dsda_FreeTrueColorPlayPal(void)
         if (mode != VID_MODE15)
         {
             if (playpal_data[playpal_i].Palettes15)
+            {
                 free(playpal_data[playpal_i].Palettes15);
+            }
 
             playpal_data[playpal_i].Palettes15 = nullptr;
         }
@@ -100,7 +110,9 @@ void dsda_FreeTrueColorPlayPal(void)
         if (mode != VID_MODE16)
         {
             if (playpal_data[playpal_i].Palettes16)
+            {
                 free(playpal_data[playpal_i].Palettes16);
+            }
 
             playpal_data[playpal_i].Palettes16 = nullptr;
         }
@@ -108,7 +120,9 @@ void dsda_FreeTrueColorPlayPal(void)
         if (mode != VID_MODE32)
         {
             if (playpal_data[playpal_i].Palettes32)
+            {
                 free(playpal_data[playpal_i].Palettes32);
+            }
 
             playpal_data[playpal_i].Palettes32 = nullptr;
         }
@@ -130,7 +144,9 @@ void dsda_InitPlayPal(void)
 
             lump = W_CheckNumForName(playpal_data[playpal_i].lump_name);
             if (lump < 0)
+            {
                 continue;
+            }
 
             playpal = static_cast<const char *>(W_CacheLumpNum(lump));
 
@@ -151,7 +167,9 @@ void dsda_InitPlayPal(void)
                 }
 
                 if (found)
+                {
                     break;
+                }
             }
 
             if (found)

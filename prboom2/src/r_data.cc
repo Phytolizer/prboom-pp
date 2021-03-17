@@ -102,7 +102,9 @@ int *texturetranslation;
 const byte *R_GetTextureColumn(const rpatch_t *texpatch, int col)
 {
     while (col < 0)
+    {
         col += texpatch->width;
+    }
     col &= texpatch->widthmask;
 
     return texpatch->columns[col].pixels;
@@ -162,10 +164,12 @@ static void R_InitTextures(void)
             patchlookup[i] = (W_CheckNumForName)(name, ns_sprites);
 
             if (patchlookup[i] == -1 && devparm)
+            {
                 // jff 8/3/98 use logical output routine
                 lprintf(LO_WARN,
                         "\nWarning: patch %.8s, index %d does not exist", name,
                         i);
+            }
         }
     }
     W_UnlockLumpNum(names_lump); // cph - release the lump
@@ -216,7 +220,9 @@ static void R_InitTextures(void)
         offset = LittleLong(*directory);
 
         if (offset > maxoff)
+        {
             I_Error("R_InitTextures: Bad texture directory");
+        }
 
         mtexture = (const maptexture_t *)((const byte *)maptex + offset);
 
@@ -261,7 +267,9 @@ static void R_InitTextures(void)
         {
             size_t j;
             for (j = 0; j < sizeof(texture->name); j++)
+            {
                 texture->name[j] = mtexture->name[j];
+            }
         }
         /* #endif */
 
@@ -285,16 +293,22 @@ static void R_InitTextures(void)
         }
 
         for (j = 1; j * 2 <= texture->width; j <<= 1)
+        {
             ;
+        }
         texture->widthmask = j - 1;
         textureheight[i] = texture->height << FRACBITS;
     }
 
     std::free(patchlookup); // killough
 
-    for (i = 0; i < 2; i++) // cph - release the TEXTUREx lumps
+    for (i = 0; i < 2; i++)
+    { // cph - release the TEXTUREx lumps
         if (maptex_lump[i] != -1)
+        {
             W_UnlockLumpNum(maptex_lump[i]);
+        }
+    }
 
     if (errors)
     {
@@ -320,7 +334,9 @@ static void R_InitTextures(void)
     }
 
     if (errors)
+    {
         I_Error("R_InitTextures: %d errors", errors);
+    }
 
     // Create translation table for global animation.
     // killough 4/9/98: make column offsets 32-bit;
@@ -330,11 +346,15 @@ static void R_InitTextures(void)
         std::malloc((numtextures + 1) * sizeof *texturetranslation));
 
     for (i = 0; i < numtextures; i++)
+    {
         texturetranslation[i] = i;
+    }
 
     // killough 1/31/98: Initialize texture hash table
     for (i = 0; i < numtextures; i++)
+    {
         textures[i]->index = -1;
+    }
     while (--i >= 0)
     {
         int j = W_LumpNameHash(textures[i]->name) % (unsigned)numtextures;
@@ -362,7 +382,9 @@ static void R_InitFlats(void)
         std::malloc((numflats + 1) * sizeof(*flattranslation)));
 
     for (i = 0; i < numflats; i++)
+    {
         flattranslation[i] = i;
+    }
 }
 
 //
@@ -397,8 +419,10 @@ static void R_InitColormaps(void)
         std::malloc(sizeof(*colormaps) * numcolormaps));
     colormaps[0] = W_CacheLumpName<const lighttable_t *>("COLORMAP");
     for (i = 1; i < numcolormaps; i++)
+    {
         colormaps[i] =
             (const lighttable_t *)W_CacheLumpNum(i + firstcolormaplump);
+    }
     // cph - always lock
 }
 
@@ -409,9 +433,13 @@ static void R_InitColormaps(void)
 int R_ColormapNumForName(const char *name)
 {
     int i = 0;
-    if (strncasecmp(name, "COLORMAP", 8)) // COLORMAP predefined to return 0
+    if (strncasecmp(name, "COLORMAP", 8))
+    { // COLORMAP predefined to return 0
         if ((i = (W_CheckNumForName)(name, ns_colormaps)) != -1)
+        {
             i -= firstcolormaplump;
+        }
+    }
     return i;
 }
 
@@ -433,9 +461,11 @@ void R_InitTranMap(int progress)
 
     // If a tranlucency filter map lump is present, use it
 
-    if (lump != -1) // Set a pointer to the translucency filter maps.
+    if (lump != -1)
+    { // Set a pointer to the translucency filter maps.
         main_tranmap =
             static_cast<const byte *>(W_CacheLumpNum(lump)); // killough 4/11/98
+    }
     else if (W_CheckNumForName("PLAYPAL") !=
              -1) // can be called before WAD loaded
     {            // Compose a default transparent filter map based on PLAYPAL.
@@ -472,8 +502,10 @@ void R_InitTranMap(int progress)
             long w2 = (1l << TSC) - w1;
 
             if (progress)
+            {
                 lprintf(LO_INFO, "Tranmap build [        "
                                  "]\x08\x08\x08\x08\x08\x08\x08\x08\x08");
+            }
 
             // First, convert playpal into long int type, and transpose array,
             // for fast inner-loop calculations. Precompute tot array.
@@ -506,8 +538,10 @@ void R_InitTranMap(int progress)
                     long g1 = pal[1][i] * w2;
                     long b1 = pal[2][i] * w2;
                     if (!(i & 31) && progress)
+                    {
                         // jff 8/3/98 use logical output routine
                         lprintf(LO_INFO, ".");
+                    }
                     for (j = 0; j < 256; j++, tp++)
                     {
                         int color = 255;
@@ -517,11 +551,14 @@ void R_InitTranMap(int progress)
                         long b = pal_w1[2][j] + b1;
                         long best = LONG_MAX;
                         do
+                        {
                             if ((err = tot[color] - pal[0][color] * r -
                                        pal[1][color] * g - pal[2][color] * b) <
                                 best)
+                            {
                                 best = err, *tp = color;
-                        while (--color >= 0);
+                            }
+                        } while (--color >= 0);
                     }
                 }
             }
@@ -537,8 +574,10 @@ void R_InitTranMap(int progress)
             }
         }
 
-        if (cachefp) // killough 11/98: fix filehandle leak
+        if (cachefp)
+        { // killough 11/98: fix filehandle leak
             fclose(cachefp);
+        }
 
         std::free(fname);
 
@@ -561,9 +600,11 @@ void R_InitData(void)
     R_InitFlats();
     lprintf(LO_INFO, "Sprites ");
     R_InitSpriteLumps();
-    if (default_translucency) // killough 3/1/98
-        R_InitTranMap(1);     // killough 2/21/98, 3/6/98
-    R_InitColormaps();        // killough 3/20/98
+    if (default_translucency)
+    {                     // killough 3/1/98
+        R_InitTranMap(1); // killough 2/21/98, 3/6/98
+    }
+    R_InitColormaps(); // killough 3/20/98
 }
 
 //
@@ -611,7 +652,9 @@ int PUREFUNC R_CheckTextureNumForName(const char *name)
     {
         i = textures[W_LumpNameHash(name) % (unsigned)numtextures]->index;
         while (i >= 0 && strncasecmp(textures[i]->name, name, 8))
+        {
             i = textures[i]->next;
+        }
     }
     return i;
 }
@@ -672,7 +715,9 @@ void R_PrecacheLevel(void)
     byte *hitlist;
 
     if (timingdemo)
+    {
         return;
+    }
 
     {
         int size = numflats > numsprites ? numflats : numsprites;
@@ -685,19 +730,27 @@ void R_PrecacheLevel(void)
     memset(hitlist, 0, numflats);
 
     for (i = numsectors; --i >= 0;)
+    {
         hitlist[sectors[i].floorpic] = hitlist[sectors[i].ceilingpic] = 1;
+    }
 
     for (i = numflats; --i >= 0;)
+    {
         if (hitlist[i])
+        {
             precache_lump(firstflat + i);
+        }
+    }
 
     // Precache textures.
 
     memset(hitlist, 0, numtextures);
 
     for (i = numsides; --i >= 0;)
+    {
         hitlist[sides[i].bottomtexture] = hitlist[sides[i].toptexture] =
             hitlist[sides[i].midtexture] = 1;
+    }
 
     // Sky texture is always present.
     // Note that F_SKY1 is the name used to
@@ -709,13 +762,17 @@ void R_PrecacheLevel(void)
     hitlist[skytexture] = 1;
 
     for (i = numtextures; --i >= 0;)
+    {
         if (hitlist[i])
         {
             texture_t *texture = textures[i];
             int j = texture->patchcount;
             while (--j >= 0)
+            {
                 precache_lump(texture->patches[j].patch);
+            }
         }
+    }
 
     // Precache sprites.
     memset(hitlist, 0, numsprites);
@@ -723,11 +780,16 @@ void R_PrecacheLevel(void)
     {
         thinker_t *th = nullptr;
         while ((th = P_NextThinker(th, th_all)) != nullptr)
+        {
             if (th->function == P_MobjThinker)
+            {
                 hitlist[((mobj_t *)th)->sprite] = 1;
+            }
+        }
     }
 
     for (i = numsprites; --i >= 0;)
+    {
         if (hitlist[i])
         {
             int j = sprites[i].numframes;
@@ -736,10 +798,12 @@ void R_PrecacheLevel(void)
                 short *sflump = sprites[i].spriteframes[j].lump;
                 int k = 7;
                 do
+                {
                     precache_lump(firstspritelump + sflump[k]);
-                while (--k >= 0);
+                } while (--k >= 0);
             }
         }
+    }
     std::free(hitlist);
 }
 

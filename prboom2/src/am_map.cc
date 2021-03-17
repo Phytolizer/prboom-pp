@@ -508,10 +508,12 @@ static void AM_addMark(void)
     // remove limit on automap marks
 
     if (markpointnum >= markpointnum_max)
+    {
         markpoints = static_cast<markpoint_t *>(realloc(
             markpoints,
             (markpointnum_max = markpointnum_max ? markpointnum_max * 2 : 16) *
                 sizeof(*markpoints)));
+    }
 
     markpoints[markpointnum].x = m_x + m_w / 2;
     markpoints[markpointnum].y = m_y + m_h / 2;
@@ -539,14 +541,22 @@ static void AM_findMinMaxBoundaries(void)
     for (i = 0; i < numvertexes; i++)
     {
         if (vertexes[i].x < min_x)
+        {
             min_x = vertexes[i].x;
+        }
         else if (vertexes[i].x > max_x)
+        {
             max_x = vertexes[i].x;
+        }
 
         if (vertexes[i].y < min_y)
+        {
             min_y = vertexes[i].y;
+        }
         else if (vertexes[i].y > max_y)
+        {
             max_y = vertexes[i].y;
+        }
     }
 
     max_w = (max_x >>= FRACTOMAPBITS) - (min_x >>= FRACTOMAPBITS); // e6y
@@ -597,14 +607,22 @@ static void AM_changeWindowLoc(void)
     if (!(automapmode & am_rotate))
     {
         if (m_x + m_w / 2 > max_x)
+        {
             m_x = max_x - m_w / 2;
+        }
         else if (m_x + m_w / 2 < min_x)
+        {
             m_x = min_x - m_w / 2;
+        }
 
         if (m_y + m_h / 2 > max_y)
+        {
             m_y = max_y - m_h / 2;
+        }
         else if (m_y + m_h / 2 < min_y)
+        {
             m_y = min_y - m_h / 2;
+        }
     }
 
     m_x2 = m_x + m_w;
@@ -619,7 +637,9 @@ void AM_SetScale(void)
     AM_findMinMaxBoundaries();
     scale_mtof = FixedDiv(min_scale_mtof, (int)(0.7 * FRACUNIT));
     if (scale_mtof > max_scale_mtof)
+    {
         scale_mtof = min_scale_mtof;
+    }
     scale_ftom = FixedDiv(FRACUNIT, scale_mtof);
 }
 
@@ -636,9 +656,13 @@ void AM_SetPosition(void)
         f_h = map_overlay_pos_height * SCREENHEIGHT / 200;
 
         if (f_x + f_w > SCREENWIDTH)
+        {
             f_w = SCREENWIDTH - f_x;
+        }
         if (f_y + f_h > SCREENHEIGHT)
+        {
             f_h = SCREENHEIGHT - f_y;
+        }
 
         f_x = viewwindowx + f_x * viewwidth / SCREENWIDTH;
         f_y = viewwindowy + f_y * viewheight / SCREENHEIGHT;
@@ -680,9 +704,15 @@ static void AM_initVariables(void)
 
     // find player to center on initially
     if (!playeringame[pnum = consoleplayer])
+    {
         for (pnum = 0; pnum < MAXPLAYERS; pnum++)
+        {
             if (playeringame[pnum])
+            {
                 break;
+            }
+        }
+    }
 
     plr = &players[pnum];
     m_x = (plr->mo->x >> FRACTOMAPBITS) - m_w / 2; // e6y
@@ -788,7 +818,9 @@ void AM_Start(void)
     static int lastlevel = -1, lastepisode = -1;
 
     if (!stopped)
+    {
         AM_Stop();
+    }
     stopped = false;
     if (lastlevel != gamemap || lastepisode != gameepisode)
     {
@@ -874,12 +906,16 @@ dboolean AM_Responder(event_t *ev)
     else if (dsda_InputDeactivated(dsda_input_map_right))
     {
         if (!(automapmode & am_follow))
+        {
             m_paninc.x = 0;
+        }
     }
     else if (dsda_InputDeactivated(dsda_input_map_left))
     {
         if (!(automapmode & am_follow))
+        {
             m_paninc.x = 0;
+        }
     }
     else if (dsda_InputActivated(dsda_input_map_up))
     {
@@ -900,12 +936,16 @@ dboolean AM_Responder(event_t *ev)
     else if (dsda_InputDeactivated(dsda_input_map_up))
     {
         if (!(automapmode & am_follow))
+        {
             m_paninc.y = 0;
+        }
     }
     else if (dsda_InputDeactivated(dsda_input_map_down))
     {
         if (!(automapmode & am_follow))
+        {
             m_paninc.y = 0;
+        }
     }
     else if (dsda_InputActivated(dsda_input_map_zoomout) ||
              (map_wheel_zoom && ev->type == ev_keydown &&
@@ -938,7 +978,9 @@ dboolean AM_Responder(event_t *ev)
             AM_minOutWindowScale();
         }
         else
+        {
             AM_restoreScaleAndLoc();
+        }
 
         return true;
     }
@@ -969,7 +1011,9 @@ dboolean AM_Responder(event_t *ev)
          * cph 2001/11/20 - use doom_printf so we don't have our own buffer */
         doom_printf("%s %d", s_AMSTR_MARKEDSPOT, markpointnum);
         if (!heretic)
+        {
             AM_addMark();
+        }
 
         return true;
     }
@@ -1017,7 +1061,9 @@ dboolean AM_Responder(event_t *ev)
         stop_zooming = true;
 
         if (leveltime != zoom_leveltime)
+        {
             AM_StopZooming();
+        }
     }
 
     return false;
@@ -1090,7 +1136,9 @@ static void AM_changeWindowScale(void)
             (float)F_PANINC / (float)FRACUNIT * (float)tic_vars.frac;
 
         if (f_paninc < 0.01f)
+        {
             f_paninc = 0.01f;
+        }
 
         scale_mtof = prev_scale_mtof;
         if (curr_mtof_zoommul == M_ZOOMIN)
@@ -1113,11 +1161,17 @@ static void AM_changeWindowScale(void)
     scale_ftom = FixedDiv(FRACUNIT, scale_mtof);
 
     if (scale_mtof < min_scale_mtof)
+    {
         AM_minOutWindowScale();
+    }
     else if (scale_mtof > max_scale_mtof)
+    {
         AM_maxOutWindowScale();
+    }
     else
+    {
         AM_activateNewScale();
+    }
 }
 
 //
@@ -1149,7 +1203,9 @@ void AM_Ticker(void)
     prev_m_y = m_y;
 
     if (stop_zooming && leveltime - zoom_leveltime != 1)
+    {
         AM_StopZooming();
+    }
 }
 
 //
@@ -1197,30 +1253,50 @@ static dboolean AM_clipMline(mline_t *ml, fline_t *fl)
 
     // do trivial rejects and outcodes
     if (ml->a.y > m_y2)
+    {
         outcode1 = TOP;
+    }
     else if (ml->a.y < m_y)
+    {
         outcode1 = BOTTOM;
+    }
 
     if (ml->b.y > m_y2)
+    {
         outcode2 = TOP;
+    }
     else if (ml->b.y < m_y)
+    {
         outcode2 = BOTTOM;
+    }
 
     if (outcode1 & outcode2)
+    {
         return false; // trivially outside
+    }
 
     if (ml->a.x < m_x)
+    {
         outcode1 |= LEFT;
+    }
     else if (ml->a.x > m_x2)
+    {
         outcode1 |= RIGHT;
+    }
 
     if (ml->b.x < m_x)
+    {
         outcode2 |= LEFT;
+    }
     else if (ml->b.x > m_x2)
+    {
         outcode2 |= RIGHT;
+    }
 
     if (outcode1 & outcode2)
+    {
         return false; // trivially outside
+    }
 
     // transform to frame-buffer coordinates.
     fl->a.x = CXMTOF(ml->a.x);
@@ -1232,7 +1308,9 @@ static dboolean AM_clipMline(mline_t *ml, fline_t *fl)
     DOOUTCODE(outcode2, fl->b.x, fl->b.y);
 
     if (outcode1 & outcode2)
+    {
         return false;
+    }
 
     if (am_frame.precise)
     {
@@ -1247,9 +1325,13 @@ static dboolean AM_clipMline(mline_t *ml, fline_t *fl)
         // may be partially inside box
         // find an outside point
         if (outcode1)
+        {
             outside = outcode1;
+        }
         else
+        {
             outside = outcode2;
+        }
 
         // clip to each side
         if (outside & TOP)
@@ -1324,7 +1406,9 @@ static dboolean AM_clipMline(mline_t *ml, fline_t *fl)
         }
 
         if (outcode1 & outcode2)
+        {
             return false; // trivially outside
+        }
     }
 
     return true;
@@ -1346,18 +1430,26 @@ static void AM_drawMline(mline_t *ml, int color)
 {
     static fline_t fl;
 
-    if (color == -1)  // jff 4/3/98 allow not drawing any sort of line
-        return;       // by setting its color to -1
-    if (color == 247) // jff 4/3/98 if color is 247 (xparent), use black
+    if (color == -1)
+    {           // jff 4/3/98 allow not drawing any sort of line
+        return; // by setting its color to -1
+    }
+    if (color == 247)
+    { // jff 4/3/98 if color is 247 (xparent), use black
         color = 0;
+    }
 
     if (AM_clipMline(ml, &fl))
     {
         // draws it on frame buffer using fb coords
         if (!heretic && map_use_multisamling)
+        {
             V_DrawLineWu(&fl, color);
+        }
         else
+        {
             V_DrawLine(&fl, color);
+        }
     }
 }
 
@@ -1383,9 +1475,13 @@ static void AM_drawGrid(int color)
         fixed_t oprtimal_gridsize = m_h / 16;
         gridsize = 8;
         while (gridsize < oprtimal_gridsize)
+        {
             gridsize <<= 1;
+        }
         if (gridsize - oprtimal_gridsize > oprtimal_gridsize - (gridsize >> 1))
+        {
             gridsize >>= 1;
+        }
     }
 
     // [RH] Calculate a minimum for how long the grid lines should be so that
@@ -1406,7 +1502,9 @@ static void AM_drawGrid(int color)
     // Figure out start of vertical gridlines
     start = minx - extx;
     if ((start - (bmaporgx >> FRACTOMAPBITS)) % gridsize)
+    {
         start -= ((start - (bmaporgx >> FRACTOMAPBITS)) % gridsize);
+    }
     end = minx + minlen - extx;
 
     // draw vertical gridlines
@@ -1432,7 +1530,9 @@ static void AM_drawGrid(int color)
     // Figure out start of horizontal gridlines
     start = miny - exty;
     if ((start - (bmaporgy >> FRACTOMAPBITS)) % gridsize)
+    {
         start -= ((start - (bmaporgy >> FRACTOMAPBITS)) % gridsize);
+    }
     end = miny + minlen - exty;
 
     // draw horizontal gridlines
@@ -1473,16 +1573,22 @@ static void AM_drawGrid(int color)
 static int AM_DoorColor(int type)
 {
     if (heretic && type > 34)
+    {
         return -1;
+    }
 
     if (GenLockedBase <= type && type < GenDoorBase)
     {
         type -= GenLockedBase;
         type = (type & LockedKey) >> LockedKeyShift;
         if (!type || type == 7)
+        {
             return 3; // any or all keys
+        }
         else
+        {
             return (type - 1) % 3;
+        }
     }
     switch (type) // closed keyed door
     {
@@ -1561,7 +1667,9 @@ static void AM_drawWalls(void)
         if (ddt_cheating || (lines[i].flags & ML_MAPPED))
         {
             if ((lines[i].flags & ML_DONTDRAW) && !ddt_cheating)
+            {
                 continue;
+            }
             {
                 /* cph - show keyed doors and lines */
                 int amd;
@@ -1618,10 +1726,14 @@ static void AM_drawWalls(void)
                     ((map_secret_after && P_WasSecret(lines[i].frontsector) &&
                       !P_IsSecret(lines[i].frontsector)) ||
                      (!map_secret_after && P_WasSecret(lines[i].frontsector))))
+                {
                     AM_drawMline(
                         &l, (*mapcolor_secr_p)); // line bounding secret sector
-                else                             // jff 2/16/98 fixed bug
+                }
+                else
+                { // jff 2/16/98 fixed bug
                     AM_drawMline(&l, (*mapcolor_wall_p)); // special was cleared
+                }
             }
             else /* now for 2S lines */
             {
@@ -1658,8 +1770,9 @@ static void AM_drawWalls(void)
                                 !P_IsSecret(
                                     lines[i].backsector)))) || // jff 3/9/98 add
                                                                // logic to not
-                                                               // show secret til
-                                                               // after entered
+                                                               // show secret
+                                                               // til after
+                                                               // entered
                              ( // if map_secret_after is true
                                  !map_secret_after &&
                                  (P_WasSecret(lines[i].frontsector) ||
@@ -1696,7 +1809,9 @@ static void AM_drawWalls(void)
                         lines[i].frontsector->floorheight ||
                     lines[i].backsector->ceilingheight !=
                         lines[i].frontsector->ceilingheight)
+                {
                     AM_drawMline(&l, (*mapcolor_unsn_p));
+                }
             }
         }
     }
@@ -1720,7 +1835,9 @@ static void AM_drawLineCharacter(mline_t *lineguy, int lineguylines,
     mline_t l;
 
     if (automapmode & am_rotate)
+    {
         angle -= viewangle - ANG90; // cph
+    }
 
     for (i = 0; i < lineguylines; i++)
     {
@@ -1734,7 +1851,9 @@ static void AM_drawLineCharacter(mline_t *lineguy, int lineguylines,
         }
 
         if (angle)
+        {
             AM_rotate(&l.a.x, &l.a.y, angle);
+        }
 
         l.a.x += x;
         l.a.y += y;
@@ -1749,7 +1868,9 @@ static void AM_drawLineCharacter(mline_t *lineguy, int lineguylines,
         }
 
         if (angle)
+        {
             AM_rotate(&l.b.x, &l.b.y, angle);
+        }
 
         l.b.x += x;
         l.b.y += y;
@@ -1770,11 +1891,15 @@ INLINE static void AM_GetMobjPosition(mobj_t *mo, mpoint_t *p, angle_t *angle)
         p->x = mo->PrevX + FixedMul(tic_vars.frac, mo->x - mo->PrevX);
         p->y = mo->PrevY + FixedMul(tic_vars.frac, mo->y - mo->PrevY);
         if (mo->player)
+        {
             *angle = mo->player->prev_viewangle +
                      FixedMul(tic_vars.frac, R_SmoothPlaying_Get(mo->player) -
                                                  mo->player->prev_viewangle);
+        }
         else
+        {
             *angle = mo->angle;
+        }
     }
     else
     {
@@ -1806,31 +1931,45 @@ static void AM_drawPlayers(void)
     if (V_GetMode() == VID_MODEGL)
     {
         if (map_things_appearance == map_things_appearance_icon)
+        {
             return;
+        }
     }
 #endif
 
     if (map_things_appearance == map_things_appearance_scaled)
+    {
         scale = (BETWEEN(4 << FRACBITS, 256 << FRACBITS, plr->mo->radius) >>
                  FRACTOMAPBITS);
+    }
     else
+    {
         scale = 16 << MAPBITS;
+    }
 
     if (!netgame)
     {
         pt.x = viewx >> FRACTOMAPBITS;
         pt.y = viewy >> FRACTOMAPBITS;
         if (automapmode & am_rotate)
+        {
             AM_rotatePoint(&pt);
+        }
         else
+        {
             AM_SetMPointFloatValue(&pt);
+        }
 
         if (ddt_cheating)
+        {
             AM_drawLineCharacter(cheat_player_arrow, NUMCHEATPLYRLINES, scale,
                                  viewangle, (*mapcolor_sngl_p), pt.x, pt.y);
+        }
         else
+        {
             AM_drawLineCharacter(player_arrow, NUMPLYRLINES, scale, viewangle,
                                  (*mapcolor_sngl_p), pt.x, pt.y);
+        }
         return;
     }
 
@@ -1839,16 +1978,22 @@ static void AM_drawPlayers(void)
         player_t *p = &players[i];
 
         if ((deathmatch && !demoplayback) && p != plr)
+        {
             continue;
+        }
 
         if (playeringame[i])
         {
             AM_GetMobjPosition(p->mo, &pt, &angle);
 
             if (automapmode & am_rotate)
+            {
                 AM_rotatePoint(&pt);
+            }
             else
+            {
                 AM_SetMPointFloatValue(&pt);
+            }
 
             AM_drawLineCharacter(
                 player_arrow, NUMPLYRLINES, scale, angle,
@@ -1950,7 +2095,9 @@ static void AM_ProcessNiceThing(mobj_t *mobj, angle_t angle, fixed_t x,
         const unsigned char *playpal = V_GetPlaypal();
 
         if ((deathmatch && !demoplayback) && p != plr)
+        {
             return;
+        }
 
         type = am_icon_player;
 
@@ -2003,9 +2150,13 @@ static void AM_ProcessNiceThing(mobj_t *mobj, angle_t angle, fixed_t x,
 
     fradius = MTOF_F(radius >> FRACTOMAPBITS);
     if (fradius < 1.0f)
+    {
         return;
+    }
     if (fradius < 4.0f)
+    {
         need_shadow = false;
+    }
 
     fx = CXMTOF_F(x);
     fy = CYMTOF_F(y);
@@ -2044,16 +2195,22 @@ static void AM_DrawNiceThings(void)
     for (i = 0; i < MAXPLAYERS; i++)
     {
         if ((deathmatch && !demoplayback) && &players[i] != plr)
+        {
             continue;
+        }
 
         if (playeringame[i])
         {
             t = players[i].mo;
             AM_GetMobjPosition(t, &p, &angle);
             if (automapmode & am_rotate)
+            {
                 AM_rotatePoint(&p);
+            }
             else
+            {
                 AM_SetMPointFloatValue(&p);
+            }
             AM_ProcessNiceThing(t, angle, p.x, p.y);
         }
     }
@@ -2080,7 +2237,9 @@ static void AM_DrawNiceThings(void)
                 {
                     AM_GetMobjPosition(t, &p, &angle);
                     if (automapmode & am_rotate)
+                    {
                         AM_rotatePoint(&p);
+                    }
                     AM_ProcessNiceThing(t, angle, p.x, p.y);
                 }
                 t = t->snext;
@@ -2116,9 +2275,13 @@ static void AM_DrawNiceThings(void)
                 markpoint.y = markpoints[i].y;
 
                 if (automapmode & am_rotate)
+                {
                     AM_rotatePoint(&markpoint);
+                }
                 else
+                {
                     AM_SetMPointFloatValue(&markpoint);
+                }
 
                 markpoint.fx = CXMTOF_F(markpoint.fx);
                 markpoint.fy = CYMTOF_F(markpoint.fy);
@@ -2158,7 +2321,9 @@ static void AM_drawThings(void)
 #endif
 
     if (ddt_cheating != 2)
+    {
         return;
+    }
 
     // for all sectors
     for (i = 0; i < numsectors; i++)
@@ -2192,7 +2357,9 @@ static void AM_drawThings(void)
                 // e6y: stop if all enemies from current sector already has been
                 // drawn
                 if (pass == 1 && enemies == 0)
+                {
                     break;
+                }
                 if (pass ==
                     ((t->flags & (MF_COUNTKILL | MF_CORPSE)) == MF_COUNTKILL
                      ? (pass == 0 ? enemies++ : enemies--),
@@ -2203,18 +2370,26 @@ static void AM_drawThings(void)
                 }
 
                 if (map_things_appearance == map_things_appearance_scaled)
+                {
                     scale =
                         (BETWEEN(4 << FRACBITS, 256 << FRACBITS, t->radius) >>
                          FRACTOMAPBITS); // * 16 / 20;
+                }
                 else
+                {
                     scale = 16 << MAPBITS;
+                }
 
                 AM_GetMobjPosition(t, &p, &angle);
 
                 if (automapmode & am_rotate)
+                {
                     AM_rotatePoint(&p);
+                }
                 else
+                {
                     AM_SetMPointFloatValue(&p);
+                }
 
                 // jff 1/5/98 case over doomednum of thing being drawn
                 if ((*mapcolor_rkey_p) || (*mapcolor_ykey_p) ||
@@ -2319,7 +2494,9 @@ static void AM_drawMarks(void)
     if (V_GetMode() == VID_MODEGL)
     {
         if (map_things_appearance == map_things_appearance_icon)
+        {
             return;
+        }
     }
 #endif
 
@@ -2335,9 +2512,13 @@ static void AM_drawMarks(void)
             p.y = markpoints[i].y; // - m_y + prev_m_y;
 
             if (automapmode & am_rotate)
+            {
                 AM_rotatePoint(&p);
+            }
             else
+            {
                 AM_SetMPointFloatValue(&p);
+            }
 
             p.x = CXMTOF(p.x) - markpoints[i].w * SCREENWIDTH / 320 / 2;
             p.y = CYMTOF(p.y) - markpoints[i].h * SCREENHEIGHT / 200 / 2;
@@ -2516,18 +2697,26 @@ void AM_Drawer(void)
 {
     // CPhipps - all automap modes put into one enum
     if (!(automapmode & am_active))
+    {
         return;
+    }
 
     if (automapmode & am_follow)
+    {
         AM_doFollowPlayer();
+    }
 
     // Change the zoom if necessary
     if (ftom_zoommul != FRACUNIT)
+    {
         AM_changeWindowScale();
+    }
 
     // Change x,y location
     if (m_paninc.x || m_paninc.y)
+    {
         AM_changeWindowLoc();
+    }
 
     AM_setFrameVariables();
 
@@ -2539,11 +2728,13 @@ void AM_Drawer(void)
     }
 #endif
 
-    if (!(automapmode & am_overlay)) // cph - If not overlay mode, clear
-                                     // background for the automap
+    if (!(automapmode & am_overlay))
+    {   // cph - If not overlay mode, clear
+        // background for the automap
         V_FillRect(
             FB, f_x, f_y, f_w, f_h,
             (byte)(*mapcolor_back_p)); // jff 1/5/98 background default color
+    }
 
     if (map_textured)
     {
@@ -2551,7 +2742,9 @@ void AM_Drawer(void)
     }
 
     if (automapmode & am_grid)
+    {
         AM_drawGrid((*mapcolor_grid_p)); // jff 1/7/98 grid default color
+    }
     AM_drawWalls();
     AM_drawPlayers();
     AM_drawThings(); // jff 1/5/98 default double IDDT sprite

@@ -68,6 +68,7 @@ void P_ArchivePlayers(void)
 
     CheckSaveGame(sizeof(player_t) * MAXPLAYERS); // killough
     for (i = 0; i < MAXPLAYERS; i++)
+    {
         if (playeringame[i])
         {
             int j;
@@ -78,10 +79,15 @@ void P_ArchivePlayers(void)
             memcpy(dest, &players[i], sizeof(player_t));
             save_p += sizeof(player_t);
             for (j = 0; j < NUMPSPRITES; j++)
+            {
                 if (dest->psprites[j].state)
+                {
                     dest->psprites[j].state =
                         (state_t *)(dest->psprites[j].state - states);
+                }
+            }
         }
+    }
 }
 
 //
@@ -92,6 +98,7 @@ void P_UnArchivePlayers(void)
     int i;
 
     for (i = 0; i < MAXPLAYERS; i++)
+    {
         if (playeringame[i])
         {
             int j;
@@ -110,10 +117,15 @@ void P_UnArchivePlayers(void)
             players[i].rain2 = nullptr;
 
             for (j = 0; j < NUMPSPRITES; j++)
+            {
                 if (players[i].psprites[j].state)
+                {
                     players[i].psprites[j].state =
                         &states[(size_t)players[i].psprites[j].state];
+                }
+            }
         }
+    }
 }
 
 //
@@ -137,11 +149,15 @@ void P_ArchiveWorld(void)
     for (i = 0; i < numlines; i++)
     {
         if (lines[i].sidenum[0] != NO_INDEX)
+        {
             size += sizeof(short) * 3 + sizeof si->textureoffset +
                     sizeof si->rowoffset;
+        }
         if (lines[i].sidenum[1] != NO_INDEX)
+        {
             size += sizeof(short) * 3 + sizeof si->textureoffset +
                     sizeof si->rowoffset;
+        }
     }
 
     CheckSaveGame(size); // killough
@@ -178,6 +194,7 @@ void P_ArchiveWorld(void)
         *put++ = li->tag;
 
         for (j = 0; j < 2; j++)
+        {
             if (li->sidenum[j] != NO_INDEX)
             {
                 si = &sides[li->sidenum[j]];
@@ -196,6 +213,7 @@ void P_ArchiveWorld(void)
                 *put++ = si->bottomtexture;
                 *put++ = si->midtexture;
             }
+        }
     }
 
     *put++ = static_cast<short>(musinfo.current_item);
@@ -235,7 +253,8 @@ void P_UnArchiveWorld(void)
         sec->lightlevel = *get++;
         sec->special = *get++;
         sec->tag = *get++;
-        sec->ceilingdata = nullptr; // jff 2/22/98 now three thinker fields, not two
+        sec->ceilingdata =
+            nullptr; // jff 2/22/98 now three thinker fields, not two
         sec->floordata = nullptr;
         sec->lightingdata = nullptr;
         sec->soundtarget = nullptr;
@@ -250,6 +269,7 @@ void P_UnArchiveWorld(void)
         li->special = *get++;
         li->tag = *get++;
         for (j = 0; j < 2; j++)
+        {
             if (li->sidenum[j] != NO_INDEX)
             {
                 side_t *si = &sides[li->sidenum[j]];
@@ -268,6 +288,7 @@ void P_UnArchiveWorld(void)
                 si->bottomtexture = *get++;
                 si->midtexture = *get++;
             }
+        }
     }
 
     musinfo.current_item = *get++;
@@ -308,8 +329,12 @@ void P_ThinkerToIndex(void)
 
     number_of_thinkers = 0;
     for (th = thinkercap.next; th != &thinkercap; th = th->next)
+    {
         if (P_IsMobjThinker(th))
+        {
             th->prev = (thinker_t *)(intptr_t)++number_of_thinkers;
+        }
+    }
 }
 
 // phares 9/13/98: Moved this code outside of P_ArchiveThinkers so the
@@ -322,7 +347,9 @@ void P_IndexToThinker(void)
     thinker_t *prev = &thinkercap;
 
     for (th = thinkercap.next; th != &thinkercap; prev = th, th = th->next)
+    {
         th->prev = prev;
+    }
 }
 
 /*
@@ -345,7 +372,9 @@ int P_GetMobj(mobj_t *mi, size_t s)
 {
     size_t i = (size_t)mi;
     if (i >= s)
+    {
         I_Error("Corrupt savegame");
+    }
     return i;
 }
 
@@ -424,7 +453,9 @@ void P_UnArchiveMap(void)
     save_p += sizeof unused;
 
     if (automapmode & am_active)
+    {
         AM_Start();
+    }
 
     memcpy(&markpointnum, save_p, sizeof markpointnum);
     save_p += sizeof markpointnum;
@@ -433,11 +464,13 @@ void P_UnArchiveMap(void)
     {
         int i;
         while (markpointnum >= markpointnum_max)
+        {
             markpoints = static_cast<markpoint_t *>(realloc(
                 markpoints,
                 sizeof *markpoints *
                     (markpointnum_max =
                          markpointnum_max ? markpointnum_max * 2 : 16)));
+        }
 
         for (i = 0; i < markpointnum; i++)
         {
@@ -459,7 +492,9 @@ void P_ArchiveThinkerSubclass(th_class cls)
     count = 0;
     cap = &thinkerclasscap[cls];
     for (th = cap->cnext; th != cap; th = th->cnext)
+    {
         count++;
+    }
 
     CheckSaveGame(count * sizeof(mobj_t *) + sizeof(count));
 
@@ -644,26 +679,31 @@ void P_TrueArchiveThinkers(void)
 
     // save off the current thinkers (memory size calculation -- killough)
     for (th = thinkercap.next; th != &thinkercap; th = th->next)
+    {
         if (th->function.isNull())
         {
             platlist_t *pl;
             ceilinglist_t *cl; // jff 2/22/98 need this for ceilings too now
             for (pl = activeplats; pl; pl = pl->next)
+            {
                 if (pl->plat == (plat_t *)th) // killough 2/14/98
                 {
                     size += 4 + sizeof(plat_t);
                     goto end;
                 }
-            for (cl = activeceilings; cl;
-                 cl = cl->next)                     // search for activeceiling
+            }
+            for (cl = activeceilings; cl; cl = cl->next)
+            {                                       // search for activeceiling
                 if (cl->ceiling == (ceiling_t *)th) // jff 2/22/98
                 {
                     size += 4 + sizeof(ceiling_t);
                     goto end;
                 }
+            }
         end:;
         }
         else
+        {
             size += th->function == T_MoveCeiling    ? 4 + sizeof(ceiling_t)
                     : th->function == T_VerticalDoor ? 4 + sizeof(vldoor_t)
                     : th->function == T_MoveFloor    ? 4 + sizeof(floormove_t)
@@ -678,6 +718,8 @@ void P_TrueArchiveThinkers(void)
                     : th->function == T_Friction     ? 4 + sizeof(friction_t)
                     : P_IsMobjThinker(th)            ? 4 + sizeof(mobj_t)
                                                      : 0;
+        }
+    }
 
     CheckSaveGame(size + 1); // killough; cph: +1 for the tc_endspecials
 
@@ -695,12 +737,20 @@ void P_TrueArchiveThinkers(void)
             // plat (jff: or ceiling) even if it is in stasis.
 
             for (pl = activeplats; pl; pl = pl->next)
-                if (pl->plat == (plat_t *)th) // killough 2/14/98
+            {
+                if (pl->plat == (plat_t *)th)
+                { // killough 2/14/98
                     goto plat;
+                }
+            }
 
             for (cl = activeceilings; cl; cl = cl->next)
-                if (cl->ceiling == (ceiling_t *)th) // jff 2/22/98
+            {
+                if (cl->ceiling == (ceiling_t *)th)
+                { // jff 2/22/98
                     goto ceiling;
+                }
+            }
 
             continue;
         }
@@ -874,7 +924,9 @@ void P_TrueArchiveThinkers(void)
             // - We need to save such objects and remember they are marked for
             // deletion
             if (mobj->thinker.function == P_RemoveThinkerDelayed)
+            {
                 mobj->index = MARKED_FOR_DELETION;
+            }
 
             // killough 2/14/98: convert pointers into indices.
             // Fixes many savegame problems, by properly saving
@@ -883,23 +935,29 @@ void P_TrueArchiveThinkers(void)
             // mobj thinker.
 
             if (mobj->target)
+            {
                 mobj->target = P_IsMobjThinker(&mobj->target->thinker)
                                    ? (mobj_t *)mobj->target->thinker.prev
                                    : nullptr;
+            }
 
             if (mobj->tracer)
+            {
                 mobj->tracer = P_IsMobjThinker(&mobj->tracer->thinker)
                                    ? (mobj_t *)mobj->tracer->thinker.prev
                                    : nullptr;
+            }
 
             // killough 2/14/98: new field: save last known enemy. Prevents
             // monsters from going to sleep after killing monsters and not
             // seeing player anymore.
 
             if (mobj->lastenemy)
+            {
                 mobj->lastenemy = P_IsMobjThinker(&mobj->lastenemy->thinker)
                                       ? (mobj_t *)mobj->lastenemy->thinker.prev
                                       : nullptr;
+            }
 
             // killough 2/14/98: end changes
 
@@ -935,7 +993,9 @@ void P_TrueArchiveThinkers(void)
             }
 
             if (mobj->player)
+            {
                 mobj->player = (player_t *)((mobj->player - players) + 1);
+            }
         }
     }
 
@@ -952,9 +1012,13 @@ void P_TrueArchiveThinkers(void)
             // Fix crash on reload when a soundtarget points to a removed corpse
             // (prboom bug #1590350)
             if (target && P_IsMobjThinker(&target->thinker))
+            {
                 target = (mobj_t *)target->thinker.prev;
+            }
             else
+            {
                 target = nullptr;
+            }
             memcpy(save_p, &target, sizeof target);
             save_p += sizeof target;
         }
@@ -990,7 +1054,9 @@ void P_TrueUnArchiveThinkers(void)
             P_RemoveThinkerDelayed(th); // fix mobj leak
         }
         else
+        {
             std::free(th);
+        }
         th = next;
     }
     P_InitThinkers();
@@ -1006,7 +1072,9 @@ void P_TrueUnArchiveThinkers(void)
                tc_true_end)
         {
             if (tc == tc_true_mobj)
+            {
                 mobj_count++;
+            }
             PADSAVEP();
             save_p += tc == tc_true_ceiling    ? sizeof(ceiling_t)
                       : tc == tc_true_door     ? sizeof(vldoor_t)
@@ -1025,19 +1093,23 @@ void P_TrueUnArchiveThinkers(void)
         }
 
         if (*--save_p != tc_true_end)
+        {
             I_Error(
                 "P_TrueUnArchiveThinkers: Unknown tc %i in size calculation",
                 *save_p);
+        }
 
         // first table entry special: 0 maps to nullptr
-        *(mobj_p = static_cast<mobj_t **>(malloc(
-              (mobj_count + 1) * sizeof *mobj_p))) = nullptr; // table of pointers
-        save_p = sp;                                    // restore save pointer
+        *(mobj_p = static_cast<mobj_t **>(
+              malloc((mobj_count + 1) * sizeof *mobj_p))) =
+            nullptr; // table of pointers
+        save_p = sp; // restore save pointer
     }
 
     // read in saved thinkers
     mobj_count = 0;
     while ((tc = static_cast<true_thinkerclass_t>(*save_p++)) != tc_true_end)
+    {
         switch (tc)
         {
         case tc_true_ceiling:
@@ -1051,7 +1123,9 @@ void P_TrueUnArchiveThinkers(void)
                 ceiling->sector->ceilingdata = ceiling; // jff 2/22/98
 
                 if (ceiling->thinker.function.notNull())
+                {
                     ceiling->thinker.function = T_MoveCeiling;
+                }
 
                 P_AddThinker(&ceiling->thinker);
                 P_AddActiveCeiling(ceiling);
@@ -1103,7 +1177,9 @@ void P_TrueUnArchiveThinkers(void)
                 plat->sector->floordata = plat; // jff 2/22/98
 
                 if (plat->thinker.function.notNull())
+                {
                     plat->thinker.function = T_PlatRaise;
+                }
 
                 P_AddThinker(&plat->thinker);
                 P_AddActivePlat(plat);
@@ -1232,8 +1308,10 @@ void P_TrueUnArchiveThinkers(void)
                 mobj->state = states + (intptr_t)mobj->state;
 
                 if (mobj->player)
+                {
                     (mobj->player = &players[(size_t)mobj->player - 1])->mo =
                         mobj;
+                }
 
                 mobj->info = &mobjinfo[mobj->type];
 
@@ -1260,17 +1338,22 @@ void P_TrueUnArchiveThinkers(void)
                 P_AddThinker(&mobj->thinker);
 
                 if (mobj->type == HERETIC_MT_BLASTERFX1)
+                {
                     mobj->thinker.function = P_BlasterMobjThinker;
+                }
 
                 if (!((mobj->flags ^ MF_COUNTKILL) &
                       (MF_FRIEND | MF_COUNTKILL | MF_CORPSE)))
+                {
                     totallive++;
+                }
                 break;
             }
 
         default:
             I_Error("P_TrueUnarchiveSpecials: Unknown tc %i in extraction", tc);
         }
+    }
 
     // killough 2/14/98: adjust target and tracer fields, plus
     // lastenemy field, to correctly point to mobj thinkers.
@@ -1279,6 +1362,7 @@ void P_TrueUnArchiveThinkers(void)
     // killough 11/98: use P_SetNewTarget() to set fields
 
     for (th = thinkercap.next; th != &thinkercap; th = th->next)
+    {
         if (P_IsMobjThinker(th))
         {
             P_SetNewTarget(
@@ -1323,6 +1407,7 @@ void P_TrueUnArchiveThinkers(void)
                 th->references--;
             }
         }
+    }
 
     { // killough 9/14/98: restore soundtargets
         int i;

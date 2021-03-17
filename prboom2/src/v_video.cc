@@ -187,15 +187,21 @@ void V_InitColorTranslation(void)
     {
         *p->map = W_CacheLumpName<const byte *>(p->name);
         if (p - crdefs == CR_DEFAULT)
+        {
             continue;
+        }
         if (gamemission == chex || gamemission == hacx)
         {
             byte *temp = malloc<byte *>(256);
             memcpy(temp, *p->map, 256);
             if (gamemission == chex)
+            {
                 memcpy(temp + 112, *p->map + 176, 16); // green range
+            }
             else if (gamemission == hacx)
+            {
                 memcpy(temp + 192, *p->map + 176, 16); // blue range
+            }
             *p->map = temp;
         }
     }
@@ -414,9 +420,13 @@ static void V_DrawMemPatch(int x, int y, int scrn, const rpatch_t *patch,
     stretch_param_t *params;
 
     if (cm < CR_LIMIT)
+    {
         trans = colrngs[cm];
+    }
     else
+    {
         trans = translationtables + 256 * ((cm - CR_LIMIT) - 1);
+    }
 
     if (!(flags & VPT_NOOFFSET))
     {
@@ -426,14 +436,18 @@ static void V_DrawMemPatch(int x, int y, int scrn, const rpatch_t *patch,
 
     // CPhipps - auto-no-stretch if not high-res
     if ((flags & VPT_STRETCH_MASK) && SCREEN_320x200)
+    {
         flags = static_cast<patch_translation_e>(flags & ~VPT_STRETCH_MASK);
+    }
 
     // e6y: wide-res
     params = &stretch_params[flags & VPT_ALIGN_MASK];
 
     // CPhipps - null translation pointer => no translation
     if (!trans)
+    {
         flags = static_cast<patch_translation_e>(flags & ~VPT_TRANS);
+    }
 
     if (V_GetMode() == VID_MODE8 && !(flags & VPT_STRETCH_MASK))
     {
@@ -463,9 +477,13 @@ static void V_DrawMemPatch(int x, int y, int scrn, const rpatch_t *patch,
             const rcolumn_t *column = R_GetPatchColumn(patch, colindex);
 
             if (x < 0)
+            {
                 continue;
+            }
             if (x >= SCREENWIDTH)
+            {
                 break;
+            }
 
             // step through the posts in a column
             for (i = 0; i < column->numPosts; i++)
@@ -481,6 +499,7 @@ static void V_DrawMemPatch(int x, int y, int scrn, const rpatch_t *patch,
                 if (!(flags & VPT_TRANS))
                 {
                     if ((count -= 4) >= 0)
+                    {
                         do
                         {
                             byte s0, s1;
@@ -496,17 +515,21 @@ static void V_DrawMemPatch(int x, int y, int scrn, const rpatch_t *patch,
                             dest[screens[scrn].byte_pitch] = s1;
                             dest += screens[scrn].byte_pitch * 2;
                         } while ((count -= 4) >= 0);
+                    }
                     if (count += 4)
+                    {
                         do
                         {
                             *dest = *source++;
                             dest += screens[scrn].byte_pitch;
                         } while (--count);
+                    }
                 }
                 else
                 {
                     // CPhipps - merged translation code here
                     if ((count -= 4) >= 0)
+                    {
                         do
                         {
                             byte s0, s1;
@@ -526,12 +549,15 @@ static void V_DrawMemPatch(int x, int y, int scrn, const rpatch_t *patch,
                             dest[screens[scrn].byte_pitch] = s1;
                             dest += screens[scrn].byte_pitch * 2;
                         } while ((count -= 4) >= 0);
+                    }
                     if (count += 4)
+                    {
                         do
                         {
                             *dest = trans[*source++];
                             dest += screens[scrn].byte_pitch;
                         } while (--count);
+                    }
                 }
             }
         }
@@ -595,15 +621,23 @@ static void V_DrawMemPatch(int x, int y, int scrn, const rpatch_t *patch,
                                     : params->video->y1lookup[y]);
 
             if (x + patch->width < 0 || x + patch->width > 320)
+            {
                 right = (((x + patch->width - 1) * params->video->width) / 320);
+            }
             else
+            {
                 right = params->video->x2lookup[x + patch->width - 1];
+            }
 
             if (y + patch->height < 0 || y + patch->height > 200)
+            {
                 bottom =
                     (((y + patch->height - 0) * params->video->height) / 200);
+            }
             else
+            {
                 bottom = params->video->y2lookup[y + patch->height - 1];
+            }
 
             left += params->deltax1;
             right += params->deltax2;
@@ -620,9 +654,13 @@ static void V_DrawMemPatch(int x, int y, int scrn, const rpatch_t *patch,
         {
             // bias the texture u coordinate
             if (patch->flags & PATCH_ISNOTTILEABLE)
+            {
                 col = -(FRACUNIT >> 1);
+            }
             else
+            {
                 col = (patch->width << FRACBITS) - (FRACUNIT >> 1);
+            }
         }
         else
         {
@@ -640,9 +678,13 @@ static void V_DrawMemPatch(int x, int y, int scrn, const rpatch_t *patch,
 
             // ignore this column if it's to the left of our clampRect
             if (dcvars.x < 0)
+            {
                 continue;
+            }
             if (dcvars.x >= SCREENWIDTH)
+            {
                 break;
+            }
 
             dcvars.texu =
                 ((flags & VPT_FLIP) ? ((patch->width << FRACBITS) - col)
@@ -674,26 +716,38 @@ static void V_DrawMemPatch(int x, int y, int scrn, const rpatch_t *patch,
 
                     tmpy = y + post->topdelta;
                     if (tmpy < 0 || tmpy > 200)
+                    {
                         dcvars.yl = (tmpy * params->video->height) / 200 +
                                     params->deltay1;
+                    }
                     else
+                    {
                         dcvars.yl =
                             params->video->y1lookup[tmpy] + params->deltay1;
+                    }
 
                     tmpy = y + post->topdelta + post->length - 1;
                     if (tmpy < 0 || tmpy > 200)
+                    {
                         dcvars.yh = (tmpy * params->video->height) / 200 +
                                     params->deltay1;
+                    }
                     else
+                    {
                         dcvars.yh =
                             params->video->y2lookup[tmpy] + params->deltay1;
+                    }
                 }
                 dcvars.edgeslope = post->slope;
 
                 if ((dcvars.yh < 0) || (dcvars.yh < top))
+                {
                     continue;
+                }
                 if ((dcvars.yl >= SCREENHEIGHT) || (dcvars.yl >= bottom))
+                {
                     continue;
+                }
 
                 if (dcvars.yh >= bottom)
                 {
@@ -797,7 +851,9 @@ void V_UpdateTrueColorPalette(video_mode_t mode)
     // before we've loaded any wads, which prevents us from reading the palette
     // - POPE
     if (pplump < 0)
+    {
         return;
+    }
 
     gtlump = (W_CheckNumForName)("GAMMATBL", ns_prboom);
     pal = static_cast<const byte *>(W_CacheLumpNum(pplump));
@@ -811,11 +867,17 @@ void V_UpdateTrueColorPalette(video_mode_t mode)
     if (usegammaOnLastPaletteGeneration != usegamma)
     {
         if (playpal_data->Palettes15)
+        {
             free(playpal_data->Palettes15);
+        }
         if (playpal_data->Palettes16)
+        {
             free(playpal_data->Palettes16);
+        }
         if (playpal_data->Palettes32)
+        {
             free(playpal_data->Palettes32);
+        }
         playpal_data->Palettes15 = nullptr;
         playpal_data->Palettes16 = nullptr;
         playpal_data->Palettes32 = nullptr;
@@ -945,11 +1007,17 @@ void V_DestroyUnusedTrueColorPalettes(void)
 {
     dsda_FreeTrueColorPlayPal();
     if (V_GetMode() != VID_MODE15)
+    {
         V_Palette15 = nullptr;
+    }
     if (V_GetMode() != VID_MODE16)
+    {
         V_Palette16 = nullptr;
+    }
     if (V_GetMode() != VID_MODE32)
+    {
         V_Palette32 = nullptr;
+    }
 }
 
 //
@@ -1334,9 +1402,13 @@ int V_GetPixelDepth(void)
 void V_AllocScreen(screeninfo_t *scrn)
 {
     if (!scrn->not_on_heap)
+    {
         if ((scrn->byte_pitch * scrn->height) > 0)
+        {
             // e6y: Clear the screen to black.
             scrn->data = calloc<byte *>(scrn->byte_pitch * scrn->height, 1);
+        }
+    }
 }
 
 //
@@ -1347,7 +1419,9 @@ void V_AllocScreens(void)
     int i;
 
     for (i = 0; i < NUM_SCREENS; i++)
+    {
         V_AllocScreen(&screens[i]);
+    }
 }
 
 //
@@ -1370,7 +1444,9 @@ void V_FreeScreens(void)
     int i;
 
     for (i = 0; i < NUM_SCREENS; i++)
+    {
         V_FreeScreen(&screens[i]);
+    }
 }
 
 static void V_PlotPixel8(int scrn, int x, int y, byte color)
@@ -1451,7 +1527,9 @@ static void WRAP_V_DrawLine(fline_t *fl, int color)
         {
             PUTDOT(x, y, color);
             if (x == fl->b.x)
+            {
                 return;
+            }
             if (d >= 0)
             {
                 y += sy;
@@ -1468,7 +1546,9 @@ static void WRAP_V_DrawLine(fline_t *fl, int color)
         {
             PUTDOT(x, y, color);
             if (y == fl->b.y)
+            {
                 return;
+            }
             if (d >= 0)
             {
                 x += sx;
@@ -1608,7 +1688,9 @@ void WRAP_V_DrawLineWu(fline_t *fl, int color)
 
             // if error has overflown, advance x coordinate
             if (erroracc <= erroracctmp)
+            {
                 x += xdir;
+            }
 
             y += 1; // advance y
 
@@ -1635,7 +1717,9 @@ void WRAP_V_DrawLineWu(fline_t *fl, int color)
 
             // if error has overflown, advance y coordinate
             if (erroracc <= erroracctmp)
+            {
                 y += 1;
+            }
 
             x += xdir; // advance x
 
@@ -1681,7 +1765,9 @@ void V_FillBorder(int lump, byte color)
     int bordtop, bordbottom, bordleft, bordright;
 
     if (render_stretch_hud == patch_stretch_full)
+    {
         return;
+    }
 
     bordleft = wide_offsetx;
     bordright = wide_offset2x - wide_offsetx;
@@ -1983,7 +2069,9 @@ int V_BestColor(const unsigned char *palette, int r, int g, int b)
         {
             // exact match
             if (dist == 0)
+            {
                 return color;
+            }
 
             bestdist = dist;
             bestcolor = color;
@@ -2047,11 +2135,14 @@ void V_DrawRawScreenSection(const byte *raw, int dest_y_offset,
     y_factor = (float)SCREENHEIGHT / 200;
 
     if (y_factor < x_factor)
+    {
         x_factor = y_factor;
+    }
 
     x_offset = (int)((SCREENWIDTH - (x_factor * 320)) / 2);
 
     for (j = dest_y_offset; j < dest_y_offset + dest_y_limit; ++j)
+    {
         for (i = 0; i < 320; ++i, ++raw)
         {
             int x, y, width, height;
@@ -2063,6 +2154,7 @@ void V_DrawRawScreenSection(const byte *raw, int dest_y_offset,
 
             V_FillRect(0, x_offset + x, y, width, height, *raw);
         }
+    }
 
     // e6y: wide-res
     V_FillBorder(-1, 0);

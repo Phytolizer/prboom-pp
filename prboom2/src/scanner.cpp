@@ -68,8 +68,9 @@ void (*Scanner::error)(const char*, ...) = __ScannerStandardError;
 
 Scanner::Scanner(const char* data, int length) : line(1), lineStart(0), logicalPosition(0), tokenLine(1), tokenLinePosition(0), scanPos(0), needNext(true)
 {
-	if(length == -1)
+	if(length == -1) {
 		length = strlen(data);
+}
 	this->length = length;
 	this->data = new char[length];
 	memcpy(this->data, data, length);
@@ -80,15 +81,18 @@ Scanner::Scanner(const char* data, int length) : line(1), lineStart(0), logicalP
 
 Scanner::~Scanner()
 {
-	if (string != nullptr) delete[] string;
+	if (string != nullptr) { delete[] string;
+}
 	delete[] data;
 }
 
 void Scanner::SetString(char **ptr, const char *start, unsigned int length)
 {
-	if (length == -1)
+	if (length == -1) {
 		length = strlen(start);
-	if (*ptr != nullptr) free(*ptr);
+}
+	if (*ptr != nullptr) { free(*ptr);
+}
 	*ptr = (char*)malloc(length + 1);
 	memcpy(*ptr, start, length);
 	(*ptr)[length] = 0;
@@ -108,16 +112,19 @@ void Scanner::CheckForWhitespace()
 				if(cur == '\n' || cur == '\r')
 				{
 					scanPos++;
-					if(comment == 1)
+					if(comment == 1) {
 						comment = 0;
+}
 
 					// Do a quick check for Windows style new line
-					if(cur == '\r' && next == '\n')
+					if(cur == '\r' && next == '\n') {
 						scanPos++;
+}
 					IncrementLine();
 				}
-				else
+				else {
 					scanPos++;
+}
 			}
 			else
 			{
@@ -127,17 +134,19 @@ void Scanner::CheckForWhitespace()
 			continue;
 		}
 
-		if(cur == ' ' || cur == '\t' || cur == 0)
+		if(cur == ' ' || cur == '\t' || cur == 0) {
 			scanPos++;
-		else if(cur == '\n' || cur == '\r')
+		} else if(cur == '\n' || cur == '\r')
 		{
 			scanPos++;
-			if(comment == 1)
+			if(comment == 1) {
 				comment = 0;
+}
 
 			// Do a quick check for Windows style new line
-			if(cur == '\r' && next == '\n')
+			if(cur == '\r' && next == '\n') {
 				scanPos++;
+}
 			IncrementLine();
 			//CheckForMeta();
 		}
@@ -158,10 +167,11 @@ void Scanner::CheckForWhitespace()
 		}
 		else
 		{
-			if(comment == 0)
+			if(comment == 0) {
 				return;
-			else
+			} else {
 				scanPos++;
+}
 		}
 	}
 }
@@ -170,8 +180,9 @@ bool Scanner::CheckToken(char token)
 {
 	if(needNext)
 	{
-		if(!GetNextToken(false))
+		if(!GetNextToken(false)) {
 			return false;
+}
 	}
 
 	// An int can also be a float.
@@ -202,8 +213,10 @@ void Scanner::ExpandState()
 void Scanner::SaveState(Scanner &savedstate)
 {
 	// This saves the entire parser state except for the data pointer.
-	if (savedstate.string != nullptr) free(savedstate.string);
-	if (savedstate.nextState.string != nullptr) free(savedstate.nextState.string);
+	if (savedstate.string != nullptr) { free(savedstate.string);
+}
+	if (savedstate.nextState.string != nullptr) { free(savedstate.nextState.string);
+}
 	memcpy(&savedstate, this, sizeof(*this));
 	savedstate.string = strdup(string);
 	savedstate.nextState.string = strdup(nextState.string);
@@ -225,8 +238,9 @@ bool Scanner::GetNextToken(bool expandState)
 	if(!needNext)
 	{
 		needNext = true;
-		if(expandState)
+		if(expandState) {
 			ExpandState();
+}
 		return true;
 	}
 
@@ -235,8 +249,9 @@ bool Scanner::GetNextToken(bool expandState)
 	nextState.token = TK_NoToken;
 	if(scanPos >= length)
 	{
-		if(expandState)
+		if(expandState) {
 			ExpandState();
+}
 		return false;
 	}
 
@@ -249,12 +264,13 @@ bool Scanner::GetNextToken(bool expandState)
 
 	char cur = data[scanPos++];
 	// Determine by first character
-	if(cur == '_' || (cur >= 'A' && cur <= 'Z') || (cur >= 'a' && cur <= 'z'))
+	if(cur == '_' || (cur >= 'A' && cur <= 'Z') || (cur >= 'a' && cur <= 'z')) {
 		nextState.token = TK_Identifier;
-	else if(cur >= '0' && cur <= '9')
+	} else if(cur >= '0' && cur <= '9')
 	{
-		if(cur == '0')
+		if(cur == '0') {
 			integerBase = 8;
+}
 		nextState.token = TK_IntConst;
 	}
 	else if(cur == '.')
@@ -276,17 +292,17 @@ bool Scanner::GetNextToken(bool expandState)
 		if(scanPos < length)
 		{
 			char next = data[scanPos];
-			if(cur == '&' && next == '&')
+			if(cur == '&' && next == '&') {
 				nextState.token = TK_AndAnd;
-			else if(cur == '|' && next == '|')
+			} else if(cur == '|' && next == '|') {
 				nextState.token = TK_OrOr;
-			else if(cur == '<' && next == '<')
+			} else if(cur == '<' && next == '<') {
 				nextState.token = TK_ShiftLeft;
-			else if(cur == '>' && next == '>')
+			} else if(cur == '>' && next == '>') {
 				nextState.token = TK_ShiftRight;
 			//else if(cur == '#' && next == '#')
 			//	nextState.token = TK_MacroConcat;
-			else if(next == '=')
+			} else if(next == '=')
 			{
 				switch(cur)
 				{
@@ -325,13 +341,14 @@ bool Scanner::GetNextToken(bool expandState)
 				default:
 					break;
 				case TK_Identifier:
-					if(cur != '_' && (cur < 'A' || cur > 'Z') && (cur < 'a' || cur > 'z') && (cur < '0' || cur > '9'))
+					if(cur != '_' && (cur < 'A' || cur > 'Z') && (cur < 'a' || cur > 'z') && (cur < '0' || cur > '9')) {
 						end = scanPos;
+}
 					break;
 				case TK_IntConst:
-					if(cur == '.' || (scanPos-1 != start && cur == 'e'))
+					if(cur == '.' || (scanPos-1 != start && cur == 'e')) {
 						nextState.token = TK_FloatConst;
-					else if((cur == 'x' || cur == 'X') && scanPos-1 == start)
+					} else if((cur == 'x' || cur == 'X') && scanPos-1 == start)
 					{
 						integerBase = 16;
 						break;
@@ -341,16 +358,19 @@ bool Scanner::GetNextToken(bool expandState)
 						switch(integerBase)
 						{
 							default:
-								if(cur < '0' || cur > '9')
+								if(cur < '0' || cur > '9') {
 									end = scanPos;
+}
 								break;
 							case 8:
-								if(cur < '0' || cur > '7')
+								if(cur < '0' || cur > '7') {
 									end = scanPos;
+}
 								break;
 							case 16:
-								if((cur < '0' || cur > '9') && (cur < 'A' || cur > 'F') && (cur < 'a' || cur > 'f'))
+								if((cur < '0' || cur > '9') && (cur < 'A' || cur > 'F') && (cur < 'a' || cur > 'f')) {
 									end = scanPos;
+}
 								break;
 						}
 						break;
@@ -370,10 +390,11 @@ bool Scanner::GetNextToken(bool expandState)
 							if(scanPos+1 < length)
 							{
 								char next = data[scanPos+1];
-								if((next < '0' || next > '9') && next != '+' && next != '-')
+								if((next < '0' || next > '9') && next != '+' && next != '-') {
 									end = scanPos;
-								else
+								} else {
 									scanPos++;
+}
 							}
 							break;
 						}
@@ -387,14 +408,16 @@ bool Scanner::GetNextToken(bool expandState)
 						end = scanPos;
 						scanPos++;
 					}
-					else if(cur == '\\')
+					else if(cur == '\\') {
 						scanPos++; // Will add two since the loop automatically adds one
+}
 					break;
 			}
-			if(start == end && !stringFinished)
+			if(start == end && !stringFinished) {
 				scanPos++;
-			else
+			} else {
 				break;
+}
 		}
 	}
 
@@ -438,13 +461,15 @@ bool Scanner::GetNextToken(bool expandState)
 		{
 			Unescape(nextState.string);
 		}
-		if(expandState)
+		if(expandState) {
 			ExpandState();
+}
 		return true;
 	}
 	nextState.token = TK_NoToken;
-	if(expandState)
+	if(expandState) {
 		ExpandState();
+}
 	return false;
 }
 
@@ -456,22 +481,24 @@ void Scanner::IncrementLine()
 
 void Scanner::Error(int token)
 {
-	if (token < TK_NumSpecialTokens && this->token < TK_NumSpecialTokens)
+	if (token < TK_NumSpecialTokens && this->token < TK_NumSpecialTokens) {
 		error("%d:%d:Expected '%s' but got '%s' instead.", GetLine(), GetLinePos(), TokenNames[token], TokenNames[this->token]);
-	else if (token < TK_NumSpecialTokens && this->token >= TK_NumSpecialTokens)
+	} else if (token < TK_NumSpecialTokens && this->token >= TK_NumSpecialTokens) {
 		error("%d:%d:Expected '%s' but got '%c' instead.", GetLine(), GetLinePos(), TokenNames[token], this->token);
-	else if (token >= TK_NumSpecialTokens && this->token < TK_NumSpecialTokens)
+	} else if (token >= TK_NumSpecialTokens && this->token < TK_NumSpecialTokens) {
 		error("%d:%d:Expected '%c' but got '%s' instead.", GetLine(), GetLinePos(), token, TokenNames[this->token]);
-	else
+	} else {
 		error("%d:%d:Expected '%c' but got '%c' instead.", GetLine(), GetLinePos(), token, this->token);
+}
 }
 
 void Scanner::Error(const char *mustget)
 {
-	if (token < TK_NumSpecialTokens && this->token < TK_NumSpecialTokens)
+	if (token < TK_NumSpecialTokens && this->token < TK_NumSpecialTokens) {
 		error("%d:%d:Expected '%s' but got '%s' instead.", GetLine(), GetLinePos(), mustget, TokenNames[this->token]);
-	else
+	} else {
 		error("%d:%d:Expected '%s' but got '%c' instead.", GetLine(), GetLinePos(), mustget, this->token);
+}
 }
 
 void Scanner::ErrorF(const char *msg, ...)
@@ -576,7 +603,8 @@ bool Scanner::CheckInteger()
 	Scanner savedstate;
 	SaveState(savedstate);
 	bool res = ScanInteger();
-	if (!res) RestoreState(savedstate);
+	if (!res) { RestoreState(savedstate);
+}
 	return res;
 }
 
@@ -585,18 +613,21 @@ bool Scanner::CheckFloat()
 	Scanner savedstate;
 	SaveState(savedstate);
 	bool res = ScanFloat();
-	if (!res) RestoreState(savedstate);
+	if (!res) { RestoreState(savedstate);
+}
 	return res;
 }
 
 void Scanner::MustGetInteger()
 {
-	if (!ScanInteger()) Error(TK_IntConst);
+	if (!ScanInteger()) { Error(TK_IntConst);
+}
 }
 
 void Scanner::MustGetFloat()
 {
-	if (!ScanFloat()) Error(TK_FloatConst);
+	if (!ScanFloat()) { Error(TK_FloatConst);
+}
 }
 
 
@@ -650,13 +681,13 @@ void Scanner::Unescape(char *str)
 				for (i = 0; i < 2; i++)
 				{
 					p++;
-					if (*p >= '0' && *p <= '9')
+					if (*p >= '0' && *p <= '9') {
 						c = (c << 4) + *p - '0';
-					else if (*p >= 'a' && *p <= 'f')
+					} else if (*p >= 'a' && *p <= 'f') {
 						c = (c << 4) + 10 + *p - 'a';
-					else if (*p >= 'A' && *p <= 'F')
+					} else if (*p >= 'A' && *p <= 'F') {
 						c = (c << 4) + 10 + *p - 'A';
-					else
+					} else
 					{
 						p--;
 						break;
@@ -676,9 +707,9 @@ void Scanner::Unescape(char *str)
 				for (i = 0; i < 2; i++)
 				{
 					p++;
-					if (*p >= '0' && *p <= '7')
+					if (*p >= '0' && *p <= '7') {
 						c = (c << 3) + *p - '0';
-					else
+					} else
 					{
 						p--;
 						break;

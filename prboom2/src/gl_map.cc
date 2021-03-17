@@ -192,7 +192,9 @@ void gld_DrawNiceThings(int fx, int fy, int fw, int fh)
         array_t *things = &map_things[i];
 
         if (things->count == 0)
+        {
             continue;
+        }
 
         glBindTexture(GL_TEXTURE_2D, am_icons[i].tex_id);
 

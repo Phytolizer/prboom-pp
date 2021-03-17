@@ -48,7 +48,7 @@ static int db_init(int samplerate)
 }
 
 const music_player_t db_player = {db_name, db_init, nullptr, NULL, NULL, NULL,
-                                  nullptr,    NULL,    NULL, NULL, NULL};
+                                  nullptr, NULL,    NULL,    NULL, NULL};
 
 #else // HAVE_DUMB
 
@@ -251,7 +251,9 @@ void db_render(void *dest, unsigned nsamp)
         }
     }
     else
+    {
         memset(dest, 0, nsamp * 4);
+    }
 }
 
 #endif // HAVE_DUMB

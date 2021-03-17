@@ -248,7 +248,9 @@ int TXT_Init(void)
                          TXT_SCREEN_W * font->w, TXT_SCREEN_H * font->h, 0);
 
     if (TXT_SDLWindow == nullptr)
+    {
         return 0;
+    }
 
     // Instead, we draw everything into an intermediate 8-bit surface
     // the same dimensions as the screen. SDL then takes care of all the

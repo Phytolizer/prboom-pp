@@ -17,64 +17,31 @@
 #include "doomtype.hh"
 #include "sounds.hh"
 
-musicinfo_t heretic_S_music[] = {{nullptr},
-                                 {"MUS_E1M1", 0}, // 1-1
-                                 {"MUS_E1M2", 0},
-                                 {"MUS_E1M3", 0},
-                                 {"MUS_E1M4", 0},
-                                 {"MUS_E1M5", 0},
-                                 {"MUS_E1M6", 0},
-                                 {"MUS_E1M7", 0},
-                                 {"MUS_E1M8", 0},
-                                 {"MUS_E1M9", 0},
+musicinfo_t heretic_S_music[] = {
+    {nullptr},       {"MUS_E1M1", 0}, // 1-1
+    {"MUS_E1M2", 0}, {"MUS_E1M3", 0}, {"MUS_E1M4", 0}, {"MUS_E1M5", 0},
+    {"MUS_E1M6", 0}, {"MUS_E1M7", 0}, {"MUS_E1M8", 0}, {"MUS_E1M9", 0},
 
-                                 {"MUS_E2M1", 0}, // 2-1
-                                 {"MUS_E2M2", 0},
-                                 {"MUS_E2M3", 0},
-                                 {"MUS_E2M4", 0},
-                                 {"MUS_E1M4", 0},
-                                 {"MUS_E2M6", 0},
-                                 {"MUS_E2M7", 0},
-                                 {"MUS_E2M8", 0},
-                                 {"MUS_E2M9", 0},
+    {"MUS_E2M1", 0}, // 2-1
+    {"MUS_E2M2", 0}, {"MUS_E2M3", 0}, {"MUS_E2M4", 0}, {"MUS_E1M4", 0},
+    {"MUS_E2M6", 0}, {"MUS_E2M7", 0}, {"MUS_E2M8", 0}, {"MUS_E2M9", 0},
 
-                                 {"MUS_E1M1", 0}, // 3-1
-                                 {"MUS_E3M2", 0},
-                                 {"MUS_E3M3", 0},
-                                 {"MUS_E1M6", 0},
-                                 {"MUS_E1M3", 0},
-                                 {"MUS_E1M2", 0},
-                                 {"MUS_E1M5", 0},
-                                 {"MUS_E1M9", 0},
-                                 {"MUS_E2M6", 0},
+    {"MUS_E1M1", 0}, // 3-1
+    {"MUS_E3M2", 0}, {"MUS_E3M3", 0}, {"MUS_E1M6", 0}, {"MUS_E1M3", 0},
+    {"MUS_E1M2", 0}, {"MUS_E1M5", 0}, {"MUS_E1M9", 0}, {"MUS_E2M6", 0},
 
-                                 {"MUS_E1M6", 0}, // 4-1
-                                 {"MUS_E1M2", 0},
-                                 {"MUS_E1M3", 0},
-                                 {"MUS_E1M4", 0},
-                                 {"MUS_E1M5", 0},
-                                 {"MUS_E1M1", 0},
-                                 {"MUS_E1M7", 0},
-                                 {"MUS_E1M8", 0},
-                                 {"MUS_E1M9", 0},
+    {"MUS_E1M6", 0}, // 4-1
+    {"MUS_E1M2", 0}, {"MUS_E1M3", 0}, {"MUS_E1M4", 0}, {"MUS_E1M5", 0},
+    {"MUS_E1M1", 0}, {"MUS_E1M7", 0}, {"MUS_E1M8", 0}, {"MUS_E1M9", 0},
 
-                                 {"MUS_E2M1", 0}, // 5-1
-                                 {"MUS_E2M2", 0},
-                                 {"MUS_E2M3", 0},
-                                 {"MUS_E2M4", 0},
-                                 {"MUS_E1M4", 0},
-                                 {"MUS_E2M6", 0},
-                                 {"MUS_E2M7", 0},
-                                 {"MUS_E2M8", 0},
-                                 {"MUS_E2M9", 0},
+    {"MUS_E2M1", 0}, // 5-1
+    {"MUS_E2M2", 0}, {"MUS_E2M3", 0}, {"MUS_E2M4", 0}, {"MUS_E1M4", 0},
+    {"MUS_E2M6", 0}, {"MUS_E2M7", 0}, {"MUS_E2M8", 0}, {"MUS_E2M9", 0},
 
-                                 {"MUS_E3M2", 0}, // 6-1
-                                 {"MUS_E3M3", 0},
-                                 {"MUS_E1M6", 0},
+    {"MUS_E3M2", 0}, // 6-1
+    {"MUS_E3M3", 0}, {"MUS_E1M6", 0},
 
-                                 {"MUS_TITL", 0},
-                                 {"MUS_INTR", 0},
-                                 {"MUS_CPTD", 0}};
+    {"MUS_TITL", 0}, {"MUS_INTR", 0}, {"MUS_CPTD", 0}};
 
 sfxinfo_t heretic_S_sfx[] = {
     {"", false, 0, nullptr, -1, -1, nullptr, 0, 0, 0},
@@ -86,8 +53,8 @@ sfxinfo_t heretic_S_sfx[] = {
     {"gntuse", false, 32, nullptr, -1, -1, nullptr, 0, 0, -1},
     {"phosht", false, 32, nullptr, -1, -1, nullptr, 0, 0, 2},
     {"phohit", false, 32, nullptr, -1, -1, nullptr, 0, 0, -1},
-    {"-phopow", false, 32, &heretic_S_sfx[heretic_sfx_hedat1], 0, 0, nullptr, 0, 0,
-     1},
+    {"-phopow", false, 32, &heretic_S_sfx[heretic_sfx_hedat1], 0, 0, nullptr, 0,
+     0, 1},
     {"lobsht", false, 20, nullptr, -1, -1, nullptr, 0, 0, 2},
     {"lobhit", false, 20, nullptr, -1, -1, nullptr, 0, 0, 2},
     {"lobpow", false, 20, nullptr, -1, -1, nullptr, 0, 0, 2},
@@ -104,15 +71,15 @@ sfxinfo_t heretic_S_sfx[] = {
     {"impat1", false, 32, nullptr, -1, -1, nullptr, 0, 0, 2},
     {"impat2", false, 32, nullptr, -1, -1, nullptr, 0, 0, 2},
     {"impdth", false, 80, nullptr, -1, -1, nullptr, 0, 0, 2},
-    {"-impact", false, 20, &heretic_S_sfx[heretic_sfx_impsit], 0, 0, nullptr, 0, 0,
-     2},
+    {"-impact", false, 20, &heretic_S_sfx[heretic_sfx_impsit], 0, 0, nullptr, 0,
+     0, 2},
     {"imppai", false, 32, nullptr, -1, -1, nullptr, 0, 0, 2},
     {"mumsit", false, 32, nullptr, -1, -1, nullptr, 0, 0, 2},
     {"mumat1", false, 32, nullptr, -1, -1, nullptr, 0, 0, 2},
     {"mumat2", false, 32, nullptr, -1, -1, nullptr, 0, 0, 2},
     {"mumdth", false, 80, nullptr, -1, -1, nullptr, 0, 0, 2},
-    {"-mumact", false, 20, &heretic_S_sfx[heretic_sfx_mumsit], 0, 0, nullptr, 0, 0,
-     2},
+    {"-mumact", false, 20, &heretic_S_sfx[heretic_sfx_mumsit], 0, 0, nullptr, 0,
+     0, 2},
     {"mumpai", false, 32, nullptr, -1, -1, nullptr, 0, 0, 2},
     {"mumhed", false, 32, nullptr, -1, -1, nullptr, 0, 0, 2},
     {"bstsit", false, 32, nullptr, -1, -1, nullptr, 0, 0, 2},
@@ -134,8 +101,8 @@ sfxinfo_t heretic_S_sfx[] = {
     {"kgtatk", false, 32, nullptr, -1, -1, nullptr, 0, 0, 2},
     {"kgtat2", false, 32, nullptr, -1, -1, nullptr, 0, 0, 2},
     {"kgtdth", false, 80, nullptr, -1, -1, nullptr, 0, 0, 2},
-    {"-kgtact", false, 20, &heretic_S_sfx[heretic_sfx_kgtsit], 0, 0, nullptr, 0, 0,
-     2},
+    {"-kgtact", false, 20, &heretic_S_sfx[heretic_sfx_kgtsit], 0, 0, nullptr, 0,
+     0, 2},
     {"kgtpai", false, 32, nullptr, -1, -1, nullptr, 0, 0, 2},
     {"wizsit", false, 32, nullptr, -1, -1, nullptr, 0, 0, 2},
     {"wizatk", false, 32, nullptr, -1, -1, nullptr, 0, 0, 2},
@@ -165,10 +132,10 @@ sfxinfo_t heretic_S_sfx[] = {
     {"sordsph", false, 200, nullptr, -1, -1, nullptr, 0, 0, 2},
     {"sordexp", false, 200, nullptr, -1, -1, nullptr, 0, 0, 2},
     {"sordbon", false, 200, nullptr, -1, -1, nullptr, 0, 0, 2},
-    {"-sbtsit", false, 32, &heretic_S_sfx[heretic_sfx_bstsit], 0, 0, nullptr, 0, 0,
-     2},
-    {"-sbtatk", false, 32, &heretic_S_sfx[heretic_sfx_bstatk], 0, 0, nullptr, 0, 0,
-     2},
+    {"-sbtsit", false, 32, &heretic_S_sfx[heretic_sfx_bstsit], 0, 0, nullptr, 0,
+     0, 2},
+    {"-sbtatk", false, 32, &heretic_S_sfx[heretic_sfx_bstatk], 0, 0, nullptr, 0,
+     0, 2},
     {"sbtdth", false, 80, nullptr, -1, -1, nullptr, 0, 0, 2},
     {"sbtact", false, 20, nullptr, -1, -1, nullptr, 0, 0, 2},
     {"sbtpai", false, 32, nullptr, -1, -1, nullptr, 0, 0, 2},
@@ -201,10 +168,10 @@ sfxinfo_t heretic_S_sfx[] = {
     {"newpod", false, 16, nullptr, -1, -1, nullptr, 0, 0, -1},
     {"podexp", false, 40, nullptr, -1, -1, nullptr, 0, 0, -1},
     {"bounce", false, 16, nullptr, -1, -1, nullptr, 0, 0, 2},
-    {"-volsht", false, 16, &heretic_S_sfx[heretic_sfx_bstatk], 0, 0, nullptr, 0, 0,
-     2},
-    {"-volhit", false, 16, &heretic_S_sfx[heretic_sfx_lobhit], 0, 0, nullptr, 0, 0,
-     2},
+    {"-volsht", false, 16, &heretic_S_sfx[heretic_sfx_bstatk], 0, 0, nullptr, 0,
+     0, 2},
+    {"-volhit", false, 16, &heretic_S_sfx[heretic_sfx_lobhit], 0, 0, nullptr, 0,
+     0, 2},
     {"burn", false, 10, nullptr, -1, -1, nullptr, 0, 0, 2},
     {"splash", false, 10, nullptr, -1, -1, nullptr, 0, 0, 1},
     {"gloop", false, 10, nullptr, -1, -1, nullptr, 0, 0, 2},

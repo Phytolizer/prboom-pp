@@ -155,12 +155,16 @@ void Heretic_F_TextWrite(void)
 
     count = (finalecount - 10) / TEXTSPEED;
     if (count < 0)
+    {
         count = 0;
+    }
     for (; count; count--)
     {
         c = *ch++;
         if (!c)
+        {
             break;
+        }
         if (c == '\n')
         {
             cx = 20;
@@ -178,7 +182,9 @@ void Heretic_F_TextWrite(void)
         lump = FontABaseLump + c - 33;
         width = R_NumPatchWidth(lump);
         if (cx + width > SCREENWIDTH)
+        {
             break;
+        }
         V_DrawNumPatch(cx, cy, 0, lump, CR_DEFAULT, VPT_STRETCH);
         cx += width;
     }
@@ -264,7 +270,9 @@ void Heretic_F_Drawer(void)
 {
     // UpdateState |= I_FULLSCRN;
     if (!finalestage)
+    {
         Heretic_F_TextWrite();
+    }
     else
     {
         switch (gameepisode)

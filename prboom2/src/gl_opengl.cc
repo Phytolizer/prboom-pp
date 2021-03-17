@@ -97,7 +97,8 @@ PFNGLGENFRAMEBUFFERSEXTPROC GLEXT_glGenFramebuffersEXT = nullptr;
 PFNGLGENRENDERBUFFERSEXTPROC GLEXT_glGenRenderbuffersEXT = nullptr;
 PFNGLBINDRENDERBUFFEREXTPROC GLEXT_glBindRenderbufferEXT = nullptr;
 PFNGLRENDERBUFFERSTORAGEEXTPROC GLEXT_glRenderbufferStorageEXT = nullptr;
-PFNGLFRAMEBUFFERRENDERBUFFEREXTPROC GLEXT_glFramebufferRenderbufferEXT = nullptr;
+PFNGLFRAMEBUFFERRENDERBUFFEREXTPROC GLEXT_glFramebufferRenderbufferEXT =
+    nullptr;
 PFNGLFRAMEBUFFERTEXTURE2DEXTPROC GLEXT_glFramebufferTexture2DEXT = nullptr;
 PFNGLCHECKFRAMEBUFFERSTATUSEXTPROC GLEXT_glCheckFramebufferStatusEXT = nullptr;
 PFNGLDELETEFRAMEBUFFERSEXTPROC GLEXT_glDeleteFramebuffersEXT = nullptr;
@@ -164,21 +165,33 @@ void gld_InitOpenGLVersion(void)
         {
             gl_version = OPENGL_VERSION_2_0;
             if (MinorVersion > 0)
+            {
                 gl_version = OPENGL_VERSION_2_1;
+            }
         }
         else
         {
             gl_version = OPENGL_VERSION_1_0;
             if (MinorVersion > 0)
+            {
                 gl_version = OPENGL_VERSION_1_1;
+            }
             if (MinorVersion > 1)
+            {
                 gl_version = OPENGL_VERSION_1_2;
+            }
             if (MinorVersion > 2)
+            {
                 gl_version = OPENGL_VERSION_1_3;
+            }
             if (MinorVersion > 3)
+            {
                 gl_version = OPENGL_VERSION_1_4;
+            }
             if (MinorVersion > 4)
+            {
                 gl_version = OPENGL_VERSION_1_5;
+            }
         }
     }
 }
@@ -196,14 +209,18 @@ void gld_InitOpenGL(dboolean compatibility_mode)
         gl_ext_texture_filter_anisotropic_default &&
         isExtensionSupported("GL_EXT_texture_filter_anisotropic") != nullptr;
     if (gl_ext_texture_filter_anisotropic)
+    {
         lprintf(LO_INFO, "using GL_EXT_texture_filter_anisotropic\n");
+    }
 
     // Any textures sizes are allowed
     gl_arb_texture_non_power_of_two =
         gl_arb_texture_non_power_of_two_default &&
         isExtensionSupported("GL_ARB_texture_non_power_of_two") != nullptr;
     if (gl_arb_texture_non_power_of_two)
+    {
         lprintf(LO_INFO, "using GL_ARB_texture_non_power_of_two\n");
+    }
 
     // Paletted textures
     if (isExtensionSupported("GL_EXT_paletted_texture") != nullptr)
@@ -214,9 +231,13 @@ void gld_InitOpenGL(dboolean compatibility_mode)
             GLEXT_glColorTableEXT = reinterpret_cast<PFNGLCOLORTABLEEXTPROC>(
                 SDL_GL_GetProcAddress("glColorTableEXT"));
             if (GLEXT_glColorTableEXT == nullptr)
+            {
                 gl_paletted_texture = false;
+            }
             else
+            {
                 lprintf(LO_INFO, "using GL_EXT_paletted_texture\n");
+            }
         }
     }
     else if (isExtensionSupported("GL_EXT_shared_texture_palette") != nullptr)
@@ -227,9 +248,13 @@ void gld_InitOpenGL(dboolean compatibility_mode)
             GLEXT_glColorTableEXT = reinterpret_cast<PFNGLCOLORTABLEEXTPROC>(
                 SDL_GL_GetProcAddress("glColorTableEXT"));
             if (GLEXT_glColorTableEXT == nullptr)
+            {
                 gl_shared_texture_palette = false;
+            }
             else
+            {
                 lprintf(LO_INFO, "using GL_EXT_shared_texture_palette\n");
+            }
         }
     }
 
@@ -237,8 +262,9 @@ void gld_InitOpenGL(dboolean compatibility_mode)
     // ARB_multitexture command function pointers
     //
 
-    gl_arb_multitexture = gl_arb_multitexture_default &&
-                          isExtensionSupported("GL_ARB_multitexture") != nullptr;
+    gl_arb_multitexture =
+        gl_arb_multitexture_default &&
+        isExtensionSupported("GL_ARB_multitexture") != nullptr;
     if (gl_arb_multitexture)
     {
         GLEXT_glActiveTextureARB = reinterpret_cast<PFNGLACTIVETEXTUREARBPROC>(
@@ -255,10 +281,14 @@ void gld_InitOpenGL(dboolean compatibility_mode)
 
         if (!GLEXT_glActiveTextureARB || !GLEXT_glClientActiveTextureARB ||
             !GLEXT_glMultiTexCoord2fARB || !GLEXT_glMultiTexCoord2fvARB)
+        {
             gl_arb_multitexture = false;
+        }
     }
     if (gl_arb_multitexture)
+    {
         lprintf(LO_INFO, "using GL_ARB_multitexture\n");
+    }
 
     //
     // ARB_texture_compression
@@ -274,10 +304,14 @@ void gld_InitOpenGL(dboolean compatibility_mode)
                 SDL_GL_GetProcAddress("glCompressedTexImage2DARB"));
 
         if (!GLEXT_glCompressedTexImage2DARB)
+        {
             gl_arb_texture_compression = false;
+        }
     }
     if (gl_arb_texture_compression)
+    {
         lprintf(LO_INFO, "using GL_ARB_texture_compression\n");
+    }
 
     //
     // EXT_framebuffer_object
@@ -325,16 +359,22 @@ void gld_InitOpenGL(dboolean compatibility_mode)
             !GLEXT_glFramebufferTexture2DEXT ||
             !GLEXT_glCheckFramebufferStatusEXT ||
             !GLEXT_glDeleteFramebuffersEXT || !GLEXT_glDeleteRenderbuffersEXT)
+        {
             gl_ext_framebuffer_object = false;
+        }
     }
     if (gl_ext_framebuffer_object)
+    {
         lprintf(LO_INFO, "using GL_EXT_framebuffer_object\n");
+    }
 
     gl_ext_packed_depth_stencil =
         gl_ext_packed_depth_stencil_default &&
         isExtensionSupported("GL_EXT_packed_depth_stencil") != nullptr;
     if (gl_ext_packed_depth_stencil)
+    {
         lprintf(LO_INFO, "using GL_EXT_packed_depth_stencil\n");
+    }
 
     //
     // Blending
@@ -348,12 +388,16 @@ void gld_InitOpenGL(dboolean compatibility_mode)
             SDL_GL_GetProcAddress("glBlendColorEXT"));
 
         if (!GLEXT_glBlendColorEXT)
+        {
             gl_ext_blend_color = false;
+        }
     }
     if (gl_ext_blend_color)
+    {
         lprintf(LO_INFO, "using GL_EXT_blend_color\n");
+    }
 
-        // VBO
+    // VBO
 #ifdef USE_VBO
     gl_ext_arb_vertex_buffer_object =
         gl_ext_arb_vertex_buffer_object_default &&
@@ -402,10 +446,14 @@ void gld_InitOpenGL(dboolean compatibility_mode)
             !GLEXT_glBufferDataARB || !GLEXT_glBufferSubDataARB ||
             !GLEXT_glDeleteBuffersARB || !GLEXT_glGetBufferParameterivARB ||
             !GLEXT_glMapBufferARB || !GLEXT_glUnmapBufferARB)
+        {
             gl_arb_pixel_buffer_object = false;
+        }
     }
     if (gl_arb_pixel_buffer_object)
+    {
         lprintf(LO_INFO, "using GL_ARB_pixel_buffer_object\n");
+    }
 
     //
     // Stencil support
@@ -490,7 +538,9 @@ void gld_InitOpenGL(dboolean compatibility_mode)
             !GLEXT_glGetObjectParameterivARB || !GLEXT_glGetInfoLogARB ||
             !GLEXT_glGetAttachedObjectsARB || !GLEXT_glGetUniformLocationARB ||
             !GLEXT_glGetActiveUniformARB || !GLEXT_glGetUniformfvARB)
+        {
             gl_arb_shader_objects = false;
+        }
     }
     if (gl_arb_shader_objects)
     {
@@ -585,7 +635,9 @@ void gld_EnableTexture2D(GLenum texture, int enable)
     int arb;
 
     if (!gl_arb_multitexture && texture != GL_TEXTURE0_ARB)
+    {
         return;
+    }
 
     arb = texture - GL_TEXTURE0_ARB;
 
@@ -636,7 +688,9 @@ void gld_EnableClientCoordArray(GLenum texture, int enable)
     int arb;
 
     if (!gl_arb_multitexture)
+    {
         return;
+    }
 
     arb = texture - GL_TEXTURE0_ARB;
 

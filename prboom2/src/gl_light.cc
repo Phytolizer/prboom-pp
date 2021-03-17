@@ -200,12 +200,18 @@ static void gld_InitLightTable_gzdoom(void)
     for (i = 0; i < 256; i++)
     {
         if (i < 192)
+        {
             light = (192.0f - (192 - i) * 1.95f);
+        }
         else
+        {
             light = (float)i;
+        }
 
         if (light < gl_light_ambient)
+        {
             light = (float)gl_light_ambient;
+        }
 
         lighttable_gzdoom[i] = light / 255.0f;
     }
@@ -221,9 +227,13 @@ static void gld_InitLightTable_fogbased(void)
     for (i = 0; i < 256; i++)
     {
         if (i < 192)
+        {
             light = (float)255;
+        }
         else
+        {
             light = (float)i;
+        }
 
         lighttable_fogbased[i] = light / 255.0f;
     }
@@ -242,13 +252,19 @@ static float gld_CalcLightLevel_gzdoom(int lightlevel)
 static float gld_CalcLightLevel_fogbased(int lightlevel)
 {
     if (players[displayplayer].fixedcolormap)
+    {
         return lighttable_gzdoom[BETWEEN(0, 255, lightlevel)];
+    }
     else
     {
         if (extralight)
+        {
             return lighttable_fogbased[255];
+        }
         else
+        {
             return lighttable_fogbased[BETWEEN(0, 255, lightlevel)];
+        }
     }
 }
 
@@ -355,7 +371,9 @@ void M_ChangeAllowFog(void)
             distfogtable[2][i] =
                 (float)(1 << 16) / (float)pow(1.46f, ((float)i / 8.0f));
             if (distfogtable[2][i] > 2048)
+            {
                 distfogtable[2][i] = 2048;
+            }
         }
         else if (i < 192)
         {
@@ -408,9 +426,13 @@ static float gld_CalcFogDensity_fogbased(sector_t *sector, int lightlevel,
         if (extralight)
         {
             if (extralight == 1)
+            {
                 fog -= fog / 3.0f;
+            }
             else
+            {
                 fog -= fog / 2.0f;
+            }
         }
 
         if (type == GLDIT_CEILING || type == GLDIT_FLOOR || type == GLDIT_FWALL)
@@ -447,12 +469,16 @@ void gl_EnableFog(int on)
     if (on)
     {
         if (!gl_fogenabled)
+        {
             glEnable(GL_FOG);
+        }
     }
     else
     {
         if (gl_fogenabled)
+        {
             glDisable(GL_FOG);
+        }
     }
     gl_fogenabled = on;
 }

@@ -38,51 +38,52 @@ static void Heretic_D_DrawOrder(const char *_x)
     D_SetPage(DEH_String("ORDER"), 200, 0);
 }
 
-const demostate_t heretic_demostates[][4] = {{
-                                                 {Heretic_D_DrawTitle, nullptr},
-                                                 {Heretic_D_DrawTitle, nullptr},
-                                                 {Heretic_D_DrawTitle, nullptr},
-                                                 {Heretic_D_DrawTitle, nullptr},
-                                             },
+const demostate_t heretic_demostates[][4] = {
+    {
+        {Heretic_D_DrawTitle, nullptr},
+        {Heretic_D_DrawTitle, nullptr},
+        {Heretic_D_DrawTitle, nullptr},
+        {Heretic_D_DrawTitle, nullptr},
+    },
 
-                                             {
-                                                 {G_DeferedPlayDemo, "demo1"},
-                                                 {G_DeferedPlayDemo, "demo1"},
-                                                 {G_DeferedPlayDemo, "demo1"},
-                                                 {G_DeferedPlayDemo, "demo1"},
-                                             },
+    {
+        {G_DeferedPlayDemo, "demo1"},
+        {G_DeferedPlayDemo, "demo1"},
+        {G_DeferedPlayDemo, "demo1"},
+        {G_DeferedPlayDemo, "demo1"},
+    },
 
-                                             {
-                                                 {Heretic_D_DrawCredits, nullptr},
-                                                 {Heretic_D_DrawCredits, nullptr},
-                                                 {Heretic_D_DrawCredits, nullptr},
-                                                 {Heretic_D_DrawCredits, nullptr},
-                                             },
+    {
+        {Heretic_D_DrawCredits, nullptr},
+        {Heretic_D_DrawCredits, nullptr},
+        {Heretic_D_DrawCredits, nullptr},
+        {Heretic_D_DrawCredits, nullptr},
+    },
 
-                                             {
-                                                 {G_DeferedPlayDemo, "demo2"},
-                                                 {G_DeferedPlayDemo, "demo2"},
-                                                 {G_DeferedPlayDemo, "demo2"},
-                                                 {G_DeferedPlayDemo, "demo2"},
-                                             },
+    {
+        {G_DeferedPlayDemo, "demo2"},
+        {G_DeferedPlayDemo, "demo2"},
+        {G_DeferedPlayDemo, "demo2"},
+        {G_DeferedPlayDemo, "demo2"},
+    },
 
-                                             {
-                                                 {Heretic_D_DrawOrder, nullptr},
-                                                 {Heretic_D_DrawCredits, nullptr},
-                                                 {Heretic_D_DrawCredits, nullptr},
-                                                 {Heretic_D_DrawCredits, nullptr},
-                                             },
+    {
+        {Heretic_D_DrawOrder, nullptr},
+        {Heretic_D_DrawCredits, nullptr},
+        {Heretic_D_DrawCredits, nullptr},
+        {Heretic_D_DrawCredits, nullptr},
+    },
 
-                                             {
-                                                 {G_DeferedPlayDemo, "demo3"},
-                                                 {G_DeferedPlayDemo, "demo3"},
-                                                 {G_DeferedPlayDemo, "demo3"},
-                                                 {G_DeferedPlayDemo, "demo3"},
-                                             },
+    {
+        {G_DeferedPlayDemo, "demo3"},
+        {G_DeferedPlayDemo, "demo3"},
+        {G_DeferedPlayDemo, "demo3"},
+        {G_DeferedPlayDemo, "demo3"},
+    },
 
-                                             {
-                                                 {nullptr},
-                                                 {nullptr},
-                                                 {nullptr},
-                                                 {nullptr},
-                                             }};
+    {
+        {nullptr},
+        {nullptr},
+        {nullptr},
+        {nullptr},
+    }};

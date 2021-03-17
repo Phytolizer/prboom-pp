@@ -33,7 +33,9 @@ void P_RecordChecksum(const char *file)
 
     /* special case: write to stdout */
     if (0 == strncmp("-", file, MIN(1, fnsize)))
+    {
         outfile = stdout;
+    }
     else
     {
         outfile = fopen(file, "wb");
@@ -56,12 +58,16 @@ void P_ChecksumFinal(void)
     unsigned char digest[16];
 
     if (!outfile)
+    {
         return;
+    }
 
     MD5Final(digest, &md5global);
     fprintf(outfile, "final: ");
     for (i = 0; i < 16; i++)
+    {
         fprintf(outfile, "%x", digest[i]);
+    }
     fprintf(outfile, "\n");
     MD5Init(&md5global);
 }
@@ -69,7 +75,9 @@ void P_ChecksumFinal(void)
 static void p_checksum_cleanup(void)
 {
     if (outfile && (outfile != stdout))
+    {
         fclose(outfile);
+    }
 }
 
 /*
@@ -89,7 +97,9 @@ void checksum_gamestate(int tic)
     for (i = 0; i < MAXPLAYERS; i++)
     {
         if (!playeringame[i])
+        {
             continue;
+        }
 
         doom_snprintf(buffer, sizeof(buffer), "%d", players[i].health);
         buffer[sizeof(buffer) - 1] = 0;

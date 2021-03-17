@@ -56,7 +56,7 @@ struct midi_meta_event_data_t
     // Meta event data:
 
     byte *data;
-} ;
+};
 
 struct midi_sysex_event_data_t
 {
@@ -67,7 +67,7 @@ struct midi_sysex_event_data_t
     // Event data:
 
     byte *data;
-} ;
+};
 
 struct midi_channel_event_data_t
 {
@@ -79,7 +79,7 @@ struct midi_channel_event_data_t
 
     unsigned int param1;
     unsigned int param2;
-} ;
+};
 
 typedef struct
 {

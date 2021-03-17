@@ -260,7 +260,9 @@ void gld_MultisamplingInit(void)
 
         if (gl_depthbuffer_bits != 8 && gl_depthbuffer_bits != 16 &&
             gl_depthbuffer_bits != 24)
+        {
             gl_depthbuffer_bits = 16;
+        }
         SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, gl_depthbuffer_bits);
 
         SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES, render_multisampling);
@@ -373,7 +375,9 @@ void gld_Init(int width, int height)
             }
             rover = p;
             while (*rover && *rover == ' ')
+            {
                 rover++;
+            }
         }
     }
 
@@ -484,7 +488,9 @@ void gld_MapDrawSubsectors(player_t *plr, int fx, int fy, fixed_t mx,
                                                : map_textured_trans) /
             100.0f;
     if (alpha == 0)
+    {
         return;
+    }
 
     if (numsubsectors > visible_subsectors_size)
     {
@@ -597,7 +603,9 @@ void gld_MapDrawSubsectors(player_t *plr, int fx, int fy, fixed_t mx,
                 GLLoopDef *currentloop = &subsectorloops[ssidx].loops[loopnum];
 
                 if (!currentloop)
+                {
                     continue;
+                }
 
                 // set the mode (GL_TRIANGLE_FAN)
                 glBegin(currentloop->mode);
@@ -659,7 +667,9 @@ void gld_DrawNumPatch_f(float x, float y, int lump, int cm,
     gld_BindPatch(gltexture, cmap);
 
     if (!gltexture)
+    {
         return;
+    }
     fV1 = 0.0f;
     fV2 = gltexture->scaleyfac;
     if (flags & VPT_FLIP)
@@ -764,7 +774,9 @@ void gld_FillFlat(int lump, int x, int y, int width, int height,
     boom_cm = saved_boom_cm;
 
     if (!gltexture)
+    {
         return;
+    }
 
     if (flags & VPT_STRETCH)
     {
@@ -805,7 +817,9 @@ void gld_FillPatch(int lump, int x, int y, int width, int height,
     gld_BindPatch(gltexture, CR_DEFAULT);
 
     if (!gltexture)
+    {
         return;
+    }
 
     x = x - gltexture->leftoffset;
     y = y - gltexture->topoffset;
@@ -848,7 +862,9 @@ void gld_DrawLine_f(float x0, float y0, float x1, float y1, int BaseColor)
     a = ((automapmode & am_overlay) ? map_lines_overlay_trans * 255 / 100
                                     : 255);
     if (a == 0)
+    {
         return;
+    }
 
     r = playpal[3 * BaseColor + 0];
     g = playpal[3 * BaseColor + 1];
@@ -903,7 +919,9 @@ void gld_DrawWeapon(int weaponlump, vissprite_t *vis, int lightlevel)
     gltexture =
         gld_RegisterPatch(firstspritelump + weaponlump, CR_DEFAULT, false);
     if (!gltexture)
+    {
         return;
+    }
     gld_BindPatch(gltexture, CR_DEFAULT);
     fU1 = 0;
     fV1 = 0;
@@ -934,9 +952,13 @@ void gld_DrawWeapon(int weaponlump, vissprite_t *vis, int lightlevel)
     else
     {
         if (viewplayer->mo->flags & g_mf_translucent)
+        {
             gld_StaticLightAlpha(light, (float)tran_filter_pct / 100.0f);
+        }
         else
+        {
             gld_StaticLight(light);
+        }
     }
     glBegin(GL_TRIANGLE_STRIP);
     glTexCoord2f(fU1, fV1);
@@ -982,7 +1004,9 @@ void gld_SetPalette(int palette)
     extra_blue = 0.0f;
     extra_alpha = 0.0f;
     if (palette < 0)
+    {
         palette = last_palette;
+    }
     last_palette = palette;
     if (gl_shared_texture_palette)
     {
@@ -997,11 +1021,17 @@ void gld_SetPalette(int palette)
             int col;
 
             if (fixedcolormap)
+            {
                 col = fixedcolormap[i];
+            }
             else if (fullcolormap)
+            {
                 col = fullcolormap[i];
+            }
             else
+            {
                 col = i;
+            }
             pal[i * 4 + 0] = playpal[col * 3 + 0];
             pal[i * 4 + 1] = playpal[col * 3 + 1];
             pal[i * 4 + 2] = playpal[col * 3 + 2];
@@ -1042,13 +1072,21 @@ void gld_SetPalette(int palette)
             }
         }
         if (extra_red > 1.0f)
+        {
             extra_red = 1.0f;
+        }
         if (extra_green > 1.0f)
+        {
             extra_green = 1.0f;
+        }
         if (extra_blue > 1.0f)
+        {
             extra_blue = 1.0f;
+        }
         if (extra_alpha > 1.0f)
+        {
             extra_alpha = 1.0f;
+        }
     }
 }
 
@@ -1155,8 +1193,10 @@ void gld_Clear(void)
 
 #ifndef PRBOOM_DEBUG
     if (gl_clear)
+    {
 #endif
         clearbits |= GL_COLOR_BUFFER_BIT;
+    }
 
     // flashing red HOM indicators
     if (flashing_hom)
@@ -1166,13 +1206,19 @@ void gld_Clear(void)
     }
 
     if (gl_use_stencil)
+    {
         clearbits |= GL_STENCIL_BUFFER_BIT;
+    }
 
     if (!gl_ztrick)
+    {
         clearbits |= GL_DEPTH_BUFFER_BIT;
+    }
 
     if (clearbits)
+    {
         glClear(clearbits);
+    }
 
     if (gl_ztrick)
     {
@@ -1200,7 +1246,9 @@ void gld_StartDrawScene(void)
     gld_MultisamplingSet();
 
     if (gl_shared_texture_palette)
+    {
         glEnable(GL_SHARED_TEXTURE_PALETTE_EXT);
+    }
     gld_SetPalette(-1);
 
     glViewport(viewport[0], viewport[1], viewport[2], viewport[3]);
@@ -1453,7 +1501,9 @@ void gld_EndDrawScene(void)
     glDisable(GL_SCISSOR_TEST);
     glDisable(GL_ALPHA_TEST);
     if (gl_shared_texture_palette)
+    {
         glDisable(GL_SHARED_TEXTURE_PALETTE_EXT);
+    }
 }
 
 static void gld_AddDrawWallItem(GLDrawItemType itemtype, void *itemdata)
@@ -1507,7 +1557,9 @@ static void gld_AddDrawWallItem(GLDrawItemType itemtype, void *itemdata)
     }
 
     if (((GLWall *)itemdata)->gltexture->detail)
+    {
         scene_has_wall_details++;
+    }
 
     gld_AddDrawItem(itemtype, itemdata);
 }
@@ -1534,9 +1586,13 @@ static void gld_DrawWall(GLWall *wall)
     // Do not repeat middle texture vertically
     // to avoid visual glitches for textures with holes
     if ((wall->flag == GLDWF_M2S) && (wall->flag < GLDWF_SKY))
+    {
         flags = GLTEXTURE_CLAMPY;
+    }
     else
+    {
         flags = 0;
+    }
 
     gld_BindTexture(wall->gltexture, flags);
     gld_BindDetailARB(wall->gltexture, has_detail);
@@ -1577,7 +1633,9 @@ static void gld_DrawWall(GLWall *wall)
 
             // split left edge of wall
             if (!wall->glseg->fracleft)
+            {
                 gld_SplitLeftEdge(wall, false);
+            }
 
             // upper left corner
             glTexCoord2f(wall->ul, wall->vt);
@@ -1589,7 +1647,9 @@ static void gld_DrawWall(GLWall *wall)
 
             // split right edge of wall
             if (!wall->glseg->fracright)
+            {
                 gld_SplitRightEdge(wall, false);
+            }
 
             // lower right corner
             glTexCoord2f(wall->ur, wall->vb);
@@ -1691,18 +1751,24 @@ void gld_AddWall(seg_t *seg)
 
     int side = (seg->sidedef == &sides[seg->linedef->sidenum[0]] ? 0 : 1);
     if (linerendered[side][seg->linedef->iLineID] == rendermarker)
+    {
         return;
+    }
     linerendered[side][seg->linedef->iLineID] = rendermarker;
     linelength = lines[seg->linedef->iLineID].texel_length;
     wall.glseg = &gl_lines[seg->linedef->iLineID];
     backseg = seg->sidedef != &sides[seg->linedef->sidenum[0]];
 
     if (!seg->frontsector)
+    {
         return;
+    }
     frontsector = R_FakeFlat(seg->frontsector, &ftempsec, nullptr, nullptr,
                              false); // for boom effects
     if (!frontsector)
+    {
         return;
+    }
 
     // e6y: fake contrast stuff
     // Original doom added/removed one light level ((1<<LIGHTSEGSHIFT) == 16)
@@ -1765,7 +1831,9 @@ void gld_AddWall(seg_t *seg)
         backsector = R_FakeFlat(seg->backsector, &btempsec, nullptr, nullptr,
                                 true); // for boom effects
         if (!backsector)
+        {
             return;
+        }
 
         if (frontsector->floorheight > backsector->floorheight)
         {
@@ -1868,7 +1936,7 @@ void gld_AddWall(seg_t *seg)
                 if (!temptex && gl_use_stencil && backsector &&
                     !(seg->linedef->r_flags & line_t::RF_ISOLATED) &&
                     /*frontsector->ceilingpic != skyflatnum && */
-                        backsector->ceilingpic != skyflatnum &&
+                    backsector->ceilingpic != skyflatnum &&
                     !(backsector->flags & NULL_SECTOR))
                 {
                     wall.ytop = ((float)(ceiling_height) / (float)MAP_SCALE) +
@@ -1905,15 +1973,19 @@ void gld_AddWall(seg_t *seg)
         /* midtexture */
         // e6y
         if (comp[comp_maskedanim])
+        {
             temptex =
                 gld_RegisterTexture(seg->sidedef->midtexture, true, false);
+        }
         else
+        {
 
             // e6y
             // Animated middle textures with a zero index should be forced
             // See spacelab.wad
             // (http://www.doomworld.com/idgames/index.php?id=6826)
             temptex = gld_RegisterTexture(midtexture, true, true);
+        }
         if (temptex && seg->sidedef->midtexture != NO_TEXTURE &&
             backsector->ceilingheight > frontsector->floorheight)
         {
@@ -1956,13 +2028,19 @@ void gld_AddWall(seg_t *seg)
                     backsector->ceilingpic != skyflatnum)
                 {
                     if (toptexture == NO_TEXTURE)
+                    {
                         // texture is missing - use the higher plane
                         top = MAX(f->ceilingheight, b->ceilingheight);
+                    }
                     else
+                    {
                         top = MIN(f->ceilingheight, b->ceilingheight);
+                    }
                 }
                 else
+                {
                     top = ceiling_height;
+                }
 
                 // Set up the bottom
                 if (frontsector->floorpic != skyflatnum ||
@@ -1970,11 +2048,15 @@ void gld_AddWall(seg_t *seg)
                     frontsector->floorheight != backsector->floorheight)
                 {
                     if (seg->sidedef->bottomtexture == NO_TEXTURE)
+                    {
                         // texture is missing - use the lower plane
                         bottom = MIN(f->floorheight, b->floorheight);
+                    }
                     else
+                    {
                         // normal case - use the higher plane
                         bottom = MAX(f->floorheight, b->floorheight);
+                    }
                 }
                 else
                 {
@@ -1983,9 +2065,13 @@ void gld_AddWall(seg_t *seg)
 
                 // let's clip away some unnecessary parts of the polygon
                 if (ceiling_height < top)
+                {
                     top = ceiling_height;
+                }
                 if (floor_height > bottom)
+                {
                     bottom = floor_height;
+                }
             }
             else
             {
@@ -1995,7 +2081,9 @@ void gld_AddWall(seg_t *seg)
             }
 
             if (top <= bottom)
+            {
                 goto bottomtexture;
+            }
 
             wall.ytop = (float)top / (float)MAP_SCALE;
             wall.ybottom = (float)bottom / (float)MAP_SCALE;
@@ -2009,7 +2097,9 @@ void gld_AddWall(seg_t *seg)
                       (float)wall.gltexture->realtexheight;
 
             if (seg->linedef->tranlump >= 0 && general_translucency)
+            {
                 wall.alpha = (float)tran_filter_pct / 100.0f;
+            }
             gld_AddDrawWallItem(
                 (wall.alpha == 1.0f ? GLDIT_MWALL : GLDIT_TWALL), &wall);
             wall.alpha = 1.0f;
@@ -2059,7 +2149,7 @@ void gld_AddWall(seg_t *seg)
             if (!temptex && gl_use_stencil && backsector &&
                 !(seg->linedef->r_flags & line_t::RF_ISOLATED) &&
                 /*frontsector->floorpic != skyflatnum && */
-                    backsector->floorpic != skyflatnum &&
+                backsector->floorpic != skyflatnum &&
                 !(backsector->flags & NULL_SECTOR))
             {
                 wall.ytop =
@@ -2128,9 +2218,13 @@ static void gld_DrawFlat(GLFlat *flat)
         ((tex_filter[MIP_TEXTURE].mag_filter == GL_NEAREST) ||
          (flat->gltexture->flags & GLTEXTURE_HIRES)) &&
         !(flat->flags & GLFLAT_HAVE_OFFSET))
+    {
         flags = GLTEXTURE_CLAMPXY;
+    }
     else
+    {
         flags = 0;
+    }
 
     gld_BindFlat(flat->gltexture, flags);
     gld_StaticLightAlpha(flat->light, flat->alpha);
@@ -2266,7 +2360,9 @@ static void gld_AddFlat(int sectornum, dboolean ceiling, visplane_t *plane)
     GLFlat flat;
 
     if (sectornum < 0)
+    {
         return;
+    }
     flat.sectornum = sectornum;
     sector = &sectors[sectornum]; // get the sector
     sector = R_FakeFlat(sector, &tempsec, &floorlightlevel, &ceilinglightlevel,
@@ -2275,13 +2371,17 @@ static void gld_AddFlat(int sectornum, dboolean ceiling, visplane_t *plane)
 
     if (!ceiling) // if it is a floor ...
     {
-        if (sector->floorpic == skyflatnum) // don't draw if sky
+        if (sector->floorpic == skyflatnum)
+        { // don't draw if sky
             return;
+        }
         // get the texture. flattranslation is maintained by doom and
         // contains the number of the current animation frame
         flat.gltexture = gld_RegisterFlat(flattranslation[plane->picnum], true);
         if (!flat.gltexture)
+        {
             return;
+        }
         // get the lightlevel from floorlightlevel
         flat.light = gld_CalcLightLevel(plane->lightlevel + (extralight << 5));
         flat.fogdensity =
@@ -2301,13 +2401,17 @@ static void gld_AddFlat(int sectornum, dboolean ceiling, visplane_t *plane)
     }
     else // if it is a ceiling ...
     {
-        if (sector->ceilingpic == skyflatnum) // don't draw if sky
+        if (sector->ceilingpic == skyflatnum)
+        { // don't draw if sky
             return;
+        }
         // get the texture. flattranslation is maintained by doom and
         // contains the number of the current animation frame
         flat.gltexture = gld_RegisterFlat(flattranslation[plane->picnum], true);
         if (!flat.gltexture)
+        {
             return;
+        }
         // get the lightlevel from ceilinglightlevel
         flat.light = gld_CalcLightLevel(plane->lightlevel + (extralight << 5));
         flat.fogdensity =
@@ -2352,7 +2456,9 @@ static void gld_AddFlat(int sectornum, dboolean ceiling, visplane_t *plane)
     flat.alpha = 1.0;
 
     if (flat.gltexture->detail)
+    {
         scene_has_flat_details++;
+    }
 
     gld_AddDrawItem(
         ((flat.flags & GLFLAT_CEILING) ? GLDIT_CEILING : GLDIT_FLOOR), &flat);
@@ -2364,14 +2470,20 @@ void gld_AddPlane(int subsectornum, visplane_t *floor, visplane_t *ceiling)
 
     subsector = &subsectors[subsectornum];
     if (!subsector)
+    {
         return;
+    }
 
     // render the floor
     if (floor && floor->height < viewz)
+    {
         gld_AddFlat(subsector->sector->iSectorID, false, floor);
+    }
     // render the ceiling
     if (ceiling && ceiling->height > viewz)
+    {
         gld_AddFlat(subsector->sector->iSectorID, true, ceiling);
+    }
 }
 
 /*****************
@@ -2404,10 +2516,14 @@ static void gld_DrawSprite(GLSprite *sprite)
         else
         {
             if (sprite->flags & g_mf_translucent)
+            {
                 gld_StaticLightAlpha(sprite->light,
                                      (float)tran_filter_pct / 100.0f);
+            }
             else
+            {
                 gld_StaticLight(sprite->light);
+            }
         }
     }
 
@@ -2491,11 +2607,17 @@ static void gld_AddHealthBar(mobj_t *thing, GLSprite *sprite)
 
         hbar.cm = -1;
         if (health_percent <= health_bar_red)
+        {
             hbar.cm = CR_RED;
+        }
         else if (health_percent <= health_bar_yellow)
+        {
             hbar.cm = CR_YELLOW;
+        }
         else if (health_percent <= health_bar_green)
+        {
             hbar.cm = CR_GREEN;
+        }
 
         if (hbar.cm >= 0)
         {
@@ -2607,7 +2729,9 @@ void gld_ProjectSprite(mobj_t *thing, int lightlevel)
 
     // thing is behind view plane?
     if (tz < r_near_clip_plane)
+    {
         return;
+    }
 
     gxt = -FixedMul(tr_x, viewsin);
     gyt = FixedMul(tr_y, viewcos);
@@ -2617,13 +2741,17 @@ void gld_ProjectSprite(mobj_t *thing, int lightlevel)
     if (!render_paperitems && mlook)
     {
         if (tz >= MINZ && (D_abs(tx) >> 5) > tz)
+        {
             return;
+        }
     }
     else
     {
         // too far off the side?
         if (D_abs(tx) > (tz << 2))
+        {
             return;
+        }
     }
 
     // decide which patch to use for sprite relative to player
@@ -2641,8 +2769,10 @@ void gld_ProjectSprite(mobj_t *thing, int lightlevel)
 #endif
 
     if (!sprdef->spriteframes)
+    {
         I_Error("R_ProjectSprite: Missing spriteframes %i : %i", thing->sprite,
                 thing->frame);
+    }
 
     sprframe = &sprdef->spriteframes[thing->frame & FF_FRAMEMASK];
 
@@ -2684,9 +2814,13 @@ void gld_ProjectSprite(mobj_t *thing, int lightlevel)
          * cph 2003/08/1 - fraggle points out that this offset must be flipped
          * if the sprite is flipped; e.g. FreeDoom imp is messed up by this. */
         if (flip)
+        {
             tx -= (patch->width - patch->leftoffset) << FRACBITS;
+        }
         else
+        {
             tx -= patch->leftoffset << FRACBITS;
+        }
 
         x1 = (centerxfrac + FixedMul(tx, xscale)) >> FRACBITS;
         tx += patch->width << FRACBITS;
@@ -2694,7 +2828,9 @@ void gld_ProjectSprite(mobj_t *thing, int lightlevel)
 
         // off the side?
         if (x1 > viewwidth || x2 < 0)
+        {
             goto unlock_patch;
+        }
     }
 
     // killough 3/27/98: exclude things totally separated
@@ -2709,17 +2845,23 @@ void gld_ProjectSprite(mobj_t *thing, int lightlevel)
         if (phs != -1 && viewz < sectors[phs].floorheight
                 ? fz >= sectors[heightsec].floorheight
                 : gzt < sectors[heightsec].floorheight)
+        {
             goto unlock_patch;
+        }
         if (phs != -1 && viewz > sectors[phs].ceilingheight
                 ? gzt < sectors[heightsec].ceilingheight &&
                       viewz >= sectors[heightsec].ceilingheight
                 : fz >= sectors[heightsec].ceilingheight)
+        {
             goto unlock_patch;
+        }
     }
 
     // e6y FIXME!!!
     if (thing == players[displayplayer].mo && walkcamera.type != 2)
+    {
         goto unlock_patch;
+    }
 
     sprite.x = -(float)fx / MAP_SCALE;
     sprite.y = (float)fz / MAP_SCALE;
@@ -2783,11 +2925,15 @@ void gld_ProjectSprite(mobj_t *thing, int lightlevel)
     }
     sprite.gltexture = gld_RegisterPatch(lump, sprite.cm, true);
     if (!sprite.gltexture)
+    {
         goto unlock_patch;
+    }
     sprite.flags = thing->flags;
 
     if (thing->flags & MF_FOREGROUND)
+    {
         scene_has_overlapped_sprites = true;
+    }
 
     sprite.index = gl_spriteindex++;
     sprite.xy = thing->x + (thing->y >> 16);
@@ -2895,10 +3041,10 @@ static void gld_DrawItemsSortByTexture(GLDrawItemType itemtype)
     typedef int(C_DECL * DICMP_ITEM)(const void *a, const void *b);
 
     static DICMP_ITEM itemfuncs[GLDIT_TYPES] = {
-        nullptr,          dicmp_wall, dicmp_wall,   dicmp_wall,         dicmp_wall,
+        nullptr,    dicmp_wall, dicmp_wall,   dicmp_wall,         dicmp_wall,
         dicmp_wall, dicmp_wall, dicmp_wall,   dicmp_flat,         dicmp_flat,
         dicmp_flat, dicmp_flat, dicmp_sprite, dicmp_sprite_scale, dicmp_sprite,
-        nullptr,          nullptr,
+        nullptr,    nullptr,
     };
 
     if (itemfuncs[itemtype] && gld_drawinfo.num_items[itemtype] > 1)
@@ -3462,7 +3608,9 @@ void gld_DrawScene(player_t *player)
 
     // e6y: detail
     if (!gl_arb_multitexture && render_usedetail)
+    {
         gld_DrawDetail_NoARB();
+    }
 
     gld_EnableDetail(false);
 

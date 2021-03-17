@@ -53,7 +53,7 @@ const music_player_t fl_player = {fl_name, fl_init, nullptr, NULL, NULL, NULL,
 #else // HAVE_LIBFLUIDSYNTH
 
 #include <fluidsynth.h>
-#include "i_sound.hh" // for snd_soundfont, mus_fluidsynth_gain
+#include "i_sound.hh"  // for snd_soundfont, mus_fluidsynth_gain
 #include "i_system.hh" // for I_FindFile()
 #include "lprintf.hh"
 #include "midifile.hh"
@@ -112,9 +112,13 @@ int fl_init(int samplerate)
         lprintf(LO_INFO, "Fluidplayer: Fluidsynth version %i.%i.%i\n", major,
                 minor, micro);
         if (major >= 2 || (minor >= 1 && micro >= 4))
+        {
             sratemin = 8000;
+        }
         else
+        {
             sratemin = 22050;
+        }
         if (f_soundrate < sratemin)
         {
             lprintf(LO_INFO,
@@ -313,7 +317,9 @@ static void fl_writesamples_ex(short *dest, int nsamp)
     {
         float *newfbuff = (float *)realloc(fbuff, nsamp * 2 * sizeof(float));
         if (!newfbuff)
+        {
             return;
+        }
         fbuff = newfbuff;
         fbuff_siz = nsamp * 2;
     }
@@ -325,9 +331,13 @@ static void fl_writesamples_ex(short *dest, int nsamp)
         // data is NOT already clipped
         float f = fbuff[i];
         if (f > 1.0f)
+        {
             f = 1.0f;
+        }
         if (f < -1.0f)
+        {
             f = -1.0f;
+        }
         dest[i] = (short)(f * multiplier);
     }
 }
@@ -442,9 +452,10 @@ void fl_render(void *vdest, unsigned length)
                        currevent->data.sysex.length);
             break;
         case midi_event_type_t::META.value():
-            if (currevent->data.meta.type ==
-                midi_meta_event_type_t::SET_TEMPO)
+            if (currevent->data.meta.type == midi_meta_event_type_t::SET_TEMPO)
+            {
                 spmc = MIDI_spmc(midifile, currevent, f_soundrate);
+            }
             else if (currevent->data.meta.type ==
                      midi_meta_event_type_t::END_OF_TRACK)
             {

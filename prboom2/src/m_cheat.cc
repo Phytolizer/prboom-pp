@@ -99,7 +99,8 @@ static void cheat_fly();
 //
 // The first argument is the cheat code.
 //
-// The second argument is its DEH name, or nullptr if it's not supported by -deh.
+// The second argument is its DEH name, or nullptr if it's not supported by
+// -deh.
 //
 // The third argument is a combination of the bitmasks:
 // {always, not_dm, not_coop, not_net, not_menu, not_demo, not_deh},
@@ -221,7 +222,9 @@ static void cheat_mus(char buf[3])
 
     // jff 3/17/98 avoid musnum being negative and crashing
     if (!isdigit(buf[0]) || !isdigit(buf[1]))
+    {
         return;
+    }
 
     plyr->message = s_STSTR_MUS; // Ty 03/27/98 - externalized
 
@@ -231,7 +234,9 @@ static void cheat_mus(char buf[3])
 
         // jff 4/11/98 prevent IDMUS00 in DOOMII and IDMUS36 or greater
         if (musnum < mus_runnin || ((buf[0] - '0') * 10 + buf[1] - '0') > 35)
+        {
             plyr->message = s_STSTR_NOMUS; // Ty 03/27/98 - externalized
+        }
         else
         {
             S_ChangeMusic(musnum, 1);
@@ -245,7 +250,9 @@ static void cheat_mus(char buf[3])
         // jff 4/11/98 prevent IDMUS0x IDMUSx0 in DOOMI and greater than introa
         if (buf[0] < '1' || buf[1] < '1' ||
             ((buf[0] - '1') * 9 + buf[1] - '1') > 31)
+        {
             plyr->message = s_STSTR_NOMUS; // Ty 03/27/98 - externalized
+        }
         else
         {
             S_ChangeMusic(musnum, 1);
@@ -289,13 +296,17 @@ static void cheat_god()
     if (plyr->cheats & CF_GODMODE)
     {
         if (plyr->mo)
+        {
             plyr->mo->health = god_health; // Ty 03/09/98 - deh
+        }
 
         plyr->health = god_health;
         plyr->message = s_STSTR_DQDON; // Ty 03/27/98 - externalized
     }
     else
+    {
         plyr->message = s_STSTR_DQDOFF; // Ty 03/27/98 - externalized
+    }
 }
 
 // CPhipps - new health and armour cheat codes
@@ -304,7 +315,9 @@ static void cheat_health()
     if (!(plyr->cheats & CF_GODMODE))
     {
         if (plyr->mo)
+        {
             plyr->mo->health = mega_health;
+        }
         plyr->health = mega_health;
         plyr->message = s_STSTR_BEHOLDX; // Ty 03/27/98 - externalized
     }
@@ -324,7 +337,9 @@ static void cheat_fa()
     if (!plyr->backpack)
     {
         for (i = 0; i < NUMAMMO; i++)
+        {
             plyr->maxammo[i] *= 2;
+        }
         plyr->backpack = true;
     }
 
@@ -333,13 +348,21 @@ static void cheat_fa()
 
     // You can't own weapons that aren't in the game // phares 02/27/98
     for (i = 0; i < NUMWEAPONS; i++)
+    {
         if (!(((i == wp_plasma || i == wp_bfg) && gamemode == shareware) ||
               (i == wp_supershotgun && gamemode != commercial)))
+        {
             plyr->weaponowned[i] = true;
+        }
+    }
 
     for (i = 0; i < NUMAMMO; i++)
+    {
         if (i != am_cell || gamemode != shareware)
+        {
             plyr->ammo[i] = plyr->maxammo[i];
+        }
+    }
 
     plyr->message = s_STSTR_FAADDED;
 }
@@ -348,11 +371,13 @@ static void cheat_k()
 {
     int i;
     for (i = 0; i < NUMCARDS; i++)
+    {
         if (!plyr->cards[i]) // only print message if at least one key added
         {                    // however, caller may overwrite message anyway
             plyr->cards[i] = true;
             plyr->message = "Keys Added";
         }
+    }
 }
 
 static void cheat_kfa()
@@ -376,12 +401,16 @@ static void cheat_noclip()
 static void cheat_pw(int pw)
 {
     if (plyr->powers[pw])
+    {
         plyr->powers[pw] = pw != pw_strength && pw != pw_allmap; // killough
+    }
     else
     {
         P_GivePower(plyr, pw);
         if (pw != pw_strength)
+        {
             plyr->powers[pw] = -1; // infinite duration -- killough
+        }
     }
     plyr->message = s_STSTR_BEHOLDX; // Ty 03/27/98 - externalized
 }
@@ -395,9 +424,11 @@ static void cheat_behold()
 static dboolean cannot_clev(int epsd, int map)
 {
     if (heretic)
+    {
         return (epsd < 1 || epsd > 6 || map < 1 || map > 9 ||
                 (gamemode != retail && epsd > 3) ||
                 (gamemode == shareware && epsd > 1) || (epsd == 6 && map > 3));
+    }
 
     return (
         epsd < 1 || map < 1 ||
@@ -438,7 +469,9 @@ static void cheat_clev(char buf[3])
 
         // Catch invalid maps.
         if (cannot_clev(epsd, map))
+        {
             return;
+        }
 
         // Chex.exe always warps to episode 1.
         if (gamemission == chex)
@@ -511,7 +544,9 @@ static void cheat_tnttran()
 
     // killough 3/1/98, 4/11/98: cache translucency map on a demand basis
     if (general_translucency && !main_tranmap)
+    {
         R_InitTranMap(0);
+    }
 }
 
 static void cheat_massacre() // jff 2/01/98 kill all monsters
@@ -530,7 +565,10 @@ static void cheat_massacre() // jff 2/01/98 kill all monsters
     uint_64_t mask = MF_FRIEND;
     P_MapStart();
     do
-        while ((currentthinker = P_NextThinker(currentthinker, th_all)) != nullptr)
+    {
+        while ((currentthinker = P_NextThinker(currentthinker, th_all)) !=
+               nullptr)
+        {
             if (currentthinker->function == P_MobjThinker &&
                 !(((mobj_t *)currentthinker)->flags &
                   mask) && // killough 7/20/98
@@ -540,7 +578,8 @@ static void cheat_massacre() // jff 2/01/98 kill all monsters
                 if (((mobj_t *)currentthinker)->health > 0)
                 {
                     killcount++;
-                    P_DamageMobj((mobj_t *)currentthinker, nullptr, nullptr, 10000);
+                    P_DamageMobj((mobj_t *)currentthinker, nullptr, nullptr,
+                                 10000);
                 }
                 if (((mobj_t *)currentthinker)->type == MT_PAIN)
                 {
@@ -548,7 +587,8 @@ static void cheat_massacre() // jff 2/01/98 kill all monsters
                     P_SetMobjState((mobj_t *)currentthinker, S_PAIN_DIE6);
                 }
             }
-    while (!killcount &&mask ? mask = 0, 1 : 0); // killough 7/20/98
+        }
+    } while (!killcount &&mask ? mask = 0, 1 : 0); // killough 7/20/98
     P_MapEnd();
     // killough 3/22/98: make more intelligent about plural
     // Ty 03/27/98 - string(s) *not* externalized
@@ -561,7 +601,9 @@ static void cheat_ddt()
 {
     extern int ddt_cheating;
     if (automapmode & am_active)
+    {
         ddt_cheating = (ddt_cheating + 1) % 3;
+    }
 }
 
 // killough 2/7/98: HOM autodetection
@@ -614,21 +656,29 @@ static void cheat_tntweapx(char buf[3])
 
     if ((w == wp_supershotgun && gamemode != commercial) || // killough 2/28/98
         ((w == wp_bfg || w == wp_plasma) && gamemode == shareware))
+    {
         return;
+    }
 
-    if (w == wp_fist) // make '1' apply beserker strength toggle
+    if (w == wp_fist)
+    { // make '1' apply beserker strength toggle
         cheat_pw(pw_strength);
+    }
     else if (w >= 0 && w < NUMWEAPONS)
     {
         if ((plyr->weaponowned[w] = !plyr->weaponowned[w]))
+        {
             plyr->message = "Weapon Added"; // Ty 03/27/98 - *not* externalized
+        }
         else
         {
             plyr->message =
-                "Weapon Removed";       // Ty 03/27/98 - *not* externalized
-            if (w == plyr->readyweapon) // maybe switch if weapon removed
+                "Weapon Removed"; // Ty 03/27/98 - *not* externalized
+            if (w == plyr->readyweapon)
+            { // maybe switch if weapon removed
                 plyr->pendingweapon =
                     static_cast<weapontype_t>(P_SwitchWeapon(plyr));
+            }
         }
     }
 }
@@ -642,16 +692,26 @@ static void cheat_tntammo()
 static void cheat_tntammox(char buf[1])
 {
     int a = *buf - '1';
-    if (*buf == 'b') // Ty 03/27/98 - strings *not* externalized
+    if (*buf == 'b')
+    { // Ty 03/27/98 - strings *not* externalized
         if ((plyr->backpack = !plyr->backpack))
+        {
             for (plyr->message = "Backpack Added", a = 0; a < NUMAMMO; a++)
+            {
                 plyr->maxammo[a] <<= 1;
+            }
+        }
         else
+        {
             for (plyr->message = "Backpack Removed", a = 0; a < NUMAMMO; a++)
             {
                 if (plyr->ammo[a] > (plyr->maxammo[a] >>= 1))
+                {
                     plyr->ammo[a] = plyr->maxammo[a];
+                }
             }
+        }
+    }
     else if (a >= 0 && a < NUMAMMO) // Ty 03/27/98 - *not* externalized
     { // killough 5/5/98: switch plasma and rockets for now -- KLUDGE
         a = a == am_cell ? am_misl : a == am_misl ? am_cell : a; // HACK
@@ -679,9 +739,13 @@ static void cheat_notarget()
 {
     plyr->cheats ^= CF_NOTARGET;
     if (plyr->cheats & CF_NOTARGET)
+    {
         plyr->message = "Notarget Mode ON";
+    }
     else
+    {
         plyr->message = "Notarget Mode OFF";
+    }
 }
 
 static void cheat_fly()
@@ -734,10 +798,12 @@ static int M_FindCheats_Boom(int key)
     if (argsleft)
     {
         *arg++ = static_cast<char>(tolower(key)); // store key in arg buffer
-        if (!--argsleft)                          // if last key in arg list,
+        if (!--argsleft)
+        { // if last key in arg list,
             reinterpret_cast<void (*)(char *)>(cheat[cht].func)(
                 argbuf); // process the arg buffer
-        return 1;        // affirmative response
+        }
+        return 1; // affirmative response
     }
 
     key = tolower(key) - 'a';
@@ -758,8 +824,10 @@ static int M_FindCheats_Boom(int key)
             for (p = cheat[i].cheat; *p; p++)
             {
                 unsigned letter = tolower(*p) - 'a'; // convert to 0-31
-                if (letter >= 32) // ignore most non-alpha cheat letters
+                if (letter >= 32)
+                { // ignore most non-alpha cheat letters
                     continue;
+                }
                 c = (c << 5) + letter; // shift letter into code
                 m = (m << 5) + 31;     // shift 1's into mask
             }
@@ -771,6 +839,7 @@ static int M_FindCheats_Boom(int key)
     sr = (sr << 5) + key; // shift this key into shift register
 
     for (matchedbefore = ret = i = 0; cheat[i].cheat; i++)
+    {
         if ((sr & cheat[i].mask) == cheat[i].code &&
             M_CheatAllowed(cheat[i].when))
         {
@@ -788,6 +857,7 @@ static int M_FindCheats_Boom(int key)
                     cheat[i].arg); // call cheat handler
             }
         }
+    }
     return ret;
 }
 
@@ -818,7 +888,9 @@ static int M_FindCheats_Doom(int key)
                 compatibility_level == lxdoom_1_compatibility)
             {
                 if (cht->arg < 0 && cht->deh_sequence_len < cht->sequence_len)
+                {
                     continue;
+                }
             }
 
             if (cht->chars_read < cht->deh_sequence_len)
@@ -828,9 +900,13 @@ static int M_FindCheats_Doom(int key)
                 // if a key is wrong
 
                 if (char_key == cht->cheat[cht->chars_read])
+                {
                     ++cht->chars_read;
+                }
                 else
+                {
                     cht->chars_read = 0;
+                }
 
                 cht->param_chars_read = 0;
             }
@@ -902,9 +978,13 @@ dboolean M_FindCheats(int key)
     cht_InitCheats();
 
     if (boom_cheat_route[compatibility_level])
+    {
         return M_FindCheats_Boom(key);
+    }
     else
+    {
         return M_FindCheats_Doom(key);
+    }
 }
 
 typedef struct cheat_input_s
@@ -944,14 +1024,18 @@ dboolean M_CheatResponder(event_t *ev)
     cheat_input_t *cheat_i;
 
     if (ev->type == ev_keydown && M_FindCheats(ev->data1))
+    {
         return true;
+    }
 
     for (cheat_i = cheat_input; cheat_i->input; cheat_i++)
     {
         if (dsda_InputActivated(cheat_i->input))
         {
             if (M_CheatAllowed(cheat_i->when))
+            {
                 reinterpret_cast<void (*)(int)>(cheat_i->func)(cheat_i->arg);
+            }
 
             return true;
         }

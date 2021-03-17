@@ -83,14 +83,18 @@ dboolean P_SetMobjState(mobj_t *mobj, statenum_t state)
     statenum_t tempstate[NUMSTATES];            // for use with recursion
 
     if (heretic)
+    {
         return Heretic_P_SetMobjState(mobj, state);
+    }
 
     seenstate = seenstate_tab;
     i = state;
     ret = true;
 
-    if (recursion++) // if recursion detected,
+    if (recursion++)
+    { // if recursion detected,
         memset(seenstate = tempstate, 0, sizeof tempstate); // clear state table
+    }
 
     do
     {
@@ -112,7 +116,9 @@ dboolean P_SetMobjState(mobj_t *mobj, statenum_t state)
         // Call action functions when the state is set
 
         if (st->action.notNull())
+        {
             st->action.mobj()(mobj);
+        }
 
         seenstate[state] =
             static_cast<statenum_t>(1 + st->nextstate); // killough 4/9/98
@@ -120,13 +126,19 @@ dboolean P_SetMobjState(mobj_t *mobj, statenum_t state)
         state = st->nextstate;
     } while (!mobj->tics && !seenstate[state]); // killough 4/9/98
 
-    if (ret && !mobj->tics) // killough 4/9/98: detect state cycles
+    if (ret && !mobj->tics)
+    { // killough 4/9/98: detect state cycles
         doom_printf("Warning: State Cycle Detected");
+    }
 
     if (!--recursion)
+    {
         for (; (state = seenstate[i]); i = static_cast<statenum_t>(state - 1))
+        {
             seenstate[i] = static_cast<statenum_t>(
                 0); // killough 4/9/98: erase memory of states
+        }
+    }
 
     return ret;
 }
@@ -154,13 +166,17 @@ void P_ExplodeMissile(mobj_t *mo)
         mo->tics -= P_Random(pr_explode) & 3;
 
         if (mo->tics < 1)
+        {
             mo->tics = 1;
+        }
     }
 
     mo->flags &= ~MF_MISSILE;
 
     if (mo->info->deathsound)
+    {
         S_StartSound(mo, mo->info->deathsound);
+    }
 }
 
 //
@@ -192,9 +208,13 @@ static void P_XYMovement(mobj_t *mo)
             mo->momz = 0;
 
             if (heretic)
+            {
                 new_state = static_cast<statenum_t>(mo->info->seestate);
+            }
             else
+            {
                 new_state = static_cast<statenum_t>(mo->info->spawnstate);
+            }
 
             P_SetMobjState(mo, new_state);
         }
@@ -232,14 +252,22 @@ static void P_XYMovement(mobj_t *mo)
     player = mo->player;
 
     if (mo->momx > MAXMOVE)
+    {
         mo->momx = MAXMOVE;
+    }
     else if (mo->momx < -MAXMOVE)
+    {
         mo->momx = -MAXMOVE;
+    }
 
     if (mo->momy > MAXMOVE)
+    {
         mo->momy = MAXMOVE;
+    }
     else if (mo->momy < -MAXMOVE)
+    {
         mo->momy = -MAXMOVE;
+    }
 
     xmove = mo->momx;
     ymove = mo->momy;
@@ -315,10 +343,14 @@ static void P_XYMovement(mobj_t *mo)
                     }
                 }
                 else
+                {
                     mo->momx = mo->momy = 0;
+                }
             }
-            else if (player || mo->flags2 & MF2_SLIDE) // try to slide along it
+            else if (player || mo->flags2 & MF2_SLIDE)
+            { // try to slide along it
                 P_SlideMove(mo);
+            }
             else if (mo->flags & MF_MISSILE)
             {
                 // explode a missile
@@ -345,18 +377,24 @@ static void P_XYMovement(mobj_t *mo)
                 }
                 P_ExplodeMissile(mo);
             }
-            else // whatever else it is, it is now standing still in (x,y)
+            else
+            { // whatever else it is, it is now standing still in (x,y)
                 mo->momx = mo->momy = 0;
+            }
         }
     } while (xmove || ymove);
 
     /* no friction for missiles or skulls ever, no friction when airborne */
     if (mo->flags & (MF_MISSILE | MF_SKULLFLY))
+    {
         return;
+    }
 
     if (mo->z > mo->floorz && !(mo->flags & MF_FLY) &&
         !(mo->flags2 & MF2_FLY) && !(mo->flags2 & MF2_ONMOBJ))
+    {
         return;
+    }
 
     /* killough 8/11/98: add bouncers
      * killough 9/15/98: add objects falling off ledges
@@ -367,7 +405,9 @@ static void P_XYMovement(mobj_t *mo)
         (mo->momx > FRACUNIT / 4 || mo->momx < -FRACUNIT / 4 ||
          mo->momy > FRACUNIT / 4 || mo->momy < -FRACUNIT / 4) &&
         mo->floorz != mo->subsector->sector->floorheight)
+    {
         return; // do not stop sliding if halfway off a step with some momentum
+    }
 
     // killough 11/98:
     // Stop voodoo dolls that have come to rest, despite any
@@ -399,8 +439,10 @@ static void P_XYMovement(mobj_t *mo)
                 {
                     if (heretic || player->mo == mo ||
                         compatibility_level >= lxdoom_1_compatibility)
+                    {
                         P_SetMobjState(player->mo,
                                        static_cast<statenum_t>(g_s_play));
+                    }
                 }
             }
         }
@@ -411,7 +453,9 @@ static void P_XYMovement(mobj_t *mo)
          * dolls) cph - DEMOSYNC - needs compatibility check?
          */
         if (!heretic && player && player->mo == mo)
+        {
             player->momx = player->momy = 0;
+        }
     }
     else
     {
@@ -545,15 +589,21 @@ static void P_ZMovement(mobj_t *mo)
 
                     /* Bring it to rest below a certain speed */
                     if (D_abs(mo->momz) <= mo->info->mass * (GRAVITY * 4 / 256))
+                    {
                         mo->momz = 0;
+                    }
                 }
 
                 /* killough 11/98: touchy objects explode on impact */
                 if (mo->flags & MF_TOUCHY && mo->intflags & MIF_ARMED &&
                     mo->health > 0)
+                {
                     P_DamageMobj(mo, nullptr, nullptr, mo->health);
+                }
                 else if (mo->flags & MF_FLOAT && sentient(mo))
+                {
                     goto floater;
+                }
                 return;
             }
         }
@@ -564,26 +614,38 @@ static void P_ZMovement(mobj_t *mo)
             if (mo->momz > 0)
             {
                 if (mo->subsector->sector->ceilingpic != skyflatnum)
+                {
                     mo->momz =
                         -mo->momz; /* always bounce off non-sky ceiling */
+                }
                 else if (mo->flags & MF_MISSILE)
+                {
                     P_RemoveMobj(mo); /* missiles don't bounce off skies */
+                }
                 else if (mo->flags & MF_NOGRAVITY)
+                {
                     mo->momz = -mo->momz; // bounce unless under gravity
+                }
 
                 if (mo->flags & MF_FLOAT && sentient(mo))
+                {
                     goto floater;
+                }
 
                 return;
             }
         }
         else
         {
-            if (!(mo->flags & MF_NOGRAVITY)) /* free-fall under gravity */
+            if (!(mo->flags & MF_NOGRAVITY))
+            { /* free-fall under gravity */
                 mo->momz -= mo->info->mass * (GRAVITY / 256);
+            }
 
             if (mo->flags & MF_FLOAT && sentient(mo))
+            {
                 goto floater;
+            }
             return;
         }
 
@@ -595,13 +657,19 @@ static void P_ZMovement(mobj_t *mo)
             if (ceilingline && ceilingline->backsector &&
                 ceilingline->backsector->ceilingpic == skyflatnum &&
                 mo->z > ceilingline->backsector->ceilingheight)
+            {
                 P_RemoveMobj(mo); /* don't explode on skies */
+            }
             else
+            {
                 P_ExplodeMissile(mo);
+            }
         }
 
         if (mo->flags & MF_FLOAT && sentient(mo))
+        {
             goto floater;
+        }
         return;
     }
 
@@ -626,6 +694,7 @@ static void P_ZMovement(mobj_t *mo)
 
 floater:
     if ((mo->flags & MF_FLOAT) && mo->target)
+    {
 
         // float down towards target if too close
 
@@ -634,8 +703,11 @@ floater:
             fixed_t delta;
             if (P_AproxDistance(mo->x - mo->target->x, mo->y - mo->target->y) <
                 D_abs(delta = mo->target->z + (mo->height >> 1) - mo->z) * 3)
+            {
                 mo->z += delta < 0 ? -FLOATSPEED : FLOATSPEED;
+            }
         }
+    }
 
     if (mo->player && (mo->flags & MF_FLY) && (mo->z > mo->floorz))
     {
@@ -706,19 +778,25 @@ floater:
             (!comp[comp_soul] ||
              (compatibility_level > doom2_19_compatibility &&
               compatibility_level < prboom_4_compatibility)))
+        {
             mo->momz = -mo->momz; // the skull slammed into something
+        }
 
         if (mo->momz < 0)
         {
             /* killough 11/98: touchy objects explode on impact */
             if (mo->flags & MF_TOUCHY && mo->intflags & MIF_ARMED &&
                 mo->health > 0)
+            {
                 P_DamageMobj(mo, nullptr, nullptr, mo->health);
+            }
             else
             {
                 // heretic_note: probably not necessary?
                 if (!heretic && mo->player)
+                {
                     mo->player->jumpTics = 7;
+                }
                 if (mo->player && /* killough 5/12/98: exclude voodoo dolls */
                     // e6y
                     // Restoring original visual behaviour for
@@ -745,10 +823,10 @@ floater:
                         mo->player->centering = true;
                     }
                     // e6y: compatibility optioned
-                    else if (comp[comp_sound] ||
-                             (mo->health >
-                              0)) /* cph - prevent "oof" when dead */
+                    else if (comp[comp_sound] || (mo->health > 0))
+                    { /* cph - prevent "oof" when dead */
                         S_StartSound(mo, sfx_oof);
+                    }
                 }
             }
             mo->momz = 0;
@@ -763,7 +841,9 @@ floater:
          */
         if (mo->flags & MF_SKULLFLY &&
             compatibility_level <= doom2_19_compatibility)
+        {
             mo->momz = -mo->momz; // the skull slammed into something
+        }
 
         if (mo->info->crashstate && (mo->flags & MF_CORPSE))
         {
@@ -781,14 +861,20 @@ floater:
              (mo->type == MT_GIBDTH && !demorecording && !demoplayback))
     {
         if (mo->momz == 0)
+        {
             mo->momz = -(GRAVITY >> 3) * 2;
+        }
         else
+        {
             mo->momz -= GRAVITY >> 3;
+        }
     }
     else if (!(mo->flags & MF_NOGRAVITY))
     {
         if (mo->momz == 0)
+        {
             mo->momz = -GRAVITY;
+        }
         mo->momz -= GRAVITY;
     }
 
@@ -799,12 +885,16 @@ floater:
          *  new comp_soul compatibility option added
          */
         if (!comp[comp_soul] && mo->flags & MF_SKULLFLY)
+        {
             mo->momz = -mo->momz; // the skull slammed into something
+        }
 
         // hit the ceiling
 
         if (mo->momz > 0)
+        {
             mo->momz = 0;
+        }
 
         mo->z = mo->ceilingz - mo->height;
 
@@ -814,7 +904,9 @@ floater:
          *  momentum reversal here
          */
         if (comp[comp_soul] && mo->flags & MF_SKULLFLY)
+        {
             mo->momz = -mo->momz; // the skull slammed into something
+        }
 
         if ((mo->flags & MF_MISSILE) && !(mo->flags & MF_NOCLIP))
         {
@@ -875,7 +967,9 @@ static void P_NightmareRespawn(mobj_t *mobj)
     // something is occupying its position?
 
     if (!P_CheckPosition(mobj, x, y))
+    {
         return; // no respwan
+    }
 
     // spawn a teleport fog at old spot
     // because of removal of the body?
@@ -901,9 +995,13 @@ static void P_NightmareRespawn(mobj_t *mobj)
 
     mthing = &mobj->spawnpoint;
     if (mobj->info->flags & MF_SPAWNCEILING)
+    {
         z = ONCEILINGZ;
+    }
     else
+    {
         z = ONFLOORZ;
+    }
 
     // inherit attributes from deceased one
 
@@ -917,10 +1015,14 @@ static void P_NightmareRespawn(mobj_t *mobj)
     // that value didn't exist in doom so is left uninitialized on respawn
     // we have to set this to the MT zero value for heretic
     if (mo->type == HERETIC_MT_CHICKEN)
+    {
         mo->special2.i = HERETIC_MT_ZERO;
+    }
 
     if (mthing->options & MTF_AMBUSH)
+    {
         mo->flags |= MF_AMBUSH;
+    }
 
     /* killough 11/98: transfer friendliness from deceased */
     mo->flags = (mo->flags & ~MF_FRIEND) | (mobj->flags & MF_FRIEND);
@@ -970,9 +1072,11 @@ void P_MobjThinker(mobj_t *mobj)
     {
         P_XYMovement(mobj);
         if (mobj->thinker.function != P_MobjThinker)
+        {
             // cph - Must've been removed
             // killough - mobj was removed
             return;
+        }
     }
 
     if (mobj->flags2 & MF2_FLOATBOB)
@@ -1016,11 +1120,15 @@ void P_MobjThinker(mobj_t *mobj)
             }
         }
         else
+        {
             P_ZMovement(mobj);
+        }
         if (mobj->thinker.function != P_MobjThinker)
+        {
             // cph - Must've been removed
             // killough - mobj was removed
             return;
+        }
     }
     // heretic_note: are the intflags irrelevant when compatibility is enabled?
     else if (!heretic && !(mobj->momx | mobj->momy) && !sentient(mobj))
@@ -1032,10 +1140,14 @@ void P_MobjThinker(mobj_t *mobj)
 
         if (mobj->z > mobj->dropoffz &&      // Only objects contacting dropoff
             !(mobj->flags & MF_NOGRAVITY) && // Only objects which fall
-            !comp[comp_falloff])             // Not in old demos
-            P_ApplyTorque(mobj);             // Apply torque
+            !comp[comp_falloff])
+        {                        // Not in old demos
+            P_ApplyTorque(mobj); // Apply torque
+        }
         else
+        {
             mobj->intflags &= ~MIF_FALLING, mobj->gear = 0; // Reset torque
+        }
     }
 
     // cycle through states,
@@ -1047,29 +1159,43 @@ void P_MobjThinker(mobj_t *mobj)
         // you can cycle through multiple states in a tic
 
         if (!mobj->tics)
+        {
             if (!P_SetMobjState(mobj, mobj->state->nextstate))
+            {
                 return; // freed itself
+            }
+        }
     }
     else
     {
         // check for nightmare respawn
 
         if (!(mobj->flags & MF_COUNTKILL))
+        {
             return;
+        }
 
         if (!respawnmonsters)
+        {
             return;
+        }
 
         mobj->movecount++;
 
         if (mobj->movecount < 12 * 35)
+        {
             return;
+        }
 
         if (leveltime & 31)
+        {
             return;
+        }
 
         if (P_Random(pr_respawn) > 4)
+        {
             return;
+        }
 
         P_NightmareRespawn(mobj);
     }
@@ -1118,18 +1244,26 @@ mobj_t *P_SpawnMobj(fixed_t x, fixed_t y, fixed_t z, mobjtype_t type)
     mobj->flags = info->flags;
     mobj->flags2 = info->flags2;
     if (heretic)
+    {
         mobj->damage = info->damage;
+    }
 
     /* killough 8/23/98: no friends, bouncers, or touchy things in old demos */
     if (!mbf_features)
+    {
         mobj->flags &= ~(MF_BOUNCES | MF_FRIEND | MF_TOUCHY);
-    else if (type == g_mt_player) // Except in old demos, players
+    }
+    else if (type == g_mt_player)
+    {                             // Except in old demos, players
         mobj->flags |= MF_FRIEND; // are always friends.
+    }
 
     mobj->health = info->spawnhealth;
 
     if (gameskill != sk_nightmare)
+    {
         mobj->reactiontime = static_cast<short>(info->reactiontime);
+    }
 
     mobj->lastlook = P_Random(pr_lastlook) % MAXPLAYERS;
 
@@ -1206,7 +1340,9 @@ mobj_t *P_SpawnMobj(fixed_t x, fixed_t y, fixed_t z, mobjtype_t type)
     mobj->target = mobj->tracer = mobj->lastenemy = nullptr;
     P_AddThinker(&mobj->thinker);
     if (!((mobj->flags ^ MF_COUNTKILL) & (MF_FRIEND | MF_COUNTKILL)))
+    {
         totallive++;
+    }
 
     dsda_WatchSpawn(mobj);
 
@@ -1247,7 +1383,9 @@ void P_RemoveMobj(mobj_t *mobj)
         // lose one off the end?
 
         if (iquehead == iquetail)
+        {
             iquetail = (iquetail + 1) & (ITEMQUESIZE - 1);
+        }
     }
 
     // unlink from sector and block lists
@@ -1309,19 +1447,25 @@ static PUREFUNC int P_FindDoomedNum(unsigned type)
         hash =
             static_cast<hash_t *>(std::malloc(sizeof *hash * num_mobj_types));
         for (i = 0; i < num_mobj_types; i++)
+        {
             hash[i].first = num_mobj_types;
+        }
         for (i = mobj_types_zero; i < mobj_types_max; i++)
+        {
             if (mobjinfo[i].doomednum != -1)
             {
                 unsigned h = (unsigned)mobjinfo[i].doomednum % num_mobj_types;
                 hash[i].next = hash[h].first;
                 hash[h].first = i;
             }
+        }
     }
 
     i = hash[type % num_mobj_types].first;
     while ((i < num_mobj_types) && ((unsigned)mobjinfo[i].doomednum != type))
+    {
         i = hash[i].next;
+    }
     return i;
 }
 
@@ -1342,17 +1486,23 @@ void P_RespawnSpecials(void)
     // only respawn items in deathmatch
 
     if (deathmatch != 2)
+    {
         return;
+    }
 
     // nothing left to respawn?
 
     if (iquehead == iquetail)
+    {
         return;
+    }
 
     // wait at least 30 seconds
 
     if (leveltime - itemrespawntime[iquetail] < 30 * 35)
+    {
         return;
+    }
 
     mthing = &itemrespawnque[iquetail];
 
@@ -1373,9 +1523,13 @@ void P_RespawnSpecials(void)
     // spawn it
 
     if (mobjinfo[i].flags & MF_SPAWNCEILING)
+    {
         z = ONCEILINGZ;
+    }
     else
+    {
         z = ONFLOORZ;
+    }
 
     mo = P_SpawnMobj(x, y, z, static_cast<mobjtype_t>(i));
     mo->spawnpoint = *mthing;
@@ -1409,24 +1563,32 @@ void P_SpawnPlayer(int n, const mapthing_t *mthing)
     // it detects and emulates overflows on vex6d.wad\bug_wald(toke).lmp, etc.
     // http://www.doom2.net/doom2/research/runningbody.zip
     if (PlayeringameOverrun(mthing))
+    {
         return;
+    }
 
     // not playing?
 
     if (!playeringame[n])
+    {
         return;
+    }
 
     p = &players[n];
 
     if (p->playerstate == PST_REBORN)
+    {
         G_PlayerReborn(n);
+    }
 
     /* cph 2001/08/14 - use the options field of memorised player starts to
      * indicate whether the start really exists in the level.
      */
     if (!mthing->options)
+    {
         I_Error("P_SpawnPlayer: attempt to spawn player at unavailable start "
                 "point");
+    }
 
     x = mthing->x << FRACBITS;
     y = mthing->y << FRACBITS;
@@ -1434,9 +1596,13 @@ void P_SpawnPlayer(int n, const mapthing_t *mthing)
     mobj = P_SpawnMobj(x, y, z, static_cast<mobjtype_t>(g_mt_player));
 
     if (deathmatch)
+    {
         mobj->index = TracerGetDeathmatchStart(n);
+    }
     else
+    {
         mobj->index = TracerGetPlayerStart(mthing->type - 1);
+    }
 
     // set color translations for player sprites
 
@@ -1471,12 +1637,18 @@ void P_SpawnPlayer(int n, const mapthing_t *mthing)
     if (deathmatch)
     {
         for (i = 0; i < NUMCARDS; i++)
+        {
             p->cards[i] = true;
+        }
         if (p == &players[consoleplayer])
+        {
             playerkeys = 7;
+        }
     }
     else if (p == &players[consoleplayer])
+    {
         playerkeys = 0;
+    }
 
     if (mthing->type - 1 == consoleplayer)
     {
@@ -1496,6 +1668,7 @@ dboolean P_IsDoomnumAllowed(int doomnum)
 {
     // Do not spawn cool, new monsters if !commercial
     if (!heretic && gamemode != commercial)
+    {
         switch (doomnum)
         {
         case 64: // Archvile
@@ -1510,6 +1683,7 @@ dboolean P_IsDoomnumAllowed(int doomnum)
         case 89: // Boss Shooter
             return false;
         }
+    }
 
     return true;
 }
@@ -1556,11 +1730,13 @@ mobj_t *P_SpawnMapThing(const mapthing_t *mthing, int index)
     if (demo_compatibility || (compatibility_level >= lxdoom_1_compatibility &&
                                options & MTF_RESERVED))
     {
-        if (!demo_compatibility) // cph - Add warning about bad thing flags
+        if (!demo_compatibility)
+        { // cph - Add warning about bad thing flags
             lprintf(
                 LO_WARN,
                 "P_SpawnMapThing: correcting bad flags (%u) (thing type %d)\n",
                 options, thingtype);
+        }
         options &=
             MTF_EASY | MTF_NORMAL | MTF_HARD | MTF_AMBUSH | MTF_NOTSINGLE;
     }
@@ -1643,7 +1819,9 @@ mobj_t *P_SpawnMapThing(const mapthing_t *mthing, int index)
         TracerAddPlayerStart(thingtype - 1, index);
 
         if (!deathmatch)
+        {
             P_SpawnPlayer(thingtype - 1, &playerstarts[thingtype - 1]);
+        }
         return nullptr;
     }
 
@@ -1669,24 +1847,32 @@ mobj_t *P_SpawnMapThing(const mapthing_t *mthing, int index)
 
     /* jff "not single" thing flag */
     if (!netgame && options & MTF_NOTSINGLE)
+    {
         return nullptr;
+    }
 
     // jff 3/30/98 implement "not deathmatch" thing flag
 
     if (netgame && deathmatch && options & MTF_NOTDM)
+    {
         return nullptr;
+    }
 
     // jff 3/30/98 implement "not cooperative" thing flag
 
     if (netgame && !deathmatch && options & MTF_NOTCOOP)
+    {
         return nullptr;
+    }
 
     // killough 11/98: simplify
     if (gameskill == sk_baby || gameskill == sk_easy ? !(options & MTF_EASY)
         : gameskill == sk_hard || gameskill == sk_nightmare
             ? !(options & MTF_HARD)
             : !(options & MTF_NORMAL))
+    {
         return nullptr;
+    }
 
     if (!heretic && thingtype >= 14100 && thingtype <= 14164)
     {
@@ -1714,12 +1900,16 @@ mobj_t *P_SpawnMapThing(const mapthing_t *mthing, int index)
     // don't spawn keycards and players in deathmatch
 
     if (deathmatch && mobjinfo[i].flags & MF_NOTDMATCH)
+    {
         return nullptr;
+    }
 
     // don't spawn any monsters if -nomonsters
 
     if (nomonsters && (i == MT_SKULL || (mobjinfo[i].flags & MF_COUNTKILL)))
+    {
         return nullptr;
+    }
 
     // spawn it
 spawnit:
@@ -1734,11 +1924,17 @@ spawnit:
     y = mthing->y << FRACBITS;
 
     if (mobjinfo[i].flags & MF_SPAWNCEILING)
+    {
         z = ONCEILINGZ;
+    }
     else if (mobjinfo[i].flags2 & MF2_SPAWNFLOAT)
+    {
         z = FLOATRANDZ;
+    }
     else
+    {
         z = ONFLOORZ;
+    }
 
     mobj = P_SpawnMobj(x, y, z, static_cast<mobjtype_t>(i));
     mobj->spawnpoint =
@@ -1752,7 +1948,9 @@ spawnit:
     }
 
     if (mobj->tics > 0)
+    {
         mobj->tics = 1 + (P_Random(pr_spawnthing) % mobj->tics);
+    }
 
     if (!(mobj->flags & MF_FRIEND) && options & MTF_FRIEND && mbf_features)
     {
@@ -1762,17 +1960,25 @@ spawnit:
 
     /* killough 7/20/98: exclude friends */
     if (!((mobj->flags ^ MF_COUNTKILL) & (MF_FRIEND | MF_COUNTKILL)))
+    {
         totalkills++;
+    }
 
     if (mobj->flags & MF_COUNTITEM)
+    {
         totalitems++;
+    }
 
     mobj->angle = ANG45 * (mthing->angle / 45);
     if (options & MTF_AMBUSH)
+    {
         mobj->flags |= MF_AMBUSH;
+    }
 
     if (heretic)
+    {
         return mobj; // check below irrelevant
+    }
 
     // RjY
     // Print a warning when a solid hanging body is used in a sector where
@@ -1810,7 +2016,9 @@ void P_SpawnPuff(fixed_t x, fixed_t y, fixed_t z)
     int t;
 
     if (heretic)
+    {
         return Heretic_P_SpawnPuff(x, y, z);
+    }
 
     // killough 5/5/98: remove dependence on order of evaluation:
     t = P_Random(pr_spawnpuff);
@@ -1821,12 +2029,16 @@ void P_SpawnPuff(fixed_t x, fixed_t y, fixed_t z)
     th->tics -= P_Random(pr_spawnpuff) & 3;
 
     if (th->tics < 1)
+    {
         th->tics = 1;
+    }
 
     // don't make punches spark on the wall
 
     if (attackrange == MELEERANGE)
+    {
         P_SetMobjState(th, S_PUFF3);
+    }
 }
 
 // [FG] colored blood and gibs
@@ -1836,10 +2048,14 @@ uint_64_t P_ColoredBlood(mobj_t *bleeder)
     {
         // Barons of Hell and Hell Knights bleed green blood
         if (bleeder->type == MT_BRUISER || bleeder->type == MT_KNIGHT)
+        {
             return MF_COLOREDBLOOD;
-        // Cacodemons bleed blue blood
+            // Cacodemons bleed blue blood
+        }
         else if (bleeder->type == MT_HEAD)
+        {
             return MF_COLOREDBLOOD | MF_TRANSLATION1;
+        }
     }
 
     return 0;
@@ -1860,12 +2076,18 @@ void P_SpawnBlood(fixed_t x, fixed_t y, fixed_t z, int damage, mobj_t *bleeder)
     th->flags |= P_ColoredBlood(bleeder);
 
     if (th->tics < 1)
+    {
         th->tics = 1;
+    }
 
     if (damage <= 12 && damage >= 9)
+    {
         P_SetMobjState(th, S_BLOOD2);
+    }
     else if (damage < 9)
+    {
         P_SetMobjState(th, S_BLOOD3);
+    }
 }
 
 //
@@ -1880,7 +2102,9 @@ dboolean P_CheckMissileSpawn(mobj_t *th)
     {
         th->tics -= P_Random(pr_missile) & 3;
         if (th->tics < 1)
+        {
             th->tics = 1;
+        }
     }
 
     // move a little forward so an angle can
@@ -1902,7 +2126,9 @@ dboolean P_CheckMissileSpawn(mobj_t *th)
 
     // killough 8/12/98: for non-missile objects (e.g. grenades)
     if (!(th->flags & MF_MISSILE) && mbf_features)
+    {
         return true;
+    }
 
     // killough 3/15/98: no dropoff (really = don't care for missiles)
 
@@ -1953,7 +2179,9 @@ mobj_t *P_SpawnMissile(mobj_t *source, mobj_t *dest, mobjtype_t type)
     th = P_SpawnMobj(source->x, source->y, z, type);
 
     if (th->info->seesound)
+    {
         S_StartSound(th, th->info->seesound);
+    }
 
     P_SetTarget(&th->target, source); // where it came from
     an = R_PointToAngle2(source->x, source->y, dest->x, dest->y);
@@ -1974,7 +2202,9 @@ mobj_t *P_SpawnMissile(mobj_t *source, mobj_t *dest, mobjtype_t type)
     dist = dist / th->info->speed;
 
     if (dist < 1)
+    {
         dist = 1;
+    }
 
     th->momz = (dest->z - source->z) / dist;
 
@@ -2003,7 +2233,9 @@ mobj_t *P_SpawnPlayerMissile(mobj_t *source, mobjtype_t type)
 
     // killough 7/19/98: autoaiming was not in original beta
     if (comperr(comperr_freeaim))
+    {
         slope = finetangent[(ANG90 - source->pitch) >> ANGLETOFINESHIFT];
+    }
     else
     {
         // killough 8/2/98: prefer autoaiming at enemies
@@ -2013,18 +2245,24 @@ mobj_t *P_SpawnPlayerMissile(mobj_t *source, mobjtype_t type)
         {
             slope = P_AimLineAttack(source, an, 16 * 64 * FRACUNIT, mask);
             if (!linetarget)
+            {
                 slope = P_AimLineAttack(source, an += 1 << 26,
                                         16 * 64 * FRACUNIT, mask);
+            }
             if (!linetarget)
+            {
                 slope = P_AimLineAttack(source, an -= 2 << 26,
                                         16 * 64 * FRACUNIT, mask);
+            }
             if (!linetarget)
             {
                 an = source->angle;
                 slope = 0;
 
                 if (heretic)
+                {
                     slope = ((source->player->lookdir) << FRACBITS) / 173;
+                }
             }
         } while (mask && (mask = 0, !linetarget)); // killough 8/2/98
     }
@@ -2047,7 +2285,9 @@ mobj_t *P_SpawnPlayerMissile(mobj_t *source, mobjtype_t type)
     MissileMobj = th = P_SpawnMobj(x, y, z, type);
 
     if (th->info->seesound)
+    {
         S_StartSound(th, th->info->seesound);
+    }
 
     P_SetTarget(&th->target, source);
     th->angle = an;

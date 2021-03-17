@@ -88,7 +88,9 @@ void InitTracers(void)
                 traces[i].items[count].index = value;
 
                 if (traces[i].ApplyFunc)
+                {
                     traces[i].ApplyFunc(static_cast<tracertype_t>(i));
+                }
 
                 traces_present = true;
                 count++;
@@ -277,7 +279,9 @@ void TracerAddPlayerStart(int num, int index)
 int TracerGetDeathmatchStart(int index)
 {
     if (index >= deathmatchstarts_indexes.size())
+    {
         I_Error("TracerGetDeathmatchStart: index out of bounds");
+    }
 
     return deathmatchstarts_indexes[index].index;
 }
@@ -285,7 +289,9 @@ int TracerGetDeathmatchStart(int index)
 int TracerGetPlayerStart(int index)
 {
     if (index >= MAXPLAYERS)
+    {
         I_Error("TracerGetDeathmatchStart: index out of bounds");
+    }
 
     return playerstarts_indexes[index].index;
 }

@@ -62,7 +62,9 @@ inline static PUREFUNC int iselem(const bmalpool_t *pool, size_t size,
     dif -= sizeof(bmalpool_t);
     dif -= pool->blocks;
     if (dif < 0)
+    {
         return -1;
+    }
     dif /= size;
     return (((size_t)dif >= pool->blocks) ? -1 : dif);
 }
@@ -86,13 +88,17 @@ void *Z_BMalloc(struct block_memory_alloc_s *pzone)
             int n = p - (*pool)->used;
 #ifdef SIMPLECHECKS
             if ((n < 0) || ((size_t)n >= (*pool)->blocks))
+            {
                 I_Error("Z_BMalloc: memchr returned pointer outside of array");
+            }
 #endif
             (*pool)->used[n] = used_block;
             return getelem(*pool, pzone->size, n);
         }
         else
+        {
             pool = &((*pool)->nextpool);
+        }
     }
     {
         // Nothing available, must allocate a new pool
@@ -123,7 +129,9 @@ void Z_BFree(struct block_memory_alloc_s *pzone, void *p)
         {
 #ifdef SIMPLECHECKS
             if ((*pool)->used[n] == unused_block)
+            {
                 I_Error("Z_BFree: Refree in zone %s", pzone->desc);
+            }
 #endif
             (*pool)->used[n] = unused_block;
             if (memchr(((*pool)->used), used_block, (*pool)->blocks) == nullptr)
@@ -136,7 +144,9 @@ void Z_BFree(struct block_memory_alloc_s *pzone, void *p)
             return;
         }
         else
+        {
             pool = &((*pool)->nextpool);
+        }
     }
     I_Error("Z_BFree: Free not in zone %s", pzone->desc);
 }

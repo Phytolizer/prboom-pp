@@ -56,7 +56,9 @@ fixed_t CONSTFUNC P_AproxDistance(fixed_t dx, fixed_t dy)
     dx = D_abs(dx);
     dy = D_abs(dy);
     if (dx < dy)
+    {
         return dx + dy - (dx >> 1);
+    }
     return dx + dy - (dy >> 1);
 }
 
@@ -162,7 +164,9 @@ fixed_t PUREFUNC P_InterceptVector2(const divline_t *v2, const divline_t *v1)
 fixed_t PUREFUNC P_InterceptVector(const divline_t *v2, const divline_t *v1)
 {
     if (compatibility_level < prboom_4_compatibility)
+    {
         return P_InterceptVector2(v2, v1);
+    }
     else
     {
         /* cph - This was introduced at prboom_4_compatibility - no
@@ -170,7 +174,9 @@ fixed_t PUREFUNC P_InterceptVector(const divline_t *v2, const divline_t *v1)
         int_64_t den = (int_64_t)v1->dy * v2->dx - (int_64_t)v1->dx * v2->dy;
         den >>= 16;
         if (!den)
+        {
             return 0;
+        }
         return (fixed_t)(((int_64_t)(v1->x - v2->x) * v1->dy -
                           (int_64_t)(v1->y - v2->y) * v1->dx) /
                          den);
@@ -207,9 +213,13 @@ void P_LineOpening(const line_t *linedef)
     openbacksector = linedef->backsector;
 
     if (openfrontsector->ceilingheight < openbacksector->ceilingheight)
+    {
         opentop = openfrontsector->ceilingheight;
+    }
     else
+    {
         opentop = openbacksector->ceilingheight;
+    }
 
     if (openfrontsector->floorheight > openbacksector->floorheight)
     {
@@ -250,8 +260,10 @@ void P_UnsetThingPosition(mobj_t *thing)
 
         mobj_t **sprev = thing->sprev;
         mobj_t *snext = thing->snext;
-        if ((*sprev = snext)) // unlink from sector list
+        if ((*sprev = snext))
+        { // unlink from sector list
             snext->sprev = sprev;
+        }
 
         // phares 3/14/98
         //
@@ -286,8 +298,10 @@ void P_UnsetThingPosition(mobj_t *thing)
          */
 
         mobj_t *bnext, **bprev = thing->bprev;
-        if (bprev && (*bprev = bnext = thing->bnext)) // unlink from block map
+        if (bprev && (*bprev = bnext = thing->bnext))
+        { // unlink from block map
             bnext->bprev = bprev;
+        }
     }
 }
 
@@ -312,7 +326,9 @@ void P_SetThingPosition(mobj_t *thing)
         mobj_t **link = &ss->sector->thinglist;
         mobj_t *snext = *link;
         if ((thing->snext = snext))
+        {
             snext->sprev = &thing->snext;
+        }
         thing->sprev = link;
         *link = thing;
 
@@ -331,7 +347,7 @@ void P_SetThingPosition(mobj_t *thing)
 
         P_CreateSecNodeList(thing, thing->x, thing->y);
         thing->touching_sectorlist = sector_list; // Attach to Thing's mobj_t
-        sector_list = nullptr;                       // clear for next time
+        sector_list = nullptr;                    // clear for next time
     }
 
     // link into blockmap
@@ -349,12 +365,16 @@ void P_SetThingPosition(mobj_t *thing)
             mobj_t **link = &blocklinks[blocky * bmapwidth + blockx];
             mobj_t *bnext = *link;
             if ((thing->bnext = bnext))
+            {
                 bnext->bprev = &thing->bnext;
+            }
             thing->bprev = link;
             *link = thing;
         }
-        else // thing is off the map
+        else
+        { // thing is off the map
             thing->bnext = nullptr, thing->bprev = nullptr;
+        }
     }
 }
 
@@ -382,7 +402,9 @@ dboolean P_BlockLinesIterator(int x, int y, dboolean func(line_t *))
     const int *list; // killough 3/1/98: for removal of blockmap limit
 
     if (x < 0 || y < 0 || x >= bmapwidth || y >= bmapheight)
+    {
         return true;
+    }
     offset = y * bmapwidth + x;
     offset = *(blockmap + offset);
     list = blockmaplump + offset; // original was reading         // phares
@@ -392,8 +414,10 @@ dboolean P_BlockLinesIterator(int x, int y, dboolean func(line_t *))
     // Most demos go out of sync, and maybe other problems happen, if we
     // don't consider linedef 0. For safety this should be qualified.
 
-    if (!demo_compatibility) // killough 2/22/98: demo_compatibility check
+    if (!demo_compatibility)
+    {           // killough 2/22/98: demo_compatibility check
         list++; // skip 0 starting delimiter                      // phares
+    }
     for (; *list != -1; list++) // phares
     {
         line_t *ld;
@@ -403,10 +427,14 @@ dboolean P_BlockLinesIterator(int x, int y, dboolean func(line_t *))
 #endif
         ld = &lines[*list];
         if (ld->validcount == validcount)
+        {
             continue; // line has already been checked
+        }
         ld->validcount = validcount;
         if (!func(ld))
+        {
             return false;
+        }
     }
     return true; // everything was checked
 }
@@ -420,9 +448,15 @@ dboolean P_BlockThingsIterator(int x, int y, dboolean func(mobj_t *))
 {
     mobj_t *mobj;
     if (!(x < 0 || y < 0 || x >= bmapwidth || y >= bmapheight))
+    {
         for (mobj = blocklinks[y * bmapwidth + x]; mobj; mobj = mobj->bnext)
+        {
             if (!func(mobj))
+            {
                 return false;
+            }
+        }
+    }
     return true;
 }
 
@@ -480,14 +514,18 @@ dboolean PIT_AddLineIntercepts(line_t *ld)
     }
 
     if (s1 == s2)
+    {
         return true; // line isn't crossed
+    }
 
     // hit the line
     P_MakeDivline(ld, &dl);
     frac = P_InterceptVector(&trace, &dl);
 
     if (frac < 0)
+    {
         return true; // behind source
+    }
 
     check_intercept(); // killough
 
@@ -533,7 +571,9 @@ dboolean PIT_AddThingIntercepts(mobj_t *thing)
     s2 = P_PointOnDivlineSide(x2, y2, &trace);
 
     if (s1 == s2)
+    {
         return true; // line isn't crossed
+    }
 
     dl.x = x1;
     dl.y = y1;
@@ -543,7 +583,9 @@ dboolean PIT_AddThingIntercepts(mobj_t *thing)
     frac = P_InterceptVector(&trace, &dl);
 
     if (frac < 0)
+    {
         return true; // behind source
+    }
 
     check_intercept(); // killough
 
@@ -572,12 +614,20 @@ dboolean P_TraverseIntercepts(traverser_t func, fixed_t maxfrac)
         fixed_t dist = INT_MAX;
         intercept_t *scan;
         for (scan = intercepts; scan < intercept_p; scan++)
+        {
             if (scan->frac < dist)
+            {
                 dist = (in = scan)->frac;
+            }
+        }
         if (dist > maxfrac)
+        {
             return true; // checked everything in range
+        }
         if (!func(in))
+        {
             return false; // don't bother going farther
+        }
         in->frac = INT_MAX;
     }
     return true; // everything was traversed
@@ -609,10 +659,14 @@ dboolean P_PathTraverse(fixed_t x1, fixed_t y1, fixed_t x2, fixed_t y2,
     intercept_p = intercepts;
 
     if (!((x1 - bmaporgx) & (MAPBLOCKSIZE - 1)))
+    {
         x1 += FRACUNIT; // don't side exactly on a line
+    }
 
     if (!((y1 - bmaporgy) & (MAPBLOCKSIZE - 1)))
+    {
         y1 += FRACUNIT; // don't side exactly on a line
+    }
 
     trace.x = x1;
     trace.y = y1;
@@ -709,15 +763,25 @@ dboolean P_PathTraverse(fixed_t x1, fixed_t y1, fixed_t x2, fixed_t y2,
     for (count = 0; count < 64; count++)
     {
         if (flags & PT_ADDLINES)
+        {
             if (!P_BlockLinesIterator(mapx, mapy, PIT_AddLineIntercepts))
+            {
                 return false; // early out
+            }
+        }
 
         if (flags & PT_ADDTHINGS)
+        {
             if (!P_BlockThingsIterator(mapx, mapy, PIT_AddThingIntercepts))
+            {
                 return false; // early out
+            }
+        }
 
         if (mapx == xt2 && mapy == yt2)
+        {
             break;
+        }
 
         if ((yintercept >> FRACBITS) == mapy)
         {
@@ -743,7 +807,9 @@ int P_GetSafeBlockX(int coord)
     // If x is LE than those special values, interpret as positive.
     // Otherwise, leave it as it is.
     if (comperr(comperr_blockmap) && coord <= blockmapxneg)
+    {
         return coord & 0x1FF; // Broke width boundary
+    }
 
     return coord;
 }
@@ -756,7 +822,9 @@ int P_GetSafeBlockY(int coord)
     // If y is LE than those special values, interpret as positive.
     // Otherwise, leave it as it is.
     if (comperr(comperr_blockmap) && coord <= blockmapyneg)
+    {
         return coord & 0x1FF; // Broke width boundary
+    }
 
     return coord;
 }

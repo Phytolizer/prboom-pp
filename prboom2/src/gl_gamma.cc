@@ -127,7 +127,9 @@ int gld_SetGammaRamp(int gamma)
     Uint16 gammatable[256];
 
     if (!gl_DeviceSupportsGamma)
+    {
         return false;
+    }
 
     if (gamma == -1)
     {

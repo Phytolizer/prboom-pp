@@ -79,7 +79,9 @@ int midstage;                     // whether we're in "mid-stage"
 void F_StartFinale(void)
 {
     if (heretic)
+    {
         return Heretic_F_StartFinale();
+    }
 
     gameaction = ga_nothing;
     gamestate = GS_FINALE;
@@ -201,10 +203,14 @@ void F_StartFinale(void)
 dboolean F_Responder(event_t *event)
 {
     if (heretic)
+    {
         return Heretic_F_Responder(event);
+    }
 
     if (finalestage == 2)
+    {
         return F_CastResponder(event);
+    }
 
     return false;
 }
@@ -238,7 +244,9 @@ void F_Ticker(void)
     int i;
 
     if (heretic)
+    {
         return Heretic_F_Ticker();
+    }
 
     if (using_FMI)
     {
@@ -248,17 +256,27 @@ void F_Ticker(void)
 
     float speed;
     if (!demo_compatibility)
+    {
         WI_checkForAccelerate(); // killough 3/28/98: check for acceleration
-    else if (gamemode == commercial && finalecount > 50) // check for skipping
+    }
+    else if (gamemode == commercial && finalecount > 50)
+    { // check for skipping
         for (i = 0; i < MAXPLAYERS; i++)
+        {
             if (players[i].cmd.buttons)
+            {
                 goto next_level; // go on to the next level
+            }
+        }
+    }
 
     // advance animation
     finalecount++;
 
     if (finalestage == 2)
+    {
         F_CastTicker();
+    }
 
     if (!finalestage)
     {
@@ -274,7 +292,9 @@ void F_Ticker(void)
                 finalestage = 1;
                 wipegamestate = static_cast<gamestate_t>(-1); // force a wipe
                 if (gameepisode == 3)
+                {
                     S_StartMusic(mus_bunny);
+                }
             }
             else // you must press a button to continue in Doom 2
                 if (!demo_compatibility && midstage)
@@ -282,9 +302,13 @@ void F_Ticker(void)
             next_level:
                 if (gamemap == 30 ||
                     (gamemission == pack_nerve && singleplayer && gamemap == 8))
+                {
                     F_StartCast(); // cast of Doom 2 characters
+                }
                 else
+                {
                     gameaction = ga_worlddone; // next level, e.g. MAP07
+                }
             }
         }
     }
@@ -316,7 +340,9 @@ void F_TextWrite(void)
         V_FillBorder(-1, 0);
     }
     else
+    {
         V_DrawBackground(finaleflat, 0);
+    }
     { // draw some of the text onto the screen
         int cx = 10;
         int cy = 10;
@@ -326,14 +352,18 @@ void F_TextWrite(void)
         int w;
 
         if (count < 0)
+        {
             count = 0;
+        }
 
         for (; count; count--)
         {
             int c = *ch++;
 
             if (!c)
+            {
                 break;
+            }
             if (c == '\n')
             {
                 cx = 10;
@@ -350,7 +380,9 @@ void F_TextWrite(void)
 
             w = hu_font[c].width;
             if (cx + w > SCREENWIDTH)
+            {
                 break;
+            }
             // CPhipps - patch drawing updated
             V_DrawNumPatch(cx, cy, 0, hu_font[c].lumpnum, CR_DEFAULT,
                            VPT_STRETCH);
@@ -417,7 +449,9 @@ void F_CastTicker(void)
     int sfx;
 
     if (--casttics > 0)
+    {
         return; // not time to change state yet
+    }
 
     if (caststate->tics == -1 || caststate->nextstate == S_NULL)
     {
@@ -425,9 +459,13 @@ void F_CastTicker(void)
         castnum++;
         castdeath = false;
         if (castorder[castnum].name == nullptr)
+        {
             castnum = 0;
+        }
         if (mobjinfo[castorder[castnum].type].seesound)
+        {
             S_StartSound(nullptr, mobjinfo[castorder[castnum].type].seesound);
+        }
         caststate = &states[mobjinfo[castorder[castnum].type].seestate];
         castframes = 0;
     }
@@ -435,7 +473,9 @@ void F_CastTicker(void)
     {
         // just advance to next state in animation
         if (caststate == &states[S_PLAY_ATK1])
+        {
             goto stopattack; // Oh, gross hack!
+        }
         st = caststate->nextstate;
         caststate = &states[st];
         castframes++;
@@ -509,7 +549,9 @@ void F_CastTicker(void)
         }
 
         if (sfx)
+        {
             S_StartSound(nullptr, sfx);
+        }
     }
 
     if (castframes == 12)
@@ -517,18 +559,26 @@ void F_CastTicker(void)
         // go into attack frame
         castattacking = true;
         if (castonmelee)
+        {
             caststate = &states[mobjinfo[castorder[castnum].type].meleestate];
+        }
         else
+        {
             caststate = &states[mobjinfo[castorder[castnum].type].missilestate];
+        }
         castonmelee ^= 1;
         if (caststate == &states[S_NULL])
         {
             if (castonmelee)
+            {
                 caststate =
                     &states[mobjinfo[castorder[castnum].type].meleestate];
+            }
             else
+            {
                 caststate =
                     &states[mobjinfo[castorder[castnum].type].missilestate];
+            }
         }
     }
 
@@ -546,7 +596,9 @@ void F_CastTicker(void)
 
     casttics = caststate->tics;
     if (casttics == -1)
+    {
         casttics = 15;
+    }
 }
 
 //
@@ -556,10 +608,14 @@ void F_CastTicker(void)
 dboolean F_CastResponder(event_t *ev)
 {
     if (ev->type != ev_keydown)
+    {
         return false;
+    }
 
     if (castdeath)
+    {
         return true; // already in dying frames
+    }
 
     // go into death frame
     castdeath = true;
@@ -568,7 +624,9 @@ dboolean F_CastResponder(event_t *ev)
     castframes = 0;
     castattacking = false;
     if (mobjinfo[castorder[castnum].type].deathsound)
+    {
         S_StartSound(nullptr, mobjinfo[castorder[castnum].type].deathsound);
+    }
 
     return true;
 }
@@ -589,7 +647,9 @@ static void F_CastPrint(const char *text) // CPhipps - static, const char*
     {
         c = *ch++;
         if (!c)
+        {
             break;
+        }
         c = toupper(c) - HU_FONTSTART;
         if (c < 0 || c > HU_FONTSIZE)
         {
@@ -608,7 +668,9 @@ static void F_CastPrint(const char *text) // CPhipps - static, const char*
     {
         c = *ch++;
         if (!c)
+        {
             break;
+        }
         c = toupper(c) - HU_FONTSTART;
         if (c < 0 || c > HU_FONTSIZE)
         {
@@ -686,7 +748,9 @@ static void F_BunnyScroll(void)
     }
 
     if (finalecount < 1130)
+    {
         return;
+    }
     if (finalecount < 1180)
     {
         // CPhipps - patch drawing updated
@@ -698,7 +762,9 @@ static void F_BunnyScroll(void)
 
     stage = (finalecount - 1180) / 5;
     if (stage > 6)
+    {
         stage = 6;
+    }
     if (stage > laststage)
     {
         S_StartSound(nullptr, sfx_pistol);
@@ -717,7 +783,9 @@ static void F_BunnyScroll(void)
 void F_Drawer(void)
 {
     if (heretic)
+    {
         return Heretic_F_Drawer();
+    }
 
     if (using_FMI)
     {
@@ -732,7 +800,9 @@ void F_Drawer(void)
     }
 
     if (!finalestage)
+    {
         F_TextWrite();
+    }
     else
     {
         switch (gameepisode)
@@ -740,9 +810,13 @@ void F_Drawer(void)
         // CPhipps - patch drawing updated
         case 1:
             if (gamemode == retail)
+            {
                 V_DrawNamePatch(0, 0, 0, "CREDIT", CR_DEFAULT, VPT_STRETCH);
+            }
             else
+            {
                 V_DrawNamePatch(0, 0, 0, "HELP2", CR_DEFAULT, VPT_STRETCH);
+            }
             break;
         case 2:
             V_DrawNamePatch(0, 0, 0, "VICTORY2", CR_DEFAULT, VPT_STRETCH);

@@ -81,17 +81,29 @@ static const char *const ActorNames[] = {
 static void FreeMap(MapEntry *mape)
 {
     if (mape->mapname)
+    {
         free(mape->mapname);
+    }
     if (mape->levelname)
+    {
         free(mape->levelname);
+    }
     if (mape->intertext)
+    {
         free(mape->intertext);
+    }
     if (mape->intertextsecret)
+    {
         free(mape->intertextsecret);
+    }
     if (mape->properties)
+    {
         free(mape->properties);
+    }
     if (mape->bossactions)
+    {
         free(mape->bossactions);
+    }
     mape->propertycount = 0;
     mape->mapname = nullptr;
     mape->properties = nullptr;
@@ -113,7 +125,9 @@ void FreeMapList()
 void ReplaceString(char **pptr, const char *newstring)
 {
     if (*pptr != nullptr)
+    {
         free(*pptr);
+    }
     *pptr = strdup(newstring);
 }
 
@@ -144,7 +158,9 @@ static char *ParseMultiString(Scanner &scanner, int error)
     {
         scanner.MustGetToken(TK_StringConst);
         if (build == nullptr)
+        {
             build = strdup(scanner.string);
+        }
         else
         {
             size_t newlen = strlen(build) + strlen(scanner.string) +
@@ -242,25 +258,37 @@ static int ParseStandardProperty(Scanner &scanner, MapEntry *mape)
     {
         scanner.MustGetToken(TK_BoolConst);
         if (scanner.boolean)
+        {
             strcpy(mape->endpic, "$CAST");
+        }
         else
+        {
             strcpy(mape->endpic, "-");
+        }
     }
     else if (!stricmp(pname, "endbunny"))
     {
         scanner.MustGetToken(TK_BoolConst);
         if (scanner.boolean)
+        {
             strcpy(mape->endpic, "$BUNNY");
+        }
         else
+        {
             strcpy(mape->endpic, "-");
+        }
     }
     else if (!stricmp(pname, "endgame"))
     {
         scanner.MustGetToken(TK_BoolConst);
         if (scanner.boolean)
+        {
             strcpy(mape->endpic, "!");
+        }
         else
+        {
             strcpy(mape->endpic, "-");
+        }
     }
     else if (!stricmp(pname, "exitpic"))
     {
@@ -284,18 +312,26 @@ static int ParseStandardProperty(Scanner &scanner, MapEntry *mape)
     {
         char *lname = ParseMultiString(scanner, 1);
         if (!lname)
+        {
             return 0;
+        }
         if (mape->intertext != nullptr)
+        {
             free(mape->intertext);
+        }
         mape->intertext = lname;
     }
     else if (!stricmp(pname, "intertextsecret"))
     {
         char *lname = ParseMultiString(scanner, 1);
         if (!lname)
+        {
             return 0;
+        }
         if (mape->intertextsecret != nullptr)
+        {
             free(mape->intertextsecret);
+        }
         mape->intertextsecret = lname;
     }
     else if (!stricmp(pname, "interbackdrop"))
@@ -310,7 +346,9 @@ static int ParseStandardProperty(Scanner &scanner, MapEntry *mape)
     {
         char *lname = ParseMultiString(scanner, 1);
         if (!lname)
+        {
             return 0;
+        }
         M_AddEpisode(mape->mapname, lname);
     }
     else if (!stricmp(pname, "bossaction"))
@@ -322,7 +360,9 @@ static int ParseStandardProperty(Scanner &scanner, MapEntry *mape)
             // mark level free of boss actions
             classnum = special = tag = -1;
             if (mape->bossactions)
+            {
                 free(mape->bossactions);
+            }
             mape->bossactions = nullptr;
             mape->numbossactions = -1;
         }
@@ -332,7 +372,9 @@ static int ParseStandardProperty(Scanner &scanner, MapEntry *mape)
             for (i = 0; ActorNames[i]; i++)
             {
                 if (!stricmp(scanner.string, ActorNames[i]))
+                {
                     break;
+                }
             }
             if (ActorNames[i] == nullptr)
             {
@@ -351,9 +393,13 @@ static int ParseStandardProperty(Scanner &scanner, MapEntry *mape)
                 special == 124)
             {
                 if (mape->numbossactions == -1)
+                {
                     mape->numbossactions = 1;
+                }
                 else
+                {
                     mape->numbossactions++;
+                }
                 mape->bossactions = (struct BossAction *)realloc(
                     mape->bossactions,
                     sizeof(struct BossAction) * mape->numbossactions);
@@ -368,7 +414,9 @@ static int ParseStandardProperty(Scanner &scanner, MapEntry *mape)
         do
         {
             if (!scanner.CheckFloat())
+            {
                 scanner.GetNextToken();
+            }
             if (scanner.token > TK_BoolConst)
             {
                 scanner.Error(TK_Identifier);
@@ -435,31 +483,49 @@ int ParseUMapInfo(const unsigned char *buffer, size_t length,
         {
             parsed.nextmap[0] = parsed.nextsecret[0] = 0;
             if (parsed.endpic[0] == '!')
+            {
                 parsed.endpic[0] = 0;
+            }
         }
         else if (!parsed.nextmap[0] && !parsed.endpic[0])
         {
             if (!stricmp(parsed.mapname, "MAP30"))
+            {
                 strcpy(parsed.endpic, "$CAST");
+            }
             else if (!stricmp(parsed.mapname, "E1M8"))
+            {
                 strcpy(parsed.endpic, gamemode == retail ? "CREDIT" : "HELP2");
+            }
             else if (!stricmp(parsed.mapname, "E2M8"))
+            {
                 strcpy(parsed.endpic, "VICTORY");
+            }
             else if (!stricmp(parsed.mapname, "E3M8"))
+            {
                 strcpy(parsed.endpic, "$BUNNY");
+            }
             else if (!stricmp(parsed.mapname, "E4M8"))
+            {
                 strcpy(parsed.endpic, "ENDPIC");
+            }
             else if (gamemission == chex && !stricmp(parsed.mapname, "E1M5"))
+            {
                 strcpy(parsed.endpic, "CREDIT");
+            }
             else
             {
                 int ep, map;
                 G_ValidateMapName(parsed.mapname, &ep, &map);
                 map++;
                 if (gamemode == commercial)
+                {
                     sprintf(parsed.nextmap, "MAP%02d", map);
+                }
                 else
+                {
                     sprintf(parsed.nextmap, "E%dM%d", ep, map);
+                }
             }
         }
 

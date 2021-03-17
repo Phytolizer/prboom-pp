@@ -90,7 +90,9 @@ static void R_ClipWallSegment(int first, int last, dboolean solid)
         {
             if (!(p = static_cast<byte *>(
                       memchr(solidcol + first, 0, last - first))))
+            {
                 return; // All solid
+            }
             first = p - solidcol;
         }
         else
@@ -98,9 +100,13 @@ static void R_ClipWallSegment(int first, int last, dboolean solid)
             int to;
             if (!(p = static_cast<byte *>(
                       memchr(solidcol + first, 1, last - first))))
+            {
                 to = last;
+            }
             else
+            {
                 to = p - solidcol;
+            }
             R_StoreWallRange(first, to - 1);
             if (solid)
             {
@@ -149,7 +155,9 @@ static void R_RecalcLineFlags(line_t *linedef)
             // sky):
             && (backsector->ceilingpic != skyflatnum ||
                 frontsector->ceilingpic != skyflatnum)))
+    {
         linedef->r_flags = line_t::RF_CLOSED;
+    }
     else
     {
         // Reject empty lines used for triggers
@@ -176,12 +184,16 @@ static void R_RecalcLineFlags(line_t *linedef)
             return;
         }
         else
+        {
             linedef->r_flags = line_t::RF_IGNORE;
+        }
     }
 
     /* cph - I'm too lazy to try and work with offsets in this */
     if (curline->sidedef->rowoffset)
+    {
         return;
+    }
 
     /* Now decide on texture tiling */
     if (linedef->flags & ML_TWOSIDED)
@@ -192,15 +204,19 @@ static void R_RecalcLineFlags(line_t *linedef)
         if ((c = frontsector->ceilingheight - backsector->ceilingheight) > 0 &&
             (textureheight[texturetranslation[curline->sidedef->toptexture]] >
              c))
+        {
             linedef->r_flags = static_cast<line_t::r_flags_t>(
                 linedef->r_flags | line_t::RF_TOP_TILE);
+        }
 
         /* Does bottom texture need tiling */
         if ((c = frontsector->floorheight - backsector->floorheight) > 0 &&
             (textureheight
                  [texturetranslation[curline->sidedef->bottomtexture]] > c))
+        {
             linedef->r_flags = static_cast<line_t::r_flags_t>(
                 linedef->r_flags | line_t::RF_BOT_TILE);
+        }
     }
     else
     {
@@ -209,8 +225,10 @@ static void R_RecalcLineFlags(line_t *linedef)
         if ((c = frontsector->ceilingheight - frontsector->floorheight) > 0 &&
             (textureheight[texturetranslation[curline->sidedef->midtexture]] >
              c))
+        {
             linedef->r_flags = static_cast<line_t::r_flags_t>(
                 linedef->r_flags | line_t::RF_MID_TILE);
+        }
     }
 }
 
@@ -231,15 +249,19 @@ sector_t *R_FakeFlat(sector_t *sec, sector_t *tempsec, int *floorlightlevel,
                      int *ceilinglightlevel, dboolean back)
 {
     if (floorlightlevel)
+    {
         *floorlightlevel = sec->floorlightsec == -1
                                ? sec->lightlevel
                                : sectors[sec->floorlightsec].lightlevel;
+    }
 
     if (ceilinglightlevel)
+    {
         *ceilinglightlevel = sec->ceilinglightsec == -1
                                  ? // killough 4/11/98
                                  sec->lightlevel
                                  : sectors[sec->ceilinglightsec].lightlevel;
+    }
 
     if (sec->heightsec != -1)
     {
@@ -283,16 +305,20 @@ sector_t *R_FakeFlat(sector_t *sec, sector_t *tempsec, int *floorlightlevel,
             tempsec->lightlevel = s->lightlevel;
 
             if (floorlightlevel)
+            {
                 *floorlightlevel = s->floorlightsec == -1
                                        ? s->lightlevel
                                        : sectors[s->floorlightsec]
                                              .lightlevel; // killough 3/16/98
+            }
 
             if (ceilinglightlevel)
+            {
                 *ceilinglightlevel = s->ceilinglightsec == -1
                                          ? s->lightlevel
                                          : sectors[s->ceilinglightsec]
                                                .lightlevel; // killough 4/11/98
+            }
         }
         else if (heightsec != -1 && viewz >= sectors[heightsec].ceilingheight &&
                  sec->ceilingheight > s->ceilingheight)
@@ -315,16 +341,20 @@ sector_t *R_FakeFlat(sector_t *sec, sector_t *tempsec, int *floorlightlevel,
             tempsec->lightlevel = s->lightlevel;
 
             if (floorlightlevel)
+            {
                 *floorlightlevel = s->floorlightsec == -1
                                        ? s->lightlevel
                                        : sectors[s->floorlightsec]
                                              .lightlevel; // killough 3/16/98
+            }
 
             if (ceilinglightlevel)
+            {
                 *ceilinglightlevel = s->ceilinglightsec == -1
                                          ? s->lightlevel
                                          : sectors[s->ceilinglightsec]
                                                .lightlevel; // killough 4/11/98
+            }
         }
         sec = tempsec; // Use other sector
     }
@@ -341,17 +371,22 @@ static dboolean CheckClip(seg_t *seg, sector_t *frontsector,
     static sector_t tempsec_back, tempsec_front;
 
     backsector = R_FakeFlat(backsector, &tempsec_back, nullptr, nullptr, true);
-    frontsector = R_FakeFlat(frontsector, &tempsec_front, nullptr, nullptr, false);
+    frontsector =
+        R_FakeFlat(frontsector, &tempsec_front, nullptr, nullptr, false);
 
     // check for closed sectors!
     if (backsector->ceilingheight <= frontsector->floorheight)
     {
         if (seg->sidedef->toptexture == NO_TEXTURE)
+        {
             return false;
+        }
 
         if (backsector->ceilingpic == skyflatnum &&
             frontsector->ceilingpic == skyflatnum)
+        {
             return false;
+        }
 
         return true;
     }
@@ -359,12 +394,16 @@ static dboolean CheckClip(seg_t *seg, sector_t *frontsector,
     if (frontsector->ceilingheight <= backsector->floorheight)
     {
         if (seg->sidedef->bottomtexture == NO_TEXTURE)
+        {
             return false;
+        }
 
         // properly render skies (consider door "open" if both floors are sky):
         if (backsector->ceilingpic == skyflatnum &&
             frontsector->ceilingpic == skyflatnum)
+        {
             return false;
+        }
 
         return true;
     }
@@ -375,20 +414,28 @@ static dboolean CheckClip(seg_t *seg, sector_t *frontsector,
         if (backsector->ceilingheight < frontsector->ceilingheight)
         {
             if (seg->sidedef->toptexture == NO_TEXTURE)
+            {
                 return false;
+            }
         }
         if (backsector->floorheight > frontsector->floorheight)
         {
             if (seg->sidedef->bottomtexture == NO_TEXTURE)
+            {
                 return false;
+            }
         }
         if (backsector->ceilingpic == skyflatnum &&
             frontsector->ceilingpic == skyflatnum)
+        {
             return false;
+        }
 
         if (backsector->floorpic == skyflatnum &&
             frontsector->floorpic == skyflatnum)
+        {
             return false;
+        }
 
         return true;
     }
@@ -461,8 +508,10 @@ static void R_AddLine(seg_t *line)
             maxdrawsegs = newmax;
         }
 
-        if (curline->miniseg == false) // figgi -- skip minisegs
+        if (curline->miniseg == false)
+        { // figgi -- skip minisegs
             curline->linedef->flags |= ML_MAPPED;
+        }
 
         // proff 11/99: the rest of the calculations is not needed for OpenGL
         ds_p++->curline = curline;
@@ -480,7 +529,9 @@ static void R_AddLine(seg_t *line)
 
     // Back side, i.e. backface culling
     if (span >= ANG180)
+    {
         return;
+    }
 
     // Global angle needed by segcalc.
     rw_angle1 = angle1;
@@ -494,7 +545,9 @@ static void R_AddLine(seg_t *line)
 
         // Totally off the left edge?
         if (tspan >= span)
+        {
             return;
+        }
 
         angle1 = clipangle;
     }
@@ -506,7 +559,9 @@ static void R_AddLine(seg_t *line)
 
         // Totally off the left edge?
         if (tspan >= span)
+        {
             return;
+        }
         angle2 = 0 - clipangle;
     }
 
@@ -521,26 +576,34 @@ static void R_AddLine(seg_t *line)
     x2 = viewangletox[angle2];
 
     // Does not cross a pixel?
-    if (x1 >= x2) // killough 1/31/98 -- change == to >= for robustness
+    if (x1 >= x2)
+    { // killough 1/31/98 -- change == to >= for robustness
         return;
+    }
 
     backsector = line->backsector;
 
     // Single sided line?
     if (backsector)
+    {
         // killough 3/8/98, 4/4/98: hack for invisible ceilings / deep water
         backsector = R_FakeFlat(backsector, &tempsec, nullptr, nullptr, true);
+    }
 
     /* cph - roll up linedef properties in flags */
     if ((linedef = curline->linedef)->r_validcount != gametic)
+    {
         R_RecalcLineFlags(linedef);
+    }
 
     if (linedef->r_flags & line_t::RF_IGNORE)
     {
         return;
     }
     else
+    {
         R_ClipWallSegment(x1, x2, linedef->r_flags & line_t::RF_CLOSED);
+    }
 }
 
 //
@@ -572,7 +635,9 @@ static dboolean R_CheckBBox(const fixed_t *bspcoord)
                                             : 8);
 
     if (boxpos == 5)
+    {
         return true;
+    }
 
     check = checkcoord[boxpos];
 
@@ -598,19 +663,31 @@ static dboolean R_CheckBBox(const fixed_t *bspcoord)
          * change it to the corect sign
          */
         if ((angle1 >= ANG180) && (angle1 < ANG270))
+        {
             angle1 = INT_MAX; /* which is ANG180-1 */
+        }
         else
+        {
             angle2 = INT_MIN;
+        }
     }
 
     if ((signed)angle2 >= (signed)clipangle)
+    {
         return false; // Both off left edge
+    }
     if ((signed)angle1 <= -(signed)clipangle)
+    {
         return false; // Both off right edge
+    }
     if ((signed)angle1 >= (signed)clipangle)
+    {
         angle1 = clipangle; // Clip at left edge
+    }
     if ((signed)angle2 <= -(signed)clipangle)
+    {
         angle2 = 0 - clipangle; // Clip at right edge
+    }
 
     // Find the first clippost
     //  that touches the source post
@@ -624,10 +701,14 @@ static dboolean R_CheckBBox(const fixed_t *bspcoord)
 
         // Does not cross a pixel.
         if (sx1 == sx2)
+        {
             return false;
+        }
 
         if (!memchr(solidcol + sx1, 0, sx2 - sx1))
+        {
             return false;
+        }
         // All columns it covers are already solidly covered
     }
 
@@ -779,7 +860,9 @@ static void R_Subsector(int num)
 
 #ifdef GL_DOOM
         if (V_GetMode() == VID_MODEGL)
+        {
             gld_AddPlane(num, floorplane, ceilingplane);
+        }
 #endif
     }
 
@@ -788,11 +871,13 @@ static void R_Subsector(int num)
     while (count--)
     {
         if (line->miniseg == false)
+        {
             R_AddLine(line);
+        }
         line++;
         curline =
-            nullptr; /* cph 2001/11/18 - must clear curline now we're done with it,
-                     so R_ColourMap doesn't try using it for other things */
+            nullptr; /* cph 2001/11/18 - must clear curline now we're done with
+                     it, so R_ColourMap doesn't try using it for other things */
     }
 }
 
@@ -818,7 +903,9 @@ void R_RenderBSPNode(int bspnum)
         // Possibly divide back space.
 
         if (!R_CheckBBox(bsp->bbox[side ^ 1]))
+        {
             return;
+        }
 
         bspnum = bsp->children[side ^ 1];
     }

@@ -751,7 +751,7 @@ struct scroll_t
         sc_carry,
         sc_carry_ceiling, // killough 4/11/98: carry objects hanging on ceilings
     } type;               // Type of scroll effect
-} ;
+};
 
 // phares 3/12/98: added new model of friction for ice/sludge effects
 
@@ -761,7 +761,7 @@ struct friction_t
     int friction;      // friction value (E800 = normal)
     int movefactor;    // inertia factor when adding to momentum
     int affectee;      // Number of affected sector
-} ;
+};
 
 // phares 3/20/98: added new model of Pushers for push/pull effects
 
@@ -783,7 +783,7 @@ struct pusher_t
     int x;          // X of point source if point pusher
     int y;          // Y of point source if point pusher
     int affectee;   // Number of affected sector
-} ;
+};
 
 //////////////////////////////////////////////////////////////////
 //

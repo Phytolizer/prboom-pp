@@ -246,9 +246,13 @@ static void FillBuffer(int16_t *buffer, unsigned int nsamples)
         sampval = mix_buffer[i] * mus_opl_gain / 50;
         // clip
         if (sampval > 32767)
+        {
             sampval = 32767;
+        }
         else if (sampval < -32768)
+        {
             sampval = -32768;
+        }
         buffer[i * 2] = (int16_t)sampval;
         buffer[i * 2 + 1] = (int16_t)sampval;
     }

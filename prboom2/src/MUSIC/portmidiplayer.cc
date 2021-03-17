@@ -137,15 +137,19 @@ static void pm_refreshvolume(void)
     unsigned long when = Pt_Time();
 
     for (i = 0; i < 16; i++)
+    {
         writeevent(when, midi_event_type_t::CONTROLLER, i, 7,
                    channelvol[i] * pm_volume / 15);
+    }
 }
 
 static void pm_clearchvolume(void)
 {
     int i;
     for (i = 0; i < 16; i++)
+    {
         channelvol[i] = 127; // default: max
+    }
 }
 
 static void writesysex(unsigned long when, unsigned char *data, int len)
@@ -185,20 +189,14 @@ void pm_stop(void)
                    0); // reset all parameters
 
         // RPN sequence to adjust pitch bend range (RPN value 0x0000)
-        writeevent(when, midi_event_type_t::CONTROLLER, i, 0x65,
-                   0x00);
-        writeevent(when, midi_event_type_t::CONTROLLER, i, 0x64,
-                   0x00);
+        writeevent(when, midi_event_type_t::CONTROLLER, i, 0x65, 0x00);
+        writeevent(when, midi_event_type_t::CONTROLLER, i, 0x64, 0x00);
         // reset pitch bend range to central tuning +/- 2 semitones and 0 cents
-        writeevent(when, midi_event_type_t::CONTROLLER, i, 0x06,
-                   0x02);
-        writeevent(when, midi_event_type_t::CONTROLLER, i, 0x26,
-                   0x00);
+        writeevent(when, midi_event_type_t::CONTROLLER, i, 0x06, 0x02);
+        writeevent(when, midi_event_type_t::CONTROLLER, i, 0x26, 0x00);
         // end of RPN sequence
-        writeevent(when, midi_event_type_t::CONTROLLER, i, 0x64,
-                   0x7f);
-        writeevent(when, midi_event_type_t::CONTROLLER, i, 0x65,
-                   0x7f);
+        writeevent(when, midi_event_type_t::CONTROLLER, i, 0x64, 0x7f);
+        writeevent(when, midi_event_type_t::CONTROLLER, i, 0x65, 0x7f);
     }
     // abort any partial sysex
     sysexbufflen = 0;
@@ -221,7 +219,9 @@ void pm_render(void *vdest, unsigned int bufflen)
     memset(vdest, 0, bufflen * 4);
 
     if (!pm_playing || pm_paused)
+    {
         return;
+    }
 
     while (1)
     {
@@ -251,11 +251,12 @@ void pm_render(void *vdest, unsigned int bufflen)
             writesysex(when, currevent->data.sysex.data,
                        currevent->data.sysex.length);
             break;
-        case midi_event_type_t::META.value(): // tempo is the only meta message we're interested
-                      // in
-            if (currevent->data.meta.type ==
-                midi_meta_event_type_t::SET_TEMPO)
+        case midi_event_type_t::META.value(): // tempo is the only meta message
+                                              // we're interested in
+            if (currevent->data.meta.type == midi_meta_event_type_t::SET_TEMPO)
+            {
                 spmc = MIDI_spmc(midifile, currevent, 1000);
+            }
             else if (currevent->data.meta.type ==
                      midi_meta_event_type_t::END_OF_TRACK)
             {
@@ -267,10 +268,10 @@ void pm_render(void *vdest, unsigned int bufflen)
                     // fix buggy songs that forget to terminate notes held over
                     // loop point sdl_mixer does this as well
                     for (i = 0; i < 16; i++)
-                        writeevent(when,
-                                   midi_event_type_t::CONTROLLER, i,
-                                   123,
+                    {
+                        writeevent(when, midi_event_type_t::CONTROLLER, i, 123,
                                    0); // all notes off
+                    }
                     continue;
                 }
                 // stop
@@ -300,7 +301,9 @@ void pm_render(void *vdest, unsigned int bufflen)
         // re-fix the volume (which itself was reset)
         if (currevent->event_type == midi_event_type_t::CONTROLLER &&
             currevent->data.channel.param1 == 121)
+        {
             pm_setchvolume(currevent->data.channel.channel, 127, when);
+        }
 
         // event processed so advance midiclock
         pm_delta += eventdelta;
@@ -352,7 +355,8 @@ void pm_pause(void)
     pm_paused = 1;
     for (i = 0; i < 16; i++)
     {
-        writeevent(when, midi_event_type_t::CONTROLLER, i, 123, 0); // all notes off
+        writeevent(when, midi_event_type_t::CONTROLLER, i, 123,
+                   0); // all notes off
     }
 }
 void pm_setvolume(int v)
@@ -360,7 +364,9 @@ void pm_setvolume(int v)
     static int firsttime = 1;
 
     if (pm_volume == v && !firsttime)
+    {
         return;
+    }
     firsttime = 0;
 
     pm_volume = v;
@@ -478,7 +484,9 @@ int pm_init(int samplerate)
     {
         oinfo = Pm_GetDeviceInfo(i);
         if (!oinfo || !oinfo->output)
+        {
             continue;
+        }
         doom_snprintf(devname, 64, "%s:%s", oinfo->interf, oinfo->name);
         if (strlen(snd_mididev) && strstr(devname, snd_mididev))
         {

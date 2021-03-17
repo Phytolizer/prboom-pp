@@ -393,7 +393,9 @@ void SB_Drawer(dboolean statusbaron, dboolean refresh, dboolean fullmenu)
     static dboolean hitCenterFrame;
 
     if (refresh || fullmenu || V_GetMode() == VID_MODEGL)
+    {
         SB_state = -1;
+    }
 
     if (!statusbaron)
     {

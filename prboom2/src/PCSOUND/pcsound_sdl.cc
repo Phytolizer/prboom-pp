@@ -75,7 +75,9 @@ void PCSound_Mix_Callback(void *udata, Uint8 *stream, int len)
 
     // safe to call even if not active
     if (!pcsound_inited)
+    {
         return;
+    }
 
     // Number of samples is quadrupled, because of 16-bit and stereo
 

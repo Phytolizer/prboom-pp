@@ -89,13 +89,21 @@ static void gld_PrepareSectorSpecialEffects(void)
             if (side0 && side1)
             {
                 if (side0->toptexture != NO_TEXTURE)
+                {
                     sectors[num].flags &= ~NO_TOPTEXTURES;
+                }
                 if (side0->bottomtexture != NO_TEXTURE)
+                {
                     sectors[num].flags &= ~NO_BOTTOMTEXTURES;
+                }
                 if (side1->toptexture != NO_TEXTURE)
+                {
                     sectors[num].flags &= ~NO_TOPTEXTURES;
+                }
                 if (side1->bottomtexture != NO_TEXTURE)
+                {
                     sectors[num].flags &= ~NO_BOTTOMTEXTURES;
+                }
             }
             else
             {
@@ -169,7 +177,9 @@ void gld_PreprocessFakeSectors(void)
     int groupid;
 
     if (gl_use_stencil)
+    {
         return;
+    }
 
     // free memory
     if (fakeplanes)
@@ -246,7 +256,9 @@ sector_t *GetBestFake(sector_t *sector, int ceiling, int validcount)
     int groupid = sector->fakegroup[ceiling];
 
     if (groupid == -1)
+    {
         return nullptr;
+    }
 
     if (fakeplanes[groupid].validcount != validcount)
     {

@@ -112,20 +112,26 @@ void I_Init(void)
 {
     /* killough 4/14/98: Adjustable speedup based on realtic_clock_rate */
     if (fastdemo)
+    {
         I_GetTime = I_GetTime_FastDemo;
+    }
     else if (dsda_RealticClockRate() != 100)
     {
         I_GetTime_Scale = ((int_64_t)dsda_RealticClockRate() << 24) / 100;
         I_GetTime = I_GetTime_Scaled;
     }
     else
+    {
         I_GetTime = I_GetTime_RealTime;
+    }
 
     {
         /* killough 2/21/98: avoid sound initialization if no sound & no music
          */
         if (!(nomusicparm && nosfxparm))
+        {
             I_InitSound();
+        }
     }
 
     R_InitInterpolation();
@@ -135,7 +141,9 @@ void I_Init(void)
 void I_Init2(void)
 {
     if (fastdemo)
+    {
         I_GetTime = I_GetTime_FastDemo;
+    }
     else
     {
         if (dsda_RealticClockRate() != 100)
@@ -144,7 +152,9 @@ void I_Init2(void)
             I_GetTime = I_GetTime_Scaled;
         }
         else
+        {
             I_GetTime = I_GetTime_RealTime;
+        }
     }
     R_InitInterpolation();
     force_singletics_to = gametic + BACKUPTICS;
@@ -287,9 +297,13 @@ static void I_EndDoom(void)
     lump_ed = W_CheckNumForName("ENDOOM");  /* CPhipps - also maybe ENDOOM */
 
     if (lump_eb == -1)
+    {
         lump = lump_ed;
+    }
     else if (lump_ed == -1)
+    {
         lump = lump_eb;
+    }
     else
     { /* Both ENDOOM and ENDBOOM are present */
 #define LUMP_IS_NEW(num)                                                       \
@@ -363,14 +377,20 @@ void I_SafeExit(int rc)
 static void I_Quit(void)
 {
     if (!has_exited)
+    {
         has_exited = 1; /* Prevent infinitely recursive exits -- killough */
+    }
 
     if (has_exited == 1)
     {
         if (!demorecording)
+        {
             I_EndDoom();
+        }
         if (demorecording)
+        {
             G_CheckDemoStatus();
+        }
         M_SaveDefaults();
         I_DemoExShutdown();
         dsda_WriteAnalysis();

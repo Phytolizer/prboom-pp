@@ -76,7 +76,7 @@ struct pspdef_t
     int tics;
     fixed_t sx;
     fixed_t sy;
-} ;
+};
 
 enum
 {

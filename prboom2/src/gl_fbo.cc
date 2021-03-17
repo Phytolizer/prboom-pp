@@ -98,7 +98,9 @@ static dboolean gld_CreateScreenSizeFBO(void)
         gl_ext_packed_depth_stencil; // && (gl_has_hires || gl_use_motionblur);
 
     if (!gl_ext_framebuffer_object)
+    {
         return false;
+    }
 
     GLEXT_glGenFramebuffersEXT(1, &glSceneImageFBOTexID);
     GLEXT_glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, glSceneImageFBOTexID);
@@ -166,7 +168,9 @@ static dboolean gld_CreateScreenSizeFBO(void)
 void gld_FreeScreenSizeFBO(void)
 {
     if (!gl_ext_framebuffer_object)
+    {
         return;
+    }
 
     GLEXT_glDeleteFramebuffersEXT(1, &glSceneImageFBOTexID);
     glSceneImageFBOTexID = 0;

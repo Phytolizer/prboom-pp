@@ -101,8 +101,10 @@ int(P_Random)(pr_class_t pr_class
     // much more unstable method by putting everything
     // except pr_misc into pr_all_in_one
 
-    if (pr_class != pr_misc && !demo_insurance) // killough 3/31/98
+    if (pr_class != pr_misc && !demo_insurance)
+    { // killough 3/31/98
         pr_class = pr_all_in_one;
+    }
 
     boom = rng.seed[pr_class];
 
@@ -111,7 +113,9 @@ int(P_Random)(pr_class_t pr_class
     rng.seed[pr_class] = boom * 1664525ul + 221297ul + pr_class * 2;
 
     if (demo_compatibility)
+    {
         return rndtable[compat];
+    }
 
     boom >>= 20;
 
@@ -124,7 +128,9 @@ int(P_Random)(pr_class_t pr_class
      */
 
     if (demo_insurance)
+    {
         boom += (gametic - basetic) * 7;
+    }
 
     return boom & 255;
 }
@@ -140,9 +146,11 @@ void M_ClearRandom(void)
 {
     int i;
     unsigned int seed = rngseed * 2 + 1; // add 3/26/98: add rngseed
-    for (i = 0; i < NUMPRCLASS; i++)     // go through each pr_class and set
-        rng.seed[i] = seed *= 69069ul;   // each starting seed differently
-    rng.prndindex = rng.rndindex = 0;    // clear two compatibility indices
+    for (i = 0; i < NUMPRCLASS; i++)
+    {                                  // go through each pr_class and set
+        rng.seed[i] = seed *= 69069ul; // each starting seed differently
+    }
+    rng.prndindex = rng.rndindex = 0; // clear two compatibility indices
 }
 
 // heretic

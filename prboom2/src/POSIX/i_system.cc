@@ -94,10 +94,14 @@ int I_GetTime_RealTime(void)
         thistimereply = 0;
     }
     else
+    {
         thistimereply -= basetime;
+    }
 
     if (thistimereply < lasttimereply)
+    {
         thistimereply = lasttimereply;
+    }
 
     return (lasttimereply = thistimereply);
 }
@@ -133,9 +137,13 @@ const char *I_SigString(char *buf, size_t sz, int signum)
 {
 #ifdef HAVE_STRSIGNAL
     if (strsignal(signum) && strlen(strsignal(signum)) < sz)
+    {
         strcpy(buf, strsignal(signum));
+    }
     else
+    {
 #endif
         sprintf(buf, "signal %d", signum);
+    }
     return buf;
 }

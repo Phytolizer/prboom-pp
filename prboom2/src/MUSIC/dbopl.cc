@@ -430,7 +430,9 @@ static void Operator__UpdateRates(Operator *self, const Chip *chip)
         newKsr >>= 2;
     }
     if (self->ksr == newKsr)
+    {
         return;
+    }
     self->ksr = newKsr;
     Operator__UpdateAttack(self, chip);
     Operator__UpdateDecay(self, chip);
@@ -457,7 +459,9 @@ static Bits Operator__TemplateVolume(Operator *self, OperatorState yes)
     case ATTACK:
         change = Operator__RateForward(self, self->attackAdd);
         if (!change)
+        {
             return vol;
+        }
         vol += ((~vol) * change) >> 3;
         if (vol < ENV_MIN)
         {
@@ -538,7 +542,9 @@ static void Operator__Write20(Operator *self, const Chip *chip, Bit8u val)
 {
     Bit8u change = (self->reg20 ^ val);
     if (!change)
+    {
         return;
+    }
     self->reg20 = val;
     // Shift the tremolo bit over the entire register, saved a branch, YES!
     self->tremoloMask = (Bit8s)(val) >> 7;
@@ -568,7 +574,9 @@ static void Operator__Write20(Operator *self, const Chip *chip, Bit8u val)
 static void Operator__Write40(Operator *self, const Chip *chip, Bit8u val)
 {
     if (!(self->reg40 ^ val))
+    {
         return;
+    }
     self->reg40 = val;
     Operator__UpdateAttenuation(self);
 }
@@ -592,7 +600,9 @@ static void Operator__Write80(Operator *self, const Chip *chip, Bit8u val)
     Bit8u change = (self->reg80 ^ val);
     Bit8u sustain;
     if (!change)
+    {
         return;
+    }
     self->reg80 = val;
     sustain = val >> 4;
     // Turn 0xf into 0x1f
@@ -608,7 +618,9 @@ static void Operator__WriteE0(Operator *self, const Chip *chip, Bit8u val)
 {
     Bit8u waveForm;
     if (!(self->regE0 ^ val))
+    {
         return;
+    }
     // in opl3 mode you can always selet 7 waveforms regardless of
     // waveformselect
     waveForm = val & ((0x3 & chip->waveFormMask) | (0x7 & chip->opl3Active));
@@ -631,9 +643,13 @@ static inline void Operator__SetState(Operator *self, Bit8u s)
 static inline int Operator__Silent(Operator *self)
 {
     if (!ENV_SILENT(self->totalLevel + self->volume))
+    {
         return FALSE;
+    }
     if (!(self->rateZero & (1 << self->state)))
+    {
         return FALSE;
+    }
     return TRUE;
 }
 
@@ -816,7 +832,9 @@ static void Channel__WriteA0(Channel *self, const Chip *chip, Bit8u val)
     Bit8u fourOp = chip->reg104 & chip->opl3Active & self->fourMask;
     // Don't handle writes to silent fourop channels
     if (fourOp > 0x80)
+    {
         return;
+    }
     change = (self->chanData ^ val) & 0xff;
     if (change)
     {
@@ -831,7 +849,9 @@ static void Channel__WriteB0(Channel *self, const Chip *chip, Bit8u val)
     Bit8u fourOp = chip->reg104 & chip->opl3Active & self->fourMask;
     // Don't handle writes to silent fourop channels
     if (fourOp > 0x80)
+    {
         return;
+    }
     change = (self->chanData ^ (val << 8)) & 0x1f00;
     if (change)
     {
@@ -840,7 +860,9 @@ static void Channel__WriteB0(Channel *self, const Chip *chip, Bit8u val)
     }
     // Check for a change in the keyon/off state
     if (!((val ^ self->regB0) & 0x20))
+    {
         return;
+    }
     self->regB0 = val;
     if (val & 0x20)
     {
@@ -869,7 +891,9 @@ static void Channel__WriteC0(Channel *self, const Chip *chip, Bit8u val)
     Bit8u synth;
     Bit8u change = val ^ self->regC0;
     if (!change)
+    {
         return;
+    }
     self->regC0 = val;
     self->feedback = (val >> 1) & 7;
     if (self->feedback)
@@ -1260,9 +1284,13 @@ static inline Bit32u Chip__ForwardLFO(Chip *self, Bit32u samples)
         self->vibratoIndex = (self->vibratoIndex + 1) & 31;
         // Clip tremolo to the the table size
         if (self->tremoloIndex + 1 < TREMOLO_TABLE)
+        {
             ++self->tremoloIndex;
+        }
         else
+        {
             self->tremoloIndex = 0;
+        }
     }
     return count;
 }
@@ -1271,7 +1299,9 @@ static void Chip__WriteBD(Chip *self, Bit8u val)
 {
     Bit8u change = self->regBD ^ val;
     if (!change)
+    {
         return;
+    }
     self->regBD = val;
     // TODO could do this with shift and xor?
     self->vibratoStrength = (val & 0x40) ? 0x00 : 0x01;
@@ -1385,7 +1415,9 @@ void Chip__WriteReg(Chip *self, Bit32u reg, Bit8u val)
         {
             // Only detect changes in lowest 6 bits
             if (!((self->reg104 ^ val) & 0x3f))
+            {
                 return;
+            }
             // Always keep the highest bit enabled, for checking > 0x80
             self->reg104 = 0x80 | (val & 0x3f);
         }
@@ -1396,7 +1428,9 @@ void Chip__WriteReg(Chip *self, Bit32u reg, Bit8u val)
             // MAME says the real opl3 doesn't reset anything on opl3
             // disable/enable till the next write in another register
             if (!((self->opl3Active ^ val) & 1))
+            {
                 return;
+            }
             self->opl3Active = (val & 1) ? 0xff : 0;
             // Update the 0xc0 register for all channels to signal the switch to
             // mono/stereo handlers
@@ -1459,9 +1493,13 @@ Bit32u Chip__WriteAddr(Chip *self, Bit32u port, Bit8u val)
         return val;
     case 2:
         if (self->opl3Active || (val == 0x05))
+        {
             return 0x100 | val;
+        }
         else
+        {
             return val;
+        }
     }
     return 0;
 }
@@ -1543,7 +1581,7 @@ void Chip__Setup(Chip *self, Bit32u rate)
     }
 
     //-3 since the real envelope takes 8 steps to reach the single value we
-    //supply
+    // supply
     for (i = 0; i < 76; i++)
     {
         Bit8u index, shift;
@@ -1593,7 +1631,9 @@ void Chip__Setup(Chip *self, Bit32u rate)
                 bestDiff = lDiff;
                 bestAdd = guessAdd;
                 if (!bestDiff)
+                {
                     break;
+                }
             }
             // Below our target
             if (diff < 0)
@@ -1643,7 +1683,9 @@ void Chip__Setup(Chip *self, Bit32u rate)
     for (i = 0; i < 512; i++)
     {
         if (i == 0x105)
+        {
             continue;
+        }
         Chip__WriteReg(self, i, 0xff);
         Chip__WriteReg(self, i, 0x0);
     }
@@ -1663,7 +1705,9 @@ void DBOPL_InitTables(void)
     Chip *chip = nullptr;
 
     if (doneTables)
+    {
         return;
+    }
     doneTables = TRUE;
 #if (DBOPL_WAVE == WAVE_HANDLER) || (DBOPL_WAVE == WAVE_TABLELOG)
     // Exponential volume table, same as the real adlib
@@ -1758,7 +1802,9 @@ void DBOPL_InitTables(void)
         {
             int val = base - KslCreateTable[i];
             if (val < 0)
+            {
                 val = 0;
+            }
             //*4 for the final range to match attenuation range
             KslTable[oct * 16 + i] = val * 4;
         }
@@ -1787,7 +1833,9 @@ void DBOPL_InitTables(void)
         }
         // Add back the bits for highest ones
         if (i >= 16)
+        {
             index += 9;
+        }
         blah = (Bitu)(&(chip->chan[index]));
         ChanOffsetTable[i] = (Bit16u)blah;
     }
@@ -1805,7 +1853,9 @@ void DBOPL_InitTables(void)
         // Make sure we use 16 and up for the 2nd range to match the chanoffset
         // gap
         if (chNum >= 12)
+        {
             chNum += 16 - 12;
+        }
         opNum = (i % 8) / 3;
         blah = (Bitu)(&(chan->op[opNum]));
         OpOffsetTable[i] = (Bit16u)(ChanOffsetTable[chNum] + blah);

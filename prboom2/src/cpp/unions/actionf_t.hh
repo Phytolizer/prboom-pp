@@ -77,6 +77,7 @@ class actionf_t
         pusher,
         undefined
     } m_d = D::undefined;
+
   public:
     constexpr actionf_t() = default;
     constexpr actionf_t(m_v_t v) : m_v(v), m_d(D::v)

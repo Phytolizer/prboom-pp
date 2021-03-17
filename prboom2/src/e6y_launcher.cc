@@ -1396,10 +1396,10 @@ BOOL DoCreateDialogTooltip(void)
 {
     // Ensure that the common control DLL is loaded, and create a tooltip
     // control.
-    g_hwndTT = CreateWindowEx(0, TOOLTIPS_CLASS, (LPSTR)nullptr, TTS_ALWAYSTIP,
+    g_hwndTT = CreateWindowEx(0, TOOLTIPS_CLASS, (LPSTR) nullptr, TTS_ALWAYSTIP,
                               CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT,
-                              CW_USEDEFAULT, launcher.HWNDClient, (HMENU)nullptr,
-                              GetModuleHandle(nullptr), NULL);
+                              CW_USEDEFAULT, launcher.HWNDClient,
+                              (HMENU) nullptr, GetModuleHandle(nullptr), NULL);
 
     if (g_hwndTT == nullptr)
         return FALSE;
@@ -1410,10 +1410,10 @@ BOOL DoCreateDialogTooltip(void)
 
     // Install a hook procedure to monitor the message stream for mouse
     // messages intended for the controls in the dialog box.
-    g_hhk = SetWindowsHookEx(WH_GETMESSAGE, GetMsgProc, (HINSTANCE)nullptr,
+    g_hhk = SetWindowsHookEx(WH_GETMESSAGE, GetMsgProc, (HINSTANCE) nullptr,
                              GetCurrentThreadId());
 
-    if (g_hhk == (HHOOK)nullptr)
+    if (g_hhk == (HHOOK) nullptr)
         return FALSE;
 
     return TRUE;

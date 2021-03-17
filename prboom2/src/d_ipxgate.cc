@@ -199,7 +199,8 @@ void ipx_receive(int s)
             }
             else if (buf.u.d.checksum & NCMD_EXIT)
             {
-                send_udp_packet(packet_type_e::PKT_QUIT, buf.u.d.starttic, nullptr, 0);
+                send_udp_packet(packet_type_e::PKT_QUIT, buf.u.d.starttic,
+                                nullptr, 0);
                 exit(0);
             }
             else if ((buf.u.d.checksum & NCMD_CHECKSUM) == buf.u.d.checksum)
@@ -212,8 +213,9 @@ void ipx_receive(int s)
                 for (int i = 0; i < tics; i++)
                     TicToRaw(outbuf + 2 + i * sizeof(ticcmd_t),
                              &buf.u.d.cmds[i]);
-                send_udp_packet(packet_type_e::PKT_TICC, ExpandTics(buf.u.d.starttic, basetic),
-                                outbuf, 2 + tics * sizeof(ticcmd_t));
+                send_udp_packet(packet_type_e::PKT_TICC,
+                                ExpandTics(buf.u.d.starttic, basetic), outbuf,
+                                2 + tics * sizeof(ticcmd_t));
             }
         }
     }
@@ -236,7 +238,8 @@ void udp_receive(int s)
         switch (p->type.value())
         {
         case packet_type_e::PKT_SETUP.value(): {
-            setup_packet_t *sinfo = static_cast<setup_packet_t *>((void *)(p + 1));
+            setup_packet_t *sinfo =
+                static_cast<setup_packet_t *>((void *)(p + 1));
             consoleplayer = sinfo->yourplayer;
             send_udp_packet(packet_type_e::PKT_GO, 0, nullptr, 0);
             write(ipxs,

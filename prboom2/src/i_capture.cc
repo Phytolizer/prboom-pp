@@ -324,26 +324,36 @@ static int my_popen3(pipeinfo_t *p)
 
     puser = malloc<puser_t *>(sizeof(puser_t));
     if (!puser)
+    {
         return 0;
+    }
 
     // make the pipes
     if (pipe(scratch))
+    {
         goto fail;
+    }
     child_hin = scratch[0];
     parent_hin = scratch[1];
     if (pipe(scratch))
+    {
         goto fail;
+    }
     parent_hout = scratch[0];
     child_hout = scratch[1];
     if (pipe(scratch))
+    {
         goto fail;
+    }
     parent_herr = scratch[0];
     child_herr = scratch[1];
 
     pid = fork();
 
     if (pid == -1)
+    {
         goto fail;
+    }
     if (pid == 0)
     {
         dup2(child_hin, STDIN_FILENO);
@@ -362,11 +372,17 @@ static int my_popen3(pipeinfo_t *p)
     }
 
     if (nullptr == (fin = fdopen(parent_hin, "wb")))
+    {
         goto fail;
+    }
     if (nullptr == (fout = fdopen(parent_hout, "r")))
+    {
         goto fail;
+    }
     if (nullptr == (ferr = fdopen(parent_herr, "r")))
+    {
         goto fail;
+    }
 
     close(child_hin);
     close(child_hout);
@@ -382,11 +398,17 @@ static int my_popen3(pipeinfo_t *p)
 
 fail:
     if (fin)
+    {
         fclose(fin);
+    }
     if (fout)
+    {
         fclose(fout);
+    }
     if (ferr)
+    {
         fclose(ferr);
+    }
 
     close(parent_hin);
     close(parent_hout);
@@ -406,7 +428,9 @@ static void my_pclose3(pipeinfo_t *p)
     int s;
 
     if (!p->f_stdin || !p->f_stdout || !p->f_stderr || !puser)
+    {
         return;
+    }
 
     fclose(p->f_stdin);
     // fclose (p->f_stdout); // these are closed elsewhere
@@ -435,10 +459,14 @@ static int threadstdoutproc(void *data)
     FILE *f = fopen(p->stdoutdumpname, "w");
 
     if (!f || !p->f_stdout)
+    {
         return 0;
+    }
 
     while ((c = fgetc(p->f_stdout)) != EOF)
+    {
         fputc(c, f);
+    }
 
     fclose(f);
     fclose(p->f_stdout);
@@ -455,10 +483,14 @@ static int threadstderrproc(void *data)
     FILE *f = fopen(p->stderrdumpname, "w");
 
     if (!f || !p->f_stderr)
+    {
         return 0;
+    }
 
     while ((c = fgetc(p->f_stderr)) != EOF)
+    {
         fputc(c, f);
+    }
 
     fclose(f);
     fclose(p->f_stderr);
@@ -542,7 +574,9 @@ void I_CaptureFrame(void)
     int nsampreq;
 
     if (!capturing_video)
+    {
         return;
+    }
 
     nsampreq = snd_samplerate / cap_fps;
     partsof35 += snd_samplerate % cap_fps;
@@ -556,14 +590,18 @@ void I_CaptureFrame(void)
     if (snd)
     {
         if (fwrite(snd, nsampreq * 4, 1, soundpipe.f_stdin) != 1)
+        {
             lprintf(LO_WARN, "I_CaptureFrame: error writing soundpipe.\n");
+        }
         // free (snd); // static buffer
     }
     vid = I_GrabScreen();
     if (vid)
     {
         if (fwrite(vid, renderW * renderH * 3, 1, videopipe.f_stdin) != 1)
+        {
             lprintf(LO_WARN, "I_CaptureFrame: error writing videopipe.\n");
+        }
         // free (vid); // static buffer
     }
 }
@@ -574,7 +612,9 @@ void I_CaptureFinish(void)
     int s;
 
     if (!capturing_video)
+    {
         return;
+    }
     capturing_video = 0;
 
     // on linux, we have to close videopipe first, because it has a copy of the

@@ -76,7 +76,7 @@ def generate(union):
         union_file.write("undefined")
         union_file.write("} m_d = D::undefined;")
 
-        union_file.write("public:")
+        union_file.write("\n\npublic:")
         union_file.write(f"constexpr {union.name}()=default;")
         for field in union.fields:
             union_file.write(f"constexpr {union.name}(")

@@ -512,7 +512,9 @@ inline static dboolean I_SkipFrame(void)
     {
     case GS_LEVEL:
         if (!paused)
+        {
             return false;
+        }
     default:
         // Skip odd frames
         return (frameno & 1) ? true : false;
@@ -532,11 +534,14 @@ static void I_UploadNewPalette(int pal, int force)
     dsda_playpal_t *playpal_data;
 
     if (V_GetMode() == VID_MODEGL)
+    {
         return;
+    }
 
     playpal_data = dsda_PlayPalData();
 
-    if ((playpal_data->colours == nullptr) || (cachedgamma != usegamma) || force)
+    if ((playpal_data->colours == nullptr) || (cachedgamma != usegamma) ||
+        force)
     {
         int pplump;
         int gtlump;
@@ -696,17 +701,29 @@ void I_SetPalette(int pal)
 static void I_ShutdownSDL(void)
 {
     if (sdl_glcontext)
+    {
         SDL_GL_DeleteContext(sdl_glcontext);
+    }
     if (screen)
+    {
         SDL_FreeSurface(screen);
+    }
     if (buffer)
+    {
         SDL_FreeSurface(buffer);
+    }
     if (sdl_texture)
+    {
         SDL_DestroyTexture(sdl_texture);
+    }
     if (sdl_renderer)
+    {
         SDL_DestroyRenderer(sdl_renderer);
+    }
     if (sdl_window)
+    {
         SDL_DestroyWindow(sdl_window);
+    }
 
     SDL_Quit();
     return;
@@ -719,7 +736,9 @@ void I_PreInitGraphics(void)
     // Initialize SDL
     unsigned int flags = 0;
     if (!(M_CheckParm("-nodraw") && M_CheckParm("-nosound")))
+    {
         flags = SDL_INIT_VIDEO;
+    }
 #ifdef PRBOOM_DEBUG
     flags |= SDL_INIT_NOPARACHUTE;
 #endif
@@ -807,7 +826,9 @@ static void I_FillScreenResolutionsList(void)
     // Don't call SDL_ListModes if SDL has not been initialized
     count = 0;
     if (!nodrawers)
+    {
         count = SDL_GetNumDisplayModes(display_index);
+    }
 
     list_size = 0;
     current_resolution_index = -1;
@@ -904,7 +925,9 @@ static void I_ClosestResolution(int *width, int *height)
     unsigned int dist;
 
     if (!SDL_WasInit(SDL_INIT_VIDEO))
+    {
         return;
+    }
 
     count = SDL_GetNumDisplayModes(display_index);
 
@@ -919,7 +942,9 @@ static void I_ClosestResolution(int *width, int *height)
             theight = mode.h;
 
             if (twidth == *width && theight == *height)
+            {
                 return;
+            }
 
             // if (iteration == 0 && (twidth < *width || theight < *height))
             //  continue;
@@ -1062,18 +1087,30 @@ void I_InitScreenResolution(void)
 
         // Video stuff
         if ((p = M_CheckParm("-width")))
+        {
             if (myargv[p + 1])
+            {
                 desired_screenwidth = atoi(myargv[p + 1]);
+            }
+        }
 
         if ((p = M_CheckParm("-height")))
+        {
             if (myargv[p + 1])
+            {
                 desired_screenheight = atoi(myargv[p + 1]);
+            }
+        }
 
         if ((p = M_CheckParm("-fullscreen")))
+        {
             use_fullscreen = 1;
+        }
 
         if ((p = M_CheckParm("-nofullscreen")))
+        {
             use_fullscreen = 0;
+        }
 
         // e6y
         // New command-line options for setting a window (-window)
@@ -1081,10 +1118,14 @@ void I_InitScreenResolution(void)
         // It works like "-geom" switch
         desired_fullscreen = use_fullscreen;
         if ((p = M_CheckParm("-window")))
+        {
             desired_fullscreen = 0;
+        }
 
         if ((p = M_CheckParm("-nowindow")))
+        {
             desired_fullscreen = 1;
+        }
 
         // e6y
         // change the screen size for the current session only
@@ -1094,7 +1135,9 @@ void I_InitScreenResolution(void)
         h = desired_screenheight;
 
         if (!(p = M_CheckParm("-geom")))
+        {
             p = M_CheckParm("-geometry");
+        }
 
         if (p && p + 1 < myargc)
         {
@@ -1112,9 +1155,13 @@ void I_InitScreenResolution(void)
                 if (count >= 4)
                 {
                     if (tolower(c) == 'w')
+                    {
                         desired_fullscreen = 0;
+                    }
                     if (tolower(c) == 'f')
+                    {
                         desired_fullscreen = 1;
+                    }
                 }
             }
         }
@@ -1296,15 +1343,25 @@ void I_UpdateVideoMode(void)
         I_InitScreenResolution();
 
         if (sdl_glcontext)
+        {
             SDL_GL_DeleteContext(sdl_glcontext);
+        }
         if (screen)
+        {
             SDL_FreeSurface(screen);
+        }
         if (buffer)
+        {
             SDL_FreeSurface(buffer);
+        }
         if (sdl_texture)
+        {
             SDL_DestroyTexture(sdl_texture);
+        }
         if (sdl_renderer)
+        {
             SDL_DestroyRenderer(sdl_renderer);
+        }
         SDL_DestroyWindow(sdl_window);
 
         sdl_renderer = nullptr;
@@ -1326,16 +1383,22 @@ void I_UpdateVideoMode(void)
 
     // Fullscreen desktop for software renderer only - DTIED
     if (desired_fullscreen && V_GetMode() != VID_MODEGL)
+    {
         init_flags |= SDL_WINDOW_FULLSCREEN_DESKTOP;
+    }
     else if (desired_fullscreen)
+    {
         init_flags |= SDL_WINDOW_FULLSCREEN;
+    }
 
-        // In windowed mode, the window can be resized while the game is
-        // running.  This feature is disabled on OS X, as it adds an ugly
-        // scroll handle to the corner of the screen.
+    // In windowed mode, the window can be resized while the game is
+    // running.  This feature is disabled on OS X, as it adds an ugly
+    // scroll handle to the corner of the screen.
 #ifndef MACOSX
     if (!desired_fullscreen && V_GetMode() != VID_MODEGL)
+    {
         init_flags |= SDL_WINDOW_RESIZABLE;
+    }
 #endif
 
     if (V_GetMode() == VID_MODEGL)
@@ -1371,7 +1434,9 @@ void I_UpdateVideoMode(void)
         int flags = SDL_RENDERER_TARGETTEXTURE;
 
         if (render_vsync && !novsync)
+        {
             flags |= SDL_RENDERER_PRESENTVSYNC;
+        }
 
         sdl_window = SDL_CreateWindow(
             PACKAGE_NAME " " PACKAGE_VERSION, SDL_WINDOWPOS_CENTERED,
@@ -1588,7 +1653,9 @@ static void I_ReadMouse(void)
     }
 
     if (!usemouse)
+    {
         return;
+    }
 
     if (!MouseShouldBeGrabbed())
     {
@@ -1611,25 +1678,35 @@ static dboolean MouseShouldBeGrabbed()
 
     // if the window doesnt have focus, never grab it
     if (!window_focused)
+    {
         return false;
+    }
 
     // always grab the mouse when full screen (dont want to
     // see the mouse pointer)
     if (desired_fullscreen)
+    {
         return true;
+    }
 
     // if we specify not to grab the mouse, never grab
     if (!mouse_enabled)
+    {
         return false;
+    }
 
     // always grab the mouse in camera mode when playing levels
     // and menu is not active
     if (walkcamera.type)
+    {
         return (demoplayback && gamestate == GS_LEVEL && !menuactive);
+    }
 
     // when menu is active or game is paused, release the mouse
     if (menuactive || paused)
+    {
         return false;
+    }
 
     // only grab mouse when playing levels (but not demos)
     return (gamestate == GS_LEVEL) && !demoplayback;
@@ -1662,7 +1739,9 @@ static void UpdateFocus(void)
     {
         // currentPaletteIndex?
         if (st_palette < 0)
+        {
             st_palette = 0;
+        }
 
         V_SetPalette(st_palette);
     }

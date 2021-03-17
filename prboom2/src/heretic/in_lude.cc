@@ -156,7 +156,9 @@ static void IN_DrawInterpic(void)
     char name[9];
 
     if (gameepisode < 1 || gameepisode > 3)
+    {
         return;
+    }
 
     snprintf(name, 9, "MAPE%d", gameepisode);
 

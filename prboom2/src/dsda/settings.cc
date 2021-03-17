@@ -43,7 +43,9 @@ int dsda_CompatibilityLevel(void)
     int i, level;
 
     if (heretic)
+    {
         return doom_12_compatibility;
+    }
 
     i = M_CheckParm("-complevel");
 
@@ -52,7 +54,9 @@ int dsda_CompatibilityLevel(void)
         level = atoi(myargv[i + 1]);
 
         if (level >= -1)
+        {
             return level;
+        }
     }
 
     return UNSPECIFIED_COMPLEVEL;
@@ -127,7 +131,9 @@ dboolean dsda_WipeAtFullSpeed(void)
 int dsda_RealticClockRate(void)
 {
     if (dsda_StrictMode())
+    {
         return 100;
+    }
 
     return realtic_clock_rate;
 }
@@ -135,7 +141,9 @@ int dsda_RealticClockRate(void)
 int dsda_AutoKeyFrameInterval(void)
 {
     if (dsda_StrictMode())
+    {
         return 0;
+    }
 
     return dsda_auto_key_frame_interval;
 }
@@ -143,7 +151,9 @@ int dsda_AutoKeyFrameInterval(void)
 int dsda_AutoKeyFrameDepth(void)
 {
     if (dsda_StrictMode())
+    {
         return 0;
+    }
 
     return dsda_auto_key_frame_depth;
 }

@@ -126,7 +126,9 @@ int I_ConnectToServer(const char *serv)
 
     /* Split serv into address and port */
     if (strlen(serv) > 500)
+    {
         return 0;
+    }
     strcpy(server, serv);
     p = strchr(server, ':');
     if (p)
@@ -135,14 +137,20 @@ int I_ConnectToServer(const char *serv)
         port = atoi(p);
     }
     else
+    {
         port = 5030; /* Default server port */
+    }
 
     SDLNet_ResolveHost(&serverIP, server, port);
     if (serverIP.host == INADDR_NONE)
+    {
         return -1;
+    }
 
     if (SDLNet_UDP_Bind(udp_socket, 0, &serverIP) == -1)
+    {
         return -1;
+    }
 
     return 0;
 }
@@ -178,13 +186,17 @@ void I_Disconnect(void)
 UDP_SOCKET I_Socket(Uint16 port)
 {
     if (port)
+    {
         return (SDLNet_UDP_Open(port));
+    }
     else
     {
         UDP_SOCKET sock;
         port = IPPORT_RESERVED;
         while ((sock = SDLNet_UDP_Open(port)) == nullptr)
+        {
             port++;
+        }
         return sock;
     }
 }
@@ -216,10 +228,14 @@ static byte ChecksumPacket(const packet_header_t *buffer, size_t len)
     byte sum = 0;
 
     if (len == 0)
+    {
         return 0;
+    }
 
     while (p++, --len)
+    {
         sum += *p;
+    }
 
     return sum;
 }
@@ -233,9 +249,13 @@ size_t I_GetPacket(packet_header_t *buffer, size_t buflen)
     status = SDLNet_UDP_Recv(udp_socket, udp_packet);
     len = udp_packet->len;
     if (buflen < len)
+    {
         len = buflen;
+    }
     if ((status != 0) && (len > 0))
+    {
         memcpy(buffer, udp_packet->data, len);
+    }
     sentfrom = udp_packet->channel;
     sentfrom_addr = udp_packet->address;
     checksum = buffer->checksum;
@@ -247,7 +267,9 @@ size_t I_GetPacket(packet_header_t *buffer, size_t buflen)
         /*    fprintf(stderr, "recvlen = %u, stolen = %u, csum = %u, psum =
           %u\n", udp_packet->len, len, checksum, psum); */
         if (psum == checksum)
+        {
             return len;
+        }
     }
     return 0;
 }

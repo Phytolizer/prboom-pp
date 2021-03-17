@@ -369,7 +369,9 @@ static void dsda_InitHeretic(void)
 
     // heretic doesn't use "clip" concept
     for (i = 0; i < NUMAMMO; ++i)
+    {
         clipammo[i] = 1;
+    }
 
     // so few it's not worth implementing a pointer swap
     maxammo[0] = 100; // gold wand
@@ -389,7 +391,9 @@ static dboolean dsda_AutoDetectHeretic(void)
         length = strlen(myargv[i]);
         if (length >= 11 &&
             !strnicmp(myargv[i] + length - 11, "heretic.wad", 11))
+        {
             return true;
+        }
     }
 
     return false;

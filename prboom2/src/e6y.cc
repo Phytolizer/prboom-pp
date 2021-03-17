@@ -229,8 +229,10 @@ void ParamsMatchingCheck()
                                    M_CheckParm("-fastdemo");
 
     if (recording_attempt && playbacking_attempt)
+    {
         I_Error("Params are not matching: Can not being played back and "
                 "recorded at the same time.");
+    }
 }
 
 prboom_comp_t prboom_comp[PC_MAX] = {
@@ -271,16 +273,24 @@ void e6y_InitCommandLine(void)
         float min, sec;
 
         if (sscanf(myargv[p + 1], "%f:%f", &min, &sec) == 2)
+        {
             demo_skiptics = (int)((60 * min + sec) * TICRATE);
+        }
         else if (sscanf(myargv[p + 1], "%f", &sec) == 1)
+        {
             demo_skiptics = (int)(sec * TICRATE);
+        }
     }
 
     if ((IsDemoPlayback() || IsDemoContinue()) &&
         (startmap > 1 || demo_skiptics))
+    {
         G_SkipDemoStart();
+    }
     if ((p = M_CheckParm("-avidemo")) && (p < myargc - 1))
+    {
         avi_shot_fname = myargv[p + 1];
+    }
     stats_level = M_CheckParm("-levelstat");
 
     if ((stroller = M_CheckParm("-stroller")))
@@ -411,9 +421,13 @@ int G_GotoNextLevel(void)
     {
         const char *n;
         if (gamemapinfo->nextsecret[0])
+        {
             n = gamemapinfo->nextsecret;
+        }
         else
+        {
             n = gamemapinfo->nextmap;
+        }
         G_ValidateMapName(n, &epsd, &map);
     }
 
@@ -431,14 +445,20 @@ int G_GotoNextLevel(void)
                 doom2_next[8] = 5;
             }
             else
+            {
                 doom2_next[1] = 33;
+            }
         }
 
         if (gamemode == shareware)
+        {
             heretic_next[0][7] = 11;
+        }
 
         if (gamemode == registered)
+        {
             heretic_next[2][7] = 11;
+        }
 
         // shareware doom has only episode 1
         doom_next[0][7] = (gamemode == shareware ? 11 : 21);
@@ -496,9 +516,13 @@ void M_ChangeMouseLook(void)
 
 #ifdef GL_DOOM
     if (gl_skymode == skytype_auto)
+    {
         gl_drawskys = (movement_mouselook ? skytype_skydome : skytype_standard);
+    }
     else
+    {
         gl_drawskys = gl_skymode;
+    }
 #endif // GL_DOOM
 }
 
@@ -547,9 +571,13 @@ dboolean HaveMouseLook(void)
 void CheckPitch(signed int *view_pitch)
 {
     if (*view_pitch > maxViewPitch)
+    {
         *view_pitch = maxViewPitch;
+    }
     if (*view_pitch < minViewPitch)
+    {
         *view_pitch = minViewPitch;
+    }
 
     (*view_pitch) >>= 16;
     (*view_pitch) <<= 16;
@@ -620,9 +648,13 @@ void M_ChangeFOV(void)
     f1 = (float)(320.0f / 200.0f * (float)render_fov / (float)FOV90 - 0.2f);
     f2 = (float)tan(DEG2RAD(render_fovy) / 2.0f);
     if (f1 - f2 < 1)
+    {
         skyUpAngle = (float)-RAD2DEG(asin(f1 - f2));
+    }
     else
+    {
         skyUpAngle = -90.0f;
+    }
 
     skyUpShift = (float)tan(DEG2RAD(render_fovy) / 2.0f);
 
@@ -733,30 +765,42 @@ int StepwiseSum(int value, int direction, int step, int minval, int maxval,
     int val = (direction > 0 ? value : value - 1);
 
     if (direction == 0)
+    {
         return defval;
+    }
 
     direction = (direction > 0 ? 1 : -1);
 
     if (step != 0)
+    {
         newvalue = (prev_direction * direction < 0 ? prev_value
                                                    : value + direction * step);
+    }
     else
     {
         int exp = 1;
         while (exp * 10 <= val)
+        {
             exp *= 10;
+        }
         newvalue = direction * (val < exp * 5 && exp > 1 ? exp / 2 : exp);
         newvalue = (value + newvalue) / newvalue * newvalue;
     }
 
     if (newvalue > maxval)
+    {
         newvalue = maxval;
+    }
     if (newvalue < minval)
+    {
         newvalue = minval;
+    }
 
     if ((value < defval && newvalue > defval) ||
         (value > defval && newvalue < defval))
+    {
         newvalue = defval;
+    }
 
     if (newvalue != value)
     {
@@ -873,10 +917,14 @@ void e6y_G_DoCompleted(void)
     int i;
 
     if (doSkip && (demo_stoponend || demo_warp))
+    {
         G_SkipDemoStop();
+    }
 
     if (!stats_level)
+    {
         return;
+    }
 
     if (numlevels >= levels_max)
     {
@@ -888,15 +936,21 @@ void e6y_G_DoCompleted(void)
     memset(&stats[numlevels], 0, sizeof(timetable_t));
 
     if (gamemode == commercial)
+    {
         sprintf(stats[numlevels].map, "MAP%02i", gamemap);
+    }
     else
+    {
         sprintf(stats[numlevels].map, "E%iM%i", gameepisode, gamemap);
+    }
 
     if (secretexit)
     {
         size_t end_of_string = strlen(stats[numlevels].map);
         if (end_of_string < 15)
+        {
             stats[numlevels].map[end_of_string] = 's';
+        }
     }
 
     stats[numlevels].stat[TT_TIME] = leveltime;
@@ -948,8 +1002,12 @@ void e6y_WriteStats(void)
 
     playerscount = 0;
     for (i = 0; i < MAXPLAYERS; i++)
+    {
         if (playeringame[i])
+        {
             playerscount++;
+        }
+    }
 
     for (level = 0; level < numlevels; level++)
     {
@@ -975,7 +1033,9 @@ void e6y_WriteStats(void)
             }
         }
         if (playerscount < 2)
+        {
             memset(&all[level], 0, sizeof(tmpdata_t));
+        }
         else
         {
             sprintf(all[level].kill, " (%s)", tmp.kill);
@@ -984,15 +1044,25 @@ void e6y_WriteStats(void)
         }
 
         if (strlen(all[level].kill) > allkills_len)
+        {
             allkills_len = strlen(all[level].kill);
+        }
         if (strlen(all[level].item) > allitems_len)
+        {
             allitems_len = strlen(all[level].item);
+        }
         if (strlen(all[level].secret) > allsecrets_len)
+        {
             allsecrets_len = strlen(all[level].secret);
+        }
 
         for (i = 0; i < TT_MAX; i++)
+        {
             if (stats[level].stat[i] > max.stat[i])
+            {
                 max.stat[i] = stats[level].stat[i];
+            }
+        }
     }
     max.stat[TT_TIME] = max.stat[TT_TIME] / TICRATE / 60;
     max.stat[TT_TOTALTIME] = max.stat[TT_TOTALTIME] / TICRATE / 60;
@@ -1043,7 +1113,9 @@ void e6y_G_DoWorldDone(void)
             if (gamemode == commercial)
             {
                 if (p < myargc - 1)
+                {
                     map = atoi(myargv[p + 1]);
+                }
             }
             else
             {
@@ -1061,7 +1133,9 @@ void e6y_G_DoWorldDone(void)
                          : (episode == gameepisode && map == gamemap));
 
         if (demo_warp && demo_skiptics == 0 && !firstmap)
+        {
             G_SkipDemoStop();
+        }
 
         firstmap = 0;
     }
@@ -1072,10 +1146,14 @@ void e6y_G_DoWorldDone(void)
 int AccelerateMouse(int val)
 {
     if (!mouse_acceleration)
+    {
         return val;
+    }
 
     if (val < 0)
+    {
         return -AccelerateMouse(-val);
+    }
 
     return M_DoubleToInt(pow((double)val, (double)mouse_accelfactor));
 }
@@ -1118,7 +1196,9 @@ void e6y_G_Compatibility(void)
         for (i = 0; i < PC_MAX; i++)
         {
             if (M_CheckParm(prboom_comp[i].cmd))
+            {
                 prboom_comp[i].state = true;
+            }
         }
     }
 
@@ -1126,7 +1206,9 @@ void e6y_G_Compatibility(void)
     if (!prboom_comp[PC_FORCE_LXDOOM_DEMO_COMPATIBILITY].state)
     {
         if (demo_compatibility)
+        {
             P_CrossSubsector = P_CrossSubsector_Doom;
+        }
 
         switch (compatibility_level)
         {
@@ -1148,7 +1230,9 @@ dboolean ProcessNoTagLines(line_t *line, sector_t **sec, int *secnum)
     if (line->tag == 0 && comperr(comperr_zerotag))
     {
         if (!(*sec = line->backsector))
+        {
             return true;
+        }
         *secnum = (*sec)->iSectorID;
         zerotag_manual = true;
         return true;
@@ -1166,7 +1250,9 @@ char *PathFindFileName(const char *pPath)
         {
             if ((pPath[0] == '\\' || pPath[0] == ':' || pPath[0] == '/') &&
                 pPath[1] && pPath[1] != '\\' && pPath[1] != '/')
+            {
                 pT = pPath + 1;
+            }
         }
     }
 
@@ -1178,12 +1264,20 @@ void NormalizeSlashes2(char *str)
     size_t l;
 
     if (!str || !(l = strlen(str)))
+    {
         return;
+    }
     if (str[--l] == '\\' || str[l] == '/')
+    {
         str[l] = 0;
+    }
     while (l--)
+    {
         if (str[l] == '/')
+        {
             str[l] = '\\';
+        }
+    }
 }
 
 unsigned int AfxGetFileName(const char *lpszPathName, char *lpszTitle,
@@ -1192,7 +1286,9 @@ unsigned int AfxGetFileName(const char *lpszPathName, char *lpszTitle,
     char *lpszTemp = PathFindFileName(lpszPathName);
 
     if (lpszTitle == nullptr)
+    {
         return strlen(lpszTemp) + 1;
+    }
 
     strncpy(lpszTitle, lpszTemp, nMax - 1);
     return 0;
@@ -1212,7 +1308,9 @@ void AbbreviateName(char *lpszCanon, int cchMax, int bAtLeastName)
     lpszFileName = lpszBase + (cchFullPath - cchFileName);
 
     if (cchMax >= cchFullPath)
+    {
         return;
+    }
 
     if (cchMax < cchFileName)
     {
@@ -1225,14 +1323,18 @@ void AbbreviateName(char *lpszCanon, int cchMax, int bAtLeastName)
     if (lpszBase[0] == '\\' && lpszBase[1] == '\\')
     {
         while (*lpszCur != '\\')
+        {
             lpszCur++;
+        }
     }
 
     if (cchFullPath - cchFileName > 3)
     {
         lpszCur++;
         while (*lpszCur != '\\')
+        {
             lpszCur++;
+        }
     }
 
     cchVolName = (int)(lpszCur - lpszBase);
@@ -1269,7 +1371,9 @@ int HU_DrawDemoProgress(int force)
 
     if (gamestate == GS_DEMOSCREEN || (!demoplayback && !democontinue) ||
         !hudadd_demoprogressbar)
+    {
         return false;
+    }
 
     tics_count =
         ((doSkip && demo_skiptics > 0) ? MIN(demo_skiptics, demo_tics_count)
@@ -1287,20 +1391,26 @@ int HU_DrawDemoProgress(int force)
         // can slow down demo skipping and playback
         tick = SDL_GetTicks();
         if (tick - last_update < max_period)
+        {
             return false;
+        }
         last_update = tick;
 
         // Do not update progress bar if difference is small
         diff = len - prev_len;
-        if (diff == 0 || diff == 1) // because of static prev_len
+        if (diff == 0 || diff == 1)
+        { // because of static prev_len
             return false;
+        }
     }
 
     prev_len = len;
 
     V_FillRect(0, 0, SCREENHEIGHT - 4, len - 0, 4, 4);
     if (len > 4)
+    {
         V_FillRect(0, 2, SCREENHEIGHT - 3, len - 4, 2, 0);
+    }
 
     return true;
 }
@@ -1445,47 +1555,67 @@ dboolean SmoothEdges(unsigned char *buffer, int w, int h)
     // Makes sense for HUD small digits
     // 2 and 7 still look ugly
     if (h <= 8 || w <= 8)
+    {
         return false;
+    }
 
     l1 = buffer;
 
     if (l1[MSB] == 0 && !CHKPIX(1))
+    {
         CHKPIX(w);
+    }
     l1 += 4;
     for (x = 1; x < w - 1; x++, l1 += 4)
     {
         if (l1[MSB] == 0 && !CHKPIX(-1) && !CHKPIX(1))
+        {
             CHKPIX(w);
+        }
     }
     if (l1[MSB] == 0 && !CHKPIX(-1))
+    {
         CHKPIX(w);
+    }
     l1 += 4;
 
     for (y = 1; y < h - 1; y++)
     {
         if (l1[MSB] == 0 && !CHKPIX(-w) && !CHKPIX(1))
+        {
             CHKPIX(w);
+        }
         l1 += 4;
         for (x = 1; x < w - 1; x++, l1 += 4)
         {
             if (l1[MSB] == 0 && !CHKPIX(-w) && !CHKPIX(-1) && !CHKPIX(1))
+            {
                 CHKPIX(w);
+            }
         }
         if (l1[MSB] == 0 && !CHKPIX(-w) && !CHKPIX(-1))
+        {
             CHKPIX(w);
+        }
         l1 += 4;
     }
 
     if (l1[MSB] == 0 && !CHKPIX(-w))
+    {
         CHKPIX(1);
+    }
     l1 += 4;
     for (x = 1; x < w - 1; x++, l1 += 4)
     {
         if (l1[MSB] == 0 && !CHKPIX(-w) && !CHKPIX(-1))
+        {
             CHKPIX(1);
+        }
     }
     if (l1[MSB] == 0 && !CHKPIX(-w))
+    {
         CHKPIX(-1);
+    }
 
     return trans;
 }

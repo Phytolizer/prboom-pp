@@ -125,7 +125,9 @@ void dsda_ArchiveMSecNodes(void)
     for (th = thinkercap.next; th != &thinkercap; th = th->next)
     {
         if (!dsda_IsMSecNodeMobj(th))
+        {
             continue;
+        }
 
         // We must store the count because it will be unobtainable
         //   while we are rewriting the m_tnext chains
@@ -166,9 +168,13 @@ static void dsda_UnArchiveMSecNodeMobj(msecnode_t *msecnode, mobj_t **mobj_p,
     mobj = mobj_p[P_GetMobj(mobj, mobj_count + 1)];
 
     if (mobj)
+    {
         msecnode->m_thing = mobj;
+    }
     else
+    {
         I_Error("dsda_UnArchiveMSecNodeMobj: mobj does not exist!\n");
+    }
 }
 
 void dsda_UnArchiveMSecNodes(mobj_t **mobj_p, int mobj_count)
@@ -209,9 +215,13 @@ void dsda_UnArchiveMSecNodes(mobj_t **mobj_p, int mobj_count)
                     P_DelSecnode(msecnode);
 
                     if (msecnode_prev)
+                    {
                         msecnode = msecnode_prev->m_snext;
+                    }
                     else
+                    {
                         msecnode = nullptr;
+                    }
                 }
 
                 break;
@@ -251,7 +261,9 @@ void dsda_UnArchiveMSecNodes(mobj_t **mobj_p, int mobj_count)
     for (th = thinkercap.next; th != &thinkercap; th = th->next)
     {
         if (!dsda_IsMSecNodeMobj(th))
+        {
             continue;
+        }
 
         mobj = ((mobj_t *)th);
 
@@ -285,8 +297,10 @@ void dsda_UnArchiveMSecNodes(mobj_t **mobj_p, int mobj_count)
             }
 
             if (!found)
+            {
                 I_Error("dsda_UnArchiveMSecNodes: mobj missing in sector "
                         "msecnodes!\n");
+            }
 
             // Rewrite the m_tnext chain with the new msecnodes
             msecnode->m_tprev = msecnode_prev;

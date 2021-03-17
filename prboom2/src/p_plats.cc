@@ -75,8 +75,10 @@ void T_PlatRaise(plat_t *plat)
             plat->type == raiseToNearestAndChange)
         {
             if (!(leveltime & 7))
+            {
                 S_StartSound((mobj_t *)&plat->sector->soundorg,
                              g_sfx_stnmov_plats);
+            }
         }
 
         // if encountered an obstacle, and not a crush type, reverse direction
@@ -128,7 +130,9 @@ void T_PlatRaise(plat_t *plat)
                 case raiseToNearestAndChange:
                 case genLift:
                     if (heretic && plat->type == raiseToNearestAndChange)
+                    {
                         break;
+                    }
                     P_RemoveActivePlat(plat); // killough
                 default:
                     break;
@@ -183,9 +187,13 @@ void T_PlatRaise(plat_t *plat)
         if (!--plat->count) // downcount and check for delay elapsed
         {
             if (plat->sector->floorheight == plat->low)
+            {
                 plat->status = up; // if at bottom, start up
+            }
             else
+            {
                 plat->status = down; // if at top, start down
+            }
 
             // make plat start sound
             S_StartSound((mobj_t *)&plat->sector->soundorg, g_sfx_pstart);
@@ -219,7 +227,9 @@ int EV_DoPlat(line_t *line, plattype_e type, int amount)
     if (ProcessNoTagLines(line, &sec, &secnum))
     {
         if (zerotag_manual)
+        {
             goto manual_plat;
+        }
         else
         {
             return rtn;
@@ -251,7 +261,9 @@ int EV_DoPlat(line_t *line, plattype_e type, int amount)
         if (P_SectorActive(floor_special, sec))
         { // jff 2/23/98 multiple thinkers
             if (!zerotag_manual)
+            {
                 continue;
+            }
             else
             {
                 return rtn;
@@ -306,7 +318,9 @@ int EV_DoPlat(line_t *line, plattype_e type, int amount)
             plat->low = P_FindLowestFloorSurrounding(sec);
 
             if (plat->low > sec->floorheight)
+            {
                 plat->low = sec->floorheight;
+            }
 
             plat->high = sec->floorheight;
             plat->wait = 35 * PLATWAIT;
@@ -319,7 +333,9 @@ int EV_DoPlat(line_t *line, plattype_e type, int amount)
             plat->low = P_FindLowestFloorSurrounding(sec);
 
             if (plat->low > sec->floorheight)
+            {
                 plat->low = sec->floorheight;
+            }
 
             plat->high = sec->floorheight;
             plat->wait = 35 * PLATWAIT;
@@ -332,12 +348,16 @@ int EV_DoPlat(line_t *line, plattype_e type, int amount)
             plat->low = P_FindLowestFloorSurrounding(sec);
 
             if (plat->low > sec->floorheight)
+            {
                 plat->low = sec->floorheight;
+            }
 
             plat->high = P_FindHighestFloorSurrounding(sec);
 
             if (plat->high < sec->floorheight)
+            {
                 plat->high = sec->floorheight;
+            }
 
             plat->wait = 35 * PLATWAIT;
             plat->status = static_cast<plat_e>(P_Random(pr_plats) & 1);
@@ -361,7 +381,9 @@ int EV_DoPlat(line_t *line, plattype_e type, int amount)
         }
         P_AddActivePlat(plat); // add plat to list of active plats
         if (zerotag_manual)
+        {
             return rtn; // e6y
+        }
     }
     return rtn;
 }
@@ -391,10 +413,14 @@ void P_ActivateInStasis(int tag)
         plat_t *plat = pl->plat; // for one in stasis with right tag
         if (plat->tag == tag && plat->status == in_stasis)
         {
-            if (plat->type == toggleUpDn) // jff 3/14/98 reactivate toggle type
+            if (plat->type == toggleUpDn)
+            { // jff 3/14/98 reactivate toggle type
                 plat->status = plat->oldstatus == up ? down : up;
+            }
             else
+            {
                 plat->status = plat->oldstatus;
+            }
             plat->thinker.function = T_PlatRaise;
         }
     }
@@ -440,7 +466,9 @@ void P_AddActivePlat(plat_t *plat)
     list->plat = plat;
     plat->list = list;
     if ((list->next = activeplats))
+    {
         list->next->prev = &list->next;
+    }
     list->prev = &activeplats;
     activeplats = list;
 }
@@ -459,7 +487,9 @@ void P_RemoveActivePlat(plat_t *plat)
     plat->sector->floordata = nullptr; // jff 2/23/98 multiple thinkers
     P_RemoveThinker(&plat->thinker);
     if ((*list->prev = list->next))
+    {
         list->next->prev = list->prev;
+    }
     free(list);
 }
 

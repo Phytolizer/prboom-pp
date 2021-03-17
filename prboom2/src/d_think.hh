@@ -45,7 +45,7 @@
  *  action functions cleanly.
  */
 // killough 11/98: convert back to C instead of C++
-//typedef void (*actionf_t)();
+// typedef void (*actionf_t)();
 
 // e6y: for boom's friction code
 typedef void (*actionf_v)();
@@ -88,6 +88,6 @@ struct thinker_t
      * this one using pointers. Used for garbage collection.
      */
     unsigned references;
-} ;
+};
 
 #endif

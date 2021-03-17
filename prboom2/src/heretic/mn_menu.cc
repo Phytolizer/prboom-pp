@@ -163,14 +163,18 @@ void MN_DrawMessage(const char *messageString)
 
         text = p;
         while ((c = *p) && *p != '\n')
+        {
             p++;
+        }
         *p = 0;
 
         MN_DrTextA(text, 160 - MN_TextAWidth(text) / 2, y);
         y += R_NumPatchHeight(FontABaseLump);
 
         if ((*p = c))
+        {
             p++;
+        }
     }
     free(msg);
 }
@@ -191,7 +195,9 @@ void MN_Drawer(void)
     {
         const char *text = currentMenu->menuitems[i].alttext;
         if (text)
+        {
             MN_DrTextB(DEH_String(text), x, y);
+        }
         y += ITEM_HEIGHT;
     }
 
@@ -407,8 +413,12 @@ int MN_TextAHeight(const char *text)
     total_height = line_height;
 
     for (i = 0; text[i]; i++)
+    {
         if (text[i] == '\n')
+        {
             total_height += line_height;
+        }
+    }
     return total_height;
 }
 

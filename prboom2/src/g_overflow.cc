@@ -394,9 +394,10 @@ void RejectOverrun(int rejectlump, const byte **rejectmatrix, int totallines)
                 for (i = 0; i < (unsigned int)(required - length) && i < 16;
                      i++)
                 { // 16 hard-coded
-                    if (!(i &
-                          3)) // get the next 4 bytes to copy when i=0,4,8,12
+                    if (!(i & 3))
+                    { // get the next 4 bytes to copy when i=0,4,8,12
                         padding = *src++;
+                    }
                     *dest++ = padding & 0xff; // store lowest-significant byte
                     padding >>= 8;            // rotate the next byte down
                 }
@@ -449,11 +450,17 @@ static int GetMemoryValue(unsigned int offset, void *value, int size)
         if ((p = M_CheckParm("-setmem")) && (p < myargc - 1))
         {
             if (!strcasecmp(myargv[p + 1], "dos622"))
+            {
                 dos_mem_dump = mem_dump_dos622;
+            }
             if (!strcasecmp(myargv[p + 1], "dos71"))
+            {
                 dos_mem_dump = mem_dump_win98;
+            }
             else if (!strcasecmp(myargv[p + 1], "dosbox"))
+            {
                 dos_mem_dump = mem_dump_dosbox;
+            }
             else
             {
                 while (++p != myargc && *myargv[p] != '-' &&

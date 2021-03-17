@@ -114,7 +114,9 @@ float distance2piece(float x0, float y0, float x1, float y1, float x2, float y2)
         t = x01 * x01 + y01 * y01;
         w = x02 * x02 + y02 * y02;
         if (w < t)
+        {
             t = w;
+        }
     }
     else
     {
@@ -227,7 +229,9 @@ void gld_PreprocessDetail(void)
 void gld_EnableDetail(int enable)
 {
     if (!gl_arb_multitexture || !render_usedetail)
+    {
         return;
+    }
 
     gld_EnableTexture2D(GL_TEXTURE1_ARB, enable);
     gld_EnableClientCoordArray(GL_TEXTURE1_ARB, enable);
@@ -281,7 +285,9 @@ void gld_DrawWallWithDetail(GLWall *wall)
 
         // split left edge of wall
         if (!wall->glseg->fracleft)
+        {
             gld_SplitLeftEdge(wall, true);
+        }
 
         // upper left corner
         GLEXT_glMultiTexCoord2fARB(GL_TEXTURE0_ARB, wall->ul, wall->vt);
@@ -297,7 +303,9 @@ void gld_DrawWallWithDetail(GLWall *wall)
 
         // split right edge of wall
         if (!wall->glseg->fracright)
+        {
             gld_SplitRightEdge(wall, true);
+        }
 
         // lower right corner
         GLEXT_glMultiTexCoord2fARB(GL_TEXTURE0_ARB, wall->ur, wall->vb);
@@ -312,10 +320,14 @@ void gld_DrawWallWithDetail(GLWall *wall)
 void gld_DrawWallDetail_NoARB(GLWall *wall)
 {
     if (!wall->gltexture->detail)
+    {
         return;
+    }
 
     if (wall->flag >= GLDWF_SKY)
+    {
         return;
+    }
 
     if (gld_IsDetailVisible(xCamera, yCamera, wall->glseg->x1, wall->glseg->z1,
                             wall->glseg->x2, wall->glseg->z2))
@@ -371,7 +383,9 @@ void gld_DrawWallDetail_NoARB(GLWall *wall)
 
             // split left edge of wall
             if (!wall->glseg->fracleft)
+            {
                 gld_SplitLeftEdge(wall, true);
+            }
 
             // upper left corner
             glTexCoord2f(wall->ul * w + dx, wall->vt * h + dy);
@@ -383,7 +397,9 @@ void gld_DrawWallDetail_NoARB(GLWall *wall)
 
             // split right edge of wall
             if (!wall->glseg->fracright)
+            {
                 gld_SplitRightEdge(wall, true);
+            }
 
             // lower right corner
             glTexCoord2f(wall->ur * w + dx, wall->vb * h + dy);
@@ -402,7 +418,9 @@ void gld_DrawFlatDetail_NoARB(GLFlat *flat)
     detail_t *detail;
 
     if (!flat->gltexture->detail)
+    {
         return;
+    }
 
     detail = flat->gltexture->detail;
     gld_BindDetail(flat->gltexture, detail->texid);
@@ -505,21 +523,11 @@ void gld_DrawItemsSortByDetail(GLDrawItemType itemtype)
     typedef int(C_DECL * DICMP_ITEM)(const void *a, const void *b);
 
     static DICMP_ITEM itemfuncs[GLDIT_TYPES] = {
-        nullptr,
-        dicmp_wall_detail,
-        dicmp_wall_detail,
-        dicmp_wall_detail,
-        dicmp_wall_detail,
-        dicmp_wall_detail,
-        dicmp_wall_detail,
-        dicmp_wall_detail,
-        dicmp_flat_detail,
-        dicmp_flat_detail,
-        dicmp_flat_detail,
-        dicmp_flat_detail,
-        nullptr,
-        nullptr,
-        nullptr,
+        nullptr,           dicmp_wall_detail, dicmp_wall_detail,
+        dicmp_wall_detail, dicmp_wall_detail, dicmp_wall_detail,
+        dicmp_wall_detail, dicmp_wall_detail, dicmp_flat_detail,
+        dicmp_flat_detail, dicmp_flat_detail, dicmp_flat_detail,
+        nullptr,           nullptr,           nullptr,
         nullptr,
     };
 
@@ -535,7 +543,9 @@ void gld_DrawDetail_NoARB(void)
     int i;
 
     if (!scene_has_wall_details && !scene_has_flat_details)
+    {
         return;
+    }
 
     glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL);
     glBlendFunc(GL_DST_COLOR, GL_SRC_COLOR);
@@ -703,11 +713,15 @@ void gld_SetTexDetail(GLTexture *gltexture)
             {
             case GLDT_TEXTURE:
                 if (details[TAG_DETAIL_WALL].texid > 0)
+                {
                     gltexture->detail = &details[TAG_DETAIL_WALL];
+                }
                 break;
             case GLDT_FLAT:
                 if (details[TAG_DETAIL_FLAT].texid > 0)
+                {
                     gltexture->detail = &details[TAG_DETAIL_FLAT];
+                }
                 break;
             }
         }
@@ -755,7 +769,9 @@ GLuint gld_LoadDetailName(const char *name)
             if (surf)
             {
                 if (gl_arb_multitexture)
+                {
                     GLEXT_glActiveTextureARB(GL_TEXTURE1_ARB);
+                }
                 glGenTextures(1, &texid);
                 glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
                 glBindTexture(GL_TEXTURE_2D, texid);
@@ -772,12 +788,16 @@ GLuint gld_LoadDetailName(const char *name)
                 glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,
                                 GL_LINEAR_MIPMAP_LINEAR);
                 if (gl_ext_texture_filter_anisotropic)
+                {
                     glTexParameterf(
                         GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT,
                         (GLfloat)(1 << gl_texture_filter_anisotropic));
+                }
 
                 if (gl_arb_multitexture)
+                {
                     GLEXT_glActiveTextureARB(GL_TEXTURE0_ARB);
+                }
 
                 SDL_FreeSurface(surf);
             }
@@ -804,21 +824,31 @@ int gld_ReadDetailParams(tag_detail_e item, detail_t *detail)
                 float f;
 
                 if (SC_Check() && SC_GetString() && M_StrToFloat(sc_String, &f))
+                {
                     detail->width = f;
+                }
                 if (SC_Check() && SC_GetString() && M_StrToFloat(sc_String, &f))
+                {
                     detail->height = f;
+                }
 
                 if (SC_Check() && SC_GetString() && M_StrToFloat(sc_String, &f))
+                {
                     detail->offsetx = f / detail->width;
+                }
                 if (SC_Check() && SC_GetString() && M_StrToFloat(sc_String, &f))
+                {
                     detail->offsety = f / detail->height;
+                }
 
                 result = true;
             }
         }
         // skip the rest of unknown params
         while (SC_Check())
+        {
             SC_GetString();
+        }
     }
 
     return result;
@@ -892,7 +922,9 @@ void gld_ParseDetail(void)
 
     // skip "Detail" params
     while (SC_Check() && !SC_Compare("{"))
+    {
         SC_GetString();
+    }
 
     if (SC_GetString() && SC_Compare("{"))
     {
