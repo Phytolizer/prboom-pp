@@ -221,10 +221,8 @@ angle_t R_SmoothPlaying_Get(player_t *player)
     {
         return smooth_playing_angle;
     }
-    else
-    {
-        return player->mo->angle;
-    }
+
+    return player->mo->angle;
 }
 
 void R_ResetAfterTeleport(player_t *player)

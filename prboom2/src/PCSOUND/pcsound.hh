@@ -30,9 +30,7 @@
 
 using pcsound_driver_t = struct pcsound_driver_s;
 using pcsound_callback_func = void (*)(int *, int *);
-typedef int (*pcso;
 using pcsound_init_func = int (*)(pcsound_callback_func);
-typedef void (;
 using pcsound_shutdown_func = void (*)();
 
 struct pcsound_driver_s

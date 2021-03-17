@@ -314,15 +314,13 @@ angle_t R_PointToPseudoAngle(fixed_t x, fixed_t y)
     {
         return 0;
     }
-    else
+
+    double result = vecy / (fabs(vecx) + fabs(vecy));
+    if (vecx < 0)
     {
-        double result = vecy / (fabs(vecx) + fabs(vecy));
-        if (vecx < 0)
-        {
-            result = 2.0 - result;
-        }
-        return (angle_t)xs_CRoundToInt(result * (1 << 30));
+        result = 2.0 - result;
     }
+    return (angle_t)xs_CRoundToInt(result * (1 << 30));
 }
 
 //

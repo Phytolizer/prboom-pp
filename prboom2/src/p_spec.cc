@@ -333,10 +333,9 @@ sector_t *getNextSector(line_t *line, sector_t *sec)
             return line
                 ->backsector; // jff 5/3/98 don't retn sec unless compatibility
         }
-        else
-        {                   // fixes an intra-sector line breaking functions
-            return nullptr; // like floor->highest floor
-        }
+
+        // fixes an intra-sector line breaking functions
+        return nullptr; // like floor->highest floor
     }
     return line->frontsector;
 }
@@ -1210,18 +1209,17 @@ dboolean PUREFUNC P_SectorActive(special_e t, const sector_t *sec)
         return sec->floordata != nullptr || sec->ceilingdata != nullptr ||
                sec->lightingdata != nullptr;
     }
-    else
+
+    switch (t) // return whether thinker of same type is active
     {
-        switch (t) // return whether thinker of same type is active
-        {
-        case floor_special:
-            return sec->floordata != nullptr;
-        case ceiling_special:
-            return sec->ceilingdata != nullptr;
-        case lighting_special:
-            return sec->lightingdata != nullptr;
-        }
+    case floor_special:
+        return sec->floordata != nullptr;
+    case ceiling_special:
+        return sec->ceilingdata != nullptr;
+    case lighting_special:
+        return sec->lightingdata != nullptr;
     }
+
     return true; // don't know which special, must be active, shouldn't be here
 }
 

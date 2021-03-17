@@ -288,10 +288,8 @@ dboolean SC_GetNumber()
         }
         return true;
     }
-    else
-    {
-        return false;
-    }
+
+    return false;
 }
 
 //==========================================================================

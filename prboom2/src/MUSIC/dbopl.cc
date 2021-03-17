@@ -726,12 +726,10 @@ static inline Bits Operator__GetSample(Operator *self, Bits modulation)
         self->waveIndex += self->waveCurrent;
         return 0;
     }
-    else
-    {
-        Bitu index = Operator__ForwardWave(self);
-        index += modulation;
-        return Operator__GetWave(self, index, vol);
-    }
+
+    Bitu index = Operator__ForwardWave(self);
+    index += modulation;
+    return Operator__GetWave(self, index, vol);
 }
 
 static void Operator__Operator(Operator *self)
@@ -1136,7 +1134,7 @@ Channel *Channel__BlockTemplate(Channel *self, Chip *chip, Bit32u samples,
             Channel__GeneratePercussion(self, chip, output + i, FALSE);
             continue; // Prevent some unitialized value bitching
         }
-        else if (mode == sm3Percussion)
+        if (mode == sm3Percussion)
         {
             Channel__GeneratePercussion(self, chip, output + i * 2, TRUE);
             continue; // Prevent some unitialized value bitching

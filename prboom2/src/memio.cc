@@ -33,8 +33,6 @@
 
 #include "memio.hh"
 
-
-
 using memfile_mode_t = enum
 {
     MODE_READ,
@@ -202,9 +200,7 @@ int mem_fseek(MEMFILE *stream, signed long position, mem_rel_t whence)
         stream->position = newpos;
         return 0;
     }
-    else
-    {
-        printf("Error seeking to %i\n", newpos);
-        return -1;
-    }
+
+    printf("Error seeking to %i\n", newpos);
+    return -1;
 }

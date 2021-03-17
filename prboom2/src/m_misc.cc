@@ -4710,10 +4710,8 @@ void M_LoadDefaults()
                         (*index)++;
                         continue;
                     }
-                    else
-                    {
-                        item = nullptr;
-                    }
+
+                    item = nullptr;
                 }
 
                 for (i = 0; i < numdefaults; i++)

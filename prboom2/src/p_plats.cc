@@ -264,10 +264,9 @@ int EV_DoPlat(line_t *line, plattype_e type, int amount)
             {
                 continue;
             }
-            else
-            {
-                return rtn;
-            }
+
+            return rtn;
+
         }; // e6y
 
         // Create a thinker

@@ -66,10 +66,8 @@ int deh_strcasecmp(const char *str1, const char *str2)
     {
         return strcmp(str1, str2);
     }
-    else
-    {
-        return strcasecmp(str1, str2);
-    }
+
+    return strcasecmp(str1, str2);
 }
 const char *deh_getBitsDelims()
 {
@@ -79,10 +77,8 @@ const char *deh_getBitsDelims()
     {
         return "+";
     }
-    else
-    {
-        return ",+| \t\f\r";
-    }
+
+    return ",+| \t\f\r";
 }
 
 // If false, dehacked cheat replacements are ignored.

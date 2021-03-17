@@ -295,7 +295,7 @@ void M_DrawChatStrings();
 void M_Compat(int); // killough 10/98
 void M_ChangeDemoSmoothTurns();
 void M_ChangeTextureParams();
-void M_General(int);      // killough 10/98
+void M_General(int);  // killough 10/98
 void M_DrawCompat();  // killough 10/98
 void M_DrawGeneral(); // killough 10/98
 void M_ChangeFullScreen();
@@ -7562,12 +7562,10 @@ dboolean M_Responder(event_t *ev)
                 G_SkipDemoStart();
                 return true;
             }
-            else
+
+            if (G_GotoNextLevel())
             {
-                if (G_GotoNextLevel())
-                {
-                    return true;
-                }
+                return true;
             }
         }
 
@@ -8705,27 +8703,25 @@ dboolean M_Responder(event_t *ev)
         return true;
     }
 
-    else
+    for (i = itemOn + 1; i < currentMenu->numitems; i++)
     {
-        for (i = itemOn + 1; i < currentMenu->numitems; i++)
+        if (currentMenu->menuitems[i].alphaKey == ch)
         {
-            if (currentMenu->menuitems[i].alphaKey == ch)
-            {
-                itemOn = i;
-                S_StartSound(nullptr, g_sfx_menu);
-                return true;
-            }
-        }
-        for (i = 0; i <= itemOn; i++)
-        {
-            if (currentMenu->menuitems[i].alphaKey == ch)
-            {
-                itemOn = i;
-                S_StartSound(nullptr, g_sfx_menu);
-                return true;
-            }
+            itemOn = i;
+            S_StartSound(nullptr, g_sfx_menu);
+            return true;
         }
     }
+    for (i = 0; i <= itemOn; i++)
+    {
+        if (currentMenu->menuitems[i].alphaKey == ch)
+        {
+            itemOn = i;
+            S_StartSound(nullptr, g_sfx_menu);
+            return true;
+        }
+    }
+
     return false;
 }
 

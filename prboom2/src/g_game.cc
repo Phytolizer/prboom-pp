@@ -2251,7 +2251,7 @@ void G_WorldDone()
 
             return;
         }
-        else if (!gamemapinfo->intertext.empty() && !secretexit)
+        if (!gamemapinfo->intertext.empty() && !secretexit)
         {
             if (gamemapinfo->intertext[0] != '-')
             { // '-' means that any default intermission was cleared.
@@ -2625,10 +2625,8 @@ void G_DoLoadGame()
                 free(msg);
                 return;
             }
-            else
-            {
-                lprintf(LO_WARN, "G_DoLoadGame: Incompatible savegame\n");
-            }
+
+            lprintf(LO_WARN, "G_DoLoadGame: Incompatible savegame\n");
         }
         save_p += sizeof checksum;
     }
@@ -2651,10 +2649,8 @@ void G_DoLoadGame()
             G_LoadGameErr("Incompatible Savegame version!!!\n\nAre you sure?");
             return;
         }
-        else
-        {
-            lprintf(LO_WARN, "G_DoLoadGame: Incompatible savegame version\n");
-        }
+
+        lprintf(LO_WARN, "G_DoLoadGame: Incompatible savegame version\n");
     }
 
     compatibility_level = (savegame_compatibility >= prboom_4_compatibility)
@@ -3894,7 +3890,8 @@ void G_BeginRecording()
             // table.
             if (mapname_len > 8)
             {
-                I_Error("Unable to save map lump name %s, too large.", mapname.c_str());
+                I_Error("Unable to save map lump name %s, too large.",
+                        mapname.c_str());
             }
 
             for (i = 0; i < mapname_len; i++)

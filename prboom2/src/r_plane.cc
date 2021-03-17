@@ -427,10 +427,9 @@ visplane_t *R_CheckPlane(visplane_t *pl, int start, int stop)
         pl->maxx = unionh;
         return pl;
     }
-    else
-    { /* Cannot use existing plane; create a new one */
-        return R_DupPlane(pl, start, stop);
-    }
+
+    /* Cannot use existing plane; create a new one */
+    return R_DupPlane(pl, start, stop);
 }
 
 //

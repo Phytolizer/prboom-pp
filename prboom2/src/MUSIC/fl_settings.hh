@@ -18,6 +18,7 @@ namespace fl
 class FluidSynthSettings
 {
     fluid_settings_t *m_ptr;
+
   public:
     [[nodiscard]] FluidSynthSettings() noexcept;
     ~FluidSynthSettings() noexcept;

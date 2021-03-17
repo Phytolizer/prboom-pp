@@ -118,10 +118,8 @@ int EV_DoGenFloor(line_t *line)
             {
                 continue;
             }
-            else
-            {
-                return rtn;
-            }
+
+            return rtn;
         }
 
         // new floor thinker
@@ -349,10 +347,8 @@ int EV_DoGenCeiling(line_t *line)
             {
                 continue;
             }
-            else
-            {
-                return rtn;
-            }
+
+            return rtn;
         }
 
         // new ceiling thinker
@@ -589,10 +585,8 @@ int EV_DoGenLift(line_t *line)
             {
                 continue;
             }
-            else
-            {
-                return rtn;
-            }
+
+            return rtn;
         }
 
         // Setup the plat thinker
@@ -777,10 +771,8 @@ int EV_DoGenStairs(line_t *line)
             {
                 continue;
             }
-            else
-            {
-                return rtn;
-            }
+
+            return rtn;
         }
 
         // new floor thinker
@@ -997,10 +989,8 @@ int EV_DoGenCrusher(line_t *line)
             {
                 continue;
             }
-            else
-            {
-                return rtn;
-            }
+
+            return rtn;
         }
 
         // new ceiling thinker
@@ -1113,10 +1103,8 @@ int EV_DoGenLockedDoor(line_t *line)
             {
                 continue;
             }
-            else
-            {
-                return rtn;
-            }
+
+            return rtn;
         }
 
         // new door thinker
@@ -1242,10 +1230,8 @@ int EV_DoGenDoor(line_t *line)
             {
                 continue;
             }
-            else
-            {
-                return rtn;
-            }
+
+            return rtn;
         }
 
         // new door thinker

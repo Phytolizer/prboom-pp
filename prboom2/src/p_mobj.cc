@@ -364,8 +364,8 @@ static void P_XYMovement(mobj_t *mo)
                         mo->momz = -FRACUNIT;
                         return;
                     }
-                    else if (demo_compatibility || // killough
-                             mo->z > ceilingline->backsector->ceilingheight)
+                    if (demo_compatibility || // killough
+                        mo->z > ceilingline->backsector->ceilingheight)
                     {
                         // Hack to prevent missiles exploding
                         // against the sky.
@@ -737,7 +737,7 @@ floater:
                     P_FloorBounceMissile(mo);
                     return;
                 }
-                else if (mo->type == HERETIC_MT_MNTRFX2)
+                if (mo->type == HERETIC_MT_MNTRFX2)
                 { // Minotaur floor fire can go up steps
                     return;
                 }
@@ -1750,29 +1750,26 @@ mobj_t *P_SpawnMapThing(const mapthing_t &mthing, int index)
         {
             return nullptr;
         }
-        else
+
+        // 1/11/98 killough -- new code removes limit on deathmatch starts:
+
+        size_t offset = deathmatch_p - deathmatchstarts;
+
+        if (offset >= num_deathmatchstarts)
         {
-            // 1/11/98 killough -- new code removes limit on deathmatch starts:
-
-            size_t offset = deathmatch_p - deathmatchstarts;
-
-            if (offset >= num_deathmatchstarts)
-            {
-                num_deathmatchstarts =
-                    num_deathmatchstarts ? num_deathmatchstarts * 2 : 16;
-                deathmatchstarts = static_cast<mapthing_t *>(
-                    realloc(deathmatchstarts,
-                            num_deathmatchstarts * sizeof(*deathmatchstarts)));
-                deathmatch_p = deathmatchstarts + offset;
-            }
-            memcpy(deathmatch_p++, &mthing, sizeof(mthing));
-            (deathmatch_p - 1)->options = 1;
-
-            TracerAddDeathmatchStart(deathmatch_p - deathmatchstarts - 1,
-                                     index);
-
-            return nullptr;
+            num_deathmatchstarts =
+                num_deathmatchstarts ? num_deathmatchstarts * 2 : 16;
+            deathmatchstarts = static_cast<mapthing_t *>(
+                realloc(deathmatchstarts,
+                        num_deathmatchstarts * sizeof(*deathmatchstarts)));
+            deathmatch_p = deathmatchstarts + offset;
         }
+        memcpy(deathmatch_p++, &mthing, sizeof(mthing));
+        (deathmatch_p - 1)->options = 1;
+
+        TracerAddDeathmatchStart(deathmatch_p - deathmatchstarts - 1, index);
+
+        return nullptr;
     }
 
     // check for players specially
@@ -2052,7 +2049,7 @@ uint_64_t P_ColoredBlood(mobj_t *bleeder)
             return MF_COLOREDBLOOD;
             // Cacodemons bleed blue blood
         }
-        else if (bleeder->type == MT_HEAD)
+        if (bleeder->type == MT_HEAD)
         {
             return MF_COLOREDBLOOD | MF_TRANSLATION1;
         }
@@ -2610,11 +2607,9 @@ int P_FaceMobj(mobj_t *source, mobj_t *target, angle_t *delta)
             *delta = ANGLE_MAX - diff;
             return (0);
         }
-        else
-        {
-            *delta = diff;
-            return (1);
-        }
+
+        *delta = diff;
+        return (1);
     }
     else
     {
@@ -2624,11 +2619,9 @@ int P_FaceMobj(mobj_t *source, mobj_t *target, angle_t *delta)
             *delta = ANGLE_MAX - diff;
             return (1);
         }
-        else
-        {
-            *delta = diff;
-            return (0);
-        }
+
+        *delta = diff;
+        return (0);
     }
 }
 

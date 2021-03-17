@@ -76,7 +76,6 @@
 
 #include "gl_opengl.hh"
 
-
 #include "v_video.hh"
 #include "gl_intern.hh"
 #include "r_main.hh"

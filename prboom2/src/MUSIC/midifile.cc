@@ -689,10 +689,8 @@ unsigned int MIDI_GetDeltaTime(midi_track_iter_t *iter)
 
         return next_event->delta_time;
     }
-    else
-    {
-        return 0;
-    }
+
+    return 0;
 }
 
 // Get a pointer to the next MIDI event.
@@ -706,10 +704,8 @@ int MIDI_GetNextEvent(midi_track_iter_t *iter, midi_event_t **event)
 
         return 1;
     }
-    else
-    {
-        return 0;
-    }
+
+    return 0;
 }
 
 unsigned int MIDI_GetFileTimeDivision(const midi_file_t *file)

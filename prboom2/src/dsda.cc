@@ -701,7 +701,7 @@ const char *dsda_DetectCategory()
 
         return "UV Speed";
     }
-    else if (gameskill == sk_nightmare)
+    if (gameskill == sk_nightmare)
     {
         if (nomonsters)
         {

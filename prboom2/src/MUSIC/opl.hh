@@ -28,8 +28,11 @@
 
 using opl_callback_t = void (*)(void *);
 
-typedef en;
-using opl_port_t = enum opl_port_t;
+enum opl_port_t
+{
+    OPL_REGISTER_PORT = 0,
+    OPL_DATA_PORT = 1
+};
 
 #define OPL_NUM_OPERATORS 21
 #define OPL_NUM_VOICES 9

@@ -37,7 +37,6 @@
 
 #include "gl_opengl.hh"
 
-
 #include <SDL.h>
 
 #ifdef HAVE_LIBSDL2_IMAGE
@@ -135,11 +134,8 @@ int gld_IsDetailVisible(float x0, float y0, float x1, float y1, float x2,
     {
         return true;
     }
-    else
-    {
-        return (distance2piece(x0, y0, x1, y1, x2, y2) <
-                gl_detail_maxdist_sqrt);
-    }
+
+    return (distance2piece(x0, y0, x1, y1, x2, y2) < gl_detail_maxdist_sqrt);
 }
 
 void gld_InitDetail()

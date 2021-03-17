@@ -390,7 +390,7 @@ static void vorb_render_ex(void *dest, unsigned nsamp)
             }
             continue;
         }
-        else if (numread == 0)
+        if (numread == 0)
         { // EOF
             if (vorb_looping)
             {

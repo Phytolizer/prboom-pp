@@ -36,7 +36,6 @@
 #include "config.h"
 #endif
 
-
 #include "doomdef.hh"
 #include "i_video.hh"
 #include "v_video.hh"

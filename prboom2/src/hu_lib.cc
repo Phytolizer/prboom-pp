@@ -103,19 +103,17 @@ dboolean HUlib_addCharToTextLine(hu_textline_t *t, char ch)
     {
         return false;
     }
-    else
-    {
-        t->linelen++;
-        if (ch == '\n')
-        {
-            t->linelen = 0;
-        }
 
-        t->l[t->len++] = ch;
-        t->l[t->len] = 0;
-        t->needsupdate = 4;
-        return true;
+    t->linelen++;
+    if (ch == '\n')
+    {
+        t->linelen = 0;
     }
+
+    t->l[t->len++] = ch;
+    t->l[t->len] = 0;
+    t->needsupdate = 4;
+    return true;
 }
 
 //
@@ -132,12 +130,10 @@ static dboolean HUlib_delCharFromTextLine(hu_textline_t *t)
     {
         return false;
     }
-    else
-    {
-        t->l[--t->len] = 0;
-        t->needsupdate = 4;
-        return true;
-    }
+
+    t->l[--t->len] = 0;
+    t->needsupdate = 4;
+    return true;
 }
 
 //
@@ -168,7 +164,7 @@ void HUlib_drawTextLine(hu_textline_t *l, dboolean drawcursor)
             {
                 continue;
             }
-            else if (c == '\x1b')
+            if (c == '\x1b')
             {
                 i++;
             }

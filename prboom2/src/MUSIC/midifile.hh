@@ -115,11 +115,20 @@ struct midi_channel_event_data_t
     unsigned int param2;
 };
 
-using midi_event_t = union {
+struct midi_event_t
+{
+    // Time between the previous event and this event.
+    unsigned int delta_time;
+
+    // Type of event:
+    midi_event_type_t::Type event_type;
+
+    union {
         midi_channel_event_data_t channel;
         midi_meta_event_data_t meta;
         midi_sysex_event_data_t sysex;
-    };
+    } data;
+} ;
 
 // Load a MIDI file.
 

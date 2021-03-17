@@ -36,7 +36,6 @@
 #include "s_sound.hh"
 #include "w_wad.hh"
 
-
 #include "opl.hh"
 #include "midifile.hh"
 
@@ -96,7 +95,6 @@ using opl_channel_data_t = struct
     // Pitch bend value:
 
     int bend;
-
 };
 
 // Data associated with a track that is currently playing.

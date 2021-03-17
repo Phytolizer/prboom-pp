@@ -360,7 +360,7 @@ static void I_GetEvent()
                     break;
                 }
                 // Switch windowed<->fullscreen if pressed Alt-Enter
-                else if (Event->key.keysym.sym == SDLK_RETURN)
+                if (Event->key.keysym.sym == SDLK_RETURN)
                 {
                     V_ToggleFullscreen();
                     break;

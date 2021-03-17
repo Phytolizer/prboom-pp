@@ -21,7 +21,7 @@
  */
 #include "config.h"
 
-#include <cstring>    /* for memcpy() */
+#include <cstring>     /* for memcpy() */
 #include <sys/types.h> /* for stupid systems */
 
 #include "md5.hh"

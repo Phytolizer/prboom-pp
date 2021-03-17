@@ -285,12 +285,11 @@ static void mp_render_ex(void *dest, unsigned nsamp)
                                       mp_len);
                     continue;
                 }
-                else
-                { // stop
-                    mp_playing = 0;
-                    memset(sout, 0, nsamp * 4);
-                    return;
-                }
+
+                // stop
+                mp_playing = 0;
+                memset(sout, 0, nsamp * 4);
+                return;
             }
             else
             { // oh well.

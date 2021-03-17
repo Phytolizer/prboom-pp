@@ -183,10 +183,8 @@ static void R_RecalcLineFlags(line_t *linedef)
             linedef->r_flags = static_cast<line_t::r_flags_t>(0);
             return;
         }
-        else
-        {
-            linedef->r_flags = line_t::RF_IGNORE;
-        }
+
+        linedef->r_flags = line_t::RF_IGNORE;
     }
 
     /* cph - I'm too lazy to try and work with offsets in this */
@@ -601,10 +599,8 @@ static void R_AddLine(seg_t *line)
     {
         return;
     }
-    else
-    {
-        R_ClipWallSegment(x1, x2, linedef->r_flags & line_t::RF_CLOSED);
-    }
+
+    R_ClipWallSegment(x1, x2, linedef->r_flags & line_t::RF_CLOSED);
 }
 
 //

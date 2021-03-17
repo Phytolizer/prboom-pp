@@ -531,10 +531,9 @@ static dboolean P_Move(mobj_t *actor, dboolean dropoff) /* killough 9/12/98 */
         {
             return (P_Random(pr_trywalk) & 3); /* jff 8/13/98 */
         }
-        else
-        { /* finally, MBF code */
-            return ((P_Random(pr_opendoor) >= 230) ^ (good & 1));
-        }
+
+        /* finally, MBF code */
+        return ((P_Random(pr_opendoor) >= 230) ^ (good & 1));
     }
     else
     {
@@ -851,32 +850,30 @@ static void P_NewChaseDir(mobj_t *actor)
             actor->movecount = 1;
             return;
         }
-        else
+
+        fixed_t dist = P_AproxDistance(deltax, deltay);
+
+        // Move away from friends when too close, except
+        // in certain situations (e.g. a crowded lift)
+
+        if (actor->flags & target->flags & MF_FRIEND &&
+            distfriend << FRACBITS > dist && !P_IsOnLift(target) &&
+            !P_IsUnderDamage(actor))
         {
-            fixed_t dist = P_AproxDistance(deltax, deltay);
-
-            // Move away from friends when too close, except
-            // in certain situations (e.g. a crowded lift)
-
-            if (actor->flags & target->flags & MF_FRIEND &&
-                distfriend << FRACBITS > dist && !P_IsOnLift(target) &&
-                !P_IsUnderDamage(actor))
-            {
+            deltax = -deltax, deltay = -deltay;
+        }
+        else if (target->health > 0 &&
+                 (actor->flags ^ target->flags) & MF_FRIEND)
+        { // Live enemy target
+            if (monster_backing && actor->info->missilestate &&
+                actor->type != MT_SKULL &&
+                ((!target->info->missilestate && dist < MELEERANGE * 2) ||
+                 (target->player && dist < MELEERANGE * 3 &&
+                  (target->player->readyweapon == wp_fist ||
+                   target->player->readyweapon == wp_chainsaw))))
+            { // Back away from melee attacker
+                actor->strafecount = P_Random(pr_enemystrafe) & 15;
                 deltax = -deltax, deltay = -deltay;
-            }
-            else if (target->health > 0 &&
-                     (actor->flags ^ target->flags) & MF_FRIEND)
-            { // Live enemy target
-                if (monster_backing && actor->info->missilestate &&
-                    actor->type != MT_SKULL &&
-                    ((!target->info->missilestate && dist < MELEERANGE * 2) ||
-                     (target->player && dist < MELEERANGE * 3 &&
-                      (target->player->readyweapon == wp_fist ||
-                       target->player->readyweapon == wp_chainsaw))))
-                { // Back away from melee attacker
-                    actor->strafecount = P_Random(pr_enemystrafe) & 15;
-                    deltax = -deltax, deltay = -deltay;
-                }
             }
         }
     }
@@ -1179,7 +1176,7 @@ static dboolean P_LookForMonsters(mobj_t *actor, dboolean allaround)
                     (th->cprev = cap)->cnext = th;
                     break;
                 }
-                else if (!PIT_FindTarget((mobj_t *)th))
+                if (!PIT_FindTarget((mobj_t *)th))
                 { // If target sighted
                     return true;
                 }

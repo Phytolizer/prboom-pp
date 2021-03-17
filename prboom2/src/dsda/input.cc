@@ -239,7 +239,7 @@ dboolean dsda_InputDeactivated(int identifier)
         {
             return false;
         }
-        else if (gamekeys[input->key[i]].deactivated_at == dsda_input_counter)
+        if (gamekeys[input->key[i]].deactivated_at == dsda_input_counter)
         {
             deactivated = true;
         }

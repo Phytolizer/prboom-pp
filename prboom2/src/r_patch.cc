@@ -58,7 +58,6 @@
 **---------------------------------------------------------------------------
 */
 
-
 #include "doomstat.hh"
 #include "w_wad.hh"
 #include "r_main.hh"
@@ -379,7 +378,7 @@ static void FillEmptySpace(rpatch_t *patch)
             }
             break;
         }
-        else if (transparent == numpix)
+        if (transparent == numpix)
         {
             break; // avoid infinite loop on entirely transparent patches
         }
@@ -1258,8 +1257,6 @@ const rcolumn_t *R_GetPatchColumn(const rpatch_t *patch, int columnIndex)
     {
         return R_GetPatchColumnClamped(patch, columnIndex);
     }
-    else
-    {
-        return R_GetPatchColumnWrapped(patch, columnIndex);
-    }
+
+    return R_GetPatchColumnWrapped(patch, columnIndex);
 }

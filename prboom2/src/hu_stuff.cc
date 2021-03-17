@@ -750,11 +750,15 @@ void HU_NextHud()
 }
 
 using HU_widget_build_func = void (*)();
-typedef void (*HU;
 using HU_widget_draw_func = void (*)();
 
-typedef struct ;
-using hud_cfg_item_t = struct hud_cfg_item_s;
+struct hud_cfg_item_t
+{
+    char name[80];
+    int x;
+    int y;
+};
+
 
 using hud_widget_t = struct hud_widget_s
 {
@@ -2836,7 +2840,6 @@ char HU_dequeueChatChar()
 //
 dboolean HU_Responder(event_t *ev)
 {
-
     static char lastmessage[HU_MAXLINELENGTH + 1];
     const char *macromessage; // CPhipps - const char*
     dboolean eatkey = false;
@@ -2861,7 +2864,7 @@ dboolean HU_Responder(event_t *ev)
         shiftdown = ev->type == ev_keydown;
         return false;
     }
-    else if (ev->data1 == key_alt)
+    if (ev->data1 == key_alt)
     {
         altdown = ev->type == ev_keydown;
         return false;
@@ -2929,7 +2932,7 @@ dboolean HU_Responder(event_t *ev)
                             HU_queueChatChar((char)(i + 1));
                             break;
                         }
-                        else if (i == consoleplayer)
+                        if (i == consoleplayer)
                         {
                             num_nobrainers++;
                             if (num_nobrainers < 3)

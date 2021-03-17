@@ -55,7 +55,6 @@
 #include "doomstat.hh"
 #include "d_net.hh"
 
-
 #include "d_main.hh"
 #include "g_game.hh"
 #include "m_menu.hh"

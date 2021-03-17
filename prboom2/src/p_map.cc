@@ -635,8 +635,8 @@ static dboolean PIT_CheckThing(mobj_t *thing) // killough 3/26/98: make static
         {
             return (true);
         }
-        else if (tmthing->z + tmthing->height < thing->z &&
-                 !(thing->flags & MF_SPECIAL))
+        if (tmthing->z + tmthing->height < thing->z &&
+            !(thing->flags & MF_SPECIAL))
         { // under thing
             return (true);
         }
@@ -706,9 +706,8 @@ static dboolean PIT_CheckThing(mobj_t *thing) // killough 3/26/98: make static
             {
                 return true; // Don't hit same species as originator.
             }
-            else
-                // e6y: Dehacked support - monsters infight
-                if (thing->type != g_mt_player && !monsters_infight)
+            // e6y: Dehacked support - monsters infight
+            if (thing->type != g_mt_player && !monsters_infight)
             {                 // Explode, but do no damage.
                 return false; // Let players missile other players.
             }
@@ -723,17 +722,15 @@ static dboolean PIT_CheckThing(mobj_t *thing) // killough 3/26/98: make static
             {
                 return true;
             }
-            else
+
+            tmthing->momx = -tmthing->momx;
+            tmthing->momy = -tmthing->momy;
+            if (!(tmthing->flags & MF_NOGRAVITY))
             {
-                tmthing->momx = -tmthing->momx;
-                tmthing->momy = -tmthing->momy;
-                if (!(tmthing->flags & MF_NOGRAVITY))
-                {
-                    tmthing->momx >>= 2;
-                    tmthing->momy >>= 2;
-                }
-                return false;
+                tmthing->momx >>= 2;
+                tmthing->momy >>= 2;
             }
+            return false;
         }
 
         if (!(thing->flags & MF_SHOOTABLE))
@@ -825,11 +822,9 @@ static dboolean PIT_CheckThing(mobj_t *thing) // killough 3/26/98: make static
     {
         return !(thing->flags & MF_SOLID);
     }
-    else
-    {
-        return !((thing->flags & MF_SOLID && !(thing->flags & MF_NOCLIP)) &&
-                 (tmthing->flags & MF_SOLID || demo_compatibility));
-    }
+
+    return !((thing->flags & MF_SOLID && !(thing->flags & MF_NOCLIP)) &&
+             (tmthing->flags & MF_SOLID || demo_compatibility));
 
     // return !(thing->flags & MF_SOLID);   // old code -- killough
 }
@@ -1034,8 +1029,7 @@ dboolean P_TryMove(mobj_t *thing, fixed_t x, fixed_t y,
                 thing->momz = -8 * FRACUNIT;
                 return false;
             }
-            else if (thing->z < tmfloorz &&
-                     tmfloorz - tmdropoffz > 24 * FRACUNIT)
+            if (thing->z < tmfloorz && tmfloorz - tmdropoffz > 24 * FRACUNIT)
             {
                 thing->momz = 8 * FRACUNIT;
                 return false;
@@ -1063,8 +1057,7 @@ dboolean P_TryMove(mobj_t *thing, fixed_t x, fixed_t y,
                 thing->momz = -8 * FRACUNIT;
                 return false;
             }
-            else if (thing->z < tmfloorz &&
-                     tmfloorz - tmdropoffz > 24 * FRACUNIT)
+            if (thing->z < tmfloorz && tmfloorz - tmdropoffz > 24 * FRACUNIT)
             {
                 thing->momz = 8 * FRACUNIT;
                 return false;
@@ -2548,7 +2541,7 @@ inline static void P_PutSecnode(msecnode_t *node)
 {
     Z_BFree(&secnodezone, node);
 }
-#else // USE_BLOCK_MEMORY_ALLOCATOR
+#else  // USE_BLOCK_MEMORY_ALLOCATOR
 // phares 3/21/98
 //
 // Maintain a freelist of msecnode_t's to reduce memory allocs and frees.
@@ -2931,7 +2924,7 @@ dboolean PIT_CheckOnmobjZ(mobj_t *thing)
     {
         return (true);
     }
-    else if (tmthing->z + tmthing->height < thing->z)
+    if (tmthing->z + tmthing->height < thing->z)
     { // under thing
         return (true);
     }

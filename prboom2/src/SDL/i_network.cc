@@ -189,16 +189,14 @@ UDP_SOCKET I_Socket(Uint16 port)
     {
         return (SDLNet_UDP_Open(port));
     }
-    else
+
+    UDP_SOCKET sock;
+    port = IPPORT_RESERVED;
+    while ((sock = SDLNet_UDP_Open(port)) == nullptr)
     {
-        UDP_SOCKET sock;
-        port = IPPORT_RESERVED;
-        while ((sock = SDLNet_UDP_Open(port)) == nullptr)
-        {
-            port++;
-        }
-        return sock;
+        port++;
     }
+    return sock;
 }
 
 void I_CloseSocket(UDP_SOCKET sock)

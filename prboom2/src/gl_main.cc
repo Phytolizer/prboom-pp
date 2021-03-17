@@ -39,7 +39,6 @@
 
 #include "gl_opengl.hh"
 
-
 #include <cmath>
 #include <SDL.h>
 #include "doomtype.hh"
@@ -3032,10 +3031,8 @@ static int C_DECL dicmp_sprite_scale(const void *a, const void *b)
     {
         return sprite2->scale - sprite1->scale;
     }
-    else
-    {
-        return sprite1->gltexture - sprite2->gltexture;
-    }
+
+    return sprite1->gltexture - sprite2->gltexture;
 }
 
 static void gld_DrawItemsSortByTexture(GLDrawItemType itemtype)

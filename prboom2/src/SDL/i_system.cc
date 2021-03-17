@@ -95,8 +95,6 @@
 #include "config.h"
 #endif
 
-
-
 void I_uSleep(unsigned long usecs)
 {
     SDL_Delay(usecs / 1000);
@@ -493,9 +491,9 @@ char *I_FindFileInternal(const char *wfname, const char *ext, dboolean isStatic)
     // lookup table of directories to search
     static struct search_t
     {
-        const char *dir;           // directory
-        const char *sub;           // subdirectory
-        const char *env;           // environment variable
+        const char *dir;       // directory
+        const char *sub;       // subdirectory
+        const char *env;       // environment variable
         const char *(*func)(); // for I_DoomExeDir
     } search0[] =
         {

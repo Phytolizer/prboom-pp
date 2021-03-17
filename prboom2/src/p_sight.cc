@@ -933,10 +933,8 @@ static dboolean P_CrossBSPNode(int bspnum)
     {
         return P_CrossBSPNode_LxDoom(bspnum);
     }
-    else
-    {
-        return P_CrossBSPNode_PrBoom(bspnum);
-    }
+
+    return P_CrossBSPNode_PrBoom(bspnum);
 }
 
 //

@@ -530,7 +530,7 @@ void S_UpdateSounds(void *listener_p)
                         S_StopChannel(cnum);
                         continue;
                     }
-                    else if (volume > snd_SfxVolume)
+                    if (volume > snd_SfxVolume)
                     {
                         volume = snd_SfxVolume;
                     }
@@ -927,10 +927,8 @@ static int S_getChannel(void *origin, sfxinfo_t *sfxinfo, int is_pickup)
         {
             return -1; // No lower priority.  Sorry, Charlie.
         }
-        else
-        {
-            S_StopChannel(cnum); // Otherwise, kick out lower priority.
-        }
+
+        S_StopChannel(cnum); // Otherwise, kick out lower priority.
     }
 
     c = &channels[cnum]; // channel is decided to be cnum.
@@ -968,14 +966,12 @@ static mobj_t *GetSoundListener()
     {
         return players[displayplayer].mo;
     }
-    else
-    {
-        dummy_listener.x = 0;
-        dummy_listener.y = 0;
-        dummy_listener.z = 0;
 
-        return (mobj_t *)&dummy_listener;
-    }
+    dummy_listener.x = 0;
+    dummy_listener.y = 0;
+    dummy_listener.z = 0;
+
+    return (mobj_t *)&dummy_listener;
 }
 
 static dboolean S_StopSoundInfo(sfxinfo_t *sfx, int priority)

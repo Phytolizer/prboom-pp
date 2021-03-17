@@ -54,7 +54,7 @@ const music_player_t fl_player = {fl_name, fl_init, nullptr, nullptr,
 #else // HAVE_LIBFLUIDSYNTH
 
 #include <fluidsynth.h>
-#include "i_sound.hh" // for snd_soundfont, mus_fluidsynth_gain
+#include "i_sound.hh"  // for snd_soundfont, mus_fluidsynth_gain
 #include "i_system.hh" // for I_FindFile()
 #include "lprintf.hh"
 #include "midifile.hh"

@@ -211,11 +211,9 @@ static void *calloc_IfSameLevel(void *p, size_t n1, size_t n2)
     {
         return calloc(n1, n2);
     }
-    else
-    {
-        memset(p, 0, n1 * n2);
-        return p;
-    }
+
+    memset(p, 0, n1 * n2);
+    return p;
 }
 
 //

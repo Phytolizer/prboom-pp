@@ -45,7 +45,6 @@
 
 #include "gl_opengl.hh"
 
-
 #include "doomstat.hh"
 #include "gl_intern.hh"
 #include "gl_struct.hh"

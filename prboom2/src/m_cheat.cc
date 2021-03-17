@@ -981,10 +981,8 @@ dboolean M_FindCheats(int key)
     {
         return M_FindCheats_Boom(key);
     }
-    else
-    {
-        return M_FindCheats_Doom(key);
-    }
+
+    return M_FindCheats_Doom(key);
 }
 
 using cheat_input_t = struct cheat_input_s

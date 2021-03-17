@@ -200,10 +200,8 @@ unsigned int OPL_Queue_Peek(opl_callback_queue_t *queue)
     {
         return queue->entries[0].time;
     }
-    else
-    {
-        return 0;
-    }
+
+    return 0;
 }
 
 #ifdef TEST

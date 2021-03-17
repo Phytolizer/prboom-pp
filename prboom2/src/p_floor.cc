@@ -142,42 +142,40 @@ result_e T_MovePlane(sector_t *sector, fixed_t speed, fixed_t dest,
                 }
                 return pastdest;
             }
-            else
+
+            // crushing is possible
+            lastpos = sector->floorheight;
+            sector->floorheight += speed;
+            flag = P_CheckSector(sector, crush); // jff 3/19/98 use faster chk
+            if (flag == true)
             {
-                // crushing is possible
-                lastpos = sector->floorheight;
-                sector->floorheight += speed;
-                flag =
-                    P_CheckSector(sector, crush); // jff 3/19/98 use faster chk
-                if (flag == true)
+                /* jff 1/25/98 fix floor crusher */
+                if (comp[comp_floors])
                 {
-                    /* jff 1/25/98 fix floor crusher */
-                    if (comp[comp_floors])
+
+                    // e6y: warning about potential desynch
+                    //                if (crush ==
+                    //                STAIRS_UNINITIALIZED_CRUSH_FIELD_VALUE)
+                    //                {
+                    //                  lprintf(LO_WARN, "T_MovePlane:
+                    //                  Stairs which can potentially crush
+                    //                  may lead to desynch in compatibility
+                    //                  mode.\n"); lprintf(LO_WARN, "
+                    //                  gametic: %d, sector: %d, complevel:
+                    //                  %d\n", gametic, sector->iSectorID,
+                    //                  compatibility_level);
+                    //                }
+
+                    if (crush == true)
                     {
-
-                        // e6y: warning about potential desynch
-                        //                if (crush ==
-                        //                STAIRS_UNINITIALIZED_CRUSH_FIELD_VALUE)
-                        //                {
-                        //                  lprintf(LO_WARN, "T_MovePlane:
-                        //                  Stairs which can potentially crush
-                        //                  may lead to desynch in compatibility
-                        //                  mode.\n"); lprintf(LO_WARN, "
-                        //                  gametic: %d, sector: %d, complevel:
-                        //                  %d\n", gametic, sector->iSectorID,
-                        //                  compatibility_level);
-                        //                }
-
-                        if (crush == true)
-                        {
-                            return crushed;
-                        }
+                        return crushed;
                     }
-                    sector->floorheight = lastpos;
-                    P_CheckSector(sector, crush); // jff 3/19/98 use faster chk
-                    return crushed;
                 }
+                sector->floorheight = lastpos;
+                P_CheckSector(sector, crush); // jff 3/19/98 use faster chk
+                return crushed;
             }
+
             break;
         }
         break;
@@ -207,25 +205,23 @@ result_e T_MovePlane(sector_t *sector, fixed_t speed, fixed_t dest,
                 }
                 return pastdest;
             }
-            else
-            {
-                // crushing is possible
-                lastpos = sector->ceilingheight;
-                sector->ceilingheight -= speed;
-                flag =
-                    P_CheckSector(sector, crush); // jff 3/19/98 use faster chk
 
-                if (flag == true)
+            // crushing is possible
+            lastpos = sector->ceilingheight;
+            sector->ceilingheight -= speed;
+            flag = P_CheckSector(sector, crush); // jff 3/19/98 use faster chk
+
+            if (flag == true)
+            {
+                if (crush == true)
                 {
-                    if (crush == true)
-                    {
-                        return crushed;
-                    }
-                    sector->ceilingheight = lastpos;
-                    P_CheckSector(sector, crush); // jff 3/19/98 use faster chk
                     return crushed;
                 }
+                sector->ceilingheight = lastpos;
+                P_CheckSector(sector, crush); // jff 3/19/98 use faster chk
+                return crushed;
             }
+
             break;
 
         case 1:
@@ -494,10 +490,9 @@ int EV_DoFloor(line_t *line, floor_e floortype)
             {
                 continue;
             }
-            else
-            {
-                return rtn;
-            }
+
+            return rtn;
+
         } // e6y
 
         // new floor thinker
@@ -1109,10 +1104,8 @@ int EV_DoDonut(line_t *line)
                         s1->lines[0]->iLineID, s1->iSectorID);
                 continue;
             }
-            else
-            {
-                continue;
-            }
+
+            continue;
         }
 
         /* do not start the donut if the pool is already moving

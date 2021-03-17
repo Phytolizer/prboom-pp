@@ -37,7 +37,6 @@
 
 #include "gl_opengl.hh"
 
-
 #ifdef _WIN32
 #ifndef WIN32_LEAN_AND_MEAN
 #define WIN32_LEAN_AND_MEAN 1
@@ -286,10 +285,8 @@ static GLTexture *gld_AddNewGLPatchTexture(int lump)
     {
         return gld_AddNewGLTexItem(lump, numlumps, &gld_GLStaticPatchTextures);
     }
-    else
-    {
-        return gld_AddNewGLTexItem(lump, numlumps, &gld_GLPatchTextures);
-    }
+
+    return gld_AddNewGLTexItem(lump, numlumps, &gld_GLPatchTextures);
 }
 
 void gld_SetTexturePalette(GLenum target)

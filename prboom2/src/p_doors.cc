@@ -409,10 +409,9 @@ int EV_DoDoor(line_t *line, vldoor_e type)
             {
                 continue;
             }
-            else
-            {
-                return rtn;
-            }
+
+            return rtn;
+
         }; // e6y
 
         // new door thinker

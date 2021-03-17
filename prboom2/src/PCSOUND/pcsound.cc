@@ -112,11 +112,9 @@ int PCSound_Init(pcsound_callback_func callback_func)
         lprintf(LO_INFO, "Using PC sound driver: %s\n", pcsound_driver->name);
         return 1;
     }
-    else
-    {
-        lprintf(LO_WARN, "Failed to find a working PC sound driver.\n");
-        return 0;
-    }
+
+    lprintf(LO_WARN, "Failed to find a working PC sound driver.\n");
+    return 0;
 }
 
 void PCSound_Shutdown()

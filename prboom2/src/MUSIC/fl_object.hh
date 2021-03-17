@@ -34,4 +34,3 @@ class FluidSynthObject
 } // namespace fl
 
 #endif
-

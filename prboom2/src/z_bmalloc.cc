@@ -95,10 +95,8 @@ void *Z_BMalloc(struct block_memory_alloc_t *pzone)
             (*pool)->used[n] = used_block;
             return getelem(*pool, pzone->size, n);
         }
-        else
-        {
-            pool = &((*pool)->nextpool);
-        }
+
+        pool = &((*pool)->nextpool);
     }
     {
         // Nothing available, must allocate a new pool
@@ -143,10 +141,8 @@ void Z_BFree(struct block_memory_alloc_t *pzone, void *p)
             }
             return;
         }
-        else
-        {
-            pool = &((*pool)->nextpool);
-        }
+
+        pool = &((*pool)->nextpool);
     }
     I_Error("Z_BFree: Free not in zone %s", pzone->desc);
 }

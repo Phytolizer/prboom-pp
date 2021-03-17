@@ -56,8 +56,6 @@
 #include "SDL_mixer.h"
 #endif
 
-
-
 #include "m_swap.hh"
 #include "i_sound.hh"
 #include "m_argv.hh"
@@ -690,7 +688,7 @@ void I_InitSound()
                 SAMPLECOUNT);
     }
     else
-#else // HAVE_MIXER
+#else  // HAVE_MIXER
     }
 #endif // HAVE_MIXER
     {
@@ -917,10 +915,8 @@ void I_InitMusic()
                 music_tmp = nullptr;
                 return;
             }
-            else
-            {
-                close(fd);
-            }
+
+            close(fd);
         }
 #else /* !_WIN32 */
         music_tmp = strdup("doom.tmp");

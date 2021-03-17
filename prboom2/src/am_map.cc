@@ -1585,10 +1585,8 @@ static int AM_DoorColor(int type)
         {
             return 3; // any or all keys
         }
-        else
-        {
-            return (type - 1) % 3;
-        }
+
+        return (type - 1) % 3;
     }
     switch (type) // closed keyed door
     {

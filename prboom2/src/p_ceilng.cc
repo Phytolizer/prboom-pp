@@ -293,10 +293,9 @@ int EV_DoCeiling(line_t *line, ceiling_e type)
             {
                 continue;
             }
-            else
-            {
-                return rtn;
-            }
+
+            return rtn;
+
         }; // e6y
 
         // create a new ceiling thinker

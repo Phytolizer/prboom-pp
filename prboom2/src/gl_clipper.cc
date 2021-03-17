@@ -103,10 +103,8 @@ static clipnode_t *gld_clipnode_GetNew()
         freelist = p->next;
         return p;
     }
-    else
-    {
-        return static_cast<clipnode_t *>(malloc(sizeof(clipnode_t)));
-    }
+
+    return static_cast<clipnode_t *>(malloc(sizeof(clipnode_t)));
 }
 
 static clipnode_t *gld_clipnode_NewRange(angle_t start, angle_t end)
@@ -235,10 +233,8 @@ static void gld_clipper_AddClipRange(angle_t start, angle_t end)
                 {
                     return;
                 }
-                else
-                {
-                    node = node->next;
-                }
+
+                node = node->next;
             }
         }
 

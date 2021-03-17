@@ -64,9 +64,15 @@ float distfogtable[3][256];
 
 using gld_InitLightTable_f = void (*)();
 
-typedef struct
-{;
-using GLLight = struct GLLight;
+struct GLLight
+{
+    int use_hwgamma;
+    int rellight;
+    gld_InitLightTable_f Init;
+    gld_CalcLightLevel_f GetLight;
+    gld_Calc2DLightLevel_f Get2DLight;
+    gld_CalcFogDensity_f GetFog;
+};
 
 static float lighttable_glboom[5][256];
 static float lighttable_gzdoom[256];
@@ -400,10 +406,8 @@ static float gld_CalcFogDensity_gzdoom(sector_t *sector, int lightlevel,
     {
         return 0;
     }
-    else
-    {
-        return distfogtable[1][BETWEEN(0, 255, lightlevel)];
-    }
+
+    return distfogtable[1][BETWEEN(0, 255, lightlevel)];
 }
 
 static float gld_CalcFogDensity_fogbased(sector_t *sector, int lightlevel,
@@ -413,30 +417,28 @@ static float gld_CalcFogDensity_fogbased(sector_t *sector, int lightlevel,
     {
         return 0;
     }
-    else
+
+    float fog = distfogtable[2][BETWEEN(0, 255, lightlevel)];
+
+    if (extralight)
     {
-        float fog = distfogtable[2][BETWEEN(0, 255, lightlevel)];
-
-        if (extralight)
+        if (extralight == 1)
         {
-            if (extralight == 1)
-            {
-                fog -= fog / 3.0f;
-            }
-            else
-            {
-                fog -= fog / 2.0f;
-            }
-        }
-
-        if (type == GLDIT_CEILING || type == GLDIT_FLOOR || type == GLDIT_FWALL)
-        {
-            return fog * 2;
+            fog -= fog / 3.0f;
         }
         else
         {
-            return fog;
+            fog -= fog / 2.0f;
         }
+    }
+
+    if (type == GLDIT_CEILING || type == GLDIT_FLOOR || type == GLDIT_FWALL)
+    {
+        return fog * 2;
+    }
+    else
+    {
+        return fog;
     }
 }
 
@@ -475,4 +477,4 @@ void gl_EnableFog(int on)
         }
     }
     gl_fogenabled = on;
-}
+};

@@ -185,10 +185,8 @@ int I_PCS_StartSound(int id, int channel, int /* vol */, int /* sep */,
     {
         return channel;
     }
-    else
-    {
-        return -1;
-    }
+
+    return -1;
 }
 
 void I_PCS_StopSound(int handle)

@@ -242,7 +242,7 @@ void P_ChangeSwitchTexture(line_t *line, int useAgain)
             position = top;
             break;
         }
-        else if (switchlist[i] == *tmid)
+        if (switchlist[i] == *tmid)
         {
             texture = tmid;
             position = middle;
@@ -290,7 +290,7 @@ int GetPairForSwitchTexture(side_t *side)
             texture = ttop;
             break;
         }
-        else if (switchlist[i] == *tmid)
+        if (switchlist[i] == *tmid)
         {
             texture = tmid;
             break;

@@ -427,7 +427,7 @@ void IN_Ticker()
             return;
         }
         // [crispy] skip "now entering" if it's the final intermission
-        else if (finalintermission)
+        if (finalintermission)
         {
             IN_Stop();
             G_WorldDone();
@@ -793,7 +793,7 @@ void IN_DrawCoopStats()
                 ypos += 37;
                 continue;
             }
-            else if (intertime >= 40 && sounds < 1)
+            if (intertime >= 40 && sounds < 1)
             {
                 S_StartSound(nullptr, heretic_sfx_dorcls);
                 sounds++;

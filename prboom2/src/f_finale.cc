@@ -70,8 +70,8 @@ dboolean F_CastResponder(event_t *ev);
 void F_CastDrawer();
 
 void WI_checkForAccelerate(); // killough 3/28/98: used to
-extern int acceleratestage;       // accelerate intermission screens
-int midstage;                     // whether we're in "mid-stage"
+extern int acceleratestage;   // accelerate intermission screens
+int midstage;                 // whether we're in "mid-stage"
 
 //
 // F_StartFinale

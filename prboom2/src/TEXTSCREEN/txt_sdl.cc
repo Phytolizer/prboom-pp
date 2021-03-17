@@ -139,7 +139,7 @@ static txt_font_t *FontForName(char *name)
     {
         return &small_font;
     }
-    else if (!strcmp(name, "normal"))
+    if (!strcmp(name, "normal"))
     {
         return &main_font;
     }
@@ -358,7 +358,7 @@ static int LimitToRange(int val, int min, int max)
     {
         return min;
     }
-    else if (val > max)
+    if (val > max)
     {
         return max;
     }
@@ -543,53 +543,51 @@ static int TranslateKey(SDL_Keysym *sym)
 #endif
         return 0;
     }
-    else
+
+    // Keypad mapping is only done when we want a raw value:
+    // most of the time, the keypad should behave as it normally
+    // does.
+
+    switch (sym->sym)
     {
-        // Keypad mapping is only done when we want a raw value:
-        // most of the time, the keypad should behave as it normally
-        // does.
+    case SDLK_KP_0:
+        return KEYP_0;
+    case SDLK_KP_1:
+        return KEYP_1;
+    case SDLK_KP_2:
+        return KEYP_2;
+    case SDLK_KP_3:
+        return KEYP_3;
+    case SDLK_KP_4:
+        return KEYP_4;
+    case SDLK_KP_5:
+        return KEYP_5;
+    case SDLK_KP_6:
+        return KEYP_6;
+    case SDLK_KP_7:
+        return KEYP_7;
+    case SDLK_KP_8:
+        return KEYP_8;
+    case SDLK_KP_9:
+        return KEYP_9;
 
-        switch (sym->sym)
-        {
-        case SDLK_KP_0:
-            return KEYP_0;
-        case SDLK_KP_1:
-            return KEYP_1;
-        case SDLK_KP_2:
-            return KEYP_2;
-        case SDLK_KP_3:
-            return KEYP_3;
-        case SDLK_KP_4:
-            return KEYP_4;
-        case SDLK_KP_5:
-            return KEYP_5;
-        case SDLK_KP_6:
-            return KEYP_6;
-        case SDLK_KP_7:
-            return KEYP_7;
-        case SDLK_KP_8:
-            return KEYP_8;
-        case SDLK_KP_9:
-            return KEYP_9;
+    case SDLK_KP_PERIOD:
+        return KEYP_PERIOD;
+    case SDLK_KP_MULTIPLY:
+        return KEYP_MULTIPLY;
+    case SDLK_KP_PLUS:
+        return KEYP_PLUS;
+    case SDLK_KP_MINUS:
+        return KEYP_MINUS;
+    case SDLK_KP_DIVIDE:
+        return KEYP_DIVIDE;
+    case SDLK_KP_EQUALS:
+        return KEYP_EQUALS;
+    case SDLK_KP_ENTER:
+        return KEYP_ENTER;
 
-        case SDLK_KP_PERIOD:
-            return KEYP_PERIOD;
-        case SDLK_KP_MULTIPLY:
-            return KEYP_MULTIPLY;
-        case SDLK_KP_PLUS:
-            return KEYP_PLUS;
-        case SDLK_KP_MINUS:
-            return KEYP_MINUS;
-        case SDLK_KP_DIVIDE:
-            return KEYP_DIVIDE;
-        case SDLK_KP_EQUALS:
-            return KEYP_EQUALS;
-        case SDLK_KP_ENTER:
-            return KEYP_ENTER;
-
-        default:
-            return tolower(sym->sym);
-        }
+    default:
+        return tolower(sym->sym);
     }
 }
 
@@ -625,10 +623,8 @@ static int MouseHasMoved()
         last_y = y;
         return 1;
     }
-    else
-    {
-        return 0;
-    }
+
+    return 0;
 }
 
 // Examine a key press/release and update the modifier key state

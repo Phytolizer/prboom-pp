@@ -128,10 +128,8 @@ static std::string ParseMultiString(Scanner &scanner, int /* error */)
             return strdup(
                 "-"); // this was explicitly deleted to override the default.
         }
-        else
-        {
-            scanner.ErrorF("Either 'clear' or string constant expected");
-        }
+
+        scanner.ErrorF("Either 'clear' or string constant expected");
     }
 
     do
@@ -476,7 +474,8 @@ int ParseUMapInfo(const unsigned char *buffer, size_t length,
             {
                 strcpy(parsed.endpic, "ENDPIC");
             }
-            else if (gamemission == chex && !str::caseInsensitiveCompare(parsed.mapname, "E1M5"))
+            else if (gamemission == chex &&
+                     !str::caseInsensitiveCompare(parsed.mapname, "E1M5"))
             {
                 strcpy(parsed.endpic, "CREDIT");
             }

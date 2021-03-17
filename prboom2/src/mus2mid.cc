@@ -378,18 +378,16 @@ static int GetMIDIChannel(int mus_channel)
     {
         return MIDI_PERCUSSION_CHAN;
     }
-    else
+
+    // If a MIDI channel hasn't been allocated for this MUS channel
+    // yet, allocate the next free MIDI channel.
+
+    if (channel_map[mus_channel] == -1)
     {
-        // If a MIDI channel hasn't been allocated for this MUS channel
-        // yet, allocate the next free MIDI channel.
-
-        if (channel_map[mus_channel] == -1)
-        {
-            channel_map[mus_channel] = AllocateMIDIChannel();
-        }
-
-        return channel_map[mus_channel];
+        channel_map[mus_channel] = AllocateMIDIChannel();
     }
+
+    return channel_map[mus_channel];
 }
 
 static dboolean ReadMusHeader(MEMFILE *file, musheader *header)
