@@ -1,10 +1,10 @@
 [Desktop Entry]
 Type=Application
-Name=PrBoom+
+Name=PrBoom++
 Comment=enhanced clone of the classic first-person shooter Doom
 Icon=prboom-plus
-TryExec=dsda-doom
-Exec=dsda-doom %F
+TryExec=prboom-pp
+Exec=prboom-pp %F
 Categories=Game;ActionGame;
 MimeType=application/x-doom-wad;
 Keywords=first;person;shooter;doom;
