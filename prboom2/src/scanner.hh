@@ -28,28 +28,8 @@
 
 #include <cstdlib>
 
+#include "cpp/enums/Token.hh"
 //#include <string>
-
-enum
-{
-    TK_Identifier,  // Ex: SomeIdentifier
-    TK_StringConst, // Ex: "Some String"
-    TK_IntConst,    // Ex: 27
-    TK_FloatConst,  // Ex: 1.5
-    TK_BoolConst,   // Ex: true
-    TK_AndAnd,      // &&
-    TK_OrOr,        // ||
-    TK_EqEq,        // ==
-    TK_NotEq,       // !=
-    TK_GtrEq,       // >=
-    TK_LessEq,      // <=
-    TK_ShiftLeft,   // <<
-    TK_ShiftRight,  // >>
-
-    TK_NumSpecialTokens,
-
-    TK_NoToken = -1
-};
 
 struct ParserState
 {
@@ -57,7 +37,7 @@ struct ParserState
     int number;
     double decimal;
     bool boolean;
-    char token;
+    Token::Type token{Token::NoToken};
     unsigned int tokenLine;
     unsigned int tokenLinePosition;
 
@@ -80,7 +60,7 @@ class Scanner
 
     void SetString(char **ptr, const char *src, unsigned int length);
     void CheckForWhitespace();
-    bool CheckToken(char token);
+    bool CheckToken(Token::Type token);
     bool CheckInteger();
     bool CheckFloat();
     void MustGetInteger();
@@ -95,10 +75,10 @@ class Scanner
         return tokenLinePosition;
     }
     bool GetNextToken(bool expandState = true);
-    void MustGetToken(char token);
+    void MustGetToken(Token::Type token);
     void MustGetIdentifier(const char *ident);
     bool TokensLeft() const;
-    void Error(int token);
+    void Error(Token::Type token);
     void Error(const char *mustget);
     void ErrorF(const char *msg, ...);
     void Unget()
@@ -112,13 +92,13 @@ class Scanner
 
     static void Unescape(char *str);
 
-    static const char *const TokenNames[TK_NumSpecialTokens];
+    static const char *const TokenNames[Token::NumSpecialTokens.value()];
 
     char *string;
     int number;
     double decimal;
     bool boolean;
-    char token;
+    Token::Type token{Token::NoToken};
 
   protected:
     Scanner()

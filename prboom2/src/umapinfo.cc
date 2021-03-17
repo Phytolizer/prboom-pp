@@ -141,7 +141,7 @@ static char *ParseMultiString(Scanner &scanner, int error)
 {
     char *build = nullptr;
 
-    if (scanner.CheckToken(TK_Identifier))
+    if (scanner.CheckToken(Token::Identifier))
     {
         if (!stricmp(scanner.string, "clear"))
         {
@@ -156,7 +156,7 @@ static char *ParseMultiString(Scanner &scanner, int error)
 
     do
     {
-        scanner.MustGetToken(TK_StringConst);
+        scanner.MustGetToken(Token::StringConst);
         if (build == nullptr)
         {
             build = strdup(scanner.string);
@@ -174,7 +174,7 @@ static char *ParseMultiString(Scanner &scanner, int error)
             strcat(build, scanner.string); // Concatenate the new line onto the
                                            // existing text
         }
-    } while (scanner.CheckToken(','));
+    } while (scanner.CheckToken(Token::Type{','}));
     return build;
 }
 
@@ -186,7 +186,7 @@ static char *ParseMultiString(Scanner &scanner, int error)
 
 static int ParseLumpName(Scanner &scanner, char *buffer)
 {
-    scanner.MustGetToken(TK_StringConst);
+    scanner.MustGetToken(Token::StringConst);
     if (strlen(scanner.string) > 8)
     {
         scanner.ErrorF("String too long. Maximum size is 8 characters.");
@@ -211,13 +211,13 @@ static int ParseStandardProperty(Scanner &scanner, MapEntry *mape)
     // find the next line with content.
     // this line is no property.
 
-    scanner.MustGetToken(TK_Identifier);
+    scanner.MustGetToken(Token::Identifier);
     char *pname = strdup(scanner.string);
-    scanner.MustGetToken('=');
+    scanner.MustGetToken(Token::Type{'='});
 
     if (!stricmp(pname, "levelname"))
     {
-        scanner.MustGetToken(TK_StringConst);
+        scanner.MustGetToken(Token::StringConst);
         ReplaceString(&mape->levelname, scanner.string);
     }
     else if (!stricmp(pname, "next"))
@@ -256,7 +256,7 @@ static int ParseStandardProperty(Scanner &scanner, MapEntry *mape)
     }
     else if (!stricmp(pname, "endcast"))
     {
-        scanner.MustGetToken(TK_BoolConst);
+        scanner.MustGetToken(Token::BoolConst);
         if (scanner.boolean)
         {
             strcpy(mape->endpic, "$CAST");
@@ -268,7 +268,7 @@ static int ParseStandardProperty(Scanner &scanner, MapEntry *mape)
     }
     else if (!stricmp(pname, "endbunny"))
     {
-        scanner.MustGetToken(TK_BoolConst);
+        scanner.MustGetToken(Token::BoolConst);
         if (scanner.boolean)
         {
             strcpy(mape->endpic, "$BUNNY");
@@ -280,7 +280,7 @@ static int ParseStandardProperty(Scanner &scanner, MapEntry *mape)
     }
     else if (!stricmp(pname, "endgame"))
     {
-        scanner.MustGetToken(TK_BoolConst);
+        scanner.MustGetToken(Token::BoolConst);
         if (scanner.boolean)
         {
             strcpy(mape->endpic, "!");
@@ -300,7 +300,7 @@ static int ParseStandardProperty(Scanner &scanner, MapEntry *mape)
     }
     else if (!stricmp(pname, "nointermission"))
     {
-        scanner.MustGetToken(TK_BoolConst);
+        scanner.MustGetToken(Token::BoolConst);
         mape->nointermission = scanner.boolean;
     }
     else if (!stricmp(pname, "partime"))
@@ -353,7 +353,7 @@ static int ParseStandardProperty(Scanner &scanner, MapEntry *mape)
     }
     else if (!stricmp(pname, "bossaction"))
     {
-        scanner.MustGetToken(TK_Identifier);
+        scanner.MustGetToken(Token::Identifier);
         int classnum, special, tag;
         if (!stricmp(scanner.string, "clear"))
         {
@@ -382,10 +382,10 @@ static int ParseStandardProperty(Scanner &scanner, MapEntry *mape)
                 return 0;
             }
 
-            scanner.MustGetToken(',');
+            scanner.MustGetToken(Token::Type{','});
             scanner.MustGetInteger();
             special = scanner.number;
-            scanner.MustGetToken(',');
+            scanner.MustGetToken(Token::Type{','});
             scanner.MustGetInteger();
             tag = scanner.number;
             // allow no 0-tag specials here, unless a level exit.
@@ -417,12 +417,12 @@ static int ParseStandardProperty(Scanner &scanner, MapEntry *mape)
             {
                 scanner.GetNextToken();
             }
-            if (scanner.token > TK_BoolConst)
+            if (scanner.token > Token::BoolConst)
             {
-                scanner.Error(TK_Identifier);
+                scanner.Error(Token::Identifier);
             }
 
-        } while (scanner.CheckToken(','));
+        } while (scanner.CheckToken(Token::Type{','}));
     }
     free(pname);
     return 1;
@@ -441,7 +441,7 @@ static int ParseMapEntry(Scanner &scanner, MapEntry *val)
     val->properties = nullptr;
 
     scanner.MustGetIdentifier("map");
-    scanner.MustGetToken(TK_Identifier);
+    scanner.MustGetToken(Token::Identifier);
     if (!G_ValidateMapName(scanner.string, nullptr, nullptr))
     {
         scanner.ErrorF("Invalid map name %s", scanner.string);
@@ -449,8 +449,8 @@ static int ParseMapEntry(Scanner &scanner, MapEntry *val)
     }
 
     ReplaceString(&val->mapname, scanner.string);
-    scanner.MustGetToken('{');
-    while (!scanner.CheckToken('}'))
+    scanner.MustGetToken(Token::Type{'{'});
+    while (!scanner.CheckToken(Token::Type{'}'}))
     {
         ParseStandardProperty(scanner, val);
     }

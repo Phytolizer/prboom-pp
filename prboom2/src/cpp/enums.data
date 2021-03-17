@@ -74,3 +74,24 @@ packet_type_e uint8_t
     PKT_WAD
     PKT_BACKOFF
 }
+
+Token size_t
+{
+    Identifier
+    StringConst
+    IntConst
+    FloatConst
+    BoolConst
+    AndAnd
+    OrOr
+    EqEq
+    NotEq
+    GtrEq
+    LessEq
+    ShiftLeft
+    ShiftRight
+
+    NumSpecialTokens
+
+    NoToken
+}
