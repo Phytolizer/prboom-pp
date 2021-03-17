@@ -47,121 +47,125 @@
 // Command line parameters.
 //
 
-extern  dboolean nomonsters; // checkparm of -nomonsters
-extern  dboolean respawnparm;  // checkparm of -respawn
-extern  dboolean fastparm; // checkparm of -fast
-extern  dboolean devparm;  // DEBUG: launched with -devparm
+extern dboolean nomonsters;  // checkparm of -nomonsters
+extern dboolean respawnparm; // checkparm of -respawn
+extern dboolean fastparm;    // checkparm of -fast
+extern dboolean devparm;     // DEBUG: launched with -devparm
 
 // -----------------------------------------------------
 // Game Mode - identify IWAD as shareware, retail etc.
 //
 
 extern GameMode_t gamemode;
-extern GameMission_t  gamemission;
+extern GameMission_t gamemission;
 extern const char *doomverstr;
 
 // Set if homebrew PWAD stuff has been added.
-extern  dboolean modifiedgame;
+extern dboolean modifiedgame;
 
 // CPhipps - new compatibility handling
 extern complevel_t compatibility_level, default_compatibility_level;
 
 // CPhipps - old compatibility testing flags aliased to new handling
-#define compatibility (compatibility_level<=boom_compatibility_compatibility)
-#define demo_compatibility (compatibility_level < boom_compatibility_compatibility)
-#define mbf_features (compatibility_level>=mbf_compatibility)
+#define compatibility (compatibility_level <= boom_compatibility_compatibility)
+#define demo_compatibility                                                     \
+    (compatibility_level < boom_compatibility_compatibility)
+#define mbf_features (compatibility_level >= mbf_compatibility)
 
 // v1.1-like pitched sounds
-extern int pitched_sounds;        // killough
+extern int pitched_sounds; // killough
 
-extern int     default_translucency; // config file says           // phares
+extern int default_translucency;      // config file says           // phares
 extern dboolean general_translucency; // true if translucency is ok // phares
 
-extern int demo_insurance, default_demo_insurance;      // killough 4/5/98
+extern int demo_insurance, default_demo_insurance; // killough 4/5/98
 
 // -------------------------------------------
 // killough 10/98: compatibility vector
 
-enum {
-  comp_telefrag,
-  comp_dropoff,
-  comp_vile,
-  comp_pain,
-  comp_skull,
-  comp_blazing,
-  comp_doorlight,
-  comp_model,
-  comp_god,
-  comp_falloff,
-  comp_floors,
-  comp_skymap,
-  comp_pursuit,
-  comp_doorstuck,
-  comp_staylift,
-  comp_zombie,
-  comp_stairs,
-  comp_infcheat,
-  comp_zerotags,
-  comp_moveblock,
-  comp_respawn,  /* cph - this is the inverse of comp_respawnfix from eternity */
-  comp_sound,
-  comp_666,
-  comp_soul,
-  comp_maskedanim,
+enum
+{
+    comp_telefrag,
+    comp_dropoff,
+    comp_vile,
+    comp_pain,
+    comp_skull,
+    comp_blazing,
+    comp_doorlight,
+    comp_model,
+    comp_god,
+    comp_falloff,
+    comp_floors,
+    comp_skymap,
+    comp_pursuit,
+    comp_doorstuck,
+    comp_staylift,
+    comp_zombie,
+    comp_stairs,
+    comp_infcheat,
+    comp_zerotags,
+    comp_moveblock,
+    comp_respawn, /* cph - this is the inverse of comp_respawnfix from eternity
+                   */
+    comp_sound,
+    comp_666,
+    comp_soul,
+    comp_maskedanim,
 
-  //e6y
-  comp_ouchface,
-  comp_maxhealth,
-  comp_translucency,
+    // e6y
+    comp_ouchface,
+    comp_maxhealth,
+    comp_translucency,
 
-  COMP_NUM,      /* cph - should be last in sequence */
-  COMP_TOTAL=32  // Some extra room for additional variables
+    COMP_NUM,       /* cph - should be last in sequence */
+    COMP_TOTAL = 32 // Some extra room for additional variables
 };
 
-enum {
-  comperr_zerotag,
-  comperr_passuse,
-  comperr_hangsolid,
-  comperr_blockmap,
-  comperr_allowjump,
-  comperr_freeaim,
+enum
+{
+    comperr_zerotag,
+    comperr_passuse,
+    comperr_hangsolid,
+    comperr_blockmap,
+    comperr_allowjump,
+    comperr_freeaim,
 
-  COMPERR_NUM
+    COMPERR_NUM
 };
 
 extern int comp[COMP_TOTAL], default_comp[COMP_TOTAL];
-extern int /*comperr[COMPERR_NUM], */default_comperr[COMPERR_NUM];
+extern int /*comperr[COMPERR_NUM], */ default_comperr[COMPERR_NUM];
 
 // -------------------------------------------
 // Language.
-extern  Language_t   language;
+extern Language_t language;
 
 // -------------------------------------------
 // Selected skill type, map etc.
 //
 
 // Defaults for menu, methinks.
-extern  skill_t   startskill;
-extern  int             startepisode;
-extern  int   startmap;
+extern skill_t startskill;
+extern int startepisode;
+extern int startmap;
 
-extern  dboolean   autostart;
+extern dboolean autostart;
 
 // Selected by user.
-extern  skill_t         gameskill;
-extern  int   gameepisode;
-extern  int   gamemap;
+extern skill_t gameskill;
+extern int gameepisode;
+extern int gamemap;
 extern struct MapEntry *gamemapinfo;
 
 // Nightmare mode flag, single player.
-extern  dboolean         respawnmonsters;
+extern dboolean respawnmonsters;
 
 // Netgame? Only true if >1 player.
-extern  dboolean netgame;
+extern dboolean netgame;
 
 // Flag: true only if started as net deathmatch.
 // An enum might handle altdeath/cooperative better.
-extern  int deathmatch;
+extern int deathmatch;
 
 // ------------------------------------------
 // Internal parameters for sound rendering.
@@ -174,8 +178,8 @@ extern  int deathmatch;
 //  Sound FX volume has default, 0 - 15
 //  Music volume has default, 0 - 15
 // These are multiplied by 8.
-extern int snd_SfxVolume;      // maximum volume for sound
-extern int snd_MusicVolume;    // maximum volume for music
+extern int snd_SfxVolume;   // maximum volume for sound
+extern int snd_MusicVolume; // maximum volume for music
 
 // CPhipps - screen parameters
 extern int desired_screenwidth, desired_screenheight;
@@ -184,64 +188,66 @@ extern int desired_screenwidth, desired_screenheight;
 // Status flags for refresh.
 //
 
-enum automapmode_e {
-  am_active = 1,  // currently shown
-  am_overlay= 2,  // covers the screen, i.e. not overlay mode
-  am_rotate = 4,  // rotates to the player facing direction
-  am_follow = 8,  // keep the player centred
-  am_grid   =16,  // show grid
+enum automapmode_e
+{
+    am_active = 1,  // currently shown
+    am_overlay = 2, // covers the screen, i.e. not overlay mode
+    am_rotate = 4,  // rotates to the player facing direction
+    am_follow = 8,  // keep the player centred
+    am_grid = 16,   // show grid
 };
 extern enum automapmode_e automapmode; // Mode that the automap is in
 
-enum menuactive_e {
-  mnact_inactive, // no menu
-  mnact_float, // doom-style large font menu, doesn't overlap anything
-  mnact_full, // boom-style small font menu, may overlap status bar
+enum menuactive_e
+{
+    mnact_inactive, // no menu
+    mnact_float,    // doom-style large font menu, doesn't overlap anything
+    mnact_full,     // boom-style small font menu, may overlap status bar
 };
 extern enum menuactive_e menuactive; // Type of menu overlaid, if any
 
-extern  dboolean paused;        // Game Pause?
-extern  dboolean nodrawers;
-extern  dboolean noblit;
+extern dboolean paused; // Game Pause?
+extern dboolean nodrawers;
+extern dboolean noblit;
 
 // This one is related to the 3-screen display mode.
 // ANG90 = left side, ANG270 = right
-extern  int viewangleoffset;
-extern  int viewpitchoffset;
+extern int viewangleoffset;
+extern int viewpitchoffset;
 
 // Player taking events, and displaying.
-extern  int consoleplayer;
-extern  int displayplayer;
+extern int consoleplayer;
+extern int displayplayer;
 
 // -------------------------------------
 // Scores, rating.
 // Statistics on a given map, for intermission.
 //
-extern  int totalkills, totallive;
-extern  int totalitems;
-extern  int totalsecret;
-extern  int show_alive;
+extern int totalkills, totallive;
+extern int totalitems;
+extern int totalsecret;
+extern int show_alive;
 
 // Timer, for scores.
-extern  int basetic;    /* killough 9/29/98: levelstarttic, adjusted */
-extern  int leveltime;  // tics in game play for par
+extern int basetic;   /* killough 9/29/98: levelstarttic, adjusted */
+extern int leveltime; // tics in game play for par
 
 // --------------------------------------
 // DEMO playback/recording related stuff.
 
-extern  dboolean usergame;
-extern  dboolean demoplayback;
-extern  dboolean demorecording;
-extern  int demover;
+extern dboolean usergame;
+extern dboolean demoplayback;
+extern dboolean demorecording;
+extern int demover;
 
 // Quit after playing a demo from cmdline.
-extern  dboolean   singledemo;
+extern dboolean singledemo;
 // Print timing information after quitting.  killough
-extern  dboolean   timingdemo;
+extern dboolean timingdemo;
 // Run tick clock at fastest speed possible while playing demo.  killough
-extern  dboolean   fastdemo;
+extern dboolean fastdemo;
 
-extern  gamestate_t  gamestate;
+extern gamestate_t gamestate;
 
 //-----------------------------
 // Internal parameters, fixed.
@@ -249,26 +255,26 @@ extern  gamestate_t  gamestate;
 //  according to user inputs. Partly load from
 //  WAD, partly set at startup time.
 
-extern  int   gametic;
+extern int gametic;
 
-//e6y
-extern  dboolean realframe;
+// e6y
+extern dboolean realframe;
 
 // Bookkeeping on players - state.
-extern  player_t  players[MAXPLAYERS];
-extern  int       upmove;
+extern player_t players[MAXPLAYERS];
+extern int upmove;
 
 // Alive? Disconnected?
-extern  dboolean   playeringame[MAXPLAYERS];
-extern  dboolean   realplayeringame[MAXPLAYERS];
+extern dboolean playeringame[MAXPLAYERS];
+extern dboolean realplayeringame[MAXPLAYERS];
 
-extern  mapthing_t *deathmatchstarts;     // killough
-extern  size_t     num_deathmatchstarts; // killough
+extern mapthing_t *deathmatchstarts; // killough
+extern size_t num_deathmatchstarts;  // killough
 
-extern  mapthing_t *deathmatch_p;
+extern mapthing_t *deathmatch_p;
 
 // Player spawn spots.
-extern  mapthing_t playerstarts[];
+extern mapthing_t playerstarts[];
 
 // Intermission stats.
 // Parameters for world map / intermission.
@@ -279,55 +285,55 @@ extern wbstartstruct_t wminfo;
 //
 
 // File handling stuff.
-extern  FILE   *debugfile;
+extern FILE *debugfile;
 
 // if true, load all graphics at level load
-extern  dboolean precache;
+extern dboolean precache;
 
 // wipegamestate can be set to -1
 //  to force a wipe on the next draw
-extern  gamestate_t     wipegamestate;
+extern gamestate_t wipegamestate;
 
-extern  int             mouseSensitivity_horiz; // killough
-extern  int             mouseSensitivity_vert;
+extern int mouseSensitivity_horiz; // killough
+extern int mouseSensitivity_vert;
 
 // debug flag to cancel adaptiveness
-extern  dboolean         singletics;
+extern dboolean singletics;
 
-extern  int             bodyqueslot;
+extern int bodyqueslot;
 
 // Needed to store the number of the dummy sky flat.
 // Used for rendering, as well as tracking projectiles etc.
 
-extern int    skyflatnum;
+extern int skyflatnum;
 
-extern  int        maketic;
+extern int maketic;
 
 // Networking and tick handling related.
-#define BACKUPTICS              12
+#define BACKUPTICS 12
 
-extern  ticcmd_t   netcmds[][BACKUPTICS];
-extern  int        ticdup;
+extern ticcmd_t netcmds[][BACKUPTICS];
+extern int ticdup;
 
 //-----------------------------------------------------------------------------
 
-extern int allow_pushers;         // MT_PUSH Things    // phares 3/10/98
+extern int allow_pushers; // MT_PUSH Things    // phares 3/10/98
 extern int default_allow_pushers;
 
-extern int variable_friction;  // ice & mud            // phares 3/10/98
+extern int variable_friction; // ice & mud            // phares 3/10/98
 extern int default_variable_friction;
 
-extern int monsters_remember;                          // killough 3/1/98
+extern int monsters_remember; // killough 3/1/98
 extern int default_monsters_remember;
 
-extern int weapon_recoil;          // weapon recoil    // phares
+extern int weapon_recoil; // weapon recoil    // phares
 extern int default_weapon_recoil;
 
-extern int player_bobbing;  // whether player bobs or not   // phares 2/25/98
-extern int default_player_bobbing;  // killough 3/1/98: make local to each game
+extern int player_bobbing; // whether player bobs or not   // phares 2/25/98
+extern int default_player_bobbing; // killough 3/1/98: make local to each game
 
-extern int dogs, default_dogs;     // killough 7/19/98: Marine's best friend :)
-extern int dog_jumping, default_dog_jumping;   // killough 10/98
+extern int dogs, default_dogs; // killough 7/19/98: Marine's best friend :)
+extern int dog_jumping, default_dog_jumping; // killough 10/98
 
 /* killough 8/8/98: distance friendly monsters tend to stay from player */
 extern int distfriend, default_distfriend;
@@ -346,14 +352,14 @@ extern int help_friends, default_help_friends;
 
 extern int flashing_hom; // killough 10/98
 
-extern int doom_weapon_toggles;   // killough 10/98
+extern int doom_weapon_toggles; // killough 10/98
 
 /* killough 7/19/98: whether monsters should fight against each other */
 extern int monster_infighting, default_monster_infighting;
 
 extern int monkeys, default_monkeys;
 
-extern int HelperThing;          // type of thing to use for helper
+extern int HelperThing; // type of thing to use for helper
 
 extern dboolean forceOldBsp;
 

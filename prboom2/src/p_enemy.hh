@@ -38,11 +38,12 @@
 
 #include "p_mobj.hh"
 
-void P_NoiseAlert (mobj_t *target, mobj_t *emmiter);
+void P_NoiseAlert(mobj_t *target, mobj_t *emmiter);
 void P_SpawnBrainTargets(void); /* killough 3/26/98: spawn icon landings */
 
-extern struct brain_s {         /* killough 3/26/98: global state of boss brain */
-  int easy, targeton;
+extern struct brain_s
+{ /* killough 3/26/98: global state of boss brain */
+    int easy, targeton;
 } brain;
 
 // ********************************************************************
@@ -105,31 +106,33 @@ void A_SpawnSound(mobj_t *);
 void A_SpawnFly(mobj_t *);
 void A_BrainExplode(mobj_t *);
 void A_Die(mobj_t *);
-void A_Detonate(mobj_t *);        /* killough 8/9/98: detonate a bomb or other device */
-void A_Mushroom(mobj_t *);        /* killough 10/98: mushroom effect */
-void A_Spawn(mobj_t *);           // killough 11/98
-void A_Turn(mobj_t *);            // killough 11/98
-void A_Face(mobj_t *);            // killough 11/98
-void A_Scratch(mobj_t *);         // killough 11/98
-void A_PlaySound(mobj_t *);       // killough 11/98
-void A_RandomJump(mobj_t *);      // killough 11/98
-void A_LineEffect(mobj_t *);      // killough 11/98
+void A_Detonate(
+    mobj_t *); /* killough 8/9/98: detonate a bomb or other device */
+void A_Mushroom(mobj_t *);   /* killough 10/98: mushroom effect */
+void A_Spawn(mobj_t *);      // killough 11/98
+void A_Turn(mobj_t *);       // killough 11/98
+void A_Face(mobj_t *);       // killough 11/98
+void A_Scratch(mobj_t *);    // killough 11/98
+void A_PlaySound(mobj_t *);  // killough 11/98
+void A_RandomJump(mobj_t *); // killough 11/98
+void A_LineEffect(mobj_t *); // killough 11/98
 
-void A_BetaSkullAttack(mobj_t *); // killough 10/98: beta lost souls attacked different
+void A_BetaSkullAttack(
+    mobj_t *); // killough 10/98: beta lost souls attacked different
 void A_Stop(mobj_t *);
 
 void A_SkullPop(mobj_t *);
 
 // heretic
 
-void P_NoiseAlert(mobj_t * target, mobj_t * emmiter);
+void P_NoiseAlert(mobj_t *target, mobj_t *emmiter);
 void P_InitMonsters(void);
 void P_AddBossSpot(fixed_t x, fixed_t y, angle_t angle);
 void P_Massacre(void);
-void P_DSparilTeleport(mobj_t * actor);
-void Heretic_A_Scream(mobj_t * actor);
-void Heretic_A_BossDeath(mobj_t * actor);
-dboolean Heretic_P_LookForMonsters(mobj_t * actor);
-dboolean Heretic_P_LookForPlayers(mobj_t * actor, dboolean allaround);
+void P_DSparilTeleport(mobj_t *actor);
+void Heretic_A_Scream(mobj_t *actor);
+void Heretic_A_BossDeath(mobj_t *actor);
+dboolean Heretic_P_LookForMonsters(mobj_t *actor);
+dboolean Heretic_P_LookForPlayers(mobj_t *actor, dboolean allaround);
 
 #endif // __P_ENEMY__

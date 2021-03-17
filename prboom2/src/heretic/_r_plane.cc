@@ -71,7 +71,6 @@ fixed_t cacheddistance[MAXHEIGHT];
 fixed_t cachedxstep[MAXHEIGHT];
 fixed_t cachedystep[MAXHEIGHT];
 
-
 /*
 ================
 =
@@ -89,7 +88,6 @@ void R_InitSkyMap(void)
     skyiscale = FRACUNIT >> crispy->hires;
 }
 
-
 /*
 ====================
 =
@@ -102,7 +100,6 @@ void R_InitSkyMap(void)
 void R_InitPlanes(void)
 {
 }
-
 
 /*
 ================
@@ -129,7 +126,7 @@ void R_MapPlane(int y, int x1, int x2)
     unsigned index;
 
 #ifdef RANGECHECK
-    if (x2 < x1 || x1 < 0 || x2 >= viewwidth || (unsigned) y > viewheight)
+    if (x2 < x1 || x1 < 0 || x2 >= viewwidth || (unsigned)y > viewheight)
         I_Error("R_MapPlane: %i, %i at %i", x1, x2, y);
 #endif
 
@@ -167,7 +164,7 @@ void R_MapPlane(int y, int x1, int x2)
     ds_x1 = x1;
     ds_x2 = x2;
 
-    spanfunc();                 // high or low detail
+    spanfunc(); // high or low detail
 }
 
 //=============================================================================
@@ -186,9 +183,9 @@ void R_ClearPlanes(void)
     int i;
     angle_t angle;
 
-//
-// opening / clipping determination
-//
+    //
+    // opening / clipping determination
+    //
     for (i = 0; i < viewwidth; i++)
     {
         floorclip[i] = viewheight;
@@ -198,40 +195,44 @@ void R_ClearPlanes(void)
     lastvisplane = visplanes;
     lastopening = openings;
 
-//
-// texture calculation
-//
+    //
+    // texture calculation
+    //
     memset(cachedheight, 0, sizeof(cachedheight));
-    angle = (viewangle - ANG90) >> ANGLETOFINESHIFT;    // left to right mapping
+    angle = (viewangle - ANG90) >> ANGLETOFINESHIFT; // left to right mapping
 
     // scale will be unit scale at SCREENWIDTH/2 distance
     basexscale = FixedDiv(finecosine[angle], centerxfrac);
     baseyscale = -FixedDiv(finesine[angle], centerxfrac);
 }
 
-
 // [crispy] remove MAXVISPLANES limit
-static void R_RaiseVisplanes (visplane_t** vp)
+static void R_RaiseVisplanes(visplane_t **vp)
 {
     if (lastvisplane - visplanes == numvisplanes)
     {
-	int numvisplanes_old = numvisplanes;
-	visplane_t* visplanes_old = visplanes;
+        int numvisplanes_old = numvisplanes;
+        visplane_t *visplanes_old = visplanes;
 
-	numvisplanes = numvisplanes ? 2 * numvisplanes : MAXVISPLANES;
-	visplanes = I_Realloc(visplanes, numvisplanes * sizeof(*visplanes));
-	memset(visplanes + numvisplanes_old, 0, (numvisplanes - numvisplanes_old) * sizeof(*visplanes));
+        numvisplanes = numvisplanes ? 2 * numvisplanes : MAXVISPLANES;
+        visplanes = I_Realloc(visplanes, numvisplanes * sizeof(*visplanes));
+        memset(visplanes + numvisplanes_old, 0,
+               (numvisplanes - numvisplanes_old) * sizeof(*visplanes));
 
-	lastvisplane = visplanes + numvisplanes_old;
-	floorplane = visplanes + (floorplane - visplanes_old);
-	ceilingplane = visplanes + (ceilingplane - visplanes_old);
+        lastvisplane = visplanes + numvisplanes_old;
+        floorplane = visplanes + (floorplane - visplanes_old);
+        ceilingplane = visplanes + (ceilingplane - visplanes_old);
 
-	if (numvisplanes_old)
-	    fprintf(stderr, "R_FindPlane: Hit MAXVISPLANES limit at %d, raised to %d.\n", numvisplanes_old, numvisplanes);
+        if (numvisplanes_old)
+            fprintf(
+                stderr,
+                "R_FindPlane: Hit MAXVISPLANES limit at %d, raised to %d.\n",
+                numvisplanes_old, numvisplanes);
 
-	// keep the pointer passed as argument in relation to the visplanes pointer
-	if (vp)
-	    *vp = visplanes + (*vp - visplanes_old);
+        // keep the pointer passed as argument in relation to the visplanes
+        // pointer
+        if (vp)
+            *vp = visplanes + (*vp - visplanes_old);
     }
 }
 
@@ -243,8 +244,7 @@ static void R_RaiseVisplanes (visplane_t** vp)
 ===============
 */
 
-visplane_t *R_FindPlane(fixed_t height, int picnum,
-                        int lightlevel, int special)
+visplane_t *R_FindPlane(fixed_t height, int picnum, int lightlevel, int special)
 {
     visplane_t *check;
 
@@ -257,9 +257,8 @@ visplane_t *R_FindPlane(fixed_t height, int picnum,
 
     for (check = visplanes; check < lastvisplane; check++)
     {
-        if (height == check->height
-            && picnum == check->picnum
-            && lightlevel == check->lightlevel && special == check->special)
+        if (height == check->height && picnum == check->picnum &&
+            lightlevel == check->lightlevel && special == check->special)
             break;
     }
 
@@ -289,7 +288,7 @@ visplane_t *R_FindPlane(fixed_t height, int picnum,
 ===============
 */
 
-visplane_t *R_CheckPlane(visplane_t * pl, int start, int stop)
+visplane_t *R_CheckPlane(visplane_t *pl, int start, int stop)
 {
     int intrl, intrh;
     int unionl, unionh;
@@ -325,10 +324,10 @@ visplane_t *R_CheckPlane(visplane_t * pl, int start, int stop)
     {
         pl->minx = unionl;
         pl->maxx = unionh;
-        return pl;              // use the same one
+        return pl; // use the same one
     }
 
-// make a new visplane
+    // make a new visplane
 
     R_RaiseVisplanes(&pl);
     lastvisplane->height = pl->height;
@@ -343,8 +342,6 @@ visplane_t *R_CheckPlane(visplane_t * pl, int start, int stop)
     return pl;
 }
 
-
-
 //=============================================================================
 
 /*
@@ -355,7 +352,8 @@ visplane_t *R_CheckPlane(visplane_t * pl, int start, int stop)
 ================
 */
 
-void R_MakeSpans(int x, unsigned int t1, unsigned int b1, unsigned int t2, unsigned int b2) // [crispy] 32-bit integer math
+void R_MakeSpans(int x, unsigned int t1, unsigned int b1, unsigned int t2,
+                 unsigned int b2) // [crispy] 32-bit integer math
 {
     while (t1 < t2 && t1 <= b1)
     {
@@ -379,8 +377,6 @@ void R_MakeSpans(int x, unsigned int t1, unsigned int b1, unsigned int t2, unsig
         b2--;
     }
 }
-
-
 
 /*
 ================
@@ -429,14 +425,14 @@ void R_DrawPlanes(void)
         if (pl->picnum == skyflatnum)
         {
             dc_iscale = skyiscale;
-            dc_colormap = colormaps;    // sky is allways drawn full bright
+            dc_colormap = colormaps; // sky is allways drawn full bright
             dc_texturemid = skytexturemid;
-            dc_texheight = textureheight[skytexture]>>FRACBITS;
+            dc_texheight = textureheight[skytexture] >> FRACBITS;
             for (x = pl->minx; x <= pl->maxx; x++)
             {
                 dc_yl = pl->top[x];
                 dc_yh = pl->bottom[x];
-                if ((unsigned) dc_yl <= dc_yh) // [crispy] 32-bit integer math
+                if ((unsigned)dc_yl <= dc_yh) // [crispy] 32-bit integer math
                 {
                     angle = (viewangle + xtoviewangle[x]) >> ANGLETOSKYSHIFT;
                     dc_x = x;
@@ -447,8 +443,8 @@ void R_DrawPlanes(void)
                         return;
 
 #ifdef RANGECHECK
-                    if ((unsigned) dc_x >= SCREENWIDTH || dc_yl < 0
-                        || dc_yh >= SCREENHEIGHT)
+                    if ((unsigned)dc_x >= SCREENWIDTH || dc_yl < 0 ||
+                        dc_yh >= SCREENHEIGHT)
                         I_Error("R_DrawColumn: %i to %i at %i", dc_yl, dc_yh,
                                 dc_x);
 #endif
@@ -462,10 +458,9 @@ void R_DrawPlanes(void)
                         *dest = dc_source[frac >> FRACBITS];
                         dest += SCREENWIDTH;
                         frac += fracstep;
-                    }
-                    while (count--);
+                    } while (count--);
 
-//                                      colfunc ();
+                    //                                      colfunc ();
                 }
             }
             continue;
@@ -480,42 +475,43 @@ void R_DrawPlanes(void)
 
         switch (pl->special)
         {
-            case 25:
-            case 26:
-            case 27:
-            case 28:
-            case 29:           // Scroll_North
-                ds_source = tempSource;
-                break;
-            case 20:
-            case 21:
-            case 22:
-            case 23:
-            case 24:           // Scroll_East
-                ds_source = tempSource + ((63 - ((leveltime >> 1) & 63)) <<
-                                          (pl->special - 20) & 63);
-                //ds_source = tempSource+((leveltime>>1)&63);
-                break;
-            case 30:
-            case 31:
-            case 32:
-            case 33:
-            case 34:           // Scroll_South
-                ds_source = tempSource;
-                break;
-            case 35:
-            case 36:
-            case 37:
-            case 38:
-            case 39:           // Scroll_West
-                ds_source = tempSource;
-                break;
-            case 4:            // Scroll_EastLavaDamage
-                ds_source =
-                    tempSource + (((63 - ((leveltime >> 1) & 63)) << 3) & 63);
-                break;
-            default:
-                ds_source = tempSource;
+        case 25:
+        case 26:
+        case 27:
+        case 28:
+        case 29: // Scroll_North
+            ds_source = tempSource;
+            break;
+        case 20:
+        case 21:
+        case 22:
+        case 23:
+        case 24: // Scroll_East
+            ds_source =
+                tempSource +
+                ((63 - ((leveltime >> 1) & 63)) << (pl->special - 20) & 63);
+            // ds_source = tempSource+((leveltime>>1)&63);
+            break;
+        case 30:
+        case 31:
+        case 32:
+        case 33:
+        case 34: // Scroll_South
+            ds_source = tempSource;
+            break;
+        case 35:
+        case 36:
+        case 37:
+        case 38:
+        case 39: // Scroll_West
+            ds_source = tempSource;
+            break;
+        case 4: // Scroll_EastLavaDamage
+            ds_source =
+                tempSource + (((63 - ((leveltime >> 1) & 63)) << 3) & 63);
+            break;
+        default:
+            ds_source = tempSource;
         }
         planeheight = abs(pl->height - viewz);
         light = (pl->lightlevel >> LIGHTSEGSHIFT) + extralight;
@@ -525,8 +521,10 @@ void R_DrawPlanes(void)
             light = 0;
         planezlight = zlight[light];
 
-        pl->top[pl->maxx + 1] = 0xffffffffu; // [crispy] hires / 32-bit integer math
-        pl->top[pl->minx - 1] = 0xffffffffu; // [crispy] hires / 32-bit integer math
+        pl->top[pl->maxx + 1] =
+            0xffffffffu; // [crispy] hires / 32-bit integer math
+        pl->top[pl->minx - 1] =
+            0xffffffffu; // [crispy] hires / 32-bit integer math
 
         stop = pl->maxx + 1;
         for (x = pl->minx; x <= stop; x++)

@@ -4,11 +4,11 @@
 
 @interface FileButtonController : NSObject
 {
-	IBOutlet NSButton *button;
-	IBOutlet id field;
+    IBOutlet NSButton *button;
+    IBOutlet id field;
 
-	NSArray *types;
-	bool allowMultiple;
+    NSArray *types;
+    bool allowMultiple;
 }
 
 - (id)init;
@@ -18,7 +18,9 @@
 - (void)setAllowMultiple:(bool)allow;
 
 - (IBAction)buttonClicked:(id)sender;
-- (void)panelEnded:(NSOpenPanel *)panel returnCode:(int)code contextInfo:(void *)info;
+- (void)panelEnded:(NSOpenPanel *)panel
+        returnCode:(int)code
+       contextInfo:(void *)info;
 
 - (id)field;
 - (void)setEnabled:(BOOL)enabled;

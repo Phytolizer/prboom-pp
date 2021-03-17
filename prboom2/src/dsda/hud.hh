@@ -22,16 +22,16 @@
 
 typedef enum
 {
-  DSDA_SPLIT_BLUE_KEY,
-  DSDA_SPLIT_YELLOW_KEY,
-  DSDA_SPLIT_RED_KEY,
-  DSDA_SPLIT_USE,
-  DSDA_SPLIT_SECRET,
-  DSDA_SPLIT_CLASS_COUNT
+    DSDA_SPLIT_BLUE_KEY,
+    DSDA_SPLIT_YELLOW_KEY,
+    DSDA_SPLIT_RED_KEY,
+    DSDA_SPLIT_USE,
+    DSDA_SPLIT_SECRET,
+    DSDA_SPLIT_CLASS_COUNT
 } dsda_split_class_t;
 
 void dsda_DrawIntermissionTime(void);
-void dsda_InitHud(patchnum_t* font);
+void dsda_InitHud(patchnum_t *font);
 void dsda_UpdateHud(void);
 void dsda_DrawHud(void);
 void dsda_EraseHud(void);

@@ -28,10 +28,10 @@
 
 #include "sb_bar.hh"
 
-#define STARTREDPALS            1
-#define STARTBONUSPALS          9
-#define NUMREDPALS              8
-#define NUMBONUSPALS            4
+#define STARTREDPALS 1
+#define STARTBONUSPALS 9
+#define NUMREDPALS 8
+#define NUMBONUSPALS 4
 
 // Private Functions
 
@@ -84,17 +84,17 @@ int spinbooklump;
 int spinflylump;
 
 char namearti[][10] = {
-    {"ARTIBOX"},                // none
-    {"ARTIINVU"},               // invulnerability
-    {"ARTIINVS"},               // invisibility
-    {"ARTIPTN2"},               // health
-    {"ARTISPHL"},               // superhealth
-    {"ARTIPWBK"},               // tomeofpower
-    {"ARTITRCH"},               // torch
-    {"ARTIFBMB"},               // firebomb
-    {"ARTIEGGC"},               // egg
-    {"ARTISOAR"},               // fly
-    {"ARTIATLP"}                // teleport
+    {"ARTIBOX"},  // none
+    {"ARTIINVU"}, // invulnerability
+    {"ARTIINVS"}, // invisibility
+    {"ARTIPTN2"}, // health
+    {"ARTISPHL"}, // superhealth
+    {"ARTIPWBK"}, // tomeofpower
+    {"ARTITRCH"}, // torch
+    {"ARTIFBMB"}, // firebomb
+    {"ARTIEGGC"}, // egg
+    {"ARTISOAR"}, // fly
+    {"ARTIATLP"}  // teleport
 };
 int lumparti[11];
 
@@ -115,7 +115,7 @@ void SB_Init(void)
 
     for (i = 0; i < 11; ++i)
     {
-      lumparti[i] = (W_CheckNumForName)(DEH_String(namearti[i]), ns_sprites);
+        lumparti[i] = (W_CheckNumForName)(DEH_String(namearti[i]), ns_sprites);
     }
 
     LumpLTFACE = W_GetNumForName(DEH_String("LTFACE"));
@@ -132,7 +132,7 @@ void SB_Init(void)
         LumpSTATBAR = W_GetNumForName(DEH_String("LIFEBAR"));
     }
     if (!netgame)
-    {                           // single player game uses red life gem
+    { // single player game uses red life gem
         LumpLIFEGEM = W_GetNumForName(DEH_String("LIFEGEM2"));
     }
     else
@@ -231,12 +231,14 @@ static void DrINumber(signed int val, int x, int y)
     {
         if (val < -9)
         {
-            V_DrawNamePatch(x + 1, y + 1, 0, DEH_String("LAME"), CR_DEFAULT, VPT_STRETCH);
+            V_DrawNamePatch(x + 1, y + 1, 0, DEH_String("LAME"), CR_DEFAULT,
+                            VPT_STRETCH);
         }
         else
         {
             val = -val;
-            V_DrawNumPatch(x + 18, y, 0, LumpINumbers[val], CR_DEFAULT, VPT_STRETCH);
+            V_DrawNumPatch(x + 18, y, 0, LumpINumbers[val], CR_DEFAULT,
+                           VPT_STRETCH);
             V_DrawNumPatch(x + 9, y, 0, LumpNEGATIVE, CR_DEFAULT, VPT_STRETCH);
         }
         return;
@@ -327,7 +329,8 @@ static void DrSmallNumber(int val, int x, int y)
 //
 //---------------------------------------------------------------------------
 
-static void ShadeLine(int /* x */, int /* y */, int /* height */, int /* shade */)
+static void ShadeLine(int /* x */, int /* y */, int /* height */,
+                      int /* shade */)
 {
     // HERETIC_TODO: ShadeLine
     // byte *dest;
@@ -371,14 +374,8 @@ static void ShadeChain(void)
 //
 //---------------------------------------------------------------------------
 
-char ammopic[][10] = {
-    {"INAMGLD"},
-    {"INAMBOW"},
-    {"INAMBST"},
-    {"INAMRAM"},
-    {"INAMPNX"},
-    {"INAMLOB"}
-};
+char ammopic[][10] = {{"INAMGLD"}, {"INAMBOW"}, {"INAMBST"},
+                      {"INAMRAM"}, {"INAMPNX"}, {"INAMLOB"}};
 
 static int oldarti = 0;
 static int oldartiCount = 0;
@@ -395,7 +392,8 @@ void SB_Drawer(dboolean statusbaron, dboolean refresh, dboolean fullmenu)
     int frame;
     static dboolean hitCenterFrame;
 
-    if (refresh || fullmenu || V_GetMode() == VID_MODEGL) SB_state = -1;
+    if (refresh || fullmenu || V_GetMode() == VID_MODEGL)
+        SB_state = -1;
 
     if (!statusbaron)
     {
@@ -416,8 +414,10 @@ void SB_Drawer(dboolean statusbaron, dboolean refresh, dboolean fullmenu)
             V_DrawNumPatch(0, 158, 0, LumpBARBACK, CR_DEFAULT, VPT_STRETCH);
             if (players[consoleplayer].cheats & CF_GODMODE)
             {
-                V_DrawNamePatch(16, 167, 0, DEH_String("GOD1"), CR_DEFAULT, VPT_STRETCH);
-                V_DrawNamePatch(287, 167, 0, DEH_String("GOD2"), CR_DEFAULT, VPT_STRETCH);
+                V_DrawNamePatch(16, 167, 0, DEH_String("GOD1"), CR_DEFAULT,
+                                VPT_STRETCH);
+                V_DrawNamePatch(287, 167, 0, DEH_String("GOD2"), CR_DEFAULT,
+                                VPT_STRETCH);
             }
             oldhealth = -1;
         }
@@ -427,12 +427,13 @@ void SB_Drawer(dboolean statusbaron, dboolean refresh, dboolean fullmenu)
             if (SB_state != 0)
             {
                 // Main interface
-                V_DrawNumPatch(34, 160, 0, LumpSTATBAR, CR_DEFAULT, VPT_STRETCH);
+                V_DrawNumPatch(34, 160, 0, LumpSTATBAR, CR_DEFAULT,
+                               VPT_STRETCH);
                 oldarti = 0;
                 oldammo = -1;
                 oldarmor = -1;
                 oldweapon = -1;
-                oldfrags = -9999;       //can't use -1, 'cuz of negative frags
+                oldfrags = -9999; // can't use -1, 'cuz of negative frags
                 oldlife = -1;
                 oldkeys = -1;
             }
@@ -454,19 +455,21 @@ void SB_Drawer(dboolean statusbaron, dboolean refresh, dboolean fullmenu)
     // Flight icons
     if (CPlayer->powers[pw_flight])
     {
-        if (CPlayer->powers[pw_flight] > BLINKTHRESHOLD
-            || !(CPlayer->powers[pw_flight] & 16))
+        if (CPlayer->powers[pw_flight] > BLINKTHRESHOLD ||
+            !(CPlayer->powers[pw_flight] & 16))
         {
             frame = (leveltime / 3) & 15;
             if (CPlayer->mo->flags2 & MF2_FLY)
             {
                 if (hitCenterFrame && (frame != 15 && frame != 0))
                 {
-                    V_DrawNumPatch(20, 17, 0, spinflylump + 15, CR_DEFAULT, VPT_STRETCH);
+                    V_DrawNumPatch(20, 17, 0, spinflylump + 15, CR_DEFAULT,
+                                   VPT_STRETCH);
                 }
                 else
                 {
-                    V_DrawNumPatch(20, 17, 0, spinflylump + frame, CR_DEFAULT, VPT_STRETCH);
+                    V_DrawNumPatch(20, 17, 0, spinflylump + frame, CR_DEFAULT,
+                                   VPT_STRETCH);
                     hitCenterFrame = false;
                 }
             }
@@ -474,12 +477,14 @@ void SB_Drawer(dboolean statusbaron, dboolean refresh, dboolean fullmenu)
             {
                 if (!hitCenterFrame && (frame != 15 && frame != 0))
                 {
-                    V_DrawNumPatch(20, 17, 0, spinflylump + frame, CR_DEFAULT, VPT_STRETCH);
+                    V_DrawNumPatch(20, 17, 0, spinflylump + frame, CR_DEFAULT,
+                                   VPT_STRETCH);
                     hitCenterFrame = false;
                 }
                 else
                 {
-                    V_DrawNumPatch(20, 17, 0, spinflylump + 15, CR_DEFAULT, VPT_STRETCH);
+                    V_DrawNumPatch(20, 17, 0, spinflylump + 15, CR_DEFAULT,
+                                   VPT_STRETCH);
                     hitCenterFrame = true;
                 }
             }
@@ -495,11 +500,12 @@ void SB_Drawer(dboolean statusbaron, dboolean refresh, dboolean fullmenu)
 
     if (CPlayer->powers[pw_weaponlevel2] && !CPlayer->chickenTics)
     {
-        if (CPlayer->powers[pw_weaponlevel2] > BLINKTHRESHOLD
-            || !(CPlayer->powers[pw_weaponlevel2] & 16))
+        if (CPlayer->powers[pw_weaponlevel2] > BLINKTHRESHOLD ||
+            !(CPlayer->powers[pw_weaponlevel2] & 16))
         {
             frame = (leveltime / 3) & 15;
-            V_DrawNumPatch(300, 17, 0, spinbooklump + frame, CR_DEFAULT, VPT_STRETCH);
+            V_DrawNumPatch(300, 17, 0, spinbooklump + frame, CR_DEFAULT,
+                           VPT_STRETCH);
             BorderTopRefresh = true;
             // UpdateState |= I_MESSAGES;
         }
@@ -561,8 +567,8 @@ void DrawCommonBar(void)
     int chainY;
     int healthPos;
 
-    V_DrawNumPatch(0,  148, 0, LumpLTFCTOP, CR_DEFAULT, VPT_STRETCH);
-    V_DrawNumPatch(290,  148, 0, LumpRTFCTOP, CR_DEFAULT, VPT_STRETCH);
+    V_DrawNumPatch(0, 148, 0, LumpLTFCTOP, CR_DEFAULT, VPT_STRETCH);
+    V_DrawNumPatch(290, 148, 0, LumpRTFCTOP, CR_DEFAULT, VPT_STRETCH);
 
     if (oldhealth != HealthMarker)
     {
@@ -579,11 +585,13 @@ void DrawCommonBar(void)
         healthPos = (healthPos * 256) / 100;
         chainY =
             (HealthMarker == CPlayer->mo->health) ? 191 : 191 + ChainWiggle;
-        V_DrawNumPatch(0,  190, 0, LumpCHAINBACK, CR_DEFAULT, VPT_STRETCH);
-        V_DrawNumPatch(2 + (healthPos % 17),  chainY, 0, LumpCHAIN, CR_DEFAULT, VPT_STRETCH);
-        V_DrawNumPatch(17 + healthPos,  chainY, 0, LumpLIFEGEM, CR_DEFAULT, VPT_STRETCH);
-        V_DrawNumPatch(0,  190, 0, LumpLTFACE, CR_DEFAULT, VPT_STRETCH);
-        V_DrawNumPatch(276,  190, 0, LumpRTFACE, CR_DEFAULT, VPT_STRETCH);
+        V_DrawNumPatch(0, 190, 0, LumpCHAINBACK, CR_DEFAULT, VPT_STRETCH);
+        V_DrawNumPatch(2 + (healthPos % 17), chainY, 0, LumpCHAIN, CR_DEFAULT,
+                       VPT_STRETCH);
+        V_DrawNumPatch(17 + healthPos, chainY, 0, LumpLIFEGEM, CR_DEFAULT,
+                       VPT_STRETCH);
+        V_DrawNumPatch(0, 190, 0, LumpLTFACE, CR_DEFAULT, VPT_STRETCH);
+        V_DrawNumPatch(276, 190, 0, LumpRTFACE, CR_DEFAULT, VPT_STRETCH);
         ShadeChain();
         // UpdateState |= I_STATBAR;
     }
@@ -603,24 +611,23 @@ void DrawMainBar(void)
     // Ready artifact
     if (ArtifactFlash)
     {
-        V_DrawNumPatch(180,  161, 0, LumpBLACKSQ, CR_DEFAULT, VPT_STRETCH);
+        V_DrawNumPatch(180, 161, 0, LumpBLACKSQ, CR_DEFAULT, VPT_STRETCH);
 
         temp = W_GetNumForName(DEH_String("useartia")) + ArtifactFlash - 1;
 
         V_DrawNumPatch(182, 161, 0, temp, CR_DEFAULT, VPT_STRETCH);
         ArtifactFlash--;
-        oldarti = -1;           // so that the correct artifact fills in after the flash
+        oldarti = -1; // so that the correct artifact fills in after the flash
         // UpdateState |= I_STATBAR;
     }
-    else if (oldarti != CPlayer->readyArtifact
-             || oldartiCount != CPlayer->inventory[inv_ptr].count)
+    else if (oldarti != CPlayer->readyArtifact ||
+             oldartiCount != CPlayer->inventory[inv_ptr].count)
     {
-        V_DrawNumPatch(180,  161, 0, LumpBLACKSQ, CR_DEFAULT, VPT_STRETCH);
+        V_DrawNumPatch(180, 161, 0, LumpBLACKSQ, CR_DEFAULT, VPT_STRETCH);
         if (CPlayer->readyArtifact > 0)
         {
-            V_DrawNumPatch(
-              179, 160, 0, lumparti[CPlayer->readyArtifact], CR_DEFAULT, VPT_STRETCH
-            );
+            V_DrawNumPatch(179, 160, 0, lumparti[CPlayer->readyArtifact],
+                           CR_DEFAULT, VPT_STRETCH);
 
             DrSmallNumber(CPlayer->inventory[inv_ptr].count, 201, 182);
         }
@@ -639,7 +646,7 @@ void DrawMainBar(void)
         }
         if (temp != oldfrags)
         {
-            V_DrawNumPatch(57,  171, 0, LumpARMCLEAR, CR_DEFAULT, VPT_STRETCH);
+            V_DrawNumPatch(57, 171, 0, LumpARMCLEAR, CR_DEFAULT, VPT_STRETCH);
             DrINumber(temp, 61, 170);
             oldfrags = temp;
             // UpdateState |= I_STATBAR;
@@ -659,7 +666,7 @@ void DrawMainBar(void)
         if (oldlife != temp)
         {
             oldlife = temp;
-            V_DrawNumPatch(57,  171, 0, LumpARMCLEAR, CR_DEFAULT, VPT_STRETCH);
+            V_DrawNumPatch(57, 171, 0, LumpARMCLEAR, CR_DEFAULT, VPT_STRETCH);
             DrINumber(temp, 61, 170);
             // UpdateState |= I_STATBAR;
         }
@@ -670,15 +677,18 @@ void DrawMainBar(void)
     {
         if (CPlayer->cards[key_yellow])
         {
-            V_DrawNamePatch(153, 164, 0, DEH_String("ykeyicon"), CR_DEFAULT, VPT_STRETCH);
+            V_DrawNamePatch(153, 164, 0, DEH_String("ykeyicon"), CR_DEFAULT,
+                            VPT_STRETCH);
         }
         if (CPlayer->cards[key_green])
         {
-            V_DrawNamePatch(153, 172, 0, DEH_String("gkeyicon"), CR_DEFAULT, VPT_STRETCH);
+            V_DrawNamePatch(153, 172, 0, DEH_String("gkeyicon"), CR_DEFAULT,
+                            VPT_STRETCH);
         }
         if (CPlayer->cards[key_blue])
         {
-            V_DrawNamePatch(153, 180, 0, DEH_String("bkeyicon"), CR_DEFAULT, VPT_STRETCH);
+            V_DrawNamePatch(153, 180, 0, DEH_String("bkeyicon"), CR_DEFAULT,
+                            VPT_STRETCH);
         }
         oldkeys = playerkeys;
         // UpdateState |= I_STATBAR;
@@ -687,13 +697,13 @@ void DrawMainBar(void)
     temp = CPlayer->ammo[wpnlev1info[CPlayer->readyweapon].ammo];
     if (oldammo != temp || oldweapon != CPlayer->readyweapon)
     {
-        V_DrawNumPatch(108,  161, 0, LumpBLACKSQ, CR_DEFAULT, VPT_STRETCH);
+        V_DrawNumPatch(108, 161, 0, LumpBLACKSQ, CR_DEFAULT, VPT_STRETCH);
         if (temp && CPlayer->readyweapon > 0 && CPlayer->readyweapon < 7)
         {
             DrINumber(temp, 109, 162);
-            V_DrawNamePatch(
-              111, 172, 0, DEH_String(ammopic[CPlayer->readyweapon - 1]), CR_DEFAULT, VPT_STRETCH
-            );
+            V_DrawNamePatch(111, 172, 0,
+                            DEH_String(ammopic[CPlayer->readyweapon - 1]),
+                            CR_DEFAULT, VPT_STRETCH);
         }
         oldammo = temp;
         oldweapon = CPlayer->readyweapon;
@@ -703,7 +713,7 @@ void DrawMainBar(void)
     // Armor
     if (oldarmor != CPlayer->armorpoints)
     {
-        V_DrawNumPatch(224,  171, 0, LumpARMCLEAR, CR_DEFAULT, VPT_STRETCH);
+        V_DrawNumPatch(224, 171, 0, LumpARMCLEAR, CR_DEFAULT, VPT_STRETCH);
         DrINumber(CPlayer->armorpoints, 228, 170);
         oldarmor = CPlayer->armorpoints;
         // UpdateState |= I_STATBAR;
@@ -724,20 +734,20 @@ void DrawInventoryBar(void)
 
     x = inv_ptr - curpos;
     // UpdateState |= I_STATBAR;
-    V_DrawNumPatch(34,  160, 0, LumpINVBAR, CR_DEFAULT, VPT_STRETCH);
+    V_DrawNumPatch(34, 160, 0, LumpINVBAR, CR_DEFAULT, VPT_STRETCH);
     for (i = 0; i < 7; i++)
     {
-        if (CPlayer->inventorySlotNum > x + i
-            && CPlayer->inventory[x + i].type != arti_none)
+        if (CPlayer->inventorySlotNum > x + i &&
+            CPlayer->inventory[x + i].type != arti_none)
         {
-            V_DrawNumPatch(
-              50 + i * 31, 160, 0,
-              lumparti[CPlayer->inventory[x + i].type], CR_DEFAULT, VPT_STRETCH
-            );
+            V_DrawNumPatch(50 + i * 31, 160, 0,
+                           lumparti[CPlayer->inventory[x + i].type], CR_DEFAULT,
+                           VPT_STRETCH);
             DrSmallNumber(CPlayer->inventory[x + i].count, 69 + i * 31, 182);
         }
     }
-    V_DrawNumPatch(50 + curpos * 31,  189, 0, LumpSELECTBOX, CR_DEFAULT, VPT_STRETCH);
+    V_DrawNumPatch(50 + curpos * 31, 189, 0, LumpSELECTBOX, CR_DEFAULT,
+                   VPT_STRETCH);
     if (x != 0)
     {
         lump = !(leveltime & 4) ? LumpINVLFGEM1 : LumpINVLFGEM2;
@@ -794,15 +804,18 @@ void DrawFullScreenStuff(void)
         for (i = 0; i < 7; i++)
         {
             V_DrawTLNamePatch(50 + i * 31, 168, DEH_String("ARTIBOX"));
-            if (CPlayer->inventorySlotNum > x + i
-                && CPlayer->inventory[x + i].type != arti_none)
+            if (CPlayer->inventorySlotNum > x + i &&
+                CPlayer->inventory[x + i].type != arti_none)
             {
                 lump = lumparti[CPlayer->inventory[x + i].type];
-                V_DrawNumPatch(50 + i * 31, 168, 0, lump, CR_DEFAULT, VPT_STRETCH);
-                DrSmallNumber(CPlayer->inventory[x + i].count, 69 + i * 31, 190);
+                V_DrawNumPatch(50 + i * 31, 168, 0, lump, CR_DEFAULT,
+                               VPT_STRETCH);
+                DrSmallNumber(CPlayer->inventory[x + i].count, 69 + i * 31,
+                              190);
             }
         }
-        V_DrawNumPatch(50 + curpos * 31,  197, 0, LumpSELECTBOX, CR_DEFAULT, VPT_STRETCH);
+        V_DrawNumPatch(50 + curpos * 31, 197, 0, LumpSELECTBOX, CR_DEFAULT,
+                       VPT_STRETCH);
         if (x != 0)
         {
             lump = !(leveltime & 4) ? LumpINVLFGEM1 : LumpINVLFGEM2;
@@ -822,23 +835,23 @@ void DrawFullScreenStuff(void)
 //
 //--------------------------------------------------------------------------
 
-dboolean SB_Responder(event_t * ev)
+dboolean SB_Responder(event_t *ev)
 {
-  // Note to self: doom logic
-  // // Filter automap on/off.
-  // if (ev->type == ev_keyup && (ev->data1 & 0xffff0000) == AM_MSGHEADER)
-  //   {
-  //     switch(ev->data1)
-  //       {
-  //       case AM_MSGENTERED:
-  //         st_gamestate = AutomapState;
-  //         st_firsttime = true;
-  //         break;
-  //
-  //       case AM_MSGEXITED:
-  //         st_gamestate = FirstPersonState;
-  //         break;
-  //       }
-  //   }
-  return M_CheatResponder(ev);
+    // Note to self: doom logic
+    // // Filter automap on/off.
+    // if (ev->type == ev_keyup && (ev->data1 & 0xffff0000) == AM_MSGHEADER)
+    //   {
+    //     switch(ev->data1)
+    //       {
+    //       case AM_MSGENTERED:
+    //         st_gamestate = AutomapState;
+    //         st_firsttime = true;
+    //         break;
+    //
+    //       case AM_MSGEXITED:
+    //         st_gamestate = FirstPersonState;
+    //         break;
+    //       }
+    //   }
+    return M_CheatResponder(ev);
 }

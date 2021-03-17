@@ -18,4 +18,4 @@
 #include "r_defs.hh"
 
 void dsda_ArchiveMSecNodes(void);
-void dsda_UnArchiveMSecNodes(mobj_t** mobj_p, int mobj_count);
+void dsda_UnArchiveMSecNodes(mobj_t **mobj_p, int mobj_count);

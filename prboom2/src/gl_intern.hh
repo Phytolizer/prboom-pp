@@ -43,187 +43,188 @@
 
 typedef enum
 {
-  GLDT_UNREGISTERED,
-  GLDT_BROKEN,
-  GLDT_PATCH,
-  GLDT_TEXTURE,
-  GLDT_FLAT
+    GLDT_UNREGISTERED,
+    GLDT_BROKEN,
+    GLDT_PATCH,
+    GLDT_TEXTURE,
+    GLDT_FLAT
 } GLTexType;
 
 typedef enum
 {
-  MIP_TEXTURE,
-  MIP_SPRITE,
-  MIP_PATCH,
+    MIP_TEXTURE,
+    MIP_SPRITE,
+    MIP_PATCH,
 
-  MIP_COUNT
+    MIP_COUNT
 } GLMipType;
 
 typedef struct tex_filter_s
 {
-  int mipmap;
-  int mag_filter;
-  int min_filter;
+    int mipmap;
+    int mag_filter;
+    int min_filter;
 } tex_filter_t;
 
 typedef enum
 {
-  GLTEXTURE_SPRITE    = 0x00000002,
-  GLTEXTURE_HASHOLES  = 0x00000004,
-  GLTEXTURE_SKY       = 0x00000008,
-  GLTEXTURE_HIRES     = 0x00000010,
-  GLTEXTURE_HASNOHIRES= 0x00000020,
-  GLTEXTURE_CLAMPX    = 0x00000040,
-  GLTEXTURE_CLAMPY    = 0x00000080,
-  GLTEXTURE_CLAMPXY   = (GLTEXTURE_CLAMPX | GLTEXTURE_CLAMPY),
-  GLTEXTURE_MIPMAP    = 0x00000100,
+    GLTEXTURE_SPRITE = 0x00000002,
+    GLTEXTURE_HASHOLES = 0x00000004,
+    GLTEXTURE_SKY = 0x00000008,
+    GLTEXTURE_HIRES = 0x00000010,
+    GLTEXTURE_HASNOHIRES = 0x00000020,
+    GLTEXTURE_CLAMPX = 0x00000040,
+    GLTEXTURE_CLAMPY = 0x00000080,
+    GLTEXTURE_CLAMPXY = (GLTEXTURE_CLAMPX | GLTEXTURE_CLAMPY),
+    GLTEXTURE_MIPMAP = 0x00000100,
 } GLTexture_flag_t;
 
 typedef struct gl_strip_coords_s
 {
-  GLfloat v[4][3];
+    GLfloat v[4][3];
 
-  GLfloat t[4][2];
+    GLfloat t[4][2];
 } gl_strip_coords_t;
 
 #define PLAYERCOLORMAP_COUNT (3)
 
 typedef struct detail_s
 {
-  GLuint texid;
-  int texture_num;
-  float width, height;
-  float offsetx, offsety;
+    GLuint texid;
+    int texture_num;
+    float width, height;
+    float offsetx, offsety;
 } detail_t;
 
 typedef struct
 {
-  int index;
-  int width,height;
-  int leftoffset,topoffset;
-  int tex_width,tex_height;
-  int realtexwidth, realtexheight;
-  int buffer_width,buffer_height;
-  int buffer_size;
+    int index;
+    int width, height;
+    int leftoffset, topoffset;
+    int tex_width, tex_height;
+    int realtexwidth, realtexheight;
+    int buffer_width, buffer_height;
+    int buffer_size;
 
-  //e6y: support for Boom colormaps
-  GLuint ***glTexExID;
-  unsigned int texflags[CR_LIMIT+MAXPLAYERS][PLAYERCOLORMAP_COUNT];
-  GLuint *texid_p;
-  unsigned int *texflags_p;
+    // e6y: support for Boom colormaps
+    GLuint ***glTexExID;
+    unsigned int texflags[CR_LIMIT + MAXPLAYERS][PLAYERCOLORMAP_COUNT];
+    GLuint *texid_p;
+    unsigned int *texflags_p;
 
-  int cm;
-  int player_cm;
+    int cm;
+    int player_cm;
 
-  GLTexType textype;
-  unsigned int flags;
-  float scalexfac, scaleyfac; //e6y: right/bottom UV coordinates for patch drawing
+    GLTexType textype;
+    unsigned int flags;
+    float scalexfac,
+        scaleyfac; // e6y: right/bottom UV coordinates for patch drawing
 
-  //detail
-  detail_t *detail;
-  float detail_width, detail_height;
+    // detail
+    detail_t *detail;
+    float detail_width, detail_height;
 } GLTexture;
 
 typedef struct
 {
-  float x1,x2;
-  float z1,z2;
-  dboolean fracleft, fracright; //e6y
+    float x1, x2;
+    float z1, z2;
+    dboolean fracleft, fracright; // e6y
 } GLSeg;
 
 typedef struct
 {
-  GLSeg *glseg;
-  float ytop,ybottom;
-  float ul,ur,vt,vb;
-  float light;
-  float fogdensity;
-  float alpha;
-  float skyymid;
-  float skyyaw;
-  GLTexture *gltexture;
-  byte flag;
-  seg_t *seg;
+    GLSeg *glseg;
+    float ytop, ybottom;
+    float ul, ur, vt, vb;
+    float light;
+    float fogdensity;
+    float alpha;
+    float skyymid;
+    float skyyaw;
+    GLTexture *gltexture;
+    byte flag;
+    seg_t *seg;
 } GLWall;
 
 typedef enum
 {
-  GLFLAT_CEILING      = 0x00000001,
-  GLFLAT_HAVE_OFFSET  = 0x00000002,
+    GLFLAT_CEILING = 0x00000001,
+    GLFLAT_HAVE_OFFSET = 0x00000002,
 } GLFlat_flag_t;
 
 typedef struct
 {
-  int sectornum;
-  float light; // the lightlevel of the flat
-  float fogdensity;
-  float uoffs,voffs; // the texture coordinates
-  float z; // the z position of the flat (height)
-  GLTexture *gltexture;
-  unsigned int flags;
-  float alpha;
+    int sectornum;
+    float light; // the lightlevel of the flat
+    float fogdensity;
+    float uoffs, voffs; // the texture coordinates
+    float z;            // the z position of the flat (height)
+    GLTexture *gltexture;
+    unsigned int flags;
+    float alpha;
 } GLFlat;
 
 /* GLLoopDef is the struct for one loop. A loop is a list of vertexes
- * for triangles, which is calculated by the gluTesselator in gld_PrecalculateSector
- * and in gld_PreprocessCarvedFlat
+ * for triangles, which is calculated by the gluTesselator in
+ * gld_PrecalculateSector and in gld_PreprocessCarvedFlat
  */
 typedef struct
 {
-  int index;   // subsector index
-  GLenum mode; // GL_TRIANGLES, GL_TRIANGLE_STRIP or GL_TRIANGLE_FAN
-  int vertexcount; // number of vertexes in this loop
-  int vertexindex; // index into vertex list
+    int index;       // subsector index
+    GLenum mode;     // GL_TRIANGLES, GL_TRIANGLE_STRIP or GL_TRIANGLE_FAN
+    int vertexcount; // number of vertexes in this loop
+    int vertexindex; // index into vertex list
 } GLLoopDef;
 
 // GLSector is the struct for a sector with a list of loops.
 
-#define SECTOR_CLAMPXY   0x00000001
+#define SECTOR_CLAMPXY 0x00000001
 typedef struct
 {
-  int loopcount; // number of loops for this sector
-  GLLoopDef *loops; // the loops itself
-  unsigned int flags;
+    int loopcount;    // number of loops for this sector
+    GLLoopDef *loops; // the loops itself
+    unsigned int flags;
 } GLSector;
 
 typedef struct
 {
-  int loopcount; // number of loops for this sector
-  GLLoopDef *loops; // the loops itself
+    int loopcount;    // number of loops for this sector
+    GLLoopDef *loops; // the loops itself
 } GLMapSubsector;
 
 typedef struct
 {
-  GLfloat x;
-  GLfloat y;
-  GLfloat z;
+    GLfloat x;
+    GLfloat y;
+    GLfloat z;
 } GLVertex;
 
 typedef struct
 {
-  GLfloat u;
-  GLfloat v;
+    GLfloat u;
+    GLfloat v;
 } GLTexcoord;
 
 typedef struct
 {
-  GLLoopDef loop; // the loops itself
+    GLLoopDef loop; // the loops itself
 } GLSubSector;
 
 typedef struct
 {
-  float x, y, z;
-  float radius;
-  float light;
+    float x, y, z;
+    float radius;
+    float light;
 } GLShadow;
 
 typedef struct
 {
-  int cm;
+    int cm;
 
-  float x1, x2, x3;
-  float z1, z2, z3;
-  float y;
+    float x1, x2, x3;
+    float z1, z2, z3;
+    float y;
 } GLHealthBar;
 
 extern GLSeg *gl_segs;
@@ -233,93 +234,93 @@ extern GLSeg *gl_lines;
 #define GLDWF_M1S 2
 #define GLDWF_M2S 3
 #define GLDWF_BOT 4
-#define GLDWF_TOPFLUD 5 //e6y: project the ceiling plane into the gap
-#define GLDWF_BOTFLUD 6 //e6y: project the floor plane into the gap
+#define GLDWF_TOPFLUD 5 // e6y: project the ceiling plane into the gap
+#define GLDWF_BOTFLUD 6 // e6y: project the floor plane into the gap
 #define GLDWF_SKY 7
 #define GLDWF_SKYFLIP 8
 
 typedef struct
 {
-  int cm;
-  float x,y,z;
-  float vt,vb;
-  float ul,ur;
-  float x1,y1;
-  float x2,y2;
-  float light;
-  float fogdensity;
-  fixed_t scale;
-  GLTexture *gltexture;
-  uint_64_t flags;
-  int index;
-  int xy;
+    int cm;
+    float x, y, z;
+    float vt, vb;
+    float ul, ur;
+    float x1, y1;
+    float x2, y2;
+    float light;
+    float fogdensity;
+    fixed_t scale;
+    GLTexture *gltexture;
+    uint_64_t flags;
+    int index;
+    int xy;
 } GLSprite;
 
 typedef enum
 {
-  GLDIT_NONE,
+    GLDIT_NONE,
 
-  GLDIT_WALL,    // opaque wall
-  GLDIT_MWALL,   // opaque mid wall
-  GLDIT_FWALL,   // projected wall
-  GLDIT_TWALL,   // transparent walls
-  GLDIT_SWALL,   // sky walls
+    GLDIT_WALL,  // opaque wall
+    GLDIT_MWALL, // opaque mid wall
+    GLDIT_FWALL, // projected wall
+    GLDIT_TWALL, // transparent walls
+    GLDIT_SWALL, // sky walls
 
-  GLDIT_AWALL,   // animated wall
-  GLDIT_FAWALL,  // animated projected wall
+    GLDIT_AWALL,  // animated wall
+    GLDIT_FAWALL, // animated projected wall
 
-  GLDIT_CEILING, // ceiling
-  GLDIT_FLOOR,   // floor
+    GLDIT_CEILING, // ceiling
+    GLDIT_FLOOR,   // floor
 
-  GLDIT_ACEILING, // animated ceiling
-  GLDIT_AFLOOR,   // animated floor
+    GLDIT_ACEILING, // animated ceiling
+    GLDIT_AFLOOR,   // animated floor
 
-  GLDIT_SPRITE,  // opaque sprite
-  GLDIT_TSPRITE, // transparent sprites
-  GLDIT_ASPRITE,
+    GLDIT_SPRITE,  // opaque sprite
+    GLDIT_TSPRITE, // transparent sprites
+    GLDIT_ASPRITE,
 
-  GLDIT_SHADOW,
+    GLDIT_SHADOW,
 
-  GLDIT_HBAR,
+    GLDIT_HBAR,
 
-  GLDIT_TYPES
+    GLDIT_TYPES
 } GLDrawItemType;
 
 typedef struct GLDrawItem_s
 {
-  union
-  {
-    void *item;
-    GLWall *wall;
-    GLFlat *flat;
-    GLSprite *sprite;
-    GLShadow *shadow;
-    GLHealthBar *hbar;
-  } item;
+    union {
+        void *item;
+        GLWall *wall;
+        GLFlat *flat;
+        GLSprite *sprite;
+        GLShadow *shadow;
+        GLHealthBar *hbar;
+    } item;
 } GLDrawItem;
 
 typedef struct GLDrawDataItem_s
 {
-  byte *data;
-  int maxsize;
-  int size;
+    byte *data;
+    int maxsize;
+    int size;
 } GLDrawDataItem_t;
 
 typedef struct
 {
-  GLDrawDataItem_t *data;
-  int maxsize;
-  int size;
+    GLDrawDataItem_t *data;
+    int maxsize;
+    int size;
 
-  GLDrawItem *items[GLDIT_TYPES];
-  int num_items[GLDIT_TYPES];
-  int max_items[GLDIT_TYPES];
+    GLDrawItem *items[GLDIT_TYPES];
+    int num_items[GLDIT_TYPES];
+    int max_items[GLDIT_TYPES];
 } GLDrawInfo;
 
 void gld_AddDrawItem(GLDrawItemType itemtype, void *itemdata);
 
 void gld_DrawTriangleStrip(GLWall *wall, gl_strip_coords_t *c);
-void gld_DrawTriangleStripARB(GLWall *wall, gl_strip_coords_t *c1, gl_strip_coords_t *c2);
+void gld_DrawTriangleStripARB(GLWall *wall, gl_strip_coords_t *c1,
+                              gl_strip_coords_t *c2);
 
 extern float roll;
 extern float yaw;
@@ -330,7 +331,7 @@ extern int gl_compatibility;
 extern int gl_ztrick;
 extern int gl_finish;
 
-extern int gl_preprocessed; //e6y
+extern int gl_preprocessed; // e6y
 
 extern GLDrawInfo gld_drawinfo;
 void gld_FreeDrawInfo(void);
@@ -347,13 +348,14 @@ extern unsigned char gld_palmap[256];
 extern tex_filter_t tex_filter[];
 void gld_SetTexFilters(GLTexture *gltexture);
 
-extern float xCamera,yCamera,zCamera;
+extern float xCamera, yCamera, zCamera;
 
 //
-//detail
+// detail
 //
 
-int gld_IsDetailVisible(float x0, float y0, float x1, float y1, float x2, float y2);
+int gld_IsDetailVisible(float x0, float y0, float x1, float y1, float x2,
+                        float y2);
 void gld_InitDetail(void);
 void gld_InitFrameDetails(void);
 void gld_ParseDetail(void);
@@ -376,8 +378,9 @@ extern int details_count;
 extern int scene_has_wall_details;
 extern int scene_has_flat_details;
 
-extern GLuint* last_glTexID;
-GLTexture *gld_RegisterTexture(int texture_num, dboolean mipmap, dboolean force);
+extern GLuint *last_glTexID;
+GLTexture *gld_RegisterTexture(int texture_num, dboolean mipmap,
+                               dboolean force);
 void gld_BindTexture(GLTexture *gltexture, unsigned int flags);
 GLTexture *gld_RegisterPatch(int lump, int cm, dboolean is_sprite);
 void gld_BindPatch(GLTexture *gltexture, int cm);
@@ -390,37 +393,39 @@ void gld_Precache(void);
 
 void SetFrameTextureMode(void);
 
-//gamma
+// gamma
 void gld_ResetGammaRamp(void);
 
-//gl_vertex
+// gl_vertex
 void gld_SplitLeftEdge(const GLWall *wall, dboolean detail);
 void gld_SplitRightEdge(const GLWall *wall, dboolean detail);
 void gld_RecalcVertexHeights(const vertex_t *v);
 
-//e6y
+// e6y
 void gld_InitGLVersion(void);
 void gld_ResetLastTexture(void);
 
-unsigned char* gld_GetTextureBuffer(GLuint texid, int miplevel, int *width, int *height);
+unsigned char *gld_GetTextureBuffer(GLuint texid, int miplevel, int *width,
+                                    int *height);
 
-int gld_BuildTexture(GLTexture *gltexture, void *data, dboolean readonly, int width, int height);
+int gld_BuildTexture(GLTexture *gltexture, void *data, dboolean readonly,
+                     int width, int height);
 
-//hires
+// hires
 extern unsigned int gl_has_hires;
 int gld_HiRes_BuildTables(void);
 void gld_InitHiRes(void);
 int gld_LoadHiresTex(GLTexture *gltexture, int cm);
 void gld_GetTextureTexID(GLTexture *gltexture, int cm);
 GLuint CaptureScreenAsTexID(void);
-void gld_ProgressUpdate(const char * text, int progress, int total);
+void gld_ProgressUpdate(const char *text, int progress, int total);
 int gld_ProgressStart(void);
 int gld_ProgressEnd(void);
 
-//FBO
-#define INVUL_CM         0x00000001
-#define INVUL_INV        0x00000002
-#define INVUL_BW         0x00000004
+// FBO
+#define INVUL_CM 0x00000001
+#define INVUL_INV 0x00000002
+#define INVUL_BW 0x00000004
 extern GLuint glSceneImageFBOTexID;
 extern GLuint glSceneImageTextureFBOTexID;
 
@@ -432,12 +437,12 @@ extern int SceneInTexture;
 void gld_InitFBO(void);
 void gld_FreeScreenSizeFBO(void);
 
-//motion bloor
+// motion bloor
 extern int gl_motionblur;
 
 extern int imageformats[];
 
-//missing flats (fake floors and ceilings)
+// missing flats (fake floors and ceilings)
 
 void gld_PreprocessFakeSectors(void);
 
@@ -447,7 +452,7 @@ void gld_ClearFloodStencil(GLWall *wall);
 void gld_SetupFloodedPlaneCoords(GLWall *wall, gl_strip_coords_t *c);
 void gld_SetupFloodedPlaneLight(GLWall *wall);
 
-//light
+// light
 extern int gl_rellight;
 void gld_StaticLightAlpha(float light, float alpha);
 #define gld_StaticLight(light) gld_StaticLightAlpha(light, 1.0f)
@@ -457,37 +462,40 @@ typedef float (*gld_Calc2DLightLevel_f)(int lightlevel);
 extern gld_CalcLightLevel_f gld_CalcLightLevel;
 extern gld_Calc2DLightLevel_f gld_Calc2DLightLevel;
 
-//fog
+// fog
 extern int gl_fog;
 extern int gl_use_fog;
 void gl_EnableFog(int on);
 void gld_SetFog(float fogdensity);
-typedef float (*gld_CalcFogDensity_f)(sector_t *sector, int lightlevel, GLDrawItemType type);
+typedef float (*gld_CalcFogDensity_f)(sector_t *sector, int lightlevel,
+                                      GLDrawItemType type);
 extern gld_CalcFogDensity_f gld_CalcFogDensity;
 
-//HQ resize
-unsigned char* gld_HQResize(GLTexture *gltexture, unsigned char *inputBuffer, int inWidth, int inHeight, int *outWidth, int *outHeight);
+// HQ resize
+unsigned char *gld_HQResize(GLTexture *gltexture, unsigned char *inputBuffer,
+                            int inWidth, int inHeight, int *outWidth,
+                            int *outHeight);
 
 // SkyBox
-#define SKY_NONE    0
+#define SKY_NONE 0
 #define SKY_CEILING 1
-#define SKY_FLOOR   2
+#define SKY_FLOOR 2
 typedef struct PalEntry_s
 {
-  unsigned char r, g, b;
+    unsigned char r, g, b;
 } PalEntry_t;
 typedef struct SkyBoxParams_s
 {
-  int index;
-  unsigned int type;
-  GLWall wall;
-  float x_scale, y_scale;
-  float x_offset, y_offset;
-  // 0 - no colormap; 1 - INVUL inverse colormap
-  PalEntry_t FloorSkyColor[2];
-  PalEntry_t CeilingSkyColor[2];
-  // for BoxSkybox
-  side_t *side;
+    int index;
+    unsigned int type;
+    GLWall wall;
+    float x_scale, y_scale;
+    float x_offset, y_offset;
+    // 0 - no colormap; 1 - INVUL inverse colormap
+    PalEntry_t FloorSkyColor[2];
+    PalEntry_t CeilingSkyColor[2];
+    // for BoxSkybox
+    side_t *side;
 } SkyBoxParams_t;
 extern SkyBoxParams_t SkyBox;
 extern GLfloat gl_whitecolor[];
@@ -510,41 +518,46 @@ void gld_RenderShadows(void);
 // VBO
 typedef struct vbo_vertex_s
 {
-  float x, y, z;
-  float u, v;
-  unsigned char r, g, b, a;
+    float x, y, z;
+    float u, v;
+    unsigned char r, g, b, a;
 } PACKEDATTR vbo_vertex_t;
-#define NULL_VBO_VERTEX ((vbo_vertex_t*)NULL)
-#define sky_vbo_x (gl_ext_arb_vertex_buffer_object ? &NULL_VBO_VERTEX->x : &vbo->data[0].x)
-#define sky_vbo_u (gl_ext_arb_vertex_buffer_object ? &NULL_VBO_VERTEX->u : &vbo->data[0].u)
-#define sky_vbo_r (gl_ext_arb_vertex_buffer_object ? &NULL_VBO_VERTEX->r : &vbo->data[0].r)
+#define NULL_VBO_VERTEX ((vbo_vertex_t *)NULL)
+#define sky_vbo_x                                                              \
+    (gl_ext_arb_vertex_buffer_object ? &NULL_VBO_VERTEX->x : &vbo->data[0].x)
+#define sky_vbo_u                                                              \
+    (gl_ext_arb_vertex_buffer_object ? &NULL_VBO_VERTEX->u : &vbo->data[0].u)
+#define sky_vbo_r                                                              \
+    (gl_ext_arb_vertex_buffer_object ? &NULL_VBO_VERTEX->r : &vbo->data[0].r)
 
 typedef struct vbo_xyz_uv_s
 {
-  float x, y, z;
-  float u, v;
+    float x, y, z;
+    float u, v;
 } PACKEDATTR vbo_xyz_uv_t;
 extern vbo_xyz_uv_t *flats_vbo;
-#define NULL_VBO_XYZ_UV ((vbo_xyz_uv_t*)NULL)
-#define flats_vbo_x (gl_ext_arb_vertex_buffer_object ? &NULL_VBO_XYZ_UV->x : &flats_vbo[0].x)
-#define flats_vbo_u (gl_ext_arb_vertex_buffer_object ? &NULL_VBO_XYZ_UV->u : &flats_vbo[0].u)
+#define NULL_VBO_XYZ_UV ((vbo_xyz_uv_t *)NULL)
+#define flats_vbo_x                                                            \
+    (gl_ext_arb_vertex_buffer_object ? &NULL_VBO_XYZ_UV->x : &flats_vbo[0].x)
+#define flats_vbo_u                                                            \
+    (gl_ext_arb_vertex_buffer_object ? &NULL_VBO_XYZ_UV->u : &flats_vbo[0].u)
 
 typedef struct vbo_xy_uv_rgba_s
 {
-  float x, y;
-  float u, v;
-  unsigned char r, g, b, a;
+    float x, y;
+    float u, v;
+    unsigned char r, g, b, a;
 } PACKEDATTR vbo_xy_uv_rgba_t;
 
-//BoxSkybox
+// BoxSkybox
 typedef struct box_skybox_s
 {
-  char name[9];
-  int fliptop;
-  char faces[6][9];
-  GLTexture texture[6];
+    char name[9];
+    int fliptop;
+    char faces[6][9];
+    GLTexture texture[6];
 } box_skybox_t;
-box_skybox_t* R_GetBoxSkybox(int index);
+box_skybox_t *R_GetBoxSkybox(int index);
 void gld_ParseSkybox(void);
 extern box_skybox_t *BoxSkybox_default;
 
@@ -554,7 +567,7 @@ void gld_CleanDisplayLists(void);
 extern int flats_display_list;
 
 // preprocessing
-extern byte *segrendered; // true if sector rendered (only here for malloc)
+extern byte *segrendered;     // true if sector rendered (only here for malloc)
 extern byte *linerendered[2]; // true if linedef rendered (only here for malloc)
 extern GLuint flats_vbo_id;
 
@@ -562,12 +575,12 @@ extern GLuint flats_vbo_id;
 
 typedef struct GLShader_s
 {
-  char name[256];
-  GLhandleARB hShader;
-  GLhandleARB hVertProg;
-  GLhandleARB hFragProg;
+    char name[256];
+    GLhandleARB hShader;
+    GLhandleARB hVertProg;
+    GLhandleARB hFragProg;
 
-  int lightlevel_index;
+    int lightlevel_index;
 } GLShader;
 
 extern GLShader *sh_main;

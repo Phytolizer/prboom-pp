@@ -26,7 +26,7 @@
 /*
 ===============================================================================
 
-						map level types
+                        map level types
 
 ===============================================================================
 */
@@ -47,81 +47,69 @@ enum
     ML_BLOCKMAP
 };
 
+typedef PACKED_STRUCT({ short x, y; }) mapvertex_t;
 
-typedef PACKED_STRUCT (
-{
-    short x, y;
-}) mapvertex_t;
-
-typedef PACKED_STRUCT (
-{
+typedef PACKED_STRUCT({
     short textureoffset;
     short rowoffset;
     char toptexture[8], bottomtexture[8], midtexture[8];
-    short sector;               // on viewer's side
+    short sector; // on viewer's side
 }) mapsidedef_t;
 
-typedef PACKED_STRUCT (
-{
+typedef PACKED_STRUCT({
     short v1, v2;
     short flags;
     short special, tag;
-    short sidenum[2];           // sidenum[1] will be -1 if one sided
+    short sidenum[2]; // sidenum[1] will be -1 if one sided
 }) maplinedef_t;
 
-typedef PACKED_STRUCT (
-{
+typedef PACKED_STRUCT({
     short floorheight, ceilingheight;
     char floorpic[8], ceilingpic[8];
     short lightlevel;
     short special, tag;
 }) mapsector_t;
 
-typedef PACKED_STRUCT (
-{
+typedef PACKED_STRUCT({
     short numsegs;
-    short firstseg;             // segs are stored sequentially
+    short firstseg; // segs are stored sequentially
 }) mapsubsector_t;
 
-typedef PACKED_STRUCT (
-{
+typedef PACKED_STRUCT({
     short v1, v2;
     short angle;
     short linedef, side;
     short offset;
 }) mapseg_t;
 
-#define	NF_SUBSECTOR	0x8000
-typedef PACKED_STRUCT (
-{
+#define NF_SUBSECTOR 0x8000
+typedef PACKED_STRUCT({
     short x, y, dx, dy;         // partition line
     short bbox[2][4];           // bounding box for each child
     unsigned short children[2]; // if NF_SUBSECTOR its a subsector
 }) mapnode_t;
 
-typedef PACKED_STRUCT (
-{
+typedef PACKED_STRUCT({
     short x, y;
     short angle;
     short type;
     short options;
 }) mapthing_t;
 
-#define	MTF_EASY		1
-#define	MTF_NORMAL		2
-#define	MTF_HARD		4
-#define	MTF_AMBUSH		8
+#define MTF_EASY 1
+#define MTF_NORMAL 2
+#define MTF_HARD 4
+#define MTF_AMBUSH 8
 
 /*
 ===============================================================================
 
-						texture definition
+                        texture definition
 
 ===============================================================================
 */
 
-typedef PACKED_STRUCT (
-{
+typedef PACKED_STRUCT({
     short originx;
     short originy;
     short patch;
@@ -129,8 +117,7 @@ typedef PACKED_STRUCT (
     short colormap;
 }) mappatch_t;
 
-typedef PACKED_STRUCT (
-{
+typedef PACKED_STRUCT({
     char name[8];
     boolean masked;
     short width;
@@ -140,11 +127,10 @@ typedef PACKED_STRUCT (
     mappatch_t patches[1];
 }) maptexture_t;
 
-
 /*
 ===============================================================================
 
-							graphics
+                            graphics
 
 ===============================================================================
 */
@@ -156,18 +142,12 @@ typedef struct
     byte data;
 } pic_t;
 
-
-
-
 /*
 ===============================================================================
 
-							status
+                            status
 
 ===============================================================================
 */
-
-
-
 
 #endif // __DOOMDATA__

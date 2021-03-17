@@ -1,4 +1,4 @@
-// Emacs style mode select   -*- C++ -*- 
+// Emacs style mode select   -*- C++ -*-
 //-----------------------------------------------------------------------------
 //
 // Copyright(C) 2009 Simon Howard
@@ -49,7 +49,7 @@ opl_callback_queue_t *OPL_Queue_Create(void)
 {
     opl_callback_queue_t *queue;
 
-    queue = (opl_callback_queue_t*)malloc(sizeof(opl_callback_queue_t));
+    queue = (opl_callback_queue_t *)malloc(sizeof(opl_callback_queue_t));
     queue->num_entries = 0;
 
     return queue;
@@ -70,16 +70,15 @@ void OPL_Queue_Clear(opl_callback_queue_t *queue)
     queue->num_entries = 0;
 }
 
-void OPL_Queue_Push(opl_callback_queue_t *queue,
-                    opl_callback_t callback, void *data,
-                    unsigned int time)
+void OPL_Queue_Push(opl_callback_queue_t *queue, opl_callback_t callback,
+                    void *data, unsigned int time)
 {
     int entry_id;
     int parent_id;
 
     if (queue->num_entries >= MAX_OPL_QUEUE)
     {
-        lprintf (LO_WARN, "OPL_Queue_Push: Exceeded maximum callbacks\n");
+        lprintf(LO_WARN, "OPL_Queue_Push: Exceeded maximum callbacks\n");
         return;
     }
 
@@ -103,8 +102,7 @@ void OPL_Queue_Push(opl_callback_queue_t *queue,
 
         // Move the existing entry down in the heap.
 
-        memcpy(&queue->entries[entry_id],
-               &queue->entries[parent_id],
+        memcpy(&queue->entries[entry_id], &queue->entries[parent_id],
                sizeof(opl_queue_entry_t));
 
         // Advance to the parent.
@@ -119,8 +117,8 @@ void OPL_Queue_Push(opl_callback_queue_t *queue,
     queue->entries[entry_id].time = time;
 }
 
-int OPL_Queue_Pop(opl_callback_queue_t *queue,
-                  opl_callback_t *callback, void **data)
+int OPL_Queue_Pop(opl_callback_queue_t *queue, opl_callback_t *callback,
+                  void **data)
 {
     opl_queue_entry_t *entry;
     int child1, child2;
@@ -153,14 +151,14 @@ int OPL_Queue_Pop(opl_callback_queue_t *queue,
         child1 = i * 2 + 1;
         child2 = i * 2 + 2;
 
-        if (child1 < queue->num_entries
-         && queue->entries[child1].time < entry->time)
+        if (child1 < queue->num_entries &&
+            queue->entries[child1].time < entry->time)
         {
             // Left child is less than entry.
             // Use the minimum of left and right children.
 
-            if (child2 < queue->num_entries
-             && queue->entries[child2].time < queue->entries[child1].time)
+            if (child2 < queue->num_entries &&
+                queue->entries[child2].time < queue->entries[child1].time)
             {
                 next_i = child2;
             }
@@ -169,8 +167,8 @@ int OPL_Queue_Pop(opl_callback_queue_t *queue,
                 next_i = child1;
             }
         }
-        else if (child2 < queue->num_entries
-              && queue->entries[child2].time < entry->time)
+        else if (child2 < queue->num_entries &&
+                 queue->entries[child2].time < entry->time)
         {
             // Right child is less than entry.  Go down the right side.
 
@@ -184,8 +182,7 @@ int OPL_Queue_Pop(opl_callback_queue_t *queue,
 
         // Percolate the next value up and advance.
 
-        memcpy(&queue->entries[i],
-               &queue->entries[next_i],
+        memcpy(&queue->entries[i], &queue->entries[next_i],
                sizeof(opl_queue_entry_t));
         i = next_i;
     }
@@ -222,7 +219,7 @@ static void PrintQueueNode(opl_callback_queue_t *queue, int node, int depth)
         return;
     }
 
-    for (i=0; i<depth * 3; ++i)
+    for (i = 0; i < depth * 3; ++i)
     {
         printf(" ");
     }
@@ -245,7 +242,7 @@ int main()
 
     queue = OPL_Queue_Create();
 
-    for (iteration=0; iteration<5000; ++iteration)
+    for (iteration = 0; iteration < 5000; ++iteration)
     {
         opl_callback_t callback;
         void *data;
@@ -253,7 +250,7 @@ int main()
         unsigned int newtime;
         int i;
 
-        for (i=0; i<MAX_OPL_QUEUE; ++i)
+        for (i = 0; i < MAX_OPL_QUEUE; ++i)
         {
             time = rand() % 0x10000;
             OPL_Queue_Push(queue, NULL, NULL, time);
@@ -261,7 +258,7 @@ int main()
 
         time = 0;
 
-        for (i=0; i<MAX_OPL_QUEUE; ++i)
+        for (i = 0; i < MAX_OPL_QUEUE; ++i)
         {
             assert(!OPL_Queue_IsEmpty(queue));
             newtime = OPL_Queue_Peek(queue);

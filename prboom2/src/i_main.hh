@@ -42,14 +42,14 @@
 
 typedef enum
 {
-  EXEPTION_NONE,
-  EXEPTION_glFramebufferTexture2DEXT,
-  EXEPTION_MAX
+    EXEPTION_NONE,
+    EXEPTION_glFramebufferTexture2DEXT,
+    EXEPTION_MAX
 } ExeptionsList_t;
 
 typedef struct
 {
-  const char * error_message;
+    const char *error_message;
 } ExeptionParam_t;
 
 extern ExeptionParam_t ExeptionsParams[];
@@ -61,7 +61,11 @@ void I_ExeptionProcess(void);
 #if defined(_WIN32) && (defined(_MSC_VER) || defined(__INTEL_COMPILER))
 void I_Warning(const char *message, ...);
 #define PRBOOM_TRY(exception_index) __try
-#define PRBOOM_EXCEPT(exception_index) __except(EXCEPTION_EXECUTE_HANDLER) { I_Warning("%s", ExeptionsParams[exception_index]); }
+#define PRBOOM_EXCEPT(exception_index)                                         \
+    __except (EXCEPTION_EXECUTE_HANDLER)                                       \
+    {                                                                          \
+        I_Warning("%s", ExeptionsParams[exception_index]);                     \
+    }
 #else
 #define PRBOOM_TRY(exception_index) I_ExeptionBegin(exception_index);
 #define PRBOOM_EXCEPT(exception_index) I_ExeptionEnd();

@@ -36,7 +36,7 @@
 
 #include "pcsound.hh"
 
-//e6y
+// e6y
 #include "lprintf.hh"
 
 #include "i_sound.hh" // snd_samplerate
@@ -48,8 +48,8 @@ static pcsound_callback_func callback;
 // Output sound format
 
 static int mixing_freq;
-//static Uint16 mixing_format;
-//static int mixing_channels;
+// static Uint16 mixing_format;
+// static int mixing_channels;
 
 // Currently playing sound
 // current_remaining is the number of remaining samples that must be played
@@ -75,19 +75,18 @@ void PCSound_Mix_Callback(void *udata, Uint8 *stream, int len)
 
     // safe to call even if not active
     if (!pcsound_inited)
-      return;
-
+        return;
 
     // Number of samples is quadrupled, because of 16-bit and stereo
 
     nsamples = len / 4;
 
-    leftptr = (Sint16 *) stream;
-    rightptr = ((Sint16 *) stream) + 1;
+    leftptr = (Sint16 *)stream;
+    rightptr = ((Sint16 *)stream) + 1;
 
     // Fill the output buffer
 
-    for (i=0; i<nsamples; ++i)
+    for (i = 0; i < nsamples; ++i)
     {
         // Has this sound expired? If so, invoke the callback to get
         // the next frequency.
@@ -171,8 +170,7 @@ static void PCSound_SDL_Shutdown(void)
     pcsound_inited = 0;
 }
 
-pcsound_driver_t pcsound_sdl_driver =
-{
+pcsound_driver_t pcsound_sdl_driver = {
     "SDL",
     PCSound_SDL_Init,
     PCSound_SDL_Shutdown,

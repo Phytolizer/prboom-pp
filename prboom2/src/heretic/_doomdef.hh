@@ -20,7 +20,7 @@
 #define __DOOMDEF__
 #include <stdio.h>
 #include <string.h>
-//haleyjd: removed WATCOMC
+// haleyjd: removed WATCOMC
 #include <limits.h>
 
 #define HERETIC_VERSION 130
@@ -59,18 +59,18 @@
 
 #include "d_loop.hh"
 
-#define	SAVEGAMENAME "hticsav"
+#define SAVEGAMENAME "hticsav"
 
 /*
 ===============================================================================
 
-						GLOBAL TYPES
+                        GLOBAL TYPES
 
 ===============================================================================
 */
 
-#define NUMARTIFCTS	28
-#define MAXPLAYERS	4
+#define NUMARTIFCTS 28
+#define MAXPLAYERS 4
 
 typedef enum
 {
@@ -86,25 +86,25 @@ typedef enum
 /*
 ===============================================================================
 
-							MAPOBJ DATA
+                            MAPOBJ DATA
 
 ===============================================================================
 */
 
-#define BLINKTHRESHOLD (4*32)
+#define BLINKTHRESHOLD (4 * 32)
 
-#define CF_NOCLIP		1
-#define	CF_GODMODE		2
-#define	CF_NOMOMENTUM	4       // not really a cheat, just a debug aid
-#define CF_SHOWFPS      8       // [crispy]
+#define CF_NOCLIP 1
+#define CF_GODMODE 2
+#define CF_NOMOMENTUM 4 // not really a cheat, just a debug aid
+#define CF_SHOWFPS 8    // [crispy]
 
-#define	SBARHEIGHT	(42 << crispy->hires)      // status bar height at bottom of screen
-
+#define SBARHEIGHT                                                             \
+    (42 << crispy->hires) // status bar height at bottom of screen
 
 /*
 ===============================================================================
 
-					GLOBAL VARIABLES
+                    GLOBAL VARIABLES
 
 ===============================================================================
 */
@@ -115,41 +115,41 @@ extern boolean paused;
 
 extern GameMode_t gamemode;
 
-extern boolean ExtendedWAD;     // true if main WAD is the extended version
+extern boolean ExtendedWAD; // true if main WAD is the extended version
 
-extern boolean nomonsters;      // checkparm of -nomonsters
+extern boolean nomonsters; // checkparm of -nomonsters
 
-extern boolean respawnparm;     // checkparm of -respawn
+extern boolean respawnparm; // checkparm of -respawn
 
-extern boolean debugmode;       // checkparm of -debug
+extern boolean debugmode; // checkparm of -debug
 
-extern boolean usergame;        // ok to save / end game
+extern boolean usergame; // ok to save / end game
 
-extern boolean ravpic;          // checkparm of -ravpic
+extern boolean ravpic; // checkparm of -ravpic
 
-extern boolean altpal;          // checkparm to use an alternate palette routine
+extern boolean altpal; // checkparm to use an alternate palette routine
 
-extern boolean cdrom;           // true if cd-rom mode active ("-cdrom")
+extern boolean cdrom; // true if cd-rom mode active ("-cdrom")
 
-extern boolean deathmatch;      // only if started as net death
+extern boolean deathmatch; // only if started as net death
 
-extern boolean netgame;         // only true if >1 player
+extern boolean netgame; // only true if >1 player
 
 extern boolean playeringame[MAXPLAYERS];
 
-extern int consoleplayer;       // player taking events and displaying
+extern int consoleplayer; // player taking events and displaying
 
 extern int displayplayer;
 
-extern int viewangleoffset;     // ANG90 = left side, ANG270 = right
+extern int viewangleoffset; // ANG90 = left side, ANG270 = right
 
 extern player_t players[MAXPLAYERS];
 
-extern boolean DebugSound;      // debug flag for displaying sound info
+extern boolean DebugSound; // debug flag for displaying sound info
 
 extern boolean demorecording;
 extern boolean demoplayback;
-extern boolean demoextend;      // allow demos to persist through exit/respawn
+extern boolean demoextend; // allow demos to persist through exit/respawn
 extern int skytexture;
 
 // Truncate angleturn in ticcmds to nearest 256.
@@ -163,13 +163,13 @@ extern int gameepisode;
 extern int gamemap;
 extern int prevmap;
 extern int totalkills, totalitems, totalsecret; // for intermission
-extern int levelstarttic;       // gametic at level start
-extern int leveltime;           // tics in game play for par
+extern int levelstarttic;                       // gametic at level start
+extern int leveltime;                           // tics in game play for par
 extern int totalleveltimes; // [crispy] total time for all completed levels
 
 extern ticcmd_t *netcmds;
 
-#define SAVEGAMESIZE 0x30000*16
+#define SAVEGAMESIZE 0x30000 * 16
 #define SAVESTRINGSIZE 24
 
 extern mapthing_t *deathmatch_p;
@@ -179,9 +179,9 @@ extern boolean playerstartsingame[MAXPLAYERS];
 
 extern int mouseSensitivity;
 
-extern boolean precache;        // if true, load all graphics at level load
+extern boolean precache; // if true, load all graphics at level load
 
-extern boolean singledemo;      // quit after playing a demo from cmdline
+extern boolean singledemo; // quit after playing a demo from cmdline
 
 extern int bodyqueslot;
 extern skill_t startskill;
@@ -198,7 +198,7 @@ extern int vanilla_demo_limit;
 /*
 ===============================================================================
 
-					GLOBAL FUNCTIONS
+                    GLOBAL FUNCTIONS
 
 ===============================================================================
 */
@@ -206,7 +206,7 @@ extern int vanilla_demo_limit;
 #include "z_zone.hh"
 
 //----------
-//BASE LEVEL
+// BASE LEVEL
 //----------
 void D_DoomMain(void);
 void IncThermo(void);
@@ -225,7 +225,7 @@ void D_DoomLoop(void);
 // calls I_GetTime, I_StartFrame, and I_StartTic
 
 //---------
-//SYSTEM IO
+// SYSTEM IO
 //---------
 byte *I_AllocLow(int length);
 // allocates from low memory under dos, just mallocs under unix
@@ -235,18 +235,18 @@ byte *I_AllocLow(int length);
 #if 0
 extern boolean useexterndriver;
 
-#define EBT_FIRE			1
-#define EBT_OPENDOOR 		2
-#define EBT_SPEED			4
-#define EBT_STRAFE			8
-#define EBT_MAP				0x10
-#define EBT_INVENTORYLEFT 	0x20
-#define EBT_INVENTORYRIGHT 	0x40
-#define EBT_USEARTIFACT		0x80
-#define EBT_FLYDROP			0x100
-#define EBT_CENTERVIEW		0x200
-#define EBT_PAUSE			0x400
-#define EBT_WEAPONCYCLE 	0x800
+#define EBT_FIRE 1
+#define EBT_OPENDOOR 2
+#define EBT_SPEED 4
+#define EBT_STRAFE 8
+#define EBT_MAP 0x10
+#define EBT_INVENTORYLEFT 0x20
+#define EBT_INVENTORYRIGHT 0x40
+#define EBT_USEARTIFACT 0x80
+#define EBT_FLYDROP 0x100
+#define EBT_CENTERVIEW 0x200
+#define EBT_PAUSE 0x400
+#define EBT_WEAPONCYCLE 0x800
 
 typedef struct
 {
@@ -263,7 +263,7 @@ typedef struct
 #endif
 
 //----
-//GAME
+// GAME
 //----
 
 void G_DeathMatchSpawnPlayer(int playernum);
@@ -314,12 +314,12 @@ void G_SecretExitLevel(void);
 void G_WorldDone(void);
 
 void G_Ticker(void);
-boolean G_Responder(event_t * ev);
+boolean G_Responder(event_t *ev);
 
 void G_ScreenShot(void);
 
 //-----
-//PLAY
+// PLAY
 //-----
 
 void P_Ticker(void);
@@ -343,9 +343,8 @@ void P_ArchiveSpecials(void);
 void P_UnArchiveSpecials(void);
 // load / save game routines
 
-
 //-------
-//REFRESH
+// REFRESH
 //-------
 
 extern boolean setsizeneeded;
@@ -355,13 +354,13 @@ extern boolean BorderTopRefresh;
 
 extern int UpdateState;
 // define the different areas for the dirty map
-#define I_NOUPDATE	0
-#define I_FULLVIEW	1
-#define I_STATBAR	2
-#define I_MESSAGES	4
-#define I_FULLSCRN	8
+#define I_NOUPDATE 0
+#define I_FULLVIEW 1
+#define I_STATBAR 2
+#define I_MESSAGES 4
+#define I_FULLSCRN 8
 
-void R_RenderPlayerView(player_t * player);
+void R_RenderPlayerView(player_t *player);
 // called by G_Drawer
 
 void R_Init(void);
@@ -381,9 +380,8 @@ int R_CheckTextureNumForName(const char *name);
 // called by P_Ticker for switches and animations
 // returns the texture number for the texture name
 
-
 //----
-//MISC
+// MISC
 //----
 // returns the position of the given parameter in the arg list (0 if not found)
 
@@ -405,7 +403,7 @@ void IN_Drawer(void);
 
 void CT_Init(void);
 void CT_Drawer(void);
-boolean CT_Responder(event_t * ev);
+boolean CT_Responder(event_t *ev);
 void CT_Ticker(void);
 char CT_dequeueChatChar(void);
 
@@ -425,7 +423,7 @@ void F_StartFinale(void);
 //----------------------
 
 void SB_Init(void);
-boolean SB_Responder(event_t * event);
+boolean SB_Responder(event_t *event);
 void SB_Ticker(void);
 void SB_Drawer(void);
 
@@ -438,7 +436,7 @@ extern boolean MenuActive;
 void MN_Init(void);
 void MN_ActivateMenu(void);
 void MN_DeactivateMenu(void);
-boolean MN_Responder(event_t * event);
+boolean MN_Responder(event_t *event);
 void MN_Ticker(void);
 void MN_Drawer(void);
 void MN_DrTextA(const char *text, int x, int y);

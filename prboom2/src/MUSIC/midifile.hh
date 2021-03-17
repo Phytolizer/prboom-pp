@@ -40,55 +40,54 @@ typedef struct
     size_t pos;
 } midimem_t;
 
-
 typedef enum
 {
-    MIDI_EVENT_NOTE_OFF        = 0x80,
-    MIDI_EVENT_NOTE_ON         = 0x90,
-    MIDI_EVENT_AFTERTOUCH      = 0xa0,
-    MIDI_EVENT_CONTROLLER      = 0xb0,
-    MIDI_EVENT_PROGRAM_CHANGE  = 0xc0,
+    MIDI_EVENT_NOTE_OFF = 0x80,
+    MIDI_EVENT_NOTE_ON = 0x90,
+    MIDI_EVENT_AFTERTOUCH = 0xa0,
+    MIDI_EVENT_CONTROLLER = 0xb0,
+    MIDI_EVENT_PROGRAM_CHANGE = 0xc0,
     MIDI_EVENT_CHAN_AFTERTOUCH = 0xd0,
-    MIDI_EVENT_PITCH_BEND      = 0xe0,
+    MIDI_EVENT_PITCH_BEND = 0xe0,
 
-    MIDI_EVENT_SYSEX           = 0xf0,
-    MIDI_EVENT_SYSEX_SPLIT     = 0xf7,
-    MIDI_EVENT_META            = 0xff,
+    MIDI_EVENT_SYSEX = 0xf0,
+    MIDI_EVENT_SYSEX_SPLIT = 0xf7,
+    MIDI_EVENT_META = 0xff,
 } midi_event_type_t;
 
 typedef enum
 {
-    MIDI_CONTROLLER_BANK_SELECT     = 0x0,
-    MIDI_CONTROLLER_MODULATION      = 0x1,
-    MIDI_CONTROLLER_BREATH_CONTROL  = 0x2,
-    MIDI_CONTROLLER_FOOT_CONTROL    = 0x3,
-    MIDI_CONTROLLER_PORTAMENTO      = 0x4,
-    MIDI_CONTROLLER_DATA_ENTRY      = 0x5,
+    MIDI_CONTROLLER_BANK_SELECT = 0x0,
+    MIDI_CONTROLLER_MODULATION = 0x1,
+    MIDI_CONTROLLER_BREATH_CONTROL = 0x2,
+    MIDI_CONTROLLER_FOOT_CONTROL = 0x3,
+    MIDI_CONTROLLER_PORTAMENTO = 0x4,
+    MIDI_CONTROLLER_DATA_ENTRY = 0x5,
 
-    MIDI_CONTROLLER_MAIN_VOLUME     = 0x7,
-    MIDI_CONTROLLER_PAN             = 0xa
+    MIDI_CONTROLLER_MAIN_VOLUME = 0x7,
+    MIDI_CONTROLLER_PAN = 0xa
 } midi_controller_t;
 
 typedef enum
 {
-    MIDI_META_SEQUENCE_NUMBER       = 0x0,
+    MIDI_META_SEQUENCE_NUMBER = 0x0,
 
-    MIDI_META_TEXT                  = 0x1,
-    MIDI_META_COPYRIGHT             = 0x2,
-    MIDI_META_TRACK_NAME            = 0x3,
-    MIDI_META_INSTR_NAME            = 0x4,
-    MIDI_META_LYRICS                = 0x5,
-    MIDI_META_MARKER                = 0x6,
-    MIDI_META_CUE_POINT             = 0x7,
+    MIDI_META_TEXT = 0x1,
+    MIDI_META_COPYRIGHT = 0x2,
+    MIDI_META_TRACK_NAME = 0x3,
+    MIDI_META_INSTR_NAME = 0x4,
+    MIDI_META_LYRICS = 0x5,
+    MIDI_META_MARKER = 0x6,
+    MIDI_META_CUE_POINT = 0x7,
 
-    MIDI_META_CHANNEL_PREFIX        = 0x20,
-    MIDI_META_END_OF_TRACK          = 0x2f,
+    MIDI_META_CHANNEL_PREFIX = 0x20,
+    MIDI_META_END_OF_TRACK = 0x2f,
 
-    MIDI_META_SET_TEMPO             = 0x51,
-    MIDI_META_SMPTE_OFFSET          = 0x54,
-    MIDI_META_TIME_SIGNATURE        = 0x58,
-    MIDI_META_KEY_SIGNATURE         = 0x59,
-    MIDI_META_SEQUENCER_SPECIFIC    = 0x7f,
+    MIDI_META_SET_TEMPO = 0x51,
+    MIDI_META_SMPTE_OFFSET = 0x54,
+    MIDI_META_TIME_SIGNATURE = 0x58,
+    MIDI_META_KEY_SIGNATURE = 0x59,
+    MIDI_META_SEQUENCER_SPECIFIC = 0x7f,
 } midi_meta_event_type_t;
 
 typedef struct
@@ -137,8 +136,7 @@ typedef struct
     // Type of event:
     midi_event_type_t event_type;
 
-    union
-    {
+    union {
         midi_channel_event_data_t channel;
         midi_meta_event_data_t meta;
         midi_sysex_event_data_t sysex;
@@ -163,7 +161,8 @@ unsigned int MIDI_NumTracks(const midi_file_t *file);
 
 // Start iterating over the events in a track.
 
-midi_track_iter_t *MIDI_IterateTrack(const midi_file_t *file, unsigned int track_num);
+midi_track_iter_t *MIDI_IterateTrack(const midi_file_t *file,
+                                     unsigned int track_num);
 
 // Free an iterator.
 
@@ -182,12 +181,13 @@ int MIDI_GetNextEvent(midi_track_iter_t *iter, midi_event_t **event);
 void MIDI_RestartIterator(midi_track_iter_t *iter);
 
 // NSM: an alternate iterator tool.
-midi_event_t **MIDI_GenerateFlatList (midi_file_t *file);
-void MIDI_DestroyFlatList (midi_event_t **evs);
+midi_event_t **MIDI_GenerateFlatList(midi_file_t *file);
+void MIDI_DestroyFlatList(midi_event_t **evs);
 
 // NSM: timing calculator
-double MIDI_spmc (const midi_file_t *file, const midi_event_t *ev, unsigned sndrate);
+double MIDI_spmc(const midi_file_t *file, const midi_event_t *ev,
+                 unsigned sndrate);
 
-midi_file_t *MIDI_LoadFileSpecial (midimem_t *mf);
+midi_file_t *MIDI_LoadFileSpecial(midimem_t *mf);
 
 #endif /* #ifndef MIDIFILE_H */

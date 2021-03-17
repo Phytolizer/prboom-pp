@@ -31,41 +31,21 @@
 #ifndef PORTMIDIPLAYER_H
 #define PORTMIDIPLAYER_H
 
-
-
 const char *pm_name(void);
-int pm_init (int samplerate);
-void pm_shutdown (void);
-void pm_setvolume (int v);
-void pm_pause (void);
-void pm_resume (void);
-const void *pm_registersong (const void *data, unsigned len);
-void pm_unregistersong (const void *handle);
-void pm_play (const void *handle, int looping);
-void pm_stop (void);
-void pm_render (void *vdest, unsigned bufflen);
+int pm_init(int samplerate);
+void pm_shutdown(void);
+void pm_setvolume(int v);
+void pm_pause(void);
+void pm_resume(void);
+const void *pm_registersong(const void *data, unsigned len);
+void pm_unregistersong(const void *handle);
+void pm_play(const void *handle, int looping);
+void pm_stop(void);
+void pm_render(void *vdest, unsigned bufflen);
 
-
-
-constexpr music_player_t pm_player =
-    {
-        pm_name,
-        pm_init,
-        pm_shutdown,
-        pm_setvolume,
-        pm_pause,
-        pm_resume,
-        pm_registersong,
-        pm_unregistersong,
-        pm_play,
-        pm_stop,
-        pm_render
-    };
-
-
-
-
-
-
+constexpr music_player_t pm_player = {
+    pm_name,  pm_init,   pm_shutdown,     pm_setvolume,
+    pm_pause, pm_resume, pm_registersong, pm_unregistersong,
+    pm_play,  pm_stop,   pm_render};
 
 #endif // PORTMIDI_H

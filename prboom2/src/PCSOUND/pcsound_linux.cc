@@ -1,4 +1,4 @@
-// Emacs style mode select   -*- C++ -*- 
+// Emacs style mode select   -*- C++ -*-
 //-----------------------------------------------------------------------------
 //
 // Copyright(C) 2007 Simon Howard
@@ -41,7 +41,7 @@
 
 #include "pcsound.hh"
 
-//e6y
+// e6y
 #include "lprintf.hh"
 
 #define CONSOLE_DEVICE "/dev/console"
@@ -106,7 +106,8 @@ static int PCSound_Linux_Init(pcsound_callback_func callback_func)
     callback = callback_func;
     sound_thread_running = 1;
 
-    sound_thread_handle = SDL_CreateThread(SoundThread, "sound_thread_handle", NULL);
+    sound_thread_handle =
+        SDL_CreateThread(SoundThread, "sound_thread_handle", NULL);
 
     return 1;
 }
@@ -118,8 +119,7 @@ static void PCSound_Linux_Shutdown(void)
     close(console_handle);
 }
 
-pcsound_driver_t pcsound_linux_driver =
-{
+pcsound_driver_t pcsound_linux_driver = {
     "Linux",
     PCSound_Linux_Init,
     PCSound_Linux_Shutdown,

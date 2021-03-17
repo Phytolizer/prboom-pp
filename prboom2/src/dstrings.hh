@@ -64,7 +64,6 @@
 #define DEVMAPS "devmaps"
 #define DEVDATA "devdata"
 
-
 /* Not done in french?
  * QuitDOOM messages *
  * killough 1/18/98:
@@ -73,8 +72,8 @@
 
 #include <stddef.h>
 
-extern const size_t NUM_QUITMESSAGES;  /* Calculated in dstrings.c */
+extern const size_t NUM_QUITMESSAGES; /* Calculated in dstrings.c */
 
-extern const char* const endmsg[];   /* killough 1/18/98 const added */
+extern const char *const endmsg[]; /* killough 1/18/98 const added */
 
 #endif

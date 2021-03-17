@@ -56,7 +56,7 @@ void P_TrueArchiveThinkers(void);
 void P_TrueUnArchiveThinkers(void);
 
 extern byte *save_p;
-void CheckSaveGame(size_t,const char*, int);              /* killough */
+void CheckSaveGame(size_t, const char *, int); /* killough */
 #define CheckSaveGame(a) (CheckSaveGame)(a, __FILE__, __LINE__)
 
 #endif

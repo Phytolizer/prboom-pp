@@ -64,7 +64,7 @@ static void IN_DrawTime(int x, int y, int h, int m, int s);
 static void IN_DrTextB(const char *text, int x, int y);
 
 // contains information passed into intermission
-static wbstartstruct_t* wbs;
+static wbstartstruct_t *wbs;
 
 static int prevmap;
 static dboolean intermission;
@@ -86,7 +86,7 @@ static int totalHours;
 static int totalMinutes;
 static int totalSeconds;
 
-static int slaughterboy;        // in DM, the player with the most kills
+static int slaughterboy; // in DM, the player with the most kills
 
 static int killPercent[MAXPLAYERS];
 static int bonusPercent[MAXPLAYERS];
@@ -102,7 +102,7 @@ static signed int totalFrags[MAXPLAYERS];
 static fixed_t dSlideX[MAXPLAYERS];
 static fixed_t dSlideY[MAXPLAYERS];
 
-static const char *KillersText[] = { "K", "I", "L", "L", "E", "R", "S" };
+static const char *KillersText[] = {"K", "I", "L", "L", "E", "R", "S"};
 
 extern const char *LevelNames[];
 
@@ -112,41 +112,33 @@ typedef struct
     int y;
 } yahpt_t;
 
-static yahpt_t YAHspot[3][9] = {
-    {
-     {172, 78},
-     {86, 90},
-     {73, 66},
-     {159, 95},
-     {148, 126},
-     {132, 54},
-     {131, 74},
-     {208, 138},
-     {52, 101}
-     },
-    {
-     {218, 57},
-     {137, 81},
-     {155, 124},
-     {171, 68},
-     {250, 86},
-     {136, 98},
-     {203, 90},
-     {220, 140},
-     {279, 106}
-     },
-    {
-     {86, 99},
-     {124, 103},
-     {154, 79},
-     {202, 83},
-     {178, 59},
-     {142, 58},
-     {219, 66},
-     {247, 57},
-     {107, 80}
-     }
-};
+static yahpt_t YAHspot[3][9] = {{{172, 78},
+                                 {86, 90},
+                                 {73, 66},
+                                 {159, 95},
+                                 {148, 126},
+                                 {132, 54},
+                                 {131, 74},
+                                 {208, 138},
+                                 {52, 101}},
+                                {{218, 57},
+                                 {137, 81},
+                                 {155, 124},
+                                 {171, 68},
+                                 {250, 86},
+                                 {136, 98},
+                                 {203, 90},
+                                 {220, 140},
+                                 {279, 106}},
+                                {{86, 99},
+                                 {124, 103},
+                                 {154, 79},
+                                 {202, 83},
+                                 {178, 59},
+                                 {142, 58},
+                                 {219, 66},
+                                 {247, 57},
+                                 {107, 80}}};
 
 static const char *NameForMap(int map)
 {
@@ -161,55 +153,54 @@ static const char *NameForMap(int map)
 
 static void IN_DrawInterpic(void)
 {
-  char name[9];
+    char name[9];
 
-  if (gameepisode < 1 || gameepisode > 3) return;
+    if (gameepisode < 1 || gameepisode > 3)
+        return;
 
-  snprintf(name, 9, "MAPE%d", gameepisode);
+    snprintf(name, 9, "MAPE%d", gameepisode);
 
-  V_DrawNamePatch(0, 0, 0, DEH_String(name), CR_DEFAULT, VPT_STRETCH);
+    V_DrawNamePatch(0, 0, 0, DEH_String(name), CR_DEFAULT, VPT_STRETCH);
 
-  // e6y: wide-res
-  V_FillBorder(-1, 0);
+    // e6y: wide-res
+    V_FillBorder(-1, 0);
 }
 
 static void IN_DrawBeenThere(int i)
 {
-  V_DrawNamePatch(
-    YAHspot[gameepisode - 1][i].x, YAHspot[gameepisode - 1][i].y, 0,
-    DEH_String("IN_X"), CR_DEFAULT, VPT_STRETCH
-  );
+    V_DrawNamePatch(YAHspot[gameepisode - 1][i].x,
+                    YAHspot[gameepisode - 1][i].y, 0, DEH_String("IN_X"),
+                    CR_DEFAULT, VPT_STRETCH);
 }
 
 static void IN_DrawGoingThere(int i)
 {
-  V_DrawNamePatch(
-    YAHspot[gameepisode - 1][i].x, YAHspot[gameepisode - 1][i].y, 0,
-    DEH_String("IN_YAH"), CR_DEFAULT, VPT_STRETCH
-  );
+    V_DrawNamePatch(YAHspot[gameepisode - 1][i].x,
+                    YAHspot[gameepisode - 1][i].y, 0, DEH_String("IN_YAH"),
+                    CR_DEFAULT, VPT_STRETCH);
 }
 
 static void IN_InitLumps(void)
 {
-  int i, base;
+    int i, base;
 
-  base = W_GetNumForName(DEH_String("FONTB16"));
-  for (i = 0; i < 10; i++)
-  {
-      FontBNumbers[i] = base + i;
-  }
+    base = W_GetNumForName(DEH_String("FONTB16"));
+    for (i = 0; i < 10; i++)
+    {
+        FontBNumbers[i] = base + i;
+    }
 
-  FontBLump = W_GetNumForName(DEH_String("FONTB_S")) + 1;
-  patchFaceOkayBase = W_GetNumForName(DEH_String("FACEA0"));
-  patchFaceDeadBase = W_GetNumForName(DEH_String("FACEB0"));
+    FontBLump = W_GetNumForName(DEH_String("FONTB_S")) + 1;
+    patchFaceOkayBase = W_GetNumForName(DEH_String("FACEA0"));
+    patchFaceDeadBase = W_GetNumForName(DEH_String("FACEB0"));
 }
 
-static void IN_InitVariables(wbstartstruct_t* wbstartstruct)
+static void IN_InitVariables(wbstartstruct_t *wbstartstruct)
 {
-  wbs = wbstartstruct;
-  prevmap = wbs->last + 1;
+    wbs = wbstartstruct;
+    prevmap = wbs->last + 1;
 
-  finalintermission = (prevmap == 8);
+    finalintermission = (prevmap == 8);
 }
 
 //========================================================================
@@ -220,7 +211,7 @@ static void IN_InitVariables(wbstartstruct_t* wbstartstruct)
 
 extern void AM_Stop(void);
 
-void IN_Start(wbstartstruct_t* wbstartstruct)
+void IN_Start(wbstartstruct_t *wbstartstruct)
 {
     V_SetPalette(0);
     IN_InitVariables(wbstartstruct);
@@ -362,7 +353,7 @@ void IN_InitStats(void)
             }
         }
         if (playercount == slaughtercount)
-        {                       // don't do the slaughter stuff if everyone is equal
+        { // don't do the slaughter stuff if everyone is equal
             slaughterboy = 0;
         }
     }
@@ -400,29 +391,29 @@ void IN_Ticker(void)
         }
 
         if (gameepisode > 3 && interstate >= 1)
-        {                       // Extended Wad levels:  skip directly to the next level
+        { // Extended Wad levels:  skip directly to the next level
             interstate = 3;
         }
         switch (interstate)
         {
-            case 0:
-                oldintertime = intertime + 300;
-                if (gameepisode > 3)
-                {
-                    oldintertime = intertime + 1200;
-                }
-                break;
-            case 1:
-                oldintertime = intertime + 200;
-                break;
-            case 2:
-                oldintertime = INT_MAX;
-                break;
-            case 3:
-                cnt = 10;
-                break;
-            default:
-                break;
+        case 0:
+            oldintertime = intertime + 300;
+            if (gameepisode > 3)
+            {
+                oldintertime = intertime + 1200;
+            }
+            break;
+        case 1:
+            oldintertime = intertime + 200;
+            break;
+        case 2:
+            oldintertime = INT_MAX;
+            break;
+        case 3:
+            cnt = 10;
+            break;
+        default:
+            break;
         }
     }
     if (skipintermission)
@@ -524,44 +515,44 @@ void IN_Drawer(void)
     oldinterstate = interstate;
     switch (interstate)
     {
-        case 0:                // draw stats
-            IN_DrawStatBack();
-            switch (gametype)
-            {
-                case SINGLE:
-                    IN_DrawSingleStats();
-                    break;
-                case COOPERATIVE:
-                    IN_DrawCoopStats();
-                    break;
-                case DEATHMATCH:
-                    IN_DrawDMStats();
-                    break;
-            }
+    case 0: // draw stats
+        IN_DrawStatBack();
+        switch (gametype)
+        {
+        case SINGLE:
+            IN_DrawSingleStats();
             break;
-        case 1:                // leaving old level
-            if (gameepisode < 4)
-            {
-                IN_DrawInterpic();
-                IN_DrawOldLevel();
-            }
+        case COOPERATIVE:
+            IN_DrawCoopStats();
             break;
-        case 2:                // going to the next level
-            if (gameepisode < 4)
-            {
-                IN_DrawInterpic();
-                IN_DrawYAH();
-            }
+        case DEATHMATCH:
+            IN_DrawDMStats();
             break;
-        case 3:                // waiting before going to the next level
-            if (gameepisode < 4)
-            {
-                IN_DrawInterpic();
-            }
-            break;
-        default:
-            I_Error("IN_lude:  Intermission state out of range.\n");
-            break;
+        }
+        break;
+    case 1: // leaving old level
+        if (gameepisode < 4)
+        {
+            IN_DrawInterpic();
+            IN_DrawOldLevel();
+        }
+        break;
+    case 2: // going to the next level
+        if (gameepisode < 4)
+        {
+            IN_DrawInterpic();
+            IN_DrawYAH();
+        }
+        break;
+    case 3: // waiting before going to the next level
+        if (gameepisode < 4)
+        {
+            IN_DrawInterpic();
+        }
+        break;
+    default:
+        I_Error("IN_lude:  Intermission state out of range.\n");
+        break;
     }
 }
 
@@ -654,7 +645,7 @@ void IN_DrawYAH(void)
         IN_DrawBeenThere(8);
     }
     if (!(intertime & 16) || interstate == 3)
-    {                           // draw the destination 'X'
+    { // draw the destination 'X'
         IN_DrawGoingThere(gamemap - 1);
     }
 }
@@ -848,15 +839,12 @@ void IN_DrawDMStats(void)
             if (playeringame[i])
             {
                 V_DrawShadowedNumPatch(
-                  40,
-                  ((ypos << FRACBITS) + dSlideY[i] * intertime) >> FRACBITS,
-                  patchFaceOkayBase + i
-                );
+                    40,
+                    ((ypos << FRACBITS) + dSlideY[i] * intertime) >> FRACBITS,
+                    patchFaceOkayBase + i);
                 V_DrawShadowedNumPatch(
-                  ((xpos << FRACBITS) + dSlideX[i] * intertime) >> FRACBITS,
-                  18,
-                  patchFaceDeadBase + i
-                );
+                    ((xpos << FRACBITS) + dSlideX[i] * intertime) >> FRACBITS,
+                    18, patchFaceDeadBase + i);
             }
         }
         sounds = 0;
@@ -962,7 +950,7 @@ void IN_DrawNumber(int val, int x, int y, int digits)
     realdigits = 1;
 
     if (val < 0)
-    {                           //...this should reflect negative frags
+    { //...this should reflect negative frags
         val = -val;
         neg = true;
         if (val > 99)
@@ -1000,14 +988,16 @@ void IN_DrawNumber(int val, int x, int y, int digits)
     if (digits == 4)
     {
         lump = FontBNumbers[val / 1000];
-        V_DrawShadowedNumPatch(xpos + 6 - R_NumPatchWidth(lump) / 2 - 12, y, lump);
+        V_DrawShadowedNumPatch(xpos + 6 - R_NumPatchWidth(lump) / 2 - 12, y,
+                               lump);
     }
     if (digits > 2)
     {
         if (realdigits > 2)
         {
             lump = FontBNumbers[val / 100];
-            V_DrawShadowedNumPatch(xpos + 6 - R_NumPatchWidth(lump) / 2, y, lump);
+            V_DrawShadowedNumPatch(xpos + 6 - R_NumPatchWidth(lump) / 2, y,
+                                   lump);
         }
         xpos += 12;
     }
@@ -1017,7 +1007,8 @@ void IN_DrawNumber(int val, int x, int y, int digits)
         if (val > 9)
         {
             lump = FontBNumbers[val / 10];
-            V_DrawShadowedNumPatch(xpos + 6 - R_NumPatchWidth(lump) / 2, y, lump);
+            V_DrawShadowedNumPatch(xpos + 6 - R_NumPatchWidth(lump) / 2, y,
+                                   lump);
         }
         else if (digits == 2 || oldval > 99)
         {
@@ -1030,11 +1021,9 @@ void IN_DrawNumber(int val, int x, int y, int digits)
     V_DrawShadowedNumPatch(xpos + 6 - R_NumPatchWidth(lump) / 2, y, lump);
     if (neg)
     {
-        V_DrawShadowedNamePatch(
-          xpos + 6 - R_NamePatchWidth("FONTB13") / 2 - 12 * (realdigits),
-          y,
-          DEH_String("FONTB13")
-        );
+        V_DrawShadowedNamePatch(xpos + 6 - R_NamePatchWidth("FONTB13") / 2 -
+                                    12 * (realdigits),
+                                y, DEH_String("FONTB13"));
     }
 }
 

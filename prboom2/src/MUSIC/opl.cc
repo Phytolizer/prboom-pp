@@ -23,12 +23,10 @@
 //
 //-----------------------------------------------------------------------------
 
-
 #include "config.hh"
 
 #include <stdio.h>
 #include <stdlib.h>
-
 
 #include "opl.hh"
 #include "opl_queue.hh"
@@ -40,7 +38,6 @@ static int init_stage_reg_writes = 1;
 
 unsigned int opl_sample_rate = 22050;
 
-
 #define MAX_SOUND_SLICE_TIME 100 /* ms */
 
 typedef struct
@@ -51,11 +48,9 @@ typedef struct
     unsigned int expire_time; // Calculated time that timer will expire.
 } opl_timer_t;
 
-
 // Queue of callbacks waiting to be invoked.
 
 static opl_callback_queue_t *callback_queue;
-
 
 // Current time, in number of samples since startup:
 
@@ -84,9 +79,8 @@ static int register_num = 0;
 
 // Timers; DBOPL does not do timer stuff itself.
 
-static opl_timer_t timer1 = { 12500, 0, 0, 0 };
-static opl_timer_t timer2 = { 3125, 0, 0, 0 };
-
+static opl_timer_t timer1 = {12500, 0, 0, 0};
+static opl_timer_t timer2 = {3125, 0, 0, 0};
 
 //
 // Init/shutdown code.
@@ -95,7 +89,7 @@ static opl_timer_t timer2 = { 3125, 0, 0, 0 };
 // Initialize the OPL library.  Returns true if initialized
 // successfully.
 
-int OPL_Init (unsigned int rate)
+int OPL_Init(unsigned int rate)
 {
     opl_sample_rate = rate;
     opl_paused = 0;
@@ -106,15 +100,13 @@ int OPL_Init (unsigned int rate)
     callback_queue = OPL_Queue_Create();
     current_time = 0;
 
-
-    mix_buffer = (int*)malloc(opl_sample_rate * sizeof(int));
+    mix_buffer = (int *)malloc(opl_sample_rate * sizeof(int));
 
     // Create the emulator structure:
 
     DBOPL_InitTables();
     Chip__Chip(&opl_chip);
     Chip__Setup(&opl_chip, opl_sample_rate);
-
 
     OPL_InitRegisters();
 
@@ -129,17 +121,15 @@ void OPL_Shutdown(void)
 {
     if (callback_queue)
     {
-      OPL_Queue_Destroy(callback_queue);
-      free(mix_buffer);
+        OPL_Queue_Destroy(callback_queue);
+        free(mix_buffer);
 
-      callback_queue = NULL;
-      mix_buffer = NULL;
+        callback_queue = NULL;
+        mix_buffer = NULL;
     }
 }
 
-void OPL_SetCallback(unsigned int ms,
-                                opl_callback_t callback,
-                                void *data)
+void OPL_SetCallback(unsigned int ms, opl_callback_t callback, void *data)
 {
     OPL_Queue_Push(callback_queue, callback, data,
                    current_time - pause_offset + (ms * opl_sample_rate) / 1000);
@@ -160,52 +150,51 @@ static void OPLTimer_CalculateEndTime(opl_timer_t *timer)
     if (timer->enabled)
     {
         tics = 0x100 - timer->value;
-        timer->expire_time = current_time
-                           + (tics * opl_sample_rate) / timer->rate;
+        timer->expire_time =
+            current_time + (tics * opl_sample_rate) / timer->rate;
     }
 }
-
 
 static void WriteRegister(unsigned int reg_num, unsigned int value)
 {
     switch (reg_num)
     {
-        case OPL_REG_TIMER1:
-            timer1.value = value;
-            OPLTimer_CalculateEndTime(&timer1);
-            break;
+    case OPL_REG_TIMER1:
+        timer1.value = value;
+        OPLTimer_CalculateEndTime(&timer1);
+        break;
 
-        case OPL_REG_TIMER2:
-            timer2.value = value;
-            OPLTimer_CalculateEndTime(&timer2);
-            break;
+    case OPL_REG_TIMER2:
+        timer2.value = value;
+        OPLTimer_CalculateEndTime(&timer2);
+        break;
 
-        case OPL_REG_TIMER_CTRL:
-            if (value & 0x80)
+    case OPL_REG_TIMER_CTRL:
+        if (value & 0x80)
+        {
+            timer1.enabled = 0;
+            timer2.enabled = 0;
+        }
+        else
+        {
+            if ((value & 0x40) == 0)
             {
-                timer1.enabled = 0;
-                timer2.enabled = 0;
-            }
-            else
-            {
-                if ((value & 0x40) == 0)
-                {
-                    timer1.enabled = (value & 0x01) != 0;
-                    OPLTimer_CalculateEndTime(&timer1);
-                }
-
-                if ((value & 0x20) == 0)
-                {
-                    timer1.enabled = (value & 0x02) != 0;
-                    OPLTimer_CalculateEndTime(&timer2);
-                }
+                timer1.enabled = (value & 0x01) != 0;
+                OPLTimer_CalculateEndTime(&timer1);
             }
 
-            break;
+            if ((value & 0x20) == 0)
+            {
+                timer1.enabled = (value & 0x02) != 0;
+                OPLTimer_CalculateEndTime(&timer2);
+            }
+        }
 
-        default:
-            Chip__WriteReg(&opl_chip, reg_num, (unsigned char) value);
-            break;
+        break;
+
+    default:
+        Chip__WriteReg(&opl_chip, reg_num, (unsigned char)value);
+        break;
     }
 }
 
@@ -213,7 +202,6 @@ static void OPL_AdvanceTime(unsigned int nsamples)
 {
     opl_callback_t callback;
     void *callback_data;
-
 
     // Advance time.
 
@@ -227,8 +215,8 @@ static void OPL_AdvanceTime(unsigned int nsamples)
     // Are there callbacks to invoke now?  Keep invoking them
     // until there are none more left.
 
-    while (!OPL_Queue_IsEmpty(callback_queue)
-        && current_time >= OPL_Queue_Peek(callback_queue) + pause_offset)
+    while (!OPL_Queue_IsEmpty(callback_queue) &&
+           current_time >= OPL_Queue_Peek(callback_queue) + pause_offset)
     {
         // Pop the callback from the queue to invoke it.
 
@@ -237,11 +225,8 @@ static void OPL_AdvanceTime(unsigned int nsamples)
             break;
         }
 
-
         callback(callback_data);
-
     }
-
 }
 
 static void FillBuffer(int16_t *buffer, unsigned int nsamples)
@@ -250,13 +235,13 @@ static void FillBuffer(int16_t *buffer, unsigned int nsamples)
     int sampval;
 
     // FIXME???
-    //assert(nsamples < opl_sample_rate);
+    // assert(nsamples < opl_sample_rate);
 
     Chip__GenerateBlock2(&opl_chip, nsamples, mix_buffer);
 
     // Mix into the destination buffer, doubling up into stereo.
 
-    for (i=0; i<nsamples; ++i)
+    for (i = 0; i < nsamples; ++i)
     {
         sampval = mix_buffer[i] * mus_opl_gain / 50;
         // clip
@@ -264,19 +249,16 @@ static void FillBuffer(int16_t *buffer, unsigned int nsamples)
             sampval = 32767;
         else if (sampval < -32768)
             sampval = -32768;
-        buffer[i * 2] = (int16_t) sampval;
-        buffer[i * 2 + 1] = (int16_t) sampval;
+        buffer[i * 2] = (int16_t)sampval;
+        buffer[i * 2 + 1] = (int16_t)sampval;
     }
 }
 
-
-void OPL_Render_Samples (void *dest, unsigned buffer_len)
+void OPL_Render_Samples(void *dest, unsigned buffer_len)
 {
     unsigned int filled = 0;
 
-
-    short *buffer = (short *) dest;
-
+    short *buffer = (short *)dest;
 
     // Repeatedly call the OPL emulator update function until the buffer is
     // full.
@@ -285,7 +267,6 @@ void OPL_Render_Samples (void *dest, unsigned buffer_len)
     {
         unsigned int next_callback_time;
         unsigned int nsamples;
-
 
         // Work out the time until the next callback waiting in
         // the callback queue must be invoked.  We can then fill the
@@ -306,7 +287,6 @@ void OPL_Render_Samples (void *dest, unsigned buffer_len)
                 nsamples = buffer_len - filled;
             }
         }
-
 
         // Add emulator output to buffer.
 
@@ -337,14 +317,14 @@ unsigned int OPL_ReadPort(opl_port_t port)
 
     if (timer1.enabled && current_time > timer1.expire_time)
     {
-        result |= 0x80;   // Either have expired
-        result |= 0x40;   // Timer 1 has expired
+        result |= 0x80; // Either have expired
+        result |= 0x40; // Timer 1 has expired
     }
 
     if (timer2.enabled && current_time > timer2.expire_time)
     {
-        result |= 0x80;   // Either have expired
-        result |= 0x20;   // Timer 2 has expired
+        result |= 0x80; // Either have expired
+        result |= 0x20; // Timer 2 has expired
     }
 
     return result;
@@ -371,7 +351,7 @@ void OPL_WriteRegister(int reg, int value)
     // For timing, read the register port six times after writing the
     // register number to cause the appropriate delay
 
-    for (i=0; i<6; ++i)
+    for (i = 0; i < 6; ++i)
     {
         // An oddity of the Doom OPL code: at startup initialization,
         // the spacing here is performed by reading from the register
@@ -392,12 +372,11 @@ void OPL_WriteRegister(int reg, int value)
     // Read the register port 24 times after writing the value to
     // cause the appropriate delay
 
-    for (i=0; i<24; ++i)
+    for (i = 0; i < 24; ++i)
     {
         OPL_ReadStatus();
     }
 }
-
 
 // Initialize registers on startup
 
@@ -407,7 +386,7 @@ void OPL_InitRegisters(void)
 
     // Initialize level registers
 
-    for (r=OPL_REGS_LEVEL; r <= OPL_REGS_LEVEL + OPL_NUM_OPERATORS; ++r)
+    for (r = OPL_REGS_LEVEL; r <= OPL_REGS_LEVEL + OPL_NUM_OPERATORS; ++r)
     {
         OPL_WriteRegister(r, 0x3f);
     }
@@ -417,14 +396,14 @@ void OPL_InitRegisters(void)
     // but this is what Doom does ...
     // Similarly, the <= is also intenational.
 
-    for (r=OPL_REGS_ATTACK; r <= OPL_REGS_WAVEFORM + OPL_NUM_OPERATORS; ++r)
+    for (r = OPL_REGS_ATTACK; r <= OPL_REGS_WAVEFORM + OPL_NUM_OPERATORS; ++r)
     {
         OPL_WriteRegister(r, 0x00);
     }
 
     // More registers ...
 
-    for (r=1; r < OPL_REGS_LEVEL; ++r)
+    for (r = 1; r < OPL_REGS_LEVEL; ++r)
     {
         OPL_WriteRegister(r, 0x00);
     }
@@ -432,17 +411,15 @@ void OPL_InitRegisters(void)
     // Re-initialize the low registers:
 
     // Reset both timers and enable interrupts:
-    OPL_WriteRegister(OPL_REG_TIMER_CTRL,      0x60);
-    OPL_WriteRegister(OPL_REG_TIMER_CTRL,      0x80);
+    OPL_WriteRegister(OPL_REG_TIMER_CTRL, 0x60);
+    OPL_WriteRegister(OPL_REG_TIMER_CTRL, 0x80);
 
     // "Allow FM chips to control the waveform of each operator":
     OPL_WriteRegister(OPL_REG_WAVEFORM_ENABLE, 0x20);
 
     // Keyboard split point on (?)
-    OPL_WriteRegister(OPL_REG_FM_MODE,         0x40);
+    OPL_WriteRegister(OPL_REG_FM_MODE, 0x40);
 }
-
-
 
 void OPL_SetPaused(int paused)
 {

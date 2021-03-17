@@ -37,30 +37,33 @@
 #include "d_event.hh"
 #include "cpp/enums/cheat_when_t.hh"
 
-#define CHEAT(cheat, deh_cheat, when, func, arg) \
-  { cheat, deh_cheat, when, func, arg, 0, 0, \
-    sizeof(cheat) - 1, 0, 0, 0, "" }
+#define CHEAT(cheat, deh_cheat, when, func, arg)                               \
+    {                                                                          \
+        cheat, deh_cheat, when, func, arg, 0, 0, sizeof(cheat) - 1, 0, 0, 0,   \
+            ""                                                                 \
+    }
 
-#define CHEAT_ARGS_MAX 8  /* Maximum number of args at end of cheats */
+#define CHEAT_ARGS_MAX 8 /* Maximum number of args at end of cheats */
 
 /* killough 4/16/98: Cheat table structure */
 
-typedef struct cheatseq_s {
-  const char *	cheat;
-  const char *const deh_cheat = nullptr;
-  const cheat_when_t::Type when = cheat_when_t::cht_never;
-  void (*const func)() = nullptr;
-  const int arg = 0;
-  uint_64_t code = 0, mask = 0;
+typedef struct cheatseq_s
+{
+    const char *cheat;
+    const char *const deh_cheat = nullptr;
+    const cheat_when_t::Type when = cheat_when_t::cht_never;
+    void (*const func)() = nullptr;
+    const int arg = 0;
+    uint_64_t code = 0, mask = 0;
 
-  // settings for this cheat
-  size_t sequence_len = 0;
-  size_t deh_sequence_len = 0;
+    // settings for this cheat
+    size_t sequence_len = 0;
+    size_t deh_sequence_len = 0;
 
-  // state used during the game
-  size_t chars_read = 0;
-  int param_chars_read = 0;
-  char parameter_buf[CHEAT_ARGS_MAX]{};
+    // state used during the game
+    size_t chars_read = 0;
+    int param_chars_read = 0;
+    char parameter_buf[CHEAT_ARGS_MAX]{};
 } cheatseq_t;
 
 extern cheatseq_t cheat[];

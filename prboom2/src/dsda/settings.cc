@@ -33,106 +33,133 @@ int dsda_wipe_at_full_speed;
 int dsda_track_attempts;
 int dsda_fine_sensitivity;
 
-void dsda_InitSettings(void) {
-  dsda_ChangeStrictMode();
+void dsda_InitSettings(void)
+{
+    dsda_ChangeStrictMode();
 }
 
-int dsda_CompatibilityLevel(void) {
-  int i, level;
+int dsda_CompatibilityLevel(void)
+{
+    int i, level;
 
-  if (heretic) return doom_12_compatibility;
+    if (heretic)
+        return doom_12_compatibility;
 
-  i = M_CheckParm("-complevel");
+    i = M_CheckParm("-complevel");
 
-  if (i && (i + 1 < myargc)) {
-    level = atoi(myargv[i + 1]);
+    if (i && (i + 1 < myargc))
+    {
+        level = atoi(myargv[i + 1]);
 
-    if (level >= -1) return level;
-  }
+        if (level >= -1)
+            return level;
+    }
 
-  return UNSPECIFIED_COMPLEVEL;
+    return UNSPECIFIED_COMPLEVEL;
 }
 
-void dsda_ChangeStrictMode(void) {
-  I_Init2(); // side effect of realtic clock rate
-  M_ChangeSpeed(); // side effect of always sr50
+void dsda_ChangeStrictMode(void)
+{
+    I_Init2();       // side effect of realtic clock rate
+    M_ChangeSpeed(); // side effect of always sr50
 }
 
-void dsda_SetTas(void) {
-  dsda_tas = true;
+void dsda_SetTas(void)
+{
+    dsda_tas = true;
 }
 
-double dsda_FineSensitivity(int base) {
-  return (double) base + (double) dsda_fine_sensitivity / 100;
+double dsda_FineSensitivity(int base)
+{
+    return (double)base + (double)dsda_fine_sensitivity / 100;
 }
 
-dboolean dsda_StrictMode(void) {
-  return dsda_strict_mode && demorecording && !dsda_tas;
+dboolean dsda_StrictMode(void)
+{
+    return dsda_strict_mode && demorecording && !dsda_tas;
 }
 
-dboolean dsda_CycleGhostColors(void) {
-  return dsda_cycle_ghost_colors;
+dboolean dsda_CycleGhostColors(void)
+{
+    return dsda_cycle_ghost_colors;
 }
 
-dboolean dsda_AlwaysSR50(void) {
-  return movement_strafe50 && !dsda_StrictMode();
+dboolean dsda_AlwaysSR50(void)
+{
+    return movement_strafe50 && !dsda_StrictMode();
 }
 
-dboolean dsda_ExHud(void) {
-  return dsda_exhud;
+dboolean dsda_ExHud(void)
+{
+    return dsda_exhud;
 }
 
-dboolean dsda_TrackAttempts(void) {
-  return dsda_track_attempts && demorecording;
+dboolean dsda_TrackAttempts(void)
+{
+    return dsda_track_attempts && demorecording;
 }
 
-dboolean dsda_PainPalette(void) {
-  return dsda_StrictMode() || palette_ondamage;
+dboolean dsda_PainPalette(void)
+{
+    return dsda_StrictMode() || palette_ondamage;
 }
 
-dboolean dsda_BonusPalette(void) {
-  return dsda_StrictMode() || palette_onbonus;
+dboolean dsda_BonusPalette(void)
+{
+    return dsda_StrictMode() || palette_onbonus;
 }
 
-dboolean dsda_PowerPalette(void) {
-  return dsda_StrictMode() || palette_onpowers;
+dboolean dsda_PowerPalette(void)
+{
+    return dsda_StrictMode() || palette_onpowers;
 }
 
-dboolean dsda_ShowHealthBars(void) {
-  return health_bar && !dsda_StrictMode();
+dboolean dsda_ShowHealthBars(void)
+{
+    return health_bar && !dsda_StrictMode();
 }
 
-dboolean dsda_WipeAtFullSpeed(void) {
-  return dsda_wipe_at_full_speed;
+dboolean dsda_WipeAtFullSpeed(void)
+{
+    return dsda_wipe_at_full_speed;
 }
 
-int dsda_RealticClockRate(void) {
-  if (dsda_StrictMode()) return 100;
+int dsda_RealticClockRate(void)
+{
+    if (dsda_StrictMode())
+        return 100;
 
-  return realtic_clock_rate;
+    return realtic_clock_rate;
 }
 
-int dsda_AutoKeyFrameInterval(void) {
-  if (dsda_StrictMode()) return 0;
+int dsda_AutoKeyFrameInterval(void)
+{
+    if (dsda_StrictMode())
+        return 0;
 
-  return dsda_auto_key_frame_interval;
+    return dsda_auto_key_frame_interval;
 }
 
-int dsda_AutoKeyFrameDepth(void) {
-  if (dsda_StrictMode()) return 0;
+int dsda_AutoKeyFrameDepth(void)
+{
+    if (dsda_StrictMode())
+        return 0;
 
-  return dsda_auto_key_frame_depth;
+    return dsda_auto_key_frame_depth;
 }
 
-void dsda_SkipNextWipe(void) {
-  dsda_skip_next_wipe = 1;
+void dsda_SkipNextWipe(void)
+{
+    dsda_skip_next_wipe = 1;
 }
 
-dboolean dsda_SkipWipe(void) {
-  if (dsda_skip_next_wipe) {
-    dsda_skip_next_wipe = 0;
-    return true;
-  }
+dboolean dsda_SkipWipe(void)
+{
+    if (dsda_skip_next_wipe)
+    {
+        dsda_skip_next_wipe = 0;
+        return true;
+    }
 
-  return !render_wipescreen;
+    return !render_wipescreen;
 }

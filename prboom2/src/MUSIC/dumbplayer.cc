@@ -37,31 +37,18 @@
 #ifndef HAVE_LIBDUMB
 #include <string.h>
 
-static const char *db_name (void)
+static const char *db_name(void)
 {
-  return "dumb tracker player (DISABLED)";
+    return "dumb tracker player (DISABLED)";
 }
 
-
-static int db_init (int samplerate)
+static int db_init(int samplerate)
 {
-  return 0;
+    return 0;
 }
 
-const music_player_t db_player =
-{
-  db_name,
-  db_init,
-  NULL,
-  NULL,
-  NULL,
-  NULL,
-  NULL,
-  NULL,
-  NULL,
-  NULL,
-  NULL
-};
+const music_player_t db_player = {db_name, db_init, NULL, NULL, NULL, NULL,
+                                  NULL,    NULL,    NULL, NULL, NULL};
 
 #else // HAVE_DUMB
 
@@ -77,7 +64,6 @@ const music_player_t db_player =
 #include <string.h>
 #include "lprintf.hh"
 
-
 static float db_delta;
 static float db_volume;
 static int db_looping;
@@ -88,186 +74,184 @@ static DUH_SIGRENDERER *dsren = NULL;
 static DUH *duh = NULL;
 static DUMBFILE *dfil = NULL;
 
-const char *db_name (void)
+const char *db_name(void)
 {
-  return "dumb tracker player";
+    return "dumb tracker player";
 }
 
-
-int db_init (int samplerate)
+int db_init(int samplerate)
 {
-  db_delta = 65536.0f / samplerate;
+    db_delta = 65536.0f / samplerate;
 
-  return 1;
+    return 1;
 }
 
-void db_shutdown (void)
+void db_shutdown(void)
 {
-  dumb_exit ();
+    dumb_exit();
 }
 
-void db_setvolume (int v)
+void db_setvolume(int v)
 {
-  db_volume = (float) v / 15.0f;
+    db_volume = (float)v / 15.0f;
 }
 
-const void* db_registersong (const void *data, unsigned len)
+const void *db_registersong(const void *data, unsigned len)
 {
-  // because dumbfiles don't have any concept of backward seek or
-  // rewind, you have to reopen if any loader fails
+    // because dumbfiles don't have any concept of backward seek or
+    // rewind, you have to reopen if any loader fails
 
-  if (1)
-  {
-    dfil = dumbfile_open_memory ((const char *)data, len);
-    duh = read_duh (dfil);
-  }
-  if (!duh)
-  {
-    dumbfile_close (dfil);
-    dfil = dumbfile_open_memory ((const char*)data, len);
-    duh = dumb_read_it_quick (dfil);
-  }
-  if (!duh)
-  {
-    dumbfile_close (dfil);
-    dfil = dumbfile_open_memory ((const char*)data, len);
-    duh = dumb_read_xm_quick (dfil);
-  }
-  if (!duh)
-  {
-    dumbfile_close (dfil);
-    dfil = dumbfile_open_memory ((const char*)data, len);
-    duh = dumb_read_s3m_quick (dfil);
-  }
-  if (!duh)
-  {
-    dumbfile_close (dfil);
-    dfil = dumbfile_open_memory ((const char*)data, len);
-#if (DUMB_MAJOR_VERSION >= 1)
-    duh = dumb_read_mod_quick (dfil, 0);
-#else
-    duh = dumb_read_mod_quick (dfil);
-#endif
-    // No way to get the filename, so we can't check for a .mod extension, and
-    // therefore, trying to load an old 15-instrument SoundTracker module is not
-    // safe. We'll restrict MOD loading to 31-instrument modules with known
-    // signatures and let the sound system worry about 15-instrument ones.
-    // (Assuming it even supports them)
+    if (1)
     {
-      DUMB_IT_SIGDATA *sigdata = duh_get_it_sigdata(duh);
-      if (sigdata)
-      {
-        int n_samples = dumb_it_sd_get_n_samples(sigdata);
-        if (n_samples == 15)
+        dfil = dumbfile_open_memory((const char *)data, len);
+        duh = read_duh(dfil);
+    }
+    if (!duh)
+    {
+        dumbfile_close(dfil);
+        dfil = dumbfile_open_memory((const char *)data, len);
+        duh = dumb_read_it_quick(dfil);
+    }
+    if (!duh)
+    {
+        dumbfile_close(dfil);
+        dfil = dumbfile_open_memory((const char *)data, len);
+        duh = dumb_read_xm_quick(dfil);
+    }
+    if (!duh)
+    {
+        dumbfile_close(dfil);
+        dfil = dumbfile_open_memory((const char *)data, len);
+        duh = dumb_read_s3m_quick(dfil);
+    }
+    if (!duh)
+    {
+        dumbfile_close(dfil);
+        dfil = dumbfile_open_memory((const char *)data, len);
+#if (DUMB_MAJOR_VERSION >= 1)
+        duh = dumb_read_mod_quick(dfil, 0);
+#else
+        duh = dumb_read_mod_quick(dfil);
+#endif
+        // No way to get the filename, so we can't check for a .mod extension,
+        // and therefore, trying to load an old 15-instrument SoundTracker
+        // module is not safe. We'll restrict MOD loading to 31-instrument
+        // modules with known signatures and let the sound system worry about
+        // 15-instrument ones. (Assuming it even supports them)
         {
-          unload_duh(duh);
-          duh = NULL;
+            DUMB_IT_SIGDATA *sigdata = duh_get_it_sigdata(duh);
+            if (sigdata)
+            {
+                int n_samples = dumb_it_sd_get_n_samples(sigdata);
+                if (n_samples == 15)
+                {
+                    unload_duh(duh);
+                    duh = NULL;
+                }
+            }
         }
-      }
     }
-  }
-  if (!duh)
-  {
-    dumbfile_close (dfil);
-    dfil = NULL;
-    lprintf (LO_WARN, "db_registersong: couldn't load as tracker\n");
-    return NULL;
-  }
-  // handle not used
-  return data;
+    if (!duh)
+    {
+        dumbfile_close(dfil);
+        dfil = NULL;
+        lprintf(LO_WARN, "db_registersong: couldn't load as tracker\n");
+        return NULL;
+    }
+    // handle not used
+    return data;
 }
 
-void db_unregistersong (const void *handle)
+void db_unregistersong(const void *handle)
 {
-  if (duh)
-  {
-    unload_duh (duh);
-    duh = NULL;
-  }
+    if (duh)
+    {
+        unload_duh(duh);
+        duh = NULL;
+    }
 
-  if (dfil)
-  {
-    dumbfile_close (dfil);
-    dfil = NULL;
-  }
+    if (dfil)
+    {
+        dumbfile_close(dfil);
+        dfil = NULL;
+    }
 }
 
-void db_play (const void *handle, int looping)
+void db_play(const void *handle, int looping)
 {
-  dsren = duh_start_sigrenderer (duh, 0, 2, 0);
+    dsren = duh_start_sigrenderer(duh, 0, 2, 0);
 
-  if (!dsren) // fail?
-  {
+    if (!dsren) // fail?
+    {
+        db_playing = 0;
+        return;
+    }
+
+    db_looping = looping;
+    db_playing = 1;
+}
+
+void db_stop(void)
+{
+    duh_end_sigrenderer(dsren);
+    dsren = NULL;
     db_playing = 0;
-    return;
-  }
-
-  db_looping = looping;
-  db_playing = 1;
 }
 
-void db_stop (void)
+void db_pause(void)
 {
-  duh_end_sigrenderer (dsren);
-  dsren = NULL;
-  db_playing = 0;
+    db_paused = 1;
 }
 
-void db_pause (void)
+void db_resume(void)
 {
-  db_paused = 1;
+    db_paused = 0;
 }
 
-void db_resume (void)
+void db_render(void *dest, unsigned nsamp)
 {
-  db_paused = 0;
-}
+    unsigned char *cdest = (unsigned char *)dest;
+    unsigned nsampwrit = 0;
 
-void db_render (void *dest, unsigned nsamp)
-{
-  unsigned char *cdest = (unsigned char *)dest;
-  unsigned nsampwrit = 0;
+    if (db_playing && !db_paused)
+    {
+        nsampwrit = duh_render(dsren, 16, 0, db_volume, db_delta, nsamp, dest);
+        if (nsampwrit != nsamp)
+        { // end of file
+            // tracker formats can have looping imbedded in them, in which case
+            // we'll never reach this (even if db_looping is 0!!)
 
-  if (db_playing && !db_paused)
-  {
-    nsampwrit = duh_render (dsren, 16, 0, db_volume, db_delta, nsamp, dest);
-    if (nsampwrit != nsamp)
-    { // end of file
-      // tracker formats can have looping imbedded in them, in which case
-      // we'll never reach this (even if db_looping is 0!!)
+            cdest += nsampwrit * 4;
 
-      cdest += nsampwrit * 4;
+            if (db_looping)
+            { // but if the tracker doesn't loop, and we want loop anyway,
+              // restart
+                // from beginning
 
+                if (nsampwrit == 0)
+                { // special case: avoid infinite recursion
+                    db_stop();
+                    lprintf(
+                        LO_WARN,
+                        "db_render: problem (0 length tracker file on loop?\n");
+                    return;
+                }
 
-      if (db_looping)
-      { // but if the tracker doesn't loop, and we want loop anyway, restart
-        // from beginning
-
-        if (nsampwrit == 0)
-        { // special case: avoid infinite recursion
-          db_stop ();
-          lprintf (LO_WARN, "db_render: problem (0 length tracker file on loop?\n");
-          return;
+                // im not sure if this is the best way to seek, but there isn't
+                // a sigrenderer_rewind type function
+                db_stop();
+                db_play(NULL, 1);
+                db_render(cdest, nsamp - nsampwrit);
+            }
+            else
+            { // halt
+                db_stop();
+                memset(cdest, 0, (nsamp - nsampwrit) * 4);
+            }
         }
-
-        // im not sure if this is the best way to seek, but there isn't
-        // a sigrenderer_rewind type function
-        db_stop ();
-        db_play (NULL, 1);
-        db_render (cdest, nsamp - nsampwrit);
-      }
-      else
-      { // halt
-        db_stop ();
-        memset (cdest, 0, (nsamp - nsampwrit) * 4);
-      }
     }
-  }
-  else
-    memset (dest, 0, nsamp * 4);
+    else
+        memset(dest, 0, nsamp * 4);
 }
-
-
-
 
 #endif // HAVE_DUMB

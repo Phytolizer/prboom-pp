@@ -38,23 +38,23 @@
 /*
  * Globally visible constants.
  */
-#define HU_FONTSTART    '!'     /* the first font characters */
-#define HU_FONTEND      (0x7f) /*jff 2/16/98 '_' the last font characters */
+#define HU_FONTSTART '!'  /* the first font characters */
+#define HU_FONTEND (0x7f) /*jff 2/16/98 '_' the last font characters */
 
 /* Calculate # of glyphs in font. */
-#define HU_FONTSIZE     (HU_FONTEND - HU_FONTSTART + 1)
+#define HU_FONTSIZE (HU_FONTEND - HU_FONTSTART + 1)
 
-#define HU_BROADCAST    5
+#define HU_BROADCAST 5
 
 /*#define HU_MSGREFRESH   KEYD_ENTER                                phares */
-#define HU_MSGX         0
-#define HU_MSGY         0
-#define HU_MSGWIDTH     64      /* in characters */
-#define HU_MSGHEIGHT    1       /* in lines */
+#define HU_MSGX 0
+#define HU_MSGY 0
+#define HU_MSGWIDTH 64 /* in characters */
+#define HU_MSGHEIGHT 1 /* in lines */
 
-#define HU_MSGTIMEOUT   (4*TICRATE)
+#define HU_MSGTIMEOUT (4 * TICRATE)
 
-#define HU_CROSSHAIRS	4
+#define HU_CROSSHAIRS 4
 extern const char *crosshair_nam[HU_CROSSHAIRS];
 extern const char *crosshair_str[HU_CROSSHAIRS];
 
@@ -65,7 +65,7 @@ void HU_Init(void);
 void HU_LoadHUDDefs(void);
 void HU_Start(void);
 
-dboolean HU_Responder(event_t* ev);
+dboolean HU_Responder(event_t *ev);
 
 void HU_Ticker(void);
 void HU_Drawer(void);
@@ -77,49 +77,50 @@ void HU_NextHud(void);
 /* killough 5/2/98: moved from m_misc.c: */
 
 /* jff 2/16/98 hud supported automap colors added */
-extern int hudcolor_titl;   /* color range of automap level title   */
-extern int hudcolor_xyco;   /* color range of new coords on automap */
+extern int hudcolor_titl; /* color range of automap level title   */
+extern int hudcolor_xyco; /* color range of new coords on automap */
 extern int hudcolor_mapstat_title;
 extern int hudcolor_mapstat_value;
 extern int hudcolor_mapstat_time;
 /* jff 2/16/98 hud text colors, controls added */
-extern int hudcolor_mesg;   /* color range of scrolling messages    */
-extern int hudcolor_chat;   /* color range of chat lines            */
+extern int hudcolor_mesg; /* color range of scrolling messages    */
+extern int hudcolor_chat; /* color range of chat lines            */
 /* jff 2/26/98 hud message list color and background enable */
-extern int hudcolor_list;   /* color of list of past messages                  */
-extern int hud_list_bgon;   /* solid window background for list of messages    */
-extern int hud_msg_lines;   /* number of message lines in window up to 16      */
+extern int hudcolor_list; /* color of list of past messages                  */
+extern int hud_list_bgon; /* solid window background for list of messages    */
+extern int hud_msg_lines; /* number of message lines in window up to 16      */
 /* jff 2/23/98 hud is currently displayed */
-extern int hud_displayed;   /* hud is displayed */
+extern int hud_displayed; /* hud is displayed */
 /* jff 2/18/98 hud/status control */
 extern int hud_num;
 extern int huds_count;
 
 typedef struct custom_message_s
 {
-  int ticks;
-  int cm;
-  int sfx;
-  const char *msg;
+    int ticks;
+    int cm;
+    int sfx;
+    const char *msg;
 } custom_message_t;
 
 typedef struct message_thinker_s
 {
-  thinker_t thinker;
-  int plr;
-  int delay;
-  custom_message_t msg;
+    thinker_t thinker;
+    int plr;
+    int delay;
+    custom_message_t msg;
 } message_thinker_t;
 
 typedef struct crosshair_s
 {
-  int lump;
-  int w, h, flags;
-  int target_x, target_y, target_z, target_sprite;
-  float target_screen_x, target_screen_y;
+    int lump;
+    int w, h, flags;
+    int target_x, target_y, target_z, target_sprite;
+    float target_screen_x, target_screen_y;
 } crosshair_t;
 extern crosshair_t crosshair;
 
-int SetCustomMessage(int player, const char *msg, int delay, int ticks, int cm, int sfx);
+int SetCustomMessage(int player, const char *msg, int delay, int ticks, int cm,
+                     int sfx);
 
 #endif

@@ -49,26 +49,26 @@
 
 #include "m_fixed.hh"
 
-#define FINEANGLES              8192
-#define FINEMASK                (FINEANGLES-1)
+#define FINEANGLES 8192
+#define FINEMASK (FINEANGLES - 1)
 
 // 0x100000000 to 0x2000
-#define ANGLETOFINESHIFT        19
+#define ANGLETOFINESHIFT 19
 
 // Binary Angle Measument, BAM.
-#define ANG45   0x20000000
-#define ANG90   0x40000000
-#define ANG180  0x80000000
-#define ANG270  0xc0000000
-#define ANG1      (ANG45/45)
+#define ANG45 0x20000000
+#define ANG90 0x40000000
+#define ANG180 0x80000000
+#define ANG270 0xc0000000
+#define ANG1 (ANG45 / 45)
 #define ANGLE_MAX 0xffffffff
 #ifndef M_PI
-#define M_PI    3.14159265358979323846
+#define M_PI 3.14159265358979323846
 #endif
 
 #define SLOPERANGE 2048
-#define SLOPEBITS    11
-#define DBITS      (FRACBITS-SLOPEBITS)
+#define SLOPEBITS 11
+#define DBITS (FRACBITS - SLOPEBITS)
 
 typedef unsigned angle_t;
 
@@ -76,18 +76,18 @@ typedef unsigned angle_t;
 void R_LoadTrigTables(void);
 
 // Effective size is 10240.
-extern fixed_t finesine[5*FINEANGLES/4];
+extern fixed_t finesine[5 * FINEANGLES / 4];
 
 // Re-use data, is just PI/2 phase shift.
-static fixed_t *const finecosine = finesine + (FINEANGLES/4);
+static fixed_t *const finecosine = finesine + (FINEANGLES / 4);
 
 // Effective size is 4096.
-extern fixed_t finetangent[FINEANGLES/2];
+extern fixed_t finetangent[FINEANGLES / 2];
 
 // Effective size is 2049;
 // The +1 size is to handle the case when x==y without additional checking.
 
-extern angle_t tantoangle[SLOPERANGE+1];
+extern angle_t tantoangle[SLOPERANGE + 1];
 
 // Utility function, called by R_PointToAngle.
 typedef int (*slope_div_fn)(unsigned int num, unsigned int den);

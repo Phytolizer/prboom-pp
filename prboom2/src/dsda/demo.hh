@@ -20,12 +20,12 @@
 
 #include "d_ticcmd.hh"
 
-void dsda_InitDemo(char* name);
-void dsda_WriteToDemo(void* buffer, size_t length);
+void dsda_InitDemo(char *name);
+void dsda_WriteToDemo(void *buffer, size_t length);
 void dsda_WriteDemoToFile(void);
 int dsda_DemoBufferOffset(void);
-int dsda_CopyDemoBuffer(void* buffer);
+int dsda_CopyDemoBuffer(void *buffer);
 void dsda_SetDemoBufferOffset(int offset);
-void dsda_JoinDemoCmd(ticcmd_t* cmd);
+void dsda_JoinDemoCmd(ticcmd_t *cmd);
 
 #endif

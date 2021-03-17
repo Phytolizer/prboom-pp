@@ -64,7 +64,7 @@ void S_StartSoundAtVolume(void *origin, int sound_id, int volume);
 #define PICKUP_SOUND (0x8000)
 
 // Stop sound for thing at <origin>
-void S_StopSound(void* origin);
+void S_StopSound(void *origin);
 
 // Start music using <music_id> from sounds.h
 void S_StartMusic(int music_id);
@@ -84,7 +84,7 @@ void S_ResumeSound(void);
 //
 // Updates music & sounds
 //
-void S_UpdateSounds(void* listener);
+void S_UpdateSounds(void *listener);
 void S_SetMusicVolume(int volume);
 void S_SetSfxVolume(int volume);
 
@@ -92,7 +92,7 @@ void S_SetSfxVolume(int volume);
 extern int default_numChannels;
 extern int numChannels;
 
-//jff 3/17/98 holds last IDMUS number, or -1
+// jff 3/17/98 holds last IDMUS number, or -1
 extern int idmusnum;
 
 // heretic

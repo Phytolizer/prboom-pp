@@ -29,103 +29,111 @@
 
 #define INITIAL_DEMO_BUFFER_SIZE 0x20000
 
-static byte* dsda_demo_write_buffer;
-static byte* dsda_demo_write_buffer_p;
+static byte *dsda_demo_write_buffer;
+static byte *dsda_demo_write_buffer_p;
 static int dsda_demo_write_buffer_length;
-static char* dsda_demo_name;
+static char *dsda_demo_name;
 
-static void dsda_EnsureDemoBufferSpace(size_t length) {
-  int offset;
+static void dsda_EnsureDemoBufferSpace(size_t length)
+{
+    int offset;
 
-  offset = dsda_DemoBufferOffset();
+    offset = dsda_DemoBufferOffset();
 
-  if (offset + length <= static_cast<unsigned long>(dsda_demo_write_buffer_length)) return;
+    if (offset + length <=
+        static_cast<unsigned long>(dsda_demo_write_buffer_length))
+        return;
 
-  while (offset + length > static_cast<unsigned long>(dsda_demo_write_buffer_length))
-    dsda_demo_write_buffer_length *= 2;
+    while (offset + length >
+           static_cast<unsigned long>(dsda_demo_write_buffer_length))
+        dsda_demo_write_buffer_length *= 2;
 
-  dsda_demo_write_buffer =
-    (byte *)realloc(dsda_demo_write_buffer, dsda_demo_write_buffer_length);
+    dsda_demo_write_buffer =
+        (byte *)realloc(dsda_demo_write_buffer, dsda_demo_write_buffer_length);
 
-  if (dsda_demo_write_buffer == NULL)
-    I_Error("dsda_EnsureDemoBufferSpace: out of memory!");
+    if (dsda_demo_write_buffer == NULL)
+        I_Error("dsda_EnsureDemoBufferSpace: out of memory!");
 
-  dsda_demo_write_buffer_p = dsda_demo_write_buffer + offset;
+    dsda_demo_write_buffer_p = dsda_demo_write_buffer + offset;
 
-  lprintf(
-    LO_INFO,
-    "dsda_EnsureDemoBufferSpace: expanding demo buffer %d\n",
-    dsda_demo_write_buffer_length
-  );
+    lprintf(LO_INFO, "dsda_EnsureDemoBufferSpace: expanding demo buffer %d\n",
+            dsda_demo_write_buffer_length);
 }
 
-void dsda_InitDemo(char* name) {
-  size_t name_size;
+void dsda_InitDemo(char *name)
+{
+    size_t name_size;
 
-  name_size = strlen(name) + 1;
-  dsda_demo_name = malloc<char *>(name_size);
-  memcpy(dsda_demo_name, name, name_size);
+    name_size = strlen(name) + 1;
+    dsda_demo_name = malloc<char *>(name_size);
+    memcpy(dsda_demo_name, name, name_size);
 
-  dsda_demo_write_buffer = malloc<byte *>(INITIAL_DEMO_BUFFER_SIZE);
-  if (dsda_demo_write_buffer == NULL)
-    I_Error("dsda_InitDemo: unable to initialize demo buffer!");
+    dsda_demo_write_buffer = malloc<byte *>(INITIAL_DEMO_BUFFER_SIZE);
+    if (dsda_demo_write_buffer == NULL)
+        I_Error("dsda_InitDemo: unable to initialize demo buffer!");
 
-  dsda_demo_write_buffer_p = dsda_demo_write_buffer;
+    dsda_demo_write_buffer_p = dsda_demo_write_buffer;
 
-  dsda_demo_write_buffer_length = INITIAL_DEMO_BUFFER_SIZE;
+    dsda_demo_write_buffer_length = INITIAL_DEMO_BUFFER_SIZE;
 }
 
-void dsda_WriteToDemo(void* buffer, size_t length) {
-  dsda_EnsureDemoBufferSpace(length);
+void dsda_WriteToDemo(void *buffer, size_t length)
+{
+    dsda_EnsureDemoBufferSpace(length);
 
-  memcpy(dsda_demo_write_buffer_p, buffer, length);
-  dsda_demo_write_buffer_p += length;
+    memcpy(dsda_demo_write_buffer_p, buffer, length);
+    dsda_demo_write_buffer_p += length;
 }
 
-void dsda_WriteDemoToFile(void) {
-  int length;
+void dsda_WriteDemoToFile(void)
+{
+    int length;
 
-  length = dsda_DemoBufferOffset();
+    length = dsda_DemoBufferOffset();
 
-  if (!M_WriteFile(dsda_demo_name, dsda_demo_write_buffer, length))
-    I_Error("dsda_WriteDemoToFile: Failed to write demo file.");
+    if (!M_WriteFile(dsda_demo_name, dsda_demo_write_buffer, length))
+        I_Error("dsda_WriteDemoToFile: Failed to write demo file.");
 
-  free(dsda_demo_write_buffer);
-  free(dsda_demo_name);
-  dsda_demo_write_buffer = NULL;
-  dsda_demo_write_buffer_p = NULL;
-  dsda_demo_write_buffer_length = 0;
-  dsda_demo_name = NULL;
+    free(dsda_demo_write_buffer);
+    free(dsda_demo_name);
+    dsda_demo_write_buffer = NULL;
+    dsda_demo_write_buffer_p = NULL;
+    dsda_demo_write_buffer_length = 0;
+    dsda_demo_name = NULL;
 }
 
-int dsda_DemoBufferOffset(void) {
-  return dsda_demo_write_buffer_p - dsda_demo_write_buffer;
+int dsda_DemoBufferOffset(void)
+{
+    return dsda_demo_write_buffer_p - dsda_demo_write_buffer;
 }
 
-int dsda_CopyDemoBuffer(void* buffer) {
-  int offset;
+int dsda_CopyDemoBuffer(void *buffer)
+{
+    int offset;
 
-  offset = dsda_DemoBufferOffset();
-  memcpy(buffer, dsda_demo_write_buffer, offset);
+    offset = dsda_DemoBufferOffset();
+    memcpy(buffer, dsda_demo_write_buffer, offset);
 
-  return offset;
+    return offset;
 }
 
-void dsda_SetDemoBufferOffset(int offset) {
-  if (dsda_demo_write_buffer == NULL) return;
+void dsda_SetDemoBufferOffset(int offset)
+{
+    if (dsda_demo_write_buffer == NULL)
+        return;
 
-  // Cannot load forward (demo buffer would desync)
-  if (offset > dsda_DemoBufferOffset())
-    I_Error("dsda_SetDemoBufferOffset: Impossible time traveling detected.");
+    // Cannot load forward (demo buffer would desync)
+    if (offset > dsda_DemoBufferOffset())
+        I_Error(
+            "dsda_SetDemoBufferOffset: Impossible time traveling detected.");
 
-  dsda_demo_write_buffer_p = dsda_demo_write_buffer + offset;
+    dsda_demo_write_buffer_p = dsda_demo_write_buffer + offset;
 }
 
-void dsda_JoinDemoCmd(ticcmd_t* cmd) {
-  // Sometimes this bit is not available
-  if (
-    (demo_compatibility && !prboom_comp[PC_ALLOW_SSG_DIRECT].state) ||
-    (cmd->buttons & BT_CHANGE) == 0
-  )
-    cmd->buttons |= BT_JOIN;
+void dsda_JoinDemoCmd(ticcmd_t *cmd)
+{
+    // Sometimes this bit is not available
+    if ((demo_compatibility && !prboom_comp[PC_ALLOW_SSG_DIRECT].state) ||
+        (cmd->buttons & BT_CHANGE) == 0)
+        cmd->buttons |= BT_JOIN;
 }

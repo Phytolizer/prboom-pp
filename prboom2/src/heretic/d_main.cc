@@ -38,54 +38,51 @@ static void Heretic_D_DrawOrder(const char *_x)
     D_SetPage(DEH_String("ORDER"), 200, 0);
 }
 
-const demostate_t heretic_demostates[][4] =
-    {
-        {
-            { Heretic_D_DrawTitle, NULL },
-            { Heretic_D_DrawTitle, NULL },
-            { Heretic_D_DrawTitle, NULL },
-            { Heretic_D_DrawTitle, NULL },
-        },
+const demostate_t heretic_demostates[][4] = {{
+                                                 {Heretic_D_DrawTitle, NULL},
+                                                 {Heretic_D_DrawTitle, NULL},
+                                                 {Heretic_D_DrawTitle, NULL},
+                                                 {Heretic_D_DrawTitle, NULL},
+                                             },
 
-        {
-            { G_DeferedPlayDemo, "demo1" },
-            { G_DeferedPlayDemo, "demo1" },
-            { G_DeferedPlayDemo, "demo1" },
-            { G_DeferedPlayDemo, "demo1" },
-        },
+                                             {
+                                                 {G_DeferedPlayDemo, "demo1"},
+                                                 {G_DeferedPlayDemo, "demo1"},
+                                                 {G_DeferedPlayDemo, "demo1"},
+                                                 {G_DeferedPlayDemo, "demo1"},
+                                             },
 
-        {
-            { Heretic_D_DrawCredits, NULL },
-            { Heretic_D_DrawCredits, NULL },
-            { Heretic_D_DrawCredits, NULL },
-            { Heretic_D_DrawCredits, NULL },
-        },
+                                             {
+                                                 {Heretic_D_DrawCredits, NULL},
+                                                 {Heretic_D_DrawCredits, NULL},
+                                                 {Heretic_D_DrawCredits, NULL},
+                                                 {Heretic_D_DrawCredits, NULL},
+                                             },
 
-        {
-            { G_DeferedPlayDemo, "demo2" },
-            { G_DeferedPlayDemo, "demo2" },
-            { G_DeferedPlayDemo, "demo2" },
-            { G_DeferedPlayDemo, "demo2" },
-        },
+                                             {
+                                                 {G_DeferedPlayDemo, "demo2"},
+                                                 {G_DeferedPlayDemo, "demo2"},
+                                                 {G_DeferedPlayDemo, "demo2"},
+                                                 {G_DeferedPlayDemo, "demo2"},
+                                             },
 
-        {
-            { Heretic_D_DrawOrder,   NULL },
-            { Heretic_D_DrawCredits, NULL },
-            { Heretic_D_DrawCredits, NULL },
-            { Heretic_D_DrawCredits, NULL },
-        },
+                                             {
+                                                 {Heretic_D_DrawOrder, NULL},
+                                                 {Heretic_D_DrawCredits, NULL},
+                                                 {Heretic_D_DrawCredits, NULL},
+                                                 {Heretic_D_DrawCredits, NULL},
+                                             },
 
-        {
-            { G_DeferedPlayDemo, "demo3" },
-            { G_DeferedPlayDemo, "demo3" },
-            { G_DeferedPlayDemo, "demo3" },
-            { G_DeferedPlayDemo, "demo3" },
-        },
+                                             {
+                                                 {G_DeferedPlayDemo, "demo3"},
+                                                 {G_DeferedPlayDemo, "demo3"},
+                                                 {G_DeferedPlayDemo, "demo3"},
+                                                 {G_DeferedPlayDemo, "demo3"},
+                                             },
 
-        {
-            {NULL},
-            {NULL},
-            {NULL},
-            {NULL},
-        }
-    };
+                                             {
+                                                 {NULL},
+                                                 {NULL},
+                                                 {NULL},
+                                                 {NULL},
+                                             }};

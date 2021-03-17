@@ -31,42 +31,21 @@
 #ifndef MADPLAYER_H
 #define MADPLAYER_H
 
-
-
-
 const char *mp_name(void);
-int mp_init (int samplerate);
-void mp_shutdown (void);
-void mp_setvolume (int v);
-void mp_pause (void);
-void mp_resume (void);
-const void *mp_registersong (const void *data, unsigned len);
-void mp_unregistersong (const void *handle);
-void mp_play (const void *handle, int looping);
-void mp_stop (void);
-void mp_render (void *vdest, unsigned bufflen);
+int mp_init(int samplerate);
+void mp_shutdown(void);
+void mp_setvolume(int v);
+void mp_pause(void);
+void mp_resume(void);
+const void *mp_registersong(const void *data, unsigned len);
+void mp_unregistersong(const void *handle);
+void mp_play(const void *handle, int looping);
+void mp_stop(void);
+void mp_render(void *vdest, unsigned bufflen);
 
-
-
-
-
-constexpr music_player_t mp_player =
-    {
-        mp_name,
-        mp_init,
-        mp_shutdown,
-        mp_setvolume,
-        mp_pause,
-        mp_resume,
-        mp_registersong,
-        mp_unregistersong,
-        mp_play,
-        mp_stop,
-        mp_render
-    };
-
-
-
-
+constexpr music_player_t mp_player = {
+    mp_name,  mp_init,   mp_shutdown,     mp_setvolume,
+    mp_pause, mp_resume, mp_registersong, mp_unregistersong,
+    mp_play,  mp_stop,   mp_render};
 
 #endif // MADPLAYER_H

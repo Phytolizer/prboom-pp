@@ -65,7 +65,7 @@ static void PlayerQuitGame(player_t *player)
 
     if (demorecording)
     {
-        G_CheckDemoStatus ();
+        G_CheckDemoStatus();
     }
 }
 
@@ -90,18 +90,13 @@ static void RunTic(ticcmd_t *cmds, boolean *ingame)
     // run a tic.
 
     if (advancedemo)
-        D_DoAdvanceDemo ();
+        D_DoAdvanceDemo();
 
-    G_Ticker ();
+    G_Ticker();
 }
 
-static loop_interface_t doom_loop_interface = {
-    D_ProcessEvents,
-    G_BuildTiccmd,
-    RunTic,
-    MN_Ticker
-};
-
+static loop_interface_t doom_loop_interface = {D_ProcessEvents, G_BuildTiccmd,
+                                               RunTic, MN_Ticker};
 
 // Load game settings from the specified structure and
 // set global variables.
@@ -151,8 +146,8 @@ static void SaveGameSettings(net_gamesettings_t *settings)
     settings->respawn_monsters = respawnparm;
     settings->timelimit = 0;
 
-    settings->lowres_turn = M_ParmExists("-record")
-                         && !M_ParmExists("-longtics");
+    settings->lowres_turn =
+        M_ParmExists("-record") && !M_ParmExists("-longtics");
 }
 
 static void InitConnectData(net_connect_data_t *connect_data)
@@ -171,8 +166,8 @@ static void InitConnectData(net_connect_data_t *connect_data)
 
     // Are we recording a demo? Possibly set lowres turn mode
 
-    connect_data->lowres_turn = M_ParmExists("-record")
-                             && !M_ParmExists("-longtics");
+    connect_data->lowres_turn =
+        M_ParmExists("-record") && !M_ParmExists("-longtics");
 
     // Read checksums of our WAD directory and dehacked information
 
@@ -208,7 +203,7 @@ void D_ConnectNetGame(void)
 // Works out player numbers among the net participants
 //
 
-void D_CheckNetGame (void)
+void D_CheckNetGame(void)
 {
     net_gamesettings_t settings;
 

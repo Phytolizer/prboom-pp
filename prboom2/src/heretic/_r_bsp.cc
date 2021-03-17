@@ -31,7 +31,7 @@ int numdrawsegs = 0;
 
 // [AM] Fractional part of the current tic, in the half-open
 //      range of [0.0, 1.0).  Used for interpolation.
-extern fixed_t          fractionaltic;
+extern fixed_t fractionaltic;
 
 void R_StoreWallRange(int start, int stop);
 
@@ -49,7 +49,6 @@ void R_ClearDrawSegs(void)
 }
 
 //=============================================================================
-
 
 /*
 ===============================================================================
@@ -74,14 +73,15 @@ typedef struct
 //#define MAXSEGS 32
 #define MAXSEGS (MAXWIDTH / 2 + 1)
 
-cliprange_t solidsegs[MAXSEGS], *newend;        // newend is one past the last valid seg
-
+cliprange_t solidsegs[MAXSEGS],
+    *newend; // newend is one past the last valid seg
 
 void R_ClipSolidWallSegment(int first, int last)
 {
     cliprange_t *next, *start;
 
-// find the first range that touches the range (adjacent pixels are touching)
+    // find the first range that touches the range (adjacent pixels are
+    // touching)
     start = solidsegs;
     while (start->last < first - 1)
         start++;
@@ -89,7 +89,7 @@ void R_ClipSolidWallSegment(int first, int last)
     if (first < start->first)
     {
         if (last < start->first - 1)
-        {                       // post is entirely visible (above start), so insert a new clippost
+        { // post is entirely visible (above start), so insert a new clippost
             R_StoreWallRange(first, last);
             next = newend;
             newend++;
@@ -105,11 +105,11 @@ void R_ClipSolidWallSegment(int first, int last)
 
         // there is a fragment above *start
         R_StoreWallRange(first, start->first - 1);
-        start->first = first;   // adjust the clip size
+        start->first = first; // adjust the clip size
     }
 
     if (last <= start->last)
-        return;                 // bottom contained in start
+        return; // bottom contained in start
 
     next = start;
     while (last >= (next + 1)->first - 1)
@@ -118,24 +118,23 @@ void R_ClipSolidWallSegment(int first, int last)
         R_StoreWallRange(next->last + 1, (next + 1)->first - 1);
         next++;
         if (last <= next->last)
-        {                       // bottom is contained in next
-            start->last = next->last;   // adjust the clip size
+        {                             // bottom is contained in next
+            start->last = next->last; // adjust the clip size
             goto crunch;
         }
     }
 
     // there is a fragment after *next
     R_StoreWallRange(next->last + 1, last);
-    start->last = last;         // adjust the clip size
+    start->last = last; // adjust the clip size
 
-
-// remove start+1 to next from the clip list,
-// because start now covers their area
-  crunch:
+    // remove start+1 to next from the clip list,
+    // because start now covers their area
+crunch:
     if (next == start)
-        return;                 // post just extended past the bottom of one post
+        return; // post just extended past the bottom of one post
 
-    while (next++ != newend)    // remove a post
+    while (next++ != newend) // remove a post
         *++start = *next;
     newend = start + 1;
 }
@@ -153,7 +152,8 @@ void R_ClipPassWallSegment(int first, int last)
 {
     cliprange_t *start;
 
-// find the first range that touches the range (adjacent pixels are touching)
+    // find the first range that touches the range (adjacent pixels are
+    // touching)
     start = solidsegs;
     while (start->last < first - 1)
         start++;
@@ -161,7 +161,7 @@ void R_ClipPassWallSegment(int first, int last)
     if (first < start->first)
     {
         if (last < start->first - 1)
-        {                       // post is entirely visible (above start)
+        { // post is entirely visible (above start)
             R_StoreWallRange(first, last);
             return;
         }
@@ -171,7 +171,7 @@ void R_ClipPassWallSegment(int first, int last)
     }
 
     if (last <= start->last)
-        return;                 // bottom contained in start
+        return; // bottom contained in start
 
     while (last >= (start + 1)->first - 1)
     {
@@ -185,8 +185,6 @@ void R_ClipPassWallSegment(int first, int last)
     // there is a fragment after *next
     R_StoreWallRange(start->last + 1, last);
 }
-
-
 
 /*
 ====================
@@ -206,7 +204,7 @@ void R_ClearClipSegs(void)
 }
 
 // [AM] Interpolate the passed sector, if prudent.
-void R_CheckInterpolateSector(sector_t* sector)
+void R_CheckInterpolateSector(sector_t *sector)
 {
     if (crispy->uncapped &&
         // Only if we moved the sector last tic.
@@ -214,11 +212,17 @@ void R_CheckInterpolateSector(sector_t* sector)
     {
         // Interpolate between current and last floor/ceiling position.
         if (sector->floorheight != sector->oldfloorheight)
-            sector->interpfloorheight = sector->oldfloorheight + FixedMul(sector->floorheight - sector->oldfloorheight, fractionaltic);
+            sector->interpfloorheight =
+                sector->oldfloorheight +
+                FixedMul(sector->floorheight - sector->oldfloorheight,
+                         fractionaltic);
         else
             sector->interpfloorheight = sector->floorheight;
         if (sector->ceilingheight != sector->oldceilingheight)
-            sector->interpceilingheight = sector->oldceilingheight + FixedMul(sector->ceilingheight - sector->oldceilingheight, fractionaltic);
+            sector->interpceilingheight =
+                sector->oldceilingheight +
+                FixedMul(sector->ceilingheight - sector->oldceilingheight,
+                         fractionaltic);
         else
             sector->interpceilingheight = sector->ceilingheight;
     }
@@ -241,27 +245,27 @@ void R_CheckInterpolateSector(sector_t* sector)
 ======================
 */
 
-void R_AddLine(seg_t * line)
+void R_AddLine(seg_t *line)
 {
     int x1, x2;
     angle_t angle1, angle2, span, tspan;
 
     curline = line;
 
-// OPTIMIZE: quickly reject orthogonal back sides
+    // OPTIMIZE: quickly reject orthogonal back sides
 
     // [crispy] remove slime trails
     angle1 = R_PointToAngle(line->v1->r_x, line->v1->r_y);
     angle2 = R_PointToAngle(line->v2->r_x, line->v2->r_y);
 
-//
-// clip to view edges
-// OPTIMIZE: make constant out of 2*clipangle (FIELDOFVIEW)
+    //
+    // clip to view edges
+    // OPTIMIZE: make constant out of 2*clipangle (FIELDOFVIEW)
     span = angle1 - angle2;
     if (span >= ANG180)
-        return;                 // back side
+        return; // back side
 
-    rw_angle1 = angle1;         // global angle needed by segcalc
+    rw_angle1 = angle1; // global angle needed by segcalc
     angle1 -= viewangle;
     angle2 -= viewangle;
 
@@ -270,7 +274,7 @@ void R_AddLine(seg_t * line)
     {
         tspan -= 2 * clipangle;
         if (tspan >= span)
-            return;             // totally off the left edge
+            return; // totally off the left edge
         angle1 = clipangle;
     }
     tspan = clipangle - angle2;
@@ -278,55 +282,54 @@ void R_AddLine(seg_t * line)
     {
         tspan -= 2 * clipangle;
         if (tspan >= span)
-            return;             // totally off the left edge
+            return; // totally off the left edge
         angle2 = -clipangle;
     }
 
-//
-// the seg is in the view range, but not necessarily visible
-//
+    //
+    // the seg is in the view range, but not necessarily visible
+    //
     angle1 = (angle1 + ANG90) >> ANGLETOFINESHIFT;
     angle2 = (angle2 + ANG90) >> ANGLETOFINESHIFT;
     x1 = viewangletox[angle1];
     x2 = viewangletox[angle2];
     if (x1 == x2)
-        return;                 // does not cross a pixel
+        return; // does not cross a pixel
 
     backsector = line->backsector;
 
     if (!backsector)
-        goto clipsolid;         // single sided line
+        goto clipsolid; // single sided line
 
     // [AM] Interpolate sector movement before
     //      running clipping tests.  Frontsector
     //      should already be interpolated.
     R_CheckInterpolateSector(backsector);
 
-    if (backsector->interpceilingheight <= frontsector->interpfloorheight
-        || backsector->interpfloorheight >= frontsector->interpceilingheight)
-        goto clipsolid;         // closed door
+    if (backsector->interpceilingheight <= frontsector->interpfloorheight ||
+        backsector->interpfloorheight >= frontsector->interpceilingheight)
+        goto clipsolid; // closed door
 
-    if (backsector->interpceilingheight != frontsector->interpceilingheight
-        || backsector->interpfloorheight != frontsector->interpfloorheight)
-        goto clippass;          // window
+    if (backsector->interpceilingheight != frontsector->interpceilingheight ||
+        backsector->interpfloorheight != frontsector->interpfloorheight)
+        goto clippass; // window
 
-// reject empty lines used for triggers and special events
-    if (backsector->ceilingpic == frontsector->ceilingpic
-        && backsector->floorpic == frontsector->floorpic
-        && backsector->lightlevel == frontsector->lightlevel
-        && curline->sidedef->midtexture == 0)
+    // reject empty lines used for triggers and special events
+    if (backsector->ceilingpic == frontsector->ceilingpic &&
+        backsector->floorpic == frontsector->floorpic &&
+        backsector->lightlevel == frontsector->lightlevel &&
+        curline->sidedef->midtexture == 0)
         return;
 
-  clippass:
+clippass:
     R_ClipPassWallSegment(x1, x2 - 1);
     return;
 
-  clipsolid:
+clipsolid:
     R_ClipSolidWallSegment(x1, x2 - 1);
 }
 
 //============================================================================
-
 
 /*
 ===============================================================================
@@ -338,22 +341,11 @@ void R_AddLine(seg_t * line)
 ===============================================================================
 */
 
-int checkcoord[12][4] = {
-    {3, 0, 2, 1},
-    {3, 0, 2, 0},
-    {3, 1, 2, 0},
-    {0},
-    {2, 0, 2, 1},
-    {0, 0, 0, 0},
-    {3, 1, 3, 0},
-    {0},
-    {2, 0, 3, 1},
-    {2, 1, 3, 1},
-    {2, 1, 3, 0}
-};
+int checkcoord[12][4] = {{3, 0, 2, 1}, {3, 0, 2, 0}, {3, 1, 2, 0}, {0},
+                         {2, 0, 2, 1}, {0, 0, 0, 0}, {3, 1, 3, 0}, {0},
+                         {2, 0, 3, 1}, {2, 1, 3, 1}, {2, 1, 3, 0}};
 
-
-boolean R_CheckBBox(fixed_t * bspcoord)
+boolean R_CheckBBox(fixed_t *bspcoord)
 {
     int boxx, boxy, boxpos;
     fixed_t x1, y1, x2, y2;
@@ -361,7 +353,7 @@ boolean R_CheckBBox(fixed_t * bspcoord)
     cliprange_t *start;
     int sx1, sx2;
 
-// find the corners of the box that define the edges from current viewpoint
+    // find the corners of the box that define the edges from current viewpoint
     if (viewx <= bspcoord[BOXLEFT])
         boxx = 0;
     else if (viewx < bspcoord[BOXRIGHT])
@@ -385,22 +377,21 @@ boolean R_CheckBBox(fixed_t * bspcoord)
     x2 = bspcoord[checkcoord[boxpos][2]];
     y2 = bspcoord[checkcoord[boxpos][3]];
 
-
-//
-// check clip list for an open space
-//
+    //
+    // check clip list for an open space
+    //
     angle1 = R_PointToAngle(x1, y1) - viewangle;
     angle2 = R_PointToAngle(x2, y2) - viewangle;
 
     span = angle1 - angle2;
     if (span >= ANG180)
-        return true;            // sitting on a line
+        return true; // sitting on a line
     tspan = angle1 + clipangle;
     if (tspan > 2 * clipangle)
     {
         tspan -= 2 * clipangle;
         if (tspan >= span)
-            return false;       // totally off the left edge
+            return false; // totally off the left edge
         angle1 = clipangle;
     }
     tspan = clipangle - angle2;
@@ -408,29 +399,28 @@ boolean R_CheckBBox(fixed_t * bspcoord)
     {
         tspan -= 2 * clipangle;
         if (tspan >= span)
-            return false;       // totally off the left edge
+            return false; // totally off the left edge
         angle2 = -clipangle;
     }
 
-
-// find the first clippost that touches the source post (adjacent pixels are touching)
+    // find the first clippost that touches the source post (adjacent pixels are
+    // touching)
     angle1 = (angle1 + ANG90) >> ANGLETOFINESHIFT;
     angle2 = (angle2 + ANG90) >> ANGLETOFINESHIFT;
     sx1 = viewangletox[angle1];
     sx2 = viewangletox[angle2];
     if (sx1 == sx2)
-        return false;           // does not cross a pixel
+        return false; // does not cross a pixel
     sx2--;
 
     start = solidsegs;
     while (start->last < sx2)
         start++;
     if (sx1 >= start->first && sx2 <= start->last)
-        return false;           // the clippost contains the new span
+        return false; // the clippost contains the new span
 
     return true;
 }
-
 
 /*
 ================
@@ -463,17 +453,16 @@ void R_Subsector(int num)
     R_CheckInterpolateSector(frontsector);
 
     if (frontsector->interpfloorheight < viewz)
-        floorplane = R_FindPlane(frontsector->interpfloorheight,
-                                 frontsector->floorpic,
-                                 frontsector->lightlevel,
-                                 frontsector->special);
+        floorplane =
+            R_FindPlane(frontsector->interpfloorheight, frontsector->floorpic,
+                        frontsector->lightlevel, frontsector->special);
     else
         floorplane = NULL;
-    if (frontsector->interpceilingheight > viewz
-        || frontsector->ceilingpic == skyflatnum)
-        ceilingplane = R_FindPlane(frontsector->interpceilingheight,
-                                   frontsector->ceilingpic,
-                                   frontsector->lightlevel, 0);
+    if (frontsector->interpceilingheight > viewz ||
+        frontsector->ceilingpic == skyflatnum)
+        ceilingplane =
+            R_FindPlane(frontsector->interpceilingheight,
+                        frontsector->ceilingpic, frontsector->lightlevel, 0);
     else
         ceilingplane = NULL;
 
@@ -486,10 +475,9 @@ void R_Subsector(int num)
     }
 
     // check for solidsegs overflow - extremely unsatisfactory!
-    if(newend > &solidsegs[32] && false)
+    if (newend > &solidsegs[32] && false)
         I_Error("R_Subsector: solidsegs overflow (vanilla may crash here)\n");
 }
-
 
 /*
 ===============================================================================
@@ -515,13 +503,13 @@ void R_RenderBSPNode(int bspnum)
 
     bsp = &nodes[bspnum];
 
-//
-// decide which side the view point is on
-//
+    //
+    // decide which side the view point is on
+    //
     side = R_PointOnSide(viewx, viewy, bsp);
 
-    R_RenderBSPNode(bsp->children[side]);       // recursively divide front space
+    R_RenderBSPNode(bsp->children[side]); // recursively divide front space
 
-    if (R_CheckBBox(bsp->bbox[side ^ 1]))       // possibly divide back space
+    if (R_CheckBBox(bsp->bbox[side ^ 1])) // possibly divide back space
         R_RenderBSPNode(bsp->children[side ^ 1]);
 }

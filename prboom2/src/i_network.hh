@@ -35,23 +35,23 @@
 #endif
 
 #ifdef USE_SDL_NET
- #include "SDL_net.h"
- #define UDP_SOCKET UDPsocket
- #define UDP_PACKET UDPpacket
- #define AF_INET
- #define UDP_CHANNEL int
- extern UDP_SOCKET udp_socket;
+#include "SDL_net.h"
+#define UDP_SOCKET UDPsocket
+#define UDP_PACKET UDPpacket
+#define AF_INET
+#define UDP_CHANNEL int
+extern UDP_SOCKET udp_socket;
 #else
- #define UDP_CHANNEL struct sockaddr
+#define UDP_CHANNEL struct sockaddr
 #endif
 
 #ifndef IPPORT_RESERVED
-        #define IPPORT_RESERVED 1024
+#define IPPORT_RESERVED 1024
 #endif
 
 void I_InitNetwork(void);
-size_t I_GetPacket(packet_header_t* buffer, size_t buflen);
-void I_SendPacket(packet_header_t* packet, size_t len);
+size_t I_GetPacket(packet_header_t *buffer, size_t buflen);
+void I_SendPacket(packet_header_t *packet, size_t len);
 void I_WaitForPacket(int ms);
 
 #ifdef USE_SDL_NET
@@ -63,9 +63,9 @@ extern IPaddress sentfrom_addr;
 #endif
 
 #ifdef AF_INET
-void I_SendPacketTo(packet_header_t* packet, size_t len, UDP_CHANNEL *to);
+void I_SendPacketTo(packet_header_t *packet, size_t len, UDP_CHANNEL *to);
 void I_SetupSocket(int sock, int port, int family);
-void I_PrintAddress(FILE* fp, UDP_CHANNEL *addr);
+void I_PrintAddress(FILE *fp, UDP_CHANNEL *addr);
 
 extern UDP_CHANNEL sentfrom;
 extern int v4socket, v6socket;

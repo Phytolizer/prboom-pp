@@ -1,15 +1,15 @@
 /* =============================================================================
-	FILE:		UKFileWatcher.h
-	PROJECT:	Filie
-    
+    FILE:		UKFileWatcher.h
+    PROJECT:	Filie
+
     COPYRIGHT:  (c) 2005 M. Uli Kusterer, all rights reserved.
-    
-	AUTHORS:	M. Uli Kusterer - UK
-    
+
+    AUTHORS:	M. Uli Kusterer - UK
+
     LICENSES:   GPL, Modified BSD
 
-	REVISIONS:
-		2005-02-25	UK	Created.
+    REVISIONS:
+        2005-02-25	UK	Created.
    ========================================================================== */
 
 /*
@@ -26,11 +26,11 @@
 
 @protocol UKFileWatcher
 
--(void) addPath: (NSString*)path;
--(void) removePath: (NSString*)path;
+- (void)addPath:(NSString *)path;
+- (void)removePath:(NSString *)path;
 
--(id)   delegate;
--(void) setDelegate: (id)newDelegate;
+- (id)delegate;
+- (void)setDelegate:(id)newDelegate;
 
 @end
 
@@ -40,17 +40,23 @@
 
 @interface NSObject (UKFileWatcherDelegate)
 
--(void) watcher: (id<UKFileWatcher>)kq receivedNotification: (NSString*)nm forPath: (NSString*)fpath;
+- (void)watcher:(id<UKFileWatcher>)kq
+    receivedNotification:(NSString *)nm
+                 forPath:(NSString *)fpath;
 
 @end
 
-
 // Notifications this sends:
-//  (object is the file path registered with, and these are sent via the workspace notification center)
-#define UKFileWatcherRenameNotification				@"UKKQueueFileRenamedNotification"
-#define UKFileWatcherWriteNotification              @"UKKQueueFileWrittenToNotification"
-#define UKFileWatcherDeleteNotification				@"UKKQueueFileDeletedNotification"
-#define UKFileWatcherAttributeChangeNotification    @"UKKQueueFileAttributesChangedNotification"
-#define UKFileWatcherSizeIncreaseNotification		@"UKKQueueFileSizeIncreasedNotification"
-#define UKFileWatcherLinkCountChangeNotification	@"UKKQueueFileLinkCountChangedNotification"
-#define UKFileWatcherAccessRevocationNotification	@"UKKQueueFileAccessRevocationNotification"
+//  (object is the file path registered with, and these are sent via the
+//  workspace notification center)
+#define UKFileWatcherRenameNotification @"UKKQueueFileRenamedNotification"
+#define UKFileWatcherWriteNotification @"UKKQueueFileWrittenToNotification"
+#define UKFileWatcherDeleteNotification @"UKKQueueFileDeletedNotification"
+#define UKFileWatcherAttributeChangeNotification                               \
+    @"UKKQueueFileAttributesChangedNotification"
+#define UKFileWatcherSizeIncreaseNotification                                  \
+    @"UKKQueueFileSizeIncreasedNotification"
+#define UKFileWatcherLinkCountChangeNotification                               \
+    @"UKKQueueFileLinkCountChangedNotification"
+#define UKFileWatcherAccessRevocationNotification                              \
+    @"UKKQueueFileAccessRevocationNotification"

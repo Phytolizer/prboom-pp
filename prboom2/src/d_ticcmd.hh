@@ -40,21 +40,22 @@
  * and transmitted to other peers (multiplayer).
  * Mainly movements/button commands per game tick,
  * plus a checksum for internal state consistency.
- * CPhipps - explicitely signed the elements, since they have to be signed to work right
+ * CPhipps - explicitely signed the elements, since they have to be signed to
+ * work right
  */
 typedef struct
 {
-  signed char forwardmove;  /* *2048 for move       */
-  signed char sidemove; /* *2048 for move       */
-  signed short  angleturn;  /* <<16 for angle delta */
-  short consistancy;          /* checks for net game  */
-  byte  chatchar;
-  byte  buttons;
+    signed char forwardmove; /* *2048 for move       */
+    signed char sidemove;    /* *2048 for move       */
+    signed short angleturn;  /* <<16 for angle delta */
+    short consistancy;       /* checks for net game  */
+    byte chatchar;
+    byte buttons;
 
-  // heretic
-  byte lookfly; // look/fly up/down/centering
-  byte arti;    // artitype_t to use
-  int lookdir;
+    // heretic
+    byte lookfly; // look/fly up/down/centering
+    byte arti;    // artitype_t to use
+    int lookdir;
 } ticcmd_t;
 
 #endif

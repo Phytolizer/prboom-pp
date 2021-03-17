@@ -36,10 +36,10 @@
 
 // Game Mode - identify IWAD as shareware, retail etc.
 GameMode_t gamemode = indetermined;
-GameMission_t   gamemission = doom;
+GameMission_t gamemission = doom;
 
 // Language.
-Language_t   language = english;
+Language_t language = english;
 
 // Set if homebrew PWAD stuff has been added.
 dboolean modifiedgame;
@@ -50,43 +50,44 @@ dboolean modifiedgame;
 complevel_t compatibility_level, default_compatibility_level;
 
 // e6y
-// it's required for demos recorded in "demo compatibility" mode by boom201 for example
+// it's required for demos recorded in "demo compatibility" mode by boom201 for
+// example
 int demover;
 
-int comp[COMP_TOTAL], default_comp[COMP_TOTAL];    // killough 10/98
-int /*comperr[COMPERR_NUM], */default_comperr[COMPERR_NUM];
+int comp[COMP_TOTAL], default_comp[COMP_TOTAL]; // killough 10/98
+int /*comperr[COMPERR_NUM], */ default_comperr[COMPERR_NUM];
 
 // v1.1-like pitched sounds
-int pitched_sounds;        // killough
+int pitched_sounds; // killough
 
-int     default_translucency; // config file says           // phares
+int default_translucency;      // config file says           // phares
 dboolean general_translucency; // true if translucency is ok // phares
 
-int demo_insurance, default_demo_insurance;        // killough 1/16/98
+int demo_insurance, default_demo_insurance; // killough 1/16/98
 
-int  allow_pushers = 1;      // MT_PUSH Things              // phares 3/10/98
-int  default_allow_pushers;  // killough 3/1/98: make local to each game
+int allow_pushers = 1;     // MT_PUSH Things              // phares 3/10/98
+int default_allow_pushers; // killough 3/1/98: make local to each game
 
-int  variable_friction = 1;      // ice & mud               // phares 3/10/98
-int  default_variable_friction;  // killough 3/1/98: make local to each game
+int variable_friction = 1;     // ice & mud               // phares 3/10/98
+int default_variable_friction; // killough 3/1/98: make local to each game
 
-int  weapon_recoil;              // weapon recoil                   // phares
-int  default_weapon_recoil;      // killough 3/1/98: make local to each game
+int weapon_recoil;         // weapon recoil                   // phares
+int default_weapon_recoil; // killough 3/1/98: make local to each game
 
-int player_bobbing;  // whether player bobs or not          // phares 2/25/98
-int default_player_bobbing;  // killough 3/1/98: make local to each game
+int player_bobbing; // whether player bobs or not          // phares 2/25/98
+int default_player_bobbing; // killough 3/1/98: make local to each game
 
-int monsters_remember;          // killough 3/1/98
+int monsters_remember; // killough 3/1/98
 int default_monsters_remember;
 
-int monster_infighting=1;       // killough 7/19/98: monster<=>monster attacks
-int default_monster_infighting=1;
+int monster_infighting = 1; // killough 7/19/98: monster<=>monster attacks
+int default_monster_infighting = 1;
 
-int monster_friction=1;       // killough 10/98: monsters affected by friction
-int default_monster_friction=1;
+int monster_friction = 1; // killough 10/98: monsters affected by friction
+int default_monster_friction = 1;
 
-int dogs, default_dogs;         // killough 7/19/98: Marine's best friend :)
-int dog_jumping, default_dog_jumping;   // killough 10/98
+int dogs, default_dogs; // killough 7/19/98: Marine's best friend :)
+int dog_jumping, default_dog_jumping; // killough 10/98
 
 // killough 8/8/98: distance friends tend to move towards players
 int distfriend = 128, default_distfriend = 128;
@@ -100,7 +101,7 @@ int monster_avoid_hazards, default_monster_avoid_hazards;
 // killough 9/9/98: whether monsters help friends
 int help_friends, default_help_friends;
 
-int flashing_hom;     // killough 10/98
+int flashing_hom; // killough 10/98
 
 int doom_weapon_toggles; // killough 10/98
 

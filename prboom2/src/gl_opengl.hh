@@ -46,35 +46,36 @@
 
 #if SDL_VERSION_ATLEAST(1, 3, 0)
 #if defined(__MACOSX__)
-#include <OpenGL/gl.h>	/* Header File For The OpenGL Library */
-#include <OpenGL/glu.h>	/* Header File For The GLU Library */
+#include <OpenGL/gl.h>  /* Header File For The OpenGL Library */
+#include <OpenGL/glu.h> /* Header File For The GLU Library */
 #elif defined(__MACOS__)
-#include <gl.h>		/* Header File For The OpenGL Library */
-#include <glu.h>	/* Header File For The GLU Library */
+#include <gl.h>  /* Header File For The OpenGL Library */
+#include <glu.h> /* Header File For The GLU Library */
 #else
-#include <GL/gl.h>	/* Header File For The OpenGL Library */
-#include <GL/glu.h>	/* Header File For The GLU Library */
+#include <GL/gl.h>  /* Header File For The OpenGL Library */
+#include <GL/glu.h> /* Header File For The GLU Library */
 #endif
 #endif
 
 #include "doomtype.hh"
 
 #if !defined(GL_DEPTH_STENCIL_EXT)
-#define GL_DEPTH_STENCIL_EXT              0x84F9
+#define GL_DEPTH_STENCIL_EXT 0x84F9
 #endif
 
 #define isExtensionSupported(ext) strstr(extensions, ext)
 
-//e6y: OpenGL version
-typedef enum {
-  OPENGL_VERSION_1_0,
-  OPENGL_VERSION_1_1,
-  OPENGL_VERSION_1_2,
-  OPENGL_VERSION_1_3,
-  OPENGL_VERSION_1_4,
-  OPENGL_VERSION_1_5,
-  OPENGL_VERSION_2_0,
-  OPENGL_VERSION_2_1,
+// e6y: OpenGL version
+typedef enum
+{
+    OPENGL_VERSION_1_0,
+    OPENGL_VERSION_1_1,
+    OPENGL_VERSION_1_2,
+    OPENGL_VERSION_1_3,
+    OPENGL_VERSION_1_4,
+    OPENGL_VERSION_1_5,
+    OPENGL_VERSION_2_0,
+    OPENGL_VERSION_2_1,
 } glversion_t;
 
 extern int gl_version;
@@ -103,88 +104,88 @@ extern dboolean gl_arb_pixel_buffer_object;
 extern dboolean gl_arb_shader_objects;
 
 // obsolete?
-extern PFNGLCOLORTABLEEXTPROC              GLEXT_glColorTableEXT;
+extern PFNGLCOLORTABLEEXTPROC GLEXT_glColorTableEXT;
 
-extern PFNGLBINDFRAMEBUFFEREXTPROC         GLEXT_glBindFramebufferEXT;
-extern PFNGLGENFRAMEBUFFERSEXTPROC         GLEXT_glGenFramebuffersEXT;
-extern PFNGLGENRENDERBUFFERSEXTPROC        GLEXT_glGenRenderbuffersEXT;
-extern PFNGLBINDRENDERBUFFEREXTPROC        GLEXT_glBindRenderbufferEXT;
-extern PFNGLRENDERBUFFERSTORAGEEXTPROC     GLEXT_glRenderbufferStorageEXT;
+extern PFNGLBINDFRAMEBUFFEREXTPROC GLEXT_glBindFramebufferEXT;
+extern PFNGLGENFRAMEBUFFERSEXTPROC GLEXT_glGenFramebuffersEXT;
+extern PFNGLGENRENDERBUFFERSEXTPROC GLEXT_glGenRenderbuffersEXT;
+extern PFNGLBINDRENDERBUFFEREXTPROC GLEXT_glBindRenderbufferEXT;
+extern PFNGLRENDERBUFFERSTORAGEEXTPROC GLEXT_glRenderbufferStorageEXT;
 extern PFNGLFRAMEBUFFERRENDERBUFFEREXTPROC GLEXT_glFramebufferRenderbufferEXT;
-extern PFNGLFRAMEBUFFERTEXTURE2DEXTPROC    GLEXT_glFramebufferTexture2DEXT;
-extern PFNGLCHECKFRAMEBUFFERSTATUSEXTPROC  GLEXT_glCheckFramebufferStatusEXT;
-extern PFNGLDELETEFRAMEBUFFERSEXTPROC      GLEXT_glDeleteFramebuffersEXT;
-extern PFNGLDELETERENDERBUFFERSEXTPROC     GLEXT_glDeleteRenderbuffersEXT;
+extern PFNGLFRAMEBUFFERTEXTURE2DEXTPROC GLEXT_glFramebufferTexture2DEXT;
+extern PFNGLCHECKFRAMEBUFFERSTATUSEXTPROC GLEXT_glCheckFramebufferStatusEXT;
+extern PFNGLDELETEFRAMEBUFFERSEXTPROC GLEXT_glDeleteFramebuffersEXT;
+extern PFNGLDELETERENDERBUFFERSEXTPROC GLEXT_glDeleteRenderbuffersEXT;
 
 /* ARB_multitexture command function pointers */
-extern PFNGLACTIVETEXTUREARBPROC           GLEXT_glActiveTextureARB;
-extern PFNGLCLIENTACTIVETEXTUREARBPROC     GLEXT_glClientActiveTextureARB;
-extern PFNGLMULTITEXCOORD2FARBPROC         GLEXT_glMultiTexCoord2fARB;
-extern PFNGLMULTITEXCOORD2FVARBPROC        GLEXT_glMultiTexCoord2fvARB;
+extern PFNGLACTIVETEXTUREARBPROC GLEXT_glActiveTextureARB;
+extern PFNGLCLIENTACTIVETEXTUREARBPROC GLEXT_glClientActiveTextureARB;
+extern PFNGLMULTITEXCOORD2FARBPROC GLEXT_glMultiTexCoord2fARB;
+extern PFNGLMULTITEXCOORD2FVARBPROC GLEXT_glMultiTexCoord2fvARB;
 
-extern PFNGLBLENDCOLOREXTPROC              GLEXT_glBlendColorEXT;
+extern PFNGLBLENDCOLOREXTPROC GLEXT_glBlendColorEXT;
 
 /* ARB_texture_compression */
-extern PFNGLCOMPRESSEDTEXIMAGE2DARBPROC    GLEXT_glCompressedTexImage2DARB;
+extern PFNGLCOMPRESSEDTEXIMAGE2DARBPROC GLEXT_glCompressedTexImage2DARB;
 
 /* VBO */
-extern PFNGLGENBUFFERSARBPROC              GLEXT_glGenBuffersARB;
-extern PFNGLDELETEBUFFERSARBPROC           GLEXT_glDeleteBuffersARB;
-extern PFNGLBINDBUFFERARBPROC              GLEXT_glBindBufferARB;
-extern PFNGLBUFFERDATAARBPROC              GLEXT_glBufferDataARB;
+extern PFNGLGENBUFFERSARBPROC GLEXT_glGenBuffersARB;
+extern PFNGLDELETEBUFFERSARBPROC GLEXT_glDeleteBuffersARB;
+extern PFNGLBINDBUFFERARBPROC GLEXT_glBindBufferARB;
+extern PFNGLBUFFERDATAARBPROC GLEXT_glBufferDataARB;
 
 /* PBO */
-extern PFNGLBUFFERSUBDATAARBPROC           GLEXT_glBufferSubDataARB;
-extern PFNGLGETBUFFERPARAMETERIVARBPROC    GLEXT_glGetBufferParameterivARB;
-extern PFNGLMAPBUFFERARBPROC               GLEXT_glMapBufferARB;
-extern PFNGLUNMAPBUFFERARBPROC             GLEXT_glUnmapBufferARB;
+extern PFNGLBUFFERSUBDATAARBPROC GLEXT_glBufferSubDataARB;
+extern PFNGLGETBUFFERPARAMETERIVARBPROC GLEXT_glGetBufferParameterivARB;
+extern PFNGLMAPBUFFERARBPROC GLEXT_glMapBufferARB;
+extern PFNGLUNMAPBUFFERARBPROC GLEXT_glUnmapBufferARB;
 
 /* GL_ARB_shader_objects */
 #ifdef USE_SHADERS
-extern PFNGLDELETEOBJECTARBPROC            GLEXT_glDeleteObjectARB;
-extern PFNGLGETHANDLEARBPROC               GLEXT_glGetHandleARB;
-extern PFNGLDETACHOBJECTARBPROC            GLEXT_glDetachObjectARB;
-extern PFNGLCREATESHADEROBJECTARBPROC      GLEXT_glCreateShaderObjectARB;
-extern PFNGLSHADERSOURCEARBPROC            GLEXT_glShaderSourceARB;
-extern PFNGLCOMPILESHADERARBPROC           GLEXT_glCompileShaderARB;
-extern PFNGLCREATEPROGRAMOBJECTARBPROC     GLEXT_glCreateProgramObjectARB;
-extern PFNGLATTACHOBJECTARBPROC            GLEXT_glAttachObjectARB;
-extern PFNGLLINKPROGRAMARBPROC             GLEXT_glLinkProgramARB;
-extern PFNGLUSEPROGRAMOBJECTARBPROC        GLEXT_glUseProgramObjectARB;
-extern PFNGLVALIDATEPROGRAMARBPROC         GLEXT_glValidateProgramARB;
+extern PFNGLDELETEOBJECTARBPROC GLEXT_glDeleteObjectARB;
+extern PFNGLGETHANDLEARBPROC GLEXT_glGetHandleARB;
+extern PFNGLDETACHOBJECTARBPROC GLEXT_glDetachObjectARB;
+extern PFNGLCREATESHADEROBJECTARBPROC GLEXT_glCreateShaderObjectARB;
+extern PFNGLSHADERSOURCEARBPROC GLEXT_glShaderSourceARB;
+extern PFNGLCOMPILESHADERARBPROC GLEXT_glCompileShaderARB;
+extern PFNGLCREATEPROGRAMOBJECTARBPROC GLEXT_glCreateProgramObjectARB;
+extern PFNGLATTACHOBJECTARBPROC GLEXT_glAttachObjectARB;
+extern PFNGLLINKPROGRAMARBPROC GLEXT_glLinkProgramARB;
+extern PFNGLUSEPROGRAMOBJECTARBPROC GLEXT_glUseProgramObjectARB;
+extern PFNGLVALIDATEPROGRAMARBPROC GLEXT_glValidateProgramARB;
 
-extern PFNGLUNIFORM1FARBPROC               GLEXT_glUniform1fARB;
-extern PFNGLUNIFORM2FARBPROC               GLEXT_glUniform2fARB;
-extern PFNGLUNIFORM1IARBPROC               GLEXT_glUniform1iARB;
+extern PFNGLUNIFORM1FARBPROC GLEXT_glUniform1fARB;
+extern PFNGLUNIFORM2FARBPROC GLEXT_glUniform2fARB;
+extern PFNGLUNIFORM1IARBPROC GLEXT_glUniform1iARB;
 
-extern PFNGLGETOBJECTPARAMETERFVARBPROC     GLEXT_glGetObjectParameterfvARB;
-extern PFNGLGETOBJECTPARAMETERIVARBPROC     GLEXT_glGetObjectParameterivARB;
-extern PFNGLGETINFOLOGARBPROC               GLEXT_glGetInfoLogARB;
-extern PFNGLGETATTACHEDOBJECTSARBPROC       GLEXT_glGetAttachedObjectsARB;
-extern PFNGLGETUNIFORMLOCATIONARBPROC       GLEXT_glGetUniformLocationARB;
-extern PFNGLGETACTIVEUNIFORMARBPROC         GLEXT_glGetActiveUniformARB;
-extern PFNGLGETUNIFORMFVARBPROC             GLEXT_glGetUniformfvARB;
+extern PFNGLGETOBJECTPARAMETERFVARBPROC GLEXT_glGetObjectParameterfvARB;
+extern PFNGLGETOBJECTPARAMETERIVARBPROC GLEXT_glGetObjectParameterivARB;
+extern PFNGLGETINFOLOGARBPROC GLEXT_glGetInfoLogARB;
+extern PFNGLGETATTACHEDOBJECTSARBPROC GLEXT_glGetAttachedObjectsARB;
+extern PFNGLGETUNIFORMLOCATIONARBPROC GLEXT_glGetUniformLocationARB;
+extern PFNGLGETACTIVEUNIFORMARBPROC GLEXT_glGetActiveUniformARB;
+extern PFNGLGETUNIFORMFVARBPROC GLEXT_glGetUniformfvARB;
 #endif
 
 void gld_InitOpenGL(dboolean compatibility_mode);
 
-//states
+// states
 void gld_EnableTexture2D(GLenum texture, int enable);
 void gld_EnableClientCoordArray(GLenum texture, int enable);
 void gld_EnableMultisample(int enable);
 
 typedef enum
 {
-  TMF_MASKBIT = 1,
-  TMF_OPAQUEBIT = 2,
-  TMF_INVERTBIT = 4,
+    TMF_MASKBIT = 1,
+    TMF_OPAQUEBIT = 2,
+    TMF_INVERTBIT = 4,
 
-  TM_MODULATE = 0,
-  TM_MASK = TMF_MASKBIT,
-  TM_OPAQUE = TMF_OPAQUEBIT,
-  TM_INVERT = TMF_INVERTBIT,
-  //TM_INVERTMASK = TMF_MASKBIT | TMF_INVERTBIT
-  TM_INVERTOPAQUE = TMF_INVERTBIT | TMF_OPAQUEBIT,
+    TM_MODULATE = 0,
+    TM_MASK = TMF_MASKBIT,
+    TM_OPAQUE = TMF_OPAQUEBIT,
+    TM_INVERT = TMF_INVERTBIT,
+    // TM_INVERTMASK = TMF_MASKBIT | TMF_INVERTBIT
+    TM_INVERTOPAQUE = TMF_INVERTBIT | TMF_OPAQUEBIT,
 } tex_mode_e;
 void SetTextureMode(tex_mode_e type);
 

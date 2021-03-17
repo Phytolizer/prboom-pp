@@ -28,6 +28,6 @@
 
 void IN_Ticker(void);
 void IN_Drawer(void);
-void IN_Start(wbstartstruct_t* wbstartstruct);
+void IN_Start(wbstartstruct_t *wbstartstruct);
 
 #endif

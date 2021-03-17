@@ -32,7 +32,7 @@ byte *viewimage;
 int viewwidth, scaledviewwidth, viewheight, viewwindowx, viewwindowy;
 byte *ylookup[MAXHEIGHT];
 int columnofs[MAXWIDTH];
-byte translations[3][256];      // color tables for different players
+byte translations[3][256]; // color tables for different players
 
 /*
 ==================
@@ -51,9 +51,9 @@ int dc_yh;
 fixed_t dc_iscale;
 fixed_t dc_texturemid;
 int dc_texheight;
-byte *dc_source;                // first pixel in a column (possibly virtual)
+byte *dc_source; // first pixel in a column (possibly virtual)
 
-int dccount;                    // just for profiling
+int dccount; // just for profiling
 
 void R_DrawColumn(void)
 {
@@ -67,7 +67,7 @@ void R_DrawColumn(void)
         return;
 
 #ifdef RANGECHECK
-    if ((unsigned) dc_x >= SCREENWIDTH || dc_yl < 0 || dc_yh >= SCREENHEIGHT)
+    if ((unsigned)dc_x >= SCREENWIDTH || dc_yl < 0 || dc_yh >= SCREENHEIGHT)
         I_Error("R_DrawColumn: %i to %i at %i", dc_yl, dc_yh, dc_x);
 #endif
 
@@ -76,35 +76,35 @@ void R_DrawColumn(void)
     fracstep = dc_iscale;
     frac = dc_texturemid + (dc_yl - centery) * fracstep;
 
-  if (dc_texheight & heightmask) // not a power of 2 -- killough
-  {
-    heightmask++;
-    heightmask <<= FRACBITS;
-
-    if (frac < 0)
-	while ((frac += heightmask) < 0);
-    else
-	while (frac >= heightmask)
-	    frac -= heightmask;
-
-    do
+    if (dc_texheight & heightmask) // not a power of 2 -- killough
     {
-	*dest = dc_colormap[dc_source[frac>>FRACBITS]];
-	dest += SCREENWIDTH;
-	if ((frac += fracstep) >= heightmask)
-	    frac -= heightmask;
-    } while (count--);
-  }
-  else // texture height is a power of 2 -- killough
-  {
-    do
-    {
-        *dest = dc_colormap[dc_source[(frac >> FRACBITS) & heightmask]];
-        dest += SCREENWIDTH;
-        frac += fracstep;
+        heightmask++;
+        heightmask <<= FRACBITS;
+
+        if (frac < 0)
+            while ((frac += heightmask) < 0)
+                ;
+        else
+            while (frac >= heightmask)
+                frac -= heightmask;
+
+        do
+        {
+            *dest = dc_colormap[dc_source[frac >> FRACBITS]];
+            dest += SCREENWIDTH;
+            if ((frac += fracstep) >= heightmask)
+                frac -= heightmask;
+        } while (count--);
     }
-    while (count--);
-  }
+    else // texture height is a power of 2 -- killough
+    {
+        do
+        {
+            *dest = dc_colormap[dc_source[(frac >> FRACBITS) & heightmask]];
+            dest += SCREENWIDTH;
+            frac += fracstep;
+        } while (count--);
+    }
 }
 
 void R_DrawColumnLow(void)
@@ -118,7 +118,7 @@ void R_DrawColumnLow(void)
         return;
 
 #ifdef RANGECHECK
-    if ((unsigned) dc_x >= SCREENWIDTH || dc_yl < 0 || dc_yh >= SCREENHEIGHT)
+    if ((unsigned)dc_x >= SCREENWIDTH || dc_yl < 0 || dc_yh >= SCREENHEIGHT)
         I_Error("R_DrawColumn: %i to %i at %i", dc_yl, dc_yh, dc_x);
 //      dccount++;
 #endif
@@ -133,8 +133,7 @@ void R_DrawColumnLow(void)
         *dest = dc_colormap[dc_source[(frac >> FRACBITS) & 127]];
         dest += SCREENWIDTH;
         frac += fracstep;
-    }
-    while (count--);
+    } while (count--);
 }
 
 // Translucent column draw - blended with background using tinttable.
@@ -155,7 +154,7 @@ void R_DrawTLColumn(void)
         return;
 
 #ifdef RANGECHECK
-    if ((unsigned) dc_x >= SCREENWIDTH || dc_yl < 0 || dc_yh >= SCREENHEIGHT)
+    if ((unsigned)dc_x >= SCREENWIDTH || dc_yl < 0 || dc_yh >= SCREENHEIGHT)
         I_Error("R_DrawTLColumn: %i to %i at %i", dc_yl, dc_yh, dc_x);
 #endif
 
@@ -166,14 +165,12 @@ void R_DrawTLColumn(void)
 
     do
     {
-        *dest =
-            tinttable[((*dest) << 8) +
-                      dc_colormap[dc_source[(frac >> FRACBITS) & 127]]];
+        *dest = tinttable[((*dest) << 8) +
+                          dc_colormap[dc_source[(frac >> FRACBITS) & 127]]];
 
         dest += SCREENWIDTH;
         frac += fracstep;
-    }
-    while (count--);
+    } while (count--);
 }
 
 /*
@@ -198,7 +195,7 @@ void R_DrawTranslatedColumn(void)
         return;
 
 #ifdef RANGECHECK
-    if ((unsigned) dc_x >= SCREENWIDTH || dc_yl < 0 || dc_yh >= SCREENHEIGHT)
+    if ((unsigned)dc_x >= SCREENWIDTH || dc_yl < 0 || dc_yh >= SCREENHEIGHT)
         I_Error("R_DrawColumn: %i to %i at %i", dc_yl, dc_yh, dc_x);
 #endif
 
@@ -212,8 +209,7 @@ void R_DrawTranslatedColumn(void)
         *dest = dc_colormap[dc_translation[dc_source[frac >> FRACBITS]]];
         dest += SCREENWIDTH;
         frac += fracstep;
-    }
-    while (count--);
+    } while (count--);
 }
 
 void R_DrawTranslatedTLColumn(void)
@@ -227,7 +223,7 @@ void R_DrawTranslatedTLColumn(void)
         return;
 
 #ifdef RANGECHECK
-    if ((unsigned) dc_x >= SCREENWIDTH || dc_yl < 0 || dc_yh >= SCREENHEIGHT)
+    if ((unsigned)dc_x >= SCREENWIDTH || dc_yl < 0 || dc_yh >= SCREENHEIGHT)
         I_Error("R_DrawColumn: %i to %i at %i", dc_yl, dc_yh, dc_x);
 #endif
 
@@ -238,14 +234,12 @@ void R_DrawTranslatedTLColumn(void)
 
     do
     {
-        *dest = tinttable[((*dest) << 8)
-                          +
-                          dc_colormap[dc_translation
-                                      [dc_source[frac >> FRACBITS]]]];
+        *dest =
+            tinttable[((*dest) << 8) +
+                      dc_colormap[dc_translation[dc_source[frac >> FRACBITS]]]];
         dest += SCREENWIDTH;
         frac += fracstep;
-    }
-    while (count--);
+    } while (count--);
 }
 
 //--------------------------------------------------------------------------
@@ -268,14 +262,14 @@ void R_InitTranslationTables(void)
     {
         if (i >= 225 && i <= 240)
         {
-            translationtables[i] = 114 + (i - 225);     // yellow
-            translationtables[i + 256] = 145 + (i - 225);       // red
-            translationtables[i + 512] = 190 + (i - 225);       // blue
+            translationtables[i] = 114 + (i - 225);       // yellow
+            translationtables[i + 256] = 145 + (i - 225); // red
+            translationtables[i + 512] = 190 + (i - 225); // blue
         }
         else
         {
-            translationtables[i] = translationtables[i + 256]
-                = translationtables[i + 512] = i;
+            translationtables[i] = translationtables[i + 256] =
+                translationtables[i + 512] = i;
         }
     }
 }
@@ -296,9 +290,9 @@ fixed_t ds_xfrac;
 fixed_t ds_yfrac;
 fixed_t ds_xstep;
 fixed_t ds_ystep;
-byte *ds_source;                // start of a 64*64 tile image
+byte *ds_source; // start of a 64*64 tile image
 
-int dscount;                    // just for profiling
+int dscount; // just for profiling
 
 void R_DrawSpan(void)
 {
@@ -307,8 +301,8 @@ void R_DrawSpan(void)
     int count, spot;
 
 #ifdef RANGECHECK
-    if (ds_x2 < ds_x1 || ds_x1 < 0 || ds_x2 >= SCREENWIDTH
-        || (unsigned) ds_y > SCREENHEIGHT)
+    if (ds_x2 < ds_x1 || ds_x1 < 0 || ds_x2 >= SCREENWIDTH ||
+        (unsigned)ds_y > SCREENHEIGHT)
         I_Error("R_DrawSpan: %i to %i at %i", ds_x1, ds_x2, ds_y);
 //      dscount++;
 #endif
@@ -324,8 +318,7 @@ void R_DrawSpan(void)
         *dest++ = ds_colormap[ds_source[spot]];
         xfrac += ds_xstep;
         yfrac += ds_ystep;
-    }
-    while (count--);
+    } while (count--);
 }
 
 void R_DrawSpanLow(void)
@@ -335,8 +328,8 @@ void R_DrawSpanLow(void)
     int count, spot;
 
 #ifdef RANGECHECK
-    if (ds_x2 < ds_x1 || ds_x1 < 0 || ds_x2 >= SCREENWIDTH
-        || (unsigned) ds_y > SCREENHEIGHT)
+    if (ds_x2 < ds_x1 || ds_x1 < 0 || ds_x2 >= SCREENWIDTH ||
+        (unsigned)ds_y > SCREENHEIGHT)
         I_Error("R_DrawSpan: %i to %i at %i", ds_x1, ds_x2, ds_y);
 //      dscount++;
 #endif
@@ -352,11 +345,8 @@ void R_DrawSpanLow(void)
         *dest++ = ds_colormap[ds_source[spot]];
         xfrac += ds_xstep;
         yfrac += ds_ystep;
-    }
-    while (count--);
+    } while (count--);
 }
-
-
 
 /*
 ================
@@ -380,7 +370,6 @@ void R_InitBuffer(int width, int height)
     for (i = 0; i < height; i++)
         ylookup[i] = I_VideoBuffer + (i + viewwindowy) * SCREENWIDTH;
 }
-
 
 /*
 ==================
@@ -424,27 +413,37 @@ void R_DrawViewBorder(void)
             dest += (SCREENWIDTH & 63);
         }
     }
-    for (x = (viewwindowx >> crispy->hires); x < ((viewwindowx >> crispy->hires) + (viewwidth >> crispy->hires)); x += 16)
+    for (x = (viewwindowx >> crispy->hires);
+         x < ((viewwindowx >> crispy->hires) + (viewwidth >> crispy->hires));
+         x += 16)
     {
         V_DrawPatch(x, (viewwindowy >> crispy->hires) - 4,
                     W_CacheLumpName(DEH_String("bordt"), PU_CACHE));
-        V_DrawPatch(x, (viewwindowy >> crispy->hires) + (viewheight >> crispy->hires),
-                    W_CacheLumpName(DEH_String("bordb"), PU_CACHE));
+        V_DrawPatch(
+            x, (viewwindowy >> crispy->hires) + (viewheight >> crispy->hires),
+            W_CacheLumpName(DEH_String("bordb"), PU_CACHE));
     }
-    for (y = (viewwindowy >> crispy->hires); y < ((viewwindowy >> crispy->hires) + (viewheight >> crispy->hires)); y += 16)
+    for (y = (viewwindowy >> crispy->hires);
+         y < ((viewwindowy >> crispy->hires) + (viewheight >> crispy->hires));
+         y += 16)
     {
         V_DrawPatch((viewwindowx >> crispy->hires) - 4, y,
                     W_CacheLumpName(DEH_String("bordl"), PU_CACHE));
-        V_DrawPatch((viewwindowx >> crispy->hires) + (viewwidth >> crispy->hires), y,
-                    W_CacheLumpName(DEH_String("bordr"), PU_CACHE));
+        V_DrawPatch((viewwindowx >> crispy->hires) +
+                        (viewwidth >> crispy->hires),
+                    y, W_CacheLumpName(DEH_String("bordr"), PU_CACHE));
     }
-    V_DrawPatch((viewwindowx >> crispy->hires) - 4, (viewwindowy >> crispy->hires) - 4,
+    V_DrawPatch((viewwindowx >> crispy->hires) - 4,
+                (viewwindowy >> crispy->hires) - 4,
                 W_CacheLumpName(DEH_String("bordtl"), PU_CACHE));
-    V_DrawPatch((viewwindowx >> crispy->hires) + (viewwidth >> crispy->hires), (viewwindowy >> crispy->hires) - 4,
+    V_DrawPatch((viewwindowx >> crispy->hires) + (viewwidth >> crispy->hires),
+                (viewwindowy >> crispy->hires) - 4,
                 W_CacheLumpName(DEH_String("bordtr"), PU_CACHE));
-    V_DrawPatch((viewwindowx >> crispy->hires) + (viewwidth >> crispy->hires), (viewwindowy >> crispy->hires) + (viewheight >> crispy->hires),
+    V_DrawPatch((viewwindowx >> crispy->hires) + (viewwidth >> crispy->hires),
+                (viewwindowy >> crispy->hires) + (viewheight >> crispy->hires),
                 W_CacheLumpName(DEH_String("bordbr"), PU_CACHE));
-    V_DrawPatch((viewwindowx >> crispy->hires) - 4, (viewwindowy >> crispy->hires) + (viewheight >> crispy->hires),
+    V_DrawPatch((viewwindowx >> crispy->hires) - 4,
+                (viewwindowy >> crispy->hires) + (viewheight >> crispy->hires),
                 W_CacheLumpName(DEH_String("bordbl"), PU_CACHE));
 }
 
@@ -492,23 +491,35 @@ void R_DrawTopBorder(void)
     }
     if ((viewwindowy >> crispy->hires) < 25)
     {
-        for (x = (viewwindowx >> crispy->hires); x < ((viewwindowx >> crispy->hires) + (viewwidth >> crispy->hires)); x += 16)
+        for (x = (viewwindowx >> crispy->hires);
+             x <
+             ((viewwindowx >> crispy->hires) + (viewwidth >> crispy->hires));
+             x += 16)
         {
             V_DrawPatch(x, (viewwindowy >> crispy->hires) - 4,
                         W_CacheLumpName(DEH_String("bordt"), PU_CACHE));
         }
-        V_DrawPatch((viewwindowx >> crispy->hires) - 4, (viewwindowy >> crispy->hires),
+        V_DrawPatch((viewwindowx >> crispy->hires) - 4,
+                    (viewwindowy >> crispy->hires),
                     W_CacheLumpName(DEH_String("bordl"), PU_CACHE));
-        V_DrawPatch((viewwindowx >> crispy->hires) + (viewwidth >> crispy->hires), (viewwindowy >> crispy->hires),
+        V_DrawPatch((viewwindowx >> crispy->hires) +
+                        (viewwidth >> crispy->hires),
+                    (viewwindowy >> crispy->hires),
                     W_CacheLumpName(DEH_String("bordr"), PU_CACHE));
-        V_DrawPatch((viewwindowx >> crispy->hires) - 4, (viewwindowy >> crispy->hires) + 16,
+        V_DrawPatch((viewwindowx >> crispy->hires) - 4,
+                    (viewwindowy >> crispy->hires) + 16,
                     W_CacheLumpName(DEH_String("bordl"), PU_CACHE));
-        V_DrawPatch((viewwindowx >> crispy->hires) + (viewwidth >> crispy->hires), (viewwindowy >> crispy->hires) + 16,
+        V_DrawPatch((viewwindowx >> crispy->hires) +
+                        (viewwidth >> crispy->hires),
+                    (viewwindowy >> crispy->hires) + 16,
                     W_CacheLumpName(DEH_String("bordr"), PU_CACHE));
 
-        V_DrawPatch((viewwindowx >> crispy->hires) - 4, (viewwindowy >> crispy->hires) - 4,
+        V_DrawPatch((viewwindowx >> crispy->hires) - 4,
+                    (viewwindowy >> crispy->hires) - 4,
                     W_CacheLumpName(DEH_String("bordtl"), PU_CACHE));
-        V_DrawPatch((viewwindowx >> crispy->hires) + (viewwidth >> crispy->hires), (viewwindowy >> crispy->hires) - 4,
+        V_DrawPatch((viewwindowx >> crispy->hires) +
+                        (viewwidth >> crispy->hires),
+                    (viewwindowy >> crispy->hires) - 4,
                     W_CacheLumpName(DEH_String("bordtr"), PU_CACHE));
     }
 }

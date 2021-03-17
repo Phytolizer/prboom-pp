@@ -54,8 +54,8 @@
  * handles maximum brightness (torches, muzzle flare, light sources)
  */
 
-#define FF_FULLBRIGHT   0x8000  /* flag in thing->frame */
-#define FF_FRAMEMASK    0x7fff
+#define FF_FULLBRIGHT 0x8000 /* flag in thing->frame */
+#define FF_FRAMEMASK 0x7fff
 
 /*
  * Overlay psprites are scaled shapes
@@ -65,17 +65,17 @@
 
 typedef enum
 {
-  ps_weapon,
-  ps_flash,
-  NUMPSPRITES
+    ps_weapon,
+    ps_flash,
+    NUMPSPRITES
 } psprnum_t;
 
 typedef struct
 {
-  state_t *state;       /* a NULL state means not active */
-  int     tics;
-  fixed_t sx;
-  fixed_t sy;
+    state_t *state; /* a NULL state means not active */
+    int tics;
+    fixed_t sx;
+    fixed_t sy;
 } pspdef_t;
 
 enum
@@ -87,7 +87,7 @@ enum
     NUM_CENTERWEAPON,
 };
 
-extern int weapon_preferences[2][NUMWEAPONS+1];      /* killough 5/2/98 */
+extern int weapon_preferences[2][NUMWEAPONS + 1]; /* killough 5/2/98 */
 extern int weapon_attack_alignment;
 int P_WeaponPreferred(int w1, int w2);
 
@@ -99,30 +99,30 @@ void P_SetupPsprites(player_t *curplayer);
 void P_MovePsprites(player_t *curplayer);
 void P_DropWeapon(player_t *player);
 
-void A_Light0(player_t*, pspdef_t*);
-void A_WeaponReady(player_t *, pspdef_t*);
-void A_Lower(player_t*, pspdef_t*);
-void A_Raise(player_t*, pspdef_t*);
-void A_Punch(player_t*, pspdef_t*);
+void A_Light0(player_t *, pspdef_t *);
+void A_WeaponReady(player_t *, pspdef_t *);
+void A_Lower(player_t *, pspdef_t *);
+void A_Raise(player_t *, pspdef_t *);
+void A_Punch(player_t *, pspdef_t *);
 void A_ReFire(player_t *pS, pspdef_t *ptr);
-void A_FirePistol(player_t*, pspdef_t*);
-void A_Light1(player_t*, pspdef_t*);
-void A_FireShotgun(player_t*, pspdef_t*);
-void A_Light2(player_t*, pspdef_t*);
-void A_FireShotgun2(player_t*, pspdef_t*);
-void A_CheckReload(player_t*, pspdef_t*);
-void A_OpenShotgun2(player_t*, pspdef_t*);
-void A_LoadShotgun2(player_t*, pspdef_t*);
-void A_CloseShotgun2(player_t*, pspdef_t*);
-void A_FireCGun(player_t*, pspdef_t*);
-void A_GunFlash(player_t*, pspdef_t*);
-void A_FireMissile(player_t*, pspdef_t*);
-void A_Saw(player_t*, pspdef_t*);
-void A_FirePlasma(player_t*, pspdef_t*);
-void A_BFGsound(player_t*, pspdef_t*);
-void A_FireBFG(player_t*, pspdef_t*);
+void A_FirePistol(player_t *, pspdef_t *);
+void A_Light1(player_t *, pspdef_t *);
+void A_FireShotgun(player_t *, pspdef_t *);
+void A_Light2(player_t *, pspdef_t *);
+void A_FireShotgun2(player_t *, pspdef_t *);
+void A_CheckReload(player_t *, pspdef_t *);
+void A_OpenShotgun2(player_t *, pspdef_t *);
+void A_LoadShotgun2(player_t *, pspdef_t *);
+void A_CloseShotgun2(player_t *, pspdef_t *);
+void A_FireCGun(player_t *, pspdef_t *);
+void A_GunFlash(player_t *, pspdef_t *);
+void A_FireMissile(player_t *, pspdef_t *);
+void A_Saw(player_t *, pspdef_t *);
+void A_FirePlasma(player_t *, pspdef_t *);
+void A_BFGsound(player_t *, pspdef_t *);
+void A_FireBFG(player_t *, pspdef_t *);
 void A_BFGSpray(mobj_t *);
-void A_FireOldBFG(player_t*, pspdef_t*);
+void A_FireOldBFG(player_t *, pspdef_t *);
 
 // heretic
 
@@ -130,15 +130,15 @@ void A_FireOldBFG(player_t*, pspdef_t*);
 
 struct player_t;
 
-void P_RepositionMace(mobj_t * mo);
-void P_ActivateBeak(player_t * player);
-void P_PostChickenWeapon(player_t * player, weapontype_t weapon);
-void P_SetPsprite(player_t * player, int position, statenum_t stnum);
+void P_RepositionMace(mobj_t *mo);
+void P_ActivateBeak(player_t *player);
+void P_PostChickenWeapon(player_t *player, weapontype_t weapon);
+void P_SetPsprite(player_t *player, int position, statenum_t stnum);
 void P_OpenWeapons(void);
 void P_CloseWeapons(void);
-void P_AddMaceSpot(const mapthing_t * mthing);
-void P_DropWeapon(player_t * player);
-void P_UpdateBeak(player_t * player, pspdef_t * psp);
-dboolean Heretic_P_CheckAmmo(player_t * player);
+void P_AddMaceSpot(const mapthing_t *mthing);
+void P_DropWeapon(player_t *player);
+void P_UpdateBeak(player_t *player, pspdef_t *psp);
+dboolean Heretic_P_CheckAmmo(player_t *player);
 
 #endif

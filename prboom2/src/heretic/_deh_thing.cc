@@ -29,30 +29,30 @@
 #include "info.hh"
 
 DEH_BEGIN_MAPPING(thing_mapping, mobjinfo_t)
-  DEH_MAPPING("ID #",                doomednum)
-  DEH_MAPPING("Initial frame",       spawnstate)
-  DEH_MAPPING("Hit points",          spawnhealth)
-  DEH_MAPPING("First moving frame",  seestate)
-  DEH_MAPPING("Alert sound",         seesound)
-  DEH_MAPPING("Reaction time",       reactiontime)
-  DEH_MAPPING("Attack sound",        attacksound)
-  DEH_MAPPING("Injury frame",        painstate)
-  DEH_MAPPING("Pain chance",         painchance)
-  DEH_MAPPING("Pain sound",          painsound)
-  DEH_MAPPING("Close attack frame",  meleestate)
-  DEH_MAPPING("Far attack frame",    missilestate)
-  DEH_MAPPING("Burning frame",       crashstate)
-  DEH_MAPPING("Death frame",         deathstate)
-  DEH_MAPPING("Exploding frame",     xdeathstate)
-  DEH_MAPPING("Death sound",         deathsound)
-  DEH_MAPPING("Speed",               speed)
-  DEH_MAPPING("Width",               radius)
-  DEH_MAPPING("Height",              height)
-  DEH_MAPPING("Mass",                mass)
-  DEH_MAPPING("Missile damage",      damage)
-  DEH_MAPPING("Action sound",        activesound)
-  DEH_MAPPING("Bits 1",              flags)
-  DEH_MAPPING("Bits 2",              flags2)
+DEH_MAPPING("ID #", doomednum)
+DEH_MAPPING("Initial frame", spawnstate)
+DEH_MAPPING("Hit points", spawnhealth)
+DEH_MAPPING("First moving frame", seestate)
+DEH_MAPPING("Alert sound", seesound)
+DEH_MAPPING("Reaction time", reactiontime)
+DEH_MAPPING("Attack sound", attacksound)
+DEH_MAPPING("Injury frame", painstate)
+DEH_MAPPING("Pain chance", painchance)
+DEH_MAPPING("Pain sound", painsound)
+DEH_MAPPING("Close attack frame", meleestate)
+DEH_MAPPING("Far attack frame", missilestate)
+DEH_MAPPING("Burning frame", crashstate)
+DEH_MAPPING("Death frame", deathstate)
+DEH_MAPPING("Exploding frame", xdeathstate)
+DEH_MAPPING("Death sound", deathsound)
+DEH_MAPPING("Speed", speed)
+DEH_MAPPING("Width", radius)
+DEH_MAPPING("Height", height)
+DEH_MAPPING("Mass", mass)
+DEH_MAPPING("Missile damage", damage)
+DEH_MAPPING("Action sound", activesound)
+DEH_MAPPING("Bits 1", flags)
+DEH_MAPPING("Bits 2", flags2)
 DEH_END_MAPPING
 
 static void *DEH_ThingStart(deh_context_t *context, char *line)
@@ -90,9 +90,9 @@ static void DEH_ThingParseLine(deh_context_t *context, char *line, void *tag)
     int ivalue;
 
     if (tag == NULL)
-       return;
+        return;
 
-    mobj = (mobjinfo_t *) tag;
+    mobj = (mobjinfo_t *)tag;
 
     // Parse the assignment
 
@@ -126,18 +126,12 @@ static void DEH_ThingSHA1Sum(sha1_context_t *context)
 {
     int i;
 
-    for (i=0; i<NUMMOBJTYPES; ++i)
+    for (i = 0; i < NUMMOBJTYPES; ++i)
     {
         DEH_StructSHA1Sum(context, &thing_mapping, &mobjinfo[i]);
     }
 }
 
-deh_section_t deh_section_thing =
-{
-    "Thing",
-    NULL,
-    DEH_ThingStart,
-    DEH_ThingParseLine,
-    NULL,
-    DEH_ThingSHA1Sum,
+deh_section_t deh_section_thing = {
+    "Thing", NULL, DEH_ThingStart, DEH_ThingParseLine, NULL, DEH_ThingSHA1Sum,
 };

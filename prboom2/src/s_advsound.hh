@@ -37,18 +37,18 @@
 #include "p_mobj.hh"
 
 //
-//MUSINFO lump
+// MUSINFO lump
 //
 
 #define MAX_MUS_ENTRIES 64
 
 typedef struct musinfo_s
 {
-  mobj_t *mapthing;
-  mobj_t *lastmapthing;
-  int tics;
-  int current_item;
-  int items[MAX_MUS_ENTRIES];
+    mobj_t *mapthing;
+    mobj_t *lastmapthing;
+    int tics;
+    int current_item;
+    int items[MAX_MUS_ENTRIES];
 } musinfo_t;
 
 extern musinfo_t musinfo;

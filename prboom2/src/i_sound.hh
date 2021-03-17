@@ -60,10 +60,11 @@ void I_ShutdownSound(void);
 void I_SetChannels(void);
 
 // Get raw data lump index for sound descriptor.
-int I_GetSfxLumpNum (sfxinfo_t *sfxinfo);
+int I_GetSfxLumpNum(sfxinfo_t *sfxinfo);
 
 // Starts a sound in a particular sound channel.
-int I_StartSound(int id, int channel, int vol, int sep, int pitch, int priority);
+int I_StartSound(int id, int channel, int vol, int sep, int pitch,
+                 int priority);
 
 // Stops a sound channel.
 void I_StopSound(int handle);
@@ -83,12 +84,14 @@ void I_UpdateSoundParams(int handle, int vol, int sep, int pitch);
 // NSM sound capture routines
 // silences sound output, and instead allows sound capture to work
 // call this before sound startup
-void I_SetSoundCap (void);
+void I_SetSoundCap(void);
 // grabs len samples of audio (16 bit interleaved)
-unsigned char *I_GrabSound (int len);
+unsigned char *I_GrabSound(int len);
 
 // NSM helper routine for some of the streaming audio
-void I_ResampleStream (void *dest, unsigned nsamp, void (*proc) (void *dest, unsigned nsamp), unsigned sratein, unsigned srateout);
+void I_ResampleStream(void *dest, unsigned nsamp,
+                      void (*proc)(void *dest, unsigned nsamp),
+                      unsigned sratein, unsigned srateout);
 
 //
 //  MUSIC I/O
@@ -111,7 +114,7 @@ void I_ResumeSong(int handle);
 int I_RegisterSong(const void *data, size_t len);
 
 // cournia - tries to load a music file
-int I_RegisterMusic( const char* filename, musicinfo_t *music );
+int I_RegisterMusic(const char *filename, musicinfo_t *music);
 
 // Called by anything that wishes to start music.
 //  plays a song, and when the song is done,
@@ -136,17 +139,17 @@ extern int use_experimental_music;
 extern int mus_fluidsynth_chorus;
 extern int mus_fluidsynth_reverb;
 extern int mus_fluidsynth_gain; // NSM  fine tune fluidsynth output level
-extern int mus_opl_gain; // NSM  fine tune OPL output level
+extern int mus_opl_gain;        // NSM  fine tune OPL output level
 
 // prefered MIDI player
 typedef enum
 {
-  midi_player_sdl,
-  midi_player_fluidsynth,
-  midi_player_opl2,
-  midi_player_portmidi,
+    midi_player_sdl,
+    midi_player_fluidsynth,
+    midi_player_opl2,
+    midi_player_portmidi,
 
-  midi_player_last
+    midi_player_last
 } midi_player_name_t;
 
 extern const char *snd_midiplayer;

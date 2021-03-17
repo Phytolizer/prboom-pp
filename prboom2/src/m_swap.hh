@@ -31,7 +31,6 @@
  *
  *-----------------------------------------------------------------------------*/
 
-
 #ifndef __M_SWAP__
 #define __M_SWAP__
 
@@ -59,10 +58,10 @@
 #ifdef HAVE_ASM_BYTEORDER_H
 #include <asm/byteorder.h>
 #ifdef __arch__swab16
-#define doom_swap_s  (signed short)__arch__swab16
+#define doom_swap_s (signed short)__arch__swab16
 #endif
 #ifdef __arch__swab32
-#define doom_swap_l  (signed long)__arch__swab32
+#define doom_swap_l (signed long)__arch__swab32
 #endif
 #endif /* HAVE_ASM_BYTEORDER_H */
 
@@ -74,17 +73,17 @@
 #endif
 
 #ifndef doom_swap_l
-#define doom_swap_l(x) \
-        ((long int)((((unsigned long int)(x) & 0x000000ffU) << 24) | \
-                             (((unsigned long int)(x) & 0x0000ff00U) <<  8) | \
-                             (((unsigned long int)(x) & 0x00ff0000U) >>  8) | \
-                             (((unsigned long int)(x) & 0xff000000U) >> 24)))
+#define doom_swap_l(x)                                                         \
+    ((long int)((((unsigned long int)(x)&0x000000ffU) << 24) |                 \
+                (((unsigned long int)(x)&0x0000ff00U) << 8) |                  \
+                (((unsigned long int)(x)&0x00ff0000U) >> 8) |                  \
+                (((unsigned long int)(x)&0xff000000U) >> 24)))
 #endif
 
 #ifndef doom_swap_s
-#define doom_swap_s(x) \
-        ((short int)((((unsigned short int)(x) & 0x00ff) << 8) | \
-                              (((unsigned short int)(x) & 0xff00) >> 8)))
+#define doom_swap_s(x)                                                         \
+    ((short int)((((unsigned short int)(x)&0x00ff) << 8) |                     \
+                 (((unsigned short int)(x)&0xff00) >> 8)))
 #endif
 
 /* Macros are named doom_XtoYT, where

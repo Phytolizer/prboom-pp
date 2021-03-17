@@ -47,10 +47,10 @@
 #include "v_video.hh"
 #include "v_trans.hh" // [crispy] dp_translation
 
-#define CT_KEY_GREEN    'g'
-#define CT_KEY_YELLOW   'y'
-#define CT_KEY_RED      'r'
-#define CT_KEY_BLUE     'b'
+#define CT_KEY_GREEN 'g'
+#define CT_KEY_YELLOW 'y'
+#define CT_KEY_RED 'r'
+#define CT_KEY_BLUE 'b'
 
 #define STARTUP_WINDOW_X 17
 #define STARTUP_WINDOW_Y 7
@@ -58,12 +58,12 @@
 GameMode_t gamemode = indetermined;
 const char *gamedescription = "unknown";
 
-boolean nomonsters;             // checkparm of -nomonsters
-boolean respawnparm;            // checkparm of -respawn
-boolean debugmode;              // checkparm of -debug
-boolean ravpic;                 // checkparm of -ravpic
-boolean cdrom;                  // true if cd-rom mode active
-boolean noartiskip;             // whether shift-enter skips an artifact
+boolean nomonsters;  // checkparm of -nomonsters
+boolean respawnparm; // checkparm of -respawn
+boolean debugmode;   // checkparm of -debug
+boolean ravpic;      // checkparm of -ravpic
+boolean cdrom;       // true if cd-rom mode active
+boolean noartiskip;  // whether shift-enter skips an artifact
 
 skill_t startskill;
 int startepisode;
@@ -85,7 +85,7 @@ void D_ConnectNetGame(void);
 void D_CheckNetGame(void);
 void D_PageDrawer(void);
 void D_AdvanceDemo(void);
-boolean F_Responder(event_t * ev);
+boolean F_Responder(event_t *ev);
 
 //---------------------------------------------------------------------------
 //
@@ -125,7 +125,7 @@ void DrawMessage(void)
 
     player = &players[consoleplayer];
     if (player->messageTics <= 0 || !player->message)
-    {                           // No message
+    { // No message
         return;
     }
     MN_DrTextA(player->message, 160 - MN_TextAWidth(player->message) / 2, 1);
@@ -139,7 +139,7 @@ void DrawMessage(void)
 //
 //---------------------------------------------------------------------------
 
-static void CrispyDrawStats (void)
+static void CrispyDrawStats(void)
 {
     static short height, coord_x;
     char str[32];
@@ -147,43 +147,48 @@ static void CrispyDrawStats (void)
 
     if (!height || !coord_x)
     {
-	const int FontABaseLump = W_GetNumForName(DEH_String("FONTA_S")) + 1;
-	const patch_t *const p = W_CacheLumpNum(FontABaseLump + 'A' - 33, PU_CACHE);
+        const int FontABaseLump = W_GetNumForName(DEH_String("FONTA_S")) + 1;
+        const patch_t *const p =
+            W_CacheLumpNum(FontABaseLump + 'A' - 33, PU_CACHE);
 
-	height = SHORT(p->height) + 1;
-	coord_x = ORIGWIDTH - 7 * SHORT(p->width);
+        height = SHORT(p->height) + 1;
+        coord_x = ORIGWIDTH - 7 * SHORT(p->width);
     }
 
-    if (crispy->automapstats == WIDGETS_ALWAYS || (automapactive && crispy->automapstats == WIDGETS_AUTOMAP))
+    if (crispy->automapstats == WIDGETS_ALWAYS ||
+        (automapactive && crispy->automapstats == WIDGETS_AUTOMAP))
     {
-	M_snprintf(str, sizeof(str), "K %d/%d", player->killcount, totalkills);
-	MN_DrTextA(str, 0, 1*height);
+        M_snprintf(str, sizeof(str), "K %d/%d", player->killcount, totalkills);
+        MN_DrTextA(str, 0, 1 * height);
 
-	M_snprintf(str, sizeof(str), "I %d/%d", player->itemcount, totalitems);
-	MN_DrTextA(str, 0, 2*height);
+        M_snprintf(str, sizeof(str), "I %d/%d", player->itemcount, totalitems);
+        MN_DrTextA(str, 0, 2 * height);
 
-	M_snprintf(str, sizeof(str), "S %d/%d", player->secretcount, totalsecret);
-	MN_DrTextA(str, 0, 3*height);
+        M_snprintf(str, sizeof(str), "S %d/%d", player->secretcount,
+                   totalsecret);
+        MN_DrTextA(str, 0, 3 * height);
     }
 
-    if (crispy->leveltime == WIDGETS_ALWAYS || (automapactive && crispy->leveltime == WIDGETS_AUTOMAP))
+    if (crispy->leveltime == WIDGETS_ALWAYS ||
+        (automapactive && crispy->leveltime == WIDGETS_AUTOMAP))
     {
-	const int time = leveltime / TICRATE;
+        const int time = leveltime / TICRATE;
 
-	M_snprintf(str, sizeof(str), "%02d:%02d", time/60, time%60);
-	MN_DrTextA(str, 0, 4*height);
+        M_snprintf(str, sizeof(str), "%02d:%02d", time / 60, time % 60);
+        MN_DrTextA(str, 0, 4 * height);
     }
 
-    if (crispy->playercoords == WIDGETS_ALWAYS || (automapactive && crispy->playercoords == WIDGETS_AUTOMAP))
+    if (crispy->playercoords == WIDGETS_ALWAYS ||
+        (automapactive && crispy->playercoords == WIDGETS_AUTOMAP))
     {
-	M_snprintf(str, sizeof(str), "X %-5d", player->mo->x>>FRACBITS);
-	MN_DrTextA(str, coord_x, 1*height);
+        M_snprintf(str, sizeof(str), "X %-5d", player->mo->x >> FRACBITS);
+        MN_DrTextA(str, coord_x, 1 * height);
 
-	M_snprintf(str, sizeof(str), "Y %-5d", player->mo->y>>FRACBITS);
-	MN_DrTextA(str, coord_x, 2*height);
+        M_snprintf(str, sizeof(str), "Y %-5d", player->mo->y >> FRACBITS);
+        MN_DrTextA(str, coord_x, 2 * height);
 
-	M_snprintf(str, sizeof(str), "A %-5d", player->mo->angle/ANG1);
-	MN_DrTextA(str, coord_x, 3*height);
+        M_snprintf(str, sizeof(str), "A %-5d", player->mo->angle / ANG1);
+        MN_DrTextA(str, coord_x, 3 * height);
     }
 }
 
@@ -192,10 +197,10 @@ static void CrispyDrawFps(void)
 {
     short coord_x, height;
     char str[32];
-    player_t* const player = &players[consoleplayer];
+    player_t *const player = &players[consoleplayer];
 
     const int FontABaseLump = W_GetNumForName(DEH_String("FONTA_S")) + 1;
-    const patch_t* const p = W_CacheLumpNum(FontABaseLump + 'A' - 33, PU_CACHE);
+    const patch_t *const p = W_CacheLumpNum(FontABaseLump + 'A' - 33, PU_CACHE);
 
     height = SHORT(p->height) + 1;
     coord_x = ORIGWIDTH - 6 * SHORT(p->width);
@@ -222,33 +227,33 @@ void D_Display(void)
         R_ExecuteSetViewSize();
     }
 
-//
-// do buffered drawing
-//
+    //
+    // do buffered drawing
+    //
     switch (gamestate)
     {
-        case GS_LEVEL:
-            if (!gametic)
-                break;
-            if (automapactive)
-                AM_Drawer();
-            else
-                R_RenderPlayerView(&players[displayplayer]);
-            CT_Drawer();
-            UpdateState |= I_FULLVIEW;
-            SB_Drawer();
-            CrispyDrawStats();
-            CrispyDrawFps();
+    case GS_LEVEL:
+        if (!gametic)
             break;
-        case GS_INTERMISSION:
-            IN_Drawer();
-            break;
-        case GS_FINALE:
-            F_Drawer();
-            break;
-        case GS_DEMOSCREEN:
-            D_PageDrawer();
-            break;
+        if (automapactive)
+            AM_Drawer();
+        else
+            R_RenderPlayerView(&players[displayplayer]);
+        CT_Drawer();
+        UpdateState |= I_FULLVIEW;
+        SB_Drawer();
+        CrispyDrawStats();
+        CrispyDrawFps();
+        break;
+    case GS_INTERMISSION:
+        IN_Drawer();
+        break;
+    case GS_FINALE:
+        F_Drawer();
+        break;
+    case GS_DEMOSCREEN:
+        D_PageDrawer();
+        break;
     }
 
     if (testcontrols)
@@ -260,12 +265,13 @@ void D_Display(void)
     {
         if (!netgame)
         {
-            V_DrawPatch(160, (viewwindowy >> crispy->hires) + 5, W_CacheLumpName(DEH_String("PAUSED"),
-                                                              PU_CACHE));
+            V_DrawPatch(160, (viewwindowy >> crispy->hires) + 5,
+                        W_CacheLumpName(DEH_String("PAUSED"), PU_CACHE));
         }
         else
         {
-            V_DrawPatch(160, 70, W_CacheLumpName(DEH_String("PAUSED"), PU_CACHE));
+            V_DrawPatch(160, 70,
+                        W_CacheLumpName(DEH_String("PAUSED"), PU_CACHE));
         }
     }
     // Handle player messages
@@ -346,7 +352,7 @@ void D_DoomLoop(void)
 /*
 ===============================================================================
 
-						DEMO LOOP
+                        DEMO LOOP
 
 ===============================================================================
 */
@@ -354,7 +360,6 @@ void D_DoomLoop(void)
 static int demosequence;
 static int pagetic;
 static const char *pagename;
-
 
 /*
 ================
@@ -371,7 +376,6 @@ void D_PageTicker(void)
     if (--pagetic < 0)
         D_AdvanceDemo();
 }
-
 
 /*
 ================
@@ -406,7 +410,6 @@ void D_StartTitle(void)
     D_AdvanceDemo();
 }
 
-
 /*
 ==============
 =
@@ -435,10 +438,10 @@ void D_CheckRecordFrom(void)
 
     filename = SV_Filename(myargv[p + 1][0] - '0');
     G_LoadGame(filename);
-    G_DoLoadGame();             // load the gameskill etc info from savegame
+    G_DoLoadGame(); // load the gameskill etc info from savegame
 
     G_RecordDemo(gameskill, 1, gameepisode, gamemap, myargv[p + 2]);
-    D_DoomLoop();               // never returns
+    D_DoomLoop(); // never returns
     free(filename);
 }
 
@@ -458,7 +461,6 @@ void D_CheckRecordFrom(void)
 #define SHAREWAREWADNAME "heretic1.wad"
 
 char *iwadfile;
-
 
 void wadprintf(void)
 {
@@ -484,13 +486,13 @@ boolean D_AddFile(char *file)
 //  Startup Thermo code
 //
 //==========================================================
-#define MSG_Y       9
-#define THERM_X     14
-#define THERM_Y     14
+#define MSG_Y 9
+#define THERM_X 14
+#define THERM_Y 14
 
 int thermMax;
 int thermCurrent;
-char smsg[80];                  // status bar line
+char smsg[80]; // status bar line
 
 //
 //  Heretic startup screen shit
@@ -525,7 +527,7 @@ void drawstatus(void)
     TXT_BGColor(TXT_COLOR_BLUE, 0);
     TXT_FGColor(TXT_COLOR_BRIGHT_WHITE);
 
-    for (i=0; smsg[i] != '\0'; ++i)
+    for (i = 0; smsg[i] != '\0'; ++i)
     {
         TXT_PutChar(smsg[i]);
     }
@@ -638,9 +640,9 @@ void CheckAbortStartup(void)
     // haleyjd: removed WATCOMC
     // haleyjd FIXME: this should actually work in text mode too, but how to
     // get input before SDL video init?
-    if(using_graphical_startup)
+    if (using_graphical_startup)
     {
-        if(TXT_GetChar() == 27)
+        if (TXT_GetChar() == 27)
             CleanExit();
     }
 }
@@ -690,17 +692,17 @@ void D_BindVariables(void)
 
     NET_BindVariables();
 
-    M_BindIntVariable("mouse_sensitivity",      &mouseSensitivity);
-    M_BindIntVariable("sfx_volume",             &snd_MaxVolume);
-    M_BindIntVariable("music_volume",           &snd_MusicVolume);
-    M_BindIntVariable("screenblocks",           &screenblocks);
-    M_BindIntVariable("snd_channels",           &snd_Channels);
+    M_BindIntVariable("mouse_sensitivity", &mouseSensitivity);
+    M_BindIntVariable("sfx_volume", &snd_MaxVolume);
+    M_BindIntVariable("music_volume", &snd_MusicVolume);
+    M_BindIntVariable("screenblocks", &screenblocks);
+    M_BindIntVariable("snd_channels", &snd_Channels);
     M_BindIntVariable("vanilla_savegame_limit", &vanilla_savegame_limit);
-    M_BindIntVariable("vanilla_demo_limit",     &vanilla_demo_limit);
-    M_BindIntVariable("show_endoom",            &show_endoom);
-    M_BindIntVariable("graphical_startup",      &graphical_startup);
+    M_BindIntVariable("vanilla_demo_limit", &vanilla_demo_limit);
+    M_BindIntVariable("show_endoom", &show_endoom);
+    M_BindIntVariable("graphical_startup", &graphical_startup);
 
-    for (i=0; i<10; ++i)
+    for (i = 0; i < 10; ++i)
     {
         char buf[12];
 
@@ -709,14 +711,14 @@ void D_BindVariables(void)
     }
 
     // [crispy] bind "crispness" config variables
-    M_BindIntVariable("crispy_hires",           &crispy->hires);
-    M_BindIntVariable("crispy_smoothscaling",   &crispy->smoothscaling);
-    M_BindIntVariable("crispy_automapstats",    &crispy->automapstats);
-    M_BindIntVariable("crispy_leveltime",       &crispy->leveltime);
-    M_BindIntVariable("crispy_playercoords",    &crispy->playercoords);
-    M_BindIntVariable("crispy_secretmessage",   &crispy->secretmessage);
-    M_BindIntVariable("crispy_uncapped",        &crispy->uncapped);
-    M_BindIntVariable("crispy_vsync",           &crispy->vsync);
+    M_BindIntVariable("crispy_hires", &crispy->hires);
+    M_BindIntVariable("crispy_smoothscaling", &crispy->smoothscaling);
+    M_BindIntVariable("crispy_automapstats", &crispy->automapstats);
+    M_BindIntVariable("crispy_leveltime", &crispy->leveltime);
+    M_BindIntVariable("crispy_playercoords", &crispy->playercoords);
+    M_BindIntVariable("crispy_secretmessage", &crispy->secretmessage);
+    M_BindIntVariable("crispy_uncapped", &crispy->uncapped);
+    M_BindIntVariable("crispy_vsync", &crispy->vsync);
 }
 
 //
@@ -797,9 +799,9 @@ void D_DoomMain(void)
     startmap = 1;
     autostart = false;
 
-//
-// get skill / episode / map from parms
-//
+    //
+    // get skill / episode / map from parms
+    //
 
     //!
     // @vanilla
@@ -861,9 +863,9 @@ void D_DoomMain(void)
         autostart = true;
     }
 
-//
-// init subsystems
-//
+    //
+    // init subsystems
+    //
     DEH_printf("V_Init: allocate screens.\n");
     V_Init();
 
@@ -1060,7 +1062,7 @@ void D_DoomMain(void)
     I_InitMusic();
 
     tprintf("NET_Init: Init network subsystem.\n", 1);
-    NET_Init ();
+    NET_Init();
 
     D_ConnectNetGame();
 
@@ -1081,11 +1083,11 @@ void D_DoomMain(void)
     {
         char temp[64];
         DEH_snprintf(temp, sizeof(temp),
-                     "Warp to Episode %d, Map %d, Skill %d ",
-                     startepisode, startmap, startskill + 1);
+                     "Warp to Episode %d, Map %d, Skill %d ", startepisode,
+                     startmap, startskill + 1);
         status(temp);
     }
-    wadprintf();                // print the added wadfiles
+    wadprintf(); // print the added wadfiles
 
     tprintf(DEH_String("MN_Init: Init menu system.\n"), 1);
     MN_Init();
@@ -1109,7 +1111,7 @@ void D_DoomMain(void)
 
     tprintf(DEH_String("S_Init: Setting up sound.\n"), 1);
     S_Init();
-    //IO_StartupTimer();
+    // IO_StartupTimer();
     S_Start();
 
     tprintf(DEH_String("D_CheckNetGame: Checking network game status.\n"), 1);
@@ -1123,9 +1125,9 @@ void D_DoomMain(void)
     SB_Init();
     IncThermo();
 
-//
-// start the apropriate game based on parms
-//
+    //
+    // start the apropriate game based on parms
+    //
 
     D_CheckRecordFrom();
 
@@ -1141,22 +1143,22 @@ void D_DoomMain(void)
     if (p)
     {
         G_RecordDemo(startskill, 1, startepisode, startmap, myargv[p + 1]);
-        D_DoomLoop();           // Never returns
+        D_DoomLoop(); // Never returns
     }
 
     p = M_CheckParmWithArgs("-playdemo", 1);
     if (p)
     {
-        singledemo = true;      // Quit after one demo
+        singledemo = true; // Quit after one demo
         G_DeferedPlayDemo(demolumpname);
-        D_DoomLoop();           // Never returns
+        D_DoomLoop(); // Never returns
     }
 
     p = M_CheckParmWithArgs("-timedemo", 1);
     if (p)
     {
         G_TimeDemo(demolumpname);
-        D_DoomLoop();           // Never returns
+        D_DoomLoop(); // Never returns
     }
 
     //!
@@ -1172,9 +1174,9 @@ void D_DoomMain(void)
     {
         char *filename;
 
-	filename = SV_Filename(myargv[p + 1][0] - '0');
+        filename = SV_Filename(myargv[p + 1][0] - '0');
         G_LoadGame(filename);
-	free(filename);
+        free(filename);
     }
 
     // Check valid episode and map
@@ -1203,5 +1205,5 @@ void D_DoomMain(void)
 
     finishStartup();
 
-    D_DoomLoop();               // Never returns
+    D_DoomLoop(); // Never returns
 }

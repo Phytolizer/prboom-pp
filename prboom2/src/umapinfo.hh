@@ -25,51 +25,53 @@ extern "C"
 {
 #endif
 
-struct BossAction
-{
-	int type;
-	int special;
-	int tag;
-};
+    struct BossAction
+    {
+        int type;
+        int special;
+        int tag;
+    };
 
-struct MapEntry
-{
-	char *mapname;
-	char *levelname;
-	char *intertext;
-	char *intertextsecret;
-	char levelpic[9];
-	char nextmap[9];
-	char nextsecret[9];
-	char music[9];
-	char skytexture[9];
-	char endpic[9];
-	char exitpic[9];
-	char enterpic[9];
-	char interbackdrop[9];
-	char intermusic[9];
-	int partime;
-	int nointermission;
-	int numbossactions;
+    struct MapEntry
+    {
+        char *mapname;
+        char *levelname;
+        char *intertext;
+        char *intertextsecret;
+        char levelpic[9];
+        char nextmap[9];
+        char nextsecret[9];
+        char music[9];
+        char skytexture[9];
+        char endpic[9];
+        char exitpic[9];
+        char enterpic[9];
+        char interbackdrop[9];
+        char intermusic[9];
+        int partime;
+        int nointermission;
+        int numbossactions;
 
-	unsigned int propertycount;
-	struct MapProperty *properties;
-	struct BossAction *bossactions;
-};
+        unsigned int propertycount;
+        struct MapProperty *properties;
+        struct BossAction *bossactions;
+    };
 
-struct MapList
-{
-	unsigned int mapcount;
-	struct MapEntry *maps;
-};
+    struct MapList
+    {
+        unsigned int mapcount;
+        struct MapEntry *maps;
+    };
 
-typedef void (*umapinfo_errorfunc)(const char *fmt, ...);	// this must not return!
+    typedef void (*umapinfo_errorfunc)(const char *fmt,
+                                       ...); // this must not return!
 
-extern struct MapList Maps;
+    extern struct MapList Maps;
 
-int ParseUMapInfo(const unsigned char *buffer, size_t length, umapinfo_errorfunc err);
-void FreeMapList();
-struct MapProperty *FindProperty(struct MapEntry *map, const char *name);
+    int ParseUMapInfo(const unsigned char *buffer, size_t length,
+                      umapinfo_errorfunc err);
+    void FreeMapList();
+    struct MapProperty *FindProperty(struct MapEntry *map, const char *name);
 
 #ifdef __cplusplus
 }

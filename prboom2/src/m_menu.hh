@@ -45,39 +45,39 @@
 // this can resize the view and change game parameters.
 // Does all the real work of the menu interaction.
 
-dboolean M_Responder (event_t *ev);
+dboolean M_Responder(event_t *ev);
 
 // Called by main loop,
 // only used for menu (skull cursor) animation.
 
-void M_Ticker (void);
+void M_Ticker(void);
 
 // Called by main loop,
 // draws the menus directly into the screen buffer.
 
-void M_Drawer (void);
+void M_Drawer(void);
 
 // Called by D_DoomMain,
 // loads the config file.
 
-void M_Init (void);
+void M_Init(void);
 
 // Called by intro code to force menu up upon a keypress,
 // does nothing if menu is already up.
 
-void M_StartControlPanel (void);
+void M_StartControlPanel(void);
 
 void M_ForcedLoadGame(const char *msg); // killough 5/15/98: forced loadgames
 
-void M_Trans(void);          // killough 11/98: reset translucency
+void M_Trans(void); // killough 11/98: reset translucency
 
-void M_ResetMenu(void);      // killough 11/98: reset main menu ordering
+void M_ResetMenu(void); // killough 11/98: reset main menu ordering
 
-void M_DrawCredits(void);    // killough 11/98
+void M_DrawCredits(void); // killough 11/98
 
 /* killough 8/15/98: warn about changes not being committed until next game */
-#define warn_about_changes(x) (warning_about_changes=(x), \
-             print_warning_about_changes = 2)
+#define warn_about_changes(x)                                                  \
+    (warning_about_changes = (x), print_warning_about_changes = 2)
 
 extern int warning_about_changes, print_warning_about_changes;
 
@@ -89,31 +89,31 @@ extern dboolean menu_background;
  *  Setup Screen. They can be OR'ed together where appropriate
  */
 
-#define S_HILITE     0x1 // Cursor is sitting on this item
-#define S_SELECT     0x2 // We're changing this item
-#define S_TITLE      0x4 // Title item
-#define S_YESNO      0x8 // Yes or No item
-#define S_CRITEM    0x10 // Message color
-#define S_COLOR     0x20 // Automap color
-#define S_CHAT      0x40 // Chat String
-#define S_RESET     0x80 // Reset to Defaults Button
-#define S_PREV     0x100 // Previous menu exists
-#define S_NEXT     0x200 // Next menu exists
-#define S_INPUT    0x400 // Composite input binding
-#define S_WEAP     0x800 // Weapon #
-#define S_NUM     0x1000 // Numerical item
-#define S_SKIP    0x2000 // Cursor can't land here
-#define S_KEEP    0x4000 // Don't swap key out
-#define S_END     0x8000 // Last item in list (dummy)
-#define S_LEVWARN 0x10000// killough 8/30/98: Always warn about pending change
-#define S_PRGWARN 0x20000// killough 10/98: Warn about change until next run
-#define S_BADVAL  0x40000// killough 10/98: Warn about bad value
-#define S_FILE    0x80000// killough 10/98: Filenames
+#define S_HILITE 0x1      // Cursor is sitting on this item
+#define S_SELECT 0x2      // We're changing this item
+#define S_TITLE 0x4       // Title item
+#define S_YESNO 0x8       // Yes or No item
+#define S_CRITEM 0x10     // Message color
+#define S_COLOR 0x20      // Automap color
+#define S_CHAT 0x40       // Chat String
+#define S_RESET 0x80      // Reset to Defaults Button
+#define S_PREV 0x100      // Previous menu exists
+#define S_NEXT 0x200      // Next menu exists
+#define S_INPUT 0x400     // Composite input binding
+#define S_WEAP 0x800      // Weapon #
+#define S_NUM 0x1000      // Numerical item
+#define S_SKIP 0x2000     // Cursor can't land here
+#define S_KEEP 0x4000     // Don't swap key out
+#define S_END 0x8000      // Last item in list (dummy)
+#define S_LEVWARN 0x10000 // killough 8/30/98: Always warn about pending change
+#define S_PRGWARN 0x20000 // killough 10/98: Warn about change until next run
+#define S_BADVAL 0x40000  // killough 10/98: Warn about bad value
+#define S_FILE 0x80000    // killough 10/98: Filenames
 #define S_LEFTJUST 0x100000 // killough 10/98: items which are left-justified
-#define S_CREDIT  0x200000  // killough 10/98: credit
-#define S_BADVID  0x400000  // killough 12/98: video mode change error
-#define S_CHOICE  0x800000  // this item has several values
-#define S_DISABLE  0x1000000 // e6y
+#define S_CREDIT 0x200000   // killough 10/98: credit
+#define S_BADVID 0x400000   // killough 12/98: video mode change error
+#define S_CHOICE 0x800000   // this item has several values
+#define S_DISABLE 0x1000000 // e6y
 
 /* S_SHOWDESC  = the set of items whose description should be displayed
  * S_SHOWSET   = the set of items whose setting should be displayed
@@ -121,13 +121,18 @@ extern dboolean menu_background;
  * S_HASDEFPTR = the set of items whose var field points to default array
  */
 
-#define S_SHOWDESC (S_TITLE|S_YESNO|S_CRITEM|S_COLOR|S_CHAT|S_RESET|S_PREV|S_NEXT|S_INPUT|S_WEAP|S_NUM|S_FILE|S_CREDIT|S_CHOICE)
+#define S_SHOWDESC                                                             \
+    (S_TITLE | S_YESNO | S_CRITEM | S_COLOR | S_CHAT | S_RESET | S_PREV |      \
+     S_NEXT | S_INPUT | S_WEAP | S_NUM | S_FILE | S_CREDIT | S_CHOICE)
 
-#define S_SHOWSET  (S_YESNO|S_CRITEM|S_COLOR|S_CHAT|S_INPUT|S_WEAP|S_NUM|S_FILE|S_CHOICE)
+#define S_SHOWSET                                                              \
+    (S_YESNO | S_CRITEM | S_COLOR | S_CHAT | S_INPUT | S_WEAP | S_NUM |        \
+     S_FILE | S_CHOICE)
 
-#define S_STRING (S_CHAT|S_FILE)
+#define S_STRING (S_CHAT | S_FILE)
 
-#define S_HASDEFPTR (S_STRING|S_YESNO|S_NUM|S_WEAP|S_COLOR|S_CRITEM|S_CHOICE)
+#define S_HASDEFPTR                                                            \
+    (S_STRING | S_YESNO | S_NUM | S_WEAP | S_COLOR | S_CRITEM | S_CHOICE)
 
 /****************************
  *
@@ -135,11 +140,12 @@ extern dboolean menu_background;
  * that you can bind a key differently in each 'group'.
  */
 
-typedef enum {
-  m_null,       // Has no meaning; not applicable
-  m_scrn,       // A key can not be assigned to more than one action
-  m_map,        // in the same group. A key can be assigned to one
-  m_menu,       // action in one group, and another action in another.
+typedef enum
+{
+    m_null, // Has no meaning; not applicable
+    m_scrn, // A key can not be assigned to more than one action
+    m_map,  // in the same group. A key can be assigned to one
+    m_menu, // action in one group, and another action in another.
 } setup_group;
 
 /****************************
@@ -161,24 +167,24 @@ typedef enum {
 
 typedef struct setup_menu_s
 {
-  const char  *m_text;  /* text to display */
-  int         m_flags;  /* phares 4/17/98: flag bits S_* (defined above) */
-  setup_group m_group;  /* Group */
-  short       m_x;      /* screen x position (left is 0) */
-  short       m_y;      /* screen y position (top is 0) */
+    const char *m_text;  /* text to display */
+    int m_flags;         /* phares 4/17/98: flag bits S_* (defined above) */
+    setup_group m_group; /* Group */
+    short m_x;           /* screen x position (left is 0) */
+    short m_y;           /* screen y position (top is 0) */
 
-  union  /* killough 11/98: The first field is a union of several types */
-  {
-    const void          *var;   /* generic variable */
-    int                 *m_key; /* key value, or 0 if not shown */
-    const char          *name;  /* name */
-    struct default_s    *def;   /* default[] table entry */
-    struct setup_menu_s *menu;  /* next or prev menu */
-  } var;
+    union /* killough 11/98: The first field is a union of several types */
+    {
+        const void *var;           /* generic variable */
+        int *m_key;                /* key value, or 0 if not shown */
+        const char *name;          /* name */
+        struct default_s *def;     /* default[] table entry */
+        struct setup_menu_s *menu; /* next or prev menu */
+    } var;
 
-  int input; // composite input identifier
-  void (*action)(void); /* killough 10/98: function to call after changing */
-  const char **selectstrings; /* list of strings for choice value */
+    int input;            // composite input identifier
+    void (*action)(void); /* killough 10/98: function to call after changing */
+    const char **selectstrings; /* list of strings for choice value */
 } setup_menu_t;
 
 //
@@ -187,26 +193,26 @@ typedef struct setup_menu_s
 
 struct menuitem_t
 {
-  short status; // 0 = no cursor here, 1 = ok, 2 = arrows ok
-  char  name[10];
+    short status; // 0 = no cursor here, 1 = ok, 2 = arrows ok
+    char name[10];
 
-  // choice = menu item #.
-  // if status = 2,
-  //   choice=0:leftarrow,1:rightarrow
-  void  (*routine)(int choice);
-  char  alphaKey = '\0'; // hotkey in menu
-  const char *alttext = nullptr;
-} ;
+    // choice = menu item #.
+    // if status = 2,
+    //   choice=0:leftarrow,1:rightarrow
+    void (*routine)(int choice);
+    char alphaKey = '\0'; // hotkey in menu
+    const char *alttext = nullptr;
+};
 
 typedef struct menu_s
 {
-  short           numitems;     // # of menu items
-  struct menu_s*  prevMenu;     // previous menu
-  menuitem_t*     menuitems;    // menu items
-  void            (*routine)(); // draw routine
-  short           x;
-  short           y;            // x,y of menu
-  short           lastOn;       // last item user was on in menu
+    short numitems;          // # of menu items
+    struct menu_s *prevMenu; // previous menu
+    menuitem_t *menuitems;   // menu items
+    void (*routine)();       // draw routine
+    short x;
+    short y;      // x,y of menu
+    short lastOn; // last item user was on in menu
 } menu_t;
 
 #define SAVESTRINGSIZE 24

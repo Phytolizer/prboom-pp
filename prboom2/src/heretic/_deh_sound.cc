@@ -29,13 +29,13 @@
 #include "sounds.hh"
 
 DEH_BEGIN_MAPPING(sound_mapping, sfxinfo_t)
-    DEH_MAPPING_STRING("Name", name)
-    DEH_UNSUPPORTED_MAPPING("Special")
-    DEH_MAPPING("Value", priority)
-    DEH_MAPPING("Unknown 1", usefulness)
-    DEH_UNSUPPORTED_MAPPING("Unknown 2")
-    DEH_UNSUPPORTED_MAPPING("Unknown 3")
-    DEH_MAPPING("One/Two", numchannels)
+DEH_MAPPING_STRING("Name", name)
+DEH_UNSUPPORTED_MAPPING("Special")
+DEH_MAPPING("Value", priority)
+DEH_MAPPING("Unknown 1", usefulness)
+DEH_UNSUPPORTED_MAPPING("Unknown 2")
+DEH_UNSUPPORTED_MAPPING("Unknown 3")
+DEH_MAPPING("One/Two", numchannels)
 DEH_END_MAPPING
 
 static void *DEH_SoundStart(deh_context_t *context, char *line)
@@ -56,8 +56,10 @@ static void *DEH_SoundStart(deh_context_t *context, char *line)
 
     if (sound_number >= DEH_VANILLA_NUMSFX)
     {
-        DEH_Warning(context, "Attempt to modify SFX %i.  This will cause "
-                             "problems in Vanilla dehacked.", sound_number);
+        DEH_Warning(context,
+                    "Attempt to modify SFX %i.  This will cause "
+                    "problems in Vanilla dehacked.",
+                    sound_number);
     }
 
     return &S_sfx[sound_number];
@@ -69,9 +71,9 @@ static void DEH_SoundParseLine(deh_context_t *context, char *line, void *tag)
     char *variable_name, *value;
 
     if (tag == NULL)
-       return;
+        return;
 
-    sfx = (sfxinfo_t *) tag;
+    sfx = (sfxinfo_t *)tag;
 
     // Parse the assignment
 
@@ -86,22 +88,16 @@ static void DEH_SoundParseLine(deh_context_t *context, char *line, void *tag)
 
     if (!strcasecmp(variable_name, "Name"))
     {
-        DEH_SetStringMapping(context, &sound_mapping, sfx,
-                             variable_name, value);
+        DEH_SetStringMapping(context, &sound_mapping, sfx, variable_name,
+                             value);
     }
     else
     {
-        DEH_SetMapping(context, &sound_mapping, sfx,
-                       variable_name, atoi(value));
+        DEH_SetMapping(context, &sound_mapping, sfx, variable_name,
+                       atoi(value));
     }
 }
 
-deh_section_t deh_section_sound =
-{
-    "Sound",
-    NULL,
-    DEH_SoundStart,
-    DEH_SoundParseLine,
-    NULL,
-    NULL,
+deh_section_t deh_section_sound = {
+    "Sound", NULL, DEH_SoundStart, DEH_SoundParseLine, NULL, NULL,
 };

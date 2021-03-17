@@ -1,4 +1,4 @@
-// Emacs style mode select   -*- C++ -*- 
+// Emacs style mode select   -*- C++ -*-
 //-----------------------------------------------------------------------------
 //
 // Copyright(C) 2007 Simon Howard
@@ -30,7 +30,7 @@
 #include "config.hh"
 #include "pcsound.hh"
 
-//e6y
+// e6y
 #include "doomtype.hh"
 #include "lprintf.hh"
 
@@ -44,8 +44,7 @@ extern pcsound_driver_t pcsound_linux_driver;
 
 extern pcsound_driver_t pcsound_sdl_driver;
 
-static pcsound_driver_t *drivers[] =
-{
+static pcsound_driver_t *drivers[] = {
 #ifdef HAVE_LINUX_KD_H
     &pcsound_linux_driver,
 #endif
@@ -74,7 +73,7 @@ int PCSound_Init(pcsound_callback_func callback_func)
 
     if (driver_name != NULL)
     {
-        for (i=0; drivers[i] != NULL; ++i)
+        for (i = 0; drivers[i] != NULL; ++i)
         {
             if (!strcasecmp(drivers[i]->name, driver_name))
             {
@@ -86,8 +85,9 @@ int PCSound_Init(pcsound_callback_func callback_func)
                 }
                 else
                 {
-                    lprintf(LO_WARN, "Failed to initialise PC sound driver: %s\n",
-                           drivers[i]->name);
+                    lprintf(LO_WARN,
+                            "Failed to initialise PC sound driver: %s\n",
+                            drivers[i]->name);
                     break;
                 }
             }
@@ -97,7 +97,7 @@ int PCSound_Init(pcsound_callback_func callback_func)
     {
         // Try all drivers until we find a working one
 
-        for (i=0; drivers[i] != NULL; ++i)
+        for (i = 0; drivers[i] != NULL; ++i)
         {
             if (drivers[i]->init_func(callback_func))
             {

@@ -28,11 +28,11 @@
 
 #include "heretic/f_finale.hh"
 
-static int finalestage;                // 0 = text, 1 = art screen
+static int finalestage; // 0 = text, 1 = art screen
 static int finalecount;
 
-#define TEXTSPEED       3
-#define TEXTWAIT        250
+#define TEXTSPEED 3
+#define TEXTWAIT 250
 
 static const char *finaletext;
 static const char *finaleflat;
@@ -51,52 +51,52 @@ extern enum automapmode_e automapmode;
 
 void Heretic_F_StartFinale(void)
 {
-  gameaction = ga_nothing;
-  gamestate = GS_FINALE;
-  automapmode = static_cast<automapmode_e>(automapmode & ~am_active);
+    gameaction = ga_nothing;
+    gamestate = GS_FINALE;
+    automapmode = static_cast<automapmode_e>(automapmode & ~am_active);
 
-  switch (gameepisode)
-  {
+    switch (gameepisode)
+    {
     case 1:
-      finaleflat = DEH_String("FLOOR25");
-      finaletext = DEH_String(HERETIC_E1TEXT);
-      break;
+        finaleflat = DEH_String("FLOOR25");
+        finaletext = DEH_String(HERETIC_E1TEXT);
+        break;
     case 2:
-      finaleflat = DEH_String("FLATHUH1");
-      finaletext = DEH_String(HERETIC_E2TEXT);
-      break;
+        finaleflat = DEH_String("FLATHUH1");
+        finaletext = DEH_String(HERETIC_E2TEXT);
+        break;
     case 3:
-      finaleflat = DEH_String("FLTWAWA2");
-      finaletext = DEH_String(HERETIC_E3TEXT);
-      break;
+        finaleflat = DEH_String("FLTWAWA2");
+        finaletext = DEH_String(HERETIC_E3TEXT);
+        break;
     case 4:
-      finaleflat = DEH_String("FLOOR28");
-      finaletext = DEH_String(HERETIC_E4TEXT);
-      break;
+        finaleflat = DEH_String("FLOOR28");
+        finaletext = DEH_String(HERETIC_E4TEXT);
+        break;
     case 5:
-      finaleflat = DEH_String("FLOOR08");
-      finaletext = DEH_String(HERETIC_E5TEXT);
-      break;
-  }
+        finaleflat = DEH_String("FLOOR08");
+        finaletext = DEH_String(HERETIC_E5TEXT);
+        break;
+    }
 
-  finalestage = 0;
-  finalecount = 0;
-  FontABaseLump = W_GetNumForName(DEH_String("FONTA_S")) + 1;
-  S_ChangeMusic(heretic_mus_cptd, true);
+    finalestage = 0;
+    finalecount = 0;
+    FontABaseLump = W_GetNumForName(DEH_String("FONTA_S")) + 1;
+    S_ChangeMusic(heretic_mus_cptd, true);
 }
 
-dboolean Heretic_F_Responder(event_t * event)
+dboolean Heretic_F_Responder(event_t *event)
 {
-  if (event->type != ev_keydown)
-  {
+    if (event->type != ev_keydown)
+    {
+        return false;
+    }
+    if (finalestage == 1 && gameepisode == 2)
+    { // we're showing the water pic, make any key kick to demo mode
+        finalestage++;
+        return true;
+    }
     return false;
-  }
-  if (finalestage == 1 && gameepisode == 2)
-  {                           // we're showing the water pic, make any key kick to demo mode
-    finalestage++;
-    return true;
-  }
-  return false;
 }
 
 /*
@@ -109,15 +109,16 @@ dboolean Heretic_F_Responder(event_t * event)
 
 void Heretic_F_Ticker(void)
 {
-  finalecount++;
-  if (!finalestage && static_cast<size_t>(finalecount) > strlen(finaletext) * TEXTSPEED + TEXTWAIT)
-  {
-    finalecount = 0;
-    if (!finalestage)
+    finalecount++;
+    if (!finalestage && static_cast<size_t>(finalecount) >
+                            strlen(finaletext) * TEXTSPEED + TEXTWAIT)
     {
-      finalestage = 1;
+        finalecount = 0;
+        if (!finalestage)
+        {
+            finalestage = 1;
+        }
     }
-  }
 }
 
 /*
@@ -130,57 +131,57 @@ void Heretic_F_Ticker(void)
 
 void Heretic_F_TextWrite(void)
 {
-  int count;
-  const char *ch;
-  int c;
-  int cx, cy;
-  int lump;
-  int width;
+    int count;
+    const char *ch;
+    int c;
+    int cx, cy;
+    int lump;
+    int width;
 
-  //
-  // erase the entire screen to a tiled background
-  //
-  V_DrawBackground(finaleflat, 0);
+    //
+    // erase the entire screen to a tiled background
+    //
+    V_DrawBackground(finaleflat, 0);
 
-  // e6y: wide-res
-  V_FillBorder(-1, 0);
+    // e6y: wide-res
+    V_FillBorder(-1, 0);
 
-  //
-  // draw some of the text onto the screen
-  //
-  cx = 20;
-  cy = 5;
-  ch = finaletext;
+    //
+    // draw some of the text onto the screen
+    //
+    cx = 20;
+    cy = 5;
+    ch = finaletext;
 
-  count = (finalecount - 10) / TEXTSPEED;
-  if (count < 0)
-    count = 0;
-  for (; count; count--)
-  {
-    c = *ch++;
-    if (!c)
-      break;
-    if (c == '\n')
+    count = (finalecount - 10) / TEXTSPEED;
+    if (count < 0)
+        count = 0;
+    for (; count; count--)
     {
-      cx = 20;
-      cy += 9;
-      continue;
-    }
+        c = *ch++;
+        if (!c)
+            break;
+        if (c == '\n')
+        {
+            cx = 20;
+            cy += 9;
+            continue;
+        }
 
-    c = toupper(c);
-    if (c < 33)
-    {
-      cx += 5;
-      continue;
-    }
+        c = toupper(c);
+        if (c < 33)
+        {
+            cx += 5;
+            continue;
+        }
 
-    lump = FontABaseLump + c - 33;
-    width = R_NumPatchWidth(lump);
-    if (cx + width > SCREENWIDTH)
-      break;
-    V_DrawNumPatch(cx, cy, 0, lump, CR_DEFAULT, VPT_STRETCH);
-    cx += width;
-  }
+        lump = FontABaseLump + c - 33;
+        width = R_NumPatchWidth(lump);
+        if (cx + width > SCREENWIDTH)
+            break;
+        V_DrawNumPatch(cx, cy, 0, lump, CR_DEFAULT, VPT_STRETCH);
+        cx += width;
+    }
 }
 
 /*
@@ -193,37 +194,37 @@ void Heretic_F_TextWrite(void)
 
 void F_DemonScroll(void)
 {
-  const byte *p1, *p2;
-  static int yval = 0;
-  static int nextscroll = 0;
+    const byte *p1, *p2;
+    static int yval = 0;
+    static int nextscroll = 0;
 
-  if (finalecount < nextscroll)
-  {
-    return;
-  }
+    if (finalecount < nextscroll)
+    {
+        return;
+    }
 
-  p1 = W_CacheLumpName<const byte *>(DEH_String("FINAL1"));
-  p2 = W_CacheLumpName<const byte *>(DEH_String("FINAL2"));
+    p1 = W_CacheLumpName<const byte *>(DEH_String("FINAL1"));
+    p2 = W_CacheLumpName<const byte *>(DEH_String("FINAL2"));
 
-  if (finalecount < 70)
-  {
-    V_DrawRawScreen(p1);
-    nextscroll = finalecount;
-  }
-  else if (yval < 200)
-  {
-    V_DrawRawScreenSection(p2 + (200 - yval) * 320, 0, yval);
-    V_DrawRawScreenSection(p1, yval, 200 - yval);
-    yval++;
-    nextscroll = finalecount + 3;
-  }
-  else
-  {                           //else, we'll just sit here and wait, for now
-    V_DrawRawScreen(p2);
-  }
+    if (finalecount < 70)
+    {
+        V_DrawRawScreen(p1);
+        nextscroll = finalecount;
+    }
+    else if (yval < 200)
+    {
+        V_DrawRawScreenSection(p2 + (200 - yval) * 320, 0, yval);
+        V_DrawRawScreenSection(p1, yval, 200 - yval);
+        yval++;
+        nextscroll = finalecount + 3;
+    }
+    else
+    { // else, we'll just sit here and wait, for now
+        V_DrawRawScreen(p2);
+    }
 
-  W_UnlockLumpName(DEH_String("FINAL1"));
-  W_UnlockLumpName(DEH_String("FINAL2"));
+    W_UnlockLumpName(DEH_String("FINAL1"));
+    W_UnlockLumpName(DEH_String("FINAL2"));
 }
 
 /*
@@ -236,19 +237,19 @@ void F_DemonScroll(void)
 
 void F_DrawUnderwater(void)
 {
-  switch (finalestage)
-  {
+    switch (finalestage)
+    {
     case 1:
-      V_SetPlayPal(playpal_heretic_e2end);
-      V_DrawRawScreen(W_CacheLumpName<const byte *>(DEH_String("E2END")));
-      W_UnlockLumpName(DEH_String("E2END"));
-      V_SetPlayPal(playpal_default);
+        V_SetPlayPal(playpal_heretic_e2end);
+        V_DrawRawScreen(W_CacheLumpName<const byte *>(DEH_String("E2END")));
+        W_UnlockLumpName(DEH_String("E2END"));
+        V_SetPlayPal(playpal_default);
 
-      break;
+        break;
     case 2:
-      V_DrawRawScreen(W_CacheLumpName<const byte *>(DEH_String("TITLE")));
-      W_UnlockLumpName(DEH_String("TITLE"));
-  }
+        V_DrawRawScreen(W_CacheLumpName<const byte *>(DEH_String("TITLE")));
+        W_UnlockLumpName(DEH_String("TITLE"));
+    }
 }
 
 /*
@@ -261,36 +262,36 @@ void F_DrawUnderwater(void)
 
 void Heretic_F_Drawer(void)
 {
-  // UpdateState |= I_FULLSCRN;
-  if (!finalestage)
-    Heretic_F_TextWrite();
-  else
-  {
-    switch (gameepisode)
+    // UpdateState |= I_FULLSCRN;
+    if (!finalestage)
+        Heretic_F_TextWrite();
+    else
     {
-      case 1:
-        if (gamemode == shareware)
+        switch (gameepisode)
         {
-          V_DrawRawScreen(W_CacheLumpName<const byte *>("ORDER"));
-          W_UnlockLumpName("ORDER");
+        case 1:
+            if (gamemode == shareware)
+            {
+                V_DrawRawScreen(W_CacheLumpName<const byte *>("ORDER"));
+                W_UnlockLumpName("ORDER");
+            }
+            else
+            {
+                V_DrawRawScreen(W_CacheLumpName<const byte *>("CREDIT"));
+                W_UnlockLumpName("CREDIT");
+            }
+            break;
+        case 2:
+            F_DrawUnderwater();
+            break;
+        case 3:
+            F_DemonScroll();
+            break;
+        case 4: // Just show credits screen for extended episodes
+        case 5:
+            V_DrawRawScreen(W_CacheLumpName<const byte *>("CREDIT"));
+            W_UnlockLumpName("CREDIT");
+            break;
         }
-        else
-        {
-          V_DrawRawScreen(W_CacheLumpName<const byte *>("CREDIT"));
-          W_UnlockLumpName("CREDIT");
-        }
-        break;
-      case 2:
-        F_DrawUnderwater();
-        break;
-      case 3:
-        F_DemonScroll();
-        break;
-      case 4:            // Just show credits screen for extended episodes
-      case 5:
-        V_DrawRawScreen(W_CacheLumpName<const byte *>("CREDIT"));
-        W_UnlockLumpName("CREDIT");
-        break;
     }
-  }
 }
