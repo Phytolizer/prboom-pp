@@ -53,7 +53,7 @@
 #define GENMIDI_FLAG_FIXED 0x0001  /* fixed pitch */
 #define GENMIDI_FLAG_2VOICE 0x0004 /* double voice (OPL3) */
 
-typedef struct
+using genmidi_op_t = struct
 {
     byte tremolo;
     byte attack;
@@ -61,29 +61,29 @@ typedef struct
     byte waveform;
     byte scale;
     byte level;
-} PACKEDATTR genmidi_op_t;
+};
 
-typedef struct
+using genmidi_voice_t = struct
 {
     genmidi_op_t modulator;
     byte feedback;
     genmidi_op_t carrier;
     byte unused;
     short base_note_offset;
-} PACKEDATTR genmidi_voice_t;
+};
 
-typedef struct
+using genmidi_instr_t = struct
 {
     unsigned short flags;
     byte fine_tuning;
     byte fixed_note;
 
     genmidi_voice_t voices[2];
-} PACKEDATTR genmidi_instr_t;
+};
 
 // Data associated with a channel of a track that is currently playing.
 
-typedef struct
+using opl_channel_data_t = struct
 {
     // The instrument currently used for this track.
 
@@ -97,11 +97,11 @@ typedef struct
 
     int bend;
 
-} opl_channel_data_t;
+};
 
 // Data associated with a track that is currently playing.
 
-typedef struct
+using opl_track_data_t = struct
 {
     // Data for each channel.
 
@@ -115,9 +115,9 @@ typedef struct
 
     unsigned int ticks_per_beat;
     unsigned int ms_per_beat;
-} opl_track_data_t;
+};
 
-typedef struct opl_voice_s opl_voice_t;
+using opl_voice_t = struct opl_voice_s;
 
 struct opl_voice_s
 {

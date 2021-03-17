@@ -41,7 +41,7 @@
 #define MUS_PERCUSSION_CHAN 15
 
 // MUS event codes
-typedef enum
+using musevent = enum
 {
     mus_releasekey = 0x00,
     mus_presskey = 0x10,
@@ -49,10 +49,10 @@ typedef enum
     mus_systemevent = 0x30,
     mus_changecontroller = 0x40,
     mus_scoreend = 0x60
-} musevent;
+};
 
 // MIDI event codes
-typedef enum
+using midievent = enum
 {
     midi_releasekey = 0x80,
     midi_presskey = 0x90,
@@ -61,7 +61,7 @@ typedef enum
     midi_changepatch = 0xC0,
     midi_aftertouchchannel = 0xD0,
     midi_pitchwheel = 0xE0
-} midievent;
+};
 
 // Standard MIDI type 0 header + track header
 static const byte midiheader[] = {

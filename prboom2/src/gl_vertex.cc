@@ -81,7 +81,7 @@
 #include "gl_intern.hh"
 #include "r_main.hh"
 
-typedef struct vertexsplit_info_s
+using vertexsplit_info_t = struct vertexsplit_info_s
 {
     dboolean changed;
     int numheights;
@@ -89,15 +89,15 @@ typedef struct vertexsplit_info_s
     sector_t **sectors;
     float *heightlist;
     byte validcount;
-} vertexsplit_info_t;
+};
 
 static vertexsplit_info_t *gl_vertexsplit = nullptr;
 
-typedef struct splitsbysector_s
+using splitsbysector_t = struct splitsbysector_s
 {
     int numsplits;
     vertexsplit_info_t **splits;
-} splitsbysector_t;
+};
 static splitsbysector_t *gl_splitsbysector = nullptr;
 
 //==========================================================================

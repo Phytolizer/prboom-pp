@@ -41,7 +41,7 @@
 int capturing_video = 0;
 static const char *vid_fname;
 
-typedef struct
+using pipeinfo_t = struct
 { // information on a running pipe
     char command[PATH_MAX];
     FILE *f_stdin;
@@ -52,7 +52,7 @@ typedef struct
     SDL_Thread *errthread;
     const char *stderrdumpname;
     void *user;
-} pipeinfo_t;
+};
 
 static pipeinfo_t soundpipe;
 static pipeinfo_t videopipe;
@@ -299,10 +299,10 @@ static void my_pclose3(pipeinfo_t *p)
 #include <sys/types.h>
 #include <sys/wait.h>
 
-typedef struct
+using puser_t = struct
 {
     int pid;
-} puser_t;
+};
 
 static int my_popen3(pipeinfo_t *p)
 {
@@ -443,11 +443,11 @@ static void my_pclose3(pipeinfo_t *p)
 
 #endif // _WIN32
 
-typedef struct
+using threaddata_t = struct
 {
     FILE *fin;
     const char *fn;
-} threaddata_t;
+};
 
 static int threadstdoutproc(void *data)
 { // simple thread proc dumps stdout

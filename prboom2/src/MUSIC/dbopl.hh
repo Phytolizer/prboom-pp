@@ -37,18 +37,18 @@ typedef INT_PTR intptr_t;
 // Select the type of wave generator routine
 #define DBOPL_WAVE WAVE_TABLEMUL
 
-typedef struct _Chip Chip;
-typedef struct _Operator Operator;
-typedef struct _Channel Channel;
+using Chip = struct _Chip;
+using Operator = struct _Operator;
+using Channel = struct _Channel;
 
-typedef uintptr_t Bitu;
-typedef intptr_t Bits;
-typedef uint32_t Bit32u;
-typedef int32_t Bit32s;
-typedef uint16_t Bit16u;
-typedef int16_t Bit16s;
-typedef uint8_t Bit8u;
-typedef int8_t Bit8s;
+using Bitu = uintptr_t;
+using Bits = intptr_t;
+using Bit32u = uint32_t;
+using Bit32s = int32_t;
+using Bit16u = uint16_t;
+using Bit16s = int16_t;
+using Bit8u = uint8_t;
+using Bit8s = int8_t;
 
 #if (DBOPL_WAVE == WAVE_HANDLER)
 typedef Bits(DB_FASTCALL *WaveHandler)(Bitu i, Bitu volume);
@@ -56,12 +56,12 @@ typedef Bits(DB_FASTCALL *WaveHandler)(Bitu i, Bitu volume);
 
 #define DB_FASTCALL
 
-typedef Bits (*VolumeHandler)(Operator *self);
-typedef Channel *(*SynthHandler)(Channel *self, Chip *chip, Bit32u samples,
-                                 Bit32s *output);
+using VolumeHandler = Bits (*)(Operator *);
+typedef Ch;
+using SynthHandler = Channel *(*)(Channel *, Chip *, Bit32u, Bit32s *);
 
 // Different synth modes that can generate blocks of data
-typedef enum
+using SynthMode = enum
 {
     sm2AM,
     sm2FM,
@@ -75,7 +75,7 @@ typedef enum
     sm6Start,
     sm2Percussion,
     sm3Percussion,
-} SynthMode;
+};
 
 // Shifts for the values contained in chandata variable
 enum
@@ -93,14 +93,14 @@ enum
     MASK_TREMOLO = 0x80,
 };
 
-typedef enum
+using OperatorState = enum
 {
     OFF,
     RELEASE,
     SUSTAIN,
     DECAY,
     ATTACK,
-} OperatorState;
+};
 
 struct _Operator
 {

@@ -239,11 +239,11 @@ void GivenDamageReset(tracertype_t index)
     }
 }
 
-typedef struct
+using tracer_mapthing_t = struct
 {
     int init_index;
     int index;
-} PACKEDATTR tracer_mapthing_t;
+};
 
 static std::vector<tracer_mapthing_t> deathmatchstarts_indexes;
 static tracer_mapthing_t playerstarts_indexes[MAXPLAYERS];

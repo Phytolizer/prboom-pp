@@ -42,12 +42,12 @@
 
 extern dboolean BorderNeedRefresh;
 
-typedef enum
+using gametype_t = enum
 {
     SINGLE,
     COOPERATIVE,
     DEATHMATCH
-} gametype_t;
+};
 
 static void IN_WaitStop();
 static void IN_Stop();
@@ -106,11 +106,11 @@ static const char *KillersText[] = {"K", "I", "L", "L", "E", "R", "S"};
 
 extern const char *LevelNames[];
 
-typedef struct
+using yahpt_t = struct
 {
     int x;
     int y;
-} yahpt_t;
+};
 
 static yahpt_t YAHspot[3][9] = {{{172, 78},
                                  {86, 90},

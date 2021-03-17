@@ -979,12 +979,12 @@ void e6y_G_DoCompleted()
     e6y_WriteStats();
 }
 
-typedef struct tmpdata_s
+using tmpdata_t = struct tmpdata_s
 {
     char kill[200];
     char item[200];
     char secret[200];
-} tmpdata_t;
+};
 
 void e6y_WriteStats()
 {

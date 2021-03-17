@@ -396,11 +396,11 @@ void F_TextWrite()
 // Casting by id Software.
 //   in order of appearance
 //
-typedef struct
+using castinfo_t = struct
 {
     const char **name; // CPhipps - const**
     mobjtype_t type;
-} castinfo_t;
+};
 
 static const castinfo_t castorder[] =
     { // CPhipps - static const, initialised here

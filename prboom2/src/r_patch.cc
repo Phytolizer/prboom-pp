@@ -76,14 +76,14 @@
 #include "dsda/palette.hh"
 
 // posts are runs of non masked source pixels
-typedef struct
+using post_t = struct
 {
     byte topdelta; // -1 is the last post in a column
     byte length;   // length data bytes follows
-} post_t;
+};
 
 // column_t is a list of 0 or more post_t, (byte)-1 terminated
-typedef post_t column_t;
+using column_t = post_t;
 
 //
 // Patches.
@@ -93,13 +93,13 @@ typedef post_t column_t;
 // of patches.
 //
 
-typedef struct
+using patch_t = struct
 {
     short width, height; // bounding box size
     short leftoffset;    // pixels to the left of origin
     short topoffset;     // pixels below the origin
     int columnofs[8];    // only [width] used
-} patch_t;
+};
 
 //---------------------------------------------------------------------------
 // Re-engineered patch support
@@ -721,12 +721,12 @@ static void createPatch(int id)
     std::free(numPostsInColumn);
 }
 
-typedef struct
+using count_t = struct
 {
     unsigned short patches;
     unsigned short posts;
     unsigned short posts_used;
-} count_t;
+};
 
 static void switchPosts(rpost_t *post1, rpost_t *post2)
 {

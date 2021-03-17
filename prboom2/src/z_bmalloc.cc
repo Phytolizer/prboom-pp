@@ -40,12 +40,12 @@
 #include "z_bmalloc.hh"
 #include "lprintf.hh"
 
-typedef struct bmalpool_s
+using bmalpool_t = struct bmalpool_s
 {
     struct bmalpool_s *nextpool;
     size_t blocks;
     byte used[0];
-} bmalpool_t;
+};
 
 inline static void *getelem(bmalpool_t *p, size_t size, size_t n)
 {

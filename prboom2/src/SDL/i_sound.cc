@@ -102,7 +102,7 @@ int snd_samplerate = 11025;
 // The actual output device.
 int audio_fd;
 
-typedef struct
+using channel_info_t = struct
 {
     // SFX id of the playing sound effect.
     // Used to catch duplicates (like chainsaw).
@@ -124,7 +124,7 @@ typedef struct
     // left and right channel volume (0-127)
     int leftvol;
     int rightvol;
-} channel_info_t;
+};
 
 channel_info_t channelinfo[MAX_CHANNELS];
 

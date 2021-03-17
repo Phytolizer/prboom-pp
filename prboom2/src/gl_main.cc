@@ -181,20 +181,20 @@ void SetFrameTextureMode()
 
 void gld_InitTextureParams()
 {
-    typedef struct tex_filter_s
+    using tex_filter_t = struct tex_filter_s
     {
         dboolean mipmap;
         int tex_filter;
         int mipmap_filter;
         const char *tex_filter_name;
         const char *mipmap_filter_name;
-    } tex_filter_t;
+    };
 
-    typedef struct tex_format_s
+    using tex_format_t = struct tex_format_s
     {
         int tex_format;
         const char *tex_format_name;
-    } tex_format_t;
+    };
 
     tex_filter_t params[filter_count] = {
         {false, GL_NEAREST, GL_NEAREST, "GL_NEAREST", "GL_NEAREST"},
@@ -302,13 +302,13 @@ void gld_MultisamplingSet()
 
 int gld_LoadGLDefs(const char *defsLump)
 {
-    typedef enum
+    using gldef_type_e = enum
     {
         TAG_SKYBOX,
         TAG_DETAIL,
 
         TAG_MAX
-    } gldef_type_e;
+    };
 
     // these are the core types available in the *DEFS lump
     static const char *CoreKeywords[TAG_MAX + 1] = {"skybox", "detail",
@@ -3040,7 +3040,7 @@ static int C_DECL dicmp_sprite_scale(const void *a, const void *b)
 
 static void gld_DrawItemsSortByTexture(GLDrawItemType itemtype)
 {
-    typedef int(C_DECL * DICMP_ITEM)(const void *a, const void *b);
+    using DICMP_ITEM = int (*)(const void *, const void *);
 
     static DICMP_ITEM itemfuncs[GLDIT_TYPES] = {
         nullptr,    dicmp_wall, dicmp_wall,   dicmp_wall,         dicmp_wall,

@@ -52,14 +52,14 @@
 #include "r_main.hh"
 #include "e6y.hh"
 
-typedef struct
+using fakegroup_t = struct
 {
     int count;      // size of the list with adjoining sectors
     int validcount; // finding of the best sector in the group only once in tic
     int ceiling;    // this group is for ceilings or flats
     sector_t *sector; // sector with the 'best' height for the sectors in list
     sector_t **list;  // list of adjoining sectors
-} fakegroup_t;
+};
 
 static int numfakeplanes = 0;
 static fakegroup_t *fakeplanes = nullptr;

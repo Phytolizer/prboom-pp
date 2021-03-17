@@ -70,12 +70,12 @@ struct midi_file_t
 
 #define MIDI_CHANNELS_PER_TRACK 16
 
-typedef struct
+using midimem_t = struct
 {
     const byte *data;
     std::size_t len;
     std::size_t pos;
-} midimem_t;
+};
 
 struct midi_meta_event_data_t
 {
@@ -115,20 +115,11 @@ struct midi_channel_event_data_t
     unsigned int param2;
 };
 
-typedef struct
-{
-    // Time between the previous event and this event.
-    unsigned int delta_time;
-
-    // Type of event:
-    midi_event_type_t::Type event_type;
-
-    union {
+using midi_event_t = union {
         midi_channel_event_data_t channel;
         midi_meta_event_data_t meta;
         midi_sysex_event_data_t sysex;
-    } data;
-} midi_event_t;
+    };
 
 // Load a MIDI file.
 

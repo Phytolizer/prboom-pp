@@ -34,7 +34,7 @@
 #define DSDA_GHOST_MIN_VERSION 1
 #define DSDA_GHOST_VERSION 2
 
-typedef struct
+using dsda_ghost_frame_t = struct
 {
     fixed_t x;
     fixed_t y;
@@ -45,28 +45,28 @@ typedef struct
     int map;
     int episode;
     int tic;
-} dsda_ghost_frame_t;
+};
 
-typedef struct
+using dsda_ghost_t = struct
 {
     dsda_ghost_frame_t frame;
     mobj_t *mobj;
     FILE *fstream;
-} dsda_ghost_t;
+};
 
-typedef struct
+using dsda_ghost_import_t = struct
 {
     thinker_t *thinker;
     dsda_ghost_t *ghosts;
     int count;
-} dsda_ghost_import_t;
+};
 
-typedef struct
+using dsda_ghost_file_t = struct
 {
     FILE *fstream;
     int version;
     int count;
-} dsda_ghost_file_t;
+};
 
 mobjinfo_t dsda_ghost_info = {-1,                             // doomednum
                               S_PLAY,                         // spawnstate

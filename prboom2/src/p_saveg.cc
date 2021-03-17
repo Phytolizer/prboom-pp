@@ -300,11 +300,11 @@ void P_UnArchiveWorld()
 // Thinkers
 //
 
-typedef enum
+using thinkerclass_t = enum
 {
     tc_end,
     tc_mobj
-} thinkerclass_t;
+};
 
 // phares 9/13/98: Moved this code outside of P_ArchiveThinkers so the
 // thinker indices could be used by the code that saves sector info.
@@ -648,7 +648,7 @@ void P_UnArchiveBlockLinks(mobj_t **mobj_p, int mobj_count)
 
 // dsda - fix save / load synchronization
 // merges thinkerclass_t and specials_e
-typedef enum
+using true_thinkerclass_t = enum
 {
     tc_true_mobj,
     tc_true_ceiling,
@@ -664,7 +664,7 @@ typedef enum
     tc_true_flicker,
     tc_true_friction,
     tc_true_end
-} true_thinkerclass_t;
+};
 
 // dsda - fix save / load synchronization
 // merges P_ArchiveThinkers & P_ArchiveSpecials

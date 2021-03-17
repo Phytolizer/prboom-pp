@@ -77,11 +77,11 @@
 
 float frustum[6][4];
 
-typedef struct clipnode_s
+using clipnode_t = struct clipnode_s
 {
     struct clipnode_s *prev, *next;
     angle_t start, end;
-} clipnode_t;
+};
 
 clipnode_t *freelist;
 clipnode_t *clipnodes;

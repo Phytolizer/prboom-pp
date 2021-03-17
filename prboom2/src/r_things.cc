@@ -78,17 +78,17 @@ int health_bar_red;
 int health_bar_yellow;
 int health_bar_green;
 
-typedef struct drawseg_xrange_item_s
+using drawseg_xrange_item_t = struct drawseg_xrange_item_s
 {
     short x1, x2;
     drawseg_t *user;
-} drawseg_xrange_item_t;
+};
 
-typedef struct drawsegs_xrange_s
+using drawsegs_xrange_t = struct drawsegs_xrange_s
 {
     drawseg_xrange_item_t *items;
     int count;
-} drawsegs_xrange_t;
+};
 
 #define DS_RANGES_COUNT 3
 static drawsegs_xrange_t drawsegs_xranges[DS_RANGES_COUNT];
@@ -1167,14 +1167,14 @@ static void R_DrawPSprite(pspdef_t *psp)
     // e6y: interpolation for weapon bobbing
     if (movement_smooth)
     {
-        typedef struct interpolate_s
+        using psp_interpolate_t = struct interpolate_s
         {
             int x1;
             int x1_prev;
             int texturemid;
             int texturemid_prev;
             int lump;
-        } psp_interpolate_t;
+        };
 
         static psp_interpolate_t psp_inter;
 

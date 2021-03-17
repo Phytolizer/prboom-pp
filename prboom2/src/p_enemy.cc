@@ -55,7 +55,7 @@
 
 static mobj_t *current_actor;
 
-typedef enum
+using dirtype_e = enum
 {
     DI_EAST,
     DI_NORTHEAST,
@@ -67,9 +67,9 @@ typedef enum
     DI_SOUTHEAST,
     DI_NODIR,
     NUMDIRS
-} dirtype_e;
+};
 
-typedef int dirtype_t;
+using dirtype_t = int;
 
 static void P_NewChaseDir(mobj_t *actor);
 void P_ZBumpCheck(mobj_t *); // phares
@@ -3505,12 +3505,12 @@ void A_LineEffect(mobj_t *mo)
 
 #define MAX_BOSS_SPOTS 8
 
-typedef struct
+using BossSpot_t = struct
 {
     fixed_t x;
     fixed_t y;
     angle_t angle;
-} BossSpot_t;
+};
 
 static int BossSpotCount;
 static BossSpot_t BossSpots[MAX_BOSS_SPOTS];

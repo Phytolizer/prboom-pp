@@ -253,10 +253,10 @@ const char *map_things_appearance_list[map_things_appearance_max] = {"classic",
 #define CXMTOF_F(x) ((float)f_x + MTOF_F((x)-m_x))
 #define CYMTOF_F(y) ((float)f_y + (f_h - MTOF_F((y)-m_y)))
 
-typedef struct
+using mline_t = struct
 {
     mpoint_t a, b;
-} mline_t;
+};
 
 //
 // The vector graphics for the automap.
@@ -2015,14 +2015,14 @@ static void AM_ProcessNiceThing(mobj_t *mobj, angle_t angle, fixed_t x,
     float fx, fy, fradius, rot, shadow_radius;
     unsigned char r, g, b, a;
 
-    typedef struct map_nice_icon_param_s
+    using map_nice_icon_param_t = struct map_nice_icon_param_s
     {
         spritenum_t sprite;
         int icon = 0;
         int radius = 0;
         int rotate = 0;
         unsigned char r = 0, g = 0, b = 0;
-    } map_nice_icon_param_t;
+    };
 
     static const map_nice_icon_param_t icons[] = {
         {SPR_STIM, am_icon_health, 12, 0, 100, 100, 200},

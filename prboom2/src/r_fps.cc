@@ -47,7 +47,7 @@ int movement_smooth_default;
 int movement_smooth;
 dboolean isExtraDDisplay = false;
 
-typedef enum
+using interpolation_type_e = enum
 {
     INTERP_SectorFloor,
     INTERP_SectorCeiling,
@@ -55,13 +55,13 @@ typedef enum
     INTERP_WallPanning,
     INTERP_FloorPanning,
     INTERP_CeilingPanning
-} interpolation_type_e;
+};
 
-typedef struct
+using interpolation_t = struct
 {
     interpolation_type_e type;
     void *address;
-} interpolation_t;
+};
 
 int interpolation_maxobjects;
 

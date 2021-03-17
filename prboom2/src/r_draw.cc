@@ -77,7 +77,7 @@ const byte *main_tranmap; // killough 4/11/98
 //
 
 // SoM: OPTIMIZE for ANYRES
-typedef enum
+using columntype_e = enum
 {
     COL_NONE,
     COL_OPAQUE,
@@ -85,7 +85,7 @@ typedef enum
     COL_FLEXTRANS,
     COL_FUZZ,
     COL_FLEXADD
-} columntype_e;
+};
 
 static int temp_x = 0;
 static int tempyl[4], tempyh[4];

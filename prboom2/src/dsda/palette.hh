@@ -20,7 +20,7 @@
 
 #include "SDL.h"
 
-typedef enum
+using dsda_playpal_index_t = enum
 {
     playpal_default,
     playpal_1,
@@ -34,9 +34,9 @@ typedef enum
     playpal_9,
     playpal_heretic_e2end,
     NUMPALETTES
-} dsda_playpal_index_t;
+};
 
-typedef struct playpal_data_s
+using dsda_playpal_t = struct playpal_data_s
 {
     const int index;
     const char *lump_name;
@@ -50,7 +50,7 @@ typedef struct playpal_data_s
     unsigned short *Palettes15 = nullptr;
     unsigned short *Palettes16 = nullptr;
     unsigned int *Palettes32 = nullptr;
-} dsda_playpal_t;
+};
 
 dsda_playpal_t *dsda_PlayPalData();
 void dsda_CyclePlayPal();

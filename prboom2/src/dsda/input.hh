@@ -28,7 +28,7 @@
 
 extern int dsda_input_profile;
 
-typedef enum
+using dsda_input_identifier_t = enum
 {
     dsda_input_null,
     dsda_input_forward,
@@ -155,15 +155,15 @@ typedef enum
     dsda_input_iddt,
     dsda_input_cycle_palette,
     DSDA_INPUT_IDENTIFIER_COUNT
-} dsda_input_identifier_t;
+};
 
-typedef struct
+using dsda_input_t = struct
 {
     int *key;
     int num_keys;
     int mouseb;
     int joyb;
-} dsda_input_t;
+};
 
 struct dsda_input_default_t
 {

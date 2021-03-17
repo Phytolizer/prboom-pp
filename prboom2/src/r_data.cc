@@ -61,16 +61,16 @@
 // and possibly other attributes.
 //
 
-typedef struct
+using mappatch_t = struct
 {
     short originx;
     short originy;
     short patch;
     short stepdir;  // unused in Doom but might be used in Phase 2 Boom
     short colormap; // unused in Doom but might be used in Phase 2 Boom
-} PACKEDATTR mappatch_t;
+};
 
-typedef struct
+using maptexture_t = struct
 {
     char name[8];
     char pad2[4]; // unused
@@ -79,7 +79,7 @@ typedef struct
     char pad[4]; // unused in Doom but might be used in Boom Phase 2
     short patchcount;
     mappatch_t patches[1];
-} PACKEDATTR maptexture_t;
+};
 
 // A maptexturedef_t describes a rectangular texture, which is composed
 // of one or more mappatch_t structures that arrange graphic patches.

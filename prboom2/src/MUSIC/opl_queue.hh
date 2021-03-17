@@ -28,7 +28,7 @@
 
 #include "opl.hh"
 
-typedef struct opl_callback_queue_s opl_callback_queue_t;
+using opl_callback_queue_t = struct opl_callback_queue_s;
 
 opl_callback_queue_t *OPL_Queue_Create();
 int OPL_Queue_IsEmpty(opl_callback_queue_t *queue);

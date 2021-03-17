@@ -4127,7 +4127,7 @@ static void P_SpawnPushers()
 
 #define MAX_AMBIENT_SFX 8
 
-typedef enum
+using afxcmd_t = enum
 {
     afxcmd_play,       // (sound)
     afxcmd_playabsvol, // (sound, volume)
@@ -4135,7 +4135,7 @@ typedef enum
     afxcmd_delay,      // (ticks)
     afxcmd_delayrand,  // (andbits)
     afxcmd_end         // ()
-} afxcmd_t;
+};
 
 int *LevelAmbientSfx[MAX_AMBIENT_SFX];
 int *AmbSfxPtr;

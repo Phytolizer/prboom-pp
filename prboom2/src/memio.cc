@@ -35,11 +35,11 @@
 
 
 
-typedef enum
+using memfile_mode_t = enum
 {
     MODE_READ,
     MODE_WRITE,
-} memfile_mode_t;
+};
 
 struct _MEMFILE
 {

@@ -68,7 +68,7 @@
 #define NORM_SEP 128
 #define S_STEREO_SWING (96 << FRACBITS)
 
-typedef struct
+using channel_t = struct
 {
     sfxinfo_t *sfxinfo; // sound information (if null, channel avail.)
     void *origin;       // origin of sound
@@ -78,7 +78,7 @@ typedef struct
 
     // heretic
     int priority;
-} channel_t;
+};
 
 // the set of channels available
 static channel_t *channels;

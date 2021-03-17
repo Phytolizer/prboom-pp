@@ -109,11 +109,11 @@ int usegamma;
  * cphipps - constness of crdef_t stuff fixed
  */
 
-typedef struct
+using crdef_t = struct
 {
     const char *name;
     const byte **map;
-} crdef_t;
+};
 
 // killough 5/2/98: table-driven approach
 static const crdef_t crdefs[] = {

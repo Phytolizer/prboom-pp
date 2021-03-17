@@ -62,17 +62,11 @@ int gl_distfog = 70;
 float gl_CurrentFogDensity = -1.0f;
 float distfogtable[3][256];
 
-typedef void (*gld_InitLightTable_f)();
+using gld_InitLightTable_f = void (*)();
 
 typedef struct
-{
-    int use_hwgamma;
-    int rellight;
-    gld_InitLightTable_f Init;
-    gld_CalcLightLevel_f GetLight;
-    gld_Calc2DLightLevel_f Get2DLight;
-    gld_CalcFogDensity_f GetFog;
-} GLLight;
+{;
+using GLLight = struct GLLight;
 
 static float lighttable_glboom[5][256];
 static float lighttable_gzdoom[256];

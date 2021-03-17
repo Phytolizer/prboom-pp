@@ -110,24 +110,24 @@ extern dboolean deh_pars;
 // These animation variables, structures, etc. are used for the
 // DOOM/Ultimate DOOM intermission screen animations.  This is
 // totally different from any sprite or texture/flat animations
-typedef enum
+using animenum_t = enum
 {
     ANIM_ALWAYS, // determined by patch entry
     ANIM_RANDOM, // occasional
     ANIM_LEVEL   // continuous
-} animenum_t;
+};
 
-typedef struct
+using point_t = struct
 {
     int x; // x/y coordinate pair structure
     int y;
-} point_t;
+};
 
 //
 // Animation.
 // There is another anim_t used in p_spec.
 //
-typedef struct
+using anim_t = struct
 {
     animenum_t type;
 
@@ -168,7 +168,7 @@ typedef struct
 
     // used by RANDOM and LEVEL when animating
     int state;
-} anim_t;
+};
 
 static point_t lnodes[NUMEPISODES][NUMMAPS] = {
     // Episode 0 World Map

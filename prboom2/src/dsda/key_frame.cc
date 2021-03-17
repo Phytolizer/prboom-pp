@@ -48,11 +48,11 @@ void RecalculateDrawnSubsectors();
 static byte *dsda_quick_key_frame_buffer;
 static int dsda_key_frame_restored;
 
-typedef struct
+using dsda_key_frame_t = struct
 {
     byte *buffer;
     int index;
-} dsda_key_frame_t;
+};
 
 static dsda_key_frame_t *dsda_auto_key_frames;
 static int dsda_last_auto_key_frame;

@@ -20,7 +20,7 @@
 
 #include "r_defs.hh"
 
-typedef enum
+using dsda_split_class_t = enum
 {
     DSDA_SPLIT_BLUE_KEY,
     DSDA_SPLIT_YELLOW_KEY,
@@ -28,7 +28,7 @@ typedef enum
     DSDA_SPLIT_USE,
     DSDA_SPLIT_SECRET,
     DSDA_SPLIT_CLASS_COUNT
-} dsda_split_class_t;
+};
 
 void dsda_DrawIntermissionTime();
 void dsda_InitHud(patchnum_t *font);

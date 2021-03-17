@@ -273,13 +273,13 @@ static dboolean InventoryMoveLeft();
 static dboolean InventoryMoveRight();
 // end heretic
 
-typedef enum
+using double_carry_t = enum
 {
     carry_vertmouse,
     carry_mousex,
     carry_mousey,
     NUMDOUBLECARRY
-} double_carry_t;
+};
 
 static double double_carry[NUMDOUBLECARRY];
 

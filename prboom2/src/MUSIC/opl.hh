@@ -26,13 +26,10 @@
 #ifndef OPL_OPL_H
 #define OPL_OPL_H
 
-typedef void (*opl_callback_t)(void *data);
+using opl_callback_t = void (*)(void *);
 
-typedef enum
-{
-    OPL_REGISTER_PORT = 0,
-    OPL_DATA_PORT = 1
-} opl_port_t;
+typedef en;
+using opl_port_t = enum opl_port_t;
 
 #define OPL_NUM_OPERATORS 21
 #define OPL_NUM_VOICES 9

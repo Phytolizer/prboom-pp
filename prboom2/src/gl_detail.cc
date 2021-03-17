@@ -68,12 +68,12 @@ int scene_has_details;
 int scene_has_wall_details;
 int scene_has_flat_details;
 
-typedef enum
+using tag_detail_e = enum
 {
     TAG_DETAIL_WALL,
     TAG_DETAIL_FLAT,
     TAG_DETAIL_MAX,
-} tag_detail_e;
+};
 
 static const char *DetailItem_Keywords[TAG_DETAIL_MAX + 1] = {"walls", "flats",
                                                               nullptr};
@@ -520,7 +520,7 @@ static int C_DECL dicmp_flat_detail(const void *a, const void *b)
 
 void gld_DrawItemsSortByDetail(GLDrawItemType itemtype)
 {
-    typedef int(C_DECL * DICMP_ITEM)(const void *a, const void *b);
+    using DICMP_ITEM = int (*)(const void *, const void *);
 
     static DICMP_ITEM itemfuncs[GLDIT_TYPES] = {
         nullptr,           dicmp_wall_detail, dicmp_wall_detail,

@@ -38,25 +38,25 @@ extern int viewheight;
 
 extern int totalleveltimes;
 
-typedef struct
+using dsda_split_text_t = struct
 {
     hu_textline_t text;
     char msg[DSDA_SPLIT_SIZE];
     int ticks;
-} dsda_split_text_t;
+};
 
-typedef struct
+using dsda_text_t = struct
 {
     hu_textline_t text;
     char msg[DSDA_TEXT_SIZE];
-} dsda_text_t;
+};
 
-typedef struct
+using dsda_split_state_t = struct
 {
     const char *msg;
     int default_delay;
     int delay;
-} dsda_split_state_t;
+};
 
 dsda_split_state_t dsda_split_state[] = {{"Blue Key", 0, 0},
                                          {"Yellow Key", 0, 0},

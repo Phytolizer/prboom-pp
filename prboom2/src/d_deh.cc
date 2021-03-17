@@ -91,7 +91,7 @@ int deh_apply_cheats = true;
 // killough 10/98: new functions, to allow processing DEH files in-memory
 // (e.g. from wads)
 
-typedef struct
+using DEHFILE = struct
 {
     /* cph 2006/08/06 -
      * if lump != nullptr, lump is the start of the lump,
@@ -100,7 +100,7 @@ typedef struct
     long size;
     /* else, !lump, and f is the file being read */
     FILE *f;
-} DEHFILE;
+};
 
 // killough 10/98: emulate IO whether input really comes from a file or not
 
@@ -936,11 +936,11 @@ static void deh_procBexSprites(DEHFILE *, FILE *, char *);
 // Structure deh_block is used to hold the block names that can
 // be encountered, and the routines to use to decipher them
 
-typedef struct
+using deh_block = struct
 {
     const char *key; // a mnemonic block code name // CPhipps - const*
     void (*const fptr)(DEHFILE *, FILE *, char *); // handler
-} deh_block;
+};
 
 #define DEH_BUFFERMAX 1024 // input buffer area size, hardcodedfor now
 // killough 8/9/98: make DEH_BLOCKMAX self-adjusting
@@ -1205,12 +1205,12 @@ static const char *deh_misc[] = // CPhipps - static const*
 // Usage: Start block, then each line is:
 // FRAME nnn = PointerMnemonic
 
-typedef struct
+using deh_bexptr = struct
 {
     thinker::types::ActionFunction cptr; // actual pointer to the subroutine
     const char *lookup; // mnemonic lookup string to be specified in BEX
                         // CPhipps - const*
-} deh_bexptr;
+};
 
 static const deh_bexptr deh_bexptrs[] = // CPhipps - static const
     {

@@ -987,13 +987,13 @@ dboolean M_FindCheats(int key)
     }
 }
 
-typedef struct cheat_input_s
+using cheat_input_t = struct cheat_input_s
 {
     int input;
     const cheat_when_t::Type when = cheat_when_t::cht_never;
     void (*const func)() = nullptr;
     const int arg = 0;
-} cheat_input_t;
+};
 
 static cheat_input_t cheat_input[] = {
     {dsda_input_iddqd, cheat_when_t::cht_never, cheat_god, 0},

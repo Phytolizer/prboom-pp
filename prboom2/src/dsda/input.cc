@@ -24,7 +24,7 @@ int dsda_input_profile = 0;
 static dsda_input_t dsda_input[DSDA_INPUT_PROFILE_COUNT]
                               [DSDA_INPUT_IDENTIFIER_COUNT];
 
-typedef struct
+using dsda_input_state_t = struct
 {
     dboolean on;
     int activated_at;
@@ -32,7 +32,7 @@ typedef struct
     dboolean game_on;
     int game_activated_at;
     int game_deactivated_at;
-} dsda_input_state_t;
+};
 
 static int dsda_input_counter;      // +1 for each event
 static int dsda_input_tick_counter; // +1 for each game tick

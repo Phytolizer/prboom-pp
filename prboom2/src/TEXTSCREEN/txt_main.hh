@@ -72,7 +72,7 @@
 
 #define TXT_COLOR_BLINKING (1 << 3)
 
-typedef enum
+using txt_color_t = enum
 {
     TXT_COLOR_BLACK,
     TXT_COLOR_BLUE,
@@ -90,17 +90,17 @@ typedef enum
     TXT_COLOR_BRIGHT_MAGENTA,
     TXT_COLOR_YELLOW,
     TXT_COLOR_BRIGHT_WHITE,
-} txt_color_t;
+};
 
 // Modifier keys.
 
-typedef enum
+using txt_modifier_t = enum
 {
     TXT_MOD_SHIFT,
     TXT_MOD_CTRL,
     TXT_MOD_ALT,
     TXT_NUM_MODIFIERS
-} txt_modifier_t;
+};
 
 // Initialize the screen
 // Returns 1 if successful, 0 if failed.

@@ -267,14 +267,14 @@ char demoex_filename[PATH_MAX];
 const char *demo_demoex_filename;
 // wadtbl_t demoex;
 
-typedef struct
+using mlooklump_t = struct
 {
     const char name[9];
     short *data;
     int lump;
     size_t maxtick;
     size_t tick;
-} mlooklump_t;
+};
 
 mlooklump_t mlook_lump = {DEMOEX_MLOOK_LUMPNAME, nullptr, -2, 0, 0};
 

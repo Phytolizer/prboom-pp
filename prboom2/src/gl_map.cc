@@ -66,10 +66,10 @@ am_icon_t am_icons[am_icon_count + 1] = {
     {static_cast<GLuint>(-1), nullptr},
 };
 
-typedef struct map_nice_thing_s
+using map_nice_thing_t = struct map_nice_thing_s
 {
     vbo_xy_uv_rgba_t v[4];
-} PACKEDATTR map_nice_thing_t;
+};
 
 static array_t map_things[am_icon_count];
 

@@ -57,22 +57,22 @@
 
 #include "e6y.hh"
 
-typedef struct
+using GLSkyLoopDef = struct
 {
     int mode;
     int vertexcount;
     int vertexindex;
     int use_texture;
-} GLSkyLoopDef;
+};
 
-typedef struct
+using GLSkyVBO = struct
 {
     int id;
     int rows, columns;
     int loopcount;
     GLSkyLoopDef *loops;
     vbo_vertex_t *data;
-} GLSkyVBO;
+};
 
 int gl_skymode;
 int gl_drawskys;

@@ -104,7 +104,7 @@ int nodesVersion = 0;
 dboolean forceOldBsp = false;
 
 // figgi 08/21/00 -- glSegs
-typedef struct
+using glseg_t = struct
 {
     unsigned short v1;      // start vertex    (16 bit)
     unsigned short v2;      // end vertex      (16 bit)
@@ -112,13 +112,13 @@ typedef struct
     short side;             // side on linedef: 0 for right, 1 for left
     unsigned short
         partner; // corresponding partner seg, or -1 on one-sided walls
-} glseg_t;
+};
 
 // fixed 32 bit gl_vert format v2.0+ (glBsp 1.91)
-typedef struct
+using mapglvertex_t = struct
 {
     fixed_t x, y;
-} mapglvertex_t;
+};
 
 enum
 {
@@ -1899,11 +1899,11 @@ static void P_LoadSideDefs2(int lump)
                                       // jff 10/8/98 use guardband>0
                                       // jff 10/12/98 0 ok with + 1 in rows,cols
 
-typedef struct linelist_t // type used to list lines in each block
+using linelist_t = struct linelist_t // type used to list lines in each block
 {
     long num;
     struct linelist_t *next;
-} linelist_t;
+};
 
 //
 // Subroutine to add a line number to a block list

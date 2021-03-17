@@ -749,17 +749,14 @@ void HU_NextHud()
     }
 }
 
-typedef void (*HU_widget_build_func)();
-typedef void (*HU_widget_draw_func)();
+using HU_widget_build_func = void (*)();
+typedef void (*HU;
+using HU_widget_draw_func = void (*)();
 
-typedef struct hud_cfg_item_s
-{
-    char name[80];
-    int x;
-    int y;
-} hud_cfg_item_t;
+typedef struct ;
+using hud_cfg_item_t = struct hud_cfg_item_s;
 
-typedef struct hud_widget_s
+using hud_widget_t = struct hud_widget_s
 {
     hu_textline_t *hu_textline;
     int x;
@@ -768,13 +765,13 @@ typedef struct hud_widget_s
     HU_widget_build_func build;
     HU_widget_draw_func draw;
     const char *name;
-} hud_widget_t;
+};
 
-typedef struct hud_widgets_list_s
+using hud_widgets_list_t = struct hud_widgets_list_s
 {
     int count;
     hud_widget_t *items;
-} hud_widgets_list_t;
+};
 
 int huds_count;
 hud_widgets_list_t *huds;

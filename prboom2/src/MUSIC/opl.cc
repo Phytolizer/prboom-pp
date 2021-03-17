@@ -40,13 +40,13 @@ unsigned int opl_sample_rate = 22050;
 
 #define MAX_SOUND_SLICE_TIME 100 /* ms */
 
-typedef struct
+using opl_timer_t = struct
 {
     unsigned int rate;        // Number of times the timer is advanced per sec.
     unsigned int enabled;     // Non-zero if timer is enabled.
     unsigned int value;       // Last value that was set.
     unsigned int expire_time; // Calculated time that timer will expire.
-} opl_timer_t;
+};
 
 // Queue of callbacks waiting to be invoked.
 
