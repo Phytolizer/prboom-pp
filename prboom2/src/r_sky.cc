@@ -56,7 +56,7 @@ fixed_t freelookviewheight;
 // R_InitSkyMap
 // Called whenever the view size changes.
 //
-void R_InitSkyMap(void)
+void R_InitSkyMap()
 {
     if (!GetMouseLook())
     {

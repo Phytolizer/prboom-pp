@@ -30,12 +30,12 @@ static dsda_playpal_t playpal_data[NUMPALETTES] = {
     {playpal_8, "PLAYPAL8"},         {playpal_9, "PLAYPAL9"},
     {playpal_heretic_e2end, "E2PAL"}};
 
-dsda_playpal_t *dsda_PlayPalData(void)
+dsda_playpal_t *dsda_PlayPalData()
 {
     return &playpal_data[playpal_index];
 }
 
-void dsda_CyclePlayPal(void)
+void dsda_CyclePlayPal()
 {
     int lump_num = -1;
     int cycle_playpal_index;
@@ -74,7 +74,7 @@ void dsda_SetPlayPal(int index)
     playpal_index = index;
 }
 
-void dsda_FreePlayPal(void)
+void dsda_FreePlayPal()
 {
     int playpal_i;
 
@@ -88,7 +88,7 @@ void dsda_FreePlayPal(void)
     }
 }
 
-void dsda_FreeTrueColorPlayPal(void)
+void dsda_FreeTrueColorPlayPal()
 {
     int playpal_i;
     video_mode_t mode;
@@ -130,7 +130,7 @@ void dsda_FreeTrueColorPlayPal(void)
 }
 
 // Moved from r_patch.c
-void dsda_InitPlayPal(void)
+void dsda_InitPlayPal()
 {
     int playpal_i;
 

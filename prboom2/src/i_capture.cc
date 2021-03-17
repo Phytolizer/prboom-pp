@@ -566,7 +566,7 @@ void I_CapturePrep(const char *fn)
 // capture a single frame of video (and corresponding audio length)
 // and send it to pipes
 // Modified to work with SDL2 resizeable window and fullscreen desktop - DTIED
-void I_CaptureFrame(void)
+void I_CaptureFrame()
 {
     unsigned char *snd;
     unsigned char *vid;
@@ -607,7 +607,7 @@ void I_CaptureFrame(void)
 }
 
 // close pipes, call muxcommand, finalize
-void I_CaptureFinish(void)
+void I_CaptureFinish()
 {
     int s;
 

@@ -163,26 +163,26 @@ draw_vars_t drawvars = {
 // columns without a column type.
 //
 
-static void R_FlushWholeError(void)
+static void R_FlushWholeError()
 {
     I_Error("R_FlushWholeColumns called without being initialized.\n");
 }
 
-static void R_FlushHTError(void)
+static void R_FlushHTError()
 {
     I_Error("R_FlushHTColumns called without being initialized.\n");
 }
 
-static void R_QuadFlushError(void)
+static void R_QuadFlushError()
 {
     I_Error("R_FlushQuadColumn called without being initialized.\n");
 }
 
-static void (*R_FlushWholeColumns)(void) = R_FlushWholeError;
-static void (*R_FlushHTColumns)(void) = R_FlushHTError;
-static void (*R_FlushQuadColumn)(void) = R_QuadFlushError;
+static void (*R_FlushWholeColumns)() = R_FlushWholeError;
+static void (*R_FlushHTColumns)() = R_FlushHTError;
+static void (*R_FlushQuadColumn)() = R_QuadFlushError;
 
-static void R_FlushColumns(void)
+static void R_FlushColumns()
 {
     if (temp_x != 4 || commontop >= commonbot)
     {
@@ -203,7 +203,7 @@ static void R_FlushColumns(void)
 // which gets rid of the unnecessary reset of various variables during
 // column drawing.
 //
-void R_ResetColumnBuffer(void)
+void R_ResetColumnBuffer()
 {
     // haleyjd 10/06/05: this must not be done if temp_x == 0!
     if (temp_x)
@@ -845,7 +845,7 @@ void R_SetDefaultDrawColumnVars(draw_column_vars_t *dcvars)
 
 byte playernumtotrans[MAXPLAYERS];
 
-void R_InitTranslationTables(void)
+void R_InitTranslationTables()
 {
     int i, j;
 #define MAXTRANS 3
@@ -1161,7 +1161,7 @@ void R_DrawSpan(draw_span_vars_t *dsvars)
     R_GetDrawSpanFunc(drawvars.filterfloor, drawvars.filterz)(dsvars);
 }
 
-void R_InitBuffersRes(void)
+void R_InitBuffersRes()
 {
     extern byte *solidcol;
 
@@ -1255,7 +1255,7 @@ void R_InitBuffer(int width, int height)
 //
 // CPhipps - patch drawing updated
 
-void R_FillBackScreen(void)
+void R_FillBackScreen()
 {
     int automap = ((automapmode & am_active) && !(automapmode & am_overlay));
 
@@ -1372,7 +1372,7 @@ void R_VideoErase(int x, int y, int count)
 //  for different size windows?
 //
 
-void R_DrawViewBorder(void)
+void R_DrawViewBorder()
 {
     int top, side, i;
 

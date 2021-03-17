@@ -74,7 +74,7 @@ int gl_hires_24bit_colormap = false;
 static GLuint progress_texid = 0;
 static unsigned int lastupdate = 0;
 
-int gld_ProgressStart(void)
+int gld_ProgressStart()
 {
     if (!progress_texid)
     {
@@ -86,7 +86,7 @@ int gld_ProgressStart(void)
     return false;
 }
 
-int gld_ProgressRestoreScreen(void)
+int gld_ProgressRestoreScreen()
 {
     int total_w, total_h;
     float fU1, fU2, fV1, fV2;
@@ -125,7 +125,7 @@ int gld_ProgressRestoreScreen(void)
     return false;
 }
 
-int gld_ProgressEnd(void)
+int gld_ProgressEnd()
 {
     if (progress_texid != 0)
     {
@@ -968,7 +968,7 @@ void gld_HiRes_ProcessColormap(unsigned char *buffer, int bufSize)
     }
 }
 
-int gld_HiRes_BuildTables(void)
+int gld_HiRes_BuildTables()
 {
 #define RGB2PAL_NAME "RGB2PAL"
     const int chanel_bits = (gl_hires_24bit_colormap ? 8 : 5);
@@ -1136,7 +1136,7 @@ int gld_HiRes_BuildTables(void)
     return false;
 }
 
-void gld_InitHiRes(void)
+void gld_InitHiRes()
 {
     gld_HiRes_BuildTables();
 
@@ -1534,7 +1534,7 @@ int gld_LoadHiresTex(GLTexture *gltexture, int cm)
     return result;
 }
 
-int gld_PrecacheGUIPatches(void)
+int gld_PrecacheGUIPatches()
 {
     static const char *staticpatches[] = {
         "INTERPIC", // "TITLEPIC",

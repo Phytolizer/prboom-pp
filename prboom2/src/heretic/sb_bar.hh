@@ -21,10 +21,10 @@
 
 #include "d_event.hh"
 
-void SB_Init(void);
-void SB_Ticker(void);
+void SB_Init();
+void SB_Ticker();
 void SB_Drawer(dboolean statusbaron, dboolean refresh, dboolean fullmenu);
 dboolean SB_Responder(event_t *ev);
-void SB_PaletteFlash(void);
+void SB_PaletteFlash();
 
 #endif

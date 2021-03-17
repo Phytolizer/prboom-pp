@@ -27,8 +27,8 @@
 #include "d_player.hh"
 #include "doomdef.hh"
 
-void IN_Ticker(void);
-void IN_Drawer(void);
+void IN_Ticker();
+void IN_Drawer();
 void IN_Start(wbstartstruct_t *wbstartstruct);
 
 #endif

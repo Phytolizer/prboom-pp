@@ -1473,7 +1473,7 @@ static PUREFUNC int P_FindDoomedNum(unsigned type)
 // P_RespawnSpecials
 //
 
-void P_RespawnSpecials(void)
+void P_RespawnSpecials()
 {
     fixed_t x;
     fixed_t y;

@@ -45,9 +45,9 @@
 #include "f_finale.hh" // CPhipps - hmm...
 
 // The implementation for UMAPINFO is kept separate to avoid demo sync issues
-void FMI_Ticker(void);
-void FMI_Drawer(void);
-void FMI_StartFinale(void);
+void FMI_Ticker();
+void FMI_Drawer();
+void FMI_StartFinale();
 extern int using_FMI;
 
 // Stage of animation:
@@ -64,19 +64,19 @@ const char *finaleflat; // made static const
 // Ty 03/22/98 - ... the new s_WHATEVER extern variables are used
 // in the code below instead.
 
-void F_StartCast(void);
-void F_CastTicker(void);
+void F_StartCast();
+void F_CastTicker();
 dboolean F_CastResponder(event_t *ev);
-void F_CastDrawer(void);
+void F_CastDrawer();
 
-void WI_checkForAccelerate(void); // killough 3/28/98: used to
+void WI_checkForAccelerate(); // killough 3/28/98: used to
 extern int acceleratestage;       // accelerate intermission screens
 int midstage;                     // whether we're in "mid-stage"
 
 //
 // F_StartFinale
 //
-void F_StartFinale(void)
+void F_StartFinale()
 {
     if (heretic)
     {
@@ -218,7 +218,7 @@ dboolean F_Responder(event_t *event)
 // Get_TextSpeed() returns the value of the text display speed  // phares
 // Rewritten to allow user-directed acceleration -- killough 3/28/98
 
-float Get_TextSpeed(void)
+float Get_TextSpeed()
 {
     return midstage ? NEWTEXTSPEED
                     : (midstage = acceleratestage)
@@ -239,7 +239,7 @@ float Get_TextSpeed(void)
 // killough 5/10/98: add back v1.9 demo compatibility
 //
 
-void F_Ticker(void)
+void F_Ticker()
 {
     int i;
 
@@ -329,7 +329,7 @@ void F_Ticker(void)
 #include "hu_stuff.hh"
 extern patchnum_t hu_font[HU_FONTSIZE];
 
-void F_TextWrite(void)
+void F_TextWrite()
 {
     // [FG] if interbackdrop does not specify a valid flat, draw it as a patch
     // instead
@@ -426,7 +426,7 @@ dboolean castattacking;
 // F_StartCast
 //
 
-void F_StartCast(void)
+void F_StartCast()
 {
     wipegamestate = static_cast<gamestate_t>(-1); // force a screen wipe
     castnum = 0;
@@ -443,7 +443,7 @@ void F_StartCast(void)
 //
 // F_CastTicker
 //
-void F_CastTicker(void)
+void F_CastTicker()
 {
     int st;
     int sfx;
@@ -689,7 +689,7 @@ static void F_CastPrint(const char *text) // CPhipps - static, const char*
 // F_CastDrawer
 //
 
-void F_CastDrawer(void)
+void F_CastDrawer()
 {
     spritedef_t *sprdef;
     spriteframe_t *sprframe;
@@ -723,7 +723,7 @@ void F_CastDrawer(void)
 static const char pfub2[] = {"PFUB2"};
 static const char pfub1[] = {"PFUB1"};
 
-static void F_BunnyScroll(void)
+static void F_BunnyScroll()
 {
     char name[10];
     int stage;
@@ -780,7 +780,7 @@ static void F_BunnyScroll(void)
 //
 // F_Drawer
 //
-void F_Drawer(void)
+void F_Drawer()
 {
     if (heretic)
     {

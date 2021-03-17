@@ -233,7 +233,7 @@ const char *shiftxform;
 
 static custom_message_t custom_message[MAXPLAYERS];
 static custom_message_t *custom_message_p;
-void HU_init_crosshair(void);
+void HU_init_crosshair();
 
 const char english_shiftxform[] = {
     0,    1,   2,   3,   4,   5,   6,   7,   8,   9,   10,  11,  12,  13,  14,
@@ -286,7 +286,7 @@ static void HU_SetLumpTrans(const char *name)
 //
 // Passed nothing, returns nothing
 //
-void HU_Init(void)
+void HU_Init()
 {
 
     int i;
@@ -425,7 +425,7 @@ void HU_Init(void)
 //
 // Passed nothing, returns nothing
 //
-static void HU_Stop(void)
+static void HU_Stop()
 {
     headsupactive = false;
 }
@@ -441,7 +441,7 @@ static void HU_Stop(void)
 //
 // Passed nothing, returns nothing
 //
-void HU_Start(void)
+void HU_Start()
 {
     int i;
     const char *s; /* cph - const */
@@ -741,7 +741,7 @@ void HU_Start(void)
     dsda_InitHud(hu_font2);
 }
 
-void HU_NextHud(void)
+void HU_NextHud()
 {
     if (huds_count > 0)
     {
@@ -749,8 +749,8 @@ void HU_NextHud(void)
     }
 }
 
-typedef void (*HU_widget_build_func)(void);
-typedef void (*HU_widget_draw_func)(void);
+typedef void (*HU_widget_build_func)();
+typedef void (*HU_widget_draw_func)();
 
 typedef struct hud_cfg_item_s
 {
@@ -780,53 +780,53 @@ int huds_count;
 hud_widgets_list_t *huds;
 hud_widgets_list_t *hud_current;
 
-void HU_widget_build_ammo(void);
-void HU_widget_draw_ammo(void);
-void HU_widget_build_weapon(void);
-void HU_widget_draw_weapon(void);
-void HU_widget_build_keys(void);
-void HU_widget_draw_keys(void);
-void HU_widget_build_monsec(void);
-void HU_widget_draw_monsec(void);
-void HU_widget_build_health(void);
-void HU_widget_draw_health(void);
-void HU_widget_build_armor(void);
-void HU_widget_draw_armor(void);
-void HU_widget_build_hudadd(void);
-void HU_widget_draw_hudadd(void);
+void HU_widget_build_ammo();
+void HU_widget_draw_ammo();
+void HU_widget_build_weapon();
+void HU_widget_draw_weapon();
+void HU_widget_build_keys();
+void HU_widget_draw_keys();
+void HU_widget_build_monsec();
+void HU_widget_draw_monsec();
+void HU_widget_build_health();
+void HU_widget_draw_health();
+void HU_widget_build_armor();
+void HU_widget_draw_armor();
+void HU_widget_build_hudadd();
+void HU_widget_draw_hudadd();
 
-void HU_widget_build_health_big(void);
-void HU_widget_draw_health_big(void);
-void HU_widget_build_armor_big(void);
-void HU_widget_draw_armor_big(void);
+void HU_widget_build_health_big();
+void HU_widget_draw_health_big();
+void HU_widget_build_armor_big();
+void HU_widget_draw_armor_big();
 
-void HU_widget_build_medict_icon_big(void);
-void HU_widget_draw_medict_icon_big(void);
-void HU_widget_build_armor_icon_big(void);
-void HU_widget_draw_armor_icon_big(void);
+void HU_widget_build_medict_icon_big();
+void HU_widget_draw_medict_icon_big();
+void HU_widget_build_armor_icon_big();
+void HU_widget_draw_armor_icon_big();
 
-void HU_widget_build_medict_icon_small(void);
-void HU_widget_draw_medict_icon_small(void);
-void HU_widget_build_armor_icon_small(void);
-void HU_widget_draw_armor_icon_small(void);
+void HU_widget_build_medict_icon_small();
+void HU_widget_draw_medict_icon_small();
+void HU_widget_build_armor_icon_small();
+void HU_widget_draw_armor_icon_small();
 
-void HU_widget_build_medict_icon_custom(void);
-void HU_widget_draw_medict_icon_custom(void);
-void HU_widget_build_armor_icon_custom(void);
-void HU_widget_draw_armor_icon_custom(void);
+void HU_widget_build_medict_icon_custom();
+void HU_widget_draw_medict_icon_custom();
+void HU_widget_build_armor_icon_custom();
+void HU_widget_draw_armor_icon_custom();
 
-void HU_widget_build_medict_percent(void);
-void HU_widget_draw_medict_percent(void);
-void HU_widget_build_armor_percent(void);
-void HU_widget_draw_armor_percent(void);
+void HU_widget_build_medict_percent();
+void HU_widget_draw_medict_percent();
+void HU_widget_build_armor_percent();
+void HU_widget_draw_armor_percent();
 
-void HU_widget_build_ammo_big(void);
-void HU_widget_draw_ammo_big(void);
-void HU_widget_build_ammo_icon(void);
-void HU_widget_draw_ammo_icon(void);
+void HU_widget_build_ammo_big();
+void HU_widget_draw_ammo_big();
+void HU_widget_build_ammo_icon();
+void HU_widget_draw_ammo_icon();
 
-void HU_widget_build_gkeys(void);
-void HU_widget_draw_gkeys(void);
+void HU_widget_build_gkeys();
+void HU_widget_draw_gkeys();
 
 static hud_widget_t hud_name_widget[] = {
     {&w_ammo, 0, 0, static_cast<patch_translation_e>(0), HU_widget_build_ammo,
@@ -890,7 +890,7 @@ static hud_widget_t hud_name_widget[] = {
     {nullptr, 0, 0, static_cast<patch_translation_e>(0), nullptr, nullptr,
      nullptr}};
 
-void HU_LoadHUDDefs(void)
+void HU_LoadHUDDefs()
 {
     static int init = 0;
 
@@ -1143,7 +1143,7 @@ int HU_GetAmmoColor(int ammo, int fullammo, int def, int tofire,
     return result;
 }
 
-void HU_widget_build_ammo(void)
+void HU_widget_build_ammo()
 {
     int i;
     char *s;
@@ -1210,13 +1210,13 @@ void HU_widget_build_ammo(void)
     }
 }
 
-void HU_widget_draw_ammo(void)
+void HU_widget_draw_ammo()
 {
     // display the ammo widget every frame
     HUlib_drawTextLine(&w_ammo, false);
 }
 
-void HU_widget_build_health(void)
+void HU_widget_build_health()
 {
     int i;
     char *s;
@@ -1275,12 +1275,12 @@ void HU_widget_build_health(void)
     }
 }
 
-void HU_widget_draw_health(void)
+void HU_widget_draw_health()
 {
     HUlib_drawTextLine(&w_health, false);
 }
 
-void HU_widget_build_health_big(void)
+void HU_widget_build_health_big()
 {
     char *s;
     char healthstr[80]; // jff
@@ -1312,48 +1312,48 @@ void HU_widget_build_health_big(void)
     }
 }
 
-void HU_widget_draw_health_big(void)
+void HU_widget_draw_health_big()
 {
     HUlib_drawTextLine(&w_health_big, false);
 }
 
-void HU_widget_build_medict_icon_big(void)
+void HU_widget_build_medict_icon_big()
 {
     // transfer the graphic key text to the widget
     HUlib_clearTextLine(&w_medict_icon_big);
     HUlib_addCharToTextLine(&w_medict_icon_big, '!' + 0 + 4);
 }
 
-void HU_widget_draw_medict_icon_big(void)
+void HU_widget_draw_medict_icon_big()
 {
     HUlib_drawTextLine(&w_medict_icon_big, false);
 }
 
-void HU_widget_build_medict_icon_small(void)
+void HU_widget_build_medict_icon_small()
 {
     // transfer the graphic key text to the widget
     HUlib_clearTextLine(&w_medict_icon_small);
     HUlib_addCharToTextLine(&w_medict_icon_small, '!' + 0 + 8);
 }
 
-void HU_widget_draw_medict_icon_small(void)
+void HU_widget_draw_medict_icon_small()
 {
     HUlib_drawTextLine(&w_medict_icon_small, false);
 }
 
-void HU_widget_build_medict_icon_custom(void)
+void HU_widget_build_medict_icon_custom()
 {
     // transfer the graphic key text to the widget
     HUlib_clearTextLine(&w_medict_icon_custom);
     HUlib_addCharToTextLine(&w_medict_icon_custom, '!' + 0 + 30);
 }
 
-void HU_widget_draw_medict_icon_custom(void)
+void HU_widget_draw_medict_icon_custom()
 {
     HUlib_drawTextLine(&w_medict_icon_custom, false);
 }
 
-void HU_widget_build_armor_icon_custom(void)
+void HU_widget_build_armor_icon_custom()
 {
     // transfer the graphic key text to the widget
     HUlib_clearTextLine(&w_armor_icon_custom);
@@ -1361,12 +1361,12 @@ void HU_widget_build_armor_icon_custom(void)
                             (char)('!' + plr->armortype + 1 + 30));
 }
 
-void HU_widget_draw_armor_icon_custom(void)
+void HU_widget_draw_armor_icon_custom()
 {
     HUlib_drawTextLine(&w_armor_icon_custom, false);
 }
 
-void HU_widget_build_armor(void)
+void HU_widget_build_armor()
 {
     int i;
     char *s;
@@ -1424,12 +1424,12 @@ void HU_widget_build_armor(void)
     }
 }
 
-void HU_widget_draw_armor(void)
+void HU_widget_draw_armor()
 {
     HUlib_drawTextLine(&w_armor, false);
 }
 
-void HU_widget_build_armor_big(void)
+void HU_widget_build_armor_big()
 {
     char *s;
     char armorstr[80]; // jff
@@ -1460,12 +1460,12 @@ void HU_widget_build_armor_big(void)
     }
 }
 
-void HU_widget_draw_armor_big(void)
+void HU_widget_draw_armor_big()
 {
     HUlib_drawTextLine(&w_armor_big, false);
 }
 
-void HU_widget_build_armor_icon_big(void)
+void HU_widget_build_armor_icon_big()
 {
     // transfer the graphic key text to the widget
     HUlib_clearTextLine(&w_armor_icon_big);
@@ -1473,12 +1473,12 @@ void HU_widget_build_armor_icon_big(void)
                             (char)('!' + plr->armortype + 1 + 4));
 }
 
-void HU_widget_draw_armor_icon_big(void)
+void HU_widget_draw_armor_icon_big()
 {
     HUlib_drawTextLine(&w_armor_icon_big, false);
 }
 
-void HU_widget_build_armor_icon_small(void)
+void HU_widget_build_armor_icon_small()
 {
     // transfer the graphic key text to the widget
     HUlib_clearTextLine(&w_armor_icon_small);
@@ -1486,12 +1486,12 @@ void HU_widget_build_armor_icon_small(void)
                             (char)('!' + plr->armortype + 1 + 8));
 }
 
-void HU_widget_draw_armor_icon_small(void)
+void HU_widget_draw_armor_icon_small()
 {
     HUlib_drawTextLine(&w_armor_icon_small, false);
 }
 
-void HU_widget_build_weapon(void)
+void HU_widget_build_weapon()
 {
     int i;
     char *s;
@@ -1597,12 +1597,12 @@ void HU_widget_build_weapon(void)
     }
 }
 
-void HU_widget_draw_weapon(void)
+void HU_widget_draw_weapon()
 {
     HUlib_drawTextLine(&w_weapon, false);
 }
 
-void HU_widget_build_keys(void)
+void HU_widget_build_keys()
 {
     int i;
     int k;
@@ -1846,7 +1846,7 @@ void HU_widget_build_keys(void)
     w_gkeys.flags = w_keys.flags;
 }
 
-void HU_widget_draw_keys(void)
+void HU_widget_draw_keys()
 {
     HUlib_drawTextLine(&w_keys, false);
     if (!deathmatch)
@@ -1855,7 +1855,7 @@ void HU_widget_draw_keys(void)
     }
 }
 
-void HU_widget_build_monsec(void)
+void HU_widget_build_monsec()
 {
     int i;
     char *s;
@@ -1950,12 +1950,12 @@ void HU_widget_build_monsec(void)
     }
 }
 
-void HU_widget_draw_monsec(void)
+void HU_widget_draw_monsec()
 {
     HUlib_drawTextLine(&w_monsec, false);
 }
 
-void HU_widget_build_hudadd(void)
+void HU_widget_build_hudadd()
 {
     char *s;
     hud_add[0] = 0;
@@ -1998,7 +1998,7 @@ void HU_widget_build_hudadd(void)
     }
 }
 
-void HU_widget_draw_hudadd(void)
+void HU_widget_draw_hudadd()
 {
     if (hudadd_gamespeed || hudadd_leveltime)
     {
@@ -2006,7 +2006,7 @@ void HU_widget_draw_hudadd(void)
     }
 }
 
-void HU_widget_build_medict_percent(void)
+void HU_widget_build_medict_percent()
 {
     int health = plr->health;
 
@@ -2034,12 +2034,12 @@ void HU_widget_build_medict_percent(void)
     HUlib_addCharToTextLine(&w_medict_percent, (char)('!' + 12));
 }
 
-void HU_widget_draw_medict_percent(void)
+void HU_widget_draw_medict_percent()
 {
     HUlib_drawTextLine(&w_medict_percent, false);
 }
 
-void HU_widget_build_armor_percent(void)
+void HU_widget_build_armor_percent()
 {
     int armor = plr->armorpoints;
 
@@ -2067,12 +2067,12 @@ void HU_widget_build_armor_percent(void)
     HUlib_addCharToTextLine(&w_armor_percent, (char)('!' + 13));
 }
 
-void HU_widget_draw_armor_percent(void)
+void HU_widget_draw_armor_percent()
 {
     HUlib_drawTextLine(&w_armor_percent, false);
 }
 
-void HU_widget_build_ammo_big(void)
+void HU_widget_build_ammo_big()
 {
     char *s;
     char ammostr[80];
@@ -2105,12 +2105,12 @@ void HU_widget_build_ammo_big(void)
     }
 }
 
-void HU_widget_draw_ammo_big(void)
+void HU_widget_draw_ammo_big()
 {
     HUlib_drawTextLine(&w_ammo_big, false);
 }
 
-void HU_widget_build_ammo_icon(void)
+void HU_widget_build_ammo_icon()
 {
     int ammo = weaponinfo[plr->readyweapon].ammo;
 
@@ -2131,12 +2131,12 @@ void HU_widget_build_ammo_icon(void)
     }
 }
 
-void HU_widget_draw_ammo_icon(void)
+void HU_widget_draw_ammo_icon()
 {
     HUlib_drawTextLine(&w_ammo_icon, false);
 }
 
-void HU_widget_build_gkeys(void)
+void HU_widget_build_gkeys()
 {
     int i, k;
     char *s;
@@ -2183,7 +2183,7 @@ void HU_widget_build_gkeys(void)
     }
 }
 
-void HU_widget_draw_gkeys(void)
+void HU_widget_draw_gkeys()
 {
     HUlib_drawTextLine(&w_keys_icon, false);
 }
@@ -2193,7 +2193,7 @@ const char *crosshair_nam[HU_CROSSHAIRS] = {nullptr, "CROSS1", "CROSS2",
 const char *crosshair_str[HU_CROSSHAIRS] = {"none", "cross", "angle", "dot"};
 crosshair_t crosshair;
 
-void HU_init_crosshair(void)
+void HU_init_crosshair()
 {
     if (!hudadd_crosshair || !crosshair_nam[hudadd_crosshair])
     {
@@ -2216,7 +2216,7 @@ void HU_init_crosshair(void)
     }
 }
 
-void SetCrosshairTarget(void)
+void SetCrosshairTarget()
 {
     crosshair.target_screen_x = 0.0f;
     crosshair.target_screen_y = 0.0f;
@@ -2267,7 +2267,7 @@ void SetCrosshairTarget(void)
     }
 }
 
-void HU_draw_crosshair(void)
+void HU_draw_crosshair()
 {
     int cm;
 
@@ -2369,7 +2369,7 @@ void HU_draw_crosshair(void)
 //
 // Passed nothing, returns nothing
 //
-void HU_Drawer(void)
+void HU_Drawer()
 {
     char *s;
     player_t *player;
@@ -2620,7 +2620,7 @@ void HU_Drawer(void)
 //
 // Passed nothing, returns nothing
 //
-void HU_Erase(void)
+void HU_Erase()
 {
     // erase the message display or the message review display
     if (!message_list)
@@ -2657,7 +2657,7 @@ void HU_Erase(void)
 static dboolean bsdown; // Is backspace down?
 static int bscounter;
 
-void HU_Ticker(void)
+void HU_Ticker()
 {
     int i, rc;
     char c;
@@ -2814,7 +2814,7 @@ static void HU_queueChatChar(char c)
 //
 // Passed nothing, returns the character dequeued
 //
-char HU_dequeueChatChar(void)
+char HU_dequeueChatChar()
 {
     char c;
 

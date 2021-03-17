@@ -330,7 +330,7 @@ angle_t R_PointToPseudoAngle(fixed_t x, fixed_t y)
 //
 // killough 5/2/98: reformatted
 
-static void R_InitTextureMapping(void)
+static void R_InitTextureMapping()
 {
     int i, x;
     FieldOfView = FIELDOFVIEW;
@@ -426,7 +426,7 @@ static void R_InitTextureMapping(void)
 
 #define DISTMAP 2
 
-static void R_InitLightTables(void)
+static void R_InitLightTables()
 {
     int i;
 
@@ -595,7 +595,7 @@ static void InitStretchParam(stretch_param_t *offsets, int stretch,
     }
 }
 
-void R_SetupViewScaling(void)
+void R_SetupViewScaling()
 {
     int i, k;
 
@@ -702,7 +702,7 @@ int R_Project(float objx, float objy, float objz, float *winx, float *winy,
     return true;
 }
 
-void R_SetupViewport(void)
+void R_SetupViewport()
 {
     extern int screenblocks;
     int height;
@@ -745,7 +745,7 @@ void R_SetupPerspective(float fovy, float aspect, float znear)
     m[14] = -2 * znear;
 }
 
-void R_BuildModelViewMatrix(void)
+void R_BuildModelViewMatrix()
 {
     float x, y, z;
     float yaw, pitch;
@@ -807,7 +807,7 @@ void R_BuildModelViewMatrix(void)
 // R_ExecuteSetViewSize
 //
 
-void R_ExecuteSetViewSize(void)
+void R_ExecuteSetViewSize()
 {
     int i;
     int cheight;
@@ -954,7 +954,7 @@ void R_ExecuteSetViewSize(void)
 
 extern int screenblocks;
 
-void R_Init(void)
+void R_Init()
 {
     // CPhipps - R_DrawColumn isn't constant anymore, so must
     //  initialise in code
@@ -1002,7 +1002,7 @@ subsector_t *R_PointInSubsector(fixed_t x, fixed_t y)
 // R_SetupFreelook
 //
 
-void R_SetupFreelook(void)
+void R_SetupFreelook()
 {
     if (V_GetMode() != VID_MODEGL)
     {
@@ -1036,7 +1036,7 @@ void R_SetupFreelook(void)
 // R_SetupMatrix
 //
 
-void R_SetupMatrix(void)
+void R_SetupMatrix()
 {
     float fovy, aspect, znear;
     int r_nearclip = 5;
@@ -1152,7 +1152,7 @@ int rendered_visplanes, rendered_segs, rendered_vissprites;
 dboolean rendering_stats;
 int renderer_fps = 0;
 
-void R_ShowStats(void)
+void R_ShowStats()
 {
     static unsigned int FPS_SavedTick = 0, FPS_FrameCount = 0;
     unsigned int tick = SDL_GetTicks();
@@ -1174,7 +1174,7 @@ void R_ShowStats(void)
     }
 }
 
-void R_ClearStats(void)
+void R_ClearStats()
 {
     rendered_visplanes = 0;
     rendered_segs = 0;

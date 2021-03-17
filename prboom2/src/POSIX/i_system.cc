@@ -77,7 +77,7 @@ void I_uSleep(unsigned long usecs)
 static unsigned long lasttimereply;
 static unsigned long basetime;
 
-int I_GetTime_RealTime(void)
+int I_GetTime_RealTime()
 {
     struct timeval tv;
     struct timezone tz;
@@ -111,7 +111,7 @@ int I_GetTime_RealTime(void)
  *
  * CPhipps - extracted from G_ReloadDefaults because it is O/S based
  */
-unsigned long I_GetRandomTimeSeed(void)
+unsigned long I_GetRandomTimeSeed()
 {
     /* killough 3/26/98: shuffle random seed, use the clock */
     struct timeval tv;

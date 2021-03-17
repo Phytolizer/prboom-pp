@@ -60,7 +60,7 @@ thinker_t thinkerclasscap[th_all + 1];
 // P_InitThinkers
 //
 
-void P_InitThinkers(void)
+void P_InitThinkers()
 {
     int i;
 
@@ -252,7 +252,7 @@ void P_SetTarget(mobj_t **mop, mobj_t *targ)
 // external and using P_RemoveThinkerDelayed() implicitly.
 //
 
-static void P_RunThinkers(void)
+static void P_RunThinkers()
 {
     for (currentthinker = thinkercap.next; currentthinker != &thinkercap;
          currentthinker = currentthinker->next)
@@ -283,7 +283,7 @@ static void P_RunThinkers(void)
 // P_Ticker
 //
 
-void P_Ticker(void)
+void P_Ticker()
 {
     int i;
 

@@ -66,7 +66,7 @@ static screeninfo_t wipe_scr;
 static int *y_lookup = nullptr;
 
 // e6y: resolution limitation is removed
-void R_InitMeltRes(void)
+void R_InitMeltRes()
 {
     if (y_lookup)
     {
@@ -211,7 +211,7 @@ static int wipe_exitMelt(int ticks)
     return 0;
 }
 
-int wipe_StartScreen(void)
+int wipe_StartScreen()
 {
     if (!render_wipescreen || wasWiped)
     {
@@ -247,7 +247,7 @@ int wipe_StartScreen(void)
     return 0;
 }
 
-int wipe_EndScreen(void)
+int wipe_EndScreen()
 {
     if (!render_wipescreen || !wasWiped)
     {

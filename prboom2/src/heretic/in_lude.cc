@@ -49,16 +49,16 @@ typedef enum
     DEATHMATCH
 } gametype_t;
 
-static void IN_WaitStop(void);
-static void IN_Stop(void);
-static void IN_CheckForSkip(void);
-static void IN_InitStats(void);
-static void IN_DrawOldLevel(void);
-static void IN_DrawYAH(void);
-static void IN_DrawStatBack(void);
-static void IN_DrawSingleStats(void);
-static void IN_DrawCoopStats(void);
-static void IN_DrawDMStats(void);
+static void IN_WaitStop();
+static void IN_Stop();
+static void IN_CheckForSkip();
+static void IN_InitStats();
+static void IN_DrawOldLevel();
+static void IN_DrawYAH();
+static void IN_DrawStatBack();
+static void IN_DrawSingleStats();
+static void IN_DrawCoopStats();
+static void IN_DrawDMStats();
 static void IN_DrawNumber(int val, int x, int y, int digits);
 static void IN_DrawTime(int x, int y, int h, int m, int s);
 static void IN_DrTextB(const char *text, int x, int y);
@@ -151,7 +151,7 @@ static const char *NameForMap(int map)
     return name + 7;
 }
 
-static void IN_DrawInterpic(void)
+static void IN_DrawInterpic()
 {
     char name[9];
 
@@ -182,7 +182,7 @@ static void IN_DrawGoingThere(int i)
                     CR_DEFAULT, VPT_STRETCH);
 }
 
-static void IN_InitLumps(void)
+static void IN_InitLumps()
 {
     int i, base;
 
@@ -211,7 +211,7 @@ static void IN_InitVariables(wbstartstruct_t *wbstartstruct)
 //
 //========================================================================
 
-extern void AM_Stop(void);
+extern void AM_Stop();
 
 void IN_Start(wbstartstruct_t *wbstartstruct)
 {
@@ -234,7 +234,7 @@ void IN_Start(wbstartstruct_t *wbstartstruct)
 //
 //========================================================================
 
-void IN_WaitStop(void)
+void IN_WaitStop()
 {
     if (!--cnt)
     {
@@ -249,7 +249,7 @@ void IN_WaitStop(void)
 //
 //========================================================================
 
-void IN_Stop(void)
+void IN_Stop()
 {
     intermission = false;
     SB_state = -1;
@@ -263,7 +263,7 @@ void IN_Stop(void)
 //      Initializes the stats for single player mode
 //========================================================================
 
-void IN_InitStats(void)
+void IN_InitStats()
 {
     int i;
     int j;
@@ -367,7 +367,7 @@ void IN_InitStats(void)
 //
 //========================================================================
 
-void IN_Ticker(void)
+void IN_Ticker()
 {
     if (!intermission)
     {
@@ -454,7 +454,7 @@ void IN_Ticker(void)
 //      Check to see if any player hit a key
 //========================================================================
 
-void IN_CheckForSkip(void)
+void IN_CheckForSkip()
 {
     int i;
     player_t *player;
@@ -497,7 +497,7 @@ void IN_CheckForSkip(void)
 //
 //========================================================================
 
-void IN_Drawer(void)
+void IN_Drawer()
 {
     static int oldinterstate;
 
@@ -564,7 +564,7 @@ void IN_Drawer(void)
 //
 //========================================================================
 
-void IN_DrawStatBack(void)
+void IN_DrawStatBack()
 {
     V_DrawBackground(DEH_String("FLOOR16"), 0);
 
@@ -578,7 +578,7 @@ void IN_DrawStatBack(void)
 //
 //========================================================================
 
-void IN_DrawOldLevel(void)
+void IN_DrawOldLevel()
 {
     const char *level_name = NameForMap(prevmap);
     int i;
@@ -623,7 +623,7 @@ void IN_DrawOldLevel(void)
 //
 //========================================================================
 
-void IN_DrawYAH(void)
+void IN_DrawYAH()
 {
     const char *level_name = NameForMap(gamemap);
     int i;
@@ -658,7 +658,7 @@ void IN_DrawYAH(void)
 //
 //========================================================================
 
-void IN_DrawSingleStats(void)
+void IN_DrawSingleStats()
 {
     const char *prev_level_name = NameForMap(prevmap);
     const char *next_level_name = NameForMap(gamemap);
@@ -764,7 +764,7 @@ void IN_DrawSingleStats(void)
 //
 //========================================================================
 
-void IN_DrawCoopStats(void)
+void IN_DrawCoopStats()
 {
     const char *level_name = NameForMap(prevmap);
     int i;
@@ -815,7 +815,7 @@ void IN_DrawCoopStats(void)
 //
 //========================================================================
 
-void IN_DrawDMStats(void)
+void IN_DrawDMStats()
 {
     int i;
     int j;

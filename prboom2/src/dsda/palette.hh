@@ -52,11 +52,11 @@ typedef struct playpal_data_s
     unsigned int *Palettes32 = nullptr;
 } dsda_playpal_t;
 
-dsda_playpal_t *dsda_PlayPalData(void);
-void dsda_CyclePlayPal(void);
+dsda_playpal_t *dsda_PlayPalData();
+void dsda_CyclePlayPal();
 void dsda_SetPlayPal(int index);
-void dsda_FreePlayPal(void);
-void dsda_FreeTrueColorPlayPal(void);
-void dsda_InitPlayPal(void);
+void dsda_FreePlayPal();
+void dsda_FreeTrueColorPlayPal();
+void dsda_InitPlayPal();
 
 #endif

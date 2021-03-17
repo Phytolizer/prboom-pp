@@ -89,26 +89,26 @@ typedef BOOL(WINAPI *SetAffinityFunc)(HANDLE hProcess, DWORD mask);
 int realtic_clock_rate = 100;
 static int_64_t I_GetTime_Scale = 1 << 24;
 
-static int I_GetTime_Scaled(void)
+static int I_GetTime_Scaled()
 {
     return (int)((int_64_t)I_GetTime_RealTime() * I_GetTime_Scale >> 24);
 }
 
-static int I_GetTime_FastDemo(void)
+static int I_GetTime_FastDemo()
 {
     static int fasttic;
     return fasttic++;
 }
 
-static int I_GetTime_Error(void)
+static int I_GetTime_Error()
 {
     I_Error("I_GetTime_Error: GetTime() used before initialization");
     return 0;
 }
 
-int (*I_GetTime)(void) = I_GetTime_Error;
+int (*I_GetTime)() = I_GetTime_Error;
 
-void I_Init(void)
+void I_Init()
 {
     /* killough 4/14/98: Adjustable speedup based on realtic_clock_rate */
     if (fastdemo)
@@ -138,7 +138,7 @@ void I_Init(void)
 }
 
 // e6y
-void I_Init2(void)
+void I_Init2()
 {
     if (fastdemo)
     {
@@ -206,12 +206,12 @@ void I_ExeptionBegin(ExeptionsList_t exception_index)
     }
 }
 
-void I_ExeptionEnd(void)
+void I_ExeptionEnd()
 {
     current_exception_index = EXEPTION_NONE;
 }
 
-void I_ExeptionProcess(void)
+void I_ExeptionProcess()
 {
     if (current_exception_index > EXEPTION_NONE &&
         current_exception_index < EXEPTION_MAX)
@@ -266,7 +266,7 @@ enum
 
 int endoom_mode;
 
-static void PrintVer(void)
+static void PrintVer()
 {
     char vbuf[200];
     lprintf(LO_INFO, "%s\n", I_GetVersionString(vbuf, 200));
@@ -275,7 +275,7 @@ static void PrintVer(void)
 //
 // ENDOOM support using text mode emulation
 //
-static void I_EndDoom(void)
+static void I_EndDoom()
 {
     int lump_eb, lump_ed, lump = -1;
 
@@ -374,7 +374,7 @@ void I_SafeExit(int rc)
     }
 }
 
-static void I_Quit(void)
+static void I_Quit()
 {
     if (!has_exited)
     {
@@ -405,7 +405,7 @@ uid_t stored_euid = -1;
 // Ability to use only the allowed CPUs
 //
 
-static void I_SetAffinityMask(void)
+static void I_SetAffinityMask()
 {
     // Forcing single core only for "SDL MIDI Player"
     process_affinity_mask = 0;
@@ -489,7 +489,7 @@ static void I_SetAffinityMask(void)
 // Sets the priority class for the prboom-plus process
 //
 
-void I_SetProcessPriority(void)
+void I_SetProcessPriority()
 {
     if (process_priority)
     {

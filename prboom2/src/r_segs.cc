@@ -445,7 +445,7 @@ void R_RenderMaskedSegRange(drawseg_t *ds, int x1, int x2)
 
 static int didsolidcol; /* True if at least one column was marked solid */
 
-static void R_RenderSegLoop(void)
+static void R_RenderSegLoop()
 {
     const rpatch_t *tex_patch;
     R_DrawColumn_f colfunc = R_GetDrawColumnFunc(

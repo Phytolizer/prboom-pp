@@ -497,7 +497,7 @@ static void CALLBACK ntessVertex(vertex_t *vert)
 //
 // called when the tesselation of a the current loop ends (DEBUG only)
 
-static void CALLBACK ntessEnd(void)
+static void CALLBACK ntessEnd()
 {
 #ifdef PRBOOM_DEBUG
     if (levelinfo)
@@ -915,7 +915,7 @@ static void gld_PrecalculateSector(int num)
  *            (glnodes only)                *
  ********************************************/
 
-static void gld_GetSubSectorVertices(void)
+static void gld_GetSubSectorVertices()
 {
     int i, j;
     int numedgepoints;
@@ -1007,7 +1007,7 @@ static void gld_GetSubSectorVertices(void)
 // GL_CLAMP instead of GL_REPEAT should be used for them for avoiding seams
 //
 
-static void gld_MarkSectorsForClamp(void)
+static void gld_MarkSectorsForClamp()
 {
     int i;
 
@@ -1087,7 +1087,7 @@ static void gld_MarkSectorsForClamp(void)
     }
 }
 
-static void gld_PreprocessSectors(void)
+static void gld_PreprocessSectors()
 {
 #ifdef USE_GLU_TESS // figgi
     char *vertexcheck = nullptr;
@@ -1307,7 +1307,7 @@ static void gld_PreprocessSectors(void)
     gld_MarkSectorsForClamp();
 }
 
-static void gld_PreprocessSegs(void)
+static void gld_PreprocessSegs()
 {
     int i;
 
@@ -1330,7 +1330,7 @@ static void gld_PreprocessSegs(void)
     }
 }
 
-void gld_PreprocessLevel(void)
+void gld_PreprocessLevel()
 {
     // e6y: speedup of level reloading
     // Do not preprocess GL data twice for same level
@@ -1436,7 +1436,7 @@ void gld_PreprocessLevel(void)
  *
  *****************************/
 
-void gld_ProcessTexturedMap(void)
+void gld_ProcessTexturedMap()
 {
     if (map_textured && subsectorloops && subsectorloops[0].loops == nullptr)
     {

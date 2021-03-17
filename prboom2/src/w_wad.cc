@@ -433,7 +433,7 @@ int(W_FindNumFromName)(const char *name, int li_namespace, int i)
 // killough 1/31/98: Initialize lump hash table
 //
 
-void W_HashLumps(void)
+void W_HashLumps()
 {
     int i;
 
@@ -546,7 +546,7 @@ wadfile_info_t *wadfiles = nullptr;
 size_t numwadfiles =
     0; // CPhipps - size of the wadfiles array (dynamic, no limit)
 
-void W_Init(void)
+void W_Init()
 {
     // CPhipps - start with nothing
 
@@ -589,7 +589,7 @@ void W_Init(void)
     V_FreePlaypal();
 }
 
-void W_ReleaseAllWads(void)
+void W_ReleaseAllWads()
 {
     size_t i;
 

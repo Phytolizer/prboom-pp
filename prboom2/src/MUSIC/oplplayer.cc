@@ -911,7 +911,7 @@ int opl_io_port = 0x388;
 
 // Load instrument table from GENMIDI lump:
 
-static dboolean LoadInstrumentTable(void)
+static dboolean LoadInstrumentTable()
 {
     const byte *lump;
 
@@ -935,7 +935,7 @@ static dboolean LoadInstrumentTable(void)
 
 // Get the next available voice from the freelist.
 
-static opl_voice_t *GetFreeVoice(void)
+static opl_voice_t *GetFreeVoice()
 {
     opl_voice_t *result;
 
@@ -1126,7 +1126,7 @@ static void SetVoiceVolume(opl_voice_t *voice, unsigned int volume)
 
 // Initialize the voice table and freelist
 
-static void InitVoices(void)
+static void InitVoices()
 {
     int i;
 
@@ -1664,7 +1664,7 @@ static void ScheduleTrack(opl_track_data_t *track);
 
 // Restart a song from the beginning.
 
-static void RestartSong(void)
+static void RestartSong()
 {
     unsigned int i;
 
@@ -1811,7 +1811,7 @@ void I_OPL_PlaySong(const void *handle, int looping)
     }
 }
 
-void I_OPL_PauseSong(void)
+void I_OPL_PauseSong()
 {
     unsigned int i;
 
@@ -1837,7 +1837,7 @@ void I_OPL_PauseSong(void)
     }
 }
 
-void I_OPL_ResumeSong(void)
+void I_OPL_ResumeSong()
 {
     if (!music_initialized)
     {
@@ -1847,7 +1847,7 @@ void I_OPL_ResumeSong(void)
     OPL_SetPaused(0);
 }
 
-void I_OPL_StopSong(void)
+void I_OPL_StopSong()
 {
     unsigned int i;
 
@@ -1941,7 +1941,7 @@ const void *I_OPL_RegisterSong(const void *data, unsigned len)
     return result;
 }
 
-void I_OPL_ShutdownMusic(void)
+void I_OPL_ShutdownMusic()
 {
     if (music_initialized)
     {
@@ -1987,7 +1987,7 @@ int I_OPL_InitMusic(int samplerate)
     return 1;
 }
 
-const char *I_OPL_SynthName(void)
+const char *I_OPL_SynthName()
 {
     return "opl2 synth player";
 }

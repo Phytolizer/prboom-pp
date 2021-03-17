@@ -134,7 +134,7 @@ static long vtell(void *src)
 
 ov_callbacks vcallback = {vread, vseek, nullptr, vtell};
 
-const char *vorb_name(void)
+const char *vorb_name()
 {
     return "vorbis player";
 }
@@ -227,7 +227,7 @@ int vorb_init(int samplerate)
     return 1;
 }
 
-void vorb_shutdown(void)
+void vorb_shutdown()
 {
     // nothing to do
 }
@@ -301,12 +301,12 @@ void vorb_setvolume(int v)
     vorb_volume = v;
 }
 
-void vorb_pause(void)
+void vorb_pause()
 {
     vorb_paused = 1;
 }
 
-void vorb_resume(void)
+void vorb_resume()
 {
     vorb_paused = 0;
 }
@@ -329,7 +329,7 @@ void vorb_play(const void *handle, int looping)
 #endif // ZDOOM_AUDIO_LOOP
 }
 
-void vorb_stop(void)
+void vorb_stop()
 {
     vorb_playing = 0;
 }

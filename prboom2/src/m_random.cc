@@ -142,7 +142,7 @@ int(P_Random)(pr_class_t pr_class
 // are added they must be added to end of pr_class_t list. killough
 //
 
-void M_ClearRandom(void)
+void M_ClearRandom()
 {
     int i;
     unsigned int seed = rngseed * 2 + 1; // add 3/26/98: add rngseed
@@ -155,7 +155,7 @@ void M_ClearRandom(void)
 
 // heretic
 
-int P_SubRandom(void)
+int P_SubRandom()
 {
     int r = P_Random(pr_heretic);
     return r - P_Random(pr_heretic);

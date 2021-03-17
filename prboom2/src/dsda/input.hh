@@ -172,14 +172,14 @@ struct dsda_input_default_t
     int joyb = 0;
 };
 
-void dsda_InputFlushTick(void);
+void dsda_InputFlushTick();
 void dsda_InputTrackEvent(event_t *ev);
 void dsda_InputTrackGameEvent(event_t *ev);
 dboolean dsda_InputActivated(int identifier);
 dboolean dsda_InputTickActivated(int identifier);
 dboolean dsda_InputDeactivated(int identifier);
 dsda_input_t *dsda_Input(int identifier);
-void dsda_InputFlush(void);
+void dsda_InputFlush();
 void dsda_InputCopy(int identifier,
                     dsda_input_t *input[DSDA_INPUT_PROFILE_COUNT]);
 int dsda_InputMatchKey(int identifier, int value);
@@ -203,6 +203,6 @@ dboolean dsda_InputActive(int identifer);
 dboolean dsda_InputKeyActive(int identifier);
 dboolean dsda_InputMouseBActive(int identifier);
 dboolean dsda_InputJoyBActive(int identifier);
-void dsda_InputCycleProfile(void);
+void dsda_InputCycleProfile();
 
 #endif

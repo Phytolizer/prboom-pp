@@ -52,7 +52,7 @@ simple_shadow_params_t simple_shadows = {
 // GL_PrepareLightTexture
 //	The dynamic light map is a 64x64 grayscale 8-bit image.
 //===========================================================================
-void gld_InitShadows(void)
+void gld_InitShadows()
 {
     int lump;
 
@@ -271,7 +271,7 @@ void gld_ProcessThingShadow(mobj_t *mo)
 //===========================================================================
 // Rend_RenderShadows
 //===========================================================================
-void gld_RenderShadows(void)
+void gld_RenderShadows()
 {
     int i;
 

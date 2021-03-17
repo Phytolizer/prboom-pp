@@ -2195,7 +2195,7 @@ dboolean Heretic_P_CheckAmmo(player_t *player)
     return (false);
 }
 
-void P_OpenWeapons(void)
+void P_OpenWeapons()
 {
     MaceSpotCount = 0;
 }
@@ -2211,7 +2211,7 @@ void P_AddMaceSpot(const mapthing_t &mthing)
     MaceSpotCount++;
 }
 
-void P_CloseWeapons(void)
+void P_CloseWeapons()
 {
     int spot;
 

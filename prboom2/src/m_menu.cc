@@ -124,7 +124,7 @@ dboolean messageNeedsInput; // timed message = no input from user
 void (*messageRoutine)(int response);
 
 /* killough 8/15/98: when changes are allowed to sync-critical variables */
-static int allow_changes(void)
+static int allow_changes()
 {
     return !(demoplayback || demorecording || netgame);
 }
@@ -229,27 +229,27 @@ void M_Sound(int choice);
 void M_Mouse(int choice, int *sens); /* killough */
 void M_MouseVert(int choice);
 void M_MouseHoriz(int choice);
-void M_DrawMouse(void);
+void M_DrawMouse();
 
 void M_FinishReadThis(int choice);
 void M_FinishHelp(int choice); // killough 10/98
 void M_LoadSelect(int choice);
 void M_SaveSelect(int choice);
-void M_ReadSaveStrings(void);
-void M_QuickSave(void);
-void M_QuickLoad(void);
+void M_ReadSaveStrings();
+void M_QuickSave();
+void M_QuickLoad();
 
-void M_DrawMainMenu(void);
-void M_DrawReadThis1(void);
-void M_DrawReadThis2(void);
-void M_DrawNewGame(void);
-void M_DrawEpisode(void);
-void M_DrawOptions(void);
-void M_DrawSound(void);
-void M_DrawLoad(void);
-void M_DrawSave(void);
-void M_DrawSetup(void); // phares 3/21/98
-void M_DrawHelp(void);  // phares 5/04/98
+void M_DrawMainMenu();
+void M_DrawReadThis1();
+void M_DrawReadThis2();
+void M_DrawNewGame();
+void M_DrawEpisode();
+void M_DrawOptions();
+void M_DrawSound();
+void M_DrawLoad();
+void M_DrawSave();
+void M_DrawSetup(); // phares 3/21/98
+void M_DrawHelp();  // phares 5/04/98
 
 void M_DrawSaveLoadBorder(int x, int y);
 void M_SetupNextMenu(menu_t *menudef);
@@ -262,8 +262,8 @@ int M_StringHeight(const char *string);
 void M_DrawTitle(int x, int y, const char *patch, int cm, const char *alttext,
                  int altcm);
 void M_StartMessage(const char *string, void *routine, dboolean input);
-void M_StopMessage(void);
-void M_ClearMenus(void);
+void M_StopMessage();
+void M_ClearMenus();
 
 // phares 3/30/98
 // prototypes added to support Setup Menus and Extended HELP screens
@@ -277,31 +277,31 @@ void M_Automap(int);
 void M_Enemy(int);
 void M_Messages(int);
 void M_ChatStrings(int);
-void M_InitExtendedHelp(void);
+void M_InitExtendedHelp();
 void M_ExtHelpNextScreen(int);
 void M_ExtHelp(int);
 static int M_GetPixelWidth(const char *);
-void M_DrawKeybnd(void);
-void M_DrawWeapons(void);
+void M_DrawKeybnd();
+void M_DrawWeapons();
 static void M_DrawString(int cx, int cy, int color, const char *ch);
 static void M_DrawMenuString(int, int, int);
 static void M_DrawStringCentered(int, int, int, const char *);
-void M_DrawStatusHUD(void);
-void M_DrawExtHelp(void);
-void M_DrawAutoMap(void);
-void M_DrawEnemy(void);
-void M_DrawMessages(void);
-void M_DrawChatStrings(void);
+void M_DrawStatusHUD();
+void M_DrawExtHelp();
+void M_DrawAutoMap();
+void M_DrawEnemy();
+void M_DrawMessages();
+void M_DrawChatStrings();
 void M_Compat(int); // killough 10/98
-void M_ChangeDemoSmoothTurns(void);
-void M_ChangeTextureParams(void);
+void M_ChangeDemoSmoothTurns();
+void M_ChangeTextureParams();
 void M_General(int);      // killough 10/98
-void M_DrawCompat(void);  // killough 10/98
-void M_DrawGeneral(void); // killough 10/98
-void M_ChangeFullScreen(void);
-void M_ChangeVideoMode(void);
-void M_ChangeUseGLSurface(void);
-void M_ChangeApplyPalette(void);
+void M_DrawCompat();  // killough 10/98
+void M_DrawGeneral(); // killough 10/98
+void M_ChangeFullScreen();
+void M_ChangeVideoMode();
+void M_ChangeUseGLSurface();
+void M_ChangeApplyPalette();
 
 extern menu_t NewDef; // phares 5/04/98
 
@@ -359,7 +359,7 @@ menu_t MainDef = {
 // M_DrawMainMenu
 //
 
-void M_DrawMainMenu(void)
+void M_DrawMainMenu()
 {
     if (heretic)
     {
@@ -446,7 +446,7 @@ void M_FinishHelp(int /* choice */) // killough 10/98
 //
 // killough 10/98: updated with new screens
 
-void M_DrawReadThis1(void)
+void M_DrawReadThis1()
 {
     inhelpscreens = true;
     if (gamemode == shareware)
@@ -466,7 +466,7 @@ void M_DrawReadThis1(void)
 //
 // killough 10/98: updated with new screens
 
-void M_DrawReadThis2(void)
+void M_DrawReadThis2()
 {
     inhelpscreens = true;
     M_DrawCredits();
@@ -556,7 +556,7 @@ void M_AddEpisode(const std::string &map, std::string *def)
     }
 }
 
-void M_DrawEpisode(void)
+void M_DrawEpisode()
 {
     if (heretic)
     {
@@ -629,7 +629,7 @@ menu_t NewDef = {
 // M_NewGame
 //
 
-void M_DrawNewGame(void)
+void M_DrawNewGame()
 {
     if (heretic)
     {
@@ -769,7 +769,7 @@ menu_t LoadDef = {load_end,   &MainDef, LoadMenue,
 // M_LoadGame & Cie.
 //
 
-void M_DrawLoad(void)
+void M_DrawLoad()
 {
     int i;
 
@@ -889,7 +889,7 @@ menu_t SaveDef = {load_end, // same number of slots as the Load Game screen
 // M_ReadSaveStrings
 //  read the strings from the savegame files
 //
-void M_ReadSaveStrings(void)
+void M_ReadSaveStrings()
 {
     int i;
 
@@ -921,7 +921,7 @@ void M_ReadSaveStrings(void)
 //
 //  M_SaveGame & Cie.
 //
-void M_DrawSave(void)
+void M_DrawSave()
 {
     int i;
 
@@ -1048,7 +1048,7 @@ menu_t OptionsDef = {opt_end, &MainDef, OptionsMenu, M_DrawOptions, 60, 37, 0};
 //
 char msgNames[2][9] = {"M_MSGOFF", "M_MSGON"};
 
-void M_DrawOptions(void)
+void M_DrawOptions()
 {
     if (heretic)
     {
@@ -1180,7 +1180,7 @@ menu_t SoundDef = {sound_end, &OptionsDef, SoundMenu, M_DrawSound, 80, 64, 0};
 // Change Sfx & Music volumes
 //
 
-void M_DrawSound(void)
+void M_DrawSound()
 {
     if (heretic)
     {
@@ -1290,7 +1290,7 @@ menu_t MouseDef = {mouse_end, &OptionsDef, MouseMenu, M_DrawMouse,
 // Change Mouse Sensitivities -- killough
 //
 
-void M_DrawMouse(void)
+void M_DrawMouse()
 {
     if (heretic)
     {
@@ -1372,7 +1372,7 @@ static void M_QuickSaveResponse(int ch)
     }
 }
 
-void M_QuickSave(void)
+void M_QuickSave()
 {
     if (!usergame && (!demoplayback || netgame))
     { /* killough 10/98 */
@@ -1413,7 +1413,7 @@ static void M_QuickLoadResponse(int ch)
     }
 }
 
-void M_QuickLoad(void)
+void M_QuickLoad()
 {
     // cph - removed restriction against quickload in a netgame
 
@@ -1587,7 +1587,7 @@ static setup_menu_t *current_setup_menu; // points to current setup menu table
 
 // save the setup menu's itemon value in the S_END element's x coordinate
 
-static int M_GetSetupMenuItemOn(void)
+static int M_GetSetupMenuItemOn()
 {
     const setup_menu_t *menu = current_setup_menu;
 
@@ -1794,7 +1794,7 @@ menu_t CompatDef = // killough 10/98
 //
 // Draws the Title for the main Setup screen
 
-void M_DrawSetup(void)
+void M_DrawSetup()
 {
     if (heretic)
     {
@@ -2292,7 +2292,7 @@ static void M_DrawScreenItems(const setup_menu_t *src)
 
 // And the routine to draw it.
 
-static void M_DrawDefVerify(void)
+static void M_DrawDefVerify()
 {
     // proff 12/6/98: Drawing of verify box changed for hi-res, it now uses a
     // patch
@@ -2316,7 +2316,7 @@ static void M_DrawDefVerify(void)
 // cph 2006/08/06 - go back to the Boom version, and then clean up by using
 // M_DrawStringCentered (much better than all those magic 'x' valies!)
 
-static void M_DrawInstructions(void)
+static void M_DrawInstructions()
 {
     int flags = current_setup_menu[set_menu_itemon].m_flags;
 
@@ -3526,7 +3526,7 @@ void M_KeyBindings(int choice)
 // The drawing part of the Key Bindings Setup initialization. Draw the
 // background, title, instruction line, and items.
 
-void M_DrawKeybnd(void)
+void M_DrawKeybnd()
 {
     menuactive = mnact_full;
 
@@ -3709,7 +3709,7 @@ void M_Weapons(int choice)
 // The drawing part of the Weapons Setup initialization. Draw the
 // background, title, instruction line, and items.
 
-void M_DrawWeapons(void)
+void M_DrawWeapons()
 {
     menuactive = mnact_full;
 
@@ -3926,7 +3926,7 @@ void M_StatusBar(int choice)
 // The drawing part of the Status Bar / HUD Setup initialization. Draw the
 // background, title, instruction line, and items.
 
-void M_DrawStatusHUD(void)
+void M_DrawStatusHUD()
 {
     menuactive = mnact_full;
 
@@ -4256,7 +4256,7 @@ byte palette_background[16 * (CHIP_SIZE + 1) + 8];
 // phares 4/1/98: now uses a single lump for the palette instead of
 // building the image out of individual paint chips.
 
-static void M_DrawColPal(void)
+static void M_DrawColPal()
 {
     int cpx, cpy;
 
@@ -4281,7 +4281,7 @@ static void M_DrawColPal(void)
 // The drawing part of the Automap Setup initialization. Draw the
 // background, title, instruction line, and items.
 
-void M_DrawAutoMap(void)
+void M_DrawAutoMap()
 {
     menuactive = mnact_full;
 
@@ -4463,7 +4463,7 @@ void M_Enemy(int choice)
 // The drawing part of the Enemies Setup initialization. Draw the
 // background, title, instruction line, and items.
 
-void M_DrawEnemy(void)
+void M_DrawEnemy()
 {
     menuactive = mnact_full;
 
@@ -5460,7 +5460,7 @@ setup_menu_t dsda_gen_settings[] = {
 #endif
     {nullptr, S_SKIP | S_END, m_null}};
 
-void M_Trans(void) // To reset translucency after setting it in menu
+void M_Trans() // To reset translucency after setting it in menu
 {
     general_translucency =
         default_translucency; // e6y: Fix for "translucency won't change until
@@ -5473,27 +5473,27 @@ void M_Trans(void) // To reset translucency after setting it in menu
 }
 
 // To (un)set fullscreen video after menu changes
-void M_ChangeFullScreen(void)
+void M_ChangeFullScreen()
 {
     V_ToggleFullscreen();
 }
 
-void M_ChangeVideoMode(void)
+void M_ChangeVideoMode()
 {
     V_ChangeScreenResolution();
 }
 
-void M_ChangeUseGLSurface(void)
+void M_ChangeUseGLSurface()
 {
     V_ChangeScreenResolution();
 }
 
-void M_ChangeDemoSmoothTurns(void)
+void M_ChangeDemoSmoothTurns()
 {
     R_SmoothPlaying_Reset(nullptr);
 }
 
-void M_ChangeTextureParams(void)
+void M_ChangeTextureParams()
 {
 #ifdef GL_DOOM
     if (V_GetMode() == VID_MODEGL)
@@ -5531,7 +5531,7 @@ void M_General(int choice)
 // The drawing part of the General Setup initialization. Draw the
 // background, title, instruction line, and items.
 
-void M_DrawGeneral(void)
+void M_DrawGeneral()
 {
     menuactive = mnact_full;
 
@@ -5864,7 +5864,7 @@ void M_Compat(int choice)
 // The drawing part of the Compatibility Setup initialization. Draw the
 // background, title, instruction line, and items.
 
-void M_DrawCompat(void)
+void M_DrawCompat()
 {
     menuactive = mnact_full;
 
@@ -6003,7 +6003,7 @@ void M_Messages(int choice)
 // The drawing part of the Messages Setup initialization. Draw the
 // background, title, instruction line, and items.
 
-void M_DrawMessages(void)
+void M_DrawMessages()
 {
     menuactive = mnact_full;
 
@@ -6076,7 +6076,7 @@ void M_ChatStrings(int choice)
 // The drawing part of the Chat Strings Setup initialization. Draw the
 // background, title, instruction line, and items.
 
-void M_DrawChatStrings(void)
+void M_DrawChatStrings()
 {
     menuactive = mnact_full;
 
@@ -6135,7 +6135,7 @@ static setup_menu_t **setup_screens[] = {
 //
 // killough 10/98: rewritten to fix bugs and warn about pending changes
 
-static void M_ResetDefaults(void)
+static void M_ResetDefaults()
 {
     int i; // e6y
 
@@ -6221,7 +6221,7 @@ static void M_ResetDefaults(void)
 // array entry. var.name becomes converted to var.def.
 //
 
-static void M_InitDefaults(void)
+static void M_InitDefaults()
 {
     setup_menu_t *const *p, *t;
     default_t *dp;
@@ -6307,7 +6307,7 @@ void M_ExtHelpNextScreen(int choice)
 // Routine to look for HELPnn screens and create a menu
 // definition structure that defines extended help screens.
 
-void M_InitExtendedHelp(void)
+void M_InitExtendedHelp()
 
 {
     int index, i;
@@ -6362,7 +6362,7 @@ void M_ExtHelp(int choice)
 
 // Initialize the drawing part of the extended HELP screens.
 
-void M_DrawExtHelp(void)
+void M_DrawExtHelp()
 {
     char namebfr[10] = {"HELPnn"}; // CPhipps - make it local & writable
 
@@ -7007,7 +7007,7 @@ static void M_DrawStringCentered(int cx, int cy, int color, const char *ch)
 //
 // This displays the help screen
 
-void M_DrawHelp(void)
+void M_DrawHelp()
 {
     const int helplump = W_CheckNumForName("HELP");
 
@@ -7085,7 +7085,7 @@ setup_menu_t cred_settings[] = {
 
     {nullptr, S_SKIP | S_END, m_null}};
 
-void M_DrawCredits(void) // killough 10/98: credit screen
+void M_DrawCredits() // killough 10/98: credit screen
 {
     const int creditlump = W_CheckNumForName("CREDIT");
 
@@ -8742,7 +8742,7 @@ dboolean M_Responder(event_t *ev)
 // Plus a variety of routines that control the Big Font menu display.
 // Plus some initialization for game-dependant situations.
 
-void M_StartControlPanel(void)
+void M_StartControlPanel()
 {
     // intro might call this repeatedly
 
@@ -8789,7 +8789,7 @@ void M_StartControlPanel(void)
 // killough 9/29/98: Significantly reformatted source
 //
 
-void M_Drawer(void)
+void M_Drawer()
 {
     inhelpscreens = false;
 
@@ -8901,7 +8901,7 @@ void M_Drawer(void)
 //
 // Called when leaving the menu screens for the real world
 
-void M_ClearMenus(void)
+void M_ClearMenus()
 {
     menuactive = mnact_inactive;
     print_warning_about_changes = 0; // killough 8/15/98
@@ -8928,7 +8928,7 @@ void M_SetupNextMenu(menu_t *menudef)
 //
 // M_Ticker
 //
-void M_Ticker(void)
+void M_Ticker()
 {
     // The skull counter is also used for non-skull pointers
     if (--skullAnimCounter <= 0)
@@ -8959,7 +8959,7 @@ void M_StartMessage(const char *string, void *routine, dboolean input)
     return;
 }
 
-void M_StopMessage(void)
+void M_StopMessage()
 {
     menuactive = static_cast<menuactive_e>(messageLastMenuActive);
     messageToPrint = 0;
@@ -9177,7 +9177,7 @@ void M_DrawTitle(int x, int y, const char *patch, int cm, const char *alttext,
 // M_InitHelpScreen() clears the weapons from the HELP
 // screen that don't exist in this version of the game.
 
-void M_InitHelpScreen(void)
+void M_InitHelpScreen()
 {
     setup_menu_t *src;
 
@@ -9204,7 +9204,7 @@ void M_InitHelpScreen(void)
 //
 // M_Init
 //
-void M_Init(void)
+void M_Init()
 {
     if (heretic)
     {

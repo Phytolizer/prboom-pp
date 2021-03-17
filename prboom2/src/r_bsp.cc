@@ -62,7 +62,7 @@ unsigned maxdrawsegs;
 // R_ClearDrawSegs
 //
 
-void R_ClearDrawSegs(void)
+void R_ClearDrawSegs()
 {
     ds_p = drawsegs;
 }
@@ -121,7 +121,7 @@ static void R_ClipWallSegment(int first, int last, dboolean solid)
 // R_ClearClipSegs
 //
 
-void R_ClearClipSegs(void)
+void R_ClearClipSegs()
 {
     memset(solidcol, 0, SCREENWIDTH);
 }

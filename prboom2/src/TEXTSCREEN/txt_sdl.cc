@@ -160,7 +160,7 @@ static txt_font_t *FontForName(char *name)
 // 640x480, use the small font.
 //
 
-static void ChooseFont(void)
+static void ChooseFont()
 {
     SDL_DisplayMode desktop_info;
     char *env;
@@ -224,7 +224,7 @@ static void ChooseFont(void)
 // Returns 1 if successful, 0 if an error occurred
 //
 
-int TXT_Init(void)
+int TXT_Init()
 {
     if (SDL_Init(SDL_INIT_VIDEO) < 0)
     {
@@ -271,7 +271,7 @@ int TXT_Init(void)
     return 1;
 }
 
-void TXT_Shutdown(void)
+void TXT_Shutdown()
 {
     free(screendata);
     screendata = nullptr;
@@ -280,7 +280,7 @@ void TXT_Shutdown(void)
     SDL_QuitSubSystem(SDL_INIT_VIDEO);
 }
 
-unsigned char *TXT_GetScreenData(void)
+unsigned char *TXT_GetScreenData()
 {
     return screendata;
 }
@@ -402,7 +402,7 @@ void TXT_UpdateScreenArea(int x, int y, int w, int h)
     SDL_UpdateWindowSurfaceRects(TXT_SDLWindow, &rect, 1);
 }
 
-void TXT_UpdateScreen(void)
+void TXT_UpdateScreen()
 {
     TXT_UpdateScreenArea(0, 0, TXT_SCREEN_W, TXT_SCREEN_H);
 }
@@ -612,7 +612,7 @@ static int SDLButtonToTXTButton(int button)
     }
 }
 
-static int MouseHasMoved(void)
+static int MouseHasMoved()
 {
     static int last_x = 0, last_y = 0;
     int x, y;
@@ -669,7 +669,7 @@ static void UpdateModifierState(SDL_Keysym *sym, int pressed)
     }
 }
 
-signed int TXT_GetChar(void)
+signed int TXT_GetChar()
 {
     SDL_Event ev;
 
@@ -859,7 +859,7 @@ void TXT_GetKeyDescription(int key, char *buf, size_t buf_len)
 // Searches the desktop screen buffer to determine whether there are any
 // blinking characters.
 
-int TXT_ScreenHasBlinkingChars(void)
+int TXT_ScreenHasBlinkingChars()
 {
     int x, y;
     unsigned char *p;

@@ -154,7 +154,7 @@ PFNGLGETACTIVEUNIFORMARBPROC GLEXT_glGetActiveUniformARB = nullptr;
 PFNGLGETUNIFORMFVARBPROC GLEXT_glGetUniformfvARB = nullptr;
 #endif
 
-void gld_InitOpenGLVersion(void)
+void gld_InitOpenGLVersion()
 {
     int MajorVersion, MinorVersion;
     gl_version = OPENGL_VERSION_1_0;

@@ -398,9 +398,9 @@ extern const char **const mapnames[];
 // STATUS BAR CODE
 //
 
-static void ST_Stop(void);
+static void ST_Stop();
 
-static void ST_refreshBackground(void)
+static void ST_refreshBackground()
 {
     int y = ST_Y;
     enum patch_translation_e flags = VPT_ALIGN_LEFT_TOP;
@@ -458,7 +458,7 @@ dboolean ST_Responder(event_t *ev)
     return M_CheatResponder(ev);
 }
 
-static int ST_calcPainOffset(void)
+static int ST_calcPainOffset()
 {
     static int lastcalc;
     static int oldhealth = -1;
@@ -479,7 +479,7 @@ static int ST_calcPainOffset(void)
 //  dead > evil grin > turned head > straight ahead
 //
 
-static void ST_updateFaceWidget(void)
+static void ST_updateFaceWidget()
 {
     int i;
     angle_t badguyangle;
@@ -667,7 +667,7 @@ static void ST_updateFaceWidget(void)
 
 int sts_traditional_keys; // killough 2/28/98: traditional status bar keys
 
-static void ST_updateWidgets(void)
+static void ST_updateWidgets()
 {
     static int largeammo = 1994; // means "n/a"
     int i;
@@ -746,7 +746,7 @@ static void ST_updateWidgets(void)
     }
 }
 
-void ST_Ticker(void)
+void ST_Ticker()
 {
     if (heretic)
     {
@@ -761,7 +761,7 @@ void ST_Ticker(void)
 
 int st_palette = 0;
 
-static void ST_doPaletteStuff(void)
+static void ST_doPaletteStuff()
 {
     int palette;
     int cnt = dsda_PainPalette() ? plyr->damagecount : 0;
@@ -838,7 +838,7 @@ static void ST_doPaletteStuff(void)
     }
 }
 
-void M_ChangeApplyPalette(void)
+void M_ChangeApplyPalette()
 {
     ST_doPaletteStuff();
 }
@@ -967,7 +967,7 @@ static void ST_drawWidgets(dboolean refresh)
     STlib_updateNum(&w_frags, CR_DEFAULT, refresh);
 }
 
-void ST_SetResolution(void)
+void ST_SetResolution()
 {
     st_firsttime = true;
     R_FillBackScreen();
@@ -1102,17 +1102,17 @@ static void ST_loadGraphics(dboolean doload)
     R_SetPatchNum(&faces[facenum++], "STFDEAD0");
 }
 
-static void ST_loadData(void)
+static void ST_loadData()
 {
     ST_loadGraphics(true);
 }
 
-static void ST_unloadData(void)
+static void ST_unloadData()
 {
     ST_loadGraphics(false);
 }
 
-static void ST_initData(void)
+static void ST_initData()
 {
     int i;
 
@@ -1145,7 +1145,7 @@ static void ST_initData(void)
     STlib_init();
 }
 
-static void ST_createWidgets(void)
+static void ST_createWidgets()
 {
     int i;
 
@@ -1224,7 +1224,7 @@ static void ST_createWidgets(void)
 
 static dboolean st_stopped = true;
 
-void ST_Start(void)
+void ST_Start()
 {
     if (heretic)
     {
@@ -1240,7 +1240,7 @@ void ST_Start(void)
     st_stopped = false;
 }
 
-static void ST_Stop(void)
+static void ST_Stop()
 {
     if (st_stopped)
     {
@@ -1250,7 +1250,7 @@ static void ST_Stop(void)
     st_stopped = true;
 }
 
-void ST_Init(void)
+void ST_Init()
 {
     if (heretic)
     {

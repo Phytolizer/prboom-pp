@@ -89,10 +89,10 @@
 #include "i_capture.hh"
 
 /* cph - disk icon not implemented */
-static inline void I_BeginRead(void)
+static inline void I_BeginRead()
 {
 }
-static inline void I_EndRead(void)
+static inline void I_EndRead()
 {
 }
 
@@ -4374,7 +4374,7 @@ static char *defaultfile; // CPhipps - static, const
 // M_SaveDefaults
 //
 
-void M_SaveDefaults(void)
+void M_SaveDefaults()
 {
     int i;
     FILE *f;
@@ -4526,7 +4526,7 @@ struct default_s *M_LookupDefault(const char *name)
 
 #define CFG_BUFFERMAX 32000
 
-void M_LoadDefaults(void)
+void M_LoadDefaults()
 {
     int i;
     int len;
@@ -4922,7 +4922,7 @@ const char *M_CheckWritableDir(const char *dir)
     return result;
 }
 
-void M_ScreenShot(void)
+void M_ScreenShot()
 {
     static int shot;
     char *lbmname = nullptr;

@@ -105,7 +105,7 @@
 
 void GetFirstMap(int *ep,
                  int *map); // Ty 08/29/98 - add "-warp x" functionality
-static void D_PageDrawer(void);
+static void D_PageDrawer();
 
 // CPhipps - removed wadfiles[] stuff
 
@@ -220,7 +220,7 @@ void D_PostEvent(event_t *ev)
 // The screens to wipe between are already stored, this just does the timing
 // and screen updating
 
-static void D_Wipe(void)
+static void D_Wipe()
 {
     dboolean done;
     int wipestart;
@@ -505,7 +505,7 @@ static const char *auto_shot_fname;
 //  calls I_GetTime, I_StartFrame, and I_StartTic
 //
 
-static void D_DoomLoop(void)
+static void D_DoomLoop()
 {
     if (quickstart_window_ms > 0)
     {
@@ -612,7 +612,7 @@ dboolean bfgedition = 0;
 // D_PageTicker
 // Handles timing for warped projection
 //
-void D_PageTicker(void)
+void D_PageTicker()
 {
     if (--pagetic < 0)
     {
@@ -623,7 +623,7 @@ void D_PageTicker(void)
 //
 // D_PageDrawer
 //
-static void D_PageDrawer(void)
+static void D_PageDrawer()
 {
     if (heretic)
     {
@@ -653,7 +653,7 @@ static void D_PageDrawer(void)
 // D_AdvanceDemo
 // Called after each demo or intro demosequence finishes
 //
-void D_AdvanceDemo(void)
+void D_AdvanceDemo()
 {
     advancedemo = true;
 }
@@ -776,7 +776,7 @@ const demostate_t doom_demostates[][4] = {
  * killough 11/98: made table-driven
  */
 
-void D_DoAdvanceDemo(void)
+void D_DoAdvanceDemo()
 {
     players[consoleplayer].playerstate = PST_LIVE; /* not reborn */
     advancedemo = usergame = paused = false;
@@ -801,7 +801,7 @@ void D_DoAdvanceDemo(void)
 //
 // D_StartTitle
 //
-void D_StartTitle(void)
+void D_StartTitle()
 {
     gameaction = ga_nothing;
     demosequence = -1;
@@ -864,7 +864,7 @@ void D_AddFile(const char *file, wad_source_t source)
 // killough 10/98: support -dehout filename
 // cph - made const, don't cache results
 // e6y static
-const char *D_dehout(void)
+const char *D_dehout()
 {
     int p = M_CheckParm("-dehout");
     if (!p)
@@ -1133,7 +1133,7 @@ static void NormalizeSlashes(char *str)
  * CPhipps  - static, proper prototype
  *    - 12/1999 - rewritten to use I_FindFile
  */
-static char *FindIWADFile(void)
+static char *FindIWADFile()
 {
     int i;
     char *iwad = nullptr;
@@ -1174,7 +1174,7 @@ static char *FindIWADFile(void)
 //
 // jff 4/19/98 rewritten to use a more advanced search algorithm
 
-static void IdentifyVersion(void)
+static void IdentifyVersion()
 {
     int i;            // jff 3/24/98 index of args on commandline
     struct stat sbuf; // jff 3/24/98 used to test save path for existence
@@ -1248,7 +1248,7 @@ static void IdentifyVersion(void)
 // Find a Response File
 //
 
-static void FindResponseFile(void)
+static void FindResponseFile()
 {
     int i;
 
@@ -1429,7 +1429,7 @@ static void FindResponseFile(void)
 // The logic of DoLooseFiles has been rewritten in more optimized style
 // MAXARGVS has been removed.
 
-static void DoLooseFiles(void)
+static void DoLooseFiles()
 {
     char **wads; // store the respective loose filenames
     char **lmps;
@@ -1580,7 +1580,7 @@ const char *wad_files[MAXLOADFILES], *deh_files[MAXLOADFILES];
 // CPhipps - misc screen stuff
 int desired_screenwidth, desired_screenheight;
 
-static void L_SetupConsoleMasks(void)
+static void L_SetupConsoleMasks()
 {
     int p;
     int i;
@@ -1633,7 +1633,7 @@ static void L_SetupConsoleMasks(void)
 //  line of execution so its stack space can be freed
 const char *doomverstr = nullptr;
 
-static void D_DoomMainSetup(void)
+static void D_DoomMainSetup()
 {
     int p, slot;
 
@@ -2353,7 +2353,7 @@ static void D_DoomMainSetup(void)
 // D_DoomMain
 //
 
-void D_DoomMain(void)
+void D_DoomMain()
 {
     D_DoomMainSetup(); // CPhipps - setup out of main execution stack
 

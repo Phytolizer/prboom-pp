@@ -49,7 +49,7 @@ extern enum automapmode_e automapmode;
 =======================
 */
 
-void Heretic_F_StartFinale(void)
+void Heretic_F_StartFinale()
 {
     gameaction = ga_nothing;
     gamestate = GS_FINALE;
@@ -107,7 +107,7 @@ dboolean Heretic_F_Responder(event_t *event)
 =======================
 */
 
-void Heretic_F_Ticker(void)
+void Heretic_F_Ticker()
 {
     finalecount++;
     if (!finalestage && static_cast<size_t>(finalecount) >
@@ -129,7 +129,7 @@ void Heretic_F_Ticker(void)
 =======================
 */
 
-void Heretic_F_TextWrite(void)
+void Heretic_F_TextWrite()
 {
     int count;
     const char *ch;
@@ -198,7 +198,7 @@ void Heretic_F_TextWrite(void)
 ==================
 */
 
-void F_DemonScroll(void)
+void F_DemonScroll()
 {
     const byte *p1, *p2;
     static int yval = 0;
@@ -241,7 +241,7 @@ void F_DemonScroll(void)
 ==================
 */
 
-void F_DrawUnderwater(void)
+void F_DrawUnderwater()
 {
     switch (finalestage)
     {
@@ -266,7 +266,7 @@ void F_DrawUnderwater(void)
 =======================
 */
 
-void Heretic_F_Drawer(void)
+void Heretic_F_Drawer()
 {
     // UpdateState |= I_FULLSCRN;
     if (!finalestage)

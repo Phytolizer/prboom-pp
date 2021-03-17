@@ -39,7 +39,7 @@ static int FontBBaseLump;
 static int SkullBaseLump;
 static int MenuTime;
 
-static void MN_InitFonts(void)
+static void MN_InitFonts()
 {
     FontABaseLump = W_GetNumForName(DEH_String("FONTA_S")) + 1;
     FontBBaseLump = W_GetNumForName(DEH_String("FONTB_S")) + 1;
@@ -62,7 +62,7 @@ extern short EpiMenuEpi[];
 
 void M_DrawThermo(int x, int y, int thermWidth, int thermDot);
 
-void MN_Init(void)
+void MN_Init()
 {
     MN_InitFonts();
     SkullBaseLump = W_GetNumForName(DEH_String("M_SKL00"));
@@ -132,7 +132,7 @@ void MN_Init(void)
     }
 }
 
-void MN_Ticker(void)
+void MN_Ticker()
 {
     if (!menuactive)
     {
@@ -179,7 +179,7 @@ void MN_DrawMessage(const char *messageString)
     free(msg);
 }
 
-void MN_Drawer(void)
+void MN_Drawer()
 {
     int i;
     int x;
@@ -271,7 +271,7 @@ void MN_Drawer(void)
     // }
 }
 
-void MN_DrawMainMenu(void)
+void MN_DrawMainMenu()
 {
     int frame;
 
@@ -282,7 +282,7 @@ void MN_DrawMainMenu(void)
     V_DrawNumPatch(232, 10, 0, SkullBaseLump + frame, CR_DEFAULT, VPT_STRETCH);
 }
 
-void MN_DrawOptions(void)
+void MN_DrawOptions()
 {
     if (showMessages)
     {
@@ -296,7 +296,7 @@ void MN_DrawOptions(void)
                   OptionsDef.y + ITEM_HEIGHT * SCREENSIZE_INDEX, 9, screenSize);
 }
 
-void MN_DrawSetup(void)
+void MN_DrawSetup()
 {
     // nothing for heretic
 }
@@ -304,7 +304,7 @@ void MN_DrawSetup(void)
 extern int mouseSensitivity_mlook;
 extern int mouse_acceleration;
 
-void MN_DrawMouse(void)
+void MN_DrawMouse()
 {
     MN_DrawSlider(MouseDef.x - 8, MouseDef.y + ITEM_HEIGHT * MOUSE_HORIZ_INDEX,
                   200, mouseSensitivity_horiz);
@@ -320,7 +320,7 @@ void MN_DrawMouse(void)
                   200, mouse_acceleration);
 }
 
-void MN_DrawSound(void)
+void MN_DrawSound()
 {
     MN_DrawSlider(SoundDef.x - 8, SoundDef.y + ITEM_HEIGHT * SFX_VOL_INDEX, 16,
                   snd_SfxVolume);
@@ -344,7 +344,7 @@ static void MN_DrawFileSlots(int x, int y)
     }
 }
 
-void MN_DrawLoad(void)
+void MN_DrawLoad()
 {
     const char *title;
 
@@ -357,7 +357,7 @@ void MN_DrawLoad(void)
 extern int saveStringEnter;
 extern int saveSlot;
 
-void MN_DrawSave(void)
+void MN_DrawSave()
 {
     const char *title;
 
@@ -376,7 +376,7 @@ void MN_DrawSave(void)
     }
 }
 
-void MN_DrawPause(void)
+void MN_DrawPause()
 {
     const char *title;
 

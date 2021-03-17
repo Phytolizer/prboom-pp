@@ -75,7 +75,7 @@ UDP_PACKET *udp_packet;
  *
  * Shutdown the network code
  */
-void I_ShutdownNetwork(void)
+void I_ShutdownNetwork()
 {
     SDLNet_FreePacket(udp_packet);
     SDLNet_Quit();
@@ -85,7 +85,7 @@ void I_ShutdownNetwork(void)
  *
  * Sets up the network code
  */
-void I_InitNetwork(void)
+void I_InitNetwork()
 {
     SDLNet_Init();
     atexit(I_ShutdownNetwork);
@@ -159,7 +159,7 @@ int I_ConnectToServer(const char *serv)
  *
  * Disconnect from server
  */
-void I_Disconnect(void)
+void I_Disconnect()
 {
     /*  int i;
       UDP_PACKET *packet;

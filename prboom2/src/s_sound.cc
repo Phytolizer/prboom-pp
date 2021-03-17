@@ -185,7 +185,7 @@ void S_Init(int sfxVolume, int musicVolume)
     S_SetSoundCurve(true);
 }
 
-void S_Stop(void)
+void S_Stop()
 {
     int cnum;
 
@@ -210,7 +210,7 @@ void S_Stop(void)
 // Kills playing sounds at start of level,
 //  determines music if any, changes music.
 //
-void S_Start(void)
+void S_Start()
 {
     int mnum;
 
@@ -455,7 +455,7 @@ void S_StopSound(void *origin)
 //
 // Stop and resume music, during game PAUSE.
 //
-void S_PauseSound(void)
+void S_PauseSound()
 {
     // jff 1/22/98 return if music is not enabled
     if (!mus_card || nomusicparm)
@@ -470,7 +470,7 @@ void S_PauseSound(void)
     }
 }
 
-void S_ResumeSound(void)
+void S_ResumeSound()
 {
     // jff 1/22/98 return if music is not enabled
     if (!mus_card || nomusicparm)
@@ -659,7 +659,7 @@ void S_ChangeMusic(int musicnum, int looping)
     }
 }
 
-void S_RestartMusic(void)
+void S_RestartMusic()
 {
     if (musinfo.current_item != -1)
     {
@@ -720,7 +720,7 @@ void S_ChangeMusInfoMusic(int lumpnum, int looping)
     musinfo.current_item = lumpnum;
 }
 
-void S_StopMusic(void)
+void S_StopMusic()
 {
     // jff 1/22/98 return if music is not enabled
     if (!mus_card || nomusicparm)
@@ -957,7 +957,7 @@ void S_SetSoundCurve(dboolean fullprocess)
     }
 }
 
-static mobj_t *GetSoundListener(void)
+static mobj_t *GetSoundListener()
 {
     static degenmobj_t dummy_listener;
 

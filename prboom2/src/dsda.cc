@@ -82,10 +82,10 @@ int dsda_total_attempts = 1;
 
 dboolean dsda_IsWeapon(mobj_t *thing);
 void dsda_DisplayNotification(const char *msg);
-void dsda_ResetMapVariables(void);
-const char *dsda_DetectCategory(void);
+void dsda_ResetMapVariables();
+const char *dsda_DetectCategory();
 
-void dsda_ReadCommandLine(void)
+void dsda_ReadCommandLine()
 {
     int p;
 
@@ -124,7 +124,7 @@ void dsda_ReadCommandLine(void)
 
 static int dsda_shown_attempt = 0;
 
-void dsda_DisplayNotifications(void)
+void dsda_DisplayNotifications()
 {
     if (dsda_TrackAttempts() && dsda_session_attempts > dsda_shown_attempt)
     {
@@ -312,7 +312,7 @@ int dsda_MaxKillRequirement()
     return dsda_max_kill_requirement;
 }
 
-void dsda_WatchCommand(void)
+void dsda_WatchCommand()
 {
     int i;
     ticcmd_t *cmd;
@@ -346,7 +346,7 @@ void dsda_WatchCommand(void)
     dsda_ExportGhostFrame();
 }
 
-void dsda_WatchBeforeLevelSetup(void)
+void dsda_WatchBeforeLevelSetup()
 {
     dsda_100k_on_map = false;
     dsda_kills_on_map = 0;
@@ -354,12 +354,12 @@ void dsda_WatchBeforeLevelSetup(void)
     dsda_max_kill_requirement = 0;
 }
 
-void dsda_WatchAfterLevelSetup(void)
+void dsda_WatchAfterLevelSetup()
 {
     dsda_SpawnGhost();
 }
 
-void dsda_WatchLevelCompletion(void)
+void dsda_WatchLevelCompletion()
 {
     thinker_t *th;
     mobj_t *mobj;
@@ -449,7 +449,7 @@ void dsda_WatchWeaponFire(weapontype_t weapon)
     dsda_tyson_weapons = false;
 }
 
-void dsda_WatchSecret(void)
+void dsda_WatchSecret()
 {
     if (dsda_time_secrets)
     {
@@ -458,7 +458,7 @@ void dsda_WatchSecret(void)
 }
 
 // from crispy - incrementing demo file names
-char *dsda_NewDemoName(void)
+char *dsda_NewDemoName()
 {
     char *demo_name;
     size_t demo_name_size;
@@ -481,7 +481,7 @@ char *dsda_NewDemoName(void)
     return demo_name;
 }
 
-static void dsda_ResetTracking(void)
+static void dsda_ResetTracking()
 {
     dsda_pacifist = true;
     dsda_reality = true;
@@ -529,7 +529,7 @@ void dsda_WatchDeferredInitNew(skill_t /* skill */, int /* episode */,
     free(demo_name);
 }
 
-void dsda_WatchNewGame(void)
+void dsda_WatchNewGame()
 {
     if (!demorecording)
     {
@@ -569,7 +569,7 @@ void dsda_WatchRecordDemo(const char *name)
     dsda_InitKeyFrame();
 }
 
-void dsda_WriteAnalysis(void)
+void dsda_WriteAnalysis()
 {
     FILE *fstream = nullptr;
 
@@ -625,7 +625,7 @@ void dsda_WriteAnalysis(void)
     return;
 }
 
-const char *dsda_DetectCategory(void)
+const char *dsda_DetectCategory()
 {
     dboolean satisfies_max;
     dboolean satisfies_respawn;

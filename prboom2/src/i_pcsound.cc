@@ -228,7 +228,7 @@ int I_PCS_SoundIsPlaying(int handle)
     return current_sound_lump != nullptr && current_sound_remaining > 0;
 }
 
-void I_PCS_InitSound(void)
+void I_PCS_InitSound()
 {
     pcs_initialised = PCSound_Init(PCSCallbackFunc);
 

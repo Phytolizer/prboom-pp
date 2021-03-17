@@ -220,7 +220,7 @@ const void *W_CacheLumpNum(int lump)
 
 void **mapped_wad;
 
-void W_InitCache(void)
+void W_InitCache()
 {
     int maxfd = 0;
     // set up caching
@@ -270,7 +270,7 @@ void W_InitCache(void)
     }
 }
 
-void W_DoneCache(void)
+void W_DoneCache()
 {
     {
         int i;

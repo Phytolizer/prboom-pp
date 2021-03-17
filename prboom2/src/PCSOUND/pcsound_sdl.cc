@@ -167,7 +167,7 @@ static int PCSound_SDL_Init(pcsound_callback_func callback_func)
     return 1;
 }
 
-static void PCSound_SDL_Shutdown(void)
+static void PCSound_SDL_Shutdown()
 {
     pcsound_inited = 0;
 }

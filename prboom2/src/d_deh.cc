@@ -71,7 +71,7 @@ int deh_strcasecmp(const char *str1, const char *str2)
         return strcasecmp(str1, str2);
     }
 }
-const char *deh_getBitsDelims(void)
+const char *deh_getBitsDelims()
 {
     if (prboom_comp[PC_BOOM_DEH_PARSER].state &&
         compatibility_level >= boom_compatibility_compatibility &&
@@ -1313,7 +1313,7 @@ char *deh_spritenames[NUMSPRITES + 1];
 char *deh_musicnames[NUMMUSIC + 1];
 char *deh_soundnames[NUMSFX + 1];
 
-void D_BuildBEXTables(void)
+void D_BuildBEXTables()
 {
     int i;
 
@@ -1398,7 +1398,7 @@ dboolean IsDehMaxSoul = false;
 dboolean IsDehMegaHealth = false;
 dboolean DEH_mobjinfo_bits[NUMMOBJTYPES] = {0};
 
-void deh_changeCompTranslucency(void)
+void deh_changeCompTranslucency()
 {
     int i;
     int predefined_translucency[] = {
@@ -1438,7 +1438,7 @@ void deh_changeCompTranslucency(void)
     }
 }
 
-void deh_applyCompatibility(void)
+void deh_applyCompatibility()
 {
     int comp_max = (compatibility_level == doom_12_compatibility ? 199 : 200);
 

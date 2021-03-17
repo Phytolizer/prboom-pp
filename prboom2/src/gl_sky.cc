@@ -91,14 +91,14 @@ int BoxSkyboxCount = 0;
 
 box_skybox_t *BoxSkybox_default;
 
-void gld_InitSky(void)
+void gld_InitSky()
 {
     memset(&SkyBox, 0, sizeof(SkyBox));
     SkyBox.index = -1;
     y_offset_saved = 0;
 }
 
-void gld_InitFrameSky(void)
+void gld_InitFrameSky()
 {
     SkyBox.type = SKY_NONE;
     SkyBox.wall.gltexture = nullptr;
@@ -109,7 +109,7 @@ void gld_InitFrameSky(void)
     SkyBox.side = nullptr;
 }
 
-void gld_DrawFakeSkyStrips(void)
+void gld_DrawFakeSkyStrips()
 {
     int i;
 
@@ -277,7 +277,7 @@ void gld_AddSkyTexture(GLWall *wall, int sky1, int sky2, int skytype)
     }
 }
 
-void gld_DrawStripsSky(void)
+void gld_DrawStripsSky()
 {
     int i;
     float skyymid_multiplier;
@@ -385,7 +385,7 @@ void gld_DrawStripsSky(void)
     }
 }
 
-void gld_DrawSkyCaps(void)
+void gld_DrawSkyCaps()
 {
     if (SkyBox.type && SkyBox.wall.gltexture)
     {
@@ -486,7 +486,7 @@ void averageColor(PalEntry_t *PalEntry, const unsigned int *data, int size,
 // It is an alternative way of drawing the sky (gl_drawskys == skytype_screen)
 // This method make sense only for old hardware which have no support for
 // GL_TEXTURE_GEN_* Voodoo as example
-void gld_DrawScreenSkybox(void)
+void gld_DrawScreenSkybox()
 {
     if (SkyBox.wall.gltexture)
     {
@@ -599,7 +599,7 @@ int gl_sky_detail = 16;
 //
 //-----------------------------------------------------------------------------
 
-void gld_GetSkyCapColors(void)
+void gld_GetSkyCapColors()
 {
     int color, width, height;
     int frame_fixedcolormap_saved;
@@ -987,7 +987,7 @@ static void RenderDome(SkyBoxParams_t *sky)
 #endif
 }
 
-void gld_DrawDomeSkyBox(void)
+void gld_DrawDomeSkyBox()
 {
     if (SkyBox.wall.gltexture)
     {
@@ -1073,7 +1073,7 @@ box_skybox_t *R_GetBoxSkybox(int index)
     }
 }
 
-void gld_ParseSkybox(void)
+void gld_ParseSkybox()
 {
     if (SC_GetString())
     {
@@ -1173,7 +1173,7 @@ int gld_BindFace(box_skybox_t *sb, int index)
     return false;
 }
 
-int gld_DrawBoxSkyBox(void)
+int gld_DrawBoxSkyBox()
 {
     int faces;
     box_skybox_t *sb;

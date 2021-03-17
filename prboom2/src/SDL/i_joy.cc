@@ -52,12 +52,12 @@ int usejoystick;
 static SDL_Joystick *joystick;
 #endif
 
-static void I_EndJoystick(void)
+static void I_EndJoystick()
 {
     lprintf(LO_DEBUG, "I_EndJoystick : closing joystick\n");
 }
 
-void I_PollJoystick(void)
+void I_PollJoystick()
 {
 #ifdef HAVE_SDL_JOYSTICKGETAXIS
     event_t ev;
@@ -93,7 +93,7 @@ void I_PollJoystick(void)
 #endif
 }
 
-void I_InitJoystick(void)
+void I_InitJoystick()
 {
 #ifdef HAVE_SDL_JOYSTICKGETAXIS
     const char *fname = "I_InitJoystick : ";

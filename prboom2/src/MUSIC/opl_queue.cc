@@ -45,7 +45,7 @@ struct opl_callback_queue_s
     int num_entries;
 };
 
-opl_callback_queue_t *OPL_Queue_Create(void)
+opl_callback_queue_t *OPL_Queue_Create()
 {
     opl_callback_queue_t *queue;
 

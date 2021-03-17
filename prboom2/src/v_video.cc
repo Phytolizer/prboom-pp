@@ -140,7 +140,7 @@ byte RGB32k[32][32][32];
 
 #define MAKECOLOR(a) (((a) << 3) | ((a) >> 2))
 
-void V_InitFlexTranTable(void)
+void V_InitFlexTranTable()
 {
     static int flexTranInit = false;
 
@@ -182,7 +182,7 @@ void V_InitFlexTranTable(void)
 }
 
 // killough 5/2/98: tiny engine driven by table above
-void V_InitColorTranslation(void)
+void V_InitColorTranslation()
 {
     const crdef_t *p;
     for (p = crdefs; p->name; p++)
@@ -383,7 +383,7 @@ static void FUNC_V_DrawBackground(const char *flatname, int scrn)
 // No return
 //
 
-void V_Init(void)
+void V_Init()
 {
     int i;
 
@@ -1005,7 +1005,7 @@ void V_UpdateTrueColorPalette(video_mode_t mode)
     W_UnlockLumpNum(gtlump);
 }
 
-void V_DestroyUnusedTrueColorPalettes(void)
+void V_DestroyUnusedTrueColorPalettes()
 {
     dsda_FreeTrueColorPlayPal();
     if (V_GetMode() != VID_MODE15)
@@ -1347,7 +1347,7 @@ void V_InitMode(video_mode_t mode)
 //
 // V_GetMode
 //
-video_mode_t V_GetMode(void)
+video_mode_t V_GetMode()
 {
     return current_videomode;
 }
@@ -1375,7 +1375,7 @@ int V_GetModePixelDepth(video_mode_t mode)
 //
 // V_GetNumPixelBits
 //
-int V_GetNumPixelBits(void)
+int V_GetNumPixelBits()
 {
     switch (current_videomode)
     {
@@ -1395,7 +1395,7 @@ int V_GetNumPixelBits(void)
 //
 // V_GetPixelDepth
 //
-int V_GetPixelDepth(void)
+int V_GetPixelDepth()
 {
     return V_GetModePixelDepth(current_videomode);
 }
@@ -1419,7 +1419,7 @@ void V_AllocScreen(screeninfo_t *scrn)
 //
 // V_AllocScreens
 //
-void V_AllocScreens(void)
+void V_AllocScreens()
 {
     int i;
 
@@ -1444,7 +1444,7 @@ void V_FreeScreen(screeninfo_t *scrn)
 //
 // V_FreeScreens
 //
-void V_FreeScreens(void)
+void V_FreeScreens()
 {
     int i;
 
@@ -1741,7 +1741,7 @@ void WRAP_V_DrawLineWu(fline_t *fl, int color)
     PUTDOT(fl->b.x, fl->b.y, color);
 }
 
-const unsigned char *V_GetPlaypal(void)
+const unsigned char *V_GetPlaypal()
 {
     dsda_playpal_t *playpal_data;
 
@@ -1760,7 +1760,7 @@ const unsigned char *V_GetPlaypal(void)
     return playpal_data->lump;
 }
 
-void V_FreePlaypal(void)
+void V_FreePlaypal()
 {
     dsda_FreePlayPal();
 }
@@ -2087,7 +2087,7 @@ int V_BestColor(const unsigned char *palette, int r, int g, int b)
 }
 
 // Alt-Enter: fullscreen <-> windowed
-void V_ToggleFullscreen(void)
+void V_ToggleFullscreen()
 {
     if (desired_fullscreen == use_fullscreen)
     {
@@ -2109,7 +2109,7 @@ void V_ToggleFullscreen(void)
 #endif
 }
 
-void V_ChangeScreenResolution(void)
+void V_ChangeScreenResolution()
 {
     I_UpdateVideoMode();
 

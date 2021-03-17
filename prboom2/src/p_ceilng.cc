@@ -489,7 +489,7 @@ void P_RemoveActiveCeiling(ceiling_t *ceiling)
 //
 // Passed nothing, returns nothing
 //
-void P_RemoveAllActiveCeilings(void)
+void P_RemoveAllActiveCeilings()
 {
     while (activeceilings)
     {

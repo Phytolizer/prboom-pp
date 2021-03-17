@@ -66,7 +66,7 @@
 #include "e6y.hh"
 #include "dsda/demo.hh"
 
-int IsDemoPlayback(void)
+int IsDemoPlayback()
 {
     int p;
 
@@ -86,7 +86,7 @@ int IsDemoPlayback(void)
     return 0;
 }
 
-int IsDemoContinue(void)
+int IsDemoContinue()
 {
     int p;
 
@@ -281,7 +281,7 @@ mlooklump_t mlook_lump = {DEMOEX_MLOOK_LUMPNAME, nullptr, -2, 0, 0};
 int AddString(char **str, const char *val);
 
 static void R_DemoEx_AddParams(wadtbl_t *wadtbl);
-static int R_DemoEx_GetVersion(void);
+static int R_DemoEx_GetVersion();
 static void R_DemoEx_GetParams(const byte *pwad_p, waddata_t *waddata);
 static void R_DemoEx_AddMouseLookData(wadtbl_t *wadtbl);
 
@@ -312,7 +312,7 @@ int AddString(char **str, const char *val)
     return size;
 }
 
-void M_ChangeDemoExtendedFormat(void)
+void M_ChangeDemoExtendedFormat()
 {
     if (demo_extendedformat == -1)
     {
@@ -383,7 +383,7 @@ void W_AddLump(wadtbl_t *wadtbl, const char *name, const byte *data,
     }
 }
 
-void R_DemoEx_ShowComment(void)
+void R_DemoEx_ShowComment()
 {
     extern patchnum_t hu_font[];
 
@@ -449,7 +449,7 @@ void R_DemoEx_ShowComment(void)
     W_UnlockLumpNum(lump);
 }
 
-angle_t R_DemoEx_ReadMLook(void)
+angle_t R_DemoEx_ReadMLook()
 {
     angle_t pitch;
 
@@ -519,7 +519,7 @@ void R_DemoEx_WriteMLook(angle_t pitch)
     mlook_lump.tick++;
 }
 
-static int R_DemoEx_GetVersion(void)
+static int R_DemoEx_GetVersion()
 {
     int result = -1;
 
@@ -905,7 +905,7 @@ static void R_DemoEx_AddMouseLookData(wadtbl_t *wadtbl)
     }
 }
 
-void I_DemoExShutdown(void)
+void I_DemoExShutdown()
 {
     W_ReleaseAllWads();
 
@@ -1255,7 +1255,7 @@ static int G_ReadDemoFooter(const char *filename)
     return result;
 }
 
-void G_WriteDemoFooter(void)
+void G_WriteDemoFooter()
 {
     wadtbl_t demoex;
 
@@ -1534,11 +1534,12 @@ int DemoNameToWadData(const char *demoname, waddata_t *waddata,
 }
 #endif // HAVE_LIBPCREPOSIX
 
+const char *D_dehout();
+
 void WadDataToWadFiles(waddata_t *waddata)
 {
     void ProcessDehFile(const char *filename, const char *outfilename,
                         int lumpnum);
-    const char *D_dehout(void);
 
     int i, iwadindex = -1;
 
@@ -1655,7 +1656,7 @@ void WadFilesToWadData(waddata_t *waddata)
     }
 }
 
-int CheckDemoExDemo(void)
+int CheckDemoExDemo()
 {
     int result = false;
     int p;
@@ -1689,7 +1690,7 @@ int CheckDemoExDemo(void)
     return result;
 }
 
-int CheckAutoDemo(void)
+int CheckAutoDemo()
 {
     int result = false;
     if (M_CheckParm("-auto"))

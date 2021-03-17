@@ -269,8 +269,8 @@ mobj_t **bodyque = nullptr;   // phares 8/10/98
 int inventoryTics;
 int lookheld;
 
-static dboolean InventoryMoveLeft(void);
-static dboolean InventoryMoveRight(void);
+static dboolean InventoryMoveLeft();
+static dboolean InventoryMoveRight();
 // end heretic
 
 typedef enum
@@ -313,7 +313,7 @@ static inline signed char fudgef(signed char b)
     return b;
 }
 
-void G_SetSpeed(void)
+void G_SetSpeed()
 {
     int p;
 
@@ -985,7 +985,7 @@ void G_BuildTiccmd(ticcmd_t *cmd)
 // G_RestartLevel
 //
 
-void G_RestartLevel(void)
+void G_RestartLevel()
 {
     special_event = static_cast<buttoncode_t>(
         BT_SPECIAL | (BTS_RESTARTLEVEL & BT_SPECIALMASK));
@@ -995,7 +995,7 @@ void G_RestartLevel(void)
 // G_DoLoadLevel
 //
 
-static void G_DoLoadLevel(void)
+static void G_DoLoadLevel()
 {
     int i;
 
@@ -1275,7 +1275,7 @@ dboolean G_Responder(event_t *ev)
 // Make ticcmd_ts for the players.
 //
 
-void G_Ticker(void)
+void G_Ticker()
 {
     int i;
     static gamestate_t prevgamestate;
@@ -1927,7 +1927,7 @@ void G_DoReborn(int playernum)
     }
 }
 
-void G_ScreenShot(void)
+void G_ScreenShot()
 {
     gameaction = ga_screenshot;
 }
@@ -1950,7 +1950,7 @@ int cpars[34] = {
 
 dboolean secretexit;
 
-void G_ExitLevel(void)
+void G_ExitLevel()
 {
     secretexit = false;
     gameaction = ga_completed;
@@ -1959,7 +1959,7 @@ void G_ExitLevel(void)
 // Here's for the german edition.
 // IF NO WOLF3D LEVELS, NO SECRET EXIT!
 
-void G_SecretExitLevel(void)
+void G_SecretExitLevel()
 {
     if (gamemode != commercial || haswolflevels)
     {
@@ -1976,7 +1976,7 @@ void G_SecretExitLevel(void)
 // G_DoCompleted
 //
 
-void G_DoCompleted(void)
+void G_DoCompleted()
 {
     int i;
 
@@ -2231,7 +2231,7 @@ frommapinfo:
 // G_WorldDone
 //
 
-void G_WorldDone(void)
+void G_WorldDone()
 {
     gameaction = ga_worlddone;
 
@@ -2300,7 +2300,7 @@ void G_WorldDone(void)
     }
 }
 
-void G_DoWorldDone(void)
+void G_DoWorldDone()
 {
     idmusnum = -1; // jff 3/17/98 allow new level's music to be loaded
     gamestate = GS_LEVEL;
@@ -2342,7 +2342,7 @@ static uint_64_t G_UpdateSignature(uint_64_t s, const char *name)
     return s;
 }
 
-static uint_64_t G_Signature(void)
+static uint_64_t G_Signature()
 {
     static uint_64_t s = 0;
     static dboolean computed = false;
@@ -2381,7 +2381,7 @@ static uint_64_t G_Signature(void)
 // killough 5/15/98: add forced loadgames, which allow user to override checks
 //
 
-void G_ForcedLoadGame(void)
+void G_ForcedLoadGame()
 {
     // CPhipps - net loadgames are always forced, so we only reach here
     //  in single player
@@ -2490,7 +2490,7 @@ static const size_t num_version_headers =
     sizeof(version_headers) / sizeof(version_headers[0]);
 
 // e6y
-unsigned int GetPackageVersion(void)
+unsigned int GetPackageVersion()
 {
     static unsigned int PACKAGEVERSION = 0;
 
@@ -2521,7 +2521,7 @@ unsigned int GetPackageVersion(void)
 //
 //==========================================================================
 
-void RecalculateDrawnSubsectors(void)
+void RecalculateDrawnSubsectors()
 {
 #ifdef GL_DOOM
     int i, j;
@@ -2545,7 +2545,7 @@ void RecalculateDrawnSubsectors(void)
 
 // HERETIC_TODO: ignoring save / load differences
 
-void G_DoLoadGame(void)
+void G_DoLoadGame()
 {
     int length, i;
     // CPhipps - do savegame filename stuff here
@@ -3028,7 +3028,7 @@ void G_DeferedInitNew(skill_t skill, int episode, int map)
  *  introduced, and made optional (replaces comp_options_by_version)
  */
 
-void G_Compatibility(void)
+void G_Compatibility()
 {
     static const struct
     {
@@ -3132,7 +3132,7 @@ void G_Compatibility(void)
 }
 
 /* killough 7/19/98: Marine's best friend :) */
-static int G_GetHelpers(void)
+static int G_GetHelpers()
 {
     int j = M_CheckParm("-dog");
 
@@ -3146,7 +3146,7 @@ static int G_GetHelpers(void)
 // killough 3/1/98: function to reload all the default parameter
 // settings before a new game begins
 
-void G_ReloadDefaults(void)
+void G_ReloadDefaults()
 {
     // killough 3/1/98: Initialize options based on config file
     // (allows functions above to load different values for demos
@@ -3228,7 +3228,7 @@ void G_ReloadDefaults(void)
     rngseed += I_GetRandomTimeSeed() + gametic; // CPhipps
 }
 
-void G_DoNewGame(void)
+void G_DoNewGame()
 {
     // e6y: allow new level's music to be loaded
     idmusnum = -1;
@@ -3820,7 +3820,7 @@ const byte *G_ReadOptions(const byte *demo_pointer)
     return target;
 }
 
-void G_BeginRecording(void)
+void G_BeginRecording()
 {
     int i;
     byte *demostart, *demo_pointer;
@@ -4740,7 +4740,7 @@ const byte *G_ReadDemoHeaderEx(const byte *demo_pointer, size_t size,
     return demo_pointer;
 }
 
-void G_DoPlayDemo(void)
+void G_DoPlayDemo()
 {
     if (LoadDemo(defdemoname, &demobuffer, &demolength, &demolumpnum))
     {
@@ -4773,7 +4773,7 @@ void G_DoPlayDemo(void)
  * Called after a death or level completion to allow demos to be cleaned up
  * Returns true if a new demo loop action will take place
  */
-dboolean G_CheckDemoStatus(void)
+dboolean G_CheckDemoStatus()
 {
     // e6y
     if (doSkip && (demo_stoponend || demo_stoponnext))
@@ -5029,7 +5029,7 @@ void P_WalkTicker()
     mousex = mousey = 0;
 }
 
-void P_ResetWalkcam(void)
+void P_ResetWalkcam()
 {
     if (walkcamera.type)
     {
@@ -5091,7 +5091,7 @@ void G_ReadDemoContinueTiccmd(ticcmd_t *cmd)
 }
 
 // e6y
-void G_CheckDemoContinue(void)
+void G_CheckDemoContinue()
 {
     if (democontinue)
     {
@@ -5111,7 +5111,7 @@ void G_CheckDemoContinue(void)
 
 // heretic
 
-static dboolean InventoryMoveLeft(void)
+static dboolean InventoryMoveLeft()
 {
     inventoryTics = 5 * 35;
     if (!inventory)
@@ -5135,7 +5135,7 @@ static dboolean InventoryMoveLeft(void)
     return true;
 }
 
-static dboolean InventoryMoveRight(void)
+static dboolean InventoryMoveRight()
 {
     player_t *plr;
 

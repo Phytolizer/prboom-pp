@@ -78,7 +78,7 @@ static int mp_leftoversamps = 0; // number of extra samples
                                  // left over in mad decoder
 static int mp_leftoversamppos = 0;
 
-const char *mp_name(void)
+const char *mp_name()
 {
     return "mad mp3 player";
 }
@@ -93,7 +93,7 @@ int mp_init(int samplerate)
     return 1;
 }
 
-void mp_shutdown(void)
+void mp_shutdown()
 {
 
     mad_synth_finish(&Synth);
@@ -167,12 +167,12 @@ void mp_setvolume(int v)
     mp_volume = v;
 }
 
-void mp_pause(void)
+void mp_pause()
 {
     mp_paused = 1;
 }
 
-void mp_resume(void)
+void mp_resume()
 {
     mp_paused = 0;
 }
@@ -193,7 +193,7 @@ void mp_play(const void *handle, int looping)
     mp_leftoversamppos = 0;
 }
 
-void mp_stop(void)
+void mp_stop()
 {
     mp_playing = 0;
 }

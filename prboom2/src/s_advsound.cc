@@ -132,7 +132,7 @@ void MusInfoThinker(mobj_t *thing)
     }
 }
 
-void T_MAPMusic(void)
+void T_MAPMusic()
 {
     if (musinfo.tics < 0 || !musinfo.mapthing)
     {

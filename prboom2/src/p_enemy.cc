@@ -3053,7 +3053,7 @@ struct brain_s brain; // killough 3/26/98: global state of boss brain
 // killough 3/26/98: initialize icon landings at level startup,
 // rather than at boss wakeup, to prevent savegame-related crashes
 
-void P_SpawnBrainTargets(void) // killough 3/26/98: renamed old function
+void P_SpawnBrainTargets() // killough 3/26/98: renamed old function
 {
     thinker_t *thinker;
 
@@ -3515,7 +3515,7 @@ typedef struct
 static int BossSpotCount;
 static BossSpot_t BossSpots[MAX_BOSS_SPOTS];
 
-void P_InitMonsters(void)
+void P_InitMonsters()
 {
     BossSpotCount = 0;
 }
@@ -4037,7 +4037,7 @@ void A_GenWizard(mobj_t *actor)
     S_StartSound(fog, heretic_sfx_telept);
 }
 
-void P_Massacre(void)
+void P_Massacre()
 {
     mobj_t *mo;
     thinker_t *think;

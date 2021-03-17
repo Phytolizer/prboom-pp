@@ -65,11 +65,11 @@ static int numfakeplanes = 0;
 static fakegroup_t *fakeplanes = nullptr;
 static sector_t **sectors2 = nullptr;
 
-static void gld_PrepareSectorSpecialEffects(void);
+static void gld_PrepareSectorSpecialEffects();
 static void gld_PreprocessFakeSector(int ceiling, sector_t *sector,
                                      int groupid);
 
-static void gld_PrepareSectorSpecialEffects(void)
+static void gld_PrepareSectorSpecialEffects()
 {
     int i, num;
 
@@ -171,7 +171,7 @@ static void gld_PreprocessFakeSector(int ceiling, sector_t *sector, int groupid)
 // with adjoining sectors with no bottom/top texture
 //
 
-void gld_PreprocessFakeSectors(void)
+void gld_PreprocessFakeSectors()
 {
     int i, j, k, ceiling;
     int groupid;

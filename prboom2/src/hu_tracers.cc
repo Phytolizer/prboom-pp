@@ -55,7 +55,7 @@ void GivenDamageApply(tracertype_t index);
 
 traceslist_t traces[NUMTRACES];
 
-void InitTracers(void)
+void InitTracers()
 {
     int i, p;
     int value, count;
@@ -170,7 +170,7 @@ void CheckLinesCrossTracer(line_t *line)
     }
 }
 
-void ClearLinesCrossTracer(void)
+void ClearLinesCrossTracer()
 {
     if (traces[TRACE_CROSS].count)
     {
@@ -296,7 +296,7 @@ int TracerGetPlayerStart(int index)
     return playerstarts_indexes[index].index;
 }
 
-void TracerClearStarts(void)
+void TracerClearStarts()
 {
     int i;
 

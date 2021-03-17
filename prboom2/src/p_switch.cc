@@ -76,7 +76,7 @@ button_t buttonlist[MAXBUTTONS];
 //
 // Rewritten by Lee Killough to remove limit 2/8/98
 //
-void P_InitSwitchList(void)
+void P_InitSwitchList()
 {
     int lump = -1;
     int i, index = 0;

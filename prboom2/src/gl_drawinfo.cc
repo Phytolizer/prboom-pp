@@ -43,7 +43,7 @@ GLDrawInfo gld_drawinfo;
 //
 // gld_FreeDrawInfo
 //
-void gld_FreeDrawInfo(void)
+void gld_FreeDrawInfo()
 {
     int i;
 
@@ -75,7 +75,7 @@ void gld_FreeDrawInfo(void)
 //
 // Should be used between frames (in gld_StartDrawScene)
 //
-void gld_ResetDrawInfo(void)
+void gld_ResetDrawInfo()
 {
     int i;
 

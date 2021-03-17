@@ -116,7 +116,7 @@ const byte *R_GetTextureColumn(const rpatch_t *texpatch, int col)
 //  with the textures from the world map.
 //
 
-static void R_InitTextures(void)
+static void R_InitTextures()
 {
     const maptexture_t *mtexture;
     texture_t *texture;
@@ -366,7 +366,7 @@ static void R_InitTextures(void)
 //
 // R_InitFlats
 //
-static void R_InitFlats(void)
+static void R_InitFlats()
 {
     int i;
 
@@ -393,7 +393,7 @@ static void R_InitFlats(void)
 // so the sprite does not need to be cached completely
 // just for having the header info ready during rendering.
 //
-static void R_InitSpriteLumps(void)
+static void R_InitSpriteLumps()
 {
     firstspritelump = W_GetNumForName("S_START") + 1;
     lastspritelump = W_GetNumForName("S_END") - 1;
@@ -409,7 +409,7 @@ static void R_InitSpriteLumps(void)
 // killough 4/4/98: Add support for C_START/C_END markers
 //
 
-static void R_InitColormaps(void)
+static void R_InitColormaps()
 {
     int i;
     firstcolormaplump = W_GetNumForName("C_START");
@@ -592,7 +592,7 @@ void R_InitTranMap(int progress)
 // Must be called after W_Init.
 //
 
-void R_InitData(void)
+void R_InitData()
 {
     lprintf(LO_INFO, "Textures ");
     R_InitTextures();
@@ -709,7 +709,7 @@ static inline void precache_lump(int l)
     W_UnlockLumpNum(l);
 }
 
-void R_PrecacheLevel(void)
+void R_PrecacheLevel()
 {
     int i;
     byte *hitlist;

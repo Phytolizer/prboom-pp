@@ -73,7 +73,7 @@ static void R_DoAnInterpolation(int i, fixed_t smoothratio);
 
 void D_Display(fixed_t frac);
 
-void M_ChangeUncappedFrameRate(void)
+void M_ChangeUncappedFrameRate()
 {
     if (capturing_video)
     {
@@ -85,7 +85,7 @@ void M_ChangeUncappedFrameRate(void)
     }
 }
 
-void R_InitInterpolation(void)
+void R_InitInterpolation()
 {
     tic_vars.msec = dsda_RealticClockRate() * TICRATE / 100000.0f;
 }
@@ -493,7 +493,7 @@ static void R_StopInterpolation(interpolation_type_e type, void *posptr)
     }
 }
 
-void R_StopAllInterpolations(void)
+void R_StopAllInterpolations()
 {
     int i;
 
@@ -526,7 +526,7 @@ void R_StopAllInterpolations(void)
     }
 }
 
-void R_RestoreInterpolations(void)
+void R_RestoreInterpolations()
 {
     int i;
 

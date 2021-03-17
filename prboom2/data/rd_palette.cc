@@ -29,7 +29,7 @@ static struct
 // killough-style chained hash
 //
 
-static void make_hash(void)
+static void make_hash()
 {
     int i;
     unsigned char *rgb;

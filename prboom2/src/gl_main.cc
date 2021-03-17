@@ -155,7 +155,7 @@ GLfloat cm2RGB[CR_LIMIT + 1][4] = {
     {1.00f, 1.00f, 1.00f, 1.00f}, // CR_LIMIT
 };
 
-void SetFrameTextureMode(void)
+void SetFrameTextureMode()
 {
 #ifdef USE_FBO_TECHNIQUE
     if (SceneInTexture)
@@ -179,7 +179,7 @@ void SetFrameTextureMode(void)
     glTexEnvi(GL_TEXTURE_ENV, GL_OPERAND0_ALPHA, GL_SRC_ALPHA);
 }
 
-void gld_InitTextureParams(void)
+void gld_InitTextureParams()
 {
     typedef struct tex_filter_s
     {
@@ -248,7 +248,7 @@ void gld_InitTextureParams(void)
     }
 }
 
-void gld_MultisamplingInit(void)
+void gld_MultisamplingInit()
 {
     if (render_multisampling)
     {
@@ -270,7 +270,7 @@ void gld_MultisamplingInit(void)
     }
 }
 
-void gld_MultisamplingCheck(void)
+void gld_MultisamplingCheck()
 {
     if (render_multisampling)
     {
@@ -278,7 +278,7 @@ void gld_MultisamplingCheck(void)
         SDL_GL_GetAttribute(SDL_GL_MULTISAMPLESAMPLES, &test);
         if (test != render_multisampling)
         {
-            void M_SaveDefaults(void);
+            void M_SaveDefaults();
             int i = render_multisampling;
             render_multisampling = 0;
             M_SaveDefaults();
@@ -288,7 +288,7 @@ void gld_MultisamplingCheck(void)
     }
 }
 
-void gld_MultisamplingSet(void)
+void gld_MultisamplingSet()
 {
     if (render_multisampling)
     {
@@ -450,7 +450,7 @@ void gld_Init(int width, int height)
     atexit(gld_CleanMemory); // e6y
 }
 
-void gld_InitCommandLine(void)
+void gld_InitCommandLine()
 {
 }
 
@@ -465,7 +465,7 @@ static int C_DECL dicmp_visible_subsectors_by_pic(const void *a, const void *b)
 }
 
 static int visible_subsectors_count_prev = -1;
-void gld_ResetTexturedAutomap(void)
+void gld_ResetTexturedAutomap()
 {
     visible_subsectors_count_prev = -1;
 }
@@ -1090,7 +1090,7 @@ void gld_SetPalette(int palette)
     }
 }
 
-unsigned char *gld_ReadScreen(void)
+unsigned char *gld_ReadScreen()
 { // NSM convert to static
     static unsigned char *scr = nullptr;
     static unsigned char *buffer = nullptr;
@@ -1140,7 +1140,7 @@ unsigned char *gld_ReadScreen(void)
     return scr;
 }
 
-GLvoid gld_Set2DMode(void)
+GLvoid gld_Set2DMode()
 {
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
@@ -1151,12 +1151,12 @@ GLvoid gld_Set2DMode(void)
     glDisable(GL_DEPTH_TEST);
 }
 
-void gld_InitDrawScene(void)
+void gld_InitDrawScene()
 {
     gld_ResetDrawInfo();
 }
 
-void gld_Finish(void)
+void gld_Finish()
 {
     gld_Set2DMode();
     if (gl_finish && !render_vsync && 0)
@@ -1187,7 +1187,7 @@ float cos_paperitems_pitch, sin_paperitems_pitch;
 
 #define __glPi 3.14159265358979323846
 
-void gld_Clear(void)
+void gld_Clear()
 {
     int clearbits = 0;
 
@@ -1239,7 +1239,7 @@ void gld_Clear(void)
     }
 }
 
-void gld_StartDrawScene(void)
+void gld_StartDrawScene()
 {
     extern int screenblocks;
 
@@ -1355,7 +1355,7 @@ void gld_StartDrawScene(void)
 }
 
 // e6y
-static void gld_ProcessExtraAlpha(void)
+static void gld_ProcessExtraAlpha()
 {
     if (extra_alpha > 0.0f)
     {
@@ -1374,7 +1374,7 @@ static void gld_ProcessExtraAlpha(void)
 }
 
 // e6y
-static void gld_InvertScene(void)
+static void gld_InvertScene()
 {
     glBlendFunc(GL_ONE_MINUS_DST_COLOR, GL_ZERO);
     glColor4f(1, 1, 1, 1);
@@ -1389,7 +1389,7 @@ static void gld_InvertScene(void)
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
 
-void gld_EndDrawScene(void)
+void gld_EndDrawScene()
 {
     glDisable(GL_POLYGON_SMOOTH);
 
@@ -2643,7 +2643,7 @@ static void gld_AddHealthBar(mobj_t *thing, GLSprite *sprite)
     }
 }
 
-static void gld_DrawHealthBars(void)
+static void gld_DrawHealthBars()
 {
     int i, count;
     int cm = -1;
@@ -3184,7 +3184,7 @@ void gld_DrawProjectedWalls(GLDrawItemType itemtype)
     }
 }
 
-void gld_InitDisplayLists(void)
+void gld_InitDisplayLists()
 {
     int i;
     int loopnum; // current loop number
@@ -3259,7 +3259,7 @@ void gld_InitDisplayLists(void)
     }
 }
 
-void gld_CleanDisplayLists(void)
+void gld_CleanDisplayLists()
 {
     if (gl_use_display_lists)
     {

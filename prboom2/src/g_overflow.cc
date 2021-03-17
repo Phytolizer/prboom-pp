@@ -551,7 +551,7 @@ int MissedBackSideOverrun(line_t *line)
 //
 // GetSectorAtNullAddress
 //
-sector_t *GetSectorAtNullAddress(void)
+sector_t *GetSectorAtNullAddress()
 {
     static int null_sector_is_initialized = false;
     static sector_t null_sector;

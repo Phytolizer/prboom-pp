@@ -94,7 +94,7 @@ void dsda_WriteToDemo(void *buffer, size_t length)
     dsda_demo_write_buffer_p += length;
 }
 
-void dsda_WriteDemoToFile(void)
+void dsda_WriteDemoToFile()
 {
     int length;
 
@@ -113,7 +113,7 @@ void dsda_WriteDemoToFile(void)
     dsda_demo_name = nullptr;
 }
 
-int dsda_DemoBufferOffset(void)
+int dsda_DemoBufferOffset()
 {
     return dsda_demo_write_buffer_p - dsda_demo_write_buffer;
 }

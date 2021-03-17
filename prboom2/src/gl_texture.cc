@@ -98,12 +98,12 @@ GLuint *last_glTexID = nullptr;
 int transparent_pal_index;
 unsigned char gld_palmap[256];
 
-void gld_ResetLastTexture(void)
+void gld_ResetLastTexture()
 {
     last_glTexID = nullptr;
 }
 
-void gld_InitPalettedTextures(void)
+void gld_InitPalettedTextures()
 {
     const unsigned char *playpal;
     int pal[256];
@@ -1522,7 +1522,7 @@ static void gld_CleanTexItems(int count, GLTexture ***items)
     memset((*items), 0, count * sizeof(GLTexture *));
 }
 
-void gld_FlushTextures(void)
+void gld_FlushTextures()
 {
     gld_CleanTexItems(numtextures, &gld_GLTextures);
     gld_CleanTexItems(numlumps, &gld_GLPatchTextures);
@@ -1562,7 +1562,7 @@ static void CalcHitsCount(const byte *hitlist, int size, int *hit,
     }
 }
 
-void gld_Precache(void)
+void gld_Precache()
 {
     int i;
     byte *hitlist;
@@ -1833,7 +1833,7 @@ void gld_Precache(void)
     }
 }
 
-void gld_CleanMemory(void)
+void gld_CleanMemory()
 {
     gld_CleanVertexData();
     gld_CleanTexItems(numtextures, &gld_GLTextures);
@@ -1842,7 +1842,7 @@ void gld_CleanMemory(void)
     gl_preprocessed = false;
 }
 
-void gld_CleanStaticMemory(void)
+void gld_CleanStaticMemory()
 {
     gld_CleanTexItems(numlumps, &gld_GLStaticPatchTextures);
 }

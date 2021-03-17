@@ -46,7 +46,7 @@
 static GLuint wipe_scr_start_tex = 0;
 static GLuint wipe_scr_end_tex = 0;
 
-GLuint CaptureScreenAsTexID(void)
+GLuint CaptureScreenAsTexID()
 {
     GLuint id;
 
@@ -144,14 +144,14 @@ int gld_wipe_exitMelt(int ticks)
     return 0;
 }
 
-int gld_wipe_StartScreen(void)
+int gld_wipe_StartScreen()
 {
     wipe_scr_start_tex = CaptureScreenAsTexID();
 
     return 0;
 }
 
-int gld_wipe_EndScreen(void)
+int gld_wipe_EndScreen()
 {
     glFlush();
     wipe_scr_end_tex = CaptureScreenAsTexID();

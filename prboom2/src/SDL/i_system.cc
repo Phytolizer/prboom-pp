@@ -105,7 +105,7 @@ void I_uSleep(unsigned long usecs)
 int ms_to_next_tick;
 
 static int basetime = 0;
-int I_GetTime_RealTime(void)
+int I_GetTime_RealTime()
 {
     int i;
     int t = SDL_GetTicks();
@@ -133,7 +133,7 @@ static dboolean InDisplay = false;
 static int saved_gametic = -1;
 dboolean realframe = false;
 
-dboolean I_StartDisplay(void)
+dboolean I_StartDisplay()
 {
     if (InDisplay)
     {
@@ -152,7 +152,7 @@ dboolean I_StartDisplay(void)
     return true;
 }
 
-void I_EndDisplay(void)
+void I_EndDisplay()
 {
     displaytime = SDL_GetTicks() - start_displaytime;
     InDisplay = false;
@@ -161,7 +161,7 @@ void I_EndDisplay(void)
 static int subframe = 0;
 static int prevsubframe = 0;
 int interpolation_method;
-fixed_t I_GetTimeFrac(void)
+fixed_t I_GetTimeFrac()
 {
     unsigned long now;
     fixed_t frac;
@@ -195,7 +195,7 @@ fixed_t I_GetTimeFrac(void)
     return frac;
 }
 
-void I_GetTime_SaveMS(void)
+void I_GetTime_SaveMS()
 {
     if (!movement_smooth)
     {
@@ -216,7 +216,7 @@ void I_GetTime_SaveMS(void)
  *
  * CPhipps - extracted from G_ReloadDefaults because it is O/S based
  */
-unsigned long I_GetRandomTimeSeed(void)
+unsigned long I_GetRandomTimeSeed()
 {
     return (unsigned long)time(nullptr);
 }
@@ -423,7 +423,7 @@ const char *I_GetTempDir(void)
 static const char prboom_dir[] = {
     "/.dsda-doom"}; // Mead rem extra slash 8/21/03
 
-const char *I_DoomExeDir(void)
+const char *I_DoomExeDir()
 {
     static char *base;
     if (!base) // cache multiple requests
@@ -444,7 +444,7 @@ const char *I_DoomExeDir(void)
     return base;
 }
 
-const char *I_GetTempDir(void)
+const char *I_GetTempDir()
 {
     return "/tmp";
 }
@@ -496,7 +496,7 @@ char *I_FindFileInternal(const char *wfname, const char *ext, dboolean isStatic)
         const char *dir;           // directory
         const char *sub;           // subdirectory
         const char *env;           // environment variable
-        const char *(*func)(void); // for I_DoomExeDir
+        const char *(*func)(); // for I_DoomExeDir
     } search0[] =
         {
             {nullptr, nullptr, nullptr, I_DoomExeDir}, // config directory

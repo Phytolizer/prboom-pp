@@ -84,14 +84,14 @@ int ticdup = 1;
 static int xtratics = 0;
 int wanted_player_number;
 
-static void D_QuitNetGame(void);
+static void D_QuitNetGame();
 
 #ifndef HAVE_NET
 doomcom_t *doomcom;
 #endif
 
 #ifdef HAVE_NET
-void D_InitNetGame(void)
+void D_InitNetGame()
 {
     int i;
     int numplayers = 1;
@@ -209,7 +209,7 @@ void D_InitNetGame(void)
 #endif // HAVE_NET
 
 #ifdef HAVE_NET
-void D_CheckNetGame(void)
+void D_CheckNetGame()
 {
     packet_header_t *packet = static_cast<packet_header_t *>(
         std::malloc(sizeof(packet_header_t) + 1));
@@ -303,7 +303,7 @@ dboolean D_NetGetWad(const char *name)
 #endif
 }
 
-void NetUpdate(void)
+void NetUpdate()
 {
     static int lastmadetic;
 
@@ -503,7 +503,7 @@ void D_NetSendMisc(netmisctype_t type, size_t len, void *data)
     }
 }
 
-static void CheckQueuedPackets(void)
+static void CheckQueuedPackets()
 {
     int i;
     for (i = 0; (unsigned)i < numqueuedpackets; i++)
@@ -570,7 +570,7 @@ static void CheckQueuedPackets(void)
 }
 #endif // HAVE_NET
 
-void TryRunTics(void)
+void TryRunTics()
 {
     int runtics;
     int entertime = I_GetTime();
@@ -657,7 +657,7 @@ void TryRunTics(void)
 }
 
 #ifdef HAVE_NET
-static void D_QuitNetGame(void)
+static void D_QuitNetGame()
 {
     byte buf[1 + sizeof(packet_header_t)];
     packet_header_t *packet = static_cast<packet_header_t *>((void *)buf);

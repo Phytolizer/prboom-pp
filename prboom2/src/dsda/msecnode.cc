@@ -26,7 +26,7 @@
 extern sector_t *sectors;
 extern int numsectors;
 
-msecnode_t *P_GetSecnode(void);
+msecnode_t *P_GetSecnode();
 msecnode_t *P_DelSecnode(msecnode_t *node);
 int P_GetMobj(mobj_t *mi, size_t s);
 
@@ -84,7 +84,7 @@ static dboolean dsda_IsMSecNodeMobj(thinker_t *thinker)
 //   the sector ordering of msecnodes should be corrected,
 //   and the thing ordering should still be correct from the first step.
 
-void dsda_ArchiveMSecNodes(void)
+void dsda_ArchiveMSecNodes()
 {
     int sector_i;
     thinker_t *th;

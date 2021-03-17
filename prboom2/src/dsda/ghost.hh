@@ -20,8 +20,8 @@
 
 void dsda_InitGhostExport(const char *name);
 void dsda_InitGhostImport(int option_i);
-void dsda_ExportGhostFrame(void);
-void dsda_SpawnGhost(void);
+void dsda_ExportGhostFrame();
+void dsda_SpawnGhost();
 void dsda_UpdateGhosts(void *_void);
 
 #endif

@@ -100,12 +100,12 @@ static void ApplyWindowResize(SDL_Event *resize_event);
 
 const char *sdl_video_window_pos;
 
-static void ActivateMouse(void);
-static void DeactivateMouse(void);
+static void ActivateMouse();
+static void DeactivateMouse();
 // static int AccelerateMouse(int val);
-static void I_ReadMouse(void);
+static void I_ReadMouse();
 static dboolean MouseShouldBeGrabbed();
-static void UpdateFocus(void);
+static void UpdateFocus();
 
 int gl_colorbuffer_bits = 16;
 int gl_depthbuffer_bits = 16;
@@ -329,7 +329,7 @@ int I_SDLtoDoomMouseState(Uint32 buttonstate)
            (buttonstate & SDL_BUTTON(8) ? 128 : 0);
 }
 
-static void I_GetEvent(void)
+static void I_GetEvent()
 {
     event_t event;
 
@@ -453,7 +453,7 @@ static void I_GetEvent(void)
 // I_StartTic
 //
 
-void I_StartTic(void)
+void I_StartTic()
 {
     I_GetEvent();
 
@@ -465,7 +465,7 @@ void I_StartTic(void)
 //
 // I_StartFrame
 //
-void I_StartFrame(void)
+void I_StartFrame()
 {
 }
 
@@ -473,7 +473,7 @@ void I_StartFrame(void)
 // I_InitInputs
 //
 
-static void I_InitInputs(void)
+static void I_InitInputs()
 {
     static Uint8 empty_cursor_data = 0;
 
@@ -503,7 +503,7 @@ static void I_InitInputs(void)
 //
 // Returns true if it thinks we can afford to skip this frame
 
-inline static dboolean I_SkipFrame(void)
+inline static dboolean I_SkipFrame()
 {
     static int frameno;
 
@@ -592,7 +592,7 @@ static void I_UploadNewPalette(int pal, int force)
 //////////////////////////////////////////////////////////////////////////////
 // Graphics API
 
-void I_ShutdownGraphics(void)
+void I_ShutdownGraphics()
 {
     SDL_FreeCursor(cursors[1]);
     DeactivateMouse();
@@ -601,7 +601,7 @@ void I_ShutdownGraphics(void)
 //
 // I_UpdateNoBlit
 //
-void I_UpdateNoBlit(void)
+void I_UpdateNoBlit()
 {
 }
 
@@ -611,7 +611,7 @@ void I_UpdateNoBlit(void)
 static int newpal = 0;
 #define NO_PALETTE_CHANGE 1000
 
-void I_FinishUpdate(void)
+void I_FinishUpdate()
 {
     // e6y: new mouse code
     UpdateGrab();
@@ -698,7 +698,7 @@ void I_SetPalette(int pal)
 
 // I_PreInitGraphics
 
-static void I_ShutdownSDL(void)
+static void I_ShutdownSDL()
 {
     if (sdl_glcontext)
     {
@@ -729,7 +729,7 @@ static void I_ShutdownSDL(void)
     return;
 }
 
-void I_PreInitGraphics(void)
+void I_PreInitGraphics()
 {
     int p;
 
@@ -753,7 +753,7 @@ void I_PreInitGraphics(void)
 }
 
 // e6y: resolution limitation is removed
-void I_InitBuffersRes(void)
+void I_InitBuffersRes()
 {
     R_InitMeltRes();
     R_InitSpritesRes();
@@ -771,7 +771,7 @@ const char *screen_resolution = nullptr;
 // Get current resolution from the config variable (WIDTHxHEIGHT format)
 // 640x480 if screen_resolution variable has wrong data
 //
-void I_GetScreenResolution(void)
+void I_GetScreenResolution()
 {
     int width, height;
 
@@ -805,7 +805,7 @@ static const int num_canonicals = sizeof(canonicals) / sizeof(*canonicals);
 // Get all the supported screen resolutions
 // and fill the list with them
 //
-static void I_FillScreenResolutionsList(void)
+static void I_FillScreenResolutionsList()
 {
     int display_index = 0;
     SDL_DisplayMode mode;
@@ -1071,7 +1071,7 @@ void I_CalculateRes(int width, int height)
 // CPhipps -
 // I_InitScreenResolution
 // Sets the screen resolution
-void I_InitScreenResolution(void)
+void I_InitScreenResolution()
 {
     int i, p, w, h;
     char c, x;
@@ -1217,7 +1217,7 @@ void I_InitScreenResolution(void)
 // Set the window caption
 //
 
-void I_SetWindowCaption(void)
+void I_SetWindowCaption()
 {
     SDL_SetWindowTitle(nullptr, PACKAGE_NAME " " PACKAGE_VERSION);
 }
@@ -1228,7 +1228,7 @@ void I_SetWindowCaption(void)
 
 #include "icon.cc"
 
-void I_SetWindowIcon(void)
+void I_SetWindowIcon()
 {
     static SDL_Surface *surface = nullptr;
 
@@ -1246,7 +1246,7 @@ void I_SetWindowIcon(void)
     }
 }
 
-void I_InitGraphics(void)
+void I_InitGraphics()
 {
     static int firsttime = 1;
 
@@ -1319,7 +1319,7 @@ video_mode_t I_GetModeFromString(const char *modestr)
     return mode;
 }
 
-void I_UpdateVideoMode(void)
+void I_UpdateVideoMode()
 {
     int init_flags = 0;
     int actualheight;
@@ -1616,13 +1616,13 @@ void I_UpdateVideoMode(void)
     src_rect.h = SCREENHEIGHT;
 }
 
-static void ActivateMouse(void)
+static void ActivateMouse()
 {
     SDL_SetRelativeMouseMode(SDL_TRUE);
     SDL_GetRelativeMouseState(nullptr, nullptr);
 }
 
-static void DeactivateMouse(void)
+static void DeactivateMouse()
 {
     SDL_SetRelativeMouseMode(SDL_FALSE);
 }
@@ -1632,7 +1632,7 @@ static void DeactivateMouse(void)
 //
 // This is to combine all mouse movement for a tic into one mouse
 // motion event.
-static void I_ReadMouse(void)
+static void I_ReadMouse()
 {
     if (mouse_enabled && window_focused)
     {
@@ -1717,7 +1717,7 @@ static dboolean MouseShouldBeGrabbed()
 // We try to make ourselves be well-behaved: the grab on the mouse
 // is removed if we lose focus (such as a popup window appearing),
 // and we dont move the mouse around if we aren't focused either.
-static void UpdateFocus(void)
+static void UpdateFocus()
 {
     Uint32 flags = 0;
 
@@ -1768,7 +1768,7 @@ static void UpdateFocus(void)
     //    screenvisible = (state & SDL_APPACTIVE) != 0;
 }
 
-void UpdateGrab(void)
+void UpdateGrab()
 {
     static dboolean currently_grabbed = false;
     dboolean grab;

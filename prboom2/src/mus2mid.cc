@@ -332,7 +332,7 @@ static dboolean WriteChangeController_Valueless(byte channel, byte control,
 
 // Allocate a free MIDI channel.
 
-static int AllocateMIDIChannel(void)
+static int AllocateMIDIChannel()
 {
     int result;
     int max;

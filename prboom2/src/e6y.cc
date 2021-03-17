@@ -264,7 +264,7 @@ prboom_comp_t prboom_comp[PC_MAX] = {
     {0x00000000, 0x02050104, 0, "-reset_monsterspawner_params_after_loading"},
 };
 
-void e6y_InitCommandLine(void)
+void e6y_InitCommandLine()
 {
     int p;
 
@@ -312,7 +312,7 @@ static dboolean saved_nodrawers;
 static dboolean saved_nosfxparm;
 static dboolean saved_nomusicparm;
 
-void G_SkipDemoStart(void)
+void G_SkipDemoStart()
 {
     saved_fastdemo = fastdemo;
     saved_nodrawers = nodrawers;
@@ -334,7 +334,7 @@ void G_SkipDemoStart(void)
 
 dboolean sound_inited_once = false;
 
-void G_SkipDemoStop(void)
+void G_SkipDemoStop()
 {
     fastdemo = saved_fastdemo;
     nodrawers = saved_nodrawers;
@@ -365,7 +365,7 @@ void G_SkipDemoStop(void)
 #endif
 }
 
-void G_SkipDemoCheck(void)
+void G_SkipDemoCheck()
 {
     if (doSkip && gametic > 0)
     {
@@ -379,7 +379,7 @@ void G_SkipDemoCheck(void)
     }
 }
 
-int G_ReloadLevel(void)
+int G_ReloadLevel()
 {
     int result = false;
 
@@ -395,7 +395,7 @@ int G_ReloadLevel(void)
     return result;
 }
 
-int G_GotoNextLevel(void)
+int G_GotoNextLevel()
 {
     static byte doom2_next[33] = {2,  3,  4,  5,  6,  7,  8,  9,  10, 11, 12,
                                   13, 14, 15, 31, 17, 18, 19, 20, 21, 22, 23,
@@ -503,12 +503,12 @@ int G_GotoNextLevel(void)
     return changed;
 }
 
-void M_ChangeSpeed(void)
+void M_ChangeSpeed()
 {
     G_SetSpeed();
 }
 
-void M_ChangeMouseLook(void)
+void M_ChangeMouseLook()
 {
     viewpitch = 0;
 
@@ -526,11 +526,11 @@ void M_ChangeMouseLook(void)
 #endif // GL_DOOM
 }
 
-void M_ChangeMouseInvert(void)
+void M_ChangeMouseInvert()
 {
 }
 
-void M_ChangeMaxViewPitch(void)
+void M_ChangeMaxViewPitch()
 {
     int max_up, max_dn, angle_up, angle_dn;
 
@@ -554,16 +554,16 @@ void M_ChangeMaxViewPitch(void)
     viewpitch = 0;
 }
 
-void M_ChangeScreenMultipleFactor(void)
+void M_ChangeScreenMultipleFactor()
 {
     V_ChangeScreenResolution();
 }
 
-dboolean GetMouseLook(void)
+dboolean GetMouseLook()
 {
     return movement_mouselook;
 }
-dboolean HaveMouseLook(void)
+dboolean HaveMouseLook()
 {
     return (viewpitch != 0);
 }
@@ -589,7 +589,7 @@ float render_fovratio;
 float render_fovy = FOV90;
 float render_multiplier;
 
-void M_ChangeAspectRatio(void)
+void M_ChangeAspectRatio()
 {
     extern int screenblocks;
 
@@ -598,7 +598,7 @@ void M_ChangeAspectRatio(void)
     R_SetViewSize(screenblocks);
 }
 
-void M_ChangeStretch(void)
+void M_ChangeStretch()
 {
     extern int screenblocks;
 
@@ -607,7 +607,7 @@ void M_ChangeStretch(void)
     R_SetViewSize(screenblocks);
 }
 
-void M_ChangeFOV(void)
+void M_ChangeFOV()
 {
     float f1, f2;
     int p;
@@ -662,11 +662,11 @@ void M_ChangeFOV(void)
 }
 
 #ifdef GL_DOOM
-void M_ChangeMultiSample(void)
+void M_ChangeMultiSample()
 {
 }
 
-void M_ChangeSpriteClip(void)
+void M_ChangeSpriteClip()
 {
     gl_sprite_offset = (gl_spriteclip != spriteclip_const
                             ? 0
@@ -705,7 +705,7 @@ void ResolveColormapsHiresConflict(dboolean /* prefer_colormap */)
 #endif
 }
 
-void M_ChangeAllowBoomColormaps(void)
+void M_ChangeAllowBoomColormaps()
 {
     if (gl_boom_colormaps == -1)
     {
@@ -721,7 +721,7 @@ void M_ChangeAllowBoomColormaps(void)
     }
 }
 
-void M_ChangeTextureUseHires(void)
+void M_ChangeTextureUseHires()
 {
     ResolveColormapsHiresConflict(false);
 
@@ -729,7 +729,7 @@ void M_ChangeTextureUseHires(void)
     gld_Precache();
 }
 
-void M_ChangeTextureHQResize(void)
+void M_ChangeTextureHQResize()
 {
     gld_FlushTextures();
 }
@@ -747,7 +747,7 @@ void M_MouseAccel(int choice)
     MouseAccelChanging();
 }
 
-void MouseAccelChanging(void)
+void MouseAccelChanging()
 {
     mouse_accelfactor = (float)mouse_acceleration / 100.0f + 1.0f;
 }
@@ -912,7 +912,7 @@ int numlevels = 0;
 int levels_max = 0;
 timetable_t *stats = nullptr;
 
-void e6y_G_DoCompleted(void)
+void e6y_G_DoCompleted()
 {
     int i;
 
@@ -986,7 +986,7 @@ typedef struct tmpdata_s
     char secret[200];
 } tmpdata_t;
 
-void e6y_WriteStats(void)
+void e6y_WriteStats()
 {
     FILE *f;
     char str[200];
@@ -1099,7 +1099,7 @@ void e6y_WriteStats(void)
     fclose(f);
 }
 
-void e6y_G_DoWorldDone(void)
+void e6y_G_DoWorldDone()
 {
     if (doSkip)
     {
@@ -1160,7 +1160,7 @@ int AccelerateMouse(int val)
 
 int mlooky = 0;
 
-void e6y_G_Compatibility(void)
+void e6y_G_Compatibility()
 {
     deh_applyCompatibility();
 

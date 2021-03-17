@@ -2531,13 +2531,13 @@ IMPLEMENT_BLOCK_MEMORY_ALLOC_ZONE(secnodezone, sizeof(msecnode_t), 0, 256,
 //
 // P_FreeSecNodeList
 //
-void P_FreeSecNodeList(void)
+void P_FreeSecNodeList()
 {
     DECLARE_BLOCK_MEMORY_ALLOC_ZONE(secnodezone);
     NULL_BLOCK_MEMORY_ALLOC_ZONE(secnodezone);
 }
 
-msecnode_t *P_GetSecnode(void)
+msecnode_t *P_GetSecnode()
 {
     return (msecnode_t *)Z_BMalloc(&secnodezone);
 }
@@ -2873,14 +2873,14 @@ void P_CreateSecNodeList(mobj_t *thing, fixed_t x, fixed_t y)
  * thinker, or the level might have ended/been ended and we clear the objects it
  * was pointing too. Hopefully we don't need to carry this between tics for
  * sync. */
-void P_MapStart(void)
+void P_MapStart()
 {
     if (tmthing)
     {
         I_Error("P_MapStart: tmthing set!");
     }
 }
-void P_MapEnd(void)
+void P_MapEnd()
 {
     tmthing = nullptr;
 }

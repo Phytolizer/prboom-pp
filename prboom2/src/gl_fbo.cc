@@ -51,7 +51,7 @@ GLuint glSceneImageFBOTexID = 0;
 GLuint glDepthBufferFBOTexID = 0;
 GLuint glSceneImageTextureFBOTexID = 0;
 int SceneInTexture = false;
-static dboolean gld_CreateScreenSizeFBO(void);
+static dboolean gld_CreateScreenSizeFBO();
 #endif
 
 // e6y: motion bloor
@@ -61,9 +61,9 @@ motion_blur_params_t motion_blur;
 
 #ifdef USE_FBO_TECHNIQUE
 
-void gld_InitMotionBlur(void);
+void gld_InitMotionBlur();
 
-void gld_InitFBO(void)
+void gld_InitFBO()
 {
     gld_FreeScreenSizeFBO();
 
@@ -90,7 +90,7 @@ void gld_InitFBO(void)
     }
 }
 
-static dboolean gld_CreateScreenSizeFBO(void)
+static dboolean gld_CreateScreenSizeFBO()
 {
     int status = 0;
     GLenum internalFormat;
@@ -165,7 +165,7 @@ static dboolean gld_CreateScreenSizeFBO(void)
     return (status == GL_FRAMEBUFFER_COMPLETE_EXT);
 }
 
-void gld_FreeScreenSizeFBO(void)
+void gld_FreeScreenSizeFBO()
 {
     if (!gl_ext_framebuffer_object)
     {
@@ -182,7 +182,7 @@ void gld_FreeScreenSizeFBO(void)
     glSceneImageTextureFBOTexID = 0;
 }
 
-void gld_InitMotionBlur(void)
+void gld_InitMotionBlur()
 {
     if (gl_use_motionblur)
     {

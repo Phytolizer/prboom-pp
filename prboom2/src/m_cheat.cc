@@ -950,7 +950,7 @@ static int M_FindCheats_Doom(int key)
     return rc;
 }
 
-static void cht_InitCheats(void)
+static void cht_InitCheats()
 {
     static int init = false;
 

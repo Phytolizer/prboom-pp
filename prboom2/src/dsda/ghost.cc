@@ -195,7 +195,7 @@ void dsda_InitGhostImport(int option_i)
     }
 }
 
-void dsda_ExportGhostFrame(void)
+void dsda_ExportGhostFrame()
 {
     dsda_ghost_frame_t ghost_frame;
     mobj_t *player;
@@ -253,7 +253,7 @@ void dsda_ExportGhostFrame(void)
 }
 
 // Stripped down version of P_SpawnMobj
-void dsda_SpawnGhost(void)
+void dsda_SpawnGhost()
 {
     mobj_t *mobj;
     state_t *ghost_state;

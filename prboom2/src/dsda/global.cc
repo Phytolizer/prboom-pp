@@ -151,7 +151,7 @@ static void dsda_SetMusic(musicinfo_t *music_list, int count)
     num_music = count;
 }
 
-static void dsda_InitDoom(void)
+static void dsda_InitDoom()
 {
     int i;
     doom_mobjinfo_t *mobjinfo_p;
@@ -259,7 +259,7 @@ static void dsda_InitDoom(void)
     }
 }
 
-static void dsda_InitHeretic(void)
+static void dsda_InitHeretic()
 {
     int i, j;
     heretic_mobjinfo_t *mobjinfo_p;
@@ -383,7 +383,7 @@ static void dsda_InitHeretic(void)
     maxammo[5] = 150; // mace
 }
 
-static dboolean dsda_AutoDetectHeretic(void)
+static dboolean dsda_AutoDetectHeretic()
 {
     int i, length;
     i = M_CheckParm("-iwad");
@@ -400,7 +400,7 @@ static dboolean dsda_AutoDetectHeretic(void)
     return false;
 }
 
-void dsda_InitGlobal(void)
+void dsda_InitGlobal()
 {
     heretic = M_CheckParm("-heretic") || dsda_AutoDetectHeretic();
 

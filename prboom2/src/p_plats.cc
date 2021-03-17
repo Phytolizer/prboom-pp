@@ -500,7 +500,7 @@ void P_RemoveActivePlat(plat_t *plat)
 //
 // Passed nothing, returns nothing
 //
-void P_RemoveAllActivePlats(void)
+void P_RemoveAllActivePlats()
 {
     while (activeplats)
     {

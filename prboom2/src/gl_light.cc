@@ -62,7 +62,7 @@ int gl_distfog = 70;
 float gl_CurrentFogDensity = -1.0f;
 float distfogtable[3][256];
 
-typedef void (*gld_InitLightTable_f)(void);
+typedef void (*gld_InitLightTable_f)();
 
 typedef struct
 {
@@ -78,9 +78,9 @@ static float lighttable_glboom[5][256];
 static float lighttable_gzdoom[256];
 static float lighttable_fogbased[256];
 
-static void gld_InitLightTable_glboom(void);
-static void gld_InitLightTable_gzdoom(void);
-static void gld_InitLightTable_fogbased(void);
+static void gld_InitLightTable_glboom();
+static void gld_InitLightTable_gzdoom();
+static void gld_InitLightTable_fogbased();
 
 static float gld_CalcLightLevel_glboom(int lightlevel);
 static float gld_CalcLightLevel_gzdoom(int lightlevel);
@@ -117,7 +117,7 @@ gld_CalcLightLevel_f gld_CalcLightLevel = gld_CalcLightLevel_glboom;
 gld_Calc2DLightLevel_f gld_Calc2DLightLevel = gld_CalcLightLevel_glboom;
 gld_CalcFogDensity_f gld_CalcFogDensity = gld_CalcFogDensity_glboom;
 
-void M_ChangeLightMode(void)
+void M_ChangeLightMode()
 {
     if (gl_compatibility)
     {
@@ -159,7 +159,7 @@ void M_ChangeLightMode(void)
     }
 }
 
-void gld_InitLightTable(void)
+void gld_InitLightTable()
 {
     int i;
 
@@ -176,7 +176,7 @@ void gld_InitLightTable(void)
  * gamma=-0,2;-2,0;-4,0;-6,0;-8,0
  * light=0,0 .. 1,0
  */
-static void gld_InitLightTable_glboom(void)
+static void gld_InitLightTable_glboom()
 {
     int i, g;
     float gamma[5] = {-0.2f, -2.0f, -4.0f, -6.0f, -8.0f};
@@ -192,7 +192,7 @@ static void gld_InitLightTable_glboom(void)
     }
 }
 
-static void gld_InitLightTable_gzdoom(void)
+static void gld_InitLightTable_gzdoom()
 {
     int i;
     float light;
@@ -219,7 +219,7 @@ static void gld_InitLightTable_gzdoom(void)
     lighttable_gzdoom[0] = 0.0f;
 }
 
-static void gld_InitLightTable_fogbased(void)
+static void gld_InitLightTable_fogbased()
 {
     int i;
     float light;
@@ -314,7 +314,7 @@ void gld_StaticLightAlpha(float light, float alpha)
     }
 }
 
-void M_ChangeAllowFog(void)
+void M_ChangeAllowFog()
 {
     int i;
     GLfloat FogColor[4] = {0.0f, 0.0f, 0.0f, 0.0f};

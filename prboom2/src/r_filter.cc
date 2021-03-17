@@ -41,7 +41,7 @@ byte filter_ditherMatrix[DITHER_DIM][DITHER_DIM] = {
 byte filter_roundedUVMap[FILTER_UVDIM * FILTER_UVDIM];
 byte filter_roundedRowMap[4 * 16];
 
-void R_FilterInit(void)
+void R_FilterInit()
 {
     int i, j, s, t;
 

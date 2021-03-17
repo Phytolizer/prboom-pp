@@ -9,7 +9,7 @@
 #include "lprintf.hh"
 
 /* forward decls */
-static void p_checksum_cleanup(void);
+static void p_checksum_cleanup();
 void checksum_gamestate(int tic);
 
 /* vars */
@@ -52,7 +52,7 @@ void P_RecordChecksum(const char *file)
     P_Checksum = checksum_gamestate;
 }
 
-void P_ChecksumFinal(void)
+void P_ChecksumFinal()
 {
     int i;
     unsigned char digest[16];
@@ -72,7 +72,7 @@ void P_ChecksumFinal(void)
     MD5Init(&md5global);
 }
 
-static void p_checksum_cleanup(void)
+static void p_checksum_cleanup()
 {
     if (outfile && (outfile != stdout))
     {

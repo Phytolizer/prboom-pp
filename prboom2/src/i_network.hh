@@ -36,6 +36,8 @@
 
 #include <cstddef>
 
+#include "protocol.hh"
+
 #ifdef USE_SDL_NET
 #include "SDL_net.h"
 #define UDP_SOCKET UDPsocket

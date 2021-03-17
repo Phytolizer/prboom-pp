@@ -3,14 +3,15 @@
 #include "../smart_enum.hh"
 namespace Token
 {
-class Type final : public SmartEnum<size_t, Type>
+class Type final : public SmartEnum<std::size_t, Type>
 {
   public:
-    explicit constexpr Type(size_t value) : SmartEnum<size_t, Type>(value)
+    explicit constexpr Type(std::size_t value)
+        : SmartEnum<std::size_t, Type>(value)
     {
     }
-    constexpr Type(SmartEnum<size_t, Type> value)
-        : SmartEnum<size_t, Type>(value.value())
+    constexpr Type(SmartEnum<std::size_t, Type> value)
+        : SmartEnum<std::size_t, Type>(value.value())
     {
     }
 };

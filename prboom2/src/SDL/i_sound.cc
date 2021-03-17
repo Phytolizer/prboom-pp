@@ -264,7 +264,7 @@ void I_UpdateSoundParams(int handle, int volume, int seperation, int pitch)
 // version.
 // See soundserver initdata().
 //
-void I_SetChannels(void)
+void I_SetChannels()
 {
     // Init internal lookups (raw data, mixing buffer, channels).
     // This function sets up internal lookups used during
@@ -423,7 +423,7 @@ dboolean I_SoundIsPlaying(int handle)
     return channelinfo[handle].data != nullptr;
 }
 
-dboolean I_AnySoundStillPlaying(void)
+dboolean I_AnySoundStillPlaying()
 {
     dboolean result = false;
     int i;
@@ -617,7 +617,7 @@ static void I_UpdateSound(void *unused, Uint8 *stream, int len)
     SDL_UnlockMutex(sfxmutex);
 }
 
-void I_ShutdownSound(void)
+void I_ShutdownSound()
 {
     if (sound_inited)
     {
@@ -639,7 +639,7 @@ void I_ShutdownSound(void)
 
 // static SDL_AudioSpec audio;
 
-void I_InitSound(void)
+void I_InitSound()
 {
     int audio_rate;
     int audio_channels;
@@ -746,7 +746,7 @@ void I_InitSound(void)
 
 // silences sound output, and instead allows sound capture to work
 // call this before sound startup
-void I_SetSoundCap(void)
+void I_SetSoundCap()
 {
     dumping_sound = 1;
 }
@@ -842,8 +842,8 @@ static void Exp_StopSong(int handle);
 static void Exp_ResumeSong(int handle);
 static void Exp_PauseSong(int handle);
 static void Exp_PlaySong(int handle, int looping);
-static void Exp_InitMusic(void);
-static void Exp_ShutdownMusic(void);
+static void Exp_InitMusic();
+static void Exp_ShutdownMusic();
 
 #ifdef HAVE_MIXER
 
@@ -863,7 +863,7 @@ static const char *music_tmp_ext[] = {"", ".mp3", ".ogg"};
 
 #endif
 
-void I_ShutdownMusic(void)
+void I_ShutdownMusic()
 {
     if (use_experimental_music)
     {
@@ -894,7 +894,7 @@ void I_ShutdownMusic(void)
 #endif
 }
 
-void I_InitMusic(void)
+void I_InitMusic()
 {
     if (use_experimental_music)
     {
@@ -1304,7 +1304,7 @@ int mus_fluidsynth_reverb;
 int mus_fluidsynth_gain; // NSM  fine tune fluidsynth output level
 int mus_opl_gain;        // NSM  fine tune OPL output level
 
-static void Exp_ShutdownMusic(void)
+static void Exp_ShutdownMusic()
 {
     int i;
     S_StopMusic();
@@ -1324,7 +1324,7 @@ static void Exp_ShutdownMusic(void)
     }
 }
 
-static void Exp_InitMusic(void)
+static void Exp_InitMusic()
 {
     int i;
     musmutex = SDL_CreateMutex();
@@ -1590,7 +1590,7 @@ static void Exp_UpdateMusic(void *buff, unsigned nsamp)
     music_players[current_player]->render(buff, nsamp);
 }
 
-void M_ChangeMIDIPlayer(void)
+void M_ChangeMIDIPlayer()
 {
     int experimental_music;
 

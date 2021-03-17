@@ -94,7 +94,7 @@ angle_t tantoangle[2049];
 // Load trig tables from a wad file lump
 // CPhipps 24/12/98 - fix endianness (!)
 //
-void R_LoadTrigTables(void)
+void R_LoadTrigTables()
 {
     int lump;
     {

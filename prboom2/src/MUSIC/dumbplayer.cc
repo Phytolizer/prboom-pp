@@ -74,7 +74,7 @@ static DUH_SIGRENDERER *dsren = nullptr;
 static DUH *duh = nullptr;
 static DUMBFILE *dfil = nullptr;
 
-const char *db_name(void)
+const char *db_name()
 {
     return "dumb tracker player";
 }
@@ -86,7 +86,7 @@ int db_init(int samplerate)
     return 1;
 }
 
-void db_shutdown(void)
+void db_shutdown()
 {
     dumb_exit();
 }
@@ -191,19 +191,19 @@ void db_play(const void *handle, int looping)
     db_playing = 1;
 }
 
-void db_stop(void)
+void db_stop()
 {
     duh_end_sigrenderer(dsren);
     dsren = nullptr;
     db_playing = 0;
 }
 
-void db_pause(void)
+void db_pause()
 {
     db_paused = 1;
 }
 
-void db_resume(void)
+void db_resume()
 {
     db_paused = 0;
 }

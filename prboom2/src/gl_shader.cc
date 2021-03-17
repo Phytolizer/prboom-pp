@@ -57,7 +57,7 @@ static GLShader *active_shader = nullptr;
 
 static GLShader *gld_LoadShader(const char *vpname, const char *fpname);
 
-int glsl_Init(void)
+int glsl_Init()
 {
     static int init = false;
 
@@ -238,7 +238,7 @@ void glsl_SetLightLevel(float lightlevel)
     }
 }
 
-int glsl_IsActive(void)
+int glsl_IsActive()
 {
     return (gl_lightmode == gl_lightmode_shaders && sh_main);
 }

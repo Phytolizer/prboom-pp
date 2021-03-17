@@ -117,7 +117,7 @@ int OPL_Init(unsigned int rate)
 
 // Shut down the OPL library.
 
-void OPL_Shutdown(void)
+void OPL_Shutdown()
 {
     if (callback_queue)
     {
@@ -135,7 +135,7 @@ void OPL_SetCallback(unsigned int ms, opl_callback_t callback, void *data)
                    current_time - pause_offset + (ms * opl_sample_rate) / 1000);
 }
 
-void OPL_ClearCallbacks(void)
+void OPL_ClearCallbacks()
 {
     OPL_Queue_Clear(callback_queue);
 }
@@ -339,7 +339,7 @@ unsigned int OPL_ReadPort(opl_port_t port)
 // (register write, etc).
 //
 
-unsigned int OPL_ReadStatus(void)
+unsigned int OPL_ReadStatus()
 {
     return OPL_ReadPort(OPL_REGISTER_PORT);
 }
@@ -384,7 +384,7 @@ void OPL_WriteRegister(int reg, int value)
 
 // Initialize registers on startup
 
-void OPL_InitRegisters(void)
+void OPL_InitRegisters()
 {
     int r;
 

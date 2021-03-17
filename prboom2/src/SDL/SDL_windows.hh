@@ -35,7 +35,6 @@
              0x501 for raw input */
 #define _WIN32_WINNT 0x501
 #include <windows.h>
-#endif
 
 /* Routines to convert from UTF8 to native Windows text */
 #if UNICODE
@@ -65,6 +64,8 @@ extern void WIN_CoUninitialize(void);
 
 /* Returns SDL_TRUE if we're running on Windows Vista and newer */
 extern BOOL WIN_IsWindowsVistaOrGreater();
+
+#endif
 
 #endif /* _INCLUDED_WINDOWS_H */
 

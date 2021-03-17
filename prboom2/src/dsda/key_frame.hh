@@ -20,14 +20,14 @@
 
 #include "doomtype.hh"
 
-void dsda_InitKeyFrame(void);
-void dsda_ContinueKeyFrame(void);
+void dsda_InitKeyFrame();
+void dsda_ContinueKeyFrame();
 void dsda_StoreKeyFrame(unsigned char **buffer, byte complete);
 void dsda_RestoreKeyFrame(unsigned char *buffer, byte complete);
-int dsda_KeyFrameRestored(void);
-void dsda_StoreQuickKeyFrame(void);
-void dsda_RestoreQuickKeyFrame(void);
-void dsda_RewindAutoKeyFrame(void);
-void dsda_UpdateAutoKeyFrames(void);
+int dsda_KeyFrameRestored();
+void dsda_StoreQuickKeyFrame();
+void dsda_RestoreQuickKeyFrame();
+void dsda_RewindAutoKeyFrame();
+void dsda_UpdateAutoKeyFrames();
 
 #endif

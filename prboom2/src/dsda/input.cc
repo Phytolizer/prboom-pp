@@ -91,7 +91,7 @@ static void dsda_InputTrackKeyUp(event_t *ev)
     gamekeys[key].on = false;
 }
 
-void dsda_InputFlushTick(void)
+void dsda_InputFlushTick()
 {
     dsda_input_tick_counter = dsda_input_counter;
 }
@@ -251,7 +251,7 @@ dboolean dsda_InputDeactivated(int identifier)
             joybuttons[input->joyb].deactivated_at == dsda_input_counter);
 }
 
-void dsda_InputFlush(void)
+void dsda_InputFlush()
 {
     memset(gamekeys, 0, sizeof(gamekeys));
     memset(mousearray, 0, sizeof(mousearray));
@@ -503,7 +503,7 @@ dboolean dsda_InputJoyBActive(int identifier)
     return input->joyb >= 0 && joybuttons[input->joyb].game_on;
 }
 
-void dsda_InputCycleProfile(void)
+void dsda_InputCycleProfile()
 {
     dsda_input_profile++;
 

@@ -93,7 +93,7 @@ void dsda_InitHud(patchnum_t *font)
     dsda_InitExHud(font);
 }
 
-void dsda_DrawIntermissionTime(void)
+void dsda_DrawIntermissionTime()
 {
     char *s;
 
@@ -112,7 +112,7 @@ void dsda_DrawIntermissionTime(void)
     HUlib_drawTextLine(&dsda_intermission_time.text, false);
 }
 
-static dboolean dsda_ExHudVisible(void)
+static dboolean dsda_ExHudVisible()
 {
     return dsda_ExHud() &&               // extended hud turned on
            viewheight != SCREENHEIGHT && // not zoomed in
@@ -120,7 +120,7 @@ static dboolean dsda_ExHudVisible(void)
             (automapmode & am_overlay)); // automap inactive
 }
 
-static void dsda_UpdateExHud(void)
+static void dsda_UpdateExHud()
 {
     char *s;
 
@@ -248,7 +248,7 @@ static void dsda_UpdateExHud(void)
     }
 }
 
-void dsda_UpdateHud(void)
+void dsda_UpdateHud()
 {
     int i;
 
@@ -271,13 +271,13 @@ void dsda_UpdateHud(void)
     }
 }
 
-static void dsda_DrawExHud(void)
+static void dsda_DrawExHud()
 {
     HUlib_drawTextLine(&dsda_exhud_timer.text, false);
     HUlib_drawTextLine(&dsda_exhud_max_totals.text, false);
 }
 
-void dsda_DrawHud(void)
+void dsda_DrawHud()
 {
     if (dsda_split.ticks > 0)
     {
@@ -290,13 +290,13 @@ void dsda_DrawHud(void)
     }
 }
 
-static void dsda_EraseExHud(void)
+static void dsda_EraseExHud()
 {
     HUlib_eraseTextLine(&dsda_exhud_timer.text);
     HUlib_eraseTextLine(&dsda_exhud_max_totals.text);
 }
 
-void dsda_EraseHud(void)
+void dsda_EraseHud()
 {
     if (dsda_split.ticks > 0)
     {

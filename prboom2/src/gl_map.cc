@@ -73,7 +73,7 @@ typedef struct map_nice_thing_s
 
 static array_t map_things[am_icon_count];
 
-void gld_InitMapPics(void)
+void gld_InitMapPics()
 {
     int i, lump;
 
@@ -244,7 +244,7 @@ void gld_DrawNiceThings(int fx, int fy, int fw, int fh)
     glDisable(GL_SCISSOR_TEST);
 }
 
-void gld_ClearNiceThings(void)
+void gld_ClearNiceThings()
 {
     int type;
 
@@ -254,7 +254,7 @@ void gld_ClearNiceThings(void)
     }
 }
 
-void gld_DrawMapLines(void)
+void gld_DrawMapLines()
 {
 #if defined(USE_VERTEX_ARRAYS) || defined(USE_VBO)
     if (map_lines.count > 0)

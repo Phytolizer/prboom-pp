@@ -37,8 +37,8 @@
 
 // PRIVATE FUNCTION PROTOTYPES ---------------------------------------------
 
-static void CheckOpen(void);
-static void OpenScript(void);
+static void CheckOpen();
+static void OpenScript();
 static void OpenScriptByName(const char *name);
 static void OpenScriptByNum(int lump);
 
@@ -91,7 +91,7 @@ void SC_OpenLumpByNum(int lump)
 //
 //==========================================================================
 
-static void OpenScript(void)
+static void OpenScript()
 {
     ScriptBuffer = static_cast<const char *>(W_CacheLumpNum(ScriptLump));
     ScriptSize = W_LumpLength(ScriptLump);
@@ -135,7 +135,7 @@ static void OpenScriptByNum(int lump)
 //
 //==========================================================================
 
-void SC_Close(void)
+void SC_Close()
 {
     if (ScriptOpen)
     {
@@ -150,7 +150,7 @@ void SC_Close(void)
 //
 //==========================================================================
 
-dboolean SC_GetString(void)
+dboolean SC_GetString()
 {
     char *text;
     dboolean foundToken;
@@ -243,7 +243,7 @@ dboolean SC_GetString(void)
 //
 //==========================================================================
 
-void SC_MustGetString(void)
+void SC_MustGetString()
 {
     if (SC_GetString() == false)
     {
@@ -272,7 +272,7 @@ void SC_MustGetStringName(const char *name)
 //
 //==========================================================================
 
-dboolean SC_GetNumber(void)
+dboolean SC_GetNumber()
 {
     char *stopper;
 
@@ -300,7 +300,7 @@ dboolean SC_GetNumber(void)
 //
 //==========================================================================
 
-void SC_MustGetNumber(void)
+void SC_MustGetNumber()
 {
     if (SC_GetNumber() == false)
     {
@@ -316,7 +316,7 @@ void SC_MustGetNumber(void)
 //
 //==========================================================================
 
-void SC_UnGet(void)
+void SC_UnGet()
 {
     AlreadyGot = true;
 }
@@ -329,7 +329,7 @@ void SC_UnGet(void)
 //
 //==========================================================================
 
-dboolean SC_Check(void)
+dboolean SC_Check()
 {
     const char *text;
 
@@ -435,7 +435,7 @@ void SC_ScriptError(const char *message)
 //
 //==========================================================================
 
-static void CheckOpen(void)
+static void CheckOpen()
 {
     if (ScriptOpen == false)
     {

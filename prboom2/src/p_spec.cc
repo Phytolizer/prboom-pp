@@ -102,10 +102,10 @@ static anim_t *anims; // new structure w/o limits -- killough
 static size_t maxanims;
 
 // killough 3/7/98: Initialize generalized scrolling
-static void P_SpawnScrollers(void);
+static void P_SpawnScrollers();
 
-static void P_SpawnFriction(void); // phares 3/16/98
-static void P_SpawnPushers(void);  // phares 3/20/98
+static void P_SpawnFriction(); // phares 3/16/98
+static void P_SpawnPushers();  // phares 3/20/98
 
 static const animdef_t heretic_animdefs[] = {
     // false = flat
@@ -126,7 +126,7 @@ static short numlinespecials;
 static line_t *linespeciallist[MAXLINEANIMS];
 
 // e6y
-void MarkAnimatedTextures(void)
+void MarkAnimatedTextures()
 {
 #ifdef GL_DOOM
     anim_t *anim;
@@ -178,7 +178,7 @@ void MarkAnimatedTextures(void)
 // source text file DEFSWANI.DAT also in the BOOM util distribution.
 //
 //
-void P_InitPicAnims(void)
+void P_InitPicAnims()
 {
     int i;
     const animdef_t *animdefs; // jff 3/23/98 pointer to animation lump
@@ -1000,7 +1000,7 @@ int P_FindLineFromLineTag(const line_t *line, int start)
 }
 
 // Hash the sector tags across the sectors and linedefs.
-static void P_InitTagLists(void)
+static void P_InitTagLists()
 {
     int i;
 
@@ -2895,7 +2895,7 @@ static int levelTimeCount;
 dboolean levelFragLimit; // Ty 03/18/98 Added -frags support
 int levelFragLimitCount; // Ty 03/18/98 Added -frags support
 
-void P_UpdateSpecials(void)
+void P_UpdateSpecials()
 {
     anim_t *anim;
     int pic;
@@ -3042,7 +3042,7 @@ void P_UpdateSpecials(void)
 //
 
 // Parses command line parameters.
-void P_SpawnSpecials(void)
+void P_SpawnSpecials()
 {
     sector_t *sector;
     int i;
@@ -3449,7 +3449,7 @@ static void Add_WallScroller(fixed_t dx, fixed_t dy, const line_t *l,
 #define CARRYFACTOR ((fixed_t)(FRACUNIT * .09375))
 
 // Initialize the scrollers
-static void P_SpawnScrollers(void)
+static void P_SpawnScrollers()
 {
     int i;
     line_t *l = lines;
@@ -3683,7 +3683,7 @@ void T_Friction(friction_t *f)
 //
 // Initialize the sectors where friction is increased or decreased
 
-static void P_SpawnFriction(void)
+static void P_SpawnFriction()
 {
     int i;
     line_t *l = lines;
@@ -4079,7 +4079,7 @@ mobj_t *P_GetPushThing(int s)
 // Initialize the sectors where pushers are present
 //
 
-static void P_SpawnPushers(void)
+static void P_SpawnPushers()
 {
     int i;
     line_t *l = lines;
@@ -4326,7 +4326,7 @@ void P_AddAmbientSfx(int sequence)
     LevelAmbientSfx[AmbSfxCount++] = AmbientSfx[sequence];
 }
 
-void P_InitAmbientSound(void)
+void P_InitAmbientSound()
 {
     AmbSfxCount = 0;
     AmbSfxVolume = 0;
@@ -4334,7 +4334,7 @@ void P_InitAmbientSound(void)
     AmbSfxPtr = AmbSndSeqInit;
 }
 
-void P_AmbientSound(void)
+void P_AmbientSound()
 {
     afxcmd_t cmd;
     int sound;
@@ -4396,7 +4396,7 @@ void P_AmbientSound(void)
     } while (done == false);
 }
 
-void P_InitLava(void)
+void P_InitLava()
 {
     if (!heretic)
     {
@@ -4408,7 +4408,7 @@ void P_InitLava(void)
     LavaInflictor.flags2 = MF2_FIREDAMAGE | MF2_NODMGTHRUST;
 }
 
-void P_InitTerrainTypes(void)
+void P_InitTerrainTypes()
 {
     int i;
     int lump;
@@ -4786,7 +4786,7 @@ void Heretic_P_PlayerInSpecialSector(player_t *player)
     }
 }
 
-void P_SpawnLineSpecials(void)
+void P_SpawnLineSpecials()
 {
     int i;
 

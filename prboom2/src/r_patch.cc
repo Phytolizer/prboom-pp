@@ -112,7 +112,7 @@ static rpatch_t *texture_composites = nullptr;
 static int playpal_transparent, playpal_duplicate;
 
 //---------------------------------------------------------------------------
-void R_InitPatches(void)
+void R_InitPatches()
 {
     if (!patches)
     {
@@ -132,7 +132,7 @@ void R_InitPatches(void)
     R_UpdatePlayPal();
 }
 
-void R_UpdatePlayPal(void)
+void R_UpdatePlayPal()
 {
     dsda_playpal_t *playpal_data;
 
@@ -142,7 +142,7 @@ void R_UpdatePlayPal(void)
 }
 
 //---------------------------------------------------------------------------
-void R_FlushAllPatches(void)
+void R_FlushAllPatches()
 {
     int i;
 

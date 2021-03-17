@@ -43,7 +43,7 @@ extern size_t savegamesize;
 extern dboolean setsizeneeded;
 extern dboolean BorderNeedRefresh;
 struct MapEntry *G_LookupMapinfo(int game_episode, int game_map);
-void RecalculateDrawnSubsectors(void);
+void RecalculateDrawnSubsectors();
 
 static byte *dsda_quick_key_frame_buffer;
 static int dsda_key_frame_restored;
@@ -59,7 +59,7 @@ static int dsda_last_auto_key_frame;
 static int dsda_auto_key_frames_size;
 static int restore_key_frame_index = -1;
 
-void dsda_InitKeyFrame(void)
+void dsda_InitKeyFrame()
 {
     dsda_auto_key_frames_size = dsda_AutoKeyFrameDepth();
 
@@ -291,7 +291,7 @@ void dsda_RestoreKeyFrame(byte *buffer, byte complete)
     doom_printf("Restored key frame");
 }
 
-int dsda_KeyFrameRestored(void)
+int dsda_KeyFrameRestored()
 {
     if (!dsda_key_frame_restored)
     {
@@ -302,12 +302,12 @@ int dsda_KeyFrameRestored(void)
     return 1;
 }
 
-void dsda_StoreQuickKeyFrame(void)
+void dsda_StoreQuickKeyFrame()
 {
     dsda_StoreKeyFrame(&dsda_quick_key_frame_buffer, true);
 }
 
-void dsda_RestoreQuickKeyFrame(void)
+void dsda_RestoreQuickKeyFrame()
 {
     dsda_RestoreKeyFrame(dsda_quick_key_frame_buffer, true);
 }
@@ -332,7 +332,7 @@ void dsda_RestoreKeyFrameFile(const char *name)
     }
 }
 
-void dsda_ContinueKeyFrame(void)
+void dsda_ContinueKeyFrame()
 {
     int p;
 
@@ -343,7 +343,7 @@ void dsda_ContinueKeyFrame(void)
     }
 }
 
-void dsda_RewindAutoKeyFrame(void)
+void dsda_RewindAutoKeyFrame()
 {
     int current_time;
     int interval_tics;
@@ -379,7 +379,7 @@ void dsda_RewindAutoKeyFrame(void)
     }
 }
 
-void dsda_UpdateAutoKeyFrames(void)
+void dsda_UpdateAutoKeyFrames()
 {
     int key_frame_index;
     int current_time;

@@ -106,7 +106,7 @@ static fixed_t xoffs, yoffs; // killough 2/28/98: flat offsets
 fixed_t *yslope = nullptr;
 fixed_t *distscale = nullptr;
 
-void R_InitPlanesRes(void)
+void R_InitPlanesRes()
 {
     if (floorclip)
     {
@@ -149,7 +149,7 @@ void R_InitPlanesRes(void)
         static_cast<fixed_t *>(calloc(1, SCREENWIDTH * sizeof(*distscale)));
 }
 
-void R_InitVisplanesRes(void)
+void R_InitVisplanesRes()
 {
     int i;
 
@@ -166,7 +166,7 @@ void R_InitVisplanesRes(void)
 // R_InitPlanes
 // Only at game startup.
 //
-void R_InitPlanes(void)
+void R_InitPlanes()
 {
 }
 
@@ -264,7 +264,7 @@ static void R_MapPlane(int y, int x1, int x2, draw_span_vars_t *dsvars)
 // At begining of frame.
 //
 
-void R_ClearPlanes(void)
+void R_ClearPlanes()
 {
     int i;
 
@@ -630,7 +630,7 @@ static void R_DoDrawPlane(visplane_t *pl)
 // At the end of each frame.
 //
 
-void R_DrawPlanes(void)
+void R_DrawPlanes()
 {
     visplane_t *pl;
     int i;

@@ -84,9 +84,9 @@ float xCamera, yCamera, zCamera;
 TAnimItemParam *anim_flats = nullptr;
 TAnimItemParam *anim_textures = nullptr;
 
-void gld_ShutdownDetail(void);
+void gld_ShutdownDetail();
 
-void M_ChangeUseDetail(void)
+void M_ChangeUseDetail()
 {
     render_usedetail = false;
 
@@ -142,7 +142,7 @@ int gld_IsDetailVisible(float x0, float y0, float x1, float y1, float x2,
     }
 }
 
-void gld_InitDetail(void)
+void gld_InitDetail()
 {
     gl_detail_maxdist_sqrt = (float)sqrt((float)gl_detail_maxdist);
 
@@ -150,7 +150,7 @@ void gld_InitDetail(void)
     M_ChangeUseDetail();
 }
 
-void gld_ShutdownDetail(void)
+void gld_ShutdownDetail()
 {
     int i;
 
@@ -204,7 +204,7 @@ void gld_DrawTriangleStripARB(GLWall *wall, gl_strip_coords_t *c1,
     glEnd();
 }
 
-void gld_PreprocessDetail(void)
+void gld_PreprocessDetail()
 {
     if (gl_arb_multitexture)
     {
@@ -538,7 +538,7 @@ void gld_DrawItemsSortByDetail(GLDrawItemType itemtype)
     }
 }
 
-void gld_DrawDetail_NoARB(void)
+void gld_DrawDetail_NoARB()
 {
     int i;
 
@@ -649,7 +649,7 @@ void gld_DrawDetail_NoARB(void)
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
 
-void gld_InitFrameDetails(void)
+void gld_InitFrameDetails()
 {
     last_detail_texid = -1;
 
@@ -916,7 +916,7 @@ void gld_ParseDetailItem(tag_detail_e item)
     }
 }
 
-void gld_ParseDetail(void)
+void gld_ParseDetail()
 {
     gld_ShutdownDetail();
 

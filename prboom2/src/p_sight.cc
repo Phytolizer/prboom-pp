@@ -176,7 +176,7 @@ dboolean P_SightBlockLinesIterator(int x, int y)
 ====================
 */
 
-dboolean P_SightTraverseIntercepts(void)
+dboolean P_SightTraverseIntercepts()
 {
     int count;
     fixed_t dist;

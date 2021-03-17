@@ -33,12 +33,12 @@ int dsda_wipe_at_full_speed;
 int dsda_track_attempts;
 int dsda_fine_sensitivity;
 
-void dsda_InitSettings(void)
+void dsda_InitSettings()
 {
     dsda_ChangeStrictMode();
 }
 
-int dsda_CompatibilityLevel(void)
+int dsda_CompatibilityLevel()
 {
     int i, level;
 
@@ -62,13 +62,13 @@ int dsda_CompatibilityLevel(void)
     return UNSPECIFIED_COMPLEVEL;
 }
 
-void dsda_ChangeStrictMode(void)
+void dsda_ChangeStrictMode()
 {
     I_Init2();       // side effect of realtic clock rate
     M_ChangeSpeed(); // side effect of always sr50
 }
 
-void dsda_SetTas(void)
+void dsda_SetTas()
 {
     dsda_tas = true;
 }
@@ -78,57 +78,57 @@ double dsda_FineSensitivity(int base)
     return (double)base + (double)dsda_fine_sensitivity / 100;
 }
 
-dboolean dsda_StrictMode(void)
+dboolean dsda_StrictMode()
 {
     return dsda_strict_mode && demorecording && !dsda_tas;
 }
 
-dboolean dsda_CycleGhostColors(void)
+dboolean dsda_CycleGhostColors()
 {
     return dsda_cycle_ghost_colors;
 }
 
-dboolean dsda_AlwaysSR50(void)
+dboolean dsda_AlwaysSR50()
 {
     return movement_strafe50 && !dsda_StrictMode();
 }
 
-dboolean dsda_ExHud(void)
+dboolean dsda_ExHud()
 {
     return dsda_exhud;
 }
 
-dboolean dsda_TrackAttempts(void)
+dboolean dsda_TrackAttempts()
 {
     return dsda_track_attempts && demorecording;
 }
 
-dboolean dsda_PainPalette(void)
+dboolean dsda_PainPalette()
 {
     return dsda_StrictMode() || palette_ondamage;
 }
 
-dboolean dsda_BonusPalette(void)
+dboolean dsda_BonusPalette()
 {
     return dsda_StrictMode() || palette_onbonus;
 }
 
-dboolean dsda_PowerPalette(void)
+dboolean dsda_PowerPalette()
 {
     return dsda_StrictMode() || palette_onpowers;
 }
 
-dboolean dsda_ShowHealthBars(void)
+dboolean dsda_ShowHealthBars()
 {
     return health_bar && !dsda_StrictMode();
 }
 
-dboolean dsda_WipeAtFullSpeed(void)
+dboolean dsda_WipeAtFullSpeed()
 {
     return dsda_wipe_at_full_speed;
 }
 
-int dsda_RealticClockRate(void)
+int dsda_RealticClockRate()
 {
     if (dsda_StrictMode())
     {
@@ -138,7 +138,7 @@ int dsda_RealticClockRate(void)
     return realtic_clock_rate;
 }
 
-int dsda_AutoKeyFrameInterval(void)
+int dsda_AutoKeyFrameInterval()
 {
     if (dsda_StrictMode())
     {
@@ -148,7 +148,7 @@ int dsda_AutoKeyFrameInterval(void)
     return dsda_auto_key_frame_interval;
 }
 
-int dsda_AutoKeyFrameDepth(void)
+int dsda_AutoKeyFrameDepth()
 {
     if (dsda_StrictMode())
     {
@@ -158,12 +158,12 @@ int dsda_AutoKeyFrameDepth(void)
     return dsda_auto_key_frame_depth;
 }
 
-void dsda_SkipNextWipe(void)
+void dsda_SkipNextWipe()
 {
     dsda_skip_next_wipe = 1;
 }
 
-dboolean dsda_SkipWipe(void)
+dboolean dsda_SkipWipe()
 {
     if (dsda_skip_next_wipe)
     {

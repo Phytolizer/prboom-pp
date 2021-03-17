@@ -468,7 +468,7 @@ dboolean P_BlockThingsIterator(int x, int y, dboolean func(mobj_t *))
 intercept_t *intercepts, *intercept_p;
 
 // Check for limit and double size if necessary -- killough
-void check_intercept(void)
+void check_intercept()
 {
     static size_t num_intercepts;
     size_t offset = intercept_p - intercepts;

@@ -99,7 +99,7 @@ static int sysexbufflen;
 #include <delayimp.h>
 #endif
 
-void pm_stop(void);
+void pm_stop();
 
 static void writeevent(unsigned long when, midi_event_type_t::Type eve,
                        int channel, int v1, int v2)
@@ -131,7 +131,7 @@ static void pm_setchvolume(int ch, int v, unsigned long when)
                channelvol[ch] * pm_volume / 15);
 }
 
-static void pm_refreshvolume(void)
+static void pm_refreshvolume()
 {
     int i;
     unsigned long when = Pt_Time();
@@ -143,7 +143,7 @@ static void pm_refreshvolume(void)
     }
 }
 
-static void pm_clearchvolume(void)
+static void pm_clearchvolume()
 {
     int i;
     for (i = 0; i < 16; i++)
@@ -174,7 +174,7 @@ static void writesysex(unsigned long when, unsigned char *data, int len)
     }
 }
 
-void pm_stop(void)
+void pm_stop()
 {
     int i;
     unsigned long when = Pt_Time();
@@ -343,12 +343,12 @@ void pm_unregistersong(const void *handle)
         midifile = nullptr;
     }
 }
-void pm_resume(void)
+void pm_resume()
 {
     pm_paused = 0;
     trackstart = Pt_Time();
 }
-void pm_pause(void)
+void pm_pause()
 {
     int i;
     unsigned long when = Pt_Time();
@@ -415,7 +415,7 @@ const void *pm_registersong(const void *data, unsigned int len)
     // handle not used
     return data;
 }
-void pm_shutdown(void)
+void pm_shutdown()
 {
     if (pm_stream)
     {
@@ -514,7 +514,7 @@ int pm_init(int samplerate)
 
     return 1;
 }
-const char *pm_name(void)
+const char *pm_name()
 {
     return "portmidi midi player";
 }

@@ -55,7 +55,7 @@
 int renderW;
 int renderH;
 
-void I_UpdateRenderSize(void)
+void I_UpdateRenderSize()
 {
     if (V_GetMode() == VID_MODEGL)
     {
@@ -105,7 +105,7 @@ int I_ScreenShot(const char *fname)
 // Modified to work with SDL2 resizeable window and fullscreen desktop - DTIED
 //
 
-unsigned char *I_GrabScreen(void)
+unsigned char *I_GrabScreen()
 {
     static unsigned char *pixels = nullptr;
     static int pixels_size = 0;

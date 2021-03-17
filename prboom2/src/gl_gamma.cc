@@ -64,7 +64,7 @@ static Uint16 gl_oldHardwareGamma[3][256];
 // Determines if the underlying hardware supports the Win32 gamma correction
 // API.
 //
-void gld_CheckHardwareGamma(void)
+void gld_CheckHardwareGamma()
 {
     gl_DeviceSupportsGamma =
         (-1 != SDL_GetWindowGammaRamp(sdl_window, gl_oldHardwareGamma[0],
@@ -178,7 +178,7 @@ int gld_SetGammaRamp(int gamma)
 
 // gld_ResetGammaRamp
 // Restoring the gamma values to a linear value and exit
-void gld_ResetGammaRamp(void)
+void gld_ResetGammaRamp()
 {
     if (M_CheckParm("-resetgamma"))
     {

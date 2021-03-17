@@ -118,7 +118,7 @@ int numsprites;
 static spriteframe_t sprtemp[MAX_SPRITE_FRAMES];
 static int maxframe;
 
-void R_InitSpritesRes(void)
+void R_InitSpritesRes()
 {
     if (xtoviewangle)
     {
@@ -450,7 +450,7 @@ void R_InitSprites(const char *const *namelist)
 // Called at frame start.
 //
 
-void R_ClearSprites(void)
+void R_ClearSprites()
 {
     num_vissprite = 0; // killough
 }
@@ -459,7 +459,7 @@ void R_ClearSprites(void)
 // R_NewVisSprite
 //
 
-static vissprite_t *R_NewVisSprite(void)
+static vissprite_t *R_NewVisSprite()
 {
     if (num_vissprite >= num_vissprite_alloc) // killough
     {
@@ -654,7 +654,7 @@ static void R_DrawVisSprite(vissprite_t *vis)
 
 int r_near_clip_plane = MINZ;
 
-void R_SetClipPlanes(void)
+void R_SetClipPlanes()
 {
     // thing is behind view plane?
 #ifdef GL_DOOM
@@ -975,7 +975,7 @@ void R_AddSprites(subsector_t *subsec, int lightlevel)
 // R_AddAllAliveMonstersSprites
 // Add all alive monsters.
 //
-void R_AddAllAliveMonstersSprites(void)
+void R_AddAllAliveMonstersSprites()
 {
     int i;
     sector_t *sec;
@@ -1252,7 +1252,7 @@ static void R_DrawPSprite(pspdef_t *psp)
 // R_DrawPlayerSprites
 //
 
-void R_DrawPlayerSprites(void)
+void R_DrawPlayerSprites()
 {
     int i;
     pspdef_t *psp;
@@ -1348,7 +1348,7 @@ static void msort(vissprite_t **s, vissprite_t **t, int n)
     }
 }
 
-void R_SortVisSprites(void)
+void R_SortVisSprites()
 {
     if (num_vissprite)
     {
@@ -1580,7 +1580,7 @@ static void R_DrawSprite(vissprite_t *spr)
 // R_DrawMasked
 //
 
-void R_DrawMasked(void)
+void R_DrawMasked()
 {
     int i;
     drawseg_t *ds;

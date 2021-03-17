@@ -82,7 +82,7 @@ static int f_soundrate;
 static unsigned char sysexbuff[SYSEX_BUFF_SIZE];
 static int sysexbufflen;
 
-const char *fl_name(void)
+const char *fl_name()
 {
     return "fluidsynth midi player";
 }
@@ -196,7 +196,7 @@ int fl_init(int samplerate)
     return 1;
 }
 
-void fl_shutdown(void)
+void fl_shutdown()
 {
     if (f_syn)
     {
@@ -260,7 +260,7 @@ void fl_unregistersong(const void *handle)
     }
 }
 
-void fl_pause(void)
+void fl_pause()
 {
     // int i;
     f_paused = 1;
@@ -268,7 +268,7 @@ void fl_pause(void)
     // for (i = 0; i < 16; i++)
     //  fluid_synth_cc (f_syn, i, 123, 0); // ALL NOTES OFF
 }
-void fl_resume(void)
+void fl_resume()
 {
     f_paused = 0;
 }
@@ -283,7 +283,7 @@ void fl_play(const void *handle, int looping)
     fluid_synth_system_reset(f_syn->get());
 }
 
-void fl_stop(void)
+void fl_stop()
 {
     int i;
     f_playing = 0;

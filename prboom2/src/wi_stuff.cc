@@ -359,8 +359,8 @@ static const char *exitpic, *enterpic;
 // CODE
 //
 
-static void WI_endDeathmatchStats(void);
-static void WI_endNetgameStats(void);
+static void WI_endDeathmatchStats();
+static void WI_endNetgameStats();
 #define WI_endStats WI_endNetgameStats
 
 /* ====================================================================
@@ -388,7 +388,7 @@ void WI_levelNameLump(int epis, int map, char *buf)
 // Args:    none
 // Returns: void
 //
-static void WI_slamBackground(void)
+static void WI_slamBackground()
 {
     char name[9]; // limited to 8 characters
 
@@ -485,7 +485,7 @@ static void WI_DrawString(int cx, int cy, const char *ch)
 // Args:    none
 // Returns: void
 //
-void WI_drawLF(void)
+void WI_drawLF()
 {
     int y = WI_TITLEY;
     char lname[9];
@@ -528,7 +528,7 @@ void WI_drawLF(void)
 // Args:    none
 // Returns: void
 //
-void WI_drawEL(void)
+void WI_drawEL()
 {
     int y = WI_TITLEY;
     char lname[9];
@@ -678,7 +678,7 @@ void WI_initAnimatedBack(int entering)
 // Args:    none
 // Returns: void
 //
-void WI_updateAnimatedBack(void)
+void WI_updateAnimatedBack()
 {
     int i;
     anim_t *a;
@@ -754,7 +754,7 @@ void WI_updateAnimatedBack(void)
 // Args:    none
 // Returns: void
 //
-void WI_drawAnimatedBack(void)
+void WI_drawAnimatedBack()
 {
     int i;
     anim_t *a;
@@ -934,7 +934,7 @@ static void WI_drawTime(int x, int y, int t)
 // Args:    none
 // Returns: void
 //
-void WI_End(void)
+void WI_End()
 {
     if (heretic)
     {
@@ -961,7 +961,7 @@ void WI_End(void)
 // Args:    none
 // Returns: void
 //
-void WI_initNoState(void)
+void WI_initNoState()
 {
     state = NoState;
     acceleratestage = 0;
@@ -1010,7 +1010,7 @@ static void WI_drawTimeStats(int cnt_time, int cnt_total_time, int cnt_par)
 // Args:    none
 // Returns: void
 //
-void WI_updateNoState(void)
+void WI_updateNoState()
 {
 
     WI_updateAnimatedBack();
@@ -1029,7 +1029,7 @@ static dboolean snl_pointeron = false;
 // Args:    none
 // Returns: void
 //
-void WI_initShowNextLoc(void)
+void WI_initShowNextLoc()
 {
     if (gamemapinfo != nullptr)
     {
@@ -1043,7 +1043,7 @@ void WI_initShowNextLoc(void)
         // episode change
         if (wbs->epsd != wbs->nextep)
         {
-            void WI_loadData(void);
+            void WI_loadData();
 
             wbs->epsd = wbs->nextep;
             wbs->last = wbs->next - 1;
@@ -1088,7 +1088,7 @@ void WI_initShowNextLoc(void)
 // Args:    none
 // Returns: void
 //
-void WI_updateShowNextLoc(void)
+void WI_updateShowNextLoc()
 {
     WI_updateAnimatedBack();
 
@@ -1108,7 +1108,7 @@ void WI_updateShowNextLoc(void)
 // Args:    none
 // Returns: void
 //
-void WI_drawShowNextLoc(void)
+void WI_drawShowNextLoc()
 {
     int i;
     int last;
@@ -1172,7 +1172,7 @@ void WI_drawShowNextLoc(void)
 // Args:    none
 // Returns: void
 //
-void WI_drawNoState(void)
+void WI_drawNoState()
 {
     snl_pointeron = true;
     WI_drawShowNextLoc();
@@ -1217,7 +1217,7 @@ static short int *dm_totals; // totals by player
 // Args:    none
 // Returns: void
 //
-void WI_initDeathmatchStats(void)
+void WI_initDeathmatchStats()
 {
     int i; // looping variables
 
@@ -1252,7 +1252,7 @@ void WI_initDeathmatchStats(void)
 // Returns: void
 //
 
-void WI_endDeathmatchStats(void)
+void WI_endDeathmatchStats()
 {
     int i;
     for (i = 0; i < MAXPLAYERS; i++)
@@ -1272,7 +1272,7 @@ void WI_endDeathmatchStats(void)
 // Args:    none
 // Returns: void
 //
-void WI_updateDeathmatchStats(void)
+void WI_updateDeathmatchStats()
 {
     int i;
     int j;
@@ -1398,7 +1398,7 @@ void WI_updateDeathmatchStats(void)
 //
 // proff/nicolas 09/20/98 -- changed for hi-res
 // CPhipps - patch drawing updated
-void WI_drawDeathmatchStats(void)
+void WI_drawDeathmatchStats()
 {
     int i;
     int j;
@@ -1516,7 +1516,7 @@ static int ng_state;
 // Args:    none
 // Returns: void
 //
-static void WI_endNetgameStats(void)
+static void WI_endNetgameStats()
 {
     free(cnt_frags);
     cnt_frags = nullptr;
@@ -1534,7 +1534,7 @@ static void WI_endNetgameStats(void)
 // Args:    none
 // Returns: void
 //
-void WI_initNetgameStats(void)
+void WI_initNetgameStats()
 {
     int i;
 
@@ -1570,7 +1570,7 @@ void WI_initNetgameStats(void)
 // Returns: void
 // Comment: This stuff sure is complicated for what it does
 //
-void WI_updateNetgameStats(void)
+void WI_updateNetgameStats()
 {
     int i;
     int fsum;
@@ -1780,7 +1780,7 @@ void WI_updateNetgameStats(void)
 //
 // proff/nicolas 09/20/98 -- changed for hi-res
 // CPhipps - patch drawing updated
-void WI_drawNetgameStats(void)
+void WI_drawNetgameStats()
 {
     int i;
     int x;
@@ -1876,7 +1876,7 @@ static int sp_state;
 // Comment: Seems like we could do all these stats in a more generic
 //          set of routines that weren't duplicated for dm, coop, sp
 //
-void WI_initStats(void)
+void WI_initStats()
 {
     state = StatCount;
     acceleratestage = 0;
@@ -1900,7 +1900,7 @@ void WI_initStats(void)
 // Args:    none
 // Returns: void
 //
-void WI_updateStats(void)
+void WI_updateStats()
 {
     // e6y
     static dboolean play_early_explosion = true;
@@ -2081,7 +2081,7 @@ void WI_updateStats(void)
 //
 // proff/nicolas 09/20/98 -- changed for hi-res
 // CPhipps - patch drawing updated
-void WI_drawStats(void)
+void WI_drawStats()
 {
     // line height
     int lh;
@@ -2126,7 +2126,7 @@ void WI_drawStats(void)
 // Args:    none
 // Returns: void
 //
-void WI_checkForAccelerate(void)
+void WI_checkForAccelerate()
 {
     int i;
     player_t *player;
@@ -2172,7 +2172,7 @@ void WI_checkForAccelerate(void)
 // Args:    none
 // Returns: void
 //
-void WI_Ticker(void)
+void WI_Ticker()
 {
     if (heretic)
     {
@@ -2236,7 +2236,7 @@ void WI_Ticker(void)
  *           them by name
  */
 
-void WI_loadData(void)
+void WI_loadData()
 {
     int i;
     int j;
@@ -2285,7 +2285,7 @@ void WI_loadData(void)
 // Args:    none
 // Returns: void
 //
-void WI_Drawer(void)
+void WI_Drawer()
 {
     if (heretic)
     {

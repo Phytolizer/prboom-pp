@@ -138,7 +138,7 @@ static int *mapcolor_hair_p;
 static int *mapcolor_sngl_p;
 static int *mapcolor_plyr_p;
 
-static void AM_SetColors(void)
+static void AM_SetColors()
 {
     if (heretic)
     {
@@ -403,7 +403,7 @@ static void AM_SetFPointFloatValue(fpoint_t *p)
 static dboolean stop_zooming;
 static int zoom_leveltime;
 
-static void AM_StopZooming(void)
+static void AM_StopZooming()
 {
     mtof_zoommul = FRACUNIT;
     ftom_zoommul = FRACUNIT;
@@ -417,7 +417,7 @@ static void AM_StopZooming(void)
 //
 // Passed nothing, returns nothing
 //
-static void AM_activateNewScale(void)
+static void AM_activateNewScale()
 {
     m_x += m_w / 2;
     m_y += m_h / 2;
@@ -437,7 +437,7 @@ static void AM_activateNewScale(void)
 //
 // Passed nothing, returns nothing
 //
-static void AM_saveScaleAndLoc(void)
+static void AM_saveScaleAndLoc()
 {
     old_m_x = m_x;
     old_m_y = m_y;
@@ -453,7 +453,7 @@ static void AM_saveScaleAndLoc(void)
 //
 // Passed nothing, returns nothing
 //
-static void AM_restoreScaleAndLoc(void)
+static void AM_restoreScaleAndLoc()
 {
     m_w = old_m_w;
     m_h = old_m_h;
@@ -502,7 +502,7 @@ void AM_setMarkParams(int num)
 //
 // Passed nothing, returns nothing
 //
-static void AM_addMark(void)
+static void AM_addMark()
 {
     // killough 2/22/98:
     // remove limit on automap marks
@@ -529,7 +529,7 @@ static void AM_addMark(void)
 //
 // Passed nothing, returns nothing
 //
-static void AM_findMinMaxBoundaries(void)
+static void AM_findMinMaxBoundaries()
 {
     int i;
     fixed_t a;
@@ -576,7 +576,7 @@ static void AM_findMinMaxBoundaries(void)
 //
 // Passed nothing, returns nothing
 //
-static void AM_changeWindowLoc(void)
+static void AM_changeWindowLoc()
 {
     fixed_t incx, incy;
 
@@ -632,7 +632,7 @@ static void AM_changeWindowLoc(void)
 //
 // AM_SetScale
 //
-void AM_SetScale(void)
+void AM_SetScale()
 {
     AM_findMinMaxBoundaries();
     scale_mtof = FixedDiv(min_scale_mtof, (int)(0.7 * FRACUNIT));
@@ -646,7 +646,7 @@ void AM_SetScale(void)
 //
 // AM_SetPosition
 //
-void AM_SetPosition(void)
+void AM_SetPosition()
 {
     if (automapmode & am_overlay)
     {
@@ -688,7 +688,7 @@ void AM_SetPosition(void)
 // Status bar is notified that the automap has been entered
 // Passed nothing, returns nothing
 //
-static void AM_initVariables(void)
+static void AM_initVariables()
 {
     int pnum;
     static event_t st_notify = {ev_keyup, AM_MSGENTERED, 0, 0};
@@ -732,7 +732,7 @@ static void AM_initVariables(void)
     ST_Responder(&st_notify);
 }
 
-void AM_SetResolution(void)
+void AM_SetResolution()
 {
     AM_SetPosition();
     AM_SetScale();
@@ -741,7 +741,7 @@ void AM_SetResolution(void)
 //
 // AM_loadPics()
 //
-static void AM_loadPics(void)
+static void AM_loadPics()
 {
     // cph - mark numbers no longer needed cached
 }
@@ -749,7 +749,7 @@ static void AM_loadPics(void)
 //
 // AM_unloadPics()
 //
-static void AM_unloadPics(void)
+static void AM_unloadPics()
 {
     // cph - mark numbers no longer needed cached
 }
@@ -762,7 +762,7 @@ static void AM_unloadPics(void)
 // Affects the global variable markpointnum
 // Passed nothing, returns nothing
 //
-void AM_clearMarks(void)
+void AM_clearMarks()
 {
     markpointnum = 0;
 }
@@ -777,7 +777,7 @@ void AM_clearMarks(void)
 // Affects automap's global variables
 //
 // CPhipps - get status bar height from status bar code
-static void AM_LevelInit(void)
+static void AM_LevelInit()
 {
     leveljuststarted = 0;
 
@@ -792,7 +792,7 @@ static void AM_LevelInit(void)
 //
 // Passed nothing, returns nothing
 //
-void AM_Stop(void)
+void AM_Stop()
 {
     static event_t st_notify = {static_cast<evtype_t>(0), ev_keyup,
                                 AM_MSGEXITED, 0};
@@ -813,7 +813,7 @@ void AM_Stop(void)
 //
 // Passed nothing, returns nothing
 //
-void AM_Start(void)
+void AM_Start()
 {
     static int lastlevel = -1, lastepisode = -1;
 
@@ -840,7 +840,7 @@ void AM_Start(void)
 //
 // Passed nothing, returns nothing
 //
-static void AM_minOutWindowScale(void)
+static void AM_minOutWindowScale()
 {
     scale_mtof = min_scale_mtof;
     scale_ftom = FixedDiv(FRACUNIT, scale_mtof);
@@ -854,7 +854,7 @@ static void AM_minOutWindowScale(void)
 //
 // Passed nothing, returns nothing
 //
-static void AM_maxOutWindowScale(void)
+static void AM_maxOutWindowScale()
 {
     scale_mtof = max_scale_mtof;
     scale_ftom = FixedDiv(FRACUNIT, scale_mtof);
@@ -1128,7 +1128,7 @@ void AM_rotatePoint(mpoint_t *p)
 //
 // Passed nothing, returns nothing
 //
-static void AM_changeWindowScale(void)
+static void AM_changeWindowScale()
 {
     if (movement_smooth)
     {
@@ -1181,7 +1181,7 @@ static void AM_changeWindowScale(void)
 //
 // Passed nothing, returns nothing
 //
-static void AM_doFollowPlayer(void)
+static void AM_doFollowPlayer()
 {
     m_x = (viewx >> FRACTOMAPBITS) - m_w / 2;
     m_y = (viewy >> FRACTOMAPBITS) - m_h / 2;
@@ -1196,7 +1196,7 @@ static void AM_doFollowPlayer(void)
 //
 // Passed nothing, returns nothing
 //
-void AM_Ticker(void)
+void AM_Ticker()
 {
     prev_scale_mtof = scale_mtof;
     prev_m_x = m_x;
@@ -1631,7 +1631,7 @@ static int AM_DoorColor(int type)
 // jff 4/3/98 changed mapcolor_xxxx=0 as control to disable feature
 // jff 4/3/98 changed mapcolor_xxxx=-1 to disable drawing line completely
 //
-static void AM_drawWalls(void)
+static void AM_drawWalls()
 {
     int i;
     static mline_t l;
@@ -1920,7 +1920,7 @@ INLINE static void AM_GetMobjPosition(mobj_t *mo, mpoint_t *p, angle_t *angle)
 //
 // Passed nothing, returns nothing
 //
-static void AM_drawPlayers(void)
+static void AM_drawPlayers()
 {
     int i;
     angle_t angle;
@@ -2181,7 +2181,7 @@ static void AM_ProcessNiceThing(mobj_t *mobj, angle_t angle, fixed_t x,
 #endif
 }
 
-static void AM_DrawNiceThings(void)
+static void AM_DrawNiceThings()
 {
 #ifdef GL_DOOM
     int i;
@@ -2304,7 +2304,7 @@ static void AM_DrawNiceThings(void)
 // Passed colors and colorrange, no longer used
 // Returns nothing
 //
-static void AM_drawThings(void)
+static void AM_drawThings()
 {
     int i;
     mobj_t *t;
@@ -2485,7 +2485,7 @@ static void AM_drawThings(void)
 // killough 2/22/98:
 // Rewrote AM_drawMarks(). Removed limit on marks.
 //
-static void AM_drawMarks(void)
+static void AM_drawMarks()
 {
     int i;
     char namebuf[16] = "AMMNUM0";
@@ -2606,7 +2606,7 @@ static void AM_drawCrosshair(int color)
     V_DrawLine(&line, color);
 }
 
-void M_ChangeMapGridSize(void)
+void M_ChangeMapGridSize()
 {
     if (map_grid_size > 0)
     {
@@ -2614,7 +2614,7 @@ void M_ChangeMapGridSize(void)
     }
 }
 
-void M_ChangeMapTextured(void)
+void M_ChangeMapTextured()
 {
 #ifdef GL_DOOM
     if (V_GetMode() == VID_MODEGL)
@@ -2624,7 +2624,7 @@ void M_ChangeMapTextured(void)
 #endif
 }
 
-void M_ChangeMapMultisamling(void)
+void M_ChangeMapMultisamling()
 {
     if (!heretic && map_use_multisamling && V_GetMode() != VID_MODEGL)
     {
@@ -2638,7 +2638,7 @@ void M_ChangeMapMultisamling(void)
 //
 //=============================================================================
 
-void AM_drawSubsectors(void)
+void AM_drawSubsectors()
 {
 #ifdef GL_DOOM
     if (V_GetMode() == VID_MODEGL)
@@ -2648,7 +2648,7 @@ void AM_drawSubsectors(void)
 #endif
 }
 
-static void AM_setFrameVariables(void)
+static void AM_setFrameVariables()
 {
     float angle;
 
@@ -2693,7 +2693,7 @@ static void AM_setFrameVariables(void)
 // Passed nothing, returns nothing
 //
 
-void AM_Drawer(void)
+void AM_Drawer()
 {
     // CPhipps - all automap modes put into one enum
     if (!(automapmode & am_active))
@@ -2769,7 +2769,7 @@ void AM_Drawer(void)
 }
 
 // [crispy] reset IDDT cheat when re-starting map during demo recording
-void AM_ResetIDDTcheat(void)
+void AM_ResetIDDTcheat()
 {
     ddt_cheating = 0;
 }

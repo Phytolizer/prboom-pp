@@ -62,7 +62,7 @@ byte *save_p;
 //
 // P_ArchivePlayers
 //
-void P_ArchivePlayers(void)
+void P_ArchivePlayers()
 {
     int i;
 
@@ -93,7 +93,7 @@ void P_ArchivePlayers(void)
 //
 // P_UnArchivePlayers
 //
-void P_UnArchivePlayers(void)
+void P_UnArchivePlayers()
 {
     int i;
 
@@ -131,7 +131,7 @@ void P_UnArchivePlayers(void)
 //
 // P_ArchiveWorld
 //
-void P_ArchiveWorld(void)
+void P_ArchiveWorld()
 {
     int i;
     const sector_t *sec;
@@ -224,7 +224,7 @@ void P_ArchiveWorld(void)
 //
 // P_UnArchiveWorld
 //
-void P_UnArchiveWorld(void)
+void P_UnArchiveWorld()
 {
     int i;
     sector_t *sec;
@@ -319,7 +319,7 @@ static dboolean P_IsMobjThinker(thinker_t *thinker)
             thinker->references != 0);
 }
 
-void P_ThinkerToIndex(void)
+void P_ThinkerToIndex()
 {
     thinker_t *th;
 
@@ -340,7 +340,7 @@ void P_ThinkerToIndex(void)
 // phares 9/13/98: Moved this code outside of P_ArchiveThinkers so the
 // thinker indices could be used by the code that saves sector info.
 
-void P_IndexToThinker(void)
+void P_IndexToThinker()
 {
     // killough 2/14/98: restore prev pointers
     thinker_t *th;
@@ -396,14 +396,14 @@ int P_GetMobj(mobj_t *mi, size_t s)
 
 // killough 2/16/98: save/restore random number generator state information
 
-void P_ArchiveRNG(void)
+void P_ArchiveRNG()
 {
     CheckSaveGame(sizeof rng);
     memcpy(save_p, &rng, sizeof rng);
     save_p += sizeof rng;
 }
 
-void P_UnArchiveRNG(void)
+void P_UnArchiveRNG()
 {
     memcpy(&rng, save_p, sizeof rng);
     save_p += sizeof rng;
@@ -411,7 +411,7 @@ void P_UnArchiveRNG(void)
 
 // killough 2/22/98: Save/restore automap state
 // killough 2/22/98: Save/restore automap state
-void P_ArchiveMap(void)
+void P_ArchiveMap()
 {
     int i, zero = 0, one = 1;
     CheckSaveGame(2 * sizeof zero + sizeof markpointnum +
@@ -440,7 +440,7 @@ void P_ArchiveMap(void)
     }
 }
 
-void P_UnArchiveMap(void)
+void P_UnArchiveMap()
 {
     int unused;
     memcpy(&automapmode, save_p, sizeof automapmode);
@@ -508,7 +508,7 @@ void P_ArchiveThinkerSubclass(th_class cls)
     }
 }
 
-void P_ArchiveThinkerSubclasses(void)
+void P_ArchiveThinkerSubclasses()
 {
     // Other subclass ordering is not relevant
     P_ArchiveThinkerSubclass(th_friends);
@@ -572,7 +572,7 @@ extern mobj_t **blocklinks;
 extern int bmapwidth;
 extern int bmapheight;
 
-void P_ArchiveBlockLinks(void)
+void P_ArchiveBlockLinks()
 {
     int i;
     int size;
@@ -668,7 +668,7 @@ typedef enum
 
 // dsda - fix save / load synchronization
 // merges P_ArchiveThinkers & P_ArchiveSpecials
-void P_TrueArchiveThinkers(void)
+void P_TrueArchiveThinkers()
 {
     thinker_t *th;
     size_t size = 0; // killough
@@ -1032,7 +1032,7 @@ void P_TrueArchiveThinkers(void)
 
 // dsda - fix save / load synchronization
 // merges P_UnArchiveThinkers & P_UnArchiveSpecials
-void P_TrueUnArchiveThinkers(void)
+void P_TrueUnArchiveThinkers()
 {
     thinker_t *th;
     mobj_t **mobj_p; // killough 2/14/98: Translation table

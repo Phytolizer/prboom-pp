@@ -47,11 +47,11 @@
 #include "d_deh.hh"    // Ty 03/22/98 - externalizations
 #include "f_finale.hh" // CPhipps - hmm...
 
-void F_StartCast(void);
-void F_TextWrite(void);
+void F_StartCast();
+void F_TextWrite();
 
-void WI_checkForAccelerate(void); // killough 3/28/98: used to
-float Get_TextSpeed(void);
+void WI_checkForAccelerate(); // killough 3/28/98: used to
+float Get_TextSpeed();
 extern int acceleratestage; // accelerate intermission screens
 extern int midstage;
 int using_FMI;
@@ -61,7 +61,7 @@ int using_FMI;
 //
 extern dboolean secretexit;
 
-void FMI_StartFinale(void)
+void FMI_StartFinale()
 {
     if (!gamemapinfo->intertextsecret.empty() && secretexit &&
         gamemapinfo->intertextsecret[0] !=
@@ -116,7 +116,7 @@ void FMI_StartFinale(void)
 // killough 5/10/98: add back v1.9 demo compatibility
 //
 
-void FMI_Ticker(void)
+void FMI_Ticker()
 {
     int i;
     float speed;
@@ -180,7 +180,7 @@ void FMI_Ticker(void)
 //
 // F_Drawer
 //
-void FMI_Drawer(void)
+void FMI_Drawer()
 {
     if (!finalestage || !gamemapinfo->endpic[0] ||
         (strcmp(gamemapinfo->endpic, "-") == 0))

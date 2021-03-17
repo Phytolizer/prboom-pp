@@ -48,22 +48,22 @@ synced.
 struct music_player_t
 {
     // descriptive name of the player, such as "OPL2 Synth"
-    const char *(*name)(void);
+    const char *(*name)();
 
     // samplerate is in hz.  return is 1 for success
     int (*init)(int samplerate);
 
     // deallocate structures, cleanup, ...
-    void (*shutdown)(void);
+    void (*shutdown)();
 
     // set volume, 0 = off, 15 = max
     void (*setvolume)(int v);
 
     // pause currently running song.
-    void (*pause)(void);
+    void (*pause)();
 
     // undo pause
-    void (*resume)(void);
+    void (*resume)();
 
     // return a player-specific handle, or nullptr on failure.
     // data does not belong to player, but it will persist as long as unregister
@@ -76,7 +76,7 @@ struct music_player_t
     void (*play)(const void *handle, int looping);
 
     // stop
-    void (*stop)(void);
+    void (*stop)();
 
     // s16 stereo, with samplerate as specified in init.  player needs to be
     // able to handle just about anything for nsamp.  render can be called even

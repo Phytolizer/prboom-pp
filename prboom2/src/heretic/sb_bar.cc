@@ -36,13 +36,13 @@
 // Private Functions
 
 static void ShadeLine(int x, int y, int height, int shade);
-static void ShadeChain(void);
+static void ShadeChain();
 static void DrINumber(signed int val, int x, int y);
 static void DrBNumber(signed int val, int x, int y);
-static void DrawCommonBar(void);
-static void DrawMainBar(void);
-static void DrawInventoryBar(void);
-static void DrawFullScreenStuff(void);
+static void DrawCommonBar();
+static void DrawMainBar();
+static void DrawInventoryBar();
+static void DrawFullScreenStuff();
 
 // Public Data
 
@@ -104,7 +104,7 @@ int lumparti[11];
 //
 //---------------------------------------------------------------------------
 
-void SB_Init(void)
+void SB_Init()
 {
     int i;
     int startLump;
@@ -171,7 +171,7 @@ void SB_Init(void)
 //
 //---------------------------------------------------------------------------
 
-void SB_Ticker(void)
+void SB_Ticker()
 {
     int delta;
     int curHealth;
@@ -357,7 +357,7 @@ static void ShadeLine(int /* x */, int /* y */, int /* height */,
 //
 //---------------------------------------------------------------------------
 
-static void ShadeChain(void)
+static void ShadeChain()
 {
     int i;
 
@@ -521,7 +521,7 @@ void SB_Drawer(dboolean statusbaron, dboolean refresh, dboolean fullmenu)
 
 // sets the new palette based upon current values of player->damagecount
 // and player->bonuscount
-void SB_PaletteFlash(void)
+void SB_PaletteFlash()
 {
     static int sb_palette = 0;
     int palette;
@@ -564,7 +564,7 @@ void SB_PaletteFlash(void)
 //
 //---------------------------------------------------------------------------
 
-void DrawCommonBar(void)
+void DrawCommonBar()
 {
     int chainY;
     int healthPos;
@@ -605,7 +605,7 @@ void DrawCommonBar(void)
 //
 //---------------------------------------------------------------------------
 
-void DrawMainBar(void)
+void DrawMainBar()
 {
     int i;
     int temp;
@@ -728,7 +728,7 @@ void DrawMainBar(void)
 //
 //---------------------------------------------------------------------------
 
-void DrawInventoryBar(void)
+void DrawInventoryBar()
 {
     int i;
     int x;
@@ -762,7 +762,7 @@ void DrawInventoryBar(void)
     }
 }
 
-void DrawFullScreenStuff(void)
+void DrawFullScreenStuff()
 {
     int lump;
     int i;

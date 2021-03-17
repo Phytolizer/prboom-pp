@@ -47,7 +47,7 @@ int sts_armorcolor_type; // control to enable armor color depending on type
 //
 // STlib_init()
 //
-void STlib_init(void)
+void STlib_init()
 {
     // cph - no longer hold STMINUS pointer
 }

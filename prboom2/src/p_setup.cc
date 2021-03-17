@@ -1936,7 +1936,7 @@ static void AddBlockLine(linelist_t **lists, int *count, int *done, int blockno,
 // adds the line to all block lists touching the intersection.
 //
 
-static void P_CreateBlockMap(void)
+static void P_CreateBlockMap()
 {
     int xorg, yorg;                    // blockmap origin (lower left)
     int nrows, ncols;                  // blockmap dimensions
@@ -2443,7 +2443,7 @@ static void P_AddLineToSector(line_t *li, sector_t *sector)
 }
 
 // modified to return totallines (needed by P_LoadReject)
-static int P_GroupLines(void)
+static int P_GroupLines()
 {
     line_t *li;
     sector_t *sector;
@@ -2597,7 +2597,7 @@ static int P_GroupLines(void)
 // Firelines (TM) is a Rezistered Trademark of MBF Productions
 //
 
-static void P_RemoveSlimeTrails(void) // killough 10/98
+static void P_RemoveSlimeTrails() // killough 10/98
 {
     byte *hit = static_cast<byte *>(
         std::calloc(1, numvertexes)); // Hitlist for vertices
@@ -2674,7 +2674,7 @@ static void P_RemoveSlimeTrails(void) // killough 10/98
     std::free(hit);
 }
 
-static void R_CalcSegsLength(void)
+static void R_CalcSegsLength()
 {
     int i;
     for (i = 0; i < numsegs; i++)
@@ -2794,7 +2794,7 @@ void P_CheckLevelWadStructure(const char *mapname)
     }
 }
 
-void P_InitSubsectorsLines(void)
+void P_InitSubsectorsLines()
 {
     int num, count;
 
@@ -3197,7 +3197,7 @@ void P_SetupLevel(int episode, int map, int playermask, skill_t skill)
 //
 // P_Init
 //
-void P_Init(void)
+void P_Init()
 {
     P_InitSwitchList();
     P_InitPicAnims();

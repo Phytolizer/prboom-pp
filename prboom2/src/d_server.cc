@@ -350,7 +350,7 @@ void NORETURN sig_handler(int signum)
     exit(1);
 }
 
-void doexit(void)
+void doexit()
 {
     packet_header_t packet;
 
