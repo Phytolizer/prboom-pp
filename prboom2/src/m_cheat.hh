@@ -35,6 +35,7 @@
 #define __M_CHEAT__
 
 #include "d_event.hh"
+#include "cpp/enums/cheat_when_t.hh"
 
 #define CHEAT(cheat, deh_cheat, when, func, arg) \
   { cheat, deh_cheat, when, func, arg, 0, 0, \
@@ -44,21 +45,10 @@
 
 /* killough 4/16/98: Cheat table structure */
 
-typedef enum {
-  always   = 0,
-  not_dm   = 1,
-  not_coop = 2,
-  not_demo = 4,
-  not_menu = 8,
-  not_deh = 16,
-  not_net = not_dm | not_coop,
-  cht_never = not_net | not_demo
-} cheat_when_t;
-
 typedef struct cheatseq_s {
   const char *	cheat;
   const char *const deh_cheat = nullptr;
-  const cheat_when_t when = cht_never;
+  const cheat_when_t::Type when = cheat_when_t::cht_never;
   void (*const func)() = nullptr;
   const int arg = 0;
   uint_64_t code = 0, mask = 0;
