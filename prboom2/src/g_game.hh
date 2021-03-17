@@ -32,6 +32,8 @@
 #ifndef __G_GAME__
 #define __G_GAME__
 
+#include <string>
+
 #include "doomdef.hh"
 #include "d_event.hh"
 #include "d_ticcmd.hh"
@@ -87,7 +89,7 @@ void G_BuildTiccmd(ticcmd_t *cmd); // CPhipps - move decl to header
 void G_ChangedPlayerColour(
     int pn, int cl); // CPhipps - On-the-fly player colour changing
 void G_MakeSpecialEvent(buttoncode_t bc, ...); /* cph - new event stuff */
-int G_ValidateMapName(const char *mapname, int *pEpi, int *pMap);
+int G_ValidateMapName(const std::string &mapname, int *pEpi, int *pMap);
 
 // e6y
 extern dboolean democontinue;

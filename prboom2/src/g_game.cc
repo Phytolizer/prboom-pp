@@ -44,6 +44,7 @@
 #include <unistd.h>
 #endif
 #include <fcntl.h>
+#include <cpp/strings.hh>
 
 #ifdef HAVE_CONFIG_H
 #include "config.h"
@@ -2241,7 +2242,7 @@ void G_WorldDone(void)
 
     if (gamemapinfo)
     {
-        if (gamemapinfo->intertextsecret && secretexit)
+        if (!gamemapinfo->intertextsecret.empty() && secretexit)
         {
             if (gamemapinfo->intertextsecret[0] != '-')
             { // '-' means that any default intermission was cleared.
@@ -2250,7 +2251,7 @@ void G_WorldDone(void)
 
             return;
         }
-        else if (gamemapinfo->intertext && !secretexit)
+        else if (!gamemapinfo->intertext.empty() && !secretexit)
         {
             if (gamemapinfo->intertext[0] != '-')
             { // '-' means that any default intermission was cleared.
@@ -3307,7 +3308,7 @@ struct MapEntry *G_LookupMapinfo(int game_episode, int game_map)
     }
     for (i = 0; i < Maps.mapcount; i++)
     {
-        if (!stricmp(lumpname, Maps.maps[i].mapname))
+        if (!str::caseInsensitiveCompare(lumpname, Maps.maps[i].mapname))
         {
             return &Maps.maps[i];
         }
@@ -3320,7 +3321,7 @@ struct MapEntry *G_LookupMapinfoByName(const char *lumpname)
     unsigned i;
     for (i = 0; i < Maps.mapcount; i++)
     {
-        if (!stricmp(lumpname, Maps.maps[i].mapname))
+        if (!str::caseInsensitiveCompare(lumpname, Maps.maps[i].mapname))
         {
             return &Maps.maps[i];
         }
@@ -3328,18 +3329,18 @@ struct MapEntry *G_LookupMapinfoByName(const char *lumpname)
     return nullptr;
 }
 
-int G_ValidateMapName(const char *mapname, int *pEpi, int *pMap)
+int G_ValidateMapName(const std::string &mapname, int *pEpi, int *pMap)
 {
     // Check if the given map name can be expressed as a gameepisode/gamemap
     // pair and be reconstructed from it.
     char lumpname[9], mapuname[9];
     int epi = -1, map = -1;
 
-    if (strlen(mapname) > 8)
+    if (mapname.length() > 8)
     {
         return 0;
     }
-    strncpy(mapuname, mapname, 8);
+    strncpy(mapuname, mapname.c_str(), 8);
     mapuname[8] = 0;
     M_Strupr(mapuname);
 
@@ -3856,22 +3857,23 @@ void G_BeginRecording(void)
             // [XA] get the map name from gamemapinfo if the
             // starting map has a UMAPINFO definition. if not,
             // fall back to the usual MAPxx/ExMy default.
-            char mapname[9];
+            std::string mapname;
+            mapname.resize(9);
             if (gamemapinfo)
             {
-                strncpy(mapname, gamemapinfo->mapname, 8);
+                strncpy(mapname.data(), gamemapinfo->mapname.c_str(), 8);
             }
             else if (gamemode == commercial)
             {
-                snprintf(mapname, 9, "MAP%02d", gamemap);
+                snprintf(mapname.data(), 9, "MAP%02d", gamemap);
             }
             else
             {
-                snprintf(mapname, 9, "E%dM%d", gameepisode, gamemap);
+                snprintf(mapname.data(), 9, "E%dM%d", gameepisode, gamemap);
             }
 
             mapname_len =
-                strnlen(gamemapinfo ? gamemapinfo->mapname : mapname, 9);
+                gamemapinfo ? gamemapinfo->mapname.length() : mapname.length();
 
             // ano - note that the format has each length by each string
             // as opposed to a table of lengths
@@ -3892,7 +3894,7 @@ void G_BeginRecording(void)
             // table.
             if (mapname_len > 8)
             {
-                I_Error("Unable to save map lump name %s, too large.", mapname);
+                I_Error("Unable to save map lump name %s, too large.", mapname.c_str());
             }
 
             for (i = 0; i < mapname_len; i++)

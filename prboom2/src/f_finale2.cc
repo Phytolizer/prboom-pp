@@ -63,17 +63,17 @@ extern dboolean secretexit;
 
 void FMI_StartFinale(void)
 {
-    if (gamemapinfo->intertextsecret && secretexit &&
+    if (!gamemapinfo->intertextsecret.empty() && secretexit &&
         gamemapinfo->intertextsecret[0] !=
             '-') // '-' means that any default intermission was cleared.
     {
-        finaletext = gamemapinfo->intertextsecret;
+        finaletext = gamemapinfo->intertextsecret.c_str();
     }
-    else if (gamemapinfo->intertext && !secretexit &&
+    else if (!gamemapinfo->intertext.empty() && !secretexit &&
              gamemapinfo->intertext[0] !=
                  '-') // '-' means that any default intermission was cleared.
     {
-        finaletext = gamemapinfo->intertext;
+        finaletext = gamemapinfo->intertext.c_str();
     }
 
     if (!finaletext)

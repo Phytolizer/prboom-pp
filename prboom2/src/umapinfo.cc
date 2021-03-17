@@ -17,10 +17,11 @@
 //
 //-----------------------------------------------------------------------------
 
-#include <stdlib.h>
-#include <string.h>
-#include <ctype.h>
-#include <assert.h>
+#include <cstdlib>
+#include <cstring>
+#include <cctype>
+#include <cassert>
+#include <cpp/strings.hh>
 #include "umapinfo.hh"
 #include "scanner.hh"
 
@@ -29,7 +30,7 @@
 #include "doomdef.hh"
 #include "doomstat.hh"
 
-void M_AddEpisode(const char *map, char *def);
+void M_AddEpisode(const std::string &map, std::string *def);
 
 MapList Maps;
 
@@ -80,22 +81,6 @@ static const char *const ActorNames[] = {
 
 static void FreeMap(MapEntry *mape)
 {
-    if (mape->mapname)
-    {
-        free(mape->mapname);
-    }
-    if (mape->levelname)
-    {
-        free(mape->levelname);
-    }
-    if (mape->intertext)
-    {
-        free(mape->intertext);
-    }
-    if (mape->intertextsecret)
-    {
-        free(mape->intertextsecret);
-    }
     if (mape->properties)
     {
         free(mape->properties);
@@ -105,7 +90,6 @@ static void FreeMap(MapEntry *mape)
         free(mape->bossactions);
     }
     mape->propertycount = 0;
-    mape->mapname = nullptr;
     mape->properties = nullptr;
 }
 
@@ -122,13 +106,9 @@ void FreeMapList()
     Maps.mapcount = 0;
 }
 
-void ReplaceString(char **pptr, const char *newstring)
+void ReplaceString(std::string *pptr, const char *newstring)
 {
-    if (*pptr != nullptr)
-    {
-        free(*pptr);
-    }
-    *pptr = strdup(newstring);
+    *pptr = newstring;
 }
 
 // -----------------------------------------------
@@ -137,9 +117,9 @@ void ReplaceString(char **pptr, const char *newstring)
 //
 // -----------------------------------------------
 
-static char *ParseMultiString(Scanner &scanner, int error)
+static std::string ParseMultiString(Scanner &scanner, int /* error */)
 {
-    char *build = nullptr;
+    std::string build;
 
     if (scanner.CheckToken(Token::Identifier))
     {
@@ -157,22 +137,17 @@ static char *ParseMultiString(Scanner &scanner, int error)
     do
     {
         scanner.MustGetToken(Token::StringConst);
-        if (build == nullptr)
+        if (build.empty())
         {
-            build = strdup(scanner.string);
+            build = scanner.string;
         }
         else
         {
-            size_t newlen = strlen(build) + strlen(scanner.string) +
+            size_t newlen = build.length() + strlen(scanner.string) +
                             2; // strlen for both the existing text and the new
                                // line, plus room for one \n and one \0
-            build = (char *)realloc(
-                build,
-                newlen); // Prepare the destination memory for the below strcats
-            strcat(build,
-                   "\n"); // Replace the existing text's \0 terminator with a \n
-            strcat(build, scanner.string); // Concatenate the new line onto the
-                                           // existing text
+            build += "\n";
+            build += scanner.string;
         }
     } while (scanner.CheckToken(Token::Type{','}));
     return build;
@@ -218,7 +193,7 @@ static int ParseStandardProperty(Scanner &scanner, MapEntry *mape)
     if (!stricmp(pname, "levelname"))
     {
         scanner.MustGetToken(Token::StringConst);
-        ReplaceString(&mape->levelname, scanner.string);
+        mape->levelname = scanner.string;
     }
     else if (!stricmp(pname, "next"))
     {
@@ -310,27 +285,19 @@ static int ParseStandardProperty(Scanner &scanner, MapEntry *mape)
     }
     else if (!stricmp(pname, "intertext"))
     {
-        char *lname = ParseMultiString(scanner, 1);
-        if (!lname)
+        std::string lname = ParseMultiString(scanner, 1);
+        if (lname.empty())
         {
             return 0;
-        }
-        if (mape->intertext != nullptr)
-        {
-            free(mape->intertext);
         }
         mape->intertext = lname;
     }
     else if (!stricmp(pname, "intertextsecret"))
     {
-        char *lname = ParseMultiString(scanner, 1);
-        if (!lname)
+        std::string lname = ParseMultiString(scanner, 1);
+        if (lname.empty())
         {
             return 0;
-        }
-        if (mape->intertextsecret != nullptr)
-        {
-            free(mape->intertextsecret);
         }
         mape->intertextsecret = lname;
     }
@@ -344,12 +311,12 @@ static int ParseStandardProperty(Scanner &scanner, MapEntry *mape)
     }
     else if (!stricmp(pname, "episode"))
     {
-        char *lname = ParseMultiString(scanner, 1);
-        if (!lname)
+        std::string lname = ParseMultiString(scanner, 1);
+        if (lname.empty())
         {
             return 0;
         }
-        M_AddEpisode(mape->mapname, lname);
+        M_AddEpisode(mape->mapname, &lname);
     }
     else if (!stricmp(pname, "bossaction"))
     {
@@ -436,7 +403,7 @@ static int ParseStandardProperty(Scanner &scanner, MapEntry *mape)
 
 static int ParseMapEntry(Scanner &scanner, MapEntry *val)
 {
-    val->mapname = nullptr;
+    val->mapname.clear();
     val->propertycount = 0;
     val->properties = nullptr;
 
@@ -448,7 +415,7 @@ static int ParseMapEntry(Scanner &scanner, MapEntry *val)
         return 0;
     }
 
-    ReplaceString(&val->mapname, scanner.string);
+    val->mapname = scanner.string;
     scanner.MustGetToken(Token::Type{'{'});
     while (!scanner.CheckToken(Token::Type{'}'}))
     {
@@ -489,27 +456,27 @@ int ParseUMapInfo(const unsigned char *buffer, size_t length,
         }
         else if (!parsed.nextmap[0] && !parsed.endpic[0])
         {
-            if (!stricmp(parsed.mapname, "MAP30"))
+            if (!str::caseInsensitiveCompare(parsed.mapname, "MAP30"))
             {
                 strcpy(parsed.endpic, "$CAST");
             }
-            else if (!stricmp(parsed.mapname, "E1M8"))
+            else if (!str::caseInsensitiveCompare(parsed.mapname, "E1M8"))
             {
                 strcpy(parsed.endpic, gamemode == retail ? "CREDIT" : "HELP2");
             }
-            else if (!stricmp(parsed.mapname, "E2M8"))
+            else if (!str::caseInsensitiveCompare(parsed.mapname, "E2M8"))
             {
                 strcpy(parsed.endpic, "VICTORY");
             }
-            else if (!stricmp(parsed.mapname, "E3M8"))
+            else if (!str::caseInsensitiveCompare(parsed.mapname, "E3M8"))
             {
                 strcpy(parsed.endpic, "$BUNNY");
             }
-            else if (!stricmp(parsed.mapname, "E4M8"))
+            else if (!str::caseInsensitiveCompare(parsed.mapname, "E4M8"))
             {
                 strcpy(parsed.endpic, "ENDPIC");
             }
-            else if (gamemission == chex && !stricmp(parsed.mapname, "E1M5"))
+            else if (gamemission == chex && !str::caseInsensitiveCompare(parsed.mapname, "E1M5"))
             {
                 strcpy(parsed.endpic, "CREDIT");
             }
@@ -532,7 +499,7 @@ int ParseUMapInfo(const unsigned char *buffer, size_t length,
         // Does this property already exist? If yes, replace it.
         for (i = 0; i < Maps.mapcount; i++)
         {
-            if (!strcmp(parsed.mapname, Maps.maps[i].mapname))
+            if (parsed.mapname == Maps.maps[i].mapname)
             {
                 FreeMap(&Maps.maps[i]);
                 Maps.maps[i] = parsed;

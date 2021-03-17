@@ -21,6 +21,7 @@
 #define __UMAPINFO_H
 
 #include <cstddef>
+#include <string>
 
 struct BossAction
 {
@@ -31,10 +32,10 @@ struct BossAction
 
 struct MapEntry
 {
-    char *mapname;
-    char *levelname;
-    char *intertext;
-    char *intertextsecret;
+    std::string mapname;
+    std::string levelname;
+    std::string intertext;
+    std::string intertextsecret;
     char levelpic[9];
     char nextmap[9];
     char nextsecret[9];

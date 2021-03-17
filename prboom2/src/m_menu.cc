@@ -520,17 +520,17 @@ short EpiMenuMap[8] = {1, 1, 1, 1, -1, -1, -1, -1},
 //
 int epiChoice;
 
-void M_AddEpisode(const char *map, char *def)
+void M_AddEpisode(const std::string &map, std::string *def)
 {
     EpiCustom = true;
-    if (*def == '-') // means 'clear'
+    if (def->at(0) == '-') // means 'clear'
     {
         EpiDef.numitems = 0;
     }
     else
     {
         int epi, mapnum;
-        const char *gfx = strtok(def, "\n");
+        const char *gfx = strtok(def->data(), "\n");
         const char *txt = strtok(nullptr, "\n");
         const char *alpha = strtok(nullptr, "\n");
         if (EpiDef.numitems >= 8)

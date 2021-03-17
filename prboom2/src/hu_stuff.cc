@@ -568,7 +568,7 @@ void HU_Start(void)
 
     if (gamemapinfo != nullptr)
     {
-        s = gamemapinfo->mapname;
+        s = gamemapinfo->mapname.c_str();
         while (*s)
         {
             HUlib_addCharToTextLine(&w_title, *(s++));
@@ -576,7 +576,7 @@ void HU_Start(void)
 
         HUlib_addCharToTextLine(&w_title, ':');
         HUlib_addCharToTextLine(&w_title, ' ');
-        s = gamemapinfo->levelname;
+        s = gamemapinfo->levelname.c_str();
         if (!s)
         {
             s = "Unnamed";

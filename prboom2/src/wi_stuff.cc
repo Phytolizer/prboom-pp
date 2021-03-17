@@ -490,11 +490,11 @@ void WI_drawLF(void)
     int y = WI_TITLEY;
     char lname[9];
 
-    if (wbs->lastmapinfo != nullptr && wbs->lastmapinfo->levelname != nullptr &&
+    if (wbs->lastmapinfo != nullptr && !wbs->lastmapinfo->levelname.empty() &&
         wbs->lastmapinfo->levelpic[0] == 0)
     {
         // The level defines a new name but no texture for the name.
-        WI_DrawString(160, y, wbs->lastmapinfo->levelname);
+        WI_DrawString(160, y, wbs->lastmapinfo->levelname.c_str());
         y += (5 * hu_font['A' - HU_FONTSTART].height / 4);
     }
     else
@@ -538,13 +538,13 @@ void WI_drawEL(void)
     V_DrawNamePatch((320 - V_NamePatchWidth(entering)) / 2, y, FB, entering,
                     CR_DEFAULT, VPT_STRETCH);
 
-    if (wbs->nextmapinfo != nullptr && wbs->nextmapinfo->levelname != nullptr &&
+    if (wbs->nextmapinfo != nullptr && !wbs->nextmapinfo->levelname.empty() &&
         wbs->nextmapinfo->levelpic[0] == 0)
     {
         y += (5 * V_NamePatchHeight(entering)) / 4;
 
         // The level defines a new name but no texture for the name.
-        WI_DrawString(160, y, wbs->nextmapinfo->levelname);
+        WI_DrawString(160, y, wbs->nextmapinfo->levelname.c_str());
     }
     else
     {
