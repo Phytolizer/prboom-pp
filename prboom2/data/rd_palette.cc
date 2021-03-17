@@ -6,6 +6,7 @@
 #include "config.h"
 
 #include <cstring>
+#include <iostream>
 
 #include "rd_util.hh"
 #include "rd_palette.hh"

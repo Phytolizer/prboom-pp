@@ -26,6 +26,8 @@
 #define SHORT(x) static_cast<short>(x)
 #endif
 
+#include <string_view>
+
 void ATTR((noreturn)) die(const char *error, ...);
 
 void *xmalloc(size_t size);
@@ -34,5 +36,5 @@ void *xcalloc(size_t n, size_t size);
 char *xstrdup(const char *s);
 
 // slurp an entire file into memory or kill yourself
-size_t read_or_die(void **ptr, const char *file);
+size_t read_or_die(void **ptr, std::string_view file);
 void search_path(const char *path);

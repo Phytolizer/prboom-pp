@@ -5,10 +5,14 @@
 
 #include "config.h"
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
-#include <stdarg.h>
+#include <cstdlib>
+#include <cstdio>
+#include <cstring>
+#include <cstdarg>
+#include <fstream>
+#include <sstream>
+#include <string_view>
+#include <iostream>
 
 #include "rd_util.hh"
 
@@ -61,13 +65,13 @@ static const char **search_paths = nullptr;
 static size_t num_search_paths = 0;
 
 // slurp an entire file into memory or kill yourself
-size_t read_or_die(void **ptr, const char *file)
+size_t read_or_die(void **ptr, std::string_view file)
 {
   size_t size = 0, length = 0;
   void *buffer = nullptr, *pos = buffer;
   FILE *f;
 
-  f = fopen(file, "rb");
+  f = fopen(file.data(), "rb");
   if (!f)
   {
     size_t i;
@@ -76,9 +80,9 @@ size_t read_or_die(void **ptr, const char *file)
 
     for (i = 0; i < num_search_paths; i++)
     {
-      s = strlen(search_paths[i]) + 1 + strlen(file) + 1;
+      s = strlen(search_paths[i]) + 1 + file.size() + 1;
       path = static_cast<char *>(xmalloc(s));
-      snprintf(path, s, "%s/%s", search_paths[i], file);
+      snprintf(path, s, "%s/%s", search_paths[i], file.data());
       f = fopen(path, "rb");
       free(path);
     }
