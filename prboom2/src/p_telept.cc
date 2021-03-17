@@ -50,7 +50,7 @@ static mobj_t *P_TeleportDestination(line_t *line)
     {
         thinker_t *th = NULL;
         while ((th = P_NextThinker(th, th_misc)) != NULL)
-            if (th->function == reinterpret_cast<think_t>(P_MobjThinker))
+            if (th->function == P_MobjThinker)
             {
                 mobj_t *m = (mobj_t *)th;
                 if (m->type == MT_TELEPORTMAN &&
@@ -471,8 +471,7 @@ dboolean Heretic_EV_Teleport(line_t *line, int side, mobj_t *thing)
             for (thinker = thinkercap.next; thinker != &thinkercap;
                  thinker = thinker->next)
             {
-                if (thinker->function !=
-                    reinterpret_cast<think_t>(P_MobjThinker))
+                if (thinker->function != P_MobjThinker)
                 { // Not a mobj
                     continue;
                 }

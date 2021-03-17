@@ -3,7 +3,7 @@
 
 // Main program, parse command line arguments
 
-#include "config.hh"
+#include "config.h"
 
 #include <stdlib.h>
 #include <stdio.h>

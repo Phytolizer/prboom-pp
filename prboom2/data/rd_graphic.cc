@@ -3,7 +3,7 @@
 
 // Convert portable pixmap to Doom patch format
 
-#include "config.hh"
+#include "config.h"
 
 #include <stdlib.h>
 #include <stdio.h>

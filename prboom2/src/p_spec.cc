@@ -2825,8 +2825,8 @@ void P_SpawnSpecials(void)
         case 272: // Same, only flipped
                   /* e6y: It was the bad idea
                   // e6y: sky property-transfer linedef types should be applied only
-                  for MBF and above       if (compatibility_level >= mbf_compatibility ||
-                    prboom_comp[PC_ALLOW_SKY_TRANSFER_IN_BOOM].state)
+                  for MBF and above       if (compatibility_level >= mbf_compatibility
+                  ||       prboom_comp[PC_ALLOW_SKY_TRANSFER_IN_BOOM].state)
                   {*/
             for (s = -1; (s = P_FindSectorFromLineTag(lines + i, s)) >= 0;)
                 sectors[s].sky = i | PL_SKYFLAT;
@@ -2957,7 +2957,7 @@ static void Add_Scroller(int type, fixed_t dx, fixed_t dy, int control,
                          int affectee, int accel)
 {
     scroll_t *s = static_cast<scroll_t *>(std::malloc(sizeof *s));
-    s->thinker.function = reinterpret_cast<think_t>(T_Scroll);
+    s->thinker.function = T_Scroll;
     s->type = static_cast<scroll_t::type_t>(type);
     s->dx = dx;
     s->dy = dy;
@@ -3121,8 +3121,7 @@ static void Add_Friction(int friction, int movefactor, int affectee)
 {
     friction_t *f = static_cast<friction_t *>(std::malloc(sizeof *f));
 
-    f->thinker.function /*.acp1*/ =
-        /*(actionf_p1) */ reinterpret_cast<think_t>(T_Friction);
+    f->thinker.function = T_Friction;
     f->friction = friction;
     f->movefactor = movefactor;
     f->affectee = affectee;
@@ -3353,7 +3352,7 @@ static void Add_Pusher(int type, int x_mag, int y_mag, mobj_t *source,
 {
     pusher_t *p = static_cast<pusher_t *>(std::malloc(sizeof *p));
 
-    p->thinker.function = reinterpret_cast<think_t>(T_Pusher);
+    p->thinker.function = T_Pusher;
     p->source = source;
     p->type = static_cast<pusher_t::type_t>(type);
     p->x_mag = x_mag >> FRACBITS;

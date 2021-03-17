@@ -35,7 +35,7 @@
 #define __M_FIXED__
 
 #ifdef HAVE_CONFIG_H
-#include "config.hh"
+#include "config.h"
 #endif
 
 #include <stdlib.h>

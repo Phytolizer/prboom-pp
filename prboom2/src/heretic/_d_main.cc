@@ -24,7 +24,7 @@
 
 #include "net_client.hh"
 
-#include "config.hh"
+#include "config.h"
 #include "ct_chat.hh"
 #include "doomdef.hh"
 #include "deh_main.hh"
@@ -38,7 +38,7 @@
 #include "i_timer.hh"
 #include "i_video.hh"
 #include "m_argv.hh"
-#include "m_config.hh"
+#include "m_config.h"
 #include "m_controls.hh"
 #include "m_misc.hh"
 #include "p_local.hh"

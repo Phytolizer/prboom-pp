@@ -32,7 +32,7 @@
 // split off or something
 
 #ifdef HAVE_CONFIG_H
-#include "config.hh"
+#include "config.h"
 #endif
 
 #include "musicplayer.hh"

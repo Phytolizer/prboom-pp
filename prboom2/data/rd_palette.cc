@@ -3,11 +3,9 @@
 
 // Chained hash lookup to convert rgb triples to palette indices
 
-#include "config.hh"
+#include "config.h"
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
+#include <cstring>
 
 #include "rd_util.hh"
 #include "rd_palette.hh"

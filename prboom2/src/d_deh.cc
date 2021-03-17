@@ -1205,101 +1205,101 @@ typedef struct
 
 static const deh_bexptr deh_bexptrs[] = // CPhipps - static const
     {
-        {reinterpret_cast<actionf_t>(A_Light0), "A_Light0"},
-        {reinterpret_cast<actionf_t>(A_WeaponReady), "A_WeaponReady"},
-        {reinterpret_cast<actionf_t>(A_Lower), "A_Lower"},
-        {reinterpret_cast<actionf_t>(A_Raise), "A_Raise"},
-        {reinterpret_cast<actionf_t>(A_Punch), "A_Punch"},
-        {reinterpret_cast<actionf_t>(A_ReFire),
-         "reinterpret_cast<actionf_t>(A_ReFire)"},
-        {reinterpret_cast<actionf_t>(A_FirePistol), "A_FirePistol"},
-        {reinterpret_cast<actionf_t>(A_Light1), "A_Light1"},
-        {reinterpret_cast<actionf_t>(A_FireShotgun), "A_FireShotgun"},
-        {reinterpret_cast<actionf_t>(A_Light2), "A_Light2"},
-        {reinterpret_cast<actionf_t>(A_FireShotgun2), "A_FireShotgun2"},
-        {reinterpret_cast<actionf_t>(A_CheckReload), "A_CheckReload"},
-        {reinterpret_cast<actionf_t>(A_OpenShotgun2), "A_OpenShotgun2"},
-        {reinterpret_cast<actionf_t>(A_LoadShotgun2), "A_LoadShotgun2"},
-        {reinterpret_cast<actionf_t>(A_CloseShotgun2), "A_CloseShotgun2"},
-        {reinterpret_cast<actionf_t>(A_FireCGun), "A_FireCGun"},
-        {reinterpret_cast<actionf_t>(A_GunFlash), "A_GunFlash"},
-        {reinterpret_cast<actionf_t>(A_FireMissile), "A_FireMissile"},
-        {reinterpret_cast<actionf_t>(A_Saw), "A_Saw"},
-        {reinterpret_cast<actionf_t>(A_FirePlasma), "A_FirePlasma"},
-        {reinterpret_cast<actionf_t>(A_BFGsound), "A_BFGsound"},
-        {reinterpret_cast<actionf_t>(A_FireBFG), "A_FireBFG"},
-        {reinterpret_cast<actionf_t>(A_BFGSpray), "A_BFGSpray"},
+        {A_Light0, "A_Light0"},
+        {A_WeaponReady, "A_WeaponReady"},
+        {A_Lower, "A_Lower"},
+        {A_Raise, "A_Raise"},
+        {A_Punch, "A_Punch"},
+        {A_ReFire,
+         "reinterpret_cast<actionf_t>(A_ReFire"},
+        {A_FirePistol, "A_FirePistol"},
+        {A_Light1, "A_Light1"},
+        {A_FireShotgun, "A_FireShotgun"},
+        {A_Light2, "A_Light2"},
+        {A_FireShotgun2, "A_FireShotgun2"},
+        {A_CheckReload, "A_CheckReload"},
+        {A_OpenShotgun2, "A_OpenShotgun2"},
+        {A_LoadShotgun2, "A_LoadShotgun2"},
+        {A_CloseShotgun2, "A_CloseShotgun2"},
+        {A_FireCGun, "A_FireCGun"},
+        {A_GunFlash, "A_GunFlash"},
+        {A_FireMissile, "A_FireMissile"},
+        {A_Saw, "A_Saw"},
+        {A_FirePlasma, "A_FirePlasma"},
+        {A_BFGsound, "A_BFGsound"},
+        {A_FireBFG, "A_FireBFG"},
+        {A_BFGSpray, "A_BFGSpray"},
 
-        {reinterpret_cast<actionf_t>(A_Explode), "A_Explode"},
-        {reinterpret_cast<actionf_t>(A_Pain), "A_Pain"},
-        {reinterpret_cast<actionf_t>(A_PlayerScream), "A_PlayerScream"},
-        {reinterpret_cast<actionf_t>(A_Fall), "A_Fall"},
-        {reinterpret_cast<actionf_t>(A_XScream), "A_XScream"},
-        {reinterpret_cast<actionf_t>(A_Look), "A_Look"},
-        {reinterpret_cast<actionf_t>(A_Chase), "A_Chase"},
-        {reinterpret_cast<actionf_t>(A_FaceTarget), "A_FaceTarget"},
-        {reinterpret_cast<actionf_t>(A_PosAttack), "A_PosAttack"},
-        {reinterpret_cast<actionf_t>(A_Scream), "A_Scream"},
-        {reinterpret_cast<actionf_t>(A_SPosAttack), "A_SPosAttack"},
-        {reinterpret_cast<actionf_t>(A_VileChase), "A_VileChase"},
-        {reinterpret_cast<actionf_t>(A_VileStart), "A_VileStart"},
-        {reinterpret_cast<actionf_t>(A_VileTarget), "A_VileTarget"},
-        {reinterpret_cast<actionf_t>(A_VileAttack), "A_VileAttack"},
-        {reinterpret_cast<actionf_t>(A_StartFire), "A_StartFire"},
-        {reinterpret_cast<actionf_t>(A_Fire), "A_Fire"},
-        {reinterpret_cast<actionf_t>(A_FireCrackle), "A_FireCrackle"},
-        {reinterpret_cast<actionf_t>(A_FatAttack2), "A_FatAttack2"},
-        {reinterpret_cast<actionf_t>(A_FatAttack3), "A_FatAttack3"},
-        {reinterpret_cast<actionf_t>(A_BossDeath), "A_BossDeath"},
-        {reinterpret_cast<actionf_t>(A_CPosAttack), "A_CPosAttack"},
-        {reinterpret_cast<actionf_t>(A_CPosRefire), "A_CPosRefire"},
-        {reinterpret_cast<actionf_t>(A_TroopAttack), "A_TroopAttack"},
-        {reinterpret_cast<actionf_t>(A_SargAttack), "A_SargAttack"},
-        {reinterpret_cast<actionf_t>(A_HeadAttack), "A_HeadAttack"},
-        {reinterpret_cast<actionf_t>(A_BruisAttack), "A_BruisAttack"},
-        {reinterpret_cast<actionf_t>(A_SkullAttack), "A_SkullAttack"},
-        {reinterpret_cast<actionf_t>(A_Metal), "A_Metal"},
-        {reinterpret_cast<actionf_t>(A_SpidRefire), "A_SpidRefire"},
-        {reinterpret_cast<actionf_t>(A_BabyMetal), "A_BabyMetal"},
-        {reinterpret_cast<actionf_t>(A_BspiAttack), "A_BspiAttack"},
-        {reinterpret_cast<actionf_t>(A_Hoof), "A_Hoof"},
-        {reinterpret_cast<actionf_t>(A_CyberAttack), "A_CyberAttack"},
-        {reinterpret_cast<actionf_t>(A_PainAttack), "A_PainAttack"},
-        {reinterpret_cast<actionf_t>(A_PainDie), "A_PainDie"},
-        {reinterpret_cast<actionf_t>(A_KeenDie), "A_KeenDie"},
-        {reinterpret_cast<actionf_t>(A_BrainPain), "A_BrainPain"},
-        {reinterpret_cast<actionf_t>(A_BrainScream), "A_BrainScream"},
-        {reinterpret_cast<actionf_t>(A_BrainDie), "A_BrainDie"},
-        {reinterpret_cast<actionf_t>(A_BrainAwake), "A_BrainAwake"},
-        {reinterpret_cast<actionf_t>(A_BrainSpit), "A_BrainSpit"},
-        {reinterpret_cast<actionf_t>(A_SpawnSound), "A_SpawnSound"},
-        {reinterpret_cast<actionf_t>(A_SpawnFly), "A_SpawnFly"},
-        {reinterpret_cast<actionf_t>(A_BrainExplode), "A_BrainExplode"},
-        {reinterpret_cast<actionf_t>(A_Detonate),
+        {A_Explode, "A_Explode"},
+        {A_Pain, "A_Pain"},
+        {A_PlayerScream, "A_PlayerScream"},
+        {A_Fall, "A_Fall"},
+        {A_XScream, "A_XScream"},
+        {A_Look, "A_Look"},
+        {A_Chase, "A_Chase"},
+        {A_FaceTarget, "A_FaceTarget"},
+        {A_PosAttack, "A_PosAttack"},
+        {A_Scream, "A_Scream"},
+        {A_SPosAttack, "A_SPosAttack"},
+        {A_VileChase, "A_VileChase"},
+        {A_VileStart, "A_VileStart"},
+        {A_VileTarget, "A_VileTarget"},
+        {A_VileAttack, "A_VileAttack"},
+        {A_StartFire, "A_StartFire"},
+        {A_Fire, "A_Fire"},
+        {A_FireCrackle, "A_FireCrackle"},
+        {A_FatAttack2, "A_FatAttack2"},
+        {A_FatAttack3, "A_FatAttack3"},
+        {A_BossDeath, "A_BossDeath"},
+        {A_CPosAttack, "A_CPosAttack"},
+        {A_CPosRefire, "A_CPosRefire"},
+        {A_TroopAttack, "A_TroopAttack"},
+        {A_SargAttack, "A_SargAttack"},
+        {A_HeadAttack, "A_HeadAttack"},
+        {A_BruisAttack, "A_BruisAttack"},
+        {A_SkullAttack, "A_SkullAttack"},
+        {A_Metal, "A_Metal"},
+        {A_SpidRefire, "A_SpidRefire"},
+        {A_BabyMetal, "A_BabyMetal"},
+        {A_BspiAttack, "A_BspiAttack"},
+        {A_Hoof, "A_Hoof"},
+        {A_CyberAttack, "A_CyberAttack"},
+        {A_PainAttack, "A_PainAttack"},
+        {A_PainDie, "A_PainDie"},
+        {A_KeenDie, "A_KeenDie"},
+        {A_BrainPain, "A_BrainPain"},
+        {A_BrainScream, "A_BrainScream"},
+        {A_BrainDie, "A_BrainDie"},
+        {A_BrainAwake, "A_BrainAwake"},
+        {A_BrainSpit, "A_BrainSpit"},
+        {A_SpawnSound, "A_SpawnSound"},
+        {A_SpawnFly, "A_SpawnFly"},
+        {A_BrainExplode, "A_BrainExplode"},
+        {A_Detonate,
          "A_Detonate"}, // killough 8/9/98
-        {reinterpret_cast<actionf_t>(A_Mushroom),
+        {A_Mushroom,
          "A_Mushroom"},                                        // killough 10/98
-        {reinterpret_cast<actionf_t>(A_Die), "A_Die"},         // killough 11/98
-        {reinterpret_cast<actionf_t>(A_Spawn), "A_Spawn"},     // killough 11/98
-        {reinterpret_cast<actionf_t>(A_Turn), "A_Turn"},       // killough 11/98
-        {reinterpret_cast<actionf_t>(A_Face), "A_Face"},       // killough 11/98
-        {reinterpret_cast<actionf_t>(A_Scratch), "A_Scratch"}, // killough 11/98
-        {reinterpret_cast<actionf_t>(A_PlaySound),
+        {A_Die, "A_Die"},         // killough 11/98
+        {A_Spawn, "A_Spawn"},     // killough 11/98
+        {A_Turn, "A_Turn"},       // killough 11/98
+        {A_Face, "A_Face"},       // killough 11/98
+        {A_Scratch, "A_Scratch"}, // killough 11/98
+        {A_PlaySound,
          "A_PlaySound"}, // killough 11/98
-        {reinterpret_cast<actionf_t>(A_RandomJump),
+        {A_RandomJump,
          "A_RandomJump"}, // killough 11/98
 
-        {reinterpret_cast<actionf_t>(A_LineEffect),
+        {A_LineEffect,
          "A_LineEffect"}, // killough 11/98
-        {reinterpret_cast<actionf_t>(A_FireOldBFG),
+        {A_FireOldBFG,
          "A_FireOldBFG"}, // killough 7/19/98: classic BFG firing function
-        {reinterpret_cast<actionf_t>(A_BetaSkullAttack),
+        {A_BetaSkullAttack,
          "A_BetaSkullAttack"}, // killough 10/98: beta lost souls attacked
                                // different
-        {reinterpret_cast<actionf_t>(A_Stop), "A_Stop"},
+        {A_Stop, "A_Stop"},
 
         // This NULL entry must be the last in the list
-        {NULL, "A_NULL"}, // Ty 05/16/98
+        {{}, "A_NULL"}, // Ty 05/16/98
 };
 
 // to hold startup code pointers from INFO.C
@@ -1329,7 +1329,7 @@ void D_BuildBEXTables(void)
         states[i].sprite = SPR_TNT1;
         states[i].frame = 0;
         states[i].tics = -1;
-        states[i].action = NULL;
+        states[i].action = {};
         states[i].nextstate = static_cast<statenum_t>(i);
         states[i].misc1 = 0;
         states[i].misc2 = 0;
@@ -1691,7 +1691,7 @@ static void deh_procBexCodePointers(DEHFILE *fpin, FILE *fpout, char *line)
                             deh_bexptrs[i].lookup, i, indexnum);
                 found = TRUE;
             }
-        } while (!found && (deh_bexptrs[i].cptr != NULL));
+        } while (!found && (deh_bexptrs[i].cptr.notNull()));
 
         if (!found)
             if (fpout)
@@ -2204,7 +2204,7 @@ static void deh_procPointer(DEHFILE *fpin, FILE *fpout, char *line) // done
                                 indexnum, &deh_bexptrs[i].lookup[2]);
                     break;
                 }
-                if (deh_bexptrs[i].cptr == NULL) // stop at null entry
+                if (deh_bexptrs[i].cptr.isNull()) // stop at null entry
                     break;
             }
         }

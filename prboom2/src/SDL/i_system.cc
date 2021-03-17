@@ -60,7 +60,7 @@
 #include "SDL.h"
 
 #ifdef HAVE_CONFIG_H
-#include "config.hh"
+#include "config.h"
 #endif
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
@@ -92,7 +92,7 @@
 #include "i_system.hh"
 
 #ifdef HAVE_CONFIG_H
-#include "config.hh"
+#include "config.h"
 #endif
 
 #include "z_zone.hh"
@@ -486,6 +486,8 @@ char *I_FindFileInternal(const char *wfname, const char *ext, dboolean isStatic)
             {NULL, NULL, "DOOMWADDIR"},       // run-time $DOOMWADDIR
             {DOOMWADDIR},           // build-time configured DOOMWADDIR
             {NULL, "doom", "HOME"}, // ~/doom
+            {NULL, "doom/iwad", "HOME"}, // ~/doom/iwad
+            {NULL, "doom/pwad", "HOME"}, // ~/doom/pwad
             {NULL, NULL, "HOME"},   // ~
             {"/usr/local/share/games/doom"},
             {"/usr/share/games/doom"},

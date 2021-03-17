@@ -34,7 +34,7 @@
 // killough 5/2/98: reindented, removed useless code, beautified
 
 #ifdef HAVE_CONFIG_H
-#include "config.hh"
+#include "config.h"
 #endif
 
 #include "doomstat.hh"

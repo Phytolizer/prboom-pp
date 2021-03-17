@@ -187,7 +187,7 @@ void P_SpawnFireFlicker(sector_t *sector)
     memset(flick, 0, sizeof(*flick));
     P_AddThinker(&flick->thinker);
 
-    flick->thinker.function = reinterpret_cast<think_t>(T_FireFlicker);
+    flick->thinker.function = T_FireFlicker;
     flick->sector = sector;
     flick->maxlight = sector->lightlevel;
     flick->minlight =
@@ -218,7 +218,7 @@ void P_SpawnLightFlash(sector_t *sector)
     memset(flash, 0, sizeof(*flash));
     P_AddThinker(&flash->thinker);
 
-    flash->thinker.function = reinterpret_cast<think_t>(T_LightFlash);
+    flash->thinker.function = T_LightFlash;
     flash->sector = sector;
     flash->maxlight = sector->lightlevel;
 
@@ -250,7 +250,7 @@ void P_SpawnStrobeFlash(sector_t *sector, int fastOrSlow, int inSync)
     flash->sector = sector;
     flash->darktime = fastOrSlow;
     flash->brighttime = STROBEBRIGHT;
-    flash->thinker.function = reinterpret_cast<think_t>(T_StrobeFlash);
+    flash->thinker.function = T_StrobeFlash;
     flash->maxlight = sector->lightlevel;
     flash->minlight = P_FindMinSurroundingLight(sector, sector->lightlevel);
 
@@ -289,7 +289,7 @@ void P_SpawnGlowingLight(sector_t *sector)
     g->sector = sector;
     g->minlight = P_FindMinSurroundingLight(sector, sector->lightlevel);
     g->maxlight = sector->lightlevel;
-    g->thinker.function = reinterpret_cast<think_t>(T_Glow);
+    g->thinker.function = T_Glow;
     g->direction = -1;
 
     if (heretic)

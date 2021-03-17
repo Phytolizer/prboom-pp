@@ -2769,7 +2769,7 @@ int SetCustomMessage(int player, const char *msg, int delay, int ticks, int cm,
     {
         message_thinker_t *message =
             static_cast<message_thinker_t *>(std::calloc(1, sizeof(*message)));
-        message->thinker.function = reinterpret_cast<think_t>(T_ShowMessage);
+        message->thinker.function = T_ShowMessage;
         message->delay = delay;
         message->plr = player;
 

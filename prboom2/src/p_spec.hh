@@ -576,17 +576,16 @@ typedef struct
 
 // p_lights
 
-typedef struct
+struct fireflicker_t
 {
     thinker_t thinker;
     sector_t *sector;
     int count;
     int maxlight;
     int minlight;
+};
 
-} fireflicker_t;
-
-typedef struct
+struct lightflash_t
 {
     thinker_t thinker;
     sector_t *sector;
@@ -595,10 +594,9 @@ typedef struct
     int minlight;
     int maxtime;
     int mintime;
+};
 
-} lightflash_t;
-
-typedef struct
+struct strobe_t
 {
     thinker_t thinker;
     sector_t *sector;
@@ -607,22 +605,20 @@ typedef struct
     int maxlight;
     int darktime;
     int brighttime;
+};
 
-} strobe_t;
-
-typedef struct
+struct glow_t
 {
     thinker_t thinker;
     sector_t *sector;
     int minlight;
     int maxlight;
     int direction;
-
-} glow_t;
+};
 
 // p_plats
 
-typedef struct
+struct plat_t
 {
     thinker_t thinker;
     sector_t *sector;
@@ -638,7 +634,7 @@ typedef struct
     plattype_e type;
 
     struct platlist *list; // killough
-} plat_t;
+};
 
 // New limit-free plat structure -- killough
 
@@ -650,7 +646,7 @@ typedef struct platlist
 
 // p_ceilng
 
-typedef struct
+struct vldoor_t
 {
     thinker_t thinker;
     vldoor_e type;
@@ -672,11 +668,11 @@ typedef struct
 
     /* killough 10/98: sector tag for gradual lighting effects */
     int lighttag;
-} vldoor_t;
+};
 
 // p_doors
 
-typedef struct
+struct ceiling_t
 {
     thinker_t thinker;
     ceiling_e type;
@@ -699,7 +695,7 @@ typedef struct
     int tag;
     int olddirection;
     struct ceilinglist *list; // jff 2/22/98 copied from killough's plats
-} ceiling_t;
+};
 
 typedef struct ceilinglist
 {
@@ -709,7 +705,7 @@ typedef struct ceilinglist
 
 // p_floor
 
-typedef struct
+struct floormove_t
 {
     thinker_t thinker;
     floor_e type;
@@ -721,10 +717,9 @@ typedef struct
     short texture;
     fixed_t floordestheight;
     fixed_t speed;
+};
 
-} floormove_t;
-
-typedef struct
+struct elevator_t
 {
     thinker_t thinker;
     elevator_e type;
@@ -733,13 +728,13 @@ typedef struct
     fixed_t floordestheight;
     fixed_t ceilingdestheight;
     fixed_t speed;
-} elevator_t;
+};
 
 // p_spec
 
 // killough 3/7/98: Add generalized scroll effects
 
-typedef struct
+struct scroll_t
 {
     thinker_t thinker; // Thinker structure for scrolling
     fixed_t dx, dy;    // (dx,dy) scroll speeds
@@ -756,21 +751,21 @@ typedef struct
         sc_carry,
         sc_carry_ceiling, // killough 4/11/98: carry objects hanging on ceilings
     } type;               // Type of scroll effect
-} scroll_t;
+} ;
 
 // phares 3/12/98: added new model of friction for ice/sludge effects
 
-typedef struct
+struct friction_t
 {
     thinker_t thinker; // Thinker structure for friction
     int friction;      // friction value (E800 = normal)
     int movefactor;    // inertia factor when adding to momentum
     int affectee;      // Number of affected sector
-} friction_t;
+} ;
 
 // phares 3/20/98: added new model of Pushers for push/pull effects
 
-typedef struct
+struct pusher_t
 {
     thinker_t thinker; // Thinker structure for Pusher
     enum type_t
@@ -788,7 +783,7 @@ typedef struct
     int x;          // X of point source if point pusher
     int y;          // Y of point source if point pusher
     int affectee;   // Number of affected sector
-} pusher_t;
+} ;
 
 //////////////////////////////////////////////////////////////////
 //

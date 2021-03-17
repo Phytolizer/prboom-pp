@@ -297,7 +297,7 @@ int EV_DoCeiling(line_t *line, ceiling_e type)
         memset(ceiling, 0, sizeof(*ceiling));
         P_AddThinker(&ceiling->thinker);
         sec->ceilingdata = ceiling; // jff 2/22/98
-        ceiling->thinker.function = reinterpret_cast<think_t>(T_MoveCeiling);
+        ceiling->thinker.function = T_MoveCeiling;
         ceiling->sector = sec;
         ceiling->crush = false;
 
@@ -395,7 +395,7 @@ int P_ActivateInStasisCeiling(line_t *line)
         {
             ceiling->direction = ceiling->olddirection;
             ceiling->thinker.function =
-                reinterpret_cast<think_t>(T_MoveCeiling);
+                T_MoveCeiling;
             // jff 4/5/98 return if activated
             rtn = 1;
         }
@@ -423,7 +423,7 @@ int EV_CeilingCrushStop(line_t *line)
         {
             ceiling->olddirection = ceiling->direction;
             ceiling->direction = 0;
-            ceiling->thinker.function = NULL;
+            ceiling->thinker.function = {};
             rtn = 1;
         }
     }

@@ -32,7 +32,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include "config.hh"
+#include "config.h"
 #endif
 
 #include "gl_opengl.hh"
@@ -1601,7 +1601,7 @@ void gld_Precache(void)
         thinker_t *th;
         for (th = thinkercap.next; th != &thinkercap; th = th->next)
         {
-            if (th->function == reinterpret_cast<think_t>(P_MobjThinker))
+            if (th->function == P_MobjThinker)
                 hitlist[((mobj_t *)th)->sprite] = 1;
         }
     }

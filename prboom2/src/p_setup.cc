@@ -59,7 +59,7 @@
 #include "e6y.hh" //e6y
 #include "dsda.hh"
 
-#include "config.hh"
+#include "config.h"
 #ifdef HAVE_LIBZ
 #include <zlib.h>
 #endif

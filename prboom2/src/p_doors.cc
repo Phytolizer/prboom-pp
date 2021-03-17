@@ -406,7 +406,7 @@ int EV_DoDoor(line_t *line, vldoor_e type)
         P_AddThinker(&door->thinker);
         sec->ceilingdata = door; // jff 2/22/98
 
-        door->thinker.function = reinterpret_cast<think_t>(T_VerticalDoor);
+        door->thinker.function = T_VerticalDoor;
         door->sector = sec;
         door->type = type;
         door->topwait = VDOORWAIT;
@@ -585,7 +585,7 @@ int EV_VerticalDoor(line_t *line, mobj_t *thing)
          * mess up non-T_VerticalDoor actions.
          */
         if (compatibility_level < prboom_4_compatibility ||
-            door->thinker.function == reinterpret_cast<think_t>(T_VerticalDoor))
+            door->thinker.function == T_VerticalDoor)
         {
             /* cph - we are writing outval to door->direction iff it is non-zero
              */
@@ -596,8 +596,7 @@ int EV_VerticalDoor(line_t *line, mobj_t *thing)
              * DEMOSYNC: we only read door->direction now if it really is a
              * door.
              */
-            if (door->thinker.function ==
-                    reinterpret_cast<think_t>(T_VerticalDoor) &&
+            if (door->thinker.function == T_VerticalDoor &&
                 door->direction == -1)
             {
                 outval = 1; /* go back up */
@@ -614,13 +613,11 @@ int EV_VerticalDoor(line_t *line, mobj_t *thing)
              */
             if (outval)
             {
-                if (door->thinker.function ==
-                    reinterpret_cast<think_t>(T_VerticalDoor))
+                if (door->thinker.function == T_VerticalDoor)
                 {
                     door->direction = outval;
                 }
-                else if (door->thinker.function ==
-                         reinterpret_cast<think_t>(T_PlatRaise))
+                else if (door->thinker.function == T_PlatRaise)
                 {
                     plat_t *p = (plat_t *)door;
                     p->wait = outval;
@@ -659,7 +656,7 @@ int EV_VerticalDoor(line_t *line, mobj_t *thing)
     memset(door, 0, sizeof(*door));
     P_AddThinker(&door->thinker);
     sec->ceilingdata = door; // jff 2/22/98
-    door->thinker.function = reinterpret_cast<think_t>(T_VerticalDoor);
+    door->thinker.function = T_VerticalDoor;
     door->sector = sec;
     door->direction = 1;
     door->speed = VDOORSPEED;
@@ -734,7 +731,7 @@ void P_SpawnDoorCloseIn30(sector_t *sec)
     sec->ceilingdata = door; // jff 2/22/98
     sec->special = 0;
 
-    door->thinker.function = reinterpret_cast<think_t>(T_VerticalDoor);
+    door->thinker.function = T_VerticalDoor;
     door->sector = sec;
     door->direction = 0;
     door->type = static_cast<vldoor_e>(g_door_normal);
@@ -764,7 +761,7 @@ void P_SpawnDoorRaiseIn5Mins(sector_t *sec, int /* secnum */)
     sec->ceilingdata = door; // jff 2/22/98
     sec->special = 0;
 
-    door->thinker.function = reinterpret_cast<think_t>(T_VerticalDoor);
+    door->thinker.function = T_VerticalDoor;
     door->sector = sec;
     door->direction = 2;
     door->type = static_cast<vldoor_e>(g_door_raise_in_5_mins);
@@ -873,7 +870,7 @@ void Heretic_EV_VerticalDoor(line_t *line, mobj_t *thing)
     memset(door, 0, sizeof(*door));
     P_AddThinker(&door->thinker);
     sec->ceilingdata = door;
-    door->thinker.function = reinterpret_cast<think_t>(T_VerticalDoor);
+    door->thinker.function = T_VerticalDoor;
     door->sector = sec;
     door->direction = 1;
     door->speed = VDOORSPEED;

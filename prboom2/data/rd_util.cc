@@ -3,7 +3,7 @@
 
 // Useful utility functions
 
-#include "config.hh"
+#include "config.h"
 
 #include <stdlib.h>
 #include <stdio.h>

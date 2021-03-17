@@ -35,7 +35,7 @@
 
 #include "doomdef.hh"
 #ifdef HAVE_CONFIG_H
-#include "config.hh"
+#include "config.h"
 #endif
 
 #include <stdio.h>
@@ -4725,7 +4725,7 @@ void M_LoadDefaults(void)
 
     // check for a custom default file
 
-#define BOOM_CFG "dsda-doom.cfg"
+#define BOOM_CFG "prboom-pp.cfg"
 
     i = M_CheckParm("-config");
     if (i && i < myargc - 1)
@@ -4932,7 +4932,7 @@ void M_LoadDefaults(void)
        doesn't overlap with the cfg settings */
     // e6y: Check on existence of prboom.wad
     if (!(wad_files[0] = I_FindFile(WAD_DATA, "")))
-        I_Error("dsda-doom.wad not found. Can't continue.");
+        I_Error("prboom-pp.wad not found. Can't continue.");
 }
 
 //

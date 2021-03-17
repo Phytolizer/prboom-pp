@@ -35,7 +35,7 @@
 #define __AMMAP_H__
 
 #ifdef HAVE_CONFIG_H
-#include "config.hh"
+#include "config.h"
 #endif
 
 #include "d_event.hh"

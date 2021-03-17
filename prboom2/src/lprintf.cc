@@ -34,7 +34,7 @@
  *-----------------------------------------------------------------------------*/
 
 #ifdef HAVE_CONFIG_H
-#include "config.hh"
+#include "config.h"
 #endif
 #ifdef _MSC_VER
 #include <io.h>

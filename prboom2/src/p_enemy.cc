@@ -275,8 +275,8 @@ static dboolean P_IsOnLift(const mobj_t *actor)
     int l;
 
     // Short-circuit: it's on a lift which is active.
-    if (sec->floordata && ((thinker_t *)sec->floordata)->function ==
-                              reinterpret_cast<think_t>(T_PlatRaise))
+    if (sec->floordata &&
+        ((thinker_t *)sec->floordata)->function == T_PlatRaise)
         return true;
 
     // Check to see if it's in a sector which can be activated as a lift.
@@ -343,7 +343,7 @@ static int P_IsUnderDamage(mobj_t *actor)
          seclist = seclist->m_tnext)
         if ((cl = static_cast<const ceiling_t *>(
                  seclist->m_sector->ceilingdata)) &&
-            cl->thinker.function == reinterpret_cast<think_t>(T_MoveCeiling))
+            cl->thinker.function == T_MoveCeiling)
             dir |= cl->direction;
     return dir;
 }
@@ -1102,7 +1102,7 @@ void A_KeenDie(mobj_t *mo)
     // scan the remaining thinkers to see if all Keens are dead
 
     for (th = thinkercap.next; th != &thinkercap; th = th->next)
-        if (th->function == reinterpret_cast<think_t>(P_MobjThinker))
+        if (th->function == P_MobjThinker)
         {
             mobj_t *mo2 = (mobj_t *)th;
             if (mo2 != mo && mo2->type == mo->type && mo2->health > 0)
@@ -2192,8 +2192,7 @@ static void A_PainShootSkull(mobj_t *actor, angle_t angle)
         int count = 0;
         thinker_t *currentthinker = NULL;
         while ((currentthinker = P_NextThinker(currentthinker, th_all)) != NULL)
-            if ((currentthinker->function ==
-                 reinterpret_cast<think_t>(P_MobjThinker)) &&
+            if ((currentthinker->function == P_MobjThinker) &&
                 ((mobj_t *)currentthinker)->type == MT_SKULL)
                 count++;
         if (count > 20) // phares
@@ -2443,7 +2442,7 @@ void A_BossDeath(mobj_t *mo)
         // scan the remaining thinkers to see
         // if all bosses are dead
         for (th = thinkercap.next; th != &thinkercap; th = th->next)
-            if (th->function == reinterpret_cast<think_t>(P_MobjThinker))
+            if (th->function == P_MobjThinker)
             {
                 mobj_t *mo2 = (mobj_t *)th;
                 if (mo2 != mo && mo2->type == mo->type && mo2->health > 0)
@@ -2560,7 +2559,7 @@ void A_BossDeath(mobj_t *mo)
     // scan the remaining thinkers to see
     // if all bosses are dead
     for (th = thinkercap.next; th != &thinkercap; th = th->next)
-        if (th->function == reinterpret_cast<think_t>(P_MobjThinker))
+        if (th->function == P_MobjThinker)
         {
             mobj_t *mo2 = (mobj_t *)th;
             if (mo2 != mo && mo2->type == mo->type && mo2->health > 0)
@@ -2672,7 +2671,7 @@ void P_SpawnBrainTargets(void) // killough 3/26/98: renamed old function
 
     for (thinker = thinkercap.next; thinker != &thinkercap;
          thinker = thinker->next)
-        if (thinker->function == reinterpret_cast<think_t>(P_MobjThinker))
+        if (thinker->function == P_MobjThinker)
         {
             mobj_t *m = (mobj_t *)thinker;
 
@@ -3580,7 +3579,7 @@ void P_Massacre(void)
 
     for (think = thinkercap.next; think != &thinkercap; think = think->next)
     {
-        if (think->function != reinterpret_cast<think_t>(P_MobjThinker))
+        if (think->function != P_MobjThinker)
         { // Not a mobj thinker
             continue;
         }
@@ -4341,7 +4340,7 @@ void Heretic_A_BossDeath(mobj_t *actor)
     // Make sure all bosses are dead
     for (think = thinkercap.next; think != &thinkercap; think = think->next)
     {
-        if (think->function != reinterpret_cast<think_t>(P_MobjThinker))
+        if (think->function != P_MobjThinker)
         { // Not a mobj thinker
             continue;
         }
@@ -4376,7 +4375,7 @@ dboolean Heretic_P_LookForMonsters(mobj_t *actor)
     count = 0;
     for (think = thinkercap.next; think != &thinkercap; think = think->next)
     {
-        if (think->function != reinterpret_cast<think_t>(P_MobjThinker))
+        if (think->function != P_MobjThinker)
         { // Not a mobj thinker
             continue;
         }

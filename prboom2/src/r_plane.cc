@@ -45,7 +45,7 @@
  *-----------------------------------------------------------------------------*/
 
 #ifdef HAVE_CONFIG_H
-#include "config.hh"
+#include "config.h"
 #endif
 
 #include "z_zone.hh" /* memory allocation wrappers -- killough */

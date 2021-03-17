@@ -543,34 +543,34 @@ static void R_InterpolationGetData(thinker_t *th, interpolation_type_e *type1,
     *posptr1 = NULL;
     *posptr2 = NULL;
 
-    if (th->function == reinterpret_cast<think_t>(T_MoveFloor))
+    if (th->function == T_MoveFloor)
     {
         *type1 = INTERP_SectorFloor;
         *posptr1 = ((floormove_t *)th)->sector;
     }
-    else if (th->function == reinterpret_cast<think_t>(T_PlatRaise))
+    else if (th->function == T_PlatRaise)
     {
         *type1 = INTERP_SectorFloor;
         *posptr1 = ((plat_t *)th)->sector;
     }
-    else if (th->function == reinterpret_cast<think_t>(T_MoveCeiling))
+    else if (th->function == T_MoveCeiling)
     {
         *type1 = INTERP_SectorCeiling;
         *posptr1 = ((ceiling_t *)th)->sector;
     }
-    else if (th->function == reinterpret_cast<think_t>(T_VerticalDoor))
+    else if (th->function == T_VerticalDoor)
     {
         *type1 = INTERP_SectorCeiling;
         *posptr1 = ((vldoor_t *)th)->sector;
     }
-    else if (th->function == reinterpret_cast<think_t>(T_MoveElevator))
+    else if (th->function == T_MoveElevator)
     {
         *type1 = INTERP_SectorFloor;
         *posptr1 = ((elevator_t *)th)->sector;
         *type2 = INTERP_SectorCeiling;
         *posptr2 = ((elevator_t *)th)->sector;
     }
-    else if (th->function == reinterpret_cast<think_t>(T_Scroll))
+    else if (th->function == T_Scroll)
     {
         switch (((scroll_t *)th)->type)
         {
@@ -590,6 +590,7 @@ static void R_InterpolationGetData(thinker_t *th, interpolation_type_e *type1,
         }
     }
 }
+
 
 void R_ActivateThinkerInterpolations(thinker_t *th)
 {

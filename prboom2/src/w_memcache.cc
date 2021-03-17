@@ -34,7 +34,7 @@
 
 // use config.h if autoconf made one -- josh
 #ifdef HAVE_CONFIG_H
-#include "config.hh"
+#include "config.h"
 #endif
 
 #include "doomstat.hh"

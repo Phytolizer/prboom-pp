@@ -327,7 +327,7 @@ void dsda_WatchLevelCompletion(void)
 
     for (th = thinkercap.next; th != &thinkercap; th = th->next)
     {
-        if (th->function != reinterpret_cast<think_t>(P_MobjThinker))
+        if (th->function != P_MobjThinker)
             continue;
 
         mobj = (mobj_t *)th;

@@ -124,7 +124,7 @@ int EV_DoGenFloor(line_t *line)
         memset(floor, 0, sizeof(*floor));
         P_AddThinker(&floor->thinker);
         sec->floordata = floor;
-        floor->thinker.function = reinterpret_cast<think_t>(T_MoveFloor);
+        floor->thinker.function = T_MoveFloor;
         floor->crush = Crsh;
         floor->direction = Dirn ? 1 : -1;
         floor->sector = sec;
@@ -343,7 +343,7 @@ int EV_DoGenCeiling(line_t *line)
         memset(ceiling, 0, sizeof(*ceiling));
         P_AddThinker(&ceiling->thinker);
         sec->ceilingdata = ceiling; // jff 2/22/98
-        ceiling->thinker.function = reinterpret_cast<think_t>(T_MoveCeiling);
+        ceiling->thinker.function = T_MoveCeiling;
         ceiling->crush = Crsh;
         ceiling->direction = Dirn ? 1 : -1;
         ceiling->sector = sec;
@@ -567,7 +567,7 @@ int EV_DoGenLift(line_t *line)
 
         plat->sector = sec;
         plat->sector->floordata = plat;
-        plat->thinker.function = reinterpret_cast<think_t>(T_PlatRaise);
+        plat->thinker.function = T_PlatRaise;
         plat->crush = false;
         plat->tag = line->tag;
 
@@ -737,7 +737,7 @@ int EV_DoGenStairs(line_t *line)
         memset(floor, 0, sizeof(*floor));
         P_AddThinker(&floor->thinker);
         sec->floordata = floor;
-        floor->thinker.function = reinterpret_cast<think_t>(T_MoveFloor);
+        floor->thinker.function = T_MoveFloor;
         floor->direction = Dirn ? 1 : -1;
         floor->sector = sec;
 
@@ -840,8 +840,7 @@ int EV_DoGenStairs(line_t *line)
                 P_AddThinker(&floor->thinker);
 
                 sec->floordata = floor;
-                floor->thinker.function =
-                    reinterpret_cast<think_t>(T_MoveFloor);
+                floor->thinker.function = T_MoveFloor;
                 floor->direction = Dirn ? 1 : -1;
                 floor->sector = sec;
                 floor->speed = speed;
@@ -936,7 +935,7 @@ int EV_DoGenCrusher(line_t *line)
         memset(ceiling, 0, sizeof(*ceiling));
         P_AddThinker(&ceiling->thinker);
         sec->ceilingdata = ceiling; // jff 2/22/98
-        ceiling->thinker.function = reinterpret_cast<think_t>(T_MoveCeiling);
+        ceiling->thinker.function = T_MoveCeiling;
         ceiling->crush = true;
         ceiling->direction = -1;
         ceiling->sector = sec;
@@ -1045,7 +1044,7 @@ int EV_DoGenLockedDoor(line_t *line)
         P_AddThinker(&door->thinker);
         sec->ceilingdata = door; // jff 2/22/98
 
-        door->thinker.function = reinterpret_cast<think_t>(T_VerticalDoor);
+        door->thinker.function = T_VerticalDoor;
         door->sector = sec;
         door->topwait = VDOORWAIT;
         door->line = line;
@@ -1166,7 +1165,7 @@ int EV_DoGenDoor(line_t *line)
         P_AddThinker(&door->thinker);
         sec->ceilingdata = door; // jff 2/22/98
 
-        door->thinker.function = reinterpret_cast<think_t>(T_VerticalDoor);
+        door->thinker.function = T_VerticalDoor;
         door->sector = sec;
         // setup delay for door remaining open/closed
         switch (Dely)

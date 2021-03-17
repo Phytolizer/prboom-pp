@@ -3,7 +3,7 @@
 
 // Output wad construction - add lump data, build wad directory
 
-#include "config.hh"
+#include "config.h"
 
 #include <stdlib.h>
 #include <stdio.h>

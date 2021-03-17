@@ -533,8 +533,7 @@ static void cheat_massacre() // jff 2/01/98 kill all monsters
     P_MapStart();
     do
         while ((currentthinker = P_NextThinker(currentthinker, th_all)) != NULL)
-            if (currentthinker->function ==
-                    reinterpret_cast<think_t>(P_MobjThinker) &&
+            if (currentthinker->function == P_MobjThinker &&
                 !(((mobj_t *)currentthinker)->flags &
                   mask) && // killough 7/20/98
                 (((mobj_t *)currentthinker)->flags & MF_COUNTKILL ||

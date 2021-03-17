@@ -85,9 +85,8 @@ void P_UpdateThinker(thinker_t *thinker)
     // find the class the thinker belongs to
 
     int cls =
-        thinker->function == reinterpret_cast<think_t>(P_RemoveThinkerDelayed)
-            ? th_delete
-        : thinker->function == reinterpret_cast<think_t>(P_MobjThinker) &&
+        thinker->function == P_RemoveThinkerDelayed ? th_delete
+        : thinker->function == P_MobjThinker &&
                 ((mobj_t *)thinker)->health > 0 &&
                 (((mobj_t *)thinker)->flags & MF_COUNTKILL ||
                  ((mobj_t *)thinker)->type == MT_SKULL)
@@ -184,7 +183,7 @@ void P_RemoveThinkerDelayed(thinker_t *thinker)
 void P_RemoveThinker(thinker_t *thinker)
 {
     R_StopInterpolationIfNeeded(thinker);
-    thinker->function = reinterpret_cast<think_t>(P_RemoveThinkerDelayed);
+    thinker->function = P_RemoveThinkerDelayed;
 
     P_UpdateThinker(thinker);
 }
@@ -251,9 +250,8 @@ static void P_RunThinkers(void)
     {
         if (newthinkerpresent)
             R_ActivateThinkerInterpolations(currentthinker);
-        if (currentthinker->function)
-            reinterpret_cast<actionf_p1>(currentthinker->function)(
-                currentthinker);
+        if (currentthinker->function.notNull())
+            currentthinker->function.thinker()(currentthinker);
     }
     newthinkerpresent = false;
 

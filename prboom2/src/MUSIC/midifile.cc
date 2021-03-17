@@ -48,7 +48,7 @@ typedef unsigned char byte;
 #define MAX_BUFFER_SIZE 0x10000
 
 #ifdef HAVE_CONFIG_H
-#include "config.hh"
+#include "config.h"
 #endif
 
 #ifndef ntohl

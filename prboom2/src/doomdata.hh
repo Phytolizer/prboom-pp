@@ -37,7 +37,7 @@
 #define __DOOMDATA__
 
 // The most basic types we use, portability.
-#include "config.hh"
+#include "config.h"
 #include "doomtype.hh"
 
 //

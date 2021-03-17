@@ -26,7 +26,7 @@
 // NSM: reworked to function without sdl_mixer (needs new i_sound.c)
 
 #ifdef HAVE_CONFIG_H
-#include "config.hh"
+#include "config.h"
 #endif
 
 #include <stdio.h>

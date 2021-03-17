@@ -27,7 +27,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "config.hh"
+#include "config.h"
 #include "pcsound.hh"
 
 // e6y

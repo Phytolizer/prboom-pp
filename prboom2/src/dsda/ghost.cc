@@ -303,7 +303,7 @@ void dsda_SpawnGhost(void)
             static_cast<thinker_t *>(std::malloc(sizeof(thinker_t)));
         memset(dsda_ghost_import.thinker, 0, sizeof(thinker_t));
         dsda_ghost_import.thinker->function =
-            reinterpret_cast<think_t>(dsda_UpdateGhosts);
+            dsda_UpdateGhosts;
         P_AddThinker(dsda_ghost_import.thinker);
     }
 }

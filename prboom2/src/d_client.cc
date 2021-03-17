@@ -37,7 +37,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include "config.hh"
+#include "config.h"
 #endif
 #include <sys/types.h>
 #ifdef HAVE_UNISTD_H

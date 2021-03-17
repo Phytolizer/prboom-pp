@@ -35,7 +35,7 @@
 #define _GL_OPENGL_H
 
 #ifdef HAVE_CONFIG_H
-#include "config.hh"
+#include "config.h"
 #endif
 
 #define USE_VERTEX_ARRAYS

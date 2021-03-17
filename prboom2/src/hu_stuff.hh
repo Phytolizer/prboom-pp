@@ -103,13 +103,13 @@ typedef struct custom_message_s
     const char *msg;
 } custom_message_t;
 
-typedef struct message_thinker_s
+struct message_thinker_t
 {
     thinker_t thinker;
     int plr;
     int delay;
     custom_message_t msg;
-} message_thinker_t;
+} ;
 
 typedef struct crosshair_s
 {

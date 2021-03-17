@@ -46,7 +46,7 @@
 #include <fcntl.h>
 
 #ifdef HAVE_CONFIG_H
-#include "config.hh"
+#include "config.h"
 #endif
 
 #include "doomstat.hh"

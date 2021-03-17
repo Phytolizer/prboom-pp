@@ -120,9 +120,9 @@ void P_SetPsprite(player_t *player, int position, statenum_t stnum)
 
         // Call action routine.
         // Modified handling.
-        if (state->action)
+        if (state->action.notNull())
         {
-            reinterpret_cast<actionf_p2>(state->action)(player, psp);
+            state->action.player()(player, psp);
             if (!psp->state)
                 break;
         }
@@ -1275,7 +1275,7 @@ void A_FireBlasterPL2(player_t *player, pspdef_t * /* psp */)
     mo = P_SpawnPlayerMissile(player->mo, HERETIC_MT_BLASTERFX1);
     if (mo)
     {
-        mo->thinker.function = reinterpret_cast<think_t>(P_BlasterMobjThinker);
+        mo->thinker.function = P_BlasterMobjThinker;
     }
     S_StartSound(player->mo, heretic_sfx_blssht);
 }

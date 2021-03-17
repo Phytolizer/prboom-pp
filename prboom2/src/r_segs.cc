@@ -34,7 +34,7 @@
 // 4/25/98, 5/2/98 killough: reformatted, beautified
 
 #ifdef HAVE_CONFIG_H
-#include "config.hh"
+#include "config.h"
 #endif
 #include "SDL.h"
 
