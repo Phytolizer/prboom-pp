@@ -104,9 +104,9 @@ typedef struct
 //---------------------------------------------------------------------------
 // Re-engineered patch support
 //---------------------------------------------------------------------------
-static rpatch_t *patches = 0;
+static rpatch_t *patches = nullptr;
 
-static rpatch_t *texture_composites = 0;
+static rpatch_t *texture_composites = nullptr;
 
 // indices of two duplicate PLAYPAL entries, second is -1 if none found
 static int playpal_transparent, playpal_duplicate;
@@ -526,13 +526,13 @@ static void createPatch(int id)
         {
             // non-tiling
             if (x == 0)
-                oldPrevColumn = 0;
+                oldPrevColumn = nullptr;
             else
                 oldPrevColumn =
                     (const column_t *)((const byte *)oldPatch +
                                        LittleLong(oldPatch->columnofs[x - 1]));
             if (x == patch->width - 1)
-                oldNextColumn = 0;
+                oldNextColumn = nullptr;
             else
                 oldNextColumn =
                     (const column_t *)((const byte *)oldPatch +

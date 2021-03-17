@@ -481,14 +481,14 @@ char *I_FindFileInternal(const char *wfname, const char *ext, dboolean isStatic)
         const char *(*func)(void); // for I_DoomExeDir
     } search0[] =
         {
-            {nullptr, NULL, NULL, I_DoomExeDir}, // config directory
+            {nullptr, nullptr, nullptr, I_DoomExeDir}, // config directory
             {nullptr},                           // current working directory
-            {nullptr, NULL, "DOOMWADDIR"},       // run-time $DOOMWADDIR
+            {nullptr, nullptr, "DOOMWADDIR"},       // run-time $DOOMWADDIR
             {DOOMWADDIR},           // build-time configured DOOMWADDIR
             {nullptr, "doom", "HOME"}, // ~/doom
             {nullptr, "doom/iwad", "HOME"}, // ~/doom/iwad
             {nullptr, "doom/pwad", "HOME"}, // ~/doom/pwad
-            {nullptr, NULL, "HOME"},   // ~
+            {nullptr, nullptr, "HOME"},   // ~
             {"/usr/local/share/games/doom"},
             {"/usr/share/games/doom"},
             {"/usr/local/share/doom"},

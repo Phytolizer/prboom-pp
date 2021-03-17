@@ -692,7 +692,7 @@ void HU_Start(void)
 
     // create the inputbuffer widgets, one per player
     for (i = 0; i < MAXPLAYERS; i++)
-        HUlib_initIText(&w_inputbuffer[i], 0, 0, 0, 0, hudcolor_chat, VPT_NONE,
+        HUlib_initIText(&w_inputbuffer[i], 0, 0, nullptr, 0, hudcolor_chat, VPT_NONE,
                         &always_off);
 
     HU_init_crosshair();
@@ -814,7 +814,7 @@ static hud_widget_t hud_name_widget[] = {
     {&w_keys_icon, 0, 0, static_cast<patch_translation_e>(0),
      HU_widget_build_gkeys, HU_widget_draw_gkeys, "gkeys"},
 
-    {&w_traces[0], 0, 0, static_cast<patch_translation_e>(0), nullptr, NULL,
+    {&w_traces[0], 0, 0, static_cast<patch_translation_e>(0), nullptr, nullptr,
      "tracers"},
 
     {&w_health_big, 0, 0, VPT_NOOFFSET, HU_widget_build_health_big,
@@ -854,7 +854,7 @@ static hud_widget_t hud_name_widget[] = {
     {&w_ammo_icon, 0, 0, VPT_NOOFFSET, HU_widget_build_ammo_icon,
      HU_widget_draw_ammo_icon, "ammo_icon"},
 
-    {nullptr, 0, 0, static_cast<patch_translation_e>(0), NULL, NULL, NULL}};
+    {nullptr, 0, 0, static_cast<patch_translation_e>(0), nullptr, nullptr, nullptr}};
 
 void HU_LoadHUDDefs(void)
 {
@@ -2434,12 +2434,12 @@ void HU_Ticker(void)
             (plr->message && message_dontfuckwithme))
         {
             // post the message to the message widget
-            HUlib_addMessageToSText(&w_message, 0, plr->message);
+            HUlib_addMessageToSText(&w_message, nullptr, plr->message);
             // jff 2/26/98 add message to refresh text widget too
-            HUlib_addMessageToMText(&w_rtext, 0, plr->message);
+            HUlib_addMessageToMText(&w_rtext, nullptr, plr->message);
 
             // clear the message to avoid posting multiple times
-            plr->message = 0;
+            plr->message = nullptr;
             // note a message is displayed
             message_on = true;
             // start the message persistence counter
@@ -2505,9 +2505,9 @@ void HU_Ticker(void)
                             message_on = true;
                             message_counter = HU_MSGTIMEOUT;
                             if (gamemode == commercial)
-                                S_StartSound(0, sfx_radio);
+                                S_StartSound(nullptr, sfx_radio);
                             else
-                                S_StartSound(0, sfx_tink);
+                                S_StartSound(nullptr, sfx_tink);
                         }
                         HUlib_resetIText(&w_inputbuffer[i]);
                     }

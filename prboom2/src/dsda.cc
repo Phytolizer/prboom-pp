@@ -143,7 +143,7 @@ void dsda_DisplayNotifications(void)
 
 void dsda_DisplayNotification(const char *msg)
 {
-    S_StartSound(0, sfx_radio);
+    S_StartSound(nullptr, sfx_radio);
     doom_printf("%s", msg);
 }
 

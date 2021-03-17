@@ -1066,7 +1066,7 @@ static void R_SetupFrame(player_t *player)
             scalelightfixed[i] = fixedcolormap;
     }
     else
-        fixedcolormap = 0;
+        fixedcolormap = nullptr;
 
     R_SetClipPlanes();
 

@@ -370,7 +370,7 @@ void *(Z_Malloc)(size_t size, int tag, void **user
 #endif
 
     if (!size)
-        return user ? *user = nullptr : NULL; // malloc(0) returns NULL
+        return user ? *user = nullptr : nullptr; // malloc(0) returns NULL
 
     size = (size + CHUNK_SIZE - 1) & ~(CHUNK_SIZE - 1); // round to chunk size
 

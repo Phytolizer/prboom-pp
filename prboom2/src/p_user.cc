@@ -1067,7 +1067,7 @@ dboolean P_UseArtifact(player_t *player, artitype_t arti)
         { // Attempt to undo chicken
             if (P_UndoPlayerChicken(player) == false)
             { // Failed
-                P_DamageMobj(player->mo, nullptr, NULL, 10000);
+                P_DamageMobj(player->mo, nullptr, nullptr, 10000);
             }
             else
             { // Succeeded

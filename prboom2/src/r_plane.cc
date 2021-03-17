@@ -144,7 +144,7 @@ void R_InitVisplanesRes(void)
 
     for (i = 0; i < MAXVISPLANES; i++)
     {
-        visplanes[i] = 0;
+        visplanes[i] = nullptr;
     }
 }
 

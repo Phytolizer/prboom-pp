@@ -563,5 +563,5 @@ sector_t *GetSectorAtNullAddress(void)
         return &null_sector;
     }
 
-    return 0;
+    return nullptr;
 }

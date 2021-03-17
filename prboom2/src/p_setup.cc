@@ -600,7 +600,7 @@ static void P_LoadSegs(int lump)
             li->frontsector = sides[ldef->sidenum[side]].sector;
         else
         {
-            li->frontsector = 0;
+            li->frontsector = nullptr;
             lprintf(LO_WARN, "P_LoadSegs: front of seg %i has no sidedef\n", i);
         }
 
@@ -620,7 +620,7 @@ static void P_LoadSegs(int lump)
         }
         else
         {
-            li->backsector = 0;
+            li->backsector = nullptr;
         }
 
         // e6y
@@ -744,7 +744,7 @@ static void P_LoadSegs_V4(int lump)
         }
         else
         {
-            li->frontsector = 0;
+            li->frontsector = nullptr;
             lprintf(LO_WARN, "P_LoadSegs_V4: front of seg %i has no sidedef\n",
                     i);
         }
@@ -752,7 +752,7 @@ static void P_LoadSegs_V4(int lump)
         if (ldef->flags & ML_TWOSIDED && ldef->sidenum[side ^ 1] != NO_INDEX)
             li->backsector = sides[ldef->sidenum[side ^ 1]].sector;
         else
-            li->backsector = 0;
+            li->backsector = nullptr;
 
         // e6y
         // check and fix wrong references to non-existent vertexes
@@ -841,7 +841,7 @@ static void P_LoadGLSegs(int lump)
             if (ldef->flags & ML_TWOSIDED)
                 segs[i].backsector = sides[ldef->sidenum[ml->side ^ 1]].sector;
             else
-                segs[i].backsector = 0;
+                segs[i].backsector = nullptr;
 
             if (ml->side)
                 segs[i].offset = GetOffset(segs[i].v1, ldef->v2);
@@ -1174,7 +1174,7 @@ static void P_LoadZSegs(const byte *data)
         }
         else
         {
-            li->frontsector = 0;
+            li->frontsector = nullptr;
             lprintf(LO_WARN, "P_LoadZSegs: front of seg %i has no sidedef\n",
                     i);
         }
@@ -1183,7 +1183,7 @@ static void P_LoadZSegs(const byte *data)
             (ldef->sidenum[side ^ 1] != NO_INDEX))
             li->backsector = sides[ldef->sidenum[side ^ 1]].sector;
         else
-            li->backsector = 0;
+            li->backsector = nullptr;
 
         li->v1 = &vertexes[v1];
         li->v2 = &vertexes[v2];
@@ -1680,7 +1680,7 @@ static void P_LoadLineDefs2(int lump)
         ld->frontsector =
             sides[ld->sidenum[0]].sector; // e6y: Can't be NO_INDEX here
         ld->backsector =
-            ld->sidenum[1] != NO_INDEX ? sides[ld->sidenum[1]].sector : 0;
+            ld->sidenum[1] != NO_INDEX ? sides[ld->sidenum[1]].sector : nullptr;
         switch (ld->special)
         { // killough 4/11/98: handle special types
             int lump, j;

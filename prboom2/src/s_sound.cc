@@ -641,8 +641,8 @@ void S_StopMusic(void)
             W_UnlockLumpNum(
                 mus_playing->lumpnum); // cph - release the music data
 
-        mus_playing->data = 0;
-        mus_playing = 0;
+        mus_playing->data = nullptr;
+        mus_playing = nullptr;
     }
 }
 
@@ -669,7 +669,7 @@ void S_StopChannel(int cnum)
 
         // degrade usefulness of sound data
         c->sfxinfo->usefulness--;
-        c->sfxinfo = 0;
+        c->sfxinfo = nullptr;
 
         // heretic_note: do this for doom too?
         if (heretic)
@@ -1132,7 +1132,7 @@ void Heretic_S_UpdateSounds(mobj_t *listener)
                 AmbChan = -1;
         }
 
-        if (channels[i].origin == nullptr || channels[i].sfxinfo == NULL ||
+        if (channels[i].origin == nullptr || channels[i].sfxinfo == nullptr ||
             channels[i].origin == listener || listener == nullptr)
             continue;
 

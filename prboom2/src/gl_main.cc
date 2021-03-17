@@ -1699,7 +1699,7 @@ void gld_AddWall(seg_t *seg)
 
     if (!seg->frontsector)
         return;
-    frontsector = R_FakeFlat(seg->frontsector, &ftempsec, nullptr, NULL,
+    frontsector = R_FakeFlat(seg->frontsector, &ftempsec, nullptr, nullptr,
                              false); // for boom effects
     if (!frontsector)
         return;
@@ -1762,7 +1762,7 @@ void gld_AddWall(seg_t *seg)
         fixed_t max_ceiling, min_ceiling;
         // fixed_t max_floor_tex, min_ceiling_tex;
 
-        backsector = R_FakeFlat(seg->backsector, &btempsec, nullptr, NULL,
+        backsector = R_FakeFlat(seg->backsector, &btempsec, nullptr, nullptr,
                                 true); // for boom effects
         if (!backsector)
             return;
@@ -2895,10 +2895,10 @@ static void gld_DrawItemsSortByTexture(GLDrawItemType itemtype)
     typedef int(C_DECL * DICMP_ITEM)(const void *a, const void *b);
 
     static DICMP_ITEM itemfuncs[GLDIT_TYPES] = {
-        0,          dicmp_wall, dicmp_wall,   dicmp_wall,         dicmp_wall,
+        nullptr,          dicmp_wall, dicmp_wall,   dicmp_wall,         dicmp_wall,
         dicmp_wall, dicmp_wall, dicmp_wall,   dicmp_flat,         dicmp_flat,
         dicmp_flat, dicmp_flat, dicmp_sprite, dicmp_sprite_scale, dicmp_sprite,
-        0,          0,
+        nullptr,          nullptr,
     };
 
     if (itemfuncs[itemtype] && gld_drawinfo.num_items[itemtype] > 1)

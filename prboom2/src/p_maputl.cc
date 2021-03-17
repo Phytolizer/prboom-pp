@@ -354,7 +354,7 @@ void P_SetThingPosition(mobj_t *thing)
             *link = thing;
         }
         else // thing is off the map
-            thing->bnext = nullptr, thing->bprev = NULL;
+            thing->bnext = nullptr, thing->bprev = nullptr;
     }
 }
 

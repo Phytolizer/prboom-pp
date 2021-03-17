@@ -505,7 +505,7 @@ void gld_DrawItemsSortByDetail(GLDrawItemType itemtype)
     typedef int(C_DECL * DICMP_ITEM)(const void *a, const void *b);
 
     static DICMP_ITEM itemfuncs[GLDIT_TYPES] = {
-        0,
+        nullptr,
         dicmp_wall_detail,
         dicmp_wall_detail,
         dicmp_wall_detail,
@@ -517,10 +517,10 @@ void gld_DrawItemsSortByDetail(GLDrawItemType itemtype)
         dicmp_flat_detail,
         dicmp_flat_detail,
         dicmp_flat_detail,
-        0,
-        0,
-        0,
-        0,
+        nullptr,
+        nullptr,
+        nullptr,
+        nullptr,
     };
 
     if (itemfuncs[itemtype] && gld_drawinfo.num_items[itemtype] > 1)

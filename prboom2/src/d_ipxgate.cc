@@ -302,7 +302,7 @@ void loop(int ipxs, int udps)
         FD_ZERO(&fds);
         FD_SET(ipxs, &fds);
         FD_SET(udps, &fds);
-        rc = select(ipxs + udps, &fds, nullptr, NULL, &wt);
+        rc = select(ipxs + udps, &fds, nullptr, nullptr, &wt);
         if (rc < 0)
         {
             fprintf(stderr, "select: %s\n", strerror(errno));

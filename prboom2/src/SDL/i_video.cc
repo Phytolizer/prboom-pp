@@ -90,7 +90,7 @@
 #include "dsda/palette.hh"
 
 // e6y: new mouse code
-static SDL_Cursor *cursors[2] = {nullptr, NULL};
+static SDL_Cursor *cursors[2] = {nullptr, nullptr};
 
 dboolean window_focused;
 int mouse_currently_grabbed = true;
@@ -391,7 +391,7 @@ static void I_GetEvent(void)
             {
                 event.type = ev_mouse;
                 event.data1 =
-                    I_SDLtoDoomMouseState(SDL_GetMouseState(nullptr, NULL));
+                    I_SDLtoDoomMouseState(SDL_GetMouseState(nullptr, nullptr));
                 event.data2 = event.data3 = 0;
                 D_PostEvent(&event);
             }
@@ -1554,7 +1554,7 @@ void I_UpdateVideoMode(void)
 static void ActivateMouse(void)
 {
     SDL_SetRelativeMouseMode(SDL_TRUE);
-    SDL_GetRelativeMouseState(nullptr, NULL);
+    SDL_GetRelativeMouseState(nullptr, nullptr);
 }
 
 static void DeactivateMouse(void)

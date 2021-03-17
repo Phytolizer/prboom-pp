@@ -207,7 +207,7 @@ static int ParseStandardProperty(Scanner &scanner, MapEntry *mape)
     else if (!stricmp(pname, "next"))
     {
         ParseLumpName(scanner, mape->nextmap);
-        if (!G_ValidateMapName(mape->nextmap, nullptr, NULL))
+        if (!G_ValidateMapName(mape->nextmap, nullptr, nullptr))
         {
             scanner.ErrorF("Invalid map name %s.", mape->nextmap);
             return 0;
@@ -216,7 +216,7 @@ static int ParseStandardProperty(Scanner &scanner, MapEntry *mape)
     else if (!stricmp(pname, "nextsecret"))
     {
         ParseLumpName(scanner, mape->nextsecret);
-        if (!G_ValidateMapName(mape->nextsecret, nullptr, NULL))
+        if (!G_ValidateMapName(mape->nextsecret, nullptr, nullptr))
         {
             scanner.ErrorF("Invalid map name %s", mape->nextmap);
             return 0;
@@ -394,7 +394,7 @@ static int ParseMapEntry(Scanner &scanner, MapEntry *val)
 
     scanner.MustGetIdentifier("map");
     scanner.MustGetToken(TK_Identifier);
-    if (!G_ValidateMapName(scanner.string, nullptr, NULL))
+    if (!G_ValidateMapName(scanner.string, nullptr, nullptr))
     {
         scanner.ErrorF("Invalid map name %s", scanner.string);
         return 0;
@@ -425,7 +425,7 @@ int ParseUMapInfo(const unsigned char *buffer, size_t length,
 
     while (scanner.TokensLeft())
     {
-        MapEntry parsed = {0};
+        MapEntry parsed = {nullptr};
         ParseMapEntry(scanner, &parsed);
 
         // Set default level progression here to simplify the checks elsewhere.

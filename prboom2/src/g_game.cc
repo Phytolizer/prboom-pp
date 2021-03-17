@@ -259,7 +259,7 @@ int defaultskill; // note 1-based
 
 // killough 2/8/98: make corpse queue variable in size
 int bodyqueslot, bodyquesize; // killough 2/8/98
-mobj_t **bodyque = 0;         // phares 8/10/98
+mobj_t **bodyque = nullptr;         // phares 8/10/98
 
 // heretic
 #include "p_user.hh"

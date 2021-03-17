@@ -1756,7 +1756,7 @@ void P_MinotaurSlam(mobj_t *source, mobj_t *target)
     thrust = 16 * FRACUNIT + (P_Random(pr_heretic) << 10);
     target->momx += FixedMul(thrust, finecosine[angle]);
     target->momy += FixedMul(thrust, finesine[angle]);
-    P_DamageMobj(target, nullptr, NULL, HITDICE(6));
+    P_DamageMobj(target, nullptr, nullptr, HITDICE(6));
     if (target->player)
     {
         target->reactiontime = 14 + (P_Random(pr_heretic) & 7);
@@ -1785,7 +1785,7 @@ void P_TouchWhirlwind(mobj_t *target)
     }
     if (!(leveltime & 7))
     {
-        P_DamageMobj(target, nullptr, NULL, 3);
+        P_DamageMobj(target, nullptr, nullptr, 3);
     }
 
     if (target->player)

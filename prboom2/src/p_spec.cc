@@ -1089,7 +1089,7 @@ dboolean P_CanUnlockGenDoor(line_t *line, player_t *player)
 dboolean PUREFUNC P_SectorActive(special_e t, const sector_t *sec)
 {
     if (demo_compatibility) // return whether any thinker is active
-        return sec->floordata != nullptr || sec->ceilingdata != NULL ||
+        return sec->floordata != nullptr || sec->ceilingdata != nullptr ||
                sec->lightingdata != nullptr;
     else
         switch (t) // return whether thinker of same type is active
@@ -2390,14 +2390,14 @@ void P_PlayerInSpecialSector(player_t *player)
             // 5/10 unit damage per 31 ticks
             if (!player->powers[pw_ironfeet])
                 if (!(leveltime & 0x1f))
-                    P_DamageMobj(player->mo, nullptr, NULL, 10);
+                    P_DamageMobj(player->mo, nullptr, nullptr, 10);
             break;
 
         case 7:
             // 2/5 unit damage per 31 ticks
             if (!player->powers[pw_ironfeet])
                 if (!(leveltime & 0x1f))
-                    P_DamageMobj(player->mo, nullptr, NULL, 5);
+                    P_DamageMobj(player->mo, nullptr, nullptr, 5);
             break;
 
         case 16:
@@ -2408,7 +2408,7 @@ void P_PlayerInSpecialSector(player_t *player)
                 (P_Random(pr_slimehurt) < 5)) // even with suit, take damage
             {
                 if (!(leveltime & 0x1f))
-                    P_DamageMobj(player->mo, nullptr, NULL, 20);
+                    P_DamageMobj(player->mo, nullptr, nullptr, 20);
             }
             break;
 
@@ -2437,7 +2437,7 @@ void P_PlayerInSpecialSector(player_t *player)
                     ~CF_GODMODE; // on godmode cheat clearing
                                  // does not affect invulnerability
             if (!(leveltime & 0x1f))
-                P_DamageMobj(player->mo, nullptr, NULL, 20);
+                P_DamageMobj(player->mo, nullptr, nullptr, 20);
 
             if (player->health <= 10)
                 G_ExitLevel();
@@ -2457,19 +2457,19 @@ void P_PlayerInSpecialSector(player_t *player)
         case 1: // 2/5 damage per 31 ticks
             if (!player->powers[pw_ironfeet])
                 if (!(leveltime & 0x1f))
-                    P_DamageMobj(player->mo, nullptr, NULL, 5);
+                    P_DamageMobj(player->mo, nullptr, nullptr, 5);
             break;
         case 2: // 5/10 damage per 31 ticks
             if (!player->powers[pw_ironfeet])
                 if (!(leveltime & 0x1f))
-                    P_DamageMobj(player->mo, nullptr, NULL, 10);
+                    P_DamageMobj(player->mo, nullptr, nullptr, 10);
             break;
         case 3: // 10/20 damage per 31 ticks
             if (!player->powers[pw_ironfeet] ||
                 (P_Random(pr_slimehurt) < 5)) // take damage even with suit
             {
                 if (!(leveltime & 0x1f))
-                    P_DamageMobj(player->mo, nullptr, NULL, 20);
+                    P_DamageMobj(player->mo, nullptr, nullptr, 20);
             }
             break;
         }
@@ -4187,7 +4187,7 @@ void Heretic_P_PlayerInSpecialSector(player_t *player)
     case 7: // Damage_Sludge
         if (!(leveltime & 31))
         {
-            P_DamageMobj(player->mo, nullptr, NULL, 4);
+            P_DamageMobj(player->mo, nullptr, nullptr, 4);
         }
         break;
     case 5: // Damage_LavaWimpy

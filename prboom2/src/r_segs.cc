@@ -290,7 +290,7 @@ void R_RenderMaskedSegRange(drawseg_t *ds, int x1, int x2)
 
     // killough 4/13/98: get correct lightlevel for 2s normal textures
     rw_lightlevel =
-        R_FakeFlat(frontsector, &tempsec, nullptr, NULL, false)->lightlevel;
+        R_FakeFlat(frontsector, &tempsec, nullptr, nullptr, false)->lightlevel;
     walllights = GetLightTable(rw_lightlevel);
     walllightsnext = GetLightTable(rw_lightlevel + 1);
 

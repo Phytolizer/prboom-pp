@@ -171,7 +171,7 @@ void *NewIntDynArray(int dimCount, int *dims)
     buffer = std::calloc(1, bufferSize);
     if (!buffer)
     {
-        return 0;
+        return nullptr;
     }
 
     tableOffset = 0;

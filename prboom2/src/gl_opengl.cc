@@ -548,7 +548,7 @@ void gld_InitOpenGL(dboolean compatibility_mode)
     }
 
     // init global variables
-    RGBAFormat.palette = 0;
+    RGBAFormat.palette = nullptr;
     RGBAFormat.BitsPerPixel = 32;
     RGBAFormat.BytesPerPixel = 4;
 #if SDL_BYTEORDER == SDL_BIG_ENDIAN

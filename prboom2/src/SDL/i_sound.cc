@@ -799,7 +799,7 @@ static void Exp_ShutdownMusic(void);
 
 #include "mus2mid.hh"
 
-static Mix_Music *music[2] = {nullptr, NULL};
+static Mix_Music *music[2] = {nullptr, nullptr};
 
 // Some tracks are directly streamed from the RWops;
 // we need to free them in the end

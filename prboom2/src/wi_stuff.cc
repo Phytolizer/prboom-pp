@@ -306,10 +306,10 @@ static int cnt_pause;
 //
 
 // You Are Here graphic
-static const char *yah[3] = {"WIURH0", "WIURH1", 0};
+static const char *yah[3] = {"WIURH0", "WIURH1", nullptr};
 
 // splat
-static const char *splat[2] = {"WISPLAT", 0};
+static const char *splat[2] = {"WISPLAT", nullptr};
 
 // %, : graphics
 static const char percent[] = {"WIPCNT"};
@@ -478,7 +478,7 @@ void WI_drawLF(void)
     int y = WI_TITLEY;
     char lname[9];
 
-    if (wbs->lastmapinfo != nullptr && wbs->lastmapinfo->levelname != NULL &&
+    if (wbs->lastmapinfo != nullptr && wbs->lastmapinfo->levelname != nullptr &&
         wbs->lastmapinfo->levelpic[0] == 0)
     {
         // The level defines a new name but no texture for the name.
@@ -522,7 +522,7 @@ void WI_drawEL(void)
     V_DrawNamePatch((320 - V_NamePatchWidth(entering)) / 2, y, FB, entering,
                     CR_DEFAULT, VPT_STRETCH);
 
-    if (wbs->nextmapinfo != nullptr && wbs->nextmapinfo->levelname != NULL &&
+    if (wbs->nextmapinfo != nullptr && wbs->nextmapinfo->levelname != nullptr &&
         wbs->nextmapinfo->levelpic[0] == 0)
     {
         y += (5 * V_NamePatchHeight(entering)) / 4;
@@ -1189,14 +1189,14 @@ void WI_updateDeathmatchStats(void)
             }
         }
 
-        S_StartSound(0, sfx_barexp); // bang
+        S_StartSound(nullptr, sfx_barexp); // bang
         dm_state = 4; // we're done with all 4 (or all we have to do)
     }
 
     if (dm_state == 2)
     {
         if (!(bcnt & 3))
-            S_StartSound(0, sfx_pistol); // noise while counting
+            S_StartSound(nullptr, sfx_pistol); // noise while counting
 
         stillticking = false;
 
@@ -1235,7 +1235,7 @@ void WI_updateDeathmatchStats(void)
 
         if (!stillticking)
         {
-            S_StartSound(0, sfx_barexp);
+            S_StartSound(nullptr, sfx_barexp);
             dm_state++;
         }
     }
@@ -1243,7 +1243,7 @@ void WI_updateDeathmatchStats(void)
     {
         if (acceleratestage)
         {
-            S_StartSound(0, sfx_slop);
+            S_StartSound(nullptr, sfx_slop);
 
             if (gamemode == commercial)
                 WI_initNoState();
@@ -1462,14 +1462,14 @@ void WI_updateNetgameStats(void)
             if (dofrags)
                 cnt_frags[i] = WI_fragSum(i); // we had frags
         }
-        S_StartSound(0, sfx_barexp); // bang
+        S_StartSound(nullptr, sfx_barexp); // bang
         ng_state = 10;
     }
 
     if (ng_state == 2)
     {
         if (!(bcnt & 3))
-            S_StartSound(0, sfx_pistol); // pop
+            S_StartSound(nullptr, sfx_pistol); // pop
 
         stillticking = false;
 
@@ -1488,14 +1488,14 @@ void WI_updateNetgameStats(void)
 
         if (!stillticking)
         {
-            S_StartSound(0, sfx_barexp);
+            S_StartSound(nullptr, sfx_barexp);
             ng_state++;
         }
     }
     else if (ng_state == 4)
     {
         if (!(bcnt & 3))
-            S_StartSound(0, sfx_pistol);
+            S_StartSound(nullptr, sfx_pistol);
 
         stillticking = false;
 
@@ -1513,14 +1513,14 @@ void WI_updateNetgameStats(void)
 
         if (!stillticking)
         {
-            S_StartSound(0, sfx_barexp);
+            S_StartSound(nullptr, sfx_barexp);
             ng_state++;
         }
     }
     else if (ng_state == 6)
     {
         if (!(bcnt & 3))
-            S_StartSound(0, sfx_pistol);
+            S_StartSound(nullptr, sfx_pistol);
 
         stillticking = false;
 
@@ -1546,14 +1546,14 @@ void WI_updateNetgameStats(void)
 
         if (!stillticking)
         {
-            S_StartSound(0, sfx_barexp);
+            S_StartSound(nullptr, sfx_barexp);
             ng_state += 1 + 2 * !dofrags;
         }
     }
     else if (ng_state == 8)
     {
         if (!(bcnt & 3))
-            S_StartSound(0, sfx_pistol);
+            S_StartSound(nullptr, sfx_pistol);
 
         stillticking = false;
 
@@ -1572,7 +1572,7 @@ void WI_updateNetgameStats(void)
 
         if (!stillticking)
         {
-            S_StartSound(0, sfx_pldeth);
+            S_StartSound(nullptr, sfx_pldeth);
             ng_state++;
         }
     }
@@ -1580,7 +1580,7 @@ void WI_updateNetgameStats(void)
     {
         if (acceleratestage)
         {
-            S_StartSound(0, sfx_sgcock);
+            S_StartSound(nullptr, sfx_sgcock);
             if (gamemode == commercial)
                 WI_initNoState();
             else
@@ -1728,7 +1728,7 @@ void WI_updateStats(void)
         cnt_total_time = wbs->totaltimes / TICRATE;
         cnt_time = plrs[me].stime / TICRATE;
         cnt_par = wbs->partime / TICRATE;
-        S_StartSound(0, sfx_barexp);
+        S_StartSound(nullptr, sfx_barexp);
         sp_state = 10;
     }
 
@@ -1737,12 +1737,12 @@ void WI_updateStats(void)
         cnt_kills[0] += 2;
 
         if (!(bcnt & 3))
-            S_StartSound(0, sfx_pistol);
+            S_StartSound(nullptr, sfx_pistol);
 
         if (cnt_kills[0] >= (plrs[me].skills * 100) / wbs->maxkills)
         {
             cnt_kills[0] = (plrs[me].skills * 100) / wbs->maxkills;
-            S_StartSound(0, sfx_barexp);
+            S_StartSound(nullptr, sfx_barexp);
             sp_state++;
         }
     }
@@ -1751,12 +1751,12 @@ void WI_updateStats(void)
         cnt_items[0] += 2;
 
         if (!(bcnt & 3))
-            S_StartSound(0, sfx_pistol);
+            S_StartSound(nullptr, sfx_pistol);
 
         if (cnt_items[0] >= (plrs[me].sitems * 100) / wbs->maxitems)
         {
             cnt_items[0] = (plrs[me].sitems * 100) / wbs->maxitems;
-            S_StartSound(0, sfx_barexp);
+            S_StartSound(nullptr, sfx_barexp);
             sp_state++;
         }
     }
@@ -1765,7 +1765,7 @@ void WI_updateStats(void)
         cnt_secret[0] += 2;
 
         if (!(bcnt & 3))
-            S_StartSound(0, sfx_pistol);
+            S_StartSound(nullptr, sfx_pistol);
 
         // killough 2/22/98: Make secrets = 100% if maxsecret = 0:
         if ((!wbs->maxsecret && compatibility_level < lxdoom_1_compatibility) ||
@@ -1776,7 +1776,7 @@ void WI_updateStats(void)
             cnt_secret[0] =
                 (wbs->maxsecret ? (plrs[me].ssecret * 100) / wbs->maxsecret
                                 : 100);
-            S_StartSound(0, sfx_barexp);
+            S_StartSound(nullptr, sfx_barexp);
             sp_state++;
         }
     }
@@ -1784,7 +1784,7 @@ void WI_updateStats(void)
     {
         if (!(bcnt & 3) && play_early_explosion) // e6y: do not play count sound
                                                  // after explosion sound
-            S_StartSound(0, sfx_pistol);
+            S_StartSound(nullptr, sfx_pistol);
 
         cnt_time += 3;
 
@@ -1812,7 +1812,7 @@ void WI_updateStats(void)
                 if (compatibility_level < lxdoom_1_compatibility)
                     cnt_total_time = wbs->totaltimes / TICRATE;
 
-                S_StartSound(0, sfx_barexp);
+                S_StartSound(nullptr, sfx_barexp);
                 play_early_explosion = false; // do not play it twice or more
             }
         }
@@ -1831,7 +1831,7 @@ void WI_updateStats(void)
 
                 if (!modifiedgame) // e6y: do not play explosion sound if it was
                                    // already played
-                    S_StartSound(0, sfx_barexp);
+                    S_StartSound(nullptr, sfx_barexp);
                 sp_state++;
             }
         }
@@ -1840,7 +1840,7 @@ void WI_updateStats(void)
     {
         if (acceleratestage)
         {
-            S_StartSound(0, sfx_sgcock);
+            S_StartSound(nullptr, sfx_sgcock);
 
             if (gamemode == commercial)
                 WI_initNoState();

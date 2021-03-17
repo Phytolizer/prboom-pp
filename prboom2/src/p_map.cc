@@ -560,7 +560,7 @@ static dboolean PIT_CheckThing(mobj_t *thing) // killough 3/26/98: make static
         (thing->type ^ MT_SKULL) |        // (but Barons & Knights
             (tmthing->type ^ MT_PAIN))    // are intentionally not)
     {
-        P_DamageMobj(thing, nullptr, NULL, thing->health); // kill object
+        P_DamageMobj(thing, nullptr, nullptr, thing->health); // kill object
         return true;
     }
 
@@ -2146,7 +2146,7 @@ dboolean PIT_ChangeSector(mobj_t *thing)
     if (thing->flags & MF_TOUCHY &&
         (thing->intflags & MIF_ARMED || sentient(thing)))
     {
-        P_DamageMobj(thing, nullptr, NULL, thing->health); // kill object
+        P_DamageMobj(thing, nullptr, nullptr, thing->health); // kill object
         return true;                                    // keep checking
     }
 
@@ -2161,7 +2161,7 @@ dboolean PIT_ChangeSector(mobj_t *thing)
     if (crushchange && !(leveltime & 3))
     {
         int t;
-        P_DamageMobj(thing, nullptr, NULL, 10);
+        P_DamageMobj(thing, nullptr, nullptr, 10);
         dsda_WatchCrush(thing, 10);
 
         // spray blood in a random direction

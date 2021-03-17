@@ -1196,7 +1196,7 @@ Channel *Channel__BlockTemplate(Channel *self, Chip *chip, Bit32u samples,
     default:
         abort();
     }
-    return 0;
+    return nullptr;
 }
 
 /*

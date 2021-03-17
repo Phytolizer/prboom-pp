@@ -1319,7 +1319,7 @@ static void DoLooseFiles(void)
                   // assume wad if no extension or length of the extention is
                   // not equal to 3 must be last entrie
                   {"", &wads, &wadcount},
-                  {0}};
+                  {nullptr}};
 
     struct
     {
@@ -1329,7 +1329,7 @@ static void DoLooseFiles(void)
     } params[] = {{"-file", &wads, &wadcount},
                   {"-deh", &dehs, &dehcount},
                   {"-playdemo", &lmps, &lmpcount},
-                  {0}};
+                  {nullptr}};
 
     wads = static_cast<char **>(malloc(myargc * sizeof(*wads)));
     lmps = static_cast<char **>(malloc(myargc * sizeof(*lmps)));

@@ -52,18 +52,18 @@ void gld_FreeDrawInfo(void)
         if (gld_drawinfo.data[i].data)
         {
             free(gld_drawinfo.data[i].data);
-            gld_drawinfo.data[i].data = 0;
+            gld_drawinfo.data[i].data = nullptr;
         }
     }
     free(gld_drawinfo.data);
-    gld_drawinfo.data = 0;
+    gld_drawinfo.data = nullptr;
 
     for (i = 0; i < GLDIT_TYPES; i++)
     {
         if (gld_drawinfo.items[i])
         {
             free(gld_drawinfo.items[i]);
-            gld_drawinfo.items[i] = 0;
+            gld_drawinfo.items[i] = nullptr;
         }
     }
 

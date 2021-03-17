@@ -1177,7 +1177,7 @@ static void gld_PreprocessSectors(void)
     if (numnodes)
     {
         if (nodesVersion == 0)
-            gld_CarveFlats(numnodes - 1, 0, 0);
+            gld_CarveFlats(numnodes - 1, 0, nullptr);
         else
             gld_GetSubSectorVertices();
     }
@@ -1326,7 +1326,7 @@ void gld_ProcessTexturedMap(void)
     {
         triangulate_subsectors = 1;
         if (nodesVersion == 0)
-            gld_CarveFlats(numnodes - 1, 0, 0);
+            gld_CarveFlats(numnodes - 1, 0, nullptr);
         else
             gld_GetSubSectorVertices();
         triangulate_subsectors = 0;

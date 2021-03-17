@@ -535,7 +535,7 @@ static void R_DemoEx_GetParams(const byte *pwad_p, waddata_t *waddata)
     data = static_cast<const char *>(W_CacheLumpNum(lump));
     strncpy(str, data, size);
 
-    M_ParseCmdLine(str, nullptr, NULL, &paramscount, &i);
+    M_ParseCmdLine(str, nullptr, nullptr, &paramscount, &i);
 
     params =
         malloc<char **>(paramscount * sizeof(char *) + i * sizeof(char) + 1);

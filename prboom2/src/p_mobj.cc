@@ -551,7 +551,7 @@ static void P_ZMovement(mobj_t *mo)
                 /* killough 11/98: touchy objects explode on impact */
                 if (mo->flags & MF_TOUCHY && mo->intflags & MIF_ARMED &&
                     mo->health > 0)
-                    P_DamageMobj(mo, nullptr, NULL, mo->health);
+                    P_DamageMobj(mo, nullptr, nullptr, mo->health);
                 else if (mo->flags & MF_FLOAT && sentient(mo))
                     goto floater;
                 return;
@@ -713,7 +713,7 @@ floater:
             /* killough 11/98: touchy objects explode on impact */
             if (mo->flags & MF_TOUCHY && mo->intflags & MIF_ARMED &&
                 mo->health > 0)
-                P_DamageMobj(mo, nullptr, NULL, mo->health);
+                P_DamageMobj(mo, nullptr, nullptr, mo->health);
             else
             {
                 // heretic_note: probably not necessary?

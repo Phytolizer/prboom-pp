@@ -62,7 +62,7 @@ GLuint CaptureScreenAsTexID(void)
 
     glTexImage2D(GL_TEXTURE_2D, 0, 3, gld_GetTexDimension(SCREENWIDTH),
                  gld_GetTexDimension(SCREENHEIGHT), 0, GL_RGB, GL_UNSIGNED_BYTE,
-                 0);
+                 nullptr);
 
     glCopyTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, 0, 0, SCREENWIDTH,
                         SCREENHEIGHT);

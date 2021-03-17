@@ -235,10 +235,10 @@ void P_UnArchiveWorld(void)
         sec->lightlevel = *get++;
         sec->special = *get++;
         sec->tag = *get++;
-        sec->ceilingdata = 0; // jff 2/22/98 now three thinker fields, not two
-        sec->floordata = 0;
-        sec->lightingdata = 0;
-        sec->soundtarget = 0;
+        sec->ceilingdata = nullptr; // jff 2/22/98 now three thinker fields, not two
+        sec->floordata = nullptr;
+        sec->lightingdata = nullptr;
+        sec->soundtarget = nullptr;
     }
 
     // do lines
@@ -1031,7 +1031,7 @@ void P_TrueUnArchiveThinkers(void)
 
         // first table entry special: 0 maps to nullptr
         *(mobj_p = static_cast<mobj_t **>(malloc(
-              (mobj_count + 1) * sizeof *mobj_p))) = 0; // table of pointers
+              (mobj_count + 1) * sizeof *mobj_p))) = nullptr; // table of pointers
         save_p = sp;                                    // restore save pointer
     }
 
