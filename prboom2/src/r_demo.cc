@@ -1140,7 +1140,7 @@ static int G_ReadDemoFooter(const char *filename)
     {
         const char *tmp_dir;
         char *tmp_path = nullptr;
-        const char *template_format = "%sdsda-doom-demoex-XXXXXX";
+        const char *template_format = "%sprboom-pp-demoex-XXXXXX";
 
         tmp_dir = I_GetTempDir();
         if (tmp_dir && *tmp_dir != '\0')

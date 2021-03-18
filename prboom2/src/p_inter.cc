@@ -1220,7 +1220,8 @@ void P_DamageMobj(mobj_t *target, mobj_t *inflictor, mobj_t *source, int damage)
         }
     }
 
-    if (P_Random(pr_one_shot) % 100 < one_shot_probability)
+    if (!demoplayback && !demorecording && !demo_insurance &&
+        P_Random(pr_one_shot) % 100 < one_shot_probability)
     {
         // KAZAP
         damage = target->info->spawnhealth * 3;
