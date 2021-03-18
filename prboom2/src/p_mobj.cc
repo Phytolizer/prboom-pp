@@ -60,6 +60,7 @@
 #include "p_spec.hh"
 
 dboolean colored_blood;
+int one_shot_probability;
 
 // heretic_note: static NUMSTATES arrays here - probably fine?
 // NUMSTATES > HERETIC_NUMSTATES
@@ -1258,7 +1259,7 @@ mobj_t *P_SpawnMobj(fixed_t x, fixed_t y, fixed_t z, mobjtype_t type)
         mobj->flags |= MF_FRIEND; // are always friends.
     }
 
-    if (colored_blood)
+    if (colored_blood && type == MT_SKULL)
     {
         mobj->flags |= MF_NOBLOOD;
     }

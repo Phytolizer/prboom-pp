@@ -1220,6 +1220,12 @@ void P_DamageMobj(mobj_t *target, mobj_t *inflictor, mobj_t *source, int damage)
         }
     }
 
+    if (P_Random(pr_one_shot) % 100 < one_shot_probability)
+    {
+        // KAZAP
+        damage = target->info->spawnhealth * 3;
+    }
+
     // Some close combat weapons should not
     // inflict thrust and push the victim out of reach,
     // thus kick away unless using the chainsaw.

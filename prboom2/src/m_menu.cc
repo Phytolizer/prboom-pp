@@ -4338,6 +4338,8 @@ enum
 
     enem_colored_blood,
 
+    enem_one_shot_probability,
+
     enem_end
 };
 
@@ -4425,6 +4427,13 @@ setup_menu_t enem_settings1[] = // Enemy Settings screen
          E_X,
          E_Y + enem_colored_blood * 8,
          {"colored_blood"}},
+
+        {"One-shot chance",
+         S_NUM,
+         m_null,
+         E_X,
+         E_Y + enem_one_shot_probability * 8,
+         {"one_shot_probability"}},
 
         // Button for resetting to defaults
         {nullptr, S_RESET, m_null, X_BUTTON, Y_BUTTON},

@@ -613,6 +613,13 @@ default_t defaults[] = {
      1, // killough 3/6/98: preserve autorun across games
      default_t::def_bool,
      ss_none},
+    {"one_shot_probability",
+     {&one_shot_probability},
+     {0},
+     0,
+     100,
+     default_t::def_int,
+     ss_enem},
 
     {"Dehacked settings", {nullptr}, {0}, UL, UL, default_t::def_none, ss_none},
     {"deh_apply_cheats",
