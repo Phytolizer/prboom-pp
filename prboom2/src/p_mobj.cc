@@ -1258,6 +1258,11 @@ mobj_t *P_SpawnMobj(fixed_t x, fixed_t y, fixed_t z, mobjtype_t type)
         mobj->flags |= MF_FRIEND; // are always friends.
     }
 
+    if (colored_blood)
+    {
+        mobj->flags |= MF_NOBLOOD;
+    }
+
     mobj->health = info->spawnhealth;
 
     if (gameskill != sk_nightmare)
