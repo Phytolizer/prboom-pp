@@ -81,7 +81,7 @@ dboolean P_SetMobjState(mobj_t *mobj, statenum_t state)
     static int recursion;                       // detects recursion
     statenum_t i;                               // initial state
     dboolean ret;                               // return value
-    statenum_t tempstate[NUMSTATES];            // for use with recursion
+    statenum_t *tempstate = nullptr;            // for use with recursion
 
     if (heretic)
     {
@@ -93,9 +93,8 @@ dboolean P_SetMobjState(mobj_t *mobj, statenum_t state)
     ret = true;
 
     if (recursion++)
-    { // if recursion detected,
-        memset(seenstate = tempstate, 0, sizeof tempstate); // clear state table
-    }
+        seenstate = tempstate = static_cast<statenum_t *>(
+            calloc(NUMSTATES, sizeof(statenum_t))); // allocate state table
 
     do
     {
@@ -140,6 +139,9 @@ dboolean P_SetMobjState(mobj_t *mobj, statenum_t state)
                 0); // killough 4/9/98: erase memory of states
         }
     }
+
+    if (tempstate)
+        free(tempstate);
 
     return ret;
 }
@@ -2060,7 +2062,6 @@ uint_64_t P_ColoredBlood(mobj_t *bleeder)
             return MF_COLOREDBLOOD | MF_TRANSLATION1;
         }
     }
-
     return 0;
 }
 
