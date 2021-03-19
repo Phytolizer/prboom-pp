@@ -1660,7 +1660,7 @@ doom_mobjinfo_t doom_mobjinfo[NUMMOBJTYPES] = {
         0,             // attacksound
         S_HEAD_PAIN,   // painstate
         128,           // painchance
-        sfx_cacopain,    // painsound
+        sfx_cacopain,  // painsound
         0,             // meleestate
         S_HEAD_ATK1,   // missilestate
         S_HEAD_DIE1,   // deathstate
@@ -1671,7 +1671,7 @@ doom_mobjinfo_t doom_mobjinfo[NUMMOBJTYPES] = {
         56 * FRACUNIT, // height
         400,           // mass
         0,             // damage
-        sfx_cacoact,     // activesound
+        sfx_cacoact,   // activesound
         MF_SOLID | MF_SHOOTABLE | MF_FLOAT | MF_NOGRAVITY |
             MF_COUNTKILL, // flags
         S_HEAD_RAISE1,    // raisestate
@@ -1758,7 +1758,7 @@ doom_mobjinfo_t doom_mobjinfo[NUMMOBJTYPES] = {
         0,                                      // attacksound
         S_BOS2_PAIN,                            // painstate
         50,                                     // painchance
-        sfx_dmpain,                             // painsound
+        sfx_knightpain,                         // painsound
         S_BOS2_ATK1,                            // meleestate
         S_BOS2_ATK1,                            // missilestate
         S_BOS2_DIE1,                            // deathstate
@@ -1769,7 +1769,7 @@ doom_mobjinfo_t doom_mobjinfo[NUMMOBJTYPES] = {
         64 * FRACUNIT,                          // height
         1000,                                   // mass
         0,                                      // damage
-        sfx_dmact,                              // activesound
+        sfx_knightact,                          // activesound
         MF_SOLID | MF_SHOOTABLE | MF_COUNTKILL, // flags
         S_BOS2_RAISE1,                          // raisestate
         MT_NULL,
