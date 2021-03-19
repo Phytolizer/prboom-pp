@@ -4,6 +4,10 @@ build/
 cmake-build-*
 .vscode/
 .idea/
+_lgtm_build_dir/
+_lgtm_detected_source_root
+merge_queue.txt
+db/
 
 /dependencies*
 
