@@ -35,6 +35,7 @@
  *--------------------------------------------------------------------*/
 
 // killough 5/2/98: fixed headers, removed rendunant external declarations:
+#include <algorithm>
 #include "doomdef.hh"
 #include "doomtype.hh"
 #include "doomstat.hh"
@@ -941,7 +942,7 @@ using deh_block = struct
 #define DEH_BUFFERMAX 1024 // input buffer area size, hardcodedfor now
 // killough 8/9/98: make DEH_BLOCKMAX self-adjusting
 #define DEH_BLOCKMAX (sizeof deh_blocks / sizeof *deh_blocks) // size of array
-#define DEH_MAXKEYLEN 32   // as much of any key as we'll look at
+#define DEH_MAXKEYLEN 32 // as much of any key as we'll look at
 #define DEH_MOBJINFOMAX 25 // number of ints in the mobjinfo_t structure (!)
 
 // Put all the block header values, and the function to be called when that
@@ -1307,7 +1308,7 @@ static thinker::types::ActionFunction deh_codeptr[NUMSTATES];
 // haleyjd: support for BEX SPRITES, SOUNDS, and MUSIC
 char *deh_spritenames[NUMSPRITES + 1];
 char *deh_musicnames[NUMMUSIC + 1];
-char *deh_soundnames[NUMSFX + 1];
+std::vector<std::string> deh_soundnames[NUMSFX + 1];
 
 void D_BuildBEXTables()
 {
@@ -1351,17 +1352,21 @@ void D_BuildBEXTables()
 
     for (i = 1; i < num_sfx; i++)
     {
-        if (S_sfx[i].name != nullptr)
+        if (!S_sfx[i].names.empty())
         {
-            deh_soundnames[i] = strdup(S_sfx[i].name);
+            deh_soundnames[i].resize(S_sfx[i].names.size());
+            std::transform(S_sfx[i].names.begin(), S_sfx[i].names.end(),
+                           deh_soundnames[i].begin(), [](const auto &sv) {
+                               return std::string{sv.begin(), sv.end()};
+                           });
         }
         else
         { // This is possible due to how DEHEXTRA has turned S_sfx into a sparse
           // array
-            deh_soundnames[i] = nullptr;
+            deh_soundnames[i] = {};
         }
     }
-    deh_soundnames[0] = deh_soundnames[num_sfx] = nullptr;
+    deh_soundnames[0] = deh_soundnames[num_sfx] = {};
 
     // ferk: initialize Thing extra properties (keeping vanilla props in info.c)
     for (i = 0; i < num_mobj_types; i++)
@@ -2435,7 +2440,7 @@ static void deh_procSounds(DEHFILE *fpin, FILE *fpout, char *line)
         }
         else if (!deh_strcasecmp(key, deh_sfxinfo[8]))
         { // Neg. One 2
-            S_sfx[indexnum].lumpnum = (int)value;
+            S_sfx[indexnum].lumpnums = {(int)value};
         }
         else if (fpout)
         {
@@ -3125,24 +3130,27 @@ static void deh_procText(DEHFILE *fpin, FILE *fpout, char *line)
         for (i = 1; i < num_sfx; i++)
         {
             // skip empty dummy entries in S_sfx[]
-            if (!S_sfx[i].name)
+            if (S_sfx[i].names.empty())
             {
                 continue;
             }
             // avoid short prefix erroneous match
-            if (strlen(S_sfx[i].name) != (size_t)fromlen)
+            // TODO support renaming all sfx in DEH files
+            if (strlen(S_sfx[i].names[0].data()) != (size_t)fromlen)
             {
                 continue;
             }
-            if (!strnicmp(S_sfx[i].name, inbuffer, fromlen) && !S_sfx_state[i])
+            if (!strnicmp(S_sfx[i].names[0].data(), inbuffer, fromlen) &&
+                !S_sfx_state[i])
             {
                 if (fpout)
                 {
                     fprintf(fpout, "Changing name of sfx from %s to %*s\n",
-                            S_sfx[i].name, usedlen, &inbuffer[fromlen]);
+                            S_sfx[i].names[0].data(), usedlen,
+                            &inbuffer[fromlen]);
                 }
 
-                S_sfx[i].name = strdup(&inbuffer[fromlen]);
+                S_sfx[i].names[0] = strdup(&inbuffer[fromlen]);
 
                 // e6y: flag the SFX as changed
                 S_sfx_state[i] = true;
@@ -3603,17 +3611,17 @@ static void deh_procBexSounds(DEHFILE *fpin, FILE *fpout, char *line)
         }
 
         rover = 1;
-        while (deh_soundnames[rover])
+        while (!deh_soundnames[rover].empty())
         {
-            if (!strncasecmp(deh_soundnames[rover], key, 6))
+            if (!strncasecmp(deh_soundnames[rover][0].c_str(), key, 6))
             {
                 if (fpout)
                 {
                     fprintf(fpout, "Substituting '%s' for sound '%s'\n",
-                            candidate, deh_soundnames[rover]);
+                            candidate, deh_soundnames[rover][0].c_str());
                 }
 
-                S_sfx[rover].name = strdup(candidate);
+                S_sfx[rover].names[0] = candidate;
                 break;
             }
             rover++;

@@ -33,6 +33,8 @@
 // killough 3/7/98: modified to allow arbitrary listeners in spy mode
 // killough 5/2/98: reindented, removed useless code, beautified
 
+#include "doomtype.hh"
+#include "sounds.hh"
 #ifdef HAVE_CONFIG_H
 #include "config.h"
 #endif
@@ -163,7 +165,8 @@ void S_Init(int sfxVolume, int musicVolume)
         // Note that sounds have not been cached (yet).
         for (i = 1; i < num_sfx; i++)
         {
-            S_sfx[i].lumpnum = S_sfx[i].usefulness = -1;
+            S_sfx[i].lumpnums = {-1};
+            S_sfx[i].usefulness = -1;
         }
     }
 
@@ -279,9 +282,12 @@ void S_Start()
 
 void S_StartSoundAtVolume(void *origin_p, int sfx_id, int volume)
 {
-    int sep, pitch, priority, cnum, is_pickup;
-    sfxinfo_t *sfx;
-    mobj_t *origin = (mobj_t *)origin_p;
+    int sep;
+    int pitch;
+    int priority;
+    int cnum;
+    int is_pickup;
+    auto *origin = static_cast<mobj_t *>(origin_p);
 
     if (heretic)
     {
@@ -310,10 +316,10 @@ void S_StartSoundAtVolume(void *origin_p, int sfx_id, int volume)
         I_Error("S_StartSoundAtVolume: Bad sfx #: %d", sfx_id);
     }
 
-    sfx = &S_sfx[sfx_id];
+    sfxinfo_t *sfx = &S_sfx[sfx_id];
 
     // Initialize sound parameters
-    if (sfx->link)
+    if (sfx->link != nullptr)
     {
         pitch = sfx->pitch;
         priority = sfx->priority;
@@ -338,13 +344,14 @@ void S_StartSoundAtVolume(void *origin_p, int sfx_id, int volume)
     // Check to see if it is audible, modify the params
     // killough 3/7/98, 4/25/98: code rearranged slightly
 
-    if (!origin || (origin == players[displayplayer].mo && walkcamera.type < 2))
+    if ((origin == nullptr) ||
+        (origin == players[displayplayer].mo && walkcamera.type < 2))
     {
         sep = NORM_SEP;
         volume *= 8;
     }
-    else if (!S_AdjustSoundParams(players[displayplayer].mo, origin, &volume,
-                                  &sep, &pitch))
+    else if (S_AdjustSoundParams(players[displayplayer].mo, origin, &volume,
+                                 &sep, &pitch) == 0)
     {
         return;
     }
@@ -395,10 +402,13 @@ void S_StartSoundAtVolume(void *origin_p, int sfx_id, int volume)
 
     // get lumpnum if necessary
     // killough 2/28/98: make missing sounds non-fatal
-    if (sfx->lumpnum < 0 && (sfx->lumpnum = I_GetSfxLumpNum(sfx)) < 0)
+    std::vector<int> sfxLumps = I_GetSfxLumpNums(sfx);
+    if (sfx->lumpnums.size() == 1 && sfx->lumpnums[0] < 0 &&
+        sfxLumps.size() == 1 && sfxLumps[0] < 0)
     {
         return;
     }
+    sfx->lumpnums = sfxLumps;
 
     // increase the usefulness
     if (sfx->usefulness++ < 0)
@@ -1161,9 +1171,9 @@ static void Heretic_S_StartSound(void *_origin, int sound_id)
         }
     }
 
-    if (sfx->lumpnum <= 0)
+    if (sfx->lumpnums.size() == 1 && sfx->lumpnums[0] <= 0)
     {
-        sfx->lumpnum = I_GetSfxLumpNum(sfx);
+        sfx->lumpnums = I_GetSfxLumpNums(sfx);
     }
 
     vol = soundCurve[dist];
@@ -1243,9 +1253,9 @@ static void Heretic_S_StartSoundAtVolume(void *_origin, int sound_id,
         return;
     }
 
-    if (sfx->lumpnum <= 0)
+    if (sfx->lumpnums[0] <= 0)
     {
-        sfx->lumpnum = I_GetSfxLumpNum(sfx);
+        sfx->lumpnums = I_GetSfxLumpNums(sfx);
     }
 
     channels[i].pitch =

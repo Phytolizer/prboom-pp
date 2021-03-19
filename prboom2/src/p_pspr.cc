@@ -1055,7 +1055,7 @@ void A_FireCGun(player_t *player, pspdef_t *psp)
 
     if (player->ammo[weaponinfo[player->readyweapon].ammo] || comp[comp_sound])
     {
-        S_StartSound(player->mo, sfx_pistol);
+        S_StartSound(player->mo, sfx_player_chaingun);
     }
 
     if (!player->ammo[weaponinfo[player->readyweapon].ammo])

@@ -370,7 +370,7 @@ void gld_Init(int width, int height)
                 len = MIN(len, sizeof(ext_name) - 1);
                 memset(ext_name, 0, sizeof(ext_name));
                 strncpy(ext_name, rover, len);
-                lprintf(LO_INFO, "\t%s\n", ext_name);
+//                lprintf(LO_INFO, "\t%s\n", ext_name);
             }
             rover = p;
             while (*rover && *rover == ' ')

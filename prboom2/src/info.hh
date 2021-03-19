@@ -36,6 +36,8 @@
 #ifndef __INFO__
 #define __INFO__
 
+#include <vector>
+
 /* Needed for action function pointer handling. */
 #include "d_think.hh"
 #include "doomtype.hh"
@@ -3256,9 +3258,13 @@ struct doom_mobjinfo_t
     uint_64_t flags;
     int raisestate = S_NULL;
     mobjtype_t droppeditem = MT_NULL;
+    int uniqueattacksound;
+    int uniquepainsound;
+    int uniquedeathsound;
+    int uniqueactivesound;
 };
 
-typedef struct
+struct heretic_mobjinfo_t
 {
     int doomednum;
     int spawnstate;
@@ -3284,7 +3290,7 @@ typedef struct
     int activesound;
     int flags;
     int flags2;
-} heretic_mobjinfo_t;
+};
 
 // all the stuff - dynamically selected in global.c
 

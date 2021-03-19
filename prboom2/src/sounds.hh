@@ -35,22 +35,24 @@
 #ifndef __SOUNDS__
 #define __SOUNDS__
 
+#include "doomtype.hh"
+#include <vector>
+#include <string_view>
+
 //
 // SoundFX struct.
 //
 
 struct sfxinfo_struct;
 
-typedef struct sfxinfo_struct sfxinfo_t;
-
-struct sfxinfo_struct
+struct sfxinfo_t
 {
 
     // up to 6-character name
-    const char *name; // CPhipps - const
+    std::vector<std::string_view> names;
 
     // Sfx singularity (only one at a time)
-    int singularity;
+    dboolean singularity;
 
     // Sfx priority
     int priority;
@@ -73,10 +75,12 @@ struct sfxinfo_struct
     int usefulness;
 
     // lump number of sfx
-    int lumpnum;
+    std::vector<int> lumpnums = {-1};
 
     // heretic - total number of channels a sound type may occupy
     int numchannels;
+
+    std::vector<std::string_view> altNames;
 };
 
 //
@@ -102,7 +106,7 @@ struct musicinfo_t
 // Identifiers for all music in game.
 //
 
-typedef enum
+enum musicenum_t
 {
     mus_None,
     mus_e1m1,
@@ -233,13 +237,13 @@ typedef enum
     heretic_mus_intr,
     heretic_mus_cptd,
     HERETIC_NUMMUSIC
-} musicenum_t;
+};
 
 //
 // Identifiers for all sfx in game.
 //
 
-typedef enum
+enum sfxenum_t
 {
     sfx_None,
     sfx_pistol,
@@ -362,6 +366,44 @@ typedef enum
     sfx_secret,
     sfx_gibdth,
     // Everything from here to 500 is reserved
+
+    // Per-enemy/randomized sounds
+    sfx_player_chaingun,
+    sfx_cpos_chaingun,
+    sfx_plsexpl,
+    sfx_tracerexp,
+    sfx_pinkyact,
+    sfx_baronact,
+    sfx_baronatk,
+    sfx_cacoact,
+    sfx_cacopain,
+    sfx_cacosht,
+    sfx_soulpain,
+    sfx_soulact,
+    sfx_souldth,
+    sfx_masteract,
+    sfx_masterpain,
+    sfx_bsppain,
+    sfx_bspsht,
+    sfx_splsexp,
+    sfx_cyberpain,
+    sfx_cyberact,
+    sfx_peact,
+    sfx_sssht,
+    sfx_cposit,
+    sfx_cposact,
+    sfx_cpospain,
+    sfx_cposdth,
+    sfx_knightact,
+    sfx_knightpain,
+    sfx_revpain,
+    sfx_revpnch,
+    sfx_mancact,
+    sfx_mancsht,
+    sfx_mancexp,
+    sfx_bshtexp,
+    sfx_vilres,
+    sfx_vilexp,
 
     /* Free sound effect slots for DEHEXTRA. Offset agreed upon with Eternity
      * devs. -SH */
@@ -715,7 +757,7 @@ typedef enum
     heretic_sfx_amb10,
     heretic_sfx_amb11,
     HERETIC_NUMSFX
-} sfxenum_t;
+};
 
 // all the stuff - dynamically selected in global.c
 

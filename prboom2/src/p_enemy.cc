@@ -52,6 +52,7 @@
 #include "lprintf.hh"
 #include "e6y.hh" //e6y
 #include "dsda.hh"
+#include "w_wad.hh"
 
 static mobj_t *current_actor;
 
@@ -1639,7 +1640,14 @@ void A_CPosAttack(mobj_t *actor)
     {
         return;
     }
-    S_StartSound(actor, sfx_shotgn);
+    if (actor->type == MT_WOLFSS)
+    {
+        S_StartSound(actor, sfx_sssht);
+    }
+    else
+    {
+        S_StartSound(actor, sfx_cpos_chaingun);
+    }
     A_FaceTarget(actor);
     bangle = actor->angle;
     slope =
@@ -2020,7 +2028,7 @@ void A_SkelFist(mobj_t *actor)
     if (P_CheckMeleeRange(actor))
     {
         int damage = ((P_Random(pr_skelfist) % 10) + 1) * 6;
-        S_StartSound(actor, sfx_skepch);
+        S_StartSound(actor, sfx_revpnch);
         P_DamageMobj(actor->target, actor, actor, damage);
     }
 }
@@ -2147,7 +2155,7 @@ void A_VileChase(mobj_t *actor)
                     actor->target = temp;
 
                     P_SetMobjState(actor, S_VILE_HEAL1);
-                    S_StartSound(corpsehit, sfx_slop);
+                    S_StartSound(corpsehit, sfx_vilres);
                     info = corpsehit->info;
 
                     P_SetMobjState(corpsehit,
@@ -2303,7 +2311,7 @@ void A_VileAttack(mobj_t *actor)
         return;
     }
 
-    S_StartSound(actor, sfx_barexp);
+    S_StartSound(actor, sfx_vilexp);
     P_DamageMobj(actor->target, actor, actor, 20);
     actor->target->momz = 1000 * FRACUNIT / actor->target->info->mass;
 
@@ -2651,7 +2659,6 @@ void A_SkullPop(mobj_t *actor)
 {
     mobj_t *mo;
     player_t *player;
-    int sfx_id;
 
     if (!heretic && (demorecording || demoplayback))
     {
@@ -2660,8 +2667,8 @@ void A_SkullPop(mobj_t *actor)
 
     if (!heretic)
     {
-        sfx_id =
-            (I_GetSfxLumpNum(&S_sfx[sfx_gibdth]) < 0 ? sfx_pldeth : sfx_gibdth);
+        int sfx_id = (I_GetSfxLumpNums(&S_sfx[sfx_gibdth])[0] < 0 ? sfx_pldeth
+                                                                  : sfx_gibdth);
         S_StartSound(actor, sfx_id);
     }
 

@@ -2779,8 +2779,8 @@ void P_PlayerInSpecialSector(player_t *player)
             if (hudadd_secretarea)
             {
                 int sfx_id =
-                    (I_GetSfxLumpNum(&S_sfx[sfx_secret]) < 0 ? sfx_itmbk
-                                                             : sfx_secret);
+                    (I_GetSfxLumpNums(&S_sfx[sfx_secret])[0] < 0 ? sfx_itmbk
+                                                                 : sfx_secret);
                 SetCustomMessage(player - players, STSTR_SECRETFOUND, 0,
                                  2 * TICRATE, CR_GOLD, sfx_id);
             }
@@ -2859,8 +2859,8 @@ void P_PlayerInSpecialSector(player_t *player)
             if (hudadd_secretarea)
             {
                 int sfx_id =
-                    (I_GetSfxLumpNum(&S_sfx[sfx_secret]) < 0 ? sfx_itmbk
-                                                             : sfx_secret);
+                    (I_GetSfxLumpNums(&S_sfx[sfx_secret])[0] < 0 ? sfx_itmbk
+                                                                 : sfx_secret);
                 SetCustomMessage(player - players, STSTR_SECRETFOUND, 0,
                                  2 * TICRATE, CR_GOLD, sfx_id);
             }

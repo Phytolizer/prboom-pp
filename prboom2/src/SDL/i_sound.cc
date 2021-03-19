@@ -32,10 +32,13 @@
  *-----------------------------------------------------------------------------
  */
 
+#include "m_random.hh"
 #ifdef HAVE_CONFIG_H
 #include "config.h"
 #endif
 #include <cmath>
+#include <string>
+#include <algorithm>
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif
@@ -306,7 +309,7 @@ void I_SetChannels()
 // Retrieve the raw data lump index
 //  for a given SFX name.
 //
-int I_GetSfxLumpNum(sfxinfo_t *sfx)
+std::vector<int> I_GetSfxLumpNums(sfxinfo_t *sfx)
 {
     char namebuf[9];
     const char *format;
@@ -316,11 +319,35 @@ int I_GetSfxLumpNum(sfxinfo_t *sfx)
         sfx = sfx->link;
     }
 
+    dboolean hasAlts =
+        !sfx->altNames.empty() &&
+        std::all_of(
+            sfx->altNames.begin(), sfx->altNames.end(), [](const auto &name) {
+                return W_SafeGetNumForName(
+                           (std::string{"ds"} + name.data()).c_str()) != -1;
+            });
+
     // Different prefix for PC speaker sound effects for doom.
     format = heretic ? "%s" : snd_pcspeaker ? "dp%s" : "ds%s";
 
-    sprintf(namebuf, format, sfx->name);
-    return W_SafeGetNumForName(namebuf); // e6y: make missing sounds non-fatal
+    if (hasAlts)
+    {
+        std::vector<int> lumpNums(sfx->altNames.size());
+        std::transform(sfx->altNames.begin(), sfx->altNames.end(),
+                       lumpNums.begin(), [](const auto &name) {
+                           return W_SafeGetNumForName(
+                               (std::string{"ds"} + name.data()).c_str());
+                       });
+        return lumpNums;
+    }
+
+    std::vector<int> lumpNums(sfx->names.size());
+    std::transform(sfx->names.begin(), sfx->names.end(), lumpNums.begin(),
+                   [](const auto &name) {
+                       return W_SafeGetNumForName(
+                           (std::string{"ds"} + name.data()).c_str());
+                   });
+    return lumpNums;
 }
 
 //
@@ -338,7 +365,6 @@ int I_GetSfxLumpNum(sfxinfo_t *sfx)
 int I_StartSound(int id, int channel, int vol, int sep, int pitch, int priority)
 {
     const unsigned char *data;
-    int lump;
     size_t len;
 
     if ((channel < 0) || (channel >= MAX_CHANNELS))
@@ -355,7 +381,20 @@ int I_StartSound(int id, int channel, int vol, int sep, int pitch, int priority)
         return I_PCS_StartSound(id, channel, vol, sep, pitch, priority);
     }
 
-    lump = S_sfx[id].lumpnum;
+    std::vector<int> lumps = S_sfx[id].lumpnums;
+
+    int lump;
+    if (lumps.size() > 1)
+    {
+        lump = lumps[M_Random() % lumps.size()];
+    }
+    else
+    {
+        lump = lumps[0];
+    }
+
+    lprintf(LO_CONFIRM, "Out of %zu lumps, %d was chosen for SFX #%d\n",
+            lumps.size(), lump, id);
 
     // We will handle the new SFX.
     // Set pointer to raw data.
@@ -688,7 +727,7 @@ void I_InitSound()
                 SAMPLECOUNT);
     }
     else
-#else  // HAVE_MIXER
+#else // HAVE_MIXER
     }
 #endif // HAVE_MIXER
     {
