@@ -328,10 +328,11 @@ std::vector<int> I_GetSfxLumpNums(sfxinfo_t *sfx)
             });
 
     // Different prefix for PC speaker sound effects for doom.
-    format = heretic ? "%s" : snd_pcspeaker ? "dp%s" : "ds%s";
+    format = heretic ? "%s" : (snd_pcspeaker ? "dp%s" : "ds%s");
 
     if (hasAlts)
     {
+        M_CheckParm("-forceoldbsp");
         std::vector<int> lumpNums(sfx->altNames.size());
         std::transform(sfx->altNames.begin(), sfx->altNames.end(),
                        lumpNums.begin(), [](const auto &name) {
@@ -727,7 +728,7 @@ void I_InitSound()
                 SAMPLECOUNT);
     }
     else
-#else // HAVE_MIXER
+#else  // HAVE_MIXER
     }
 #endif // HAVE_MIXER
     {
