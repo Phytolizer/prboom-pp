@@ -77,43 +77,7 @@ using midimem_t = struct
     std::size_t pos;
 };
 
-struct midi_meta_event_data_t
-{
-    // Meta event type:
-
-    midi_meta_event_type_t::Type type;
-
-    // Length:
-
-    unsigned int length;
-
-    // Meta event data:
-
-    byte *data;
-};
-
-struct midi_sysex_event_data_t
-{
-    // Length:
-
-    unsigned int length;
-
-    // Event data:
-
-    byte *data;
-};
-
-struct midi_channel_event_data_t
-{
-    // The channel number to which this applies:
-
-    unsigned int channel;
-
-    // Extra parameters:
-
-    unsigned int param1;
-    unsigned int param2;
-};
+#include "cpp/unions/MidiEventData.hh"
 
 struct midi_event_t
 {
@@ -121,14 +85,10 @@ struct midi_event_t
     unsigned int delta_time;
 
     // Type of event:
-    midi_event_type_t::Type event_type;
+    midi_event_type_t::Type event_type{midi_event_type_t::CONTROLLER};
 
-    union {
-        midi_channel_event_data_t channel;
-        midi_meta_event_data_t meta;
-        midi_sysex_event_data_t sysex;
-    } data;
-} ;
+    MidiEventData data;
+};
 
 // Load a MIDI file.
 

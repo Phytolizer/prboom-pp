@@ -22,3 +22,13 @@ ActionFunction
     fn ( friction_t* ) > void friction
     fn ( pusher_t* ) > void pusher
 }
+
+MidiEventData
+{
+    #MUSIC/midifile_events
+    @
+    :
+    midi_channel_event_data_t channel
+    midi_meta_event_data_t meta
+    midi_sysex_event_data_t sysex
+}

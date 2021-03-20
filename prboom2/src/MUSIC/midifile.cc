@@ -23,10 +23,12 @@
 //
 //-----------------------------------------------------------------------------
 
+#include "cpp/enums/midi_event_type_t.hh"
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
 #include <cassert>
+#include <vector>
 
 #ifndef TEST
 #include "doomdef.hh"
@@ -85,9 +87,7 @@ struct midi_track_t
 
     // Events in this track:
 
-    midi_event_t *events;
-    unsigned int num_events;
-    unsigned int num_event_mem; // NSM track size of structure
+    std::vector<midi_event_t> events;
 };
 
 // Check the header of a chunk:
@@ -228,7 +228,8 @@ static dboolean ReadChannelEvent(midi_event_t *event, byte event_type,
     // Set basics:
 
     event->event_type = (midi_event_type_t::Type)(event_type & 0xf0);
-    event->data.channel.channel = event_type & 0x0f;
+    event->data.setChannel();
+    event->data.channel().channel = event_type & 0x0f;
 
     // Read parameters:
 
@@ -239,7 +240,7 @@ static dboolean ReadChannelEvent(midi_event_t *event, byte event_type,
         return false;
     }
 
-    event->data.channel.param1 = b;
+    event->data.channel().param1 = b;
 
     // Second parameter:
 
@@ -252,7 +253,7 @@ static dboolean ReadChannelEvent(midi_event_t *event, byte event_type,
             return false;
         }
 
-        event->data.channel.param2 = b;
+        event->data.channel().param2 = b;
     }
 
     return true;
@@ -265,7 +266,7 @@ static dboolean ReadSysExEvent(midi_event_t *event, byte event_type,
 {
     event->event_type = midi_event_type_t::Type{event_type};
 
-    if (!ReadVariableLength(&event->data.sysex.length, mf))
+    if (!ReadVariableLength(&event->data.sysex().length, mf))
     {
         lprintf(LO_WARN, "ReadSysExEvent: Failed to read length of "
                          "SysEx block\n");
@@ -274,10 +275,10 @@ static dboolean ReadSysExEvent(midi_event_t *event, byte event_type,
 
     // Read the byte sequence:
 
-    event->data.sysex.data =
-        (byte *)ReadByteSequence(event->data.sysex.length, mf);
+    event->data.sysex().data =
+        (byte *)ReadByteSequence(event->data.sysex().length, mf);
 
-    if (event->data.sysex.data == nullptr)
+    if (event->data.sysex().data == nullptr)
     {
         lprintf(LO_WARN, "ReadSysExEvent: Failed while reading SysEx event\n");
         return false;
@@ -302,11 +303,12 @@ static dboolean ReadMetaEvent(midi_event_t *event, midimem_t *mf)
         return false;
     }
 
-    event->data.meta.type = midi_meta_event_type_t::Type{b};
+    event->data.setMeta();
+    event->data.meta().type = midi_meta_event_type_t::Type{b};
 
     // Read length of meta event data:
 
-    if (!ReadVariableLength(&event->data.meta.length, mf))
+    if (!ReadVariableLength(&event->data.meta().length, mf))
     {
         lprintf(LO_WARN, "ReadMetaEvent: Failed to read length of "
                          "MetaEvent block\n");
@@ -315,10 +317,10 @@ static dboolean ReadMetaEvent(midi_event_t *event, midimem_t *mf)
 
     // Read the byte sequence:
 
-    event->data.meta.data =
-        (byte *)ReadByteSequence(event->data.meta.length, mf);
+    event->data.meta().data =
+        (byte *)ReadByteSequence(event->data.meta().length, mf);
 
-    if (event->data.meta.data == nullptr)
+    if (event->data.meta().data == nullptr)
     {
         lprintf(LO_WARN, "ReadMetaEvent: Failed while reading MetaEvent\n");
         return false;
@@ -412,11 +414,11 @@ static void FreeEvent(midi_event_t *event)
     {
     case midi_event_type_t::SYSEX.value():
     case midi_event_type_t::SYSEX_SPLIT.value():
-        free(event->data.sysex.data);
+        free(event->data.sysex().data);
         break;
 
     case midi_event_type_t::META.value():
-        free(event->data.meta.data);
+        free(event->data.meta().data);
         break;
 
     default:
@@ -451,13 +453,10 @@ static dboolean ReadTrackHeader(midi_track_t *track, midimem_t *mf)
 
 static dboolean ReadTrack(midi_track_t *track, midimem_t *mf)
 {
-    midi_event_t *new_events = nullptr;
-    midi_event_t *event;
+    std::vector<midi_event_t> new_events(track->events.size());
     unsigned int last_event_type;
 
-    track->num_events = 0;
-    track->events = nullptr;
-    track->num_event_mem = 0; // NSM
+    track->events = {};
 
     // Read the header:
 
@@ -472,61 +471,25 @@ static dboolean ReadTrack(midi_track_t *track, midimem_t *mf)
 
     for (;;)
     {
-        // Resize the track slightly larger to hold another event:
-        /*
-        new_events = realloc(track->events,
-                             sizeof(midi_event_t) * (track->num_events + 1));
-        */
-        if (track->num_events == track->num_event_mem)
-        { // depending on the state of the heap and the malloc implementation,
-          // realloc()
-            // one more event at a time can be VERY slow.  10sec+ in MSVC
-            track->num_event_mem += 100;
-            new_events = (midi_event_t *)std::realloc(
-                track->events, sizeof(midi_event_t) * track->num_event_mem);
-        }
-
-        if (new_events == nullptr)
-        {
-            return false;
-        }
-
-        track->events = new_events;
-
         // Read the next event:
 
-        event = &track->events[track->num_events];
-        if (!ReadEvent(event, &last_event_type, mf))
+        track->events.emplace_back();
+        midi_event_t &event = track->events.back();
+        if (!ReadEvent(&event, &last_event_type, mf))
         {
             return false;
         }
-
-        ++track->num_events;
 
         // End of track?
 
-        if (event->event_type == midi_event_type_t::META &&
-            event->data.meta.type == midi_meta_event_type_t::END_OF_TRACK)
+        if (event.event_type == midi_event_type_t::META &&
+            event.data.meta().type == midi_meta_event_type_t::END_OF_TRACK)
         {
             break;
         }
     }
 
     return true;
-}
-
-// Free a track:
-
-static void FreeTrack(midi_track_t *track)
-{
-    unsigned i;
-
-    for (i = 0; i < track->num_events; ++i)
-    {
-        FreeEvent(&track->events[i]);
-    }
-
-    free(track->events);
 }
 
 static dboolean ReadAllTracks(midi_file_t *file, midimem_t *mf)
@@ -603,11 +566,6 @@ void MIDI_FreeFile(midi_file_t *file)
 
     if (file->tracks != nullptr)
     {
-        for (i = 0; i < file->num_tracks; ++i)
-        {
-            FreeTrack(&file->tracks[i]);
-        }
-
         free(file->tracks);
     }
 
@@ -681,7 +639,7 @@ void MIDI_FreeIterator(midi_track_iter_t *iter)
 
 unsigned int MIDI_GetDeltaTime(midi_track_iter_t *iter)
 {
-    if (iter->position < iter->track->num_events)
+    if (iter->position < iter->track->events.size())
     {
         midi_event_t *next_event;
 
@@ -697,7 +655,7 @@ unsigned int MIDI_GetDeltaTime(midi_track_iter_t *iter)
 
 int MIDI_GetNextEvent(midi_track_iter_t *iter, midi_event_t **event)
 {
-    if (iter->position < iter->track->num_events)
+    if (iter->position < iter->track->events.size())
     {
         *event = &iter->track->events[iter->position];
         ++iter->position;
@@ -777,23 +735,23 @@ static void MIDI_PrintFlatListDBG(const midi_event_t **evs)
         case midi_event_type_t::PROGRAM_CHANGE.value():
         case midi_event_type_t::CHAN_AFTERTOUCH.value():
         case midi_event_type_t::PITCH_BEND.value():
-            printf("\tChannel: %i\n", event->data.channel.channel);
-            printf("\tParameter 1: %i\n", event->data.channel.param1);
-            printf("\tParameter 2: %i\n", event->data.channel.param2);
+            printf("\tChannel: %i\n", event->data.channel().channel);
+            printf("\tParameter 1: %i\n", event->data.channel().param1);
+            printf("\tParameter 2: %i\n", event->data.channel().param2);
             break;
 
         case midi_event_type_t::SYSEX.value():
         case midi_event_type_t::SYSEX_SPLIT.value():
-            printf("\tLength: %i\n", event->data.sysex.length);
+            printf("\tLength: %i\n", event->data.sysex().length);
             break;
 
         case midi_event_type_t::META.value():
-            printf("\tMeta type: %i\n", event->data.meta.type.value());
-            printf("\tLength: %i\n", event->data.meta.length);
+            printf("\tMeta type: %i\n", event->data.meta().type.value());
+            printf("\tLength: %i\n", event->data.meta().length);
             break;
         }
         if (event->event_type == midi_event_type_t::META &&
-            event->data.meta.type == midi_meta_event_type_t::END_OF_TRACK)
+            event->data.meta().type == midi_meta_event_type_t::END_OF_TRACK)
         {
             printf("gotta go!\n");
             return;
@@ -820,7 +778,7 @@ midi_event_t **MIDI_GenerateFlatList(midi_file_t *file)
 
     for (i = 0; i < file->num_tracks; i++)
     {
-        totalevents += file->tracks[i].num_events;
+        totalevents += file->tracks[i].events.size();
     }
 
     ret = (midi_event_t **)malloc(totalevents * sizeof(midi_event_t **));
@@ -847,7 +805,7 @@ midi_event_t **MIDI_GenerateFlatList(midi_file_t *file)
             break;
         }
 
-        *epos = file->tracks[nextrk].events + trackpos[nextrk];
+        *epos = &file->tracks[nextrk].events[trackpos[nextrk]];
 
         for (i = 0; i < file->num_tracks; i++)
         {
@@ -866,13 +824,14 @@ midi_event_t **MIDI_GenerateFlatList(midi_file_t *file)
         totaldelta += delta;
 
         if (epos[0]->event_type == midi_event_type_t::META &&
-            epos[0]->data.meta.type == midi_meta_event_type_t::END_OF_TRACK)
+            epos[0]->data.meta().type == midi_meta_event_type_t::END_OF_TRACK)
         { // change end of track into no op
             trackactive--;
             trackpos[nextrk] = -1;
-            epos[0]->data.meta.type = midi_meta_event_type_t::TEXT;
+            epos[0]->data.meta().type = midi_meta_event_type_t::TEXT;
         }
-        else if ((unsigned)trackpos[nextrk] == file->tracks[nextrk].num_events)
+        else if (static_cast<unsigned int>(trackpos[nextrk]) ==
+                 file->tracks[nextrk].events.size())
         {
             lprintf(LO_WARN,
                     "MIDI_GenerateFlatList: Unexpected end of track\n");
@@ -895,7 +854,7 @@ midi_event_t **MIDI_GenerateFlatList(midi_file_t *file)
     }
 
     // last end of track event is preserved though
-    epos[-1]->data.meta.type = midi_meta_event_type_t::END_OF_TRACK;
+    epos[-1]->data.meta().type = midi_meta_event_type_t::END_OF_TRACK;
 
     std::free(trackpos);
     std::free(tracktime);
@@ -1000,11 +959,11 @@ double MIDI_spmc(const midi_file_t *file, const midi_event_t *ev,
     {
         if (ev->event_type == midi_event_type_t::META)
         {
-            if (ev->data.meta.length == 3)
+            if (ev->data.meta().length == 3)
             {
-                tempo = (unsigned)ev->data.meta.data[0] << 16 |
-                        (unsigned)ev->data.meta.data[1] << 8 |
-                        (unsigned)ev->data.meta.data[2];
+                tempo = (unsigned)ev->data.meta().data[0] << 16 |
+                        (unsigned)ev->data.meta().data[1] << 8 |
+                        (unsigned)ev->data.meta().data[2];
             }
             else
             {
@@ -1060,30 +1019,20 @@ midi_file_t *MIDI_LoadFileSpecial(midimem_t *mf)
     ret->buffer = nullptr;
     ret->tracks = (midi_track_t *)malloc(sizeof(midi_track_t));
 
-    ret->tracks->num_events = 0;
-    ret->tracks->num_event_mem = 0;
-    ret->tracks->events = nullptr;
+    ret->tracks->events = {};
 
     opi = MIDI_spmc(base, nullptr, 20000);
 
     while (1)
     {
         midi_event_t *oldev;
-        midi_event_t *nextev;
-
-        if (ret->tracks->num_events == ret->tracks->num_event_mem)
-        {
-            ret->tracks->num_event_mem += 100;
-            ret->tracks->events = (midi_event_t *)realloc(
-                ret->tracks->events,
-                sizeof(midi_event_t) * ret->tracks->num_event_mem);
-        }
 
         oldev = flatlist[epos];
-        nextev = ret->tracks->events + ret->tracks->num_events;
+        ret->tracks->events.emplace_back();
+        midi_event_t &nextev = ret->tracks->events.back();
 
         // figure delta time
-        nextev->delta_time = (unsigned int)(opi * oldev->delta_time);
+        nextev.delta_time = static_cast<unsigned int>(opi * oldev->delta_time);
 
         if (oldev->event_type == midi_event_type_t::SYSEX ||
             oldev->event_type == midi_event_type_t::SYSEX_SPLIT)
@@ -1095,26 +1044,24 @@ midi_file_t *MIDI_LoadFileSpecial(midimem_t *mf)
 
         if (oldev->event_type == midi_event_type_t::META)
         {
-            if (oldev->data.meta.type == midi_meta_event_type_t::SET_TEMPO)
+            if (oldev->data.meta().type == midi_meta_event_type_t::SET_TEMPO)
             { // adjust future tempo scaling
                 opi = MIDI_spmc(base, oldev, 20000);
                 // insert event as dummy
-                nextev->event_type = midi_event_type_t::META;
-                nextev->data.meta.type = midi_meta_event_type_t::TEXT;
-                nextev->data.meta.length = 0;
-                nextev->data.meta.data = (byte *)malloc(4);
+                nextev.event_type = midi_event_type_t::META;
+                nextev.data.meta().type = midi_meta_event_type_t::TEXT;
+                nextev.data.meta().length = 0;
+                nextev.data.meta().data = (byte *)malloc(4);
                 epos++;
-                ret->tracks->num_events++;
                 continue;
             }
-            if (oldev->data.meta.type == midi_meta_event_type_t::END_OF_TRACK)
+            if (oldev->data.meta().type == midi_meta_event_type_t::END_OF_TRACK)
             { // reproduce event and break
-                nextev->event_type = midi_event_type_t::META;
-                nextev->data.meta.type = midi_meta_event_type_t::END_OF_TRACK;
-                nextev->data.meta.length = 0;
-                nextev->data.meta.data = (byte *)malloc(4);
+                nextev.event_type = midi_event_type_t::META;
+                nextev.data.meta().type = midi_meta_event_type_t::END_OF_TRACK;
+                nextev.data.meta().length = 0;
+                nextev.data.meta().data = (byte *)malloc(4);
                 epos++;
-                ret->tracks->num_events++;
                 break;
             }
             // other meta events not needed
@@ -1122,10 +1069,9 @@ midi_file_t *MIDI_LoadFileSpecial(midimem_t *mf)
             continue;
         }
         // non meta events can simply be copied (excluding delta time)
-        memcpy(&nextev->event_type, &oldev->event_type,
+        memcpy(&nextev.event_type, &oldev->event_type,
                sizeof(midi_event_t) - sizeof(unsigned));
         epos++;
-        ret->tracks->num_events++;
     }
 
     MIDI_DestroyFlatList(flatlist);

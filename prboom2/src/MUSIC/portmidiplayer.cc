@@ -248,16 +248,17 @@ void pm_render(void *vdest, unsigned int bufflen)
         {
         case midi_event_type_t::SYSEX.value():
         case midi_event_type_t::SYSEX_SPLIT.value():
-            writesysex(when, currevent->data.sysex.data,
-                       currevent->data.sysex.length);
+            writesysex(when, currevent->data.sysex().data,
+                       currevent->data.sysex().length);
             break;
         case midi_event_type_t::META.value(): // tempo is the only meta message
                                               // we're interested in
-            if (currevent->data.meta.type == midi_meta_event_type_t::SET_TEMPO)
+            if (currevent->data.meta().type ==
+                midi_meta_event_type_t::SET_TEMPO)
             {
                 spmc = MIDI_spmc(midifile, currevent, 1000);
             }
-            else if (currevent->data.meta.type ==
+            else if (currevent->data.meta().type ==
                      midi_meta_event_type_t::END_OF_TRACK)
             {
                 if (pm_looping)
@@ -280,29 +281,30 @@ void pm_render(void *vdest, unsigned int bufflen)
             }
             break; // not interested in most metas
         case midi_event_type_t::CONTROLLER.value():
-            if (currevent->data.channel.param1 == 7)
+            if (currevent->data.channel().param1 == 7)
             { // volume event
 #ifdef _WIN32
                 if (!mus_extend_volume)
 #endif
                 {
-                    pm_setchvolume(currevent->data.channel.channel,
-                                   currevent->data.channel.param2, when);
+                    pm_setchvolume(currevent->data.channel().channel,
+                                   currevent->data.channel().param2, when);
                     break;
                 }
             } // fall through
         default:
-            writeevent(
-                when, currevent->event_type, currevent->data.channel.channel,
-                currevent->data.channel.param1, currevent->data.channel.param2);
+            writeevent(when, currevent->event_type,
+                       currevent->data.channel().channel,
+                       currevent->data.channel().param1,
+                       currevent->data.channel().param2);
             break;
         }
         // if the event was a "reset all controllers", we need to additionally
         // re-fix the volume (which itself was reset)
         if (currevent->event_type == midi_event_type_t::CONTROLLER &&
-            currevent->data.channel.param1 == 121)
+            currevent->data.channel().param1 == 121)
         {
-            pm_setchvolume(currevent->data.channel.channel, 127, when);
+            pm_setchvolume(currevent->data.channel().channel, 127, when);
         }
 
         // event processed so advance midiclock

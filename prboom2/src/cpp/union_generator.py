@@ -45,6 +45,9 @@ class UnionField:
         else:
             return f"{self.ty}"
 
+    def is_pointer(self):
+        return isinstance(self.ty, FunctionType) or self.ty.endswith("*")
+
 
 class Union:
     def __init__(self):
@@ -56,7 +59,9 @@ class Union:
         self.fields = []
 
     def __str__(self):
-        return f"Union {{ name: {self.name}, fields: {', '.join(map(str, self.fields))} }}"
+        return (
+            f"Union {{ name: {self.name}, fields: {', '.join(map(str, self.fields))} }}"
+        )
 
 
 def generate(union):
@@ -72,7 +77,7 @@ def generate(union):
 
         for field in union.fields:
             union_file.write(f"{field.field_type()} m_{field.name}")
-            if isinstance(field.ty, FunctionType) or '*' in field.ty:
+            if isinstance(field.ty, FunctionType) or "*" in field.ty:
                 union_file.write(" = nullptr")
             union_file.write(";")
 
@@ -88,46 +93,87 @@ def generate(union):
         print("Generating constructors...")
         union_file.write(f"constexpr {union.name}()=default;\n")
         for field in union.fields:
-            union_file.write("// NOLINTNEXTLINE(google-explicit-constructor,hicpp-explicit-conversions)\n")
+            union_file.write(
+                "// NOLINTNEXTLINE(google-explicit-constructor,hicpp-explicit-conversions)\n"
+            )
             union_file.write(f"constexpr {union.name}(")
             if isinstance(field.ty, FunctionType):
                 union_file.write(f"m_{field.name}_t {field.name}")
             else:
                 union_file.write(f"{field.ty} {field.name}")
-            union_file.write(f"): m_{field.name}({field.name}), m_d(D::{underscore(field.name)}) {{}}")
+            union_file.write(
+                f"): m_{field.name}({field.name}), m_d(D::{underscore(field.name)}) {{}}"
+            )
             union_file.write(f"// ctor({field.field_type()})\n")
         print("Generating type-specific members...")
         for field in union.fields:
-            union_file.write(f"[[nodiscard]] constexpr bool is{field.name.title()}() {{")
+            union_file.write(
+                f"[[nodiscard]] constexpr bool is{field.name.title()}() {{"
+            )
             union_file.write(f"return m_d == D::{underscore(field.name)};")
             union_file.write(f"}} // fn is{field.name}\n")
-            union_file.write(f"[[nodiscard]] constexpr {field.field_type()} {field.name}() const {{")
-            union_file.write(f"if (m_d == D::{underscore(field.name)}) {{ return m_{field.name}; }}")
-            union_file.write(f'throw std::runtime_error{{"in \'{union.name}.hh\':')
-            union_file.write(f' This {union.name} is not a \'{field.field_type()}\'')
+            if not field.is_pointer():
+                union_file.write(
+                    f"[[nodiscard]] constexpr const {field.field_type()} ")
+                union_file.write("&")
+                union_file.write(f"{field.name}() const {{")
+                union_file.write(
+                    f"if (m_d == D::{underscore(field.name)}) {{ return m_{field.name}; }}"
+                )
+                union_file.write(f"throw std::runtime_error{{\"in '{union.name}.hh':")
+                union_file.write(f" This {union.name} is not a '{field.field_type()}'")
+                if isinstance(field.ty, FunctionType):
+                    union_file.write(f" (a.k.a '{field.ty}')")
+                union_file.write('"};')
+                union_file.write(f"}} // fn {field.name} const\n")
+            union_file.write(
+                f"[[nodiscard]] constexpr {field.field_type()} ")
+            if not field.is_pointer():
+                union_file.write("&")
+            union_file.write(f"{field.name}() {{")
+            union_file.write(
+                f"if (m_d == D::{underscore(field.name)}) {{ return m_{field.name}; }}"
+            )
+            union_file.write(f"throw std::runtime_error{{\"in '{union.name}.hh':")
+            union_file.write(f" This {union.name} is not a '{field.field_type()}'")
             if isinstance(field.ty, FunctionType):
-                union_file.write(f" (a.k.a \'{field.ty}\')")
+                union_file.write(f" (a.k.a '{field.ty}')")
             union_file.write('"};')
             union_file.write(f"}} // fn {field.name}\n")
 
-            union_file.write(f"[[nodiscard]] constexpr {field.field_type()} reinterpret{field.name.title().replace('_', '')}() const {{")
-            union_file.write("switch (m_d) {")
-            for f in union.fields:
-                if f == field:
-                    union_file.write(f"case D::{underscore(field.name)}:")
-                    union_file.write(f'throw std::runtime_error{{"in \'{union.name}.hh\': This {union.name}')
-                    union_file.write(f' is already a {field.field_type()}')
-                    if isinstance(field.ty, FunctionType):
-                        union_file.write(f" (a.k.a. {field.ty})")
-                    union_file.write('"};')
-                else:
-                    union_file.write(f"case D::{underscore(f.name)}:\n")
-                    union_file.write("// NOLINTNEXTLINE(cppcoreguidelines-pro-type-reinterpret-cast)\n")
-                    union_file.write(f"return reinterpret_cast<{field.field_type()}>(m_{f.name});")
-            union_file.write("case D::undefined:")
-            union_file.write(f'throw std::runtime_error{{"in \'{union.name}.hh\': This {union.name} is undefined"}};')
-            union_file.write("} // switch (m_d)\n")
-            union_file.write(f"}} // fn reinterpret{field.name.title()}\n")
+            if field.is_pointer():
+                union_file.write(
+                    f"[[nodiscard]] constexpr {field.field_type()} reinterpret{field.name.title().replace('_', '')}() const {{"
+                )
+                union_file.write("switch (m_d) {")
+                for f in union.fields:
+                    if f == field:
+                        union_file.write(f"case D::{underscore(field.name)}:")
+                        union_file.write(
+                            f"throw std::runtime_error{{\"in '{union.name}.hh': This {union.name}"
+                        )
+                        union_file.write(f" is already a {field.field_type()}")
+                        if isinstance(field.ty, FunctionType):
+                            union_file.write(f" (a.k.a. {field.ty})")
+                        union_file.write('"};')
+                    else:
+                        union_file.write(f"case D::{underscore(f.name)}:\n")
+                        union_file.write(
+                            "// NOLINTNEXTLINE(cppcoreguidelines-pro-type-reinterpret-cast)\n"
+                        )
+                        union_file.write(
+                            f"return reinterpret_cast<{field.field_type()}>(m_{f.name});"
+                        )
+                union_file.write("case D::undefined:")
+                union_file.write(
+                    f"throw std::runtime_error{{\"in '{union.name}.hh': This {union.name} is undefined\"}};"
+                )
+                union_file.write("} // switch (m_d)\n")
+                union_file.write(f"}} // fn reinterpret{field.name.title()}\n")
+
+            union_file.write(f"void set{field.name.title()}() {{")
+            union_file.write(f"m_d = D::{underscore(field.name)};")
+            union_file.write(f"}} // set{field.name.title()}\n")
 
         print("Generating universal members...")
 
@@ -139,16 +185,22 @@ def generate(union):
         union_file.write("return m_d != D::undefined;")
         union_file.write("} // fn notNull\n")
 
-        union_file.write(f"[[nodiscard]] constexpr bool operator==(const {union.name} &other) const {{")
+        union_file.write(
+            f"[[nodiscard]] constexpr bool operator==(const {union.name} &other) const {{"
+        )
         union_file.write("switch (m_d) {")
         for field in union.fields:
             union_file.write(f"case D::{underscore(field.name)}:")
-            union_file.write(f"return m_d == other.m_d && m_{field.name} == other.m_{field.name};")
+            union_file.write(
+                f"return m_d == other.m_d && m_{field.name} == other.m_{field.name};"
+            )
         union_file.write(f"case D::undefined:return other.m_d == D::undefined;")
         union_file.write("} // switch (m_d)\n")
         union_file.write("} // fn operator==\n")
 
-        union_file.write(f"[[nodiscard]] constexpr bool operator!=(const {union.name} &other) const {{")
+        union_file.write(
+            f"[[nodiscard]] constexpr bool operator!=(const {union.name} &other) const {{"
+        )
         union_file.write("return !(*this == other);")
         union_file.write("} // fn operator!=\n")
 
@@ -176,7 +228,7 @@ def finish_namespace(union, namespace):
         union_file.write(f"}} // namespace {namespace}\n")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     with open("unions.data") as unions_data:
         lines = unions_data.readlines()
 
@@ -251,12 +303,14 @@ if __name__ == '__main__':
             elif word == "}":
                 print(f"{str(union)}")
                 generate(union)
-                finish_namespace(union, namespace)
+                if namespace is not None:
+                    finish_namespace(union, namespace)
+                namespace = None
                 run(["clang-format", "-i", f"unions/{union.name}.hh"])
                 state = State.Name
             else:
                 id = words.pop()
-                field.ty = ' '.join(w for sl in [[word], words] for w in sl)
+                field.ty = " ".join(w for sl in [[word], words] for w in sl)
                 words = [id]
                 print(f"Field type is '{field.ty}'")
                 state = State.FieldName

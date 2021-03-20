@@ -412,49 +412,50 @@ void fl_render(void *vdest, unsigned length)
         switch (currevent->event_type.value())
         {
         case midi_event_type_t::NOTE_OFF.value():
-            fluid_synth_noteoff(f_syn->get(), currevent->data.channel.channel,
-                                currevent->data.channel.param1);
+            fluid_synth_noteoff(f_syn->get(), currevent->data.channel().channel,
+                                currevent->data.channel().param1);
             break;
         case midi_event_type_t::NOTE_ON.value():
-            fluid_synth_noteon(f_syn->get(), currevent->data.channel.channel,
-                               currevent->data.channel.param1,
-                               currevent->data.channel.param2);
+            fluid_synth_noteon(f_syn->get(), currevent->data.channel().channel,
+                               currevent->data.channel().param1,
+                               currevent->data.channel().param2);
             break;
         case midi_event_type_t::AFTERTOUCH.value():
             // not suipported?
             break;
         case midi_event_type_t::CONTROLLER.value():
-            fluid_synth_cc(f_syn->get(), currevent->data.channel.channel,
-                           currevent->data.channel.param1,
-                           currevent->data.channel.param2);
+            fluid_synth_cc(f_syn->get(), currevent->data.channel().channel,
+                           currevent->data.channel().param1,
+                           currevent->data.channel().param2);
             break;
         case midi_event_type_t::PROGRAM_CHANGE.value():
             fluid_synth_program_change(f_syn->get(),
-                                       currevent->data.channel.channel,
-                                       currevent->data.channel.param1);
+                                       currevent->data.channel().channel,
+                                       currevent->data.channel().param1);
             break;
         case midi_event_type_t::CHAN_AFTERTOUCH.value():
             fluid_synth_channel_pressure(f_syn->get(),
-                                         currevent->data.channel.channel,
-                                         currevent->data.channel.param1);
+                                         currevent->data.channel().channel,
+                                         currevent->data.channel().param1);
             break;
         case midi_event_type_t::PITCH_BEND.value():
             fluid_synth_pitch_bend(f_syn->get(),
-                                   currevent->data.channel.channel,
-                                   currevent->data.channel.param1 |
-                                       currevent->data.channel.param2 << 7);
+                                   currevent->data.channel().channel,
+                                   currevent->data.channel().param1 |
+                                       currevent->data.channel().param2 << 7);
             break;
         case midi_event_type_t::SYSEX.value():
         case midi_event_type_t::SYSEX_SPLIT.value():
-            writesysex(currevent->data.sysex.data,
-                       currevent->data.sysex.length);
+            writesysex(currevent->data.sysex().data,
+                       currevent->data.sysex().length);
             break;
         case midi_event_type_t::META.value():
-            if (currevent->data.meta.type == midi_meta_event_type_t::SET_TEMPO)
+            if (currevent->data.meta().type ==
+                midi_meta_event_type_t::SET_TEMPO)
             {
                 spmc = MIDI_spmc(midifile, currevent, f_soundrate);
             }
-            else if (currevent->data.meta.type ==
+            else if (currevent->data.meta().type ==
                      midi_meta_event_type_t::END_OF_TRACK)
             {
                 if (f_looping)

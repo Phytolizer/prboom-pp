@@ -173,7 +173,7 @@ class ActionFunction
     {
         return m_d == D::v;
     } // fn isv
-    [[nodiscard]] constexpr m_v_t v() const
+    [[nodiscard]] constexpr m_v_t v()
     {
         if (m_d == D::v)
         {
@@ -246,11 +246,15 @@ class ActionFunction
                 "in 'ActionFunction.hh': This ActionFunction is undefined"};
         } // switch (m_d)
     }     // fn reinterpretV
+    void setV()
+    {
+        m_d = D::v;
+    } // setV
     [[nodiscard]] constexpr bool isMobj()
     {
         return m_d == D::mobj;
     } // fn ismobj
-    [[nodiscard]] constexpr m_mobj_t mobj() const
+    [[nodiscard]] constexpr m_mobj_t mobj()
     {
         if (m_d == D::mobj)
         {
@@ -324,11 +328,15 @@ class ActionFunction
                 "in 'ActionFunction.hh': This ActionFunction is undefined"};
         } // switch (m_d)
     }     // fn reinterpretMobj
+    void setMobj()
+    {
+        m_d = D::mobj;
+    } // setMobj
     [[nodiscard]] constexpr bool isPlayer()
     {
         return m_d == D::player;
     } // fn isplayer
-    [[nodiscard]] constexpr m_player_t player() const
+    [[nodiscard]] constexpr m_player_t player()
     {
         if (m_d == D::player)
         {
@@ -402,11 +410,15 @@ class ActionFunction
                 "in 'ActionFunction.hh': This ActionFunction is undefined"};
         } // switch (m_d)
     }     // fn reinterpretPlayer
+    void setPlayer()
+    {
+        m_d = D::player;
+    } // setPlayer
     [[nodiscard]] constexpr bool isVfn()
     {
         return m_d == D::vfn;
     } // fn isvfn
-    [[nodiscard]] constexpr m_vfn_t vfn() const
+    [[nodiscard]] constexpr m_vfn_t vfn()
     {
         if (m_d == D::vfn)
         {
@@ -480,11 +492,15 @@ class ActionFunction
                 "in 'ActionFunction.hh': This ActionFunction is undefined"};
         } // switch (m_d)
     }     // fn reinterpretVfn
+    void setVfn()
+    {
+        m_d = D::vfn;
+    } // setVfn
     [[nodiscard]] constexpr bool isMessagethinker()
     {
         return m_d == D::message_thinker;
     } // fn ismessageThinker
-    [[nodiscard]] constexpr m_messageThinker_t messageThinker() const
+    [[nodiscard]] constexpr m_messageThinker_t messageThinker()
     {
         if (m_d == D::message_thinker)
         {
@@ -558,11 +574,15 @@ class ActionFunction
                 "in 'ActionFunction.hh': This ActionFunction is undefined"};
         } // switch (m_d)
     }     // fn reinterpretMessagethinker
+    void setMessagethinker()
+    {
+        m_d = D::message_thinker;
+    } // setMessagethinker
     [[nodiscard]] constexpr bool isCeiling()
     {
         return m_d == D::ceiling;
     } // fn isceiling
-    [[nodiscard]] constexpr m_ceiling_t ceiling() const
+    [[nodiscard]] constexpr m_ceiling_t ceiling()
     {
         if (m_d == D::ceiling)
         {
@@ -636,11 +656,15 @@ class ActionFunction
                 "in 'ActionFunction.hh': This ActionFunction is undefined"};
         } // switch (m_d)
     }     // fn reinterpretCeiling
+    void setCeiling()
+    {
+        m_d = D::ceiling;
+    } // setCeiling
     [[nodiscard]] constexpr bool isVldoor()
     {
         return m_d == D::vldoor;
     } // fn isvldoor
-    [[nodiscard]] constexpr m_vldoor_t vldoor() const
+    [[nodiscard]] constexpr m_vldoor_t vldoor()
     {
         if (m_d == D::vldoor)
         {
@@ -714,11 +738,15 @@ class ActionFunction
                 "in 'ActionFunction.hh': This ActionFunction is undefined"};
         } // switch (m_d)
     }     // fn reinterpretVldoor
+    void setVldoor()
+    {
+        m_d = D::vldoor;
+    } // setVldoor
     [[nodiscard]] constexpr bool isPlat()
     {
         return m_d == D::plat;
     } // fn isplat
-    [[nodiscard]] constexpr m_plat_t plat() const
+    [[nodiscard]] constexpr m_plat_t plat()
     {
         if (m_d == D::plat)
         {
@@ -792,11 +820,15 @@ class ActionFunction
                 "in 'ActionFunction.hh': This ActionFunction is undefined"};
         } // switch (m_d)
     }     // fn reinterpretPlat
+    void setPlat()
+    {
+        m_d = D::plat;
+    } // setPlat
     [[nodiscard]] constexpr bool isFireflicker()
     {
         return m_d == D::fireflicker;
     } // fn isfireflicker
-    [[nodiscard]] constexpr m_fireflicker_t fireflicker() const
+    [[nodiscard]] constexpr m_fireflicker_t fireflicker()
     {
         if (m_d == D::fireflicker)
         {
@@ -870,11 +902,15 @@ class ActionFunction
                 "in 'ActionFunction.hh': This ActionFunction is undefined"};
         } // switch (m_d)
     }     // fn reinterpretFireflicker
+    void setFireflicker()
+    {
+        m_d = D::fireflicker;
+    } // setFireflicker
     [[nodiscard]] constexpr bool isLightflash()
     {
         return m_d == D::lightflash;
     } // fn islightflash
-    [[nodiscard]] constexpr m_lightflash_t lightflash() const
+    [[nodiscard]] constexpr m_lightflash_t lightflash()
     {
         if (m_d == D::lightflash)
         {
@@ -948,11 +984,15 @@ class ActionFunction
                 "in 'ActionFunction.hh': This ActionFunction is undefined"};
         } // switch (m_d)
     }     // fn reinterpretLightflash
+    void setLightflash()
+    {
+        m_d = D::lightflash;
+    } // setLightflash
     [[nodiscard]] constexpr bool isStrobe()
     {
         return m_d == D::strobe;
     } // fn isstrobe
-    [[nodiscard]] constexpr m_strobe_t strobe() const
+    [[nodiscard]] constexpr m_strobe_t strobe()
     {
         if (m_d == D::strobe)
         {
@@ -1026,11 +1066,15 @@ class ActionFunction
                 "in 'ActionFunction.hh': This ActionFunction is undefined"};
         } // switch (m_d)
     }     // fn reinterpretStrobe
+    void setStrobe()
+    {
+        m_d = D::strobe;
+    } // setStrobe
     [[nodiscard]] constexpr bool isGlow()
     {
         return m_d == D::glow;
     } // fn isglow
-    [[nodiscard]] constexpr m_glow_t glow() const
+    [[nodiscard]] constexpr m_glow_t glow()
     {
         if (m_d == D::glow)
         {
@@ -1104,11 +1148,15 @@ class ActionFunction
                 "in 'ActionFunction.hh': This ActionFunction is undefined"};
         } // switch (m_d)
     }     // fn reinterpretGlow
+    void setGlow()
+    {
+        m_d = D::glow;
+    } // setGlow
     [[nodiscard]] constexpr bool isElevator()
     {
         return m_d == D::elevator;
     } // fn iselevator
-    [[nodiscard]] constexpr m_elevator_t elevator() const
+    [[nodiscard]] constexpr m_elevator_t elevator()
     {
         if (m_d == D::elevator)
         {
@@ -1182,11 +1230,15 @@ class ActionFunction
                 "in 'ActionFunction.hh': This ActionFunction is undefined"};
         } // switch (m_d)
     }     // fn reinterpretElevator
+    void setElevator()
+    {
+        m_d = D::elevator;
+    } // setElevator
     [[nodiscard]] constexpr bool isFloormove()
     {
         return m_d == D::floormove;
     } // fn isfloormove
-    [[nodiscard]] constexpr m_floormove_t floormove() const
+    [[nodiscard]] constexpr m_floormove_t floormove()
     {
         if (m_d == D::floormove)
         {
@@ -1260,11 +1312,15 @@ class ActionFunction
                 "in 'ActionFunction.hh': This ActionFunction is undefined"};
         } // switch (m_d)
     }     // fn reinterpretFloormove
+    void setFloormove()
+    {
+        m_d = D::floormove;
+    } // setFloormove
     [[nodiscard]] constexpr bool isThinker()
     {
         return m_d == D::thinker;
     } // fn isthinker
-    [[nodiscard]] constexpr m_thinker_t thinker() const
+    [[nodiscard]] constexpr m_thinker_t thinker()
     {
         if (m_d == D::thinker)
         {
@@ -1338,11 +1394,15 @@ class ActionFunction
                 "in 'ActionFunction.hh': This ActionFunction is undefined"};
         } // switch (m_d)
     }     // fn reinterpretThinker
+    void setThinker()
+    {
+        m_d = D::thinker;
+    } // setThinker
     [[nodiscard]] constexpr bool isScroll()
     {
         return m_d == D::scroll;
     } // fn isscroll
-    [[nodiscard]] constexpr m_scroll_t scroll() const
+    [[nodiscard]] constexpr m_scroll_t scroll()
     {
         if (m_d == D::scroll)
         {
@@ -1416,11 +1476,15 @@ class ActionFunction
                 "in 'ActionFunction.hh': This ActionFunction is undefined"};
         } // switch (m_d)
     }     // fn reinterpretScroll
+    void setScroll()
+    {
+        m_d = D::scroll;
+    } // setScroll
     [[nodiscard]] constexpr bool isFriction()
     {
         return m_d == D::friction;
     } // fn isfriction
-    [[nodiscard]] constexpr m_friction_t friction() const
+    [[nodiscard]] constexpr m_friction_t friction()
     {
         if (m_d == D::friction)
         {
@@ -1494,11 +1558,15 @@ class ActionFunction
                 "in 'ActionFunction.hh': This ActionFunction is undefined"};
         } // switch (m_d)
     }     // fn reinterpretFriction
+    void setFriction()
+    {
+        m_d = D::friction;
+    } // setFriction
     [[nodiscard]] constexpr bool isPusher()
     {
         return m_d == D::pusher;
     } // fn ispusher
-    [[nodiscard]] constexpr m_pusher_t pusher() const
+    [[nodiscard]] constexpr m_pusher_t pusher()
     {
         if (m_d == D::pusher)
         {
@@ -1572,6 +1640,10 @@ class ActionFunction
                 "in 'ActionFunction.hh': This ActionFunction is undefined"};
         } // switch (m_d)
     }     // fn reinterpretPusher
+    void setPusher()
+    {
+        m_d = D::pusher;
+    } // setPusher
     [[nodiscard]] constexpr bool isNull() const
     {
         return m_d == D::undefined;

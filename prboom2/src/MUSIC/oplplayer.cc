@@ -1190,8 +1190,8 @@ static void KeyOffEvent(opl_track_data_t *track, midi_event_t *event)
            event->data.channel.param2);
     */
 
-    channel = &track->channels[event->data.channel.channel];
-    key = event->data.channel.param1;
+    channel = &track->channels[event->data.channel().channel];
+    key = event->data.channel().param1;
 
     // Turn off voices being used to play this key.
     // If it is a double voice instrument there will be two.
@@ -1452,7 +1452,7 @@ static void KeyOnEvent(opl_track_data_t *track, midi_event_t *event)
            event->data.channel.param2);
     */
 
-    if (event->data.channel.param2 == 0)
+    if (event->data.channel().param2 == 0)
     { // NSM
         // i have no idea why this is the case, but it is
         // note that you don't see this in any of the base doom/doom2 music
@@ -1462,13 +1462,13 @@ static void KeyOnEvent(opl_track_data_t *track, midi_event_t *event)
 
     // The channel.
 
-    channel = &track->channels[event->data.channel.channel];
-    key = event->data.channel.param1;
-    volume = event->data.channel.param2;
+    channel = &track->channels[event->data.channel().channel];
+    key = event->data.channel().param1;
+    volume = event->data.channel().param2;
 
     // Percussion channel (10) is treated differently.
 
-    if (event->data.channel.channel == 9)
+    if (event->data.channel().channel == 9)
     {
         if (key < 35 || key > 81)
         {
@@ -1500,8 +1500,8 @@ static void ProgramChangeEvent(opl_track_data_t *track, midi_event_t *event)
 
     // Set the instrument used on this channel.
 
-    channel = event->data.channel.channel;
-    instrument = event->data.channel.param1;
+    channel = event->data.channel().channel;
+    instrument = event->data.channel().param1;
     track->channels[channel].instrument = &main_instrs[instrument];
 
     // TODO: Look through existing voices that are turned on on this
@@ -1538,9 +1538,9 @@ static void ControllerEvent(opl_track_data_t *track, midi_event_t *event)
            event->data.channel.param2);
     */
 
-    channel = &track->channels[event->data.channel.channel];
-    controller = midi_controller_t::Type{event->data.channel.param1};
-    param = event->data.channel.param2;
+    channel = &track->channels[event->data.channel().channel];
+    controller = midi_controller_t::Type{event->data.channel().param1};
+    param = event->data.channel().param2;
 
     switch (controller.value())
     {
@@ -1566,8 +1566,8 @@ static void PitchBendEvent(opl_track_data_t *track, midi_event_t *event)
     // Update the channel bend value.  Only the MSB of the pitch bend
     // value is considered: this is what Doom does.
 
-    channel = &track->channels[event->data.channel.channel];
-    channel->bend = event->data.channel.param2 - 64;
+    channel = &track->channels[event->data.channel().channel];
+    channel->bend = event->data.channel().param2 - 64;
 
     // Update all voices for this channel.
 
@@ -1584,7 +1584,7 @@ static void PitchBendEvent(opl_track_data_t *track, midi_event_t *event)
 
 static void MetaEvent(opl_track_data_t *track, midi_event_t *event)
 {
-    switch (event->data.meta.type.value())
+    switch (event->data.meta().type.value())
     {
         // Things we can just ignore.
 
@@ -1706,7 +1706,7 @@ static void TrackTimerCallback(void *arg)
     // End of track?
 
     if (event->event_type == midi_event_type_t::META &&
-        event->data.meta.type == midi_meta_event_type_t::END_OF_TRACK)
+        event->data.meta().type == midi_meta_event_type_t::END_OF_TRACK)
     {
         --running_tracks;
 
