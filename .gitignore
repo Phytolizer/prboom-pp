@@ -1,13 +1,22 @@
 prboom2/ICONS/icons.aps
 prboom2/release
-build/
-cmake-build-*
+
+# VS Code
 .vscode/
+build/
+
+# CLion
 .idea/
+cmake-build-*
+
+# codeql
 _lgtm_build_dir/
 _lgtm_detected_source_root
 merge_queue.txt
 db/
+
+# rust
+target/
 
 /dependencies*
 
