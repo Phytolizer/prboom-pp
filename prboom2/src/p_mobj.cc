@@ -2055,11 +2055,16 @@ uint_64_t P_ColoredBlood(mobj_t *bleeder)
         if (bleeder->type == MT_BRUISER || bleeder->type == MT_KNIGHT)
         {
             return MF_COLOREDBLOOD;
-            // Cacodemons bleed blue blood
         }
+        // Cacodemons bleed blue blood
         if (bleeder->type == MT_HEAD)
         {
             return MF_COLOREDBLOOD | MF_TRANSLATION1;
+        }
+        // Spectres bleed shadow blood
+        if (bleeder->type == MT_SHADOWS)
+        {
+            return MF_SHADOW;
         }
     }
     return 0;
