@@ -144,7 +144,7 @@ def generate(union):
         for field in union.fields:
             union_file.write(f"case D::{underscore(field.name)}:")
             union_file.write(f"return m_d == other.m_d && m_{field.name} == other.m_{field.name};")
-        union_file.write(f"case D::undefined:return true;")
+        union_file.write(f"case D::undefined:return other.m_d == D::undefined;")
         union_file.write("} // switch (m_d)\n")
         union_file.write("} // fn operator==\n")
 

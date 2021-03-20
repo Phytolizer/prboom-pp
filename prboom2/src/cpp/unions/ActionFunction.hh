@@ -1622,7 +1622,7 @@ class ActionFunction
         case D::pusher:
             return m_d == other.m_d && m_pusher == other.m_pusher;
         case D::undefined:
-            return true;
+            return other.m_d == D::undefined;
         } // switch (m_d)
     }     // fn operator==
     [[nodiscard]] constexpr bool operator!=(const ActionFunction &other) const
