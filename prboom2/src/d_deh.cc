@@ -1057,7 +1057,7 @@ static const struct deh_mobjflags_s deh_mobjflags[] = {
     {"COUNTKILL", MF_COUNTKILL}, // count toward the kills total
     {"COUNTITEM", MF_COUNTITEM}, // count toward the items total
     {"SKULLFLY", MF_SKULLFLY},   // special handling for flying skulls
-    {"NOTDMATCH", MF_NOTDMATCH}, // do not spawn in deathmatch
+    {"NOTDMATCH", MF_NOTDEATHMATCH}, // do not spawn in deathmatch
 
     // killough 10/98: TRANSLATION consists of 2 bits, not 1:
 
@@ -1403,7 +1403,7 @@ void deh_changeCompTranslucency()
 {
     int i;
     int predefined_translucency[] = {
-        MT_FIRE,      MT_SMOKE,    MT_FATSHOT, MT_BRUISERSHOT, MT_SPAWNFIRE,
+        MT_FIRE,      MT_SMOKE,    MT_FATSHOT, MT_BARON_SHOT, MT_SPAWNFIRE,
         MT_TROOPSHOT, MT_HEADSHOT, MT_PLASMA,  MT_BFG,         MT_ARACHPLAZ,
         MT_PUFF,      MT_TFOG,     MT_IFOG,    MT_MISC12,      MT_INV,
         MT_INS,       MT_MEGA};
@@ -1818,7 +1818,7 @@ static uint_64_t getConvertedDEHBits(uint_64_t bits)
         MF_COUNTITEM, // 23 Affects item % - affects percentage items gathered
                       // on level summary.
         MF_SKULLFLY,  // 24 Running - special handling for flying skulls.
-        MF_NOTDMATCH, // 25 Not in deathmatch - do not spawn in deathmatch (like
+        MF_NOTDEATHMATCH, // 25 Not in deathmatch - do not spawn in deathmatch (like
                       // keys)
         MF_TRANSLATION1, // 26 Color 1 (grey / red)
         MF_TRANSLATION2, // 27 Color 2 (brown / red)

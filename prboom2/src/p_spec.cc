@@ -1387,7 +1387,7 @@ void P_CrossSpecialLine(line_t *line, int side, mobj_t *thing,
             case MT_BFG:
             case MT_TROOPSHOT:
             case MT_HEADSHOT:
-            case MT_BRUISERSHOT:
+            case MT_BARON_SHOT:
                 return;
                 break;
 
@@ -2778,9 +2778,11 @@ void P_PlayerInSpecialSector(player_t *player)
             // e6y
             if (hudadd_secretarea)
             {
-                int sfx_id =
-                    (I_GetSfxLumpNums(&S_sfx[sfx_secret])[0] < 0 ? sfx_itmbk
-                                                                 : sfx_secret);
+                std::vector<int> lumpNums =
+                    I_GetSfxLumpNums(&S_sfx[sfx_secret]);
+                int sfx_id = (lumpNums.size() == 0 || lumpNums[0] < 0)
+                                 ? sfx_itmbk
+                                 : sfx_secret;
                 SetCustomMessage(player - players, STSTR_SECRETFOUND, 0,
                                  2 * TICRATE, CR_GOLD, sfx_id);
             }

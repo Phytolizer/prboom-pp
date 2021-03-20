@@ -180,10 +180,10 @@ static void dsda_InitDoom()
     g_fuzzy_aim_shift = 20;
     g_special_friction_low = IGNORE_VALUE;
 
-    g_s_play_atk1 = S_PLAY_ATK1;
+    g_s_play_atk1 = S_PLAYER_ATTACK1;
     g_s_play_atk2 = S_PLAY_ATK2;
-    g_s_play_run1 = S_PLAY_RUN1;
-    g_s_play = S_PLAY;
+    g_s_play_run1 = S_PLAYER_RUN1;
+    g_s_play = S_PLAYER;
     g_s_null = S_NULL;
 
     g_sfx_sawup = sfx_sawup;

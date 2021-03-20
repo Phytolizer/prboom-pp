@@ -311,9 +311,7 @@ void I_SetChannels()
 //
 std::vector<int> I_GetSfxLumpNums(sfxinfo_t *sfx)
 {
-    char namebuf[9];
-    const char *format;
-
+    std::string prefix = heretic ? "" : snd_pcspeaker ? "dp" : "ds";
     if (sfx->link)
     {
         sfx = sfx->link;
@@ -321,33 +319,35 @@ std::vector<int> I_GetSfxLumpNums(sfxinfo_t *sfx)
 
     dboolean hasAlts =
         !sfx->altNames.empty() &&
-        std::all_of(
-            sfx->altNames.begin(), sfx->altNames.end(), [](const auto &name) {
-                return W_SafeGetNumForName(
-                           (std::string{"ds"} + name.data()).c_str()) != -1;
-            });
-
-    // Different prefix for PC speaker sound effects for doom.
-    format = heretic ? "%s" : (snd_pcspeaker ? "dp%s" : "ds%s");
+        std::any_of(sfx->altNames.begin(), sfx->altNames.end(),
+                    [&prefix](const auto &name) {
+                        return W_SafeGetNumForName(
+                                   (prefix + name.data()).c_str()) != -1;
+                    });
 
     if (hasAlts)
     {
-        M_CheckParm("-forceoldbsp");
-        std::vector<int> lumpNums(sfx->altNames.size());
-        std::transform(sfx->altNames.begin(), sfx->altNames.end(),
-                       lumpNums.begin(), [](const auto &name) {
-                           return W_SafeGetNumForName(
-                               (std::string{"ds"} + name.data()).c_str());
-                       });
+        std::vector<int> lumpNums;
+        for (const auto &lumpName : sfx->altNames)
+        {
+            int lump = W_SafeGetNumForName((prefix + lumpName.data()).c_str());
+            if (lump != -1)
+            {
+                lumpNums.push_back(lump);
+            }
+        }
         return lumpNums;
     }
 
-    std::vector<int> lumpNums(sfx->names.size());
-    std::transform(sfx->names.begin(), sfx->names.end(), lumpNums.begin(),
-                   [](const auto &name) {
-                       return W_SafeGetNumForName(
-                           (std::string{"ds"} + name.data()).c_str());
-                   });
+    std::vector<int> lumpNums;
+    for (const auto &lumpName : sfx->names)
+    {
+        int lump = W_SafeGetNumForName((prefix + lumpName.data()).c_str());
+        if (lump != -1)
+        {
+            lumpNums.push_back(lump);
+        }
+    }
     return lumpNums;
 }
 
@@ -728,7 +728,7 @@ void I_InitSound()
                 SAMPLECOUNT);
     }
     else
-#else  // HAVE_MIXER
+#else // HAVE_MIXER
     }
 #endif // HAVE_MIXER
     {

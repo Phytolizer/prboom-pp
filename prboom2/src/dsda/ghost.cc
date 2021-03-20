@@ -69,26 +69,26 @@ using dsda_ghost_file_t = struct
 };
 
 mobjinfo_t dsda_ghost_info = {-1,                             // doomednum
-                              S_PLAY,                         // spawnstate
+                              S_PLAYER,                         // spawnstate
                               0,                              // spawnhealth
-                              S_PLAY_RUN1,                    // seestate
-                              sfx_None,                       // seesound
+                              S_PLAYER_RUN1,                    // seestate
+                              sfx_none,                       // seesound
                               0,                              // reactiontime
-                              sfx_None,                       // attacksound
-                              S_PLAY_PAIN,                    // painstate
+                              sfx_none,                       // attacksound
+                              S_PLAYER_PAIN,                    // painstate
                               0,                              // painchance
-                              sfx_None,                       // painsound
+                              sfx_none,                       // painsound
                               S_NULL,                         // meleestate
-                              S_PLAY_ATK1,                    // missilestate
-                              S_PLAY_DIE1,                    // deathstate
-                              S_PLAY_XDIE1,                   // xdeathstate
-                              sfx_None,                       // deathsound
+                              S_PLAYER_ATTACK1,                    // missilestate
+                              S_PLAYER_DEATH1,                    // deathstate
+                              S_PLAYER_GIB1,                   // xdeathstate
+                              sfx_none,                       // deathsound
                               0,                              // speed
                               0,                              // radius
                               0,                              // height
                               0,                              // mass
                               0,                              // damage
-                              sfx_None,                       // activesound
+                              sfx_none,                       // activesound
                               MF_NOBLOCKMAP | MF_TRANSLUCENT, // flags
                               S_NULL,                         // raisestate
                               MT_NULL,

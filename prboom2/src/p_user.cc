@@ -422,9 +422,9 @@ void P_MovePlayer(player_t *player)
                 }
             }
         }
-        if (mo->state == states + S_PLAY)
+        if (mo->state == states + S_PLAYER)
         {
-            P_SetMobjState(mo, S_PLAY_RUN1);
+            P_SetMobjState(mo, S_PLAYER_RUN1);
         }
     }
 }

@@ -125,168 +125,21 @@ sfxinfo_t doom_S_sfx[] = {
     // S_sfx[0] needs to be a dummy for odd reasons.
     {{}, false, 0, nullptr, -1, -1, nullptr},
 
+    // sfx_pistol
     {{"pistol"}, false, 64, nullptr, -1, -1, nullptr},
+    // sfx_shotgn
     {{"shotgn"}, false, 64, nullptr, -1, -1, nullptr},
+    // sfx_sgcock
     {{"sgcock"}, false, 64, nullptr, -1, -1, nullptr},
+    // sfx_dshtgn
     {{"dshtgn"}, false, 64, nullptr, -1, -1, nullptr},
+    // sfx_dbopn
     {{"dbopn"}, false, 64, nullptr, -1, -1, nullptr},
+    // sfx_dbcls
     {{"dbcls"}, false, 64, nullptr, -1, -1, nullptr},
-    {{"dbload"},
-     false,
-     64,
-     nullptr,
-     -1,
-     -1,
-     nullptr,
-     0,
-     {-1},
-     0,
-     {"dbload", "dblod2", "dblod3"}},
-    {{"plasma"}, false, 64, nullptr, -1, -1, nullptr},
-    {{"bfg"}, false, 64, nullptr, -1, -1, nullptr},
-    {{"sawup"}, false, 64, nullptr, -1, -1, nullptr},
-    {{"sawidl"}, false, 118, nullptr, -1, -1, nullptr},
-    {{"sawful"}, false, 64, nullptr, -1, -1, nullptr},
-    {{"sawhit"}, false, 64, nullptr, -1, -1, nullptr},
-    {{"rlaunc"}, false, 64, nullptr, -1, -1, nullptr},
-    {{"rxplod"}, false, 70, nullptr, -1, -1, nullptr},
-    {{"firsht"}, false, 70, nullptr, -1, -1, nullptr},
-    {{"firxpl"}, false, 70, nullptr, -1, -1, nullptr},
-    {{"pstart"}, false, 100, nullptr, -1, -1, nullptr},
-    {{"pstop"}, false, 100, nullptr, -1, -1, nullptr},
-    {{"doropn"}, false, 100, nullptr, -1, -1, nullptr},
-    {{"dorcls"}, false, 100, nullptr, -1, -1, nullptr},
-    {{"stnmov"}, false, 119, nullptr, -1, -1, nullptr},
-    {{"swtchn"}, false, 78, nullptr, -1, -1, nullptr},
-    {{"swtchx"}, false, 78, nullptr, -1, -1, nullptr},
-    {{"plpain"}, false, 96, nullptr, -1, -1, nullptr},
-    {{"dmpain"}, false, 96, nullptr, -1, -1, nullptr},
-    {{"popain"}, false, 96, nullptr, -1, -1, nullptr},
-    {{"vipain"}, false, 96, nullptr, -1, -1, nullptr},
-    {{"mnpain"}, false, 96, nullptr, -1, -1, nullptr},
-    {{"pepain"}, false, 96, nullptr, -1, -1, nullptr},
-    {{"slop"}, false, 78, nullptr, -1, -1, nullptr},
-    {{"itemup"}, true, 78, nullptr, -1, -1, nullptr},
-    {{"wpnup"}, true, 78, nullptr, -1, -1, nullptr},
-    {{"oof"}, false, 96, nullptr, -1, -1, nullptr},
-    {{"telept"}, false, 32, nullptr, -1, -1, nullptr},
-    {{"posit1"}, true, 98, nullptr, -1, -1, nullptr},
-    {{"posit2"}, true, 98, nullptr, -1, -1, nullptr},
-    {{"posit3"}, true, 98, nullptr, -1, -1, nullptr},
-    {{"bgsit1"}, true, 98, nullptr, -1, -1, nullptr},
-    {{"bgsit2"}, true, 98, nullptr, -1, -1, nullptr},
-    {{"sgtsit"}, true, 98, nullptr, -1, -1, nullptr},
-    {{"cacsit"}, true, 98, nullptr, -1, -1, nullptr},
-    {{"brssit"}, true, 94, nullptr, -1, -1, nullptr},
-    {{"cybsit"}, true, 92, nullptr, -1, -1, nullptr},
-    {{"spisit"}, true, 90, nullptr, -1, -1, nullptr},
-    {{"bspsit"}, true, 90, nullptr, -1, -1, nullptr},
-    {{"kntsit"}, true, 90, nullptr, -1, -1, nullptr},
-    {{"vilsit"}, true, 90, nullptr, -1, -1, nullptr},
-    {{"mansit"}, true, 90, nullptr, -1, -1, nullptr},
-    {{"pesit"}, true, 90, nullptr, -1, -1, nullptr},
-    {{"sklatk"}, false, 70, nullptr, -1, -1, nullptr},
-    {{"sgtatk"}, false, 70, nullptr, -1, -1, nullptr},
-    {{"skepch"}, false, 70, nullptr, -1, -1, nullptr},
-    {{"vilatk"}, false, 70, nullptr, -1, -1, nullptr},
-    {{"claw"}, false, 70, nullptr, -1, -1, nullptr},
-    {{"skeswg"}, false, 70, nullptr, -1, -1, nullptr},
-    {{"pldeth"}, false, 32, nullptr, -1, -1, nullptr},
-    {{"pdiehi"}, false, 32, nullptr, -1, -1, nullptr},
-    {{"podth1"}, false, 70, nullptr, -1, -1, nullptr},
-    {{"podth2"}, false, 70, nullptr, -1, -1, nullptr},
-    {{"podth3"}, false, 70, nullptr, -1, -1, nullptr},
-    {{"bgdth1"}, false, 70, nullptr, -1, -1, nullptr},
-    {{"bgdth2"}, false, 70, nullptr, -1, -1, nullptr},
-    {{"sgtdth"}, false, 70, nullptr, -1, -1, nullptr},
-    {{"cacdth"}, false, 70, nullptr, -1, -1, nullptr},
-    {{"skldth"}, false, 70, nullptr, -1, -1, nullptr},
-    {{"brsdth"}, false, 32, nullptr, -1, -1, nullptr},
-    {{"cybdth"}, false, 32, nullptr, -1, -1, nullptr},
-    {{"spidth"}, false, 32, nullptr, -1, -1, nullptr},
-    {{"bspdth"}, false, 32, nullptr, -1, -1, nullptr},
-    {{"vildth"}, false, 32, nullptr, -1, -1, nullptr},
-    {{"kntdth"}, false, 32, nullptr, -1, -1, nullptr},
-    {{"pedth"}, false, 32, nullptr, -1, -1, nullptr},
-    {{"skedth"}, false, 32, nullptr, -1, -1, nullptr},
-    {{"posact"}, true, 120, nullptr, -1, -1, nullptr},
-    {{"bgact"}, true, 120, nullptr, -1, -1, nullptr},
-    {{"dmact"}, true, 120, nullptr, -1, -1, nullptr},
-    {{"bspact"}, true, 100, nullptr, -1, -1, nullptr},
-    {{"bspwlk"}, true, 100, nullptr, -1, -1, nullptr},
-    {{"vilact"}, true, 100, nullptr, -1, -1, nullptr},
-    {{"noway"}, false, 78, nullptr, -1, -1, nullptr},
-    {{"barexp"},
-     false,
-     60,
-     nullptr,
-     -1,
-     -1,
-     nullptr,
-     0,
-     {-1},
-     0,
-     {"barexp", "barex2", "barex3"}},
-    {{"punch"}, false, 64, nullptr, -1, -1, nullptr},
-    {{"hoof"},
-     false,
-     70,
-     nullptr,
-     -1,
-     -1,
-     nullptr,
-     0,
-     {-1},
-     0,
-     {"hoof", "hoof2", "hoof3", "hoof4"}},
-    {{"metal"},
-     false,
-     70,
-     nullptr,
-     -1,
-     -1,
-     nullptr,
-     0,
-     {-1},
-     0,
-     {"metal", "metal2", "metal3"}},
-    {{"chgun"}, false, 64, &doom_S_sfx[sfx_pistol], 150, 0, nullptr},
-    {{"tink"}, false, 60, nullptr, -1, -1, nullptr},
-    {{"bdopn"}, false, 100, nullptr, -1, -1, nullptr},
-    {{"bdcls"}, false, 100, nullptr, -1, -1, nullptr},
-    {{"itmbk"}, false, 100, nullptr, -1, -1, nullptr},
-    {{"flame"}, false, 32, nullptr, -1, -1, nullptr},
-    {{"flamst"}, false, 32, nullptr, -1, -1, nullptr},
-    {{"getpow"}, false, 60, nullptr, -1, -1, nullptr},
-    {{"bospit"}, false, 70, nullptr, -1, -1, nullptr},
-    {{"boscub"}, false, 70, nullptr, -1, -1, nullptr},
-    {{"bossit"}, false, 70, nullptr, -1, -1, nullptr},
-    {{"bospn"}, false, 70, nullptr, -1, -1, nullptr},
-    {{"bosdth"}, false, 70, nullptr, -1, -1, nullptr},
-    {{"manatk"}, false, 70, nullptr, -1, -1, nullptr},
-    {{"mandth"}, false, 70, nullptr, -1, -1, nullptr},
-    {{"sssit"}, false, 70, nullptr, -1, -1, nullptr},
-    {{"ssdth"}, false, 70, nullptr, -1, -1, nullptr},
-    {{"keenpn"}, false, 70, nullptr, -1, -1, nullptr},
-    {{"keendt"}, false, 70, nullptr, -1, -1, nullptr},
-    {{"skeact"}, false, 70, nullptr, -1, -1, nullptr},
-    {{"skesit"}, false, 70, nullptr, -1, -1, nullptr},
-    {{"skeatk"}, false, 70, nullptr, -1, -1, nullptr},
-    {{"radio"}, false, 60, nullptr, -1, -1, nullptr},
-
-    // killough 11/98: dog sounds
-    {{"dgsit"}, false, 98, nullptr, -1, -1, nullptr},
-    {{"dgatk"}, false, 70, nullptr, -1, -1, nullptr},
-    {{"dgact"}, false, 120, nullptr, -1, -1, nullptr},
-    {{"dgdth"}, false, 70, nullptr, -1, -1, nullptr},
-    {{"dgpain"}, false, 96, nullptr, -1, -1, nullptr},
-
-    // e6y
-    {{"secret"}, false, 60, nullptr, -1, -1, nullptr},
-    {{"gibdth"}, false, 60, nullptr, -1, -1, nullptr},
-    // Everything from here up to 500 is reserved for future use.
-
-    // Per-monster/weapon sounds that aren't part of original Doom
+    // sfx_dbload
+    {{"dbload", "dblod2", "dblod3"}, false, 64, nullptr, -1, -1, nullptr},
+    // sfx_player_chaingun
     {{"pistol"},
      false,
      64,
@@ -297,7 +150,28 @@ sfxinfo_t doom_S_sfx[] = {
      0,
      {-1},
      0,
-     {"chngn1", "chngn2", "chngn3", "chngn4"}},
+     {"chgun", "chgun2", "chgun3", "chgun4"}},
+    // sfx_plasma
+    {{"plasma"}, false, 64, nullptr, -1, -1, nullptr},
+    // sfx_bfg
+    {{"bfg"}, false, 64, nullptr, -1, -1, nullptr},
+    // sfx_sawup
+    {{"sawup"}, false, 64, nullptr, -1, -1, nullptr},
+    // sfx_sawidl
+    {{"sawidl"}, false, 118, nullptr, -1, -1, nullptr},
+    // sfx_sawful
+    {{"sawful"}, false, 64, nullptr, -1, -1, nullptr},
+    // sfx_sawhit
+    {{"sawhit"}, false, 64, nullptr, -1, -1, nullptr},
+    // sfx_rlaunc
+    {{"rlaunc"}, false, 64, nullptr, -1, -1, nullptr},
+    // sfx_bfgball_explode
+    {{"rxplod"}, false, 70, nullptr, -1, -1, nullptr},
+    // sfx_imp_shoot
+    {{"firsht"}, false, 70, nullptr, -1, -1, nullptr},
+    // sfx_imp_fireball_explode
+    {{"firxpl"}, false, 70, nullptr, -1, -1, nullptr},
+    // sfx_chaingunner_shoot
     {{"shotgn"},
      false,
      64,
@@ -308,9 +182,107 @@ sfxinfo_t doom_S_sfx[] = {
      0,
      {-1},
      0,
-     {"chngn1", "chngn2", "chngn3", "chngn4"}},
-    {{"firxpl"}, false, 64, nullptr, -1, -1, nullptr, 0, {-1}, 0, {"plsxpl"}},
-    {{"barexp"},
+     {"chgun", "chgun2", "chgun3", "chgun4"}},
+    // sfx_pstart
+    {{"pstart"}, false, 100, nullptr, -1, -1, nullptr},
+    // sfx_pstop
+    {{"pstop"}, false, 100, nullptr, -1, -1, nullptr},
+    // sfx_doropn
+    {{"doropn"}, false, 100, nullptr, -1, -1, nullptr},
+    // sfx_dorcls
+    {{"dorcls"}, false, 100, nullptr, -1, -1, nullptr},
+    // sfx_stnmov
+    {{"stnmov"}, false, 119, nullptr, -1, -1, nullptr},
+    // sfx_swtchn
+    {{"swtchn"}, false, 78, nullptr, -1, -1, nullptr},
+    // sfx_swtchx
+    {{"swtchx"}, false, 78, nullptr, -1, -1, nullptr},
+    // sfx_archvile_pain
+    {{"vipain", "vilpn2", "vilpn3", "vilpn4"},
+     false,
+     96,
+     nullptr,
+     -1,
+     -1,
+     nullptr},
+    // sfx_baron_pain
+    {{"dmpain"}, false, 96, nullptr, -1, -1, nullptr},
+    // sfx_cacodemon_pain
+    {{"dmpain"}, false, 96, nullptr, -1, -1, nullptr, 0, {-1}, 0, {"capain"}},
+    // sfx_chaingunner_pain
+    {{"popain"}, false, 96, nullptr, -1, -1, nullptr, 0, {-1}, 0, {"hwpain"}},
+    // sfx_commanderkeen_pain
+    {{"keenpn"}, false, 70, nullptr, -1, -1, nullptr},
+    // sfx_cyberdemon_pain
+    {{"dmpain"}, false, 96, nullptr, -1, -1, nullptr, 0, {-1}, 0, {"cybpn"}},
+    // sfx_hellknight_pain
+    {{"dmpain"}, false, 96, nullptr, -1, -1, nullptr, 0, {-1}, 0, {"kntpn"}},
+    // sfx_icon_pain
+    {{"bospn"}, true, 70, nullptr, -1, -1, nullptr},
+    // sfx_imp_pain
+    {{"popain"}, true, 96, nullptr, -1, -1, nullptr, 0, {-1}, 0, {"bgpain"}},
+    // sfx_lostsoul_pain
+    {{"dmpain"}, false, 96, nullptr, -1, -1, nullptr, 0, {-1}, 0, {"sklpn"}},
+    // sfx_mancubus_pain
+    {{"mnpain"}, false, 96, nullptr, -1, -1, nullptr},
+    // sfx_painelemental_pain
+    {{"pepain"}, true, 96, nullptr, -1, -1, nullptr},
+    // sfx_pinky_pain
+    {{"dmpain"}, true, 96, nullptr, -1, -1, nullptr},
+    // sfx_player_pain
+    {{"plpain"}, true, 96, nullptr, -1, -1, nullptr},
+    // sfx_possessed_pain
+    {{"popain"}, true, 96, nullptr, -1, -1, nullptr},
+    // sfx_revenant_pain
+    {{"popain"}, true, 96, nullptr, -1, -1, nullptr, 0, {-1}, 0, {"skpain"}},
+    // sfx_shotgunner_pain
+    {{"popain"}, true, 96, nullptr, -1, -1, nullptr},
+    // sfx_spectre_pain
+    {{"dmpain"}, true, 96, nullptr, -1, -1, nullptr},
+    // sfx_spidermastermind_pain
+    {{"dmpain"}, true, 96, nullptr, -1, -1, nullptr, 0, {-1}, 0, {"sppain"}},
+    // sfx_ss_pain
+    {{"popain"}, true, 96, nullptr, -1, -1, nullptr},
+    // sfx_slop
+    {{"slop"}, true, 78, nullptr, -1, -1, nullptr},
+    // sfx_itemup
+    {{"itemup"}, true, 78, nullptr, -1, -1, nullptr},
+    // sfx_wpnup
+    {{"wpnup"}, true, 78, nullptr, -1, -1, nullptr},
+    // sfx_oof
+    {{"oof"}, true, 96, nullptr, -1, -1, nullptr},
+    // sfx_telept
+    {{"telept"}, true, 32, nullptr, -1, -1, nullptr},
+    // sfx_imp_wake
+    {{"bgsit1", "bgsit2"}, true, 98, nullptr, -1, -1, nullptr},
+    // sfx_possessed_wake
+    {{"posit1", "posit2", "posit3"}, false, 98, nullptr, -1, -1, nullptr},
+    // sfx_pinky_wake
+    {{"sgtsit"}, false, 98, nullptr, -1, -1, nullptr},
+    // sfx_cacodemon_wake
+    {{"cacsit"}, false, 98, nullptr, -1, -1, nullptr},
+    // sfx_baron_wake
+    {{"brssit"}, false, 94, nullptr, -1, -1, nullptr},
+    // sfx_cyberdemon_wake
+    {{"cybsit"}, false, 92, nullptr, -1, -1, nullptr},
+    // sfx_spidermastermind_wake
+    {{"spisit"}, false, 90, nullptr, -1, -1, nullptr},
+    // sfx_arachnotron_wake
+    {{"bspsit"}, false, 90, nullptr, -1, -1, nullptr},
+    // sfx_hellknight_wake
+    {{"kntsit"}, false, 90, nullptr, -1, -1, nullptr},
+    // sfx_archvile_wake
+    {{"vilsit"}, false, 90, nullptr, -1, -1, nullptr},
+    // sfx_mancubus_wake
+    {{"mansit"}, false, 90, nullptr, -1, -1, nullptr},
+    // sfx_painelemental_wake
+    {{"pesit"}, false, 90, nullptr, -1, -1, nullptr},
+    // sfx_lostsoul_attack
+    {{"sklatk"}, false, 70, nullptr, -1, -1, nullptr},
+    // sfx_pinky_attack
+    {{"sgtatk"}, false, 70, nullptr, -1, -1, nullptr},
+    // sfx_skepch
+    {{"skepch"},
      false,
      70,
      nullptr,
@@ -320,9 +292,140 @@ sfxinfo_t doom_S_sfx[] = {
      0,
      {-1},
      0,
+     {"skpch", "skpch2", "skpch3", "skpch4"}},
+    // sfx_vilatk
+    {{"vilatk"}, false, 70, nullptr, -1, -1, nullptr},
+    // sfx_claw
+    {{"claw"}, false, 70, nullptr, -1, -1, nullptr},
+    // sfx_skeswg
+    {{"skeswg"}, false, 70, nullptr, -1, -1, nullptr},
+    // sfx_player_death
+    {{"pldeth"}, false, 32, nullptr, -1, -1, nullptr},
+    // sfx_pdiehi
+    {{"pdiehi"}, false, 32, nullptr, -1, -1, nullptr},
+    // sfx_possessed_death
+    {{"podth1", "podth2", "podth3"}, false, 70, nullptr, -1, -1, nullptr},
+    // sfx_imp_death
+    {{"bgdth1", "bgdth2"}, false, 70, nullptr, -1, -1, nullptr},
+    // sfx_pinky_death
+    {{"sgtdth"}, false, 70, nullptr, -1, -1, nullptr},
+    // sfx_cacodemon_death
+    {{"cacdth"}, false, 70, nullptr, -1, -1, nullptr},
+    // sfx_baron_death
+    {{"brsdth"}, false, 32, nullptr, -1, -1, nullptr},
+    // sfx_cyberdemon_death
+    {{"cybdth"}, true, 32, nullptr, -1, -1, nullptr},
+    // sfx_spidermastermind_death
+    {{"spidth"}, true, 32, nullptr, -1, -1, nullptr},
+    // sfx_arachnotron_death
+    {{"bspdth"}, true, 32, nullptr, -1, -1, nullptr},
+    // sfx_archvile_death
+    {{"vildth"}, true, 32, nullptr, -1, -1, nullptr},
+    // sfx_hellknight_death
+    {{"kntdth"}, true, 32, nullptr, -1, -1, nullptr},
+    // sfx_painelemental_death
+    {{"pedth"}, true, 32, nullptr, -1, -1, nullptr},
+    // sfx_revenant_death
+    {{"skedth"}, false, 32, nullptr, -1, -1, nullptr},
+    // sfx_possessed_active
+    {{"posact"}, false, 120, nullptr, -1, -1, nullptr},
+    // sfx_imp_active
+    {{"bgact"}, false, 120, nullptr, -1, -1, nullptr},
+    // sfx_pinky_active
+    {{"dmact"}, false, 120, nullptr, -1, -1, nullptr, 0, {-1}, 0, {"pnkact"}},
+    // sfx_arachnotron_active
+    {{"bspact"}, false, 100, nullptr, -1, -1, nullptr},
+    // sfx_arachnotron_walk
+    {{"bspwlk"}, false, 100, nullptr, 150, 0, nullptr},
+    // sfx_archvile_active
+    {{"vilact"}, false, 100, nullptr, -1, -1, nullptr},
+    // sfx_noway
+    {{"noway"}, false, 78, nullptr, -1, -1, nullptr},
+    // sfx_barexp
+    {{"barexp", "barex2", "barex3"}, false, 60, nullptr, -1, -1, nullptr},
+    // sfx_punch
+    {{"punch", "punch2", "punch3"}, false, 64, nullptr, -1, -1, nullptr},
+    // sfx_hoof
+    {{"hoof", "hoof2", "hoof3", "hoof4"}, false, 70, nullptr, -1, -1, nullptr},
+    // sfx_metal
+    {{"metal", "metal2", "metal3"}, false, 70, nullptr, -1, -1, nullptr},
+    // sfx_tink
+    {{"tink"}, false, 60, nullptr, -1, -1, nullptr},
+    // sfx_bdopn
+    {{"bdopn"}, false, 100, nullptr, -1, -1, nullptr},
+    // sfx_bdcls
+    {{"bdcls"}, false, 100, nullptr, -1, -1, nullptr},
+    // sfx_itmbk
+    {{"itmbk"}, false, 100, nullptr, -1, -1, nullptr},
+    // sfx_flame
+    {{"flame"}, false, 32, nullptr, -1, -1, nullptr},
+    // sfx_flamst
+    {{"flamst"}, false, 32, nullptr, -1, -1, nullptr},
+    // sfx_getpow
+    {{"getpow"}, false, 60, nullptr, -1, -1, nullptr},
+    // sfx_icon_spit
+    {{"bospit"}, false, 70, nullptr, -1, -1, nullptr},
+    // sfx_boscub
+    {{"boscub"}, false, 70, nullptr, -1, -1, nullptr},
+    // sfx_bossit
+    {{"bossit"}, false, 70, nullptr, -1, -1, nullptr},
+    // sfx_icon_death
+    {{"bosdth"}, false, 70, nullptr, -1, -1, nullptr},
+    // sfx_manatk
+    {{"manatk"}, false, 70, nullptr, -1, -1, nullptr},
+    // sfx_mancubus_death
+    {{"mandth"}, false, 70, nullptr, -1, -1, nullptr},
+    // sfx_ss_wake
+    {{"sssit"}, false, 70, nullptr, -1, -1, nullptr},
+    // sfx_ss_death
+    {{"podth1", "podth2", "podth3"}, false, 70, nullptr, -1, -1, nullptr},
+    // sfx_commanderkeen_death
+    {{"keendt"}, false, 70, nullptr, -1, -1, nullptr},
+
+    // sfx_revenant_active
+    {{"skeact"}, false, 70, nullptr, -1, -1, nullptr},
+    // sfx_revenant_wake
+    {{"skesit"}, false, 70, nullptr, -1, -1, nullptr},
+    // sfx_revenant_attack
+    {{"skeatk"}, false, 70, nullptr, -1, -1, nullptr},
+    // sfx_radio
+    {{"radio"}, false, 60, nullptr, -1, -1, nullptr},
+    // sfx_dgsit
+    {{"dgsit"}, false, 98, nullptr, -1, -1, nullptr},
+
+    // e6y
+    // sfx_dgatk
+    {{"dgatk"}, false, 70, nullptr, -1, -1, nullptr},
+    // sfx_dgact
+    {{"dgact"}, false, 120, nullptr, -1, -1, nullptr},
+    // Everything from here up to 500 is reserved for future use.
+
+    // Per-monster/weapon sounds that aren't part of original Doom
+    // sfx_dgdth
+    {{"dgdth"}, false, 70, nullptr, -1, -1, nullptr},
+    // sfx_dgpain
+    {{"dgpain"}, false, 96, nullptr, -1, -1, nullptr},
+    // sfx_secret
+    {{"secret"}, false, 60, nullptr, -1, -1, nullptr},
+    // sfx_gibdth
+    {{"gibdth"}, false, 60, nullptr, -1, -1, nullptr},
+    // sfx_plasma_sizzle
+    {{"firxpl"}, true, 70, nullptr, -1, -1, nullptr, 0, {-1}, 0, {"plsxpl"}},
+    // sfx_tracer_explode
+    {{"barexp", "barexp2", "barexp3"},
+     true,
+     60,
+     nullptr,
+     -1,
+     -1,
+     nullptr,
+     0,
+     {-1},
+     0,
      {"skexp1", "skexp2", "skexp3"}},
+    // sfx_baron_active
     {{"dmact"},
-     true,
+     false,
      120,
      nullptr,
      -1,
@@ -331,41 +434,42 @@ sfxinfo_t doom_S_sfx[] = {
      0,
      {-1},
      0,
-     {{"dmact1"}, "dmact2"}},
-    {{"dmact"},
-     true,
-     120,
-     nullptr,
-     -1,
-     -1,
-     nullptr,
-     0,
-     {-1},
-     0,
-     {{"bract1"}, "bract2"}},
-    {{"brssht"}, false, 70, nullptr, -1, -1, nullptr},
-    {{"cacact"}, false, 120, nullptr, -1, -1, nullptr},
-    {{"capain"}, false, 96, nullptr, -1, -1, nullptr},
-    {{"firsht"},
-     true,
-     70,
-     nullptr,
-     -1,
-     -1,
-     nullptr,
-     0,
-     {-1},
-     0,
-     {"cacox1", "cacox2", "cacox3"}},
-    {{"dmpain"}, false, 96, nullptr, -1, -1, nullptr, 0, {-1}, 0, {"sklpn"}},
+     {"bract1", "bract2"}},
+    // sfx_baron_shoot
+    {{"firsht"}, false, 70, nullptr, -1, -1, nullptr, 0, {-1}, 0, {"brssht"}},
+    // sfx_baron_attack
+    {{"claw"}, false, 70, nullptr, -1, -1, nullptr, 0, {-1}, 0, {"brsclw"}},
+    // sfx_baron_shot_sizzle
+    {{"firxpl"}, true, 70, nullptr, -1, -1, nullptr, 0, {-1}, 0, {"brsxpl"}},
+    // sfx_cacodemon_active
+    {{"dmact"}, false, 120, nullptr, -1, -1, nullptr, 0, {-1}, 0, {"cacact"}},
+    // sfx_cacodemon_shoot
+    {{"firsht"}, false, 70, nullptr, -1, -1, nullptr, 0, {-1}, 0, {"cacsht"}},
+    // sfx_lostsoul_active
     {{"dmact"}, false, 120, nullptr, -1, -1, nullptr, 0, {-1}, 0, {"sklact"}},
-    {{"firexp"}, false, 70, nullptr, -1, -1, nullptr, 0, {-1}, 0, {"skldth"}},
+    // sfx_lostsoul_death
+    {{"firxpl"}, false, 70, nullptr, -1, -1, nullptr, 0, {-1}, 0, {"skldth"}},
+    // sfx_spidermastermind_active
     {{"dmact"}, false, 120, nullptr, -1, -1, nullptr, 0, {-1}, 0, {"spiact"}},
-    {{"dmpain"}, false, 70, nullptr, -1, -1, nullptr, 0, {-1}, 0, {"sppain"}},
-    {{"dmpain"}, false, 70, nullptr, -1, -1, nullptr, 0, {-1}, 0, {"bsppn"}},
-    {{"plasma"}, false, 70, nullptr, -1, -1, nullptr, 0, {-1}, 0, {"bspsht"}},
+    // sfx_spidermastermind_shoot
+    {{"shotgn"},
+     false,
+     64,
+     nullptr,
+     -1,
+     -1,
+     nullptr,
+     0,
+     {-1},
+     0,
+     {"chgun", "chgun2", "chgun3", "chgun4"}},
+    // sfx_arachnotron_pain
+    {{"dmpain"}, false, 96, nullptr, -1, -1, nullptr, 0, {-1}, 0, {"bsppn"}},
+    // sfx_arachnotron_shoot
+    {{"plasma"}, false, 64, nullptr, -1, -1, nullptr, 0, {-1}, 0, {"bspsht"}},
+    // sfx_arachnotron_plasma_sizzle
     {{"firxpl"}, false, 70, nullptr, -1, -1, nullptr, 0, {-1}, 0, {"plsxpl"}},
-    {{"dmpain"}, false, 70, nullptr, -1, -1, nullptr, 0, {-1}, 0, {"cybpn"}},
+    // sfx_cyberdemon_active
     {{"dmact"},
      true,
      120,
@@ -377,10 +481,15 @@ sfxinfo_t doom_S_sfx[] = {
      {-1},
      0,
      {"cbact1", "cbact2", "cbact3", "cbact4"}},
+    // sfx_painelemental_active
     {{"dmact"}, false, 120, nullptr, -1, -1, nullptr, 0, {-1}, 0, {"peact"}},
+    // sfx_ss_active
+    {{"posact"}, false, 120, nullptr, -1, -1, nullptr},
+    // sfx_ss_shoot
     {{"shotgn"}, false, 64, nullptr, -1, -1, nullptr, 0, {-1}, 0, {"sssht"}},
+    // sfx_chaingunner_wake
     {{"posit1", "posit2", "posit3"},
-     false,
+     true,
      98,
      nullptr,
      -1,
@@ -390,8 +499,9 @@ sfxinfo_t doom_S_sfx[] = {
      {-1},
      0,
      {"hwsit1", "hwsit2", "hwsit3"}},
+    // sfx_chaingunner_active
     {{"posact"},
-     true,
+     false,
      120,
      nullptr,
      -1,
@@ -400,8 +510,8 @@ sfxinfo_t doom_S_sfx[] = {
      0,
      {-1},
      0,
-     {{"hwsact1"}, "hwsact2", "hwsact3", "hwsact4"}},
-    {{"popain"}, false, 96, nullptr, -1, -1, nullptr, 0, {-1}, 0, {"hwpain"}},
+     {"hwsact1", "hwsact2", "hwsact3", "hwsact4"}},
+    // sfx_chaingunner_death
     {{"podth1", "podth2", "podth3"},
      false,
      70,
@@ -413,12 +523,42 @@ sfxinfo_t doom_S_sfx[] = {
      {-1},
      0,
      {"hwdth1", "hwdth2", "hwdth3"}},
+    // sfx_hellknight_active
     {{"dmact"}, false, 120, nullptr, -1, -1, nullptr, 0, {-1}, 0, {"kntact"}},
-    {{"dmpain"}, false, 96, nullptr, -1, -1, nullptr, 0, {-1}, 0, {"kntpn"}},
-    {{"popain"}, false, 96, nullptr, -1, -1, nullptr, 0, {-1}, 0, {"skpain"}},
-    {{"skepch"},
+    // sfx_hellknight_shoot
+    {{"firsht"}, false, 70, nullptr, -1, -1, nullptr, 0, {-1}, 0, {"brssht"}},
+    // sfx_hellknight_shot_sizzle
+    {{"firxpl"}, false, 70, nullptr, -1, -1, nullptr, 0, {-1}, 0, {"brsxpl"}},
+    // sfx_hellknight_attack
+    {{"claw"}, false, 70, nullptr, -1, -1, nullptr, 0, {-1}, 0, {"kntclw"}},
+    // sfx_mancubus_active
+    {{"posact"}, false, 120, nullptr, -1, -1, nullptr, 0, {-1}, 0, {"manact"}},
+    // sfx_mancubus_shoot
+    {{"firsht"}, false, 70, nullptr, -1, -1, nullptr, 0, {-1}, 0, {"mansht"}},
+    // sfx_mancubus_projectile_explode
+    {{"firxpl"}, false, 70, nullptr, -1, -1, nullptr, 0, {-1}, 0, {"manxpl"}},
+    // sfx_archvile_resurrect
+    {{"slop"}, false, 78, nullptr, -1, -1, nullptr, 0, {-1}, 0, {"vilres"}},
+    // sfx_archvile_zap
+    {{"barexp"}, false, 60, nullptr, -1, -1, nullptr, 0, {-1}, 0, {"vilexp"}},
+    // sfx_shotgunner_wake
+    {{"posit1", "posit2", "posit3"}, false, 98, nullptr, -1, -1, nullptr},
+    // sfx_shotgunner_death
+    {{"podth1", "podth2", "podth3"}, false, 70, nullptr, -1, -1, nullptr},
+    // sfx_shotgunner_active
+    {{"posact"}, true, 120, nullptr, -1, -1, nullptr},
+    // sfx_possessed_shoot
+    {{"pistol"}, false, 64, nullptr, -1, -1, nullptr},
+    // sfx_spectre_wake
+    {{"sgtsit"}, false, 98, nullptr, -1, -1, nullptr},
+    // sfx_spectre_attack
+    {{"sgtatk"}, false, 70, nullptr, -1, -1, nullptr},
+    // sfx_spectre_death
+    {{"sgtdth"}, false, 70, nullptr, -1, -1, nullptr},
+    // sfx_spectre_active
+    {{"dmact"},
      false,
-     70,
+     120,
      nullptr,
      -1,
      -1,
@@ -426,13 +566,7 @@ sfxinfo_t doom_S_sfx[] = {
      0,
      {-1},
      0,
-     {"skepch", "skpch2", "skpch3", "skpch4"}},
-    {{"posact"}, false, 120, nullptr, -1, -1, nullptr, 0, {-1}, 0, {"manact"}},
-    {{"firsht"}, false, 70, nullptr, -1, -1, nullptr, 0, {-1}, 0, {"mansht"}},
-    {{"firxpl"}, false, 70, nullptr, -1, -1, nullptr, 0, {-1}, 0, {"manxpl"}},
-    {{"plasma"}, false, 70, nullptr, -1, -1, nullptr, 0, {-1}, 0, {"bspsht"}},
-    {{"slop"}, false, 78, nullptr, -1, -1, nullptr, 0, {-1}, 0, {"vilres"}},
-    {{"barexp"}, false, 60, nullptr, -1, -1, nullptr, 0, {-1}, 0, {"vilexp"}},
+     {"dmact1", "dmact2"}},
 
     // Free slots for DEHEXTRA. Priorities should be overridden by user.
     // There is a gap present to accomodate Eternity Engine - see their commit

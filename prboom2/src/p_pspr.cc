@@ -388,7 +388,7 @@ static void P_FireWeapon(player_t *player)
     }
     else
     {
-        P_SetMobjState(player->mo, S_PLAY_ATK1);
+        P_SetMobjState(player->mo, S_PLAYER_ATTACK1);
         newstate =
             static_cast<statenum_t>(weaponinfo[player->readyweapon].atkstate);
         P_SetPsprite(player, ps_weapon, newstate);

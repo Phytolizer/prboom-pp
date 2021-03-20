@@ -305,7 +305,7 @@ void S_StartSoundAtVolume(void *origin_p, int sfx_id, int volume)
                  sfx_id == sfx_noway); // killough 4/25/98
     sfx_id &= ~PICKUP_SOUND;
 
-    if (sfx_id == sfx_None)
+    if (sfx_id == sfx_none)
     {
         return;
     }
@@ -402,13 +402,15 @@ void S_StartSoundAtVolume(void *origin_p, int sfx_id, int volume)
 
     // get lumpnum if necessary
     // killough 2/28/98: make missing sounds non-fatal
-    std::vector<int> sfxLumps = I_GetSfxLumpNums(sfx);
-    if (sfx->lumpnums.size() == 1 && sfx->lumpnums[0] < 0 &&
-        sfxLumps.size() == 1 && sfxLumps[0] < 0)
+    if (sfx->lumpnums.size() == 1 && sfx->lumpnums[0] < 0)
     {
-        return;
+        std::vector<int> sfxLumps = I_GetSfxLumpNums(sfx);
+        if (sfxLumps.size() == 1 && sfxLumps[0] < 0)
+        {
+            return;
+        }
+        sfx->lumpnums = sfxLumps;
     }
-    sfx->lumpnums = sfxLumps;
 
     // increase the usefulness
     if (sfx->usefulness++ < 0)

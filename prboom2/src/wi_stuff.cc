@@ -1743,7 +1743,7 @@ void WI_updateNetgameStats()
 
         if (!stillticking)
         {
-            S_StartSound(nullptr, sfx_pldeth);
+            S_StartSound(nullptr, sfx_player_death);
             ng_state++;
         }
     }

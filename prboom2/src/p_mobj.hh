@@ -195,7 +195,7 @@
 
 // Don't spawn this object
 //  in death match mode (e.g. key cards).
-#define MF_NOTDMATCH (uint_64_t)(0x0000000002000000)
+#define MF_NOTDEATHMATCH (uint_64_t)(0x0000000002000000)
 
 // Player sprites in multiplayer modes are modified
 //  using an internal color lookup table for re-indexing.

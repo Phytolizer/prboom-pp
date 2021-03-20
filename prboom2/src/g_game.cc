@@ -3265,7 +3265,7 @@ void G_SetFastParms(int fast_pending)
     { /* only change if necessary */
         if ((fast = fast_pending))
         {
-            for (i = S_SARG_RUN1; i <= S_SARG_PAIN2; i++)
+            for (i = S_PINKY_RUN1; i <= S_SARG_PAIN2; i++)
             {
                 if (states[i].tics != 1 || demo_compatibility)
                 { // killough 4/10/98
@@ -3273,17 +3273,17 @@ void G_SetFastParms(int fast_pending)
                         1; // don't change 1->0 since it causes cycles
                 }
             }
-            mobjinfo[MT_BRUISERSHOT].speed = 20 * FRACUNIT;
+            mobjinfo[MT_BARON_SHOT].speed = 20 * FRACUNIT;
             mobjinfo[MT_HEADSHOT].speed = 20 * FRACUNIT;
             mobjinfo[MT_TROOPSHOT].speed = 20 * FRACUNIT;
         }
         else
         {
-            for (i = S_SARG_RUN1; i <= S_SARG_PAIN2; i++)
+            for (i = S_PINKY_RUN1; i <= S_SARG_PAIN2; i++)
             {
                 states[i].tics <<= 1;
             }
-            mobjinfo[MT_BRUISERSHOT].speed = 15 * FRACUNIT;
+            mobjinfo[MT_BARON_SHOT].speed = 15 * FRACUNIT;
             mobjinfo[MT_HEADSHOT].speed = 10 * FRACUNIT;
             mobjinfo[MT_TROOPSHOT].speed = 10 * FRACUNIT;
         }

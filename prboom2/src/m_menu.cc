@@ -1087,11 +1087,18 @@ void M_Options(int /* choice */)
 //
 // M_QuitDOOM
 //
-int quitsounds[8] = {sfx_pldeth, sfx_dmpain, sfx_popain, sfx_slop,
-                     sfx_telept, sfx_posit1, sfx_posit3, sfx_sgtatk};
+int quitsounds[8] = {sfx_player_death, sfx_pinky_pain, sfx_possessed_pain,
+                     sfx_slop,         sfx_telept,     sfx_possessed_wake,
+                     sfx_pinky_attack};
 
-int quitsounds2[8] = {sfx_vilact, sfx_getpow, sfx_boscub, sfx_slop,
-                      sfx_skeswg, sfx_kntdth, sfx_bspact, sfx_sgtatk};
+int quitsounds2[8] = {sfx_archvile_active,
+                      sfx_getpow,
+                      sfx_boscub,
+                      sfx_slop,
+                      sfx_skeswg,
+                      sfx_hellknight_death,
+                      sfx_arachnotron_active,
+                      sfx_pinky_attack};
 
 static void M_QuitResponse(int ch)
 {

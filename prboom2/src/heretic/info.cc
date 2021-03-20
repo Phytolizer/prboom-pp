@@ -8535,7 +8535,7 @@ heretic_mobjinfo_t heretic_mobjinfo[HERETIC_NUMMOBJTYPES] = {
         0,                    // damage
         heretic_sfx_None,     // activesound
         MF_SOLID | MF_SHOOTABLE | MF_DROPOFF | MF_PICKUP |
-            MF_NOTDMATCH, // flags
+            MF_NOTDEATHMATCH, // flags
         MF2_WINDTHRUST | MF2_FOOTCLIP | MF2_SLIDE | MF2_PASSMOBJ |
             MF2_TELESTOMP // flags2
     },
@@ -8592,7 +8592,7 @@ heretic_mobjinfo_t heretic_mobjinfo[HERETIC_NUMMOBJTYPES] = {
         100,                                                 // mass
         0,                                                   // damage
         heretic_sfx_None,                                    // activesound
-        MF_SOLID | MF_SHOOTABLE | MF_DROPOFF | MF_NOTDMATCH, // flags
+        MF_SOLID | MF_SHOOTABLE | MF_DROPOFF | MF_NOTDEATHMATCH, // flags
         MF2_WINDTHRUST | MF2_SLIDE | MF2_PASSMOBJ | MF2_FOOTCLIP | MF2_LOGRAV |
             MF2_TELESTOMP // flags2
     },
@@ -9857,7 +9857,7 @@ heretic_mobjinfo_t heretic_mobjinfo[HERETIC_NUMMOBJTYPES] = {
         100,                       // mass
         0,                         // damage
         heretic_sfx_None,          // activesound
-        MF_SPECIAL | MF_NOTDMATCH, // flags
+        MF_SPECIAL | MF_NOTDEATHMATCH, // flags
         0                          // flags2
     },
 
@@ -9885,7 +9885,7 @@ heretic_mobjinfo_t heretic_mobjinfo[HERETIC_NUMMOBJTYPES] = {
         100,                       // mass
         0,                         // damage
         heretic_sfx_None,          // activesound
-        MF_SPECIAL | MF_NOTDMATCH, // flags
+        MF_SPECIAL | MF_NOTDEATHMATCH, // flags
         0                          // flags2
     },
 
@@ -9913,7 +9913,7 @@ heretic_mobjinfo_t heretic_mobjinfo[HERETIC_NUMMOBJTYPES] = {
         100,                       // mass
         0,                         // damage
         heretic_sfx_None,          // activesound
-        MF_SPECIAL | MF_NOTDMATCH, // flags
+        MF_SPECIAL | MF_NOTDEATHMATCH, // flags
         0                          // flags2
     },
 

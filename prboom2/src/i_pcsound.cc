@@ -161,8 +161,8 @@ int I_PCS_StartSound(int id, int channel, int /* vol */, int /* sep */,
     // Heretic source code, where there are remnants of this left over
     // from Doom.
 
-    if (id == sfx_posact || id == sfx_bgact || id == sfx_dmact ||
-        id == sfx_dmpain || id == sfx_popain || id == sfx_sawidl)
+    if (id == sfx_possessed_active || id == sfx_imp_active || id == sfx_pinky_active ||
+        id == sfx_pinky_pain || id == sfx_possessed_pain || id == sfx_sawidl)
     {
         return -1;
     }

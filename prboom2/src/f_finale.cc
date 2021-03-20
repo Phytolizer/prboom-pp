@@ -472,7 +472,7 @@ void F_CastTicker()
     else
     {
         // just advance to next state in animation
-        if (caststate == &states[S_PLAY_ATK1])
+        if (caststate == &states[S_PLAYER_ATTACK1])
         {
             goto stopattack; // Oh, gross hack!
         }
@@ -483,7 +483,7 @@ void F_CastTicker()
         // sound hacks....
         switch (st)
         {
-        case S_PLAY_ATK1:
+        case S_PLAYER_ATTACK1:
             sfx = sfx_dshtgn;
             break;
         case S_POSS_ATK2:
@@ -499,15 +499,15 @@ void F_CastTicker()
             sfx = sfx_skeswg;
             break;
         case S_SKEL_FIST4:
-            sfx = sfx_skepch;
+            sfx = sfx_revenant_punch;
             break;
         case S_SKEL_MISS2:
-            sfx = sfx_skeatk;
+            sfx = sfx_revenant_attack;
             break;
         case S_FATT_ATK8:
         case S_FATT_ATK5:
         case S_FATT_ATK2:
-            sfx = sfx_firsht;
+            sfx = sfx_imp_shoot;
             break;
         case S_CPOS_ATK2:
         case S_CPOS_ATK3:
@@ -518,15 +518,15 @@ void F_CastTicker()
             sfx = sfx_claw;
             break;
         case S_SARG_ATK2:
-            sfx = sfx_sgtatk;
+            sfx = sfx_pinky_attack;
             break;
         case S_BOSS_ATK2:
         case S_BOS2_ATK2:
         case S_HEAD_ATK2:
-            sfx = sfx_firsht;
+            sfx = sfx_imp_shoot;
             break;
         case S_SKULL_ATK2:
-            sfx = sfx_sklatk;
+            sfx = sfx_lostsoul_attack;
             break;
         case S_SPID_ATK2:
         case S_SPID_ATK3:
@@ -541,7 +541,7 @@ void F_CastTicker()
             sfx = sfx_rlaunc;
             break;
         case S_PAIN_ATK3:
-            sfx = sfx_sklatk;
+            sfx = sfx_lostsoul_attack;
             break;
         default:
             sfx = 0;

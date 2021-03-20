@@ -1904,7 +1904,7 @@ mobj_t *P_SpawnMapThing(const mapthing_t &mthing, int index)
 
     // don't spawn keycards and players in deathmatch
 
-    if (deathmatch && mobjinfo[i].flags & MF_NOTDMATCH)
+    if (deathmatch && mobjinfo[i].flags & MF_NOTDEATHMATCH)
     {
         return nullptr;
     }

@@ -2188,15 +2188,17 @@ dboolean PTR_NoWayTraverse(intercept_t *in)
     // This linedef
     return ld->special ||
            !( // Ignore specials
+              // Always blocking
                ld->flags & ML_BLOCKING ||
-               (                      // Always blocking
-                   P_LineOpening(ld), // Find openings
-                   openrange <= 0 ||  // No opening
-                       openbottom >
-                           usething->z + 24 * FRACUNIT || // Too high it blocks
-                       opentop <
-                           usething->z + usething->height // Too low it blocks
-                   ));
+               (
+                   // Find openings
+                   P_LineOpening(ld),
+                   // No opening
+                   openrange <= 0 ||
+                       // Too high it blocks
+                       openbottom > usething->z + 24 * FRACUNIT ||
+                       // Too low it blocks
+                       opentop < usething->z + usething->height));
 }
 
 //
@@ -2541,7 +2543,7 @@ inline static void P_PutSecnode(msecnode_t *node)
 {
     Z_BFree(&secnodezone, node);
 }
-#else  // USE_BLOCK_MEMORY_ALLOCATOR
+#else // USE_BLOCK_MEMORY_ALLOCATOR
 // phares 3/21/98
 //
 // Maintain a freelist of msecnode_t's to reduce memory allocs and frees.
