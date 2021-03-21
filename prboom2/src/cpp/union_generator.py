@@ -2,6 +2,7 @@ from enum import Enum, auto
 from os import mkdir, rmdir, remove, listdir
 from os.path import exists
 from subprocess import run
+
 from inflection import underscore
 
 SYSTEM_INCLUDES = ["cstdint", "stdexcept"]
@@ -46,7 +47,10 @@ class UnionField:
             return f"{self.ty}"
 
     def is_pointer(self):
-        return isinstance(self.ty, FunctionType) or self.ty.endswith("*")
+        return self.is_function() or self.ty.endswith("*")
+
+    def is_function(self):
+        return isinstance(self.ty, FunctionType)
 
 
 class Union:
@@ -71,14 +75,16 @@ def generate(union):
         union_file.write(f"class {union.name} {{")
 
         for field in union.fields:
-            if isinstance(field.ty, FunctionType):
+            if field.is_function():
                 print(f"Aliasing {field.ty} to '{field.field_type()}'")
                 union_file.write(f"using m_{field.name}_t = {field.ty};")
 
         for field in union.fields:
             union_file.write(f"{field.field_type()} m_{field.name}")
-            if isinstance(field.ty, FunctionType) or "*" in field.ty:
+            if field.is_pointer():
                 union_file.write(" = nullptr")
+            else:
+                union_file.write("{}")
             union_file.write(";")
 
         print("Generating discriminant type...")
@@ -97,9 +103,9 @@ def generate(union):
                 "// NOLINTNEXTLINE(google-explicit-constructor,hicpp-explicit-conversions)\n"
             )
             union_file.write(f"constexpr {union.name}(")
-            if isinstance(field.ty, FunctionType):
+            if field.is_function():
                 union_file.write(f"m_{field.name}_t {field.name}")
-            else:
+            elif field.is_pointer():
                 union_file.write(f"{field.ty} {field.name}")
             union_file.write(
                 f"): m_{field.name}({field.name}), m_d(D::{underscore(field.name)}) {{}}"
@@ -213,6 +219,11 @@ def write_include(name, include):
         union_file.write(f'#include "{include}.hh"\n')
 
 
+def write_system_include(name, include):
+    with open(f"unions/{name}.hh", "a") as union_file:
+        union_file.write(f"#include {include}\n")
+
+
 def write_pre_declaration(union, name):
     with open(f"unions/{union}.hh", "a") as union_file:
         union_file.write(f"struct {name};")
@@ -278,7 +289,10 @@ if __name__ == "__main__":
                 print("None")
             else:
                 for include in word[1:].split(","):
-                    write_include(union.name, include)
+                    if include[0] == "<" and include[-1] == ">":
+                        write_system_include(union.name, include)
+                    else:
+                        write_include(union.name, include)
                     print(f'"{include}"')
             state = State.PreDeclarations
         elif state == State.PreDeclarations:

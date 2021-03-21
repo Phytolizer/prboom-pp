@@ -204,13 +204,13 @@ sfxinfo_t doom_S_sfx[] = {
     // sfx_possessed_wake
     {{"posit1", "posit2", "posit3"}, false, 98, nullptr, -1, -1, nullptr},
     // sfx_posit2
-    {{}, false, 98, &S_sfx[sfx_possessed_wake], -1, -1, nullptr},
+    {{}, false, 98, &doom_S_sfx[sfx_possessed_wake], -1, -1, nullptr},
     // sfx_posit3
-    {{}, false, 98, &S_sfx[sfx_possessed_wake], -1, -1, nullptr},
+    {{}, false, 98, &doom_S_sfx[sfx_possessed_wake], -1, -1, nullptr},
     // sfx_imp_wake
     {{"bgsit1", "bgsit2"}, true, 98, nullptr, -1, -1, nullptr},
     // sfx_bgsit2
-    {{}, true, 98, &S_sfx[sfx_imp_wake], -1, -1, nullptr},
+    {{}, true, 98, &doom_S_sfx[sfx_imp_wake], -1, -1, nullptr},
     // sfx_pinky_wake
     {{"sgtsit"}, false, 98, nullptr, -1, -1, nullptr},
     // sfx_cacodemon_wake
@@ -260,13 +260,13 @@ sfxinfo_t doom_S_sfx[] = {
     // sfx_possessed_death
     {{"podth1", "podth2", "podth3"}, false, 70, nullptr, -1, -1, nullptr},
     // sfx_podth2
-    {{}, false, 70, &S_sfx[sfx_possessed_death], -1, -1, nullptr},
+    {{}, false, 70, &doom_S_sfx[sfx_possessed_death], -1, -1, nullptr},
     // sfx_podth3
-    {{}, false, 70, &S_sfx[sfx_possessed_death], -1, -1, nullptr},
+    {{}, false, 70, &doom_S_sfx[sfx_possessed_death], -1, -1, nullptr},
     // sfx_imp_death
     {{"bgdth1", "bgdth2"}, false, 70, nullptr, -1, -1, nullptr},
     // sfx_bgdth2
-    {{}, false, 70, &S_sfx[sfx_imp_death], -1, -1, nullptr},
+    {{}, false, 70, &doom_S_sfx[sfx_imp_death], -1, -1, nullptr},
     // sfx_pinky_death
     {{"sgtdth"}, false, 70, nullptr, -1, -1, nullptr},
     // sfx_cacodemon_death
@@ -385,201 +385,6 @@ sfxinfo_t doom_S_sfx[] = {
     {{"secret"}, false, 60, nullptr, -1, -1, nullptr},
     // sfx_gibdth
     {{"gibdth"}, false, 60, nullptr, -1, -1, nullptr},
-    // sfx_player_chaingun
-    {{"pistol"},
-     false,
-     64,
-     nullptr,
-     -1,
-     -1,
-     nullptr,
-     0,
-     {-1},
-     0,
-     {"chgun", "chgun2", "chgun3", "chgun4"}},
-    // sfx_chaingunner_shoot
-    {{"shotgn"},
-     false,
-     64,
-     nullptr,
-     -1,
-     -1,
-     nullptr,
-     0,
-     {-1},
-     0,
-     {"chgun", "chgun2", "chgun3", "chgun4"}},
-    // sfx_cacodemon_pain
-    {{"dmpain"}, false, 96, nullptr, -1, -1, nullptr, 0, {-1}, 0, {"capain"}},
-    // sfx_chaingunner_pain
-    {{"popain"}, false, 96, nullptr, -1, -1, nullptr, 0, {-1}, 0, {"hwpain"}},
-    // sfx_cyberdemon_pain
-    {{"dmpain"}, false, 96, nullptr, -1, -1, nullptr, 0, {-1}, 0, {"cybpn"}},
-    // sfx_hellknight_pain
-    {{"dmpain"}, false, 96, nullptr, -1, -1, nullptr, 0, {-1}, 0, {"kntpn"}},
-    // sfx_imp_pain
-    {{"popain"}, true, 96, nullptr, -1, -1, nullptr, 0, {-1}, 0, {"bgpain"}},
-    // sfx_lostsoul_pain
-    {{"dmpain"}, false, 96, nullptr, -1, -1, nullptr, 0, {-1}, 0, {"sklpn"}},
-    // sfx_pinky_pain
-    {{"dmpain"}, true, 96, nullptr, -1, -1, nullptr},
-    // sfx_revenant_pain
-    {{"popain"}, true, 96, nullptr, -1, -1, nullptr, 0, {-1}, 0, {"skepn"}},
-    // sfx_shotgunner_pain
-    {{"popain"}, true, 96, nullptr, -1, -1, nullptr},
-    // sfx_spectre_pain
-    {{"dmpain"}, true, 96, nullptr, -1, -1, nullptr},
-    // sfx_spidermastermind_pain
-    {{"dmpain"}, true, 96, nullptr, -1, -1, nullptr, 0, {-1}, 0, {"sppain"}},
-    // sfx_ss_pain
-    {{"popain"}, true, 96, nullptr, -1, -1, nullptr},
-    // sfx_plasma_sizzle
-    {{"firxpl"}, true, 70, nullptr, -1, -1, nullptr, 0, {-1}, 0, {"plsxpl"}},
-    // sfx_tracer_explode
-    {{"barexp", "barexp2", "barexp3"},
-     true,
-     60,
-     nullptr,
-     -1,
-     -1,
-     nullptr,
-     0,
-     {-1},
-     0,
-     {"skexp1", "skexp2", "skexp3"}},
-    // sfx_pinky_active
-    {{"dmact"}, false, 120, nullptr, -1, -1, nullptr, 0, {-1}, 0, {"pnkact"}},
-    // sfx_baron_shoot
-    {{"firsht"}, false, 70, nullptr, -1, -1, nullptr, 0, {-1}, 0, {"brssht"}},
-    // sfx_baron_attack
-    {{"claw"}, false, 70, nullptr, -1, -1, nullptr, 0, {-1}, 0, {"brsclw"}},
-    // sfx_baron_shot_sizzle
-    {{"firxpl"}, true, 70, nullptr, -1, -1, nullptr, 0, {-1}, 0, {"brsxpl"}},
-    // sfx_cacodemon_active
-    {{"dmact"}, false, 120, nullptr, -1, -1, nullptr, 0, {-1}, 0, {"cacact"}},
-    // sfx_cacodemon_shoot
-    {{"firsht"}, false, 70, nullptr, -1, -1, nullptr, 0, {-1}, 0, {"cacsht"}},
-    // sfx_lostsoul_active
-    {{"dmact"}, false, 120, nullptr, -1, -1, nullptr, 0, {-1}, 0, {"sklact"}},
-    // sfx_spidermastermind_active
-    {{"dmact"}, false, 120, nullptr, -1, -1, nullptr, 0, {-1}, 0, {"spiact"}},
-    // sfx_spidermastermind_shoot
-    {{"shotgn"},
-     false,
-     64,
-     nullptr,
-     -1,
-     -1,
-     nullptr,
-     0,
-     {-1},
-     0,
-     {"chgun", "chgun2", "chgun3", "chgun4"}},
-    // sfx_arachnotron_pain
-    {{"dmpain"}, false, 96, nullptr, -1, -1, nullptr, 0, {-1}, 0, {"bsppn"}},
-    // sfx_arachnotron_shoot
-    {{"plasma"}, false, 64, nullptr, -1, -1, nullptr, 0, {-1}, 0, {"bspsht"}},
-    // sfx_arachnotron_plasma_sizzle
-    {{"firxpl"}, false, 70, nullptr, -1, -1, nullptr, 0, {-1}, 0, {"plsxpl"}},
-    // sfx_cyberdemon_active
-    {{"dmact"},
-     true,
-     120,
-     nullptr,
-     -1,
-     -1,
-     nullptr,
-     0,
-     {-1},
-     0,
-     {"cbact1", "cbact2", "cbact3", "cbact4"}},
-    // sfx_painelemental_active
-    {{"dmact"}, false, 120, nullptr, -1, -1, nullptr, 0, {-1}, 0, {"peact"}},
-    // sfx_ss_active
-    {{"posact"}, false, 120, nullptr, -1, -1, nullptr},
-    // sfx_ss_shoot
-    {{"shotgn"}, false, 64, nullptr, -1, -1, nullptr, 0, {-1}, 0, {"sssht"}},
-    // sfx_chaingunner_wake
-    {{"posit1", "posit2", "posit3"},
-     true,
-     98,
-     nullptr,
-     -1,
-     -1,
-     nullptr,
-     0,
-     {-1},
-     0,
-     {"hwsit1", "hwsit2", "hwsit3"}},
-    // sfx_chaingunner_active
-    {{"posact"},
-     false,
-     120,
-     nullptr,
-     -1,
-     -1,
-     nullptr,
-     0,
-     {-1},
-     0,
-     {"hwsact1", "hwsact2", "hwsact3", "hwsact4"}},
-    // sfx_chaingunner_death
-    {{"podth1", "podth2", "podth3"},
-     false,
-     70,
-     nullptr,
-     -1,
-     -1,
-     nullptr,
-     0,
-     {-1},
-     0,
-     {"hwdth1", "hwdth2", "hwdth3"}},
-    // sfx_hellknight_active
-    {{"dmact"}, false, 120, nullptr, -1, -1, nullptr, 0, {-1}, 0, {"kntact"}},
-    // sfx_hellknight_shoot
-    {{"firsht"}, false, 70, nullptr, -1, -1, nullptr, 0, {-1}, 0, {"brssht"}},
-    // sfx_hellknight_shot_sizzle
-    {{"firxpl"}, false, 70, nullptr, -1, -1, nullptr, 0, {-1}, 0, {"brsxpl"}},
-    // sfx_hellknight_attack
-    {{"claw"}, false, 70, nullptr, -1, -1, nullptr, 0, {-1}, 0, {"kntclw"}},
-    // sfx_mancubus_active
-    {{"posact"}, false, 120, nullptr, -1, -1, nullptr, 0, {-1}, 0, {"manact"}},
-    // sfx_mancubus_shoot
-    {{"firsht"}, false, 70, nullptr, -1, -1, nullptr, 0, {-1}, 0, {"mansht"}},
-    // sfx_mancubus_projectile_explode
-    {{"firxpl"}, false, 70, nullptr, -1, -1, nullptr, 0, {-1}, 0, {"manxpl"}},
-    // sfx_archvile_resurrect
-    {{"slop"}, false, 78, nullptr, -1, -1, nullptr, 0, {-1}, 0, {"vilres"}},
-    // sfx_archvile_zap
-    {{"barexp"}, false, 60, nullptr, -1, -1, nullptr, 0, {-1}, 0, {"vilexp"}},
-    // sfx_shotgunner_wake
-    {{"posit1", "posit2", "posit3"}, false, 98, nullptr, -1, -1, nullptr},
-    // sfx_shotgunner_death
-    {{"podth1", "podth2", "podth3"}, false, 70, nullptr, -1, -1, nullptr},
-    // sfx_shotgunner_active
-    {{"posact"}, true, 120, nullptr, -1, -1, nullptr},
-    // sfx_possessed_shoot
-    {{"pistol"}, false, 64, nullptr, -1, -1, nullptr},
-    // sfx_spectre_wake
-    {{"sgtsit"}, false, 98, nullptr, -1, -1, nullptr},
-    // sfx_spectre_attack
-    {{"sgtatk"}, false, 70, nullptr, -1, -1, nullptr},
-    // sfx_spectre_death
-    {{"sgtdth"}, false, 70, nullptr, -1, -1, nullptr},
-    // sfx_spectre_active
-    {{"dmact"},
-     false,
-     120,
-     nullptr,
-     -1,
-     -1,
-     nullptr,
-     0,
-     {-1},
-     0,
-     {"dmact1", "dmact2"}},
-
     // free slots for dehextra. priorities should be overridden by user.
     // there is a gap present to accomodate eternity engine - see their commit
     // @ https://github.com/team-eternity/eternity/commit/b8fb8f71 - which means
@@ -786,4 +591,290 @@ sfxinfo_t doom_S_sfx[] = {
     [697] = {{"fre197"}, false, 127, nullptr, -1, -1, nullptr},
     [698] = {{"fre198"}, false, 127, nullptr, -1, -1, nullptr},
     [699] = {{"fre199"}, false, 127, nullptr, -1, -1, nullptr},
+
+    // sfx_player_chaingun
+    {{"pistol"},
+     false,
+     64,
+     nullptr,
+     -1,
+     -1,
+     nullptr,
+     0,
+     {-1},
+     0,
+     {"chngn", "chngn2", "chngn3", "chngn4"}},
+    // sfx_chaingunner_shoot
+    {{"shotgn"},
+     false,
+     64,
+     nullptr,
+     -1,
+     -1,
+     nullptr,
+     0,
+     {-1},
+     0,
+     {"chngn", "chngn2", "chngn3", "chngn4"}},
+    // sfx_cacodemon_pain
+    {{},
+     false,
+     96,
+     &doom_S_sfx[sfx_baron_pain],
+     -1,
+     -1,
+     nullptr,
+     0,
+     {-1},
+     0,
+     {"capain"}},
+    // sfx_chaingunner_pain
+    {{},
+     false,
+     96,
+     &doom_S_sfx[sfx_possessed_pain],
+     -1,
+     -1,
+     nullptr,
+     0,
+     {-1},
+     0,
+     {"hwpain"}},
+    // sfx_cyberdemon_pain
+    {{},
+     false,
+     96,
+     &doom_S_sfx[sfx_baron_pain],
+     -1,
+     -1,
+     nullptr,
+     0,
+     {-1},
+     0,
+     {"cybpn"}},
+    // sfx_hellknight_pain
+    {{},
+     false,
+     96,
+     &doom_S_sfx[sfx_baron_pain],
+     -1,
+     -1,
+     nullptr,
+     0,
+     {-1},
+     0,
+     {"kntpn"}},
+    // sfx_imp_pain
+    {{},
+     true,
+     96,
+     &doom_S_sfx[sfx_possessed_pain],
+     -1,
+     -1,
+     nullptr,
+     0,
+     {-1},
+     0,
+     {"bgpain"}},
+    // sfx_lostsoul_pain
+    {{},
+     false,
+     96,
+     &doom_S_sfx[sfx_baron_pain],
+     -1,
+     -1,
+     nullptr,
+     0,
+     {-1},
+     0,
+     {"sklpn"}},
+    // sfx_pinky_pain
+    {{}, true, 96, &doom_S_sfx[sfx_baron_pain], -1, -1, nullptr},
+    // sfx_revenant_pain
+    {{},
+     true,
+     96,
+     &doom_S_sfx[sfx_possessed_pain],
+     -1,
+     -1,
+     nullptr,
+     0,
+     {-1},
+     0,
+     {"skpain"}},
+    // sfx_shotgunner_pain
+    {{"popain"}, true, 96, nullptr, -1, -1, nullptr},
+    // sfx_spectre_pain
+    {{"dmpain"}, true, 96, nullptr, -1, -1, nullptr},
+    // sfx_spidermastermind_pain
+    {{"dmpain"}, true, 96, nullptr, -1, -1, nullptr, 0, {-1}, 0, {"sppain"}},
+    // sfx_ss_pain
+    {{"popain"}, true, 96, nullptr, -1, -1, nullptr},
+    // sfx_plasma_sizzle
+    {{"firxpl"}, true, 70, nullptr, -1, -1, nullptr, 0, {-1}, 0, {"plsxpl"}},
+    // sfx_tracer_explode
+    {{"barexp", "barexp2", "barexp3"},
+     true,
+     60,
+     nullptr,
+     -1,
+     -1,
+     nullptr,
+     0,
+     {-1},
+     0,
+     {"skexp1", "skexp2", "skexp3"}},
+    // sfx_pinky_active
+    {{},
+     false,
+     120,
+     &doom_S_sfx[sfx_baron_active],
+     -1,
+     -1,
+     nullptr,
+     0,
+     {-1},
+     0,
+     {"dmact1", "dmact2"}},
+    // sfx_baron_shoot
+    {{"firsht"}, false, 70, nullptr, -1, -1, nullptr, 0, {-1}, 0, {"brssht"}},
+    // sfx_baron_attack
+    {{"claw"}, false, 70, nullptr, -1, -1, nullptr, 0, {-1}, 0, {"brsclw"}},
+    // sfx_baron_shot_sizzle
+    {{"firxpl"}, true, 70, nullptr, -1, -1, nullptr, 0, {-1}, 0, {"brsxpl"}},
+    // sfx_cacodemon_active
+    {{"dmact"}, false, 120, nullptr, -1, -1, nullptr, 0, {-1}, 0, {"cacact"}},
+    // sfx_cacodemon_shoot
+    {{"firsht"}, false, 70, nullptr, -1, -1, nullptr, 0, {-1}, 0, {"cacsht"}},
+    // sfx_lostsoul_active
+    {{"dmact"}, false, 120, nullptr, -1, -1, nullptr, 0, {-1}, 0, {"sklact"}},
+    // sfx_spidermastermind_active
+    {{},
+     false,
+     120,
+     &doom_S_sfx[sfx_baron_active],
+     -1,
+     -1,
+     nullptr,
+     0,
+     {-1},
+     0,
+     {"spact1", "spact2"}},
+    // sfx_spidermastermind_shoot
+    {{"shotgn"},
+     false,
+     64,
+     nullptr,
+     -1,
+     -1,
+     nullptr,
+     0,
+     {-1},
+     0,
+     {"chgun", "chgun2", "chgun3", "chgun4"}},
+    // sfx_arachnotron_pain
+    {{"dmpain"}, false, 96, nullptr, -1, -1, nullptr, 0, {-1}, 0, {"bsppn"}},
+    // sfx_arachnotron_shoot
+    {{"plasma"}, false, 64, nullptr, -1, -1, nullptr, 0, {-1}, 0, {"bspsht"}},
+    // sfx_arachnotron_plasma_sizzle
+    {{"firxpl"}, false, 70, nullptr, -1, -1, nullptr, 0, {-1}, 0, {"plsxpl"}},
+    // sfx_cyberdemon_active
+    {{"dmact"},
+     true,
+     120,
+     nullptr,
+     -1,
+     -1,
+     nullptr,
+     0,
+     {-1},
+     0,
+     {"cbact1", "cbact2", "cbact3", "cbact4"}},
+    // sfx_painelemental_active
+    {{"dmact"}, false, 120, nullptr, -1, -1, nullptr, 0, {-1}, 0, {"peact"}},
+    // sfx_ss_active
+    {{"posact"}, false, 120, nullptr, -1, -1, nullptr},
+    // sfx_ss_shoot
+    {{"shotgn"}, false, 64, nullptr, -1, -1, nullptr, 0, {-1}, 0, {"sssht"}},
+    // sfx_chaingunner_wake
+    {{"posit1", "posit2", "posit3"},
+     true,
+     98,
+     nullptr,
+     -1,
+     -1,
+     nullptr,
+     0,
+     {-1},
+     0,
+     {"hwsit1", "hwsit2", "hwsit3"}},
+    // sfx_chaingunner_active
+    {{"posact"},
+     false,
+     120,
+     nullptr,
+     -1,
+     -1,
+     nullptr,
+     0,
+     {-1},
+     0,
+     {"hwsact1", "hwsact2", "hwsact3", "hwsact4"}},
+    // sfx_chaingunner_death
+    {{"podth1", "podth2", "podth3"},
+     false,
+     70,
+     nullptr,
+     -1,
+     -1,
+     nullptr,
+     0,
+     {-1},
+     0,
+     {"hwdth1", "hwdth2", "hwdth3"}},
+    // sfx_hellknight_active
+    {{"dmact"}, false, 120, nullptr, -1, -1, nullptr, 0, {-1}, 0, {"kntact"}},
+    // sfx_hellknight_shoot
+    {{"firsht"}, false, 70, nullptr, -1, -1, nullptr, 0, {-1}, 0, {"brssht"}},
+    // sfx_hellknight_shot_sizzle
+    {{"firxpl"}, false, 70, nullptr, -1, -1, nullptr, 0, {-1}, 0, {"brsxpl"}},
+    // sfx_hellknight_attack
+    {{"claw"}, false, 70, nullptr, -1, -1, nullptr, 0, {-1}, 0, {"kntclw"}},
+    // sfx_mancubus_active
+    {{"posact"}, false, 120, nullptr, -1, -1, nullptr, 0, {-1}, 0, {"manact"}},
+    // sfx_mancubus_shoot
+    {{"firsht"}, false, 70, nullptr, -1, -1, nullptr, 0, {-1}, 0, {"mansht"}},
+    // sfx_mancubus_projectile_explode
+    {{"firxpl"}, false, 70, nullptr, -1, -1, nullptr, 0, {-1}, 0, {"manxpl"}},
+    // sfx_archvile_resurrect
+    {{"slop"}, false, 78, nullptr, -1, -1, nullptr, 0, {-1}, 0, {"vilres"}},
+    // sfx_archvile_zap
+    {{"barexp"}, false, 60, nullptr, -1, -1, nullptr, 0, {-1}, 0, {"vilexp"}},
+    // sfx_shotgunner_wake
+    {{"posit1", "posit2", "posit3"}, false, 98, nullptr, -1, -1, nullptr},
+    // sfx_shotgunner_death
+    {{"podth1", "podth2", "podth3"}, false, 70, nullptr, -1, -1, nullptr},
+    // sfx_shotgunner_active
+    {{"posact"}, true, 120, nullptr, -1, -1, nullptr},
+    // sfx_possessed_shoot
+    {{"pistol"}, false, 64, nullptr, -1, -1, nullptr},
+    // sfx_spectre_wake
+    {{"sgtsit"}, false, 98, nullptr, -1, -1, nullptr},
+    // sfx_spectre_attack
+    {{"sgtatk"}, false, 70, nullptr, -1, -1, nullptr},
+    // sfx_spectre_death
+    {{"sgtdth"}, false, 70, nullptr, -1, -1, nullptr},
+    // sfx_spectre_active
+    {{"dmact"},
+     false,
+     120,
+     nullptr,
+     -1,
+     -1,
+     nullptr,
+     0,
+     {-1},
+     0,
+     {"dmact1", "dmact2"}},
+
 };

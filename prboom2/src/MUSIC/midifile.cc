@@ -266,6 +266,7 @@ static dboolean ReadSysExEvent(midi_event_t *event, byte event_type,
 {
     event->event_type = midi_event_type_t::Type{event_type};
 
+    event->data.setSysex();
     if (!ReadVariableLength(&event->data.sysex().length, mf))
     {
         lprintf(LO_WARN, "ReadSysExEvent: Failed to read length of "

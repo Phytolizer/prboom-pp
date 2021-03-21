@@ -1738,33 +1738,6 @@ doom_mobjinfo_t doom_mobjinfo[NUMMOBJTYPES] = {
         S_NULL,             // raisestate
     },
 
-    // MT_HELLKNIGHT_SHOT
-    {
-        -1,
-        S_HELLKNIGHT_SHOT1,
-        1000,
-        S_NULL,
-        sfx_hellknight_shoot,
-        8,
-        sfx_none,
-        S_NULL,
-        0,
-        sfx_none,
-        S_NULL,
-        S_NULL,
-        S_HELLKNIGHT_SHOT_SIZZLE1,
-        S_NULL,
-        sfx_hellknight_shot_sizzle,
-        15 * FRACUNIT,
-        6 * FRACUNIT,
-        8 * FRACUNIT,
-        100,
-        8,
-        sfx_none,
-        MF_NOBLOCKMAP | MF_MISSILE | MF_DROPOFF | MF_NOGRAVITY | MF_TRANSLUCENT,
-        S_NULL,
-    },
-
     {
         // MT_KNIGHT
         69,                                     // doomednum
@@ -5268,4 +5241,30 @@ doom_mobjinfo_t doom_mobjinfo[NUMMOBJTYPES] = {
         S_NULL                      // raisestate
     },
 
+    // MT_HELLKNIGHT_SHOT
+    {
+        -1,
+        S_HELLKNIGHT_SHOT1,
+        1000,
+        S_NULL,
+        sfx_hellknight_shoot,
+        8,
+        sfx_none,
+        S_NULL,
+        0,
+        sfx_none,
+        S_NULL,
+        S_NULL,
+        S_HELLKNIGHT_SHOT_SIZZLE1,
+        S_NULL,
+        sfx_hellknight_shot_sizzle,
+        15 * FRACUNIT,
+        6 * FRACUNIT,
+        8 * FRACUNIT,
+        100,
+        8,
+        sfx_none,
+        MF_NOBLOCKMAP | MF_MISSILE | MF_DROPOFF | MF_NOGRAVITY | MF_TRANSLUCENT,
+        S_NULL,
+    },
 };

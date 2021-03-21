@@ -305,27 +305,33 @@ void I_SetChannels()
     */
 }
 
+static bool checkHasAlts(sfxinfo_t *sfx)
+{
+    std::string prefix = heretic ? "" : snd_pcspeaker ? "dp" : "ds";
+
+    return !sfx->altNames.empty() &&
+           std::any_of(sfx->altNames.begin(), sfx->altNames.end(),
+                       [&prefix](const auto &name) {
+                           return W_SafeGetNumForName(
+                                      (prefix + name.data()).c_str()) != -1;
+                       });
+}
+
 //
 // Retrieve the raw data lump index
 //  for a given SFX name.
 //
 std::vector<int> I_GetSfxLumpNums(sfxinfo_t *sfx)
 {
-    std::string prefix = heretic ? "" : snd_pcspeaker ? "dp" : "ds";
-    if (sfx->link)
+    dboolean origHasAlts = checkHasAlts(sfx);
+    if (!origHasAlts && sfx->link)
     {
         sfx = sfx->link;
     }
 
-    dboolean hasAlts =
-        !sfx->altNames.empty() &&
-        std::any_of(sfx->altNames.begin(), sfx->altNames.end(),
-                    [&prefix](const auto &name) {
-                        return W_SafeGetNumForName(
-                                   (prefix + name.data()).c_str()) != -1;
-                    });
+    std::string prefix = heretic ? "" : snd_pcspeaker ? "dp" : "ds";
 
-    if (hasAlts)
+    if (origHasAlts || checkHasAlts(sfx))
     {
         std::vector<int> lumpNums;
         for (const auto &lumpName : sfx->altNames)
@@ -1318,8 +1324,8 @@ static int music_player_was_init[NUM_MUS_PLAYERS];
 
 // order in which players are to be tried
 char music_player_order[NUM_MUS_PLAYERS][200] = {
-    PLAYER_VORBIS,     PLAYER_MAD,  PLAYER_DUMB,
-    PLAYER_FLUIDSYNTH, PLAYER_OPL2, PLAYER_PORTMIDI,
+    PLAYER_FLUIDSYNTH, PLAYER_VORBIS, PLAYER_MAD,
+    PLAYER_DUMB,       PLAYER_OPL2,   PLAYER_PORTMIDI,
 };
 
 // prefered MIDI device
@@ -1518,8 +1524,7 @@ static int Exp_RegisterSongEx(const void *data, size_t len, int try_mus2mid)
                             current_player = i;
                             music_handle = temp_handle;
                             SDL_UnlockMutex(musmutex);
-                            lprintf(LO_INFO,
-                                    "Exp_RegisterSongEx: Using player %s\n",
+                            lprintf(LO_INFO, "Exp_RegisterSongEx: Using %s\n",
                                     music_players[i]->name());
                             return 1;
                         }

@@ -4,9 +4,9 @@
 #include "MUSIC/midifile_events.hh"
 class MidiEventData
 {
-    midi_channel_event_data_t m_channel;
-    midi_meta_event_data_t m_meta;
-    midi_sysex_event_data_t m_sysex;
+    midi_channel_event_data_t m_channel{};
+    midi_meta_event_data_t m_meta{};
+    midi_sysex_event_data_t m_sysex{};
     enum class D
     {
         channel,

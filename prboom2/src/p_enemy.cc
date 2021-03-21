@@ -1868,7 +1868,15 @@ void A_BruisAttack(mobj_t *actor)
         P_DamageMobj(actor->target, actor, actor, damage);
         return;
     }
-    P_SpawnMissile(actor, actor->target, MT_BARON_SHOT); // launch a missile
+    if (actor->type == MT_BRUISER)
+    {
+        // launch a missile
+        P_SpawnMissile(actor, actor->target, MT_BARON_SHOT);
+    }
+    else
+    {
+        P_SpawnMissile(actor, actor->target, MT_HELLKNIGHT_SHOT);
+    }
 }
 
 //

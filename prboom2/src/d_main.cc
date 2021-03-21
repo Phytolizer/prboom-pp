@@ -145,12 +145,14 @@ char *basesavegame; // killough 2/16/98: savegame directory
 
 // jff 4/19/98 list of standard IWAD names
 const char *const standard_iwads[] = {
-    "doom2f.wad",    "doom2.wad",   "plutonia.wad", "tnt.wad",
+    "doom2.wad",     "plutonia.wad", "tnt.wad",
 
-    "doom.wad",      "doom1.wad",   "doomu.wad", /* CPhipps - alow doomu.wad */
+    "doom.wad",      "doom1.wad",    "doomu.wad", /* CPhipps - alow doomu.wad */
 
     "freedoom2.wad", /* wart@kobold.org:  added freedoom for Fedora Extras */
     "freedoom1.wad", "freedm.wad",
+
+    "doom2f.wad",
 
     "hacx.wad",      "chex.wad",
 

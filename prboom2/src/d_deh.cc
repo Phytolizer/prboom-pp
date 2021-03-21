@@ -1216,7 +1216,7 @@ static const deh_bexptr deh_bexptrs[] = // CPhipps - static const
         {A_Lower, "A_Lower"},
         {A_Raise, "A_Raise"},
         {A_Punch, "A_Punch"},
-        {A_ReFire, "reinterpret_cast<thinker::types::ActionFunction>(A_ReFire"},
+        {A_ReFire, "A_ReFire"},
         {A_FirePistol, "A_FirePistol"},
         {A_Light1, "A_Light1"},
         {A_FireShotgun, "A_FireShotgun"},
@@ -1578,6 +1578,7 @@ void ProcessDehFile(const char *filename, const char *outfilename, int lumpnum)
             // killough 10/98: exclude if inside wads (only to discourage
             // the practice, since the code could otherwise handle it)
 
+            // TODO comp flag to toggle this
             if (infile.lump)
             {
                 if (fileout)

@@ -2758,7 +2758,6 @@ typedef enum
     MT_HEAD,
     MT_BRUISER,
     MT_BARON_SHOT,
-    MT_HELLKNIGHT_SHOT,
     MT_KNIGHT,
     MT_SKULL,
     MT_SPIDER,
@@ -2889,6 +2888,7 @@ typedef enum
 
     MT_MUSICSOURCE, /* MUSINFO lump */
     MT_GIBDTH,
+    MT_HELLKNIGHT_SHOT,
 
     /* proff 11/22/98: Andy Baker's stealth monsters (next 12)
      * cph - moved below the MBF stuff, no need to displace them */
