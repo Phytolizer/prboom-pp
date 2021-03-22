@@ -35,9 +35,12 @@
 #ifndef __SOUNDS__
 #define __SOUNDS__
 
+#ifdef __cplusplus
+
 #include "doomtype.hh"
 #include <vector>
 #include <string_view>
+#include <string>
 
 //
 // SoundFX struct.
@@ -80,7 +83,7 @@ struct sfxinfo_t
     // heretic - total number of channels a sound type may occupy
     int numchannels;
 
-    std::vector<std::string_view> altNames;
+    std::vector<std::string> altNames;
 };
 
 //
@@ -106,7 +109,13 @@ struct musicinfo_t
 // Identifiers for all music in game.
 //
 
+#endif
+
+#ifdef __cplusplus
 enum musicenum_t
+#else
+typedef enum
+#endif
 {
     mus_None,
     mus_e1m1,
@@ -237,13 +246,21 @@ enum musicenum_t
     heretic_mus_intr,
     heretic_mus_cptd,
     HERETIC_NUMMUSIC
+#ifdef __cplusplus
 };
+#else
+} musicenum_t;
+#endif
 
 //
 // Identifiers for all sfx in game.
 //
 
+#ifdef __cplusplus
 enum sfxenum_t
+#else
+typedef enum
+#endif
 {
     sfx_none,
     sfx_pistol,
@@ -622,7 +639,9 @@ enum sfxenum_t
     sfx_spectre_attack,
     sfx_spectre_death,
     sfx_spectre_active,
-
+    sfx_rocket_explode,
+    sfx_cacodemon_projectile_explode,
+    sfx_ignored,
 
     NUMSFX,
 
@@ -773,9 +792,15 @@ enum sfxenum_t
     heretic_sfx_amb10,
     heretic_sfx_amb11,
     HERETIC_NUMSFX
+#ifdef __cplusplus
 };
+#else
+} sfxenum_t;
+#endif
 
 // all the stuff - dynamically selected in global.c
+
+#ifdef __cplusplus
 
 extern sfxinfo_t heretic_S_sfx[];
 extern musicinfo_t heretic_S_music[];
@@ -787,5 +812,7 @@ extern sfxinfo_t *S_sfx;
 extern int num_sfx;
 extern musicinfo_t *S_music;
 extern int num_music;
+
+#endif
 
 #endif

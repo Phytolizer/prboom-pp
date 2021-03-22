@@ -157,7 +157,7 @@ using dsda_input_identifier_t = enum
     DSDA_INPUT_IDENTIFIER_COUNT
 };
 
-using dsda_input_t = struct
+struct dsda_input_t
 {
     int *key;
     int num_keys;

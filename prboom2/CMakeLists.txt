@@ -218,6 +218,16 @@ set(PRBOOM_OUTPUT_PATH ${CMAKE_BINARY_DIR})
 
 set(WAD_DATA_PATH "${PRBOOM_OUTPUT_PATH}/${WAD_DATA}")
 
+include(FetchContent)
+
+FetchContent_Declare(
+    Corrosion
+    GIT_REPOSITORY https://github.com/AndrewGaspar/corrosion.git
+    GIT_TAG origin/master # Optionally specify a version tag or branch here
+)
+
+FetchContent_MakeAvailable(Corrosion)
+
 add_subdirectory(data)
 add_subdirectory(doc)
 add_subdirectory(src)

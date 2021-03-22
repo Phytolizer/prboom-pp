@@ -1,0 +1,6 @@
+language = "C++"
+pragma_once = true
+namespace = "rust"
+includes = []
+line_endings = "Native"
+usize_is_size_t = true

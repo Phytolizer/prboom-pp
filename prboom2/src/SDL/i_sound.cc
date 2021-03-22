@@ -393,7 +393,7 @@ int I_StartSound(int id, int channel, int vol, int sep, int pitch, int priority)
     int lump;
     if (lumps.size() > 1)
     {
-        lump = lumps[M_Random() % lumps.size()];
+        lump = lumps[X_Random() % lumps.size()];
     }
     else
     {

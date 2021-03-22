@@ -69,6 +69,8 @@ rng_t rng; // the random number state
 
 unsigned int rngseed = 1993; // killough 3/26/98: The seed
 
+std::random_device random_device;
+
 int(P_Random)(pr_class_t pr_class
 #ifdef INSTRUMENTED
               ,
@@ -94,8 +96,6 @@ int(P_Random)(pr_class_t pr_class
                      ? (rng.prndindex = (rng.prndindex + 1) & 255)
                      : (rng.rndindex = (rng.rndindex + 1) & 255);
 
-    unsigned long boom;
-
     // killough 3/31/98:
     // If demo sync insurance is not requested, use
     // much more unstable method by putting everything
@@ -106,7 +106,7 @@ int(P_Random)(pr_class_t pr_class
         pr_class = pr_all_in_one;
     }
 
-    boom = rng.seed[pr_class];
+    unsigned long boom = rng.seed[pr_class];
 
     // killough 3/26/98: add pr_class*2 to addend
 
@@ -159,4 +159,8 @@ int P_SubRandom()
 {
     int r = P_Random(pr_heretic);
     return r - P_Random(pr_heretic);
+}
+int X_Random()
+{
+    return std::uniform_int_distribution(0, 255)(random_device);
 }

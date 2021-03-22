@@ -44,8 +44,6 @@ extern "C"
 #include <stddef.h>
 #endif
 
-
-
     typedef enum /* Logical output levels */
     {
         LO_INFO = 1,    /* One of these is used in each physical output    */
@@ -67,12 +65,11 @@ extern "C"
     extern int cons_error_mask;
 
     /* killough 3/20/98: add const
- * killough 4/25/98: add gcc attributes
- * cphipps 01/11- moved from i_system.h */
+     * killough 4/25/98: add gcc attributes
+     * cphipps 01/11- moved from i_system.h */
     void I_Error(const char *error, ...) __attribute__((format(printf, 1, 2)));
 
-    int doom_vsnprintf(char *buf, size_t max, const char *fmt,
-                       va_list va);
+    int doom_vsnprintf(char *buf, size_t max, const char *fmt, va_list va);
     int doom_snprintf(char *buf, size_t max, const char *fmt, ...)
         __attribute__((format(printf, 3, 4)));
 

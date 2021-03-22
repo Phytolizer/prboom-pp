@@ -1,0 +1,18 @@
+[package]
+name = "rust"
+version = "0.1.0"
+authors = ["kyle.coffey <kyle.coffey@tamu.edu>"]
+edition = "2018"
+
+[lib]
+crate-type = ["staticlib"]
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+[dependencies]
+nom = "6.1"
+pom = "3.2"
+cpp = "0.5"
+
+[build-dependencies]
+bindgen = "0.57"
+cbindgen = "0.18"

@@ -2150,27 +2150,27 @@ doom_mobjinfo_t doom_mobjinfo[NUMMOBJTYPES] = {
 
     {
         // MT_HEADSHOT
-        -1,                       // doomednum
-        S_RBALL1,                 // spawnstate
-        1000,                     // spawnhealth
-        S_NULL,                   // seestate
-        sfx_cacodemon_shoot,      // seesound
-        8,                        // reactiontime
-        sfx_none,                 // attacksound
-        S_NULL,                   // painstate
-        0,                        // painchance
-        sfx_none,                 // painsound
-        S_NULL,                   // meleestate
-        S_NULL,                   // missilestate
-        S_RBALLX1,                // deathstate
-        S_NULL,                   // xdeathstate
-        sfx_imp_fireball_explode, // deathsound
-        10 * FRACUNIT,            // speed
-        6 * FRACUNIT,             // radius
-        8 * FRACUNIT,             // height
-        100,                      // mass
-        5,                        // damage
-        sfx_none,                 // activesound
+        -1,                               // doomednum
+        S_RBALL1,                         // spawnstate
+        1000,                             // spawnhealth
+        S_NULL,                           // seestate
+        sfx_cacodemon_shoot,              // seesound
+        8,                                // reactiontime
+        sfx_none,                         // attacksound
+        S_NULL,                           // painstate
+        0,                                // painchance
+        sfx_none,                         // painsound
+        S_NULL,                           // meleestate
+        S_NULL,                           // missilestate
+        S_RBALLX1,                        // deathstate
+        S_NULL,                           // xdeathstate
+        sfx_cacodemon_projectile_explode, // deathsound
+        10 * FRACUNIT,                    // speed
+        6 * FRACUNIT,                     // radius
+        8 * FRACUNIT,                     // height
+        100,                              // mass
+        5,                                // damage
+        sfx_none,                         // activesound
         MF_NOBLOCKMAP | MF_MISSILE | MF_DROPOFF | MF_NOGRAVITY |
             MF_TRANSLUCENT, // flags // phares,   // flags
         S_NULL              // raisestate

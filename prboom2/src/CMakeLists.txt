@@ -183,6 +183,8 @@ set(COMMON_SRC
         scanner.hh
         sc_man.cc
         sc_man.hh
+        sndinfo.cc
+        sndinfo.hh
         sounds.cc
         sounds.hh
         statdump.cc
@@ -430,7 +432,10 @@ function(AddGameExecutable TARGET SOURCES)
     endif ()
 endfunction()
 
+corrosion_import_crate(MANIFEST_PATH rust/Cargo.toml)
+
 AddGameExecutable(prboom-pp "${PRBOOM_PLUS_SOURCES}")
+target_link_libraries(prboom-pp PRIVATE rust)
 
 
 # PrBoom-Plus server executable

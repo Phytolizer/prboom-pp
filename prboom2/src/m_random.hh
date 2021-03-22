@@ -36,6 +36,8 @@
 
 #include "doomtype.hh"
 
+#include <random>
+
 // killough 1/19/98: rewritten to use to use a better random number generator
 // in the new engine, although the old one is available for compatibility.
 
@@ -124,8 +126,6 @@ typedef enum
     pr_randomjump,   // #61
     pr_defect,       // #62  // Start new entries -- add new entries below
     pr_heretic,      // #63
-    pr_one_shot,     // #64
-    pr_sound,        // #65
 
     // End of new entries
     NUMPRCLASS // MUST be last item in list
@@ -141,6 +141,10 @@ typedef struct
 extern rng_t rng; // The rng's state
 
 extern unsigned int rngseed; // The starting seed (not part of state)
+
+extern std::random_device random_device;
+
+int X_Random();
 
 // As M_Random, but used by the play simulation.
 int P_Random(pr_class_t DA);

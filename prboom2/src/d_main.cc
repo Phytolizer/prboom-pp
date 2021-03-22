@@ -35,6 +35,7 @@
  *-----------------------------------------------------------------------------
  */
 
+#include "sndinfo.hh"
 #ifdef HAVE_CONFIG_H
 #include "config.h"
 #endif
@@ -2058,6 +2059,12 @@ static void D_DoomMainSetup()
                 ProcessDehFile(nullptr, D_dehout(),
                                p); // cph - add dehacked-in-a-wad support
             }
+        }
+
+        int lump = (W_CheckNumForName)("SNDINFO", ns_global);
+        if (lump != -1)
+        {
+            sndinfo::parse(lump);
         }
 
         if (bfgedition)
