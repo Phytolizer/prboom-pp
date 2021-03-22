@@ -46,9 +46,15 @@
 // SoundFX struct.
 //
 
-struct sfxinfo_struct;
-
-struct sfxinfo_t
+#ifndef __cplusplus
+typedef
+#endif
+    struct
+#ifdef __cplusplus
+    sfxinfo_t
+#else
+    sfxinfo_struct
+#endif
 {
 
     // up to 6-character name
@@ -60,8 +66,13 @@ struct sfxinfo_t
     // Sfx priority
     int priority;
 
-    // referenced sound if a link
-    sfxinfo_t *link;
+// referenced sound if a link
+#ifdef __cplusplus
+    sfxinfo_t
+#else
+    struct sfxinfo_struct
+#endif
+        *link;
 
     // pitch if a link
     int pitch;
@@ -84,7 +95,11 @@ struct sfxinfo_t
     int numchannels;
 
     std::vector<std::string> altNames;
-};
+}
+#ifndef __cplusplus
+sfxinfo_t
+#endif
+    ;
 
 //
 // MusicInfo struct.
