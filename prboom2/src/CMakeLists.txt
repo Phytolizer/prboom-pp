@@ -409,8 +409,8 @@ function(AddGameExecutable TARGET SOURCES)
                 LINK_FLAGS "/MANIFEST:NO"
                 )
         add_custom_command(TARGET ${TARGET} POST_BUILD
-                COMMAND "mt.exe" -manifest \"${CMAKE_CURRENT_SOURCE_DIR}\\..\\ICONS\\prboom-plus.exe.manifest\" -outputresource:\"$<TARGET_FILE:prboom-pp>\"\;\#1
-                COMMAND ${CMAKE_COMMAND} -E copy_if_different ${WAD_DATA_PATH} $<TARGET_FILE_DIR:prboom-pp>
+                COMMAND "mt.exe" -manifest \"${CMAKE_CURRENT_SOURCE_DIR}\\..\\ICONS\\prboom-plus.exe.manifest\" -outputresource:\"$<TARGET_FILE:prboom++>\"\;\#1
+                COMMAND ${CMAKE_COMMAND} -E copy_if_different ${WAD_DATA_PATH} $<TARGET_FILE_DIR:prboom++>
                 )
     endif ()
 
@@ -434,13 +434,13 @@ endfunction()
 
 corrosion_import_crate(MANIFEST_PATH rust/Cargo.toml)
 
-AddGameExecutable(prboom-pp "${PRBOOM_PLUS_SOURCES}")
-target_link_libraries(prboom-pp PRIVATE rust)
+AddGameExecutable(prboom++ "${PRBOOM_PLUS_SOURCES}")
+target_link_libraries(prboom++ PRIVATE rust)
 
 
 # PrBoom-Plus server executable
 
-option(BUILD_SERVER "Build PrBoom-PP server executable" ON)
+option(BUILD_SERVER "Build PrBoom++ server executable" ON)
 
 if (BUILD_SERVER AND SDL2_NET_FOUND)
     set(PRBOOM_PLUS_GAME_SERVER_SOURCES
@@ -461,21 +461,21 @@ if (BUILD_SERVER AND SDL2_NET_FOUND)
                 )
     endif ()
 
-    add_executable(prboom-plus-game-server ${PRBOOM_PLUS_GAME_SERVER_SOURCES})
-    target_include_directories(prboom-plus-game-server PRIVATE
+    add_executable(prboom++-game-server ${PRBOOM_PLUS_GAME_SERVER_SOURCES})
+    target_include_directories(prboom++-game-server PRIVATE
             ${SDL2_INCLUDE_DIRS}
             ${CMAKE_BINARY_DIR}
             ${CMAKE_CURRENT_SOURCE_DIR}
             )
-    target_link_libraries(prboom-plus-game-server PRIVATE
+    target_link_libraries(prboom++-game-server PRIVATE
             ${SDL2_LIBRARIES}
             )
-    set_target_properties(prboom-plus-game-server PROPERTIES
+    set_target_properties(prboom++-game-server PROPERTIES
             COMPILE_DEFINITIONS PRBOOM_SERVER
             RUNTIME_OUTPUT_DIRECTORY ${PRBOOM_OUTPUT_PATH}
             )
-    ApplySDL2NetOptions(prboom-plus-game-server)
-    install(TARGETS prboom-plus-game-server COMPONENT "Game server executable" RUNTIME DESTINATION "${CMAKE_INSTALL_PREFIX}/bin")
+    ApplySDL2NetOptions(prboom++-game-server)
+    install(TARGETS prboom++-game-server COMPONENT "Game server executable" RUNTIME DESTINATION "${CMAKE_INSTALL_PREFIX}/bin")
 endif ()
 
 
@@ -522,35 +522,35 @@ if (APPLE)
             MACOSX_PACKAGE_LOCATION Resources/English.lproj/MainMenu.nib
             )
 
-    add_executable(prboom-pp-launcher MACOSX_BUNDLE
+    add_executable(prboom++-launcher MACOSX_BUNDLE
             ${LAUNCHER_SOURCES}
             ${LAUNCHER_RESOURCES}
             ${LAUNCHER_MAINMENU_RESOURCES}
             )
-    target_include_directories(prboom-pp-launcher PRIVATE
+    target_include_directories(prboom++-launcher PRIVATE
             ${CMAKE_BINARY_DIR}
             ${CMAKE_CURRENT_SOURCE_DIR}
             )
-    set_target_properties(prboom-pp-launcher PROPERTIES
+    set_target_properties(prboom++-launcher PROPERTIES
             LINK_FLAGS "-framework Cocoa"
             MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/MAC/Info.plist"
             OUTPUT_NAME "Launcher"
             RUNTIME_OUTPUT_DIRECTORY ${PRBOOM_OUTPUT_PATH}
             XCODE_ATTRIBUTE_CODE_SIGN_IDENTITY ""
             )
-    add_dependencies(prboom-plus-launcher prboom-pp)
+    add_dependencies(prboom++-launcher prboom++)
 
-    set(BUNDLE_GAME_EXECUTABLE prboom-pp)
+    set(BUNDLE_GAME_EXECUTABLE prboom++)
 
-    add_custom_command(TARGET prboom-pp-launcher POST_BUILD
-            COMMAND ${CMAKE_COMMAND} -E copy_if_different $<TARGET_FILE:${BUNDLE_GAME_EXECUTABLE}> $<TARGET_FILE_DIR:prboom-pp-launcher>/PrBoom-PP
-            COMMAND ${CMAKE_COMMAND} -E copy_if_different ${WAD_DATA_PATH} $<TARGET_FILE_DIR:prboom-plus-launcher>
+    add_custom_command(TARGET prboom++-launcher POST_BUILD
+            COMMAND ${CMAKE_COMMAND} -E copy_if_different $<TARGET_FILE:${BUNDLE_GAME_EXECUTABLE}> $<TARGET_FILE_DIR:prboom++-launcher>/PrBoom++
+            COMMAND ${CMAKE_COMMAND} -E copy_if_different ${WAD_DATA_PATH} $<TARGET_FILE_DIR:prboom++-launcher>
             )
 
     if (BUILD_SERVER AND SDL2_NET_FOUND)
-        add_dependencies(prboom-pp-launcher prboom-pp-game-server)
-        add_custom_command(TARGET prboom-pp-launcher POST_BUILD
-                COMMAND ${CMAKE_COMMAND} -E copy_if_different $<TARGET_FILE:prboom-plus-game-server> $<TARGET_FILE_DIR:prboom-pp-launcher>
+        add_dependencies(prboom++-launcher prboom++-game-server)
+        add_custom_command(TARGET prboom++-launcher POST_BUILD
+                COMMAND ${CMAKE_COMMAND} -E copy_if_different $<TARGET_FILE:prboom++-game-server> $<TARGET_FILE_DIR:prboom++-launcher>
                 )
     endif ()
 endif ()

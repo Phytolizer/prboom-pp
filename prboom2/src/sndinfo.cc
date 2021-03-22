@@ -3,6 +3,7 @@
 #include "doomstat.hh"
 #include "sounds.hh"
 #include "w_wad.hh"
+#include "m_argv.hh"
 #include <iostream>
 #include <map>
 
@@ -12,7 +13,8 @@ void sndinfo::parse(int lumpnum)
     std::string lump = {rawData, rawData + W_LumpLength(lumpnum)};
     rust::SoundInfo *buf = nullptr;
     size_t bufLen = 0;
-    rust::parse_sndinfo(heretic, lump.c_str(), lump.length(), &buf, &bufLen);
+    rust::parse_sndinfo(heretic, M_CheckParm("-strict-sndinfo"), lump.c_str(),
+                        lump.length(), &buf, &bufLen);
     std::map<sfxenum_t, SoundInfo> lumps;
 
     for (int i = 0; i < bufLen; i++)
@@ -43,7 +45,8 @@ void sndinfo::parse(int lumpnum)
 
         std::cout << "SFX #" << sfx
                   << " is now associated with the following lumps:\n";
-        for (const auto &lmp : si.lumps) {
+        for (const auto &lmp : si.lumps)
+        {
             std::cout << "\t" << lmp << "\n";
         }
     }

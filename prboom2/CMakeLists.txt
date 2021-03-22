@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.0)
 
-project("PrBoom-PP" VERSION 0.1.0)
+project("PrBoom++" VERSION 0.1.0)
 
 #set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -pedantic -Wformat -pedantic-errors -Werror -Wimplicit-int-conversion -Warith-conversion -Wconversion -Waddress")
 set(CMAKE_CXX_STANDARD 17)
@@ -37,8 +37,8 @@ endif ()
 set(CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH} "${CMAKE_CURRENT_SOURCE_DIR}/../dependencies_${DEPENDENCY_SUFFIX}")
 
 set(PACKAGE_NAME "${PROJECT_NAME}")
-set(PACKAGE_TARNAME "PrBoom-PP")
-set(WAD_DATA "prboompp.wad")
+set(PACKAGE_TARNAME "PrBoom++")
+set(WAD_DATA "prboom++.wad")
 set(PACKAGE_VERSION "${PROJECT_VERSION}")
 set(PACKAGE_STRING "${PROJECT_NAME} ${PROJECT_VERSION}")
 set(CMAKE_INSTALL_DOCDIR "${CMAKE_INSTALL_DATAROOTDIR}/doc/${PACKAGE_TARNAME}" CACHE PATH "")

@@ -10,7 +10,7 @@ use std::os::raw::c_ulong;
 
 use nom::branch::alt;
 use nom::bytes::complete::take_while1;
-use nom::bytes::complete::{tag, take_while, take_while_m_n};
+use nom::bytes::complete::{tag, take_while};
 use nom::character::complete::char;
 use nom::character::complete::one_of;
 use nom::combinator::{map, opt};
@@ -272,6 +272,7 @@ unsafe fn sfx_for_sound(snd: &RustKey) -> Option<c::sfxenum_t> {
 /// It is a safe conversion as long as W_LumpLength and W_CacheLumpNum return accurate values.
 pub unsafe extern "C" fn parse_sndinfo(
     heretic: bool,
+    strict: bool,
     lump: *const c_char,
     lump_length: c_int,
     buf: *mut *mut SoundInfo,
@@ -387,14 +388,18 @@ pub unsafe extern "C" fn parse_sndinfo(
                     volume: lumps[snd].volume,
                 });
             } else {
-                c::lprintf(
-                    4,
+                let args = (
                     CString::new("sndinfo::parse: warning: unrecognized sound key %s\n")
                         .unwrap()
                         .as_bytes_with_nul()
                         .as_ptr() as *const c_char,
                     snd.to_string().as_ptr() as *const c_char,
                 );
+                if strict {
+                    c::I_Error(args.0, args.1);
+                } else {
+                    c::lprintf(4, args.0, args.1);
+                }
             }
         } else {
             c::I_Error(

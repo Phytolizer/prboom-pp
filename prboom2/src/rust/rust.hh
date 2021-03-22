@@ -30,6 +30,7 @@ void deallocate_rust_sound_info(SoundInfo *ptr, unsigned long len);
 /// This function uses a ptr/length pair to construct a slice.
 /// It is a safe conversion as long as W_LumpLength and W_CacheLumpNum return accurate values.
 void parse_sndinfo(bool heretic,
+                   bool strict,
                    const char *lump,
                    int lump_length,
                    SoundInfo **buf,
