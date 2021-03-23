@@ -69,7 +69,7 @@ jobs:
           sudo apt install libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-net-dev \
             libpcre3-dev libmad0-dev libfluidsynth-dev libdumb1-dev libvorbis-dev libportmidi-dev clang-tidy
         elif [[ "${{ runner.os }}" == 'macOS' ]]; then
-          brew install sdl2 sdl2_image sdl2_mixer sdl2_net pcre mad fluidsynth dumb portmidi clang-tidy
+          brew install sdl2 sdl2_image sdl2_mixer sdl2_net pcre mad fluidsynth dumb portmidi
         fi
 
     - name: Configure
@@ -94,11 +94,11 @@ jobs:
         cd build
         mkdir package
         if [[ "${{ runner.os }}" == 'Windows' ]]; then
-          cp ${{ matrix.config.build_type }}/prboom-pp.exe ${{ matrix.config.build_type }}/prboom-plus-game-server.exe prboompp.wad package
+          cp ${{ matrix.config.build_type }}/prboom++.exe ${{ matrix.config.build_type }}/prboom++-game-server.exe prboom++.wad package
         elif [[ "${{ runner.os }}" == 'macOS' ]]; then
           cp -R Launcher.app package
         else
-          cp prboom-pp prboom-plus-game-server prboompp.wad package
+          cp prboom++ prboom++-game-server prboom++.wad package
         fi
         cp config.h package
 
