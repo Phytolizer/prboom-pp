@@ -342,7 +342,10 @@ std::vector<int> I_GetSfxLumpNums(sfxinfo_t *sfx)
                 lumpNums.push_back(lump);
             }
         }
-        return lumpNums;
+        if (!lumpNums.empty())
+        {
+            return lumpNums;
+        }
     }
 
     std::vector<int> lumpNums;
@@ -353,6 +356,10 @@ std::vector<int> I_GetSfxLumpNums(sfxinfo_t *sfx)
         {
             lumpNums.push_back(lump);
         }
+    }
+    if (lumpNums.empty())
+    {
+        return {-1};
     }
     return lumpNums;
 }
@@ -394,6 +401,10 @@ int I_StartSound(int id, int channel, int vol, int sep, int pitch, int priority)
     if (lumps.size() > 1)
     {
         lump = lumps[X_Random() % lumps.size()];
+    }
+    else if (lumps.empty())
+    {
+        lump = -1;
     }
     else
     {
@@ -734,7 +745,7 @@ void I_InitSound()
                 SAMPLECOUNT);
     }
     else
-#else // HAVE_MIXER
+#else  // HAVE_MIXER
     }
 #endif // HAVE_MIXER
     {

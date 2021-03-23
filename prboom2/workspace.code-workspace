@@ -1,0 +1,14 @@
+{
+	"folders": [
+		{
+			"path": ".."
+		},
+		{
+			"path": "src/rust"
+		},
+		{
+			"path": "src/sounds_generator"
+		}
+	],
+	"settings": {}
+}
