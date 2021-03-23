@@ -61,6 +61,7 @@
 
 dboolean colored_blood;
 int one_shot_probability;
+dboolean buddha_mode;
 
 // heretic_note: static NUMSTATES arrays here - probably fine?
 // NUMSTATES > HERETIC_NUMSTATES

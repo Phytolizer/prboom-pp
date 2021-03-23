@@ -14,11 +14,10 @@ pub trait ToCStr {
 
 impl ToCStr for CString {
     fn c_str(&self) -> *const c_char {
-        self.as_bytes_with_nul().as_ptr()
+        self.as_bytes_with_nul().as_ptr() as *const c_char
     }
 }
 
 pub fn convert_str(s: impl AsRef<str>) -> CString {
-    CString::new(s.as_ref().to_owned())
-        .unwrap()
+    CString::new(s.as_ref().to_owned()).unwrap()
 }

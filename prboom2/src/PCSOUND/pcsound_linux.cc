@@ -41,9 +41,6 @@
 
 #include "pcsound.hh"
 
-// e6y
-#include "lprintf.hh"
-
 #define CONSOLE_DEVICE "/dev/console"
 
 static int console_handle;

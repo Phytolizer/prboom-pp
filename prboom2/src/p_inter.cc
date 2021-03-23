@@ -31,6 +31,7 @@
  *
  *-----------------------------------------------------------------------------*/
 
+#include "cpp/settings.hh"
 #include "doomstat.hh"
 #include "dstrings.hh"
 #include "m_random.hh"
@@ -140,6 +141,8 @@ static dboolean P_GiveAmmo(player_t *player, ammotype_t ammo, int num)
             num <<= 1;
         }
     }
+
+    num = num * ammo_pickup_multiplier / 100;
 
     oldammo = player->ammo[ammo];
     player->ammo[ammo] += num;
@@ -305,7 +308,7 @@ dboolean P_GiveBody(player_t *player, int num)
     {
         return (false);
     }
-    player->health += num;
+    player->health += health_pickup_multiplier * num / 100;
     if (player->health > max)
     {
         player->health = max;
@@ -322,7 +325,7 @@ dboolean P_GiveBody(player_t *player, int num)
 
 static dboolean P_GiveArmor(player_t *player, int armortype)
 {
-    int hits = armortype * 100;
+    int hits = armortype * armor_pickup_multiplier;
     if (player->armorpoints >= hits)
     {
         return false; // don't pick up
@@ -1094,6 +1097,17 @@ static void P_KillMobj(mobj_t *source, mobj_t *target)
 #endif
 }
 
+int P_GetDamageValue(int base, int nd)
+{
+    if (normally_distributed_damage)
+    {
+        return std::normal_distribution<double>(base * nd / 2,
+                                                base * nd / 3)(random_device);
+    }
+
+    return base * (X_Random() % nd + 1);
+}
+
 //
 // P_DamageMobj
 // Damages both enemies and players
@@ -1110,6 +1124,15 @@ void P_DamageMobj(mobj_t *target, mobj_t *inflictor, mobj_t *source, int damage)
 {
     player_t *player;
     dboolean justhit = false; /* killough 11/98 */
+
+    int base = damage / 4;
+    if (source && source->info->damage)
+    {
+        base = source->info->damage;
+    }
+    damage = P_GetDamageValue(base, 8);
+
+    lprintf(LO_INFO, "Damage: %d\n", damage);
 
     /* killough 8/31/98: allow bouncers to take damage */
     if (!(target->flags & (MF_SHOOTABLE | MF_BOUNCES)))
@@ -1220,11 +1243,27 @@ void P_DamageMobj(mobj_t *target, mobj_t *inflictor, mobj_t *source, int damage)
         }
     }
 
-    if (!demoplayback && !demorecording && !demo_insurance &&
-        X_Random() % 100 < one_shot_probability)
+    if (!demoplayback && !demorecording && !demo_insurance)
     {
-        // KAZAP
-        damage = target->info->spawnhealth * 3;
+        if (X_Random() % 100 < one_shot_probability)
+        {
+            // KAZAP
+            damage = target->info->spawnhealth * 3;
+        }
+
+        if (buddha_mode && target->player)
+        {
+            damage =
+                static_cast<int>(static_cast<double>(damage) *
+                                 static_cast<double>(target->health) / 100.0);
+        }
+
+        if (damage_multiplier != 100 && target->player)
+        {
+            damage = static_cast<int>(static_cast<double>(damage) *
+                                      static_cast<double>(damage_multiplier) /
+                                      100.0);
+        }
     }
 
     // Some close combat weapons should not
@@ -2201,4 +2240,18 @@ void P_AutoUseHealth(player_t *player, int saveHealth)
         }
     }
     player->mo->health = player->health;
+}
+
+void P_RegenerateHealth(player_t *player)
+{
+    if (player->health < maxhealth)
+    {
+        player->health += health_regeneration;
+        if (player->health > maxhealth)
+        {
+            player->health = maxhealth;
+        }
+
+        player->mo->health = player->health;
+    }
 }

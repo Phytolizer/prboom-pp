@@ -703,3 +703,6 @@ sfxinfo_t doom_S_sfx[] = {
     {{}, false, 60, &doom_S_sfx[sfx_barexp], -1, -1, nullptr},
 
 };
+
+%%literal
+%%endliteral

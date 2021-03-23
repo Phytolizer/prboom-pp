@@ -36,9 +36,6 @@
 
 #include "pcsound.hh"
 
-// e6y
-#include "lprintf.hh"
-
 #include "i_sound.hh" // snd_samplerate
 
 #define SQUARE_WAVE_AMP 0x2000

@@ -1,18 +1,17 @@
-use std::env;
 use std::fs::File;
+use std::io::stdout;
 use std::io::Read;
 use std::io::Write;
-use std::io::stdout;
+use std::process::exit;
 
 mod c;
 mod parser;
 
-use c::ToCStr;
 use parser::parse_input_file;
 
 fn read_input_file() -> String {
     let mut contents = Vec::<u8>::new();
-    File::open(env::var("CMAKE_CURRENT_LIST_DIR").unwrap())
+    File::open("../sounds.cc.in")
         .unwrap()
         .read_exact(&mut contents)
         .unwrap();
@@ -22,16 +21,11 @@ fn read_input_file() -> String {
 fn main() {
     let input = read_input_file();
 
-    let parsed = match parse_input_file(input.as_str()) {
+    let (_, parsed) = match parse_input_file(input.as_str()) {
         Ok(contents) => contents,
         Err(e) => {
-            unsafe {
-                c::I_Error(
-                    c::convert_str("failed to parse sounds.cc: %s").c_str(),
-                    c::convert_str(e.to_string()).c_str(),
-                )
-            };
-            vec![]
+            eprintln!("failed to parse sounds.cc: {}", e);
+            exit(1);
         }
     };
     if parsed.is_empty() {

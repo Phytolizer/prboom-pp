@@ -2428,6 +2428,7 @@ extern setup_menu_t keys_settings8[];
 extern setup_menu_t heretic_keys_settings1[];
 extern setup_menu_t heretic_keys_settings2[];
 extern setup_menu_t dsda_keys_settings[];
+extern setup_menu_t kyles_settings[];
 
 // The table which gets you from one screen table to the next.
 
@@ -4512,10 +4513,10 @@ extern setup_menu_t gen_settings4[], gen_settings5[], gen_settings6[];
 extern setup_menu_t gen_settings7[], gen_settings8[];
 extern setup_menu_t dsda_gen_settings[];
 
-setup_menu_t *gen_settings[] = {gen_settings1, gen_settings2, gen_settings3,
-                                gen_settings4, gen_settings5, gen_settings6,
-                                gen_settings7, gen_settings8, dsda_gen_settings,
-                                nullptr};
+setup_menu_t *gen_settings[] = {
+    gen_settings1,     gen_settings2,  gen_settings3, gen_settings4,
+    gen_settings5,     gen_settings6,  gen_settings7, gen_settings8,
+    dsda_gen_settings, kyles_settings, nullptr};
 
 #define G_X 226
 #define GF_X 76
@@ -5474,6 +5475,59 @@ setup_menu_t dsda_gen_settings[] = {
      KB_Y + 20 * 8,
      {gen_settings7}},
 #endif
+    {"NEXT ->",
+     S_SKIP | S_NEXT,
+     m_null,
+     KB_NEXT,
+     KB_Y + 20 * 8,
+     {kyles_settings}},
+    {nullptr, S_SKIP | S_END, m_null}};
+
+setup_menu_t kyles_settings[] = {
+    {"Settings++", S_SKIP | S_TITLE, m_null, G_X, G_Y + 1 * 8},
+    {"Buddha Mode", S_YESNO, m_null, G_X, G_Y + 2 * 8, {"buddha_mode"}},
+    {"Normally Distributed Damage",
+     S_YESNO,
+     m_null,
+     G_X,
+     G_Y + 3 * 8,
+     {"normally_distributed_damage"}},
+    {"Global Damage Multiplier",
+     S_NUM,
+     m_null,
+     G_X,
+     G_Y + 4 * 8,
+     {"damage_multiplier"}},
+    {"Health Pickup Multiplier",
+     S_NUM,
+     m_null,
+     G_X,
+     G_Y + 5 * 8,
+     {"health_multiplier"}},
+    {"Armor Pickup Multiplier",
+     S_NUM,
+     m_null,
+     G_X,
+     G_Y + 6 * 8,
+     {"armor_multiplier"}},
+    {"Ammo Pickup Multiplier",
+     S_NUM,
+     m_null,
+     G_X,
+     G_Y + 7 * 8,
+     {"ammo_multiplier"}},
+    {"Health Regeneration",
+     S_NUM,
+     m_null,
+     G_X,
+     G_Y + 8 * 8,
+     {"health_regeneration"}},
+    {"<- PREV",
+     S_SKIP | S_PREV,
+     m_null,
+     KB_PREV,
+     KB_Y + 20 * 8,
+     {dsda_gen_settings}},
     {nullptr, S_SKIP | S_END, m_null}};
 
 void M_Trans() // To reset translucency after setting it in menu

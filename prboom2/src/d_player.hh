@@ -225,6 +225,8 @@ struct player_t
     int chickenPeck; // chicken peck countdown
     mobj_t *rain1;   // active rain maker 1
     mobj_t *rain2;   // active rain maker 2
+
+    int healthTics; // tics until regenerating
 };
 
 //

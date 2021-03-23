@@ -33,6 +33,7 @@
  *
  *-----------------------------------------------------------------------------*/
 
+#include "doomdef.hh"
 #ifdef HAVE_CONFIG_H
 #include "config.h"
 #endif
@@ -48,6 +49,7 @@
 #include <fcntl.h>
 #include <sys/stat.h>
 
+#include "cpp/settings.hh"
 #include "doomstat.hh"
 #include "m_argv.hh"
 #include "g_game.hh"
@@ -3412,6 +3414,64 @@ default_t defaults[] = {
      1000,
      default_t::def_int,
      ss_stat},
+
+    {"Settings++", {nullptr}, {0}, UL, UL, default_t::def_none, ss_none},
+    {"buddha_mode",
+     {(int *)&buddha_mode},
+     {0},
+     0,
+     1,
+     default_t::def_bool,
+     ss_gen},
+    {"normally_distributed_damage",
+     {(int *)&normally_distributed_damage},
+     {0},
+     0,
+     1,
+     default_t::def_bool,
+     ss_gen},
+    {"normally_distributed_damage",
+     {(int *)&normally_distributed_damage},
+     {0},
+     0,
+     1,
+     default_t::def_bool,
+     ss_gen},
+    {"damage_multiplier",
+     {&damage_multiplier},
+     {100},
+     0,
+     500,
+     default_t::def_int,
+     ss_gen},
+    {"health_multiplier",
+     {&health_pickup_multiplier},
+     {100},
+     0,
+     500,
+     default_t::def_int,
+     ss_gen},
+    {"armor_multiplier",
+     {&armor_pickup_multiplier},
+     {100},
+     0,
+     500,
+     default_t::def_int,
+     ss_gen},
+    {"ammo_multiplier",
+     {&ammo_pickup_multiplier},
+     {100},
+     0,
+     500,
+     default_t::def_int,
+     ss_gen},
+    {"health_regeneration",
+     {&health_regeneration},
+     {0},
+     0,
+     100,
+     default_t::def_int,
+     ss_gen},
 
     {"Prboom-plus game settings",
      {nullptr},

@@ -13,6 +13,10 @@ set(COMMON_SRC
         am_map.hh
         cpp/chars.cc
         cpp/chars.hh
+        cpp/settings.cc
+        cpp/settings.hh
+        cpp/statistics.cc
+        cpp/statistics.hh
         cpp/strings.cc
         cpp/strings.hh
         doomdata.hh
@@ -352,6 +356,7 @@ function(AddGameExecutable TARGET SOURCES)
             ${SDL2_INCLUDE_DIRS}
             ${CMAKE_BINARY_DIR}
             ${CMAKE_CURRENT_SOURCE_DIR}
+            ${CMAKE_CURRENT_SOURCE_DIR}/lib-lprintf
             )
     target_link_libraries(${TARGET} PRIVATE
             ${SDL2_LIBRARIES}
@@ -433,6 +438,9 @@ function(AddGameExecutable TARGET SOURCES)
 endfunction()
 
 corrosion_import_crate(MANIFEST_PATH rust/Cargo.toml)
+corrosion_import_crate(MANIFEST_PATH sounds_generator/Cargo.toml)
+target_include_directories(sounds_generator INTERFACE ${CMAKE_CURRENT_SOURCE_DIR})
+target_include_directories(rust INTERFACE ${CMAKE_CURRENT_SOURCE_DIR})
 
 AddGameExecutable(prboom++ "${PRBOOM_PLUS_SOURCES}")
 target_link_libraries(prboom++ PRIVATE rust)

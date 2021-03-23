@@ -631,6 +631,16 @@ void P_PlayerThink(player_t *player)
         P_MovePlayer(player);
     }
 
+    if (player->healthTics)
+    {
+        --player->healthTics;
+    }
+    else
+    {
+        P_RegenerateHealth(player);
+        player->healthTics = 35;
+    }
+
     P_SetPitch(player);
 
     P_CalcHeight(player); // Determines view height and bobbing

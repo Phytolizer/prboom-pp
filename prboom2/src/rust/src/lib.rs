@@ -7,12 +7,14 @@ use std::ffi::CString;
 use std::os::raw::c_char;
 use std::os::raw::c_int;
 use std::os::raw::c_ulong;
+use std::process::exit;
 
 use nom::branch::alt;
 use nom::bytes::complete::take_while1;
 use nom::bytes::complete::{tag, take_while};
 use nom::character::complete::char;
 use nom::character::complete::one_of;
+use nom::combinator::all_consuming;
 use nom::combinator::{map, opt};
 use nom::multi::{many0, many1};
 use nom::sequence::{pair, preceded, terminated, tuple};
@@ -388,24 +390,18 @@ pub unsafe extern "C" fn parse_sndinfo(
                     volume: lumps[snd].volume,
                 });
             } else {
-                let args = (
-                    CString::new("sndinfo::parse: warning: unrecognized sound key %s\n")
-                        .unwrap()
-                        .as_bytes_with_nul()
-                        .as_ptr() as *const c_char,
-                    snd.to_string().as_ptr() as *const c_char,
+                eprintln!(
+                    "sndinfo::parse: warning: unrecognized sound key {}",
+                    snd.to_string()
                 );
                 if strict {
-                    c::I_Error(args.0, args.1);
-                } else {
-                    c::lprintf(4, args.0, args.1);
+                    exit(1);
                 }
             }
         } else {
-            c::I_Error(
-                "sndinfo::parse: no definition for sound %s/%s".as_ptr() as *const c_char,
-                snd.class.as_ptr() as *const c_char,
-                snd.name.as_ptr() as *const c_char,
+            eprintln!(
+                "sndinfo::parse: no definition for sound {}",
+                snd.to_string()
             );
         }
     }
@@ -597,52 +593,21 @@ fn volume(text: &str) -> IResult<&str, Statement> {
 }
 
 fn sndinfo_parser(text: &str) -> IResult<&str, Vec<Statement>> {
-    many0(terminated(alt((non_if_stmt, if_stmt)), opt(any_whitespace)))(text)
+    all_consuming(many0(terminated(
+        alt((non_if_stmt, if_stmt)),
+        opt(any_whitespace),
+    )))(text)
 }
 
 unsafe fn do_parse_sndinfo(text: String) -> SndInfo {
     let text = text.replace("\r", "");
-    let (rest, info) = sndinfo_parser(&text)
+    let (_, info) = sndinfo_parser(&text)
         .map_err(|e| {
-            c::I_Error(
-                CString::new("%s").unwrap().as_bytes_with_nul().as_ptr() as *const c_char,
-                CString::new(e.to_string())
-                    .unwrap()
-                    .as_bytes_with_nul()
-                    .as_ptr() as *const c_char,
-            );
+            eprintln!("{}", e);
+            exit(1);
         })
         .unwrap()
         .clone();
-
-    if !rest.trim().is_empty() {
-        let line = text.lines().count() - rest.lines().count();
-        let orig_line = text.lines().nth(line).unwrap();
-        let mut marker = "     | ".chars().collect::<Vec<_>>();
-        marker.append(
-            &mut orig_line
-                .chars()
-                .map(|c| if c.is_ascii_whitespace() { c } else { ' ' })
-                .collect::<Vec<_>>(),
-        );
-        let pos = marker.len() - 1;
-        marker[pos] = '^';
-        let marker = marker.iter().collect::<String>();
-
-        c::I_Error(
-            CString::new("sndinfo::parse: cannot proceed: invalid syntax on line %d\n% 4d | %s\n%s")
-                .unwrap()
-                .as_bytes_with_nul()
-                .as_ptr() as *const c_char,
-            line + 1,
-            line + 1,
-            CString::new(text.lines().nth(line).unwrap())
-                .unwrap()
-                .as_bytes_with_nul()
-                .as_ptr() as *const c_char,
-            CString::new(marker).unwrap().as_bytes_with_nul().as_ptr() as *const c_char,
-        );
-    }
 
     SndInfo(info)
 }

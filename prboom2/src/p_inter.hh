@@ -89,5 +89,6 @@ void P_TouchWhirlwind(mobj_t *target);
 void P_MinotaurSlam(mobj_t *source, mobj_t *target);
 dboolean P_AutoUseChaosDevice(player_t *player);
 void P_AutoUseHealth(player_t *player, int saveHealth);
+void P_RegenerateHealth(player_t *player);
 
 #endif

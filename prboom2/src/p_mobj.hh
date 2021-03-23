@@ -436,6 +436,7 @@ extern int iquetail;
 // [FG] colored blood and gibs
 extern dboolean colored_blood;
 extern int one_shot_probability;
+extern dboolean buddha_mode;
 
 struct mobj_t;
 
