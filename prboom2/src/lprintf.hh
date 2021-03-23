@@ -35,8 +35,6 @@
 #define __LPRINTF__
 
 #ifdef __cplusplus
-extern "C"
-{
 #include <cstdarg>
 #include <cstddef>
 #else
@@ -44,37 +42,33 @@ extern "C"
 #include <stddef.h>
 #endif
 
-    typedef enum /* Logical output levels */
-    {
-        LO_INFO = 1,    /* One of these is used in each physical output    */
-        LO_CONFIRM = 2, /* call. Which are output, or echoed to console    */
-        LO_WARN = 4,    /* if output redirected is determined by the       */
-        LO_ERROR = 8,   /* global masks: cons_output_mask,cons_error_mask. */
-        LO_FATAL = 16,
-        LO_DEBUG = 32,
-        LO_ALWAYS = 64,
-    } OutputLevels;
+typedef enum /* Logical output levels */
+{
+    LO_INFO = 1,    /* One of these is used in each physical output    */
+    LO_CONFIRM = 2, /* call. Which are output, or echoed to console    */
+    LO_WARN = 4,    /* if output redirected is determined by the       */
+    LO_ERROR = 8,   /* global masks: cons_output_mask,cons_error_mask. */
+    LO_FATAL = 16,
+    LO_DEBUG = 32,
+    LO_ALWAYS = 64,
+} OutputLevels;
 
 #ifndef __GNUC__
 #define __attribute__(x)
 #endif
 
-    extern int lprintf(OutputLevels pri, const char *fmt, ...)
-        __attribute__((format(printf, 2, 3)));
-    extern int cons_output_mask;
-    extern int cons_error_mask;
+extern int lprintf(OutputLevels pri, const char *fmt, ...)
+    __attribute__((format(printf, 2, 3)));
+extern int cons_output_mask;
+extern int cons_error_mask;
 
-    /* killough 3/20/98: add const
-     * killough 4/25/98: add gcc attributes
-     * cphipps 01/11- moved from i_system.h */
-    void I_Error(const char *error, ...) __attribute__((format(printf, 1, 2)));
+/* killough 3/20/98: add const
+ * killough 4/25/98: add gcc attributes
+ * cphipps 01/11- moved from i_system.h */
+void I_Error(const char *error, ...) __attribute__((format(printf, 1, 2)));
 
-    int doom_vsnprintf(char *buf, size_t max, const char *fmt, va_list va);
-    int doom_snprintf(char *buf, size_t max, const char *fmt, ...)
-        __attribute__((format(printf, 3, 4)));
-
-#ifdef __cplusplus
-}
-#endif
+int doom_vsnprintf(char *buf, size_t max, const char *fmt, va_list va);
+int doom_snprintf(char *buf, size_t max, const char *fmt, ...)
+    __attribute__((format(printf, 3, 4)));
 
 #endif
