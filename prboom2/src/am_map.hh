@@ -38,22 +38,24 @@
 #include "config.h"
 #endif
 
+#include <vector>
+
 #include "d_event.hh"
 #include "m_fixed.hh"
 #include "m_misc.hh"
 
-typedef struct map_point_s
+struct map_point_t
 {
     float x, y;
     unsigned char r, g, b, a;
-} PACKEDATTR map_point_t;
+} PACKEDATTR;
 
-typedef struct map_line_s
+struct map_line_t
 {
     map_point_t point[2];
-} PACKEDATTR map_line_t;
+} PACKEDATTR;
 
-extern array_t map_lines;
+extern std::vector<map_line_t> map_lines;
 
 #define MAPBITS 12
 #define FRACTOMAPBITS (FRACBITS - MAPBITS)

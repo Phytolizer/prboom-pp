@@ -856,7 +856,6 @@ void gld_DrawLine_f(float x0, float y0, float x1, float y1, int BaseColor)
 #if defined(USE_VERTEX_ARRAYS) || defined(USE_VBO)
     const unsigned char *playpal = V_GetPlaypal();
     unsigned char r, g, b, a;
-    map_line_t *line;
 
     a = ((automapmode & am_overlay) ? map_lines_overlay_trans * 255 / 100
                                     : 255);
@@ -869,22 +868,22 @@ void gld_DrawLine_f(float x0, float y0, float x1, float y1, int BaseColor)
     g = playpal[3 * BaseColor + 1];
     b = playpal[3 * BaseColor + 2];
 
-    line = static_cast<map_line_t *>(
-        M_ArrayGetNewItem(&map_lines, sizeof(line[0])));
+    map_lines.emplace_back();
+    map_line_t &line = map_lines.back();
 
-    line->point[0].x = x0;
-    line->point[0].y = y0;
-    line->point[0].r = r;
-    line->point[0].g = g;
-    line->point[0].b = b;
-    line->point[0].a = a;
+    line.point[0].x = x0;
+    line.point[0].y = y0;
+    line.point[0].r = r;
+    line.point[0].g = g;
+    line.point[0].b = b;
+    line.point[0].a = a;
 
-    line->point[1].x = x1;
-    line->point[1].y = y1;
-    line->point[1].r = r;
-    line->point[1].g = g;
-    line->point[1].b = b;
-    line->point[1].a = a;
+    line.point[1].x = x1;
+    line.point[1].y = y1;
+    line.point[1].r = r;
+    line.point[1].g = g;
+    line.point[1].b = b;
+    line.point[1].a = a;
 #else
     const unsigned char *playpal = V_GetPlaypal();
 

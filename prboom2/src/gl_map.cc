@@ -27,6 +27,8 @@
  *---------------------------------------------------------------------
  */
 
+#include "gl_struct.hh"
+#include <array>
 #ifdef HAVE_CONFIG_H
 #include "config.h"
 #endif
@@ -71,7 +73,7 @@ using map_nice_thing_t = struct map_nice_thing_s
     vbo_xy_uv_rgba_t v[4];
 };
 
-static array_t map_things[am_icon_count];
+static std::array<std::vector<map_nice_thing_t>, am_icon_count> map_things;
 
 void gld_InitMapPics()
 {
@@ -138,22 +140,22 @@ void gld_AddNiceThing(int type, float x, float y, float radius, float angle,
                       unsigned char r, unsigned char g, unsigned char b,
                       unsigned char a)
 {
-    map_nice_thing_t *thing = static_cast<map_nice_thing_t *>(
-        M_ArrayGetNewItem(&map_things[type], sizeof(thing[0])));
+    map_things[type].emplace_back();
+    map_nice_thing_t &thing = map_things[type].back();
 
     float sina_r = (float)sin(angle) * radius;
     float cosa_r = (float)cos(angle) * radius;
 
 #define MAP_NICE_THING_INIT(index, _x, _y, _u, _v)                             \
     {                                                                          \
-        thing->v[index].x = _x;                                                \
-        thing->v[index].y = _y;                                                \
-        thing->v[index].u = _u;                                                \
-        thing->v[index].v = _v;                                                \
-        thing->v[index].r = r;                                                 \
-        thing->v[index].g = g;                                                 \
-        thing->v[index].b = b;                                                 \
-        thing->v[index].a = a;                                                 \
+        thing.v[index].x = _x;                                                \
+        thing.v[index].y = _y;                                                \
+        thing.v[index].u = _u;                                                \
+        thing.v[index].v = _v;                                                \
+        thing.v[index].r = r;                                                 \
+        thing.v[index].g = g;                                                 \
+        thing.v[index].b = b;                                                 \
+        thing.v[index].a = a;                                                 \
     }
 
     MAP_NICE_THING_INIT(0, x + sina_r + cosa_r, y - cosa_r + sina_r, 1.0f,
@@ -189,9 +191,9 @@ void gld_DrawNiceThings(int fx, int fy, int fw, int fh)
 
     for (i = 0; i < am_icon_count; i++)
     {
-        array_t *things = &map_things[i];
+        std::vector<map_nice_thing_t> &things = map_things[i];
 
-        if (things->count == 0)
+        if (things.empty())
         {
             continue;
         }
@@ -200,15 +202,15 @@ void gld_DrawNiceThings(int fx, int fy, int fw, int fh)
 
 #if defined(USE_VERTEX_ARRAYS) || defined(USE_VBO)
         {
-            map_nice_thing_t *thing = &((map_nice_thing_t *)things->data)[0];
+            map_nice_thing_t &thing = things[0];
 
             // activate and specify pointers to arrays
-            glVertexPointer(2, GL_FLOAT, sizeof(thing->v[0]), &thing->v[0].x);
-            glTexCoordPointer(2, GL_FLOAT, sizeof(thing->v[0]), &thing->v[0].u);
-            glColorPointer(4, GL_UNSIGNED_BYTE, sizeof(thing->v[0]),
-                           &thing->v[0].r);
+            glVertexPointer(2, GL_FLOAT, sizeof(thing.v[0]), &thing.v[0].x);
+            glTexCoordPointer(2, GL_FLOAT, sizeof(thing.v[0]), &thing.v[0].u);
+            glColorPointer(4, GL_UNSIGNED_BYTE, sizeof(thing.v[0]),
+                           &thing.v[0].r);
 
-            glDrawArrays(GL_QUADS, 0, things->count * 4);
+            glDrawArrays(GL_QUADS, 0, things.size() * 4);
         }
 #else
         for (j = 0; j < things->count; j++)
@@ -246,29 +248,27 @@ void gld_DrawNiceThings(int fx, int fy, int fw, int fh)
 
 void gld_ClearNiceThings()
 {
-    int type;
-
-    for (type = 0; type < am_icon_count; type++)
+    for (auto &thingsList : map_things)
     {
-        M_ArrayClear(&map_things[type]);
+        thingsList.clear();
     }
 }
 
 void gld_DrawMapLines()
 {
 #if defined(USE_VERTEX_ARRAYS) || defined(USE_VBO)
-    if (map_lines.count > 0)
+    if (!map_lines.empty())
     {
-        map_point_t *point = (map_point_t *)map_lines.data;
+        map_point_t &point = map_lines[0].point[0];
 
         gld_EnableTexture2D(GL_TEXTURE0_ARB, false);
         glEnableClientState(GL_VERTEX_ARRAY);
         glEnableClientState(GL_COLOR_ARRAY);
 
-        glVertexPointer(2, GL_FLOAT, sizeof(point[0]), &point->x);
-        glColorPointer(4, GL_UNSIGNED_BYTE, sizeof(point[0]), &point->r);
+        glVertexPointer(2, GL_FLOAT, sizeof(point), &point.x);
+        glColorPointer(4, GL_UNSIGNED_BYTE, sizeof(point), &point.r);
 
-        glDrawArrays(GL_LINES, 0, map_lines.count * 2);
+        glDrawArrays(GL_LINES, 0, map_lines.size() * 2);
 
         gld_EnableTexture2D(GL_TEXTURE0_ARB, true);
         glDisableClientState(GL_VERTEX_ARRAY);

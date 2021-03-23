@@ -379,7 +379,7 @@ static dboolean stopped = true;
 
 am_frame_t am_frame;
 
-array_t map_lines;
+std::vector<map_line_t> map_lines;
 
 static void AM_rotate(fixed_t *x, fixed_t *y, angle_t a);
 
@@ -2752,7 +2752,7 @@ void AM_Drawer()
     if (V_GetMode() == VID_MODEGL)
     {
         gld_DrawMapLines();
-        M_ArrayClear(&map_lines);
+        map_lines.clear();
 
 #if defined(HAVE_LIBSDL2_IMAGE)
         if (map_things_appearance == map_things_appearance_icon)
