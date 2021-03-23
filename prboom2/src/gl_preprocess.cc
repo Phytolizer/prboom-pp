@@ -29,6 +29,7 @@
  *---------------------------------------------------------------------
  */
 
+#include "SDL_opengl.h"
 #ifdef HAVE_CONFIG_H
 #include "config.h"
 #endif
@@ -576,13 +577,13 @@ static void gld_PrecalculateSector(int num)
     }
     // set callbacks
     gluTessCallback(tess, GLU_TESS_BEGIN,
-                    reinterpret_cast<_GLUfuncptr>(ntessBegin));
+                    reinterpret_cast<GLvoid (*)()>(ntessBegin));
     gluTessCallback(tess, GLU_TESS_VERTEX,
-                    reinterpret_cast<_GLUfuncptr>(ntessVertex));
+                    reinterpret_cast<GLvoid (*)()>(ntessVertex));
     gluTessCallback(tess, GLU_TESS_ERROR,
-                    reinterpret_cast<_GLUfuncptr>(ntessError));
+                    reinterpret_cast<GLvoid (*)()>(ntessError));
     gluTessCallback(tess, GLU_TESS_COMBINE,
-                    reinterpret_cast<_GLUfuncptr>(ntessCombine));
+                    reinterpret_cast<GLvoid (*)()>(ntessCombine));
     gluTessCallback(tess, GLU_TESS_END, ntessEnd);
     if (levelinfo)
     {
