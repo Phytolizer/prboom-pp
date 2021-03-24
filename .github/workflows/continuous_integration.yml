@@ -15,7 +15,7 @@ jobs:
     steps:
       - uses: msys2/setup-msys2@v2
       - name: "Install MSYS2"
-        shell: msys2
+        shell: msys2 {0}
         run: |
           pacman -S mingw-w64-x86_64-clang
   build:
