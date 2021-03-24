@@ -9,9 +9,18 @@ on:
       - build_windows_dependencies
 
 jobs:
+  windows-msys2:
+    name: msys2
+    runs-on: windows-latest
+    steps:
+      - uses: msys2/setup-msys2@v2
+      shell: msys2
+      run: |
+        pacman -S mingw-w64-x86_64-clang
   build:
     name: ${{ matrix.config.name }}
     runs-on: ${{ matrix.config.os }}
+    needs: windows-msys2
     strategy:
       fail-fast: false
       matrix:
