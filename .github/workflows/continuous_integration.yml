@@ -54,6 +54,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v1
+      - uses: msys2/setup-msys2@v2
 
       - name: Install Dependencies
         shell: bash
@@ -64,7 +65,7 @@ jobs:
             declare -x DEPS_FILENAME=windows_dependencies_v4.zip
             curl -LO https://github.com/coelckers/prboom-plus/releases/download/windows_dependencies/${DEPS_FILENAME}
             7z x ${DEPS_FILENAME} -o..
-            msys2_shell.cmd -mingw64 -c "pacman -S mingw-w64-x86_64-clang"
+            msys2 -c "pacman -S mingw-w64-x86_64-clang"
           elif [[ "${{ runner.os }}" == 'Linux' ]]; then
             sudo apt update
             sudo apt install libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-net-dev \
