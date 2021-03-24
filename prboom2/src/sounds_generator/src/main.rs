@@ -9,46 +9,44 @@ mod parser;
 
 use parser::parse_input_file;
 
-fn read_input_file() -> String {
+fn read_input_file() -> Vec<u8> {
     let mut contents = Vec::<u8>::new();
     File::open("../sounds.cc.in")
         .unwrap()
-        .read_exact(&mut contents)
+        .read_to_end(&mut contents)
         .unwrap();
-    String::from_utf8(contents).unwrap()
+    contents
 }
 
 fn main() {
     let input = read_input_file();
 
-    let (_, parsed) = match parse_input_file(input.as_str()) {
+    let sec = match parse_input_file(&input) {
         Ok(contents) => contents,
         Err(e) => {
             eprintln!("failed to parse sounds.cc: {}", e);
             exit(1);
         }
     };
-    if parsed.is_empty() {
-        return;
-    }
 
     let mut f = File::create("../sounds.cc").unwrap();
-    for sec in parsed {
-        print!("Writing {} bytes of prefix...", sec.prefix.len());
-        stdout().flush().unwrap();
-        writeln!(f, "{}", sec.prefix).unwrap();
-        println!("Done");
+    print!("Writing {} bytes of prefix...", sec.prefix.len());
+    stdout().flush().unwrap();
+    f.write(&sec.prefix).unwrap();
+    writeln!(f).unwrap();
+    println!("Done");
 
-        print!("Expanding parsed section...");
-        stdout().flush().unwrap();
-        for def in sec.sounds {
-            writeln!(f, "{}", def).unwrap();
-        }
-        println!("Done");
-
-        print!("Writing {} bytes of suffix...", sec.prefix.len());
-        stdout().flush().unwrap();
-        writeln!(f, "{}", sec.suffix).unwrap();
-        println!("Done");
+    print!("Expanding parsed section...");
+    stdout().flush().unwrap();
+    for def in sec.sounds {
+        f.write(&def).unwrap();
+        writeln!(f).unwrap();
     }
+    println!("Done");
+
+    print!("Writing {} bytes of suffix...", sec.prefix.len());
+    stdout().flush().unwrap();
+    f.write(&sec.suffix).unwrap();
+    writeln!(f).unwrap();
+    println!("Done");
 }

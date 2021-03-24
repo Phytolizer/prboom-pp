@@ -131,8 +131,9 @@ class MidiEventData
             return m_d == other.m_d && m_sysex == other.m_sysex;
         case D::undefined:
             return other.m_d == D::undefined;
-        } // switch (m_d)
-    }     // fn operator==
+        }             // switch (m_d)
+        return false; // unreachable
+    }                 // fn operator==
     [[nodiscard]] constexpr bool operator!=(const MidiEventData &other) const
     {
         return !(*this == other);

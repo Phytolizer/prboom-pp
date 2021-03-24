@@ -1,25 +1,8 @@
 use std::fmt::Display;
+use std::iter::once;
 use std::os::raw::c_int;
 
-use character::complete::char;
-use nom::branch::alt;
-use nom::bytes::complete::tag;
-use nom::bytes::complete::take_while;
-use nom::character;
-use nom::character::complete::multispace0;
-use nom::character::complete::multispace1;
-use nom::character::complete::satisfy;
-use nom::combinator::all_consuming;
-use nom::combinator::map;
-use nom::combinator::map_res;
-use nom::combinator::opt;
-use nom::dbg_dmp;
-use nom::multi::many0;
-use nom::multi::many1;
-use nom::sequence::delimited;
-use nom::sequence::terminated;
-use nom::sequence::tuple;
-use nom::IResult;
+use pom::parser::*;
 
 #[derive(Debug)]
 pub struct SoundDefinition {
@@ -68,10 +51,10 @@ impl Display for SoundDefinition {
 }
 
 #[derive(Debug)]
-pub struct SoundArray(Vec<SoundDefinition>);
+pub struct SoundArray(Vec<Vec<u8>>);
 
 impl IntoIterator for SoundArray {
-    type Item = SoundDefinition;
+    type Item = Vec<u8>;
 
     type IntoIter = std::vec::IntoIter<Self::Item>;
 
@@ -80,172 +63,202 @@ impl IntoIterator for SoundArray {
     }
 }
 
-pub struct InputSection<'src> {
-    pub prefix: &'src str,
+pub struct InputSection {
+    pub prefix: Vec<u8>,
     pub sounds: SoundArray,
-    pub suffix: &'src str,
+    pub suffix: Vec<u8>,
 }
 
-pub fn parse_input_file(text: &str) -> IResult<&str, Vec<InputSection>> {
-    all_consuming(many1(map(
-        tuple((
-            delimited(
-                tag("%%literal"),
-                take_while(|c: char| c != '%'),
-                tag("%%endliteral"),
-            ),
-            tuple((
-                tag("sfxinfo_t doom_S_sfx[] = {"),
-                parse_sound_definitions,
-                tag("};"),
-            )),
-            delimited(
-                tag("%%literal"),
-                take_while(|c: char| c != '%'),
-                tag("%%endliteral"),
-            ),
-        )),
-        |(prefix, (_, sounds, _), suffix)| InputSection {
-            prefix,
-            sounds,
-            suffix,
+pub fn parse_input_file<'a>(text: &[u8]) -> Result<InputSection, pom::Error> {
+    let parser = literal() + seq(b"sfxinfo_t doom_S_sfx[] = {") + sounds() + seq(b"};")
+        - whitespace().opt()
+        + literal()
+        - whitespace().opt()
+        - end();
+    parser
+        .map(
+            |((((literal1, prefix), sounds), suffix), literal2)| InputSection {
+                prefix: literal1.into_iter().chain(prefix.iter().cloned()).collect(),
+                sounds: SoundArray(sounds),
+                suffix: suffix.to_vec(),
+            },
+        )
+        .name("sounds array")
+        .parse(text)
+}
+
+fn sounds<'a>() -> Parser<'a, u8, Vec<Vec<u8>>> {
+    (comment()
+        | whitespace()
+        | (sound() - sym(b',')).map(|snd| snd.into_iter().chain(b",".iter().cloned()).collect()))
+    .repeat(0..)
+    .name("sound")
+}
+
+fn whitespace<'a>() -> Parser<'a, u8, Vec<u8>> {
+    is_a(|c: u8| c.is_ascii_whitespace())
+        .repeat(1..)
+        .name("whitespace")
+}
+
+fn sound<'a>() -> Parser<'a, u8, Vec<u8>> {
+    ((array_index() + whitespace().opt() + sym(b'=') + whitespace().opt()).opt()
+        * sym(b'{')
+        * vector()
+        - sym(b',')
+        - whitespace().opt()
+        + boolean()
+        - sym(b',')
+        - whitespace().opt()
+        + integer()
+        - sym(b',')
+        - whitespace().opt()
+        + ptr()
+        - sym(b',')
+        - whitespace().opt()
+        + integer()
+        - sym(b',')
+        - whitespace().opt()
+        + integer()
+        - sym(b',')
+        - whitespace().opt()
+        + ptr()
+        - sym(b',').opt()
+        - whitespace().opt()
+        - sym(b'}'))
+    .map(
+        |((((((lumps, singularity), priority), link), pitch), volume), data)| {
+            let sep = b", ";
+            once(b'{')
+                .chain(lumps.into_iter())
+                .chain(sep.iter().cloned())
+                .chain(singularity.into_iter())
+                .chain(sep.iter().cloned())
+                .chain(priority.into_iter())
+                .chain(sep.iter().cloned())
+                .chain(link.into_iter())
+                .chain(sep.iter().cloned())
+                .chain(pitch.into_iter())
+                .chain(sep.iter().cloned())
+                .chain(volume.into_iter())
+                .chain(sep.iter().cloned())
+                .chain(data.into_iter())
+                .chain(b"}".iter().cloned())
+                .collect()
         },
-    )))(text)
+    )
+    .name("sound")
 }
 
-fn parse_sound_definitions(text: &str) -> IResult<&str, SoundArray> {
-    map(many0(terminated(sound_definition, multispace0)), |defs| {
-        SoundArray(defs)
-    })(text)
+fn comment<'a>() -> Parser<'a, u8, Vec<u8>> {
+    (seq(b"//") * none_of(b"\n").repeat(0..))
+        .map(|s| b"// ".iter().cloned().chain(s.into_iter()).collect())
 }
 
-fn sound_definition(text: &str) -> IResult<&str, SoundDefinition> {
-    map(
-        tuple((
-            multispace0,
-            string_vec,
-            char(','),
-            multispace0,
-            boolean,
-            char(','),
-            multispace0,
-            integer,
-            char(','),
-            multispace0,
-            ptr,
-            char(','),
-            multispace0,
-            integer,
-            char(','),
-            multispace0,
-            integer,
-            char(','),
-            multispace0,
-            ptr,
-            multispace0,
-        )),
-        |(
-            _,
-            names,
-            _,
-            _,
-            singular,
-            _,
-            _,
-            priority,
-            _,
-            _,
-            link,
-            _,
-            _,
-            pitch,
-            _,
-            _,
-            volume,
-            _,
-            _,
-            data,
-            _,
-        )| {
-            SoundDefinition {
-                names,
-                singular,
-                priority,
-                link,
-                pitch,
-                volume,
-                data,
-                usefulness: 0,
-                lump_nums: vec![-1],
-                num_channels: 0,
-                alt_names: vec![],
-            }
-        },
-    )(text)
+fn boolean<'a>() -> Parser<'a, u8, Vec<u8>> {
+    (seq(b"true") | seq(b"false")).map(|s| s.to_vec())
 }
 
-fn string_literal(text: &str) -> IResult<&str, String> {
-    map(
-        delimited(char('"'), take_while(|c: char| c != '"'), char('"')),
-        str::to_owned,
-    )(text)
+fn integer<'a>() -> Parser<'a, u8, Vec<u8>> {
+    (sym(b'-').opt() + is_a(|c: u8| c.is_ascii_digit()).repeat(1..))
+        .map(|(minus, n)| minus.into_iter().chain(n.into_iter()).collect())
 }
 
-fn string_vec(text: &str) -> IResult<&str, Vec<String>> {
-    delimited(char('{'), many0(string_literal), char('}'))(text)
+fn string<'a>() -> Parser<'a, u8, Vec<u8>> {
+    (sym(b'"') * none_of(b"\"").repeat(0..) - sym(b'"')).map(|s| {
+        b"\""
+            .iter()
+            .cloned()
+            .chain(s.into_iter())
+            .chain(b"\"".iter().cloned())
+            .collect()
+    })
 }
 
-fn boolean(text: &str) -> IResult<&str, bool> {
-    alt((tag("true"), tag("false")))(text).map(|(rest, text)| (rest, text == "true"))
+fn ptr<'a>() -> Parser<'a, u8, Vec<u8>> {
+    seq(b"nullptr").map(|s| s.to_vec())
+        | (sym(b'&') + ident() + array_index().opt()).map(|((amp, ident), ind)| {
+            once(amp)
+                .chain(ident.into_iter())
+                .chain(ind.into_iter().flatten())
+                .collect()
+        })
 }
 
-fn integer(text: &str) -> IResult<&str, c_int> {
-    map_res(
-        tuple((opt(char('-')), take_while(|c: char| c.is_ascii_digit()))),
-        |(minus, number): (Option<char>, &str)| {
-            if minus.is_some() {
-                number.parse().map(|n: c_int| -n)
-            } else {
-                number.parse()
-            }
-        },
-    )(text)
+fn vector<'a>() -> Parser<'a, u8, Vec<u8>> {
+    (sym(b'{')
+        + list(
+            string() | integer(),
+            sym(b',') + is_a(|c: u8| c.is_ascii_whitespace()).repeat(0..),
+        )
+        + sym(b'}'))
+    .map(|((lb, ss), rb)| {
+        once(lb)
+            .chain(
+                ss.into_iter()
+                    .map(|s: Vec<u8>| {
+                        s.into_iter()
+                            .chain(b",".iter().cloned())
+                            .collect::<Vec<_>>()
+                    })
+                    .flatten(),
+            )
+            .chain(once(rb))
+            .collect()
+    })
 }
 
-fn ptr(text: &str) -> IResult<&str, String> {
-    map(
-        alt((
-            map(tag("nullptr"), |s: &str| s.to_owned()),
-            map(tuple((char('&'), value)), |(amp, val)| {
-                format!("{}{}", amp, val)
-            }),
-        )),
-        |val| val.to_owned(),
-    )(text)
+fn ident<'a>() -> Parser<'a, u8, Vec<u8>> {
+    is_a(|c: u8| c.is_ascii_alphanumeric() || c == b'_')
+        .repeat(1..)
+        .map(|s| s.into_iter().collect())
 }
 
-fn value(text: &str) -> IResult<&str, String> {
-    map(
-        tuple((
-            take_while(|c: char| c.is_ascii_alphanumeric()),
-            opt(array_index),
-        )),
-        |(ident, subscript)| format!("{}{}", ident, subscript.unwrap_or(String::new())),
-    )(text)
+fn array_index<'a>() -> Parser<'a, u8, Vec<u8>> {
+    (sym(b'[') + none_of(b"]").repeat(1..) + sym(b']'))
+        .map(|((lb, s), rb)| {
+            [lb].iter()
+                .chain(s.iter())
+                .chain([rb].iter())
+                .cloned()
+                .collect()
+        })
+        .name("array index")
 }
 
-fn array_index(text: &str) -> IResult<&str, String> {
-    map(tuple((char('['), ident, char(']'))), |(lb, ident, rb)| {
-        format!("{}{}{}", lb, ident, rb)
-    })(text)
+fn literal_start<'a>() -> Parser<'a, u8, ()> {
+    seq(b"%%literal").discard().name("literal start tag")
 }
 
-fn ident(text: &str) -> IResult<&str, String> {
-    map(
-        tuple((
-            satisfy(|c: char| c.is_ascii_alphabetic() || c == '_'),
-            take_while(|c: char| c.is_ascii_alphanumeric() || c == '_'),
-        )),
-        |(first, rest)| format!("{}{}", first, rest),
-    )(text)
+fn literal<'a>() -> Parser<'a, u8, Vec<u8>> {
+    (whitespace().opt() * literal_start() * not_a(|c: u8| c == b'%').repeat(0..)
+        - literal_end()
+        - whitespace().opt())
+    .name("literal")
+}
+
+fn literal_end<'a>() -> Parser<'a, u8, ()> {
+    seq(b"%%endliteral\n").discard().name("literal end tag")
+}
+
+fn consume<'a>(text: &'a [u8], tag: &[u8]) -> Result<(&'a [u8], &'a [u8]), ()> {
+    if text.starts_with(tag) {
+        Ok((&text[0..tag.len()], &text[tag.len()..]))
+    } else {
+        Err(())
+    }
+}
+
+fn take_while(text: &[u8], predicate: impl Fn(&u8) -> bool) -> (&[u8], &[u8]) {
+    let ofs = text.iter().take_while(|&b| predicate(b)).count();
+    (&text[..ofs], &text[ofs..])
+}
+
+fn take_while1(text: &[u8], predicate: impl Fn(&u8) -> bool) -> Result<(&[u8], &[u8]), ()> {
+    let ofs = text.iter().take_while(|&b| predicate(b)).count();
+    if ofs == 0 {
+        Err(())
+    } else {
+        Ok((&text[..ofs], &text[ofs..]))
+    }
 }

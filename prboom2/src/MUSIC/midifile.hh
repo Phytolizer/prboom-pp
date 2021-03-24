@@ -70,7 +70,7 @@ struct midi_file_t
 
 #define MIDI_CHANNELS_PER_TRACK 16
 
-using midimem_t = struct
+struct midimem_t
 {
     const byte *data;
     std::size_t len;

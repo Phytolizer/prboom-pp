@@ -244,8 +244,9 @@ class ActionFunction
         case D::undefined:
             throw std::runtime_error{
                 "in 'ActionFunction.hh': This ActionFunction is undefined"};
-        } // switch (m_d)
-    }     // fn reinterpretV
+        }               // switch (m_d)
+        return nullptr; // unreachable
+    }                   // fn reinterpretV
     void setV()
     {
         m_d = D::v;
@@ -326,8 +327,9 @@ class ActionFunction
         case D::undefined:
             throw std::runtime_error{
                 "in 'ActionFunction.hh': This ActionFunction is undefined"};
-        } // switch (m_d)
-    }     // fn reinterpretMobj
+        }               // switch (m_d)
+        return nullptr; // unreachable
+    }                   // fn reinterpretMobj
     void setMobj()
     {
         m_d = D::mobj;
@@ -408,8 +410,9 @@ class ActionFunction
         case D::undefined:
             throw std::runtime_error{
                 "in 'ActionFunction.hh': This ActionFunction is undefined"};
-        } // switch (m_d)
-    }     // fn reinterpretPlayer
+        }               // switch (m_d)
+        return nullptr; // unreachable
+    }                   // fn reinterpretPlayer
     void setPlayer()
     {
         m_d = D::player;
@@ -490,8 +493,9 @@ class ActionFunction
         case D::undefined:
             throw std::runtime_error{
                 "in 'ActionFunction.hh': This ActionFunction is undefined"};
-        } // switch (m_d)
-    }     // fn reinterpretVfn
+        }               // switch (m_d)
+        return nullptr; // unreachable
+    }                   // fn reinterpretVfn
     void setVfn()
     {
         m_d = D::vfn;
@@ -572,8 +576,9 @@ class ActionFunction
         case D::undefined:
             throw std::runtime_error{
                 "in 'ActionFunction.hh': This ActionFunction is undefined"};
-        } // switch (m_d)
-    }     // fn reinterpretMessagethinker
+        }               // switch (m_d)
+        return nullptr; // unreachable
+    }                   // fn reinterpretMessagethinker
     void setMessagethinker()
     {
         m_d = D::message_thinker;
@@ -654,8 +659,9 @@ class ActionFunction
         case D::undefined:
             throw std::runtime_error{
                 "in 'ActionFunction.hh': This ActionFunction is undefined"};
-        } // switch (m_d)
-    }     // fn reinterpretCeiling
+        }               // switch (m_d)
+        return nullptr; // unreachable
+    }                   // fn reinterpretCeiling
     void setCeiling()
     {
         m_d = D::ceiling;
@@ -736,8 +742,9 @@ class ActionFunction
         case D::undefined:
             throw std::runtime_error{
                 "in 'ActionFunction.hh': This ActionFunction is undefined"};
-        } // switch (m_d)
-    }     // fn reinterpretVldoor
+        }               // switch (m_d)
+        return nullptr; // unreachable
+    }                   // fn reinterpretVldoor
     void setVldoor()
     {
         m_d = D::vldoor;
@@ -818,8 +825,9 @@ class ActionFunction
         case D::undefined:
             throw std::runtime_error{
                 "in 'ActionFunction.hh': This ActionFunction is undefined"};
-        } // switch (m_d)
-    }     // fn reinterpretPlat
+        }               // switch (m_d)
+        return nullptr; // unreachable
+    }                   // fn reinterpretPlat
     void setPlat()
     {
         m_d = D::plat;
@@ -900,8 +908,9 @@ class ActionFunction
         case D::undefined:
             throw std::runtime_error{
                 "in 'ActionFunction.hh': This ActionFunction is undefined"};
-        } // switch (m_d)
-    }     // fn reinterpretFireflicker
+        }               // switch (m_d)
+        return nullptr; // unreachable
+    }                   // fn reinterpretFireflicker
     void setFireflicker()
     {
         m_d = D::fireflicker;
@@ -982,8 +991,9 @@ class ActionFunction
         case D::undefined:
             throw std::runtime_error{
                 "in 'ActionFunction.hh': This ActionFunction is undefined"};
-        } // switch (m_d)
-    }     // fn reinterpretLightflash
+        }               // switch (m_d)
+        return nullptr; // unreachable
+    }                   // fn reinterpretLightflash
     void setLightflash()
     {
         m_d = D::lightflash;
@@ -1064,8 +1074,9 @@ class ActionFunction
         case D::undefined:
             throw std::runtime_error{
                 "in 'ActionFunction.hh': This ActionFunction is undefined"};
-        } // switch (m_d)
-    }     // fn reinterpretStrobe
+        }               // switch (m_d)
+        return nullptr; // unreachable
+    }                   // fn reinterpretStrobe
     void setStrobe()
     {
         m_d = D::strobe;
@@ -1146,8 +1157,9 @@ class ActionFunction
         case D::undefined:
             throw std::runtime_error{
                 "in 'ActionFunction.hh': This ActionFunction is undefined"};
-        } // switch (m_d)
-    }     // fn reinterpretGlow
+        }               // switch (m_d)
+        return nullptr; // unreachable
+    }                   // fn reinterpretGlow
     void setGlow()
     {
         m_d = D::glow;
@@ -1228,8 +1240,9 @@ class ActionFunction
         case D::undefined:
             throw std::runtime_error{
                 "in 'ActionFunction.hh': This ActionFunction is undefined"};
-        } // switch (m_d)
-    }     // fn reinterpretElevator
+        }               // switch (m_d)
+        return nullptr; // unreachable
+    }                   // fn reinterpretElevator
     void setElevator()
     {
         m_d = D::elevator;
@@ -1310,8 +1323,9 @@ class ActionFunction
         case D::undefined:
             throw std::runtime_error{
                 "in 'ActionFunction.hh': This ActionFunction is undefined"};
-        } // switch (m_d)
-    }     // fn reinterpretFloormove
+        }               // switch (m_d)
+        return nullptr; // unreachable
+    }                   // fn reinterpretFloormove
     void setFloormove()
     {
         m_d = D::floormove;
@@ -1392,8 +1406,9 @@ class ActionFunction
         case D::undefined:
             throw std::runtime_error{
                 "in 'ActionFunction.hh': This ActionFunction is undefined"};
-        } // switch (m_d)
-    }     // fn reinterpretThinker
+        }               // switch (m_d)
+        return nullptr; // unreachable
+    }                   // fn reinterpretThinker
     void setThinker()
     {
         m_d = D::thinker;
@@ -1474,8 +1489,9 @@ class ActionFunction
         case D::undefined:
             throw std::runtime_error{
                 "in 'ActionFunction.hh': This ActionFunction is undefined"};
-        } // switch (m_d)
-    }     // fn reinterpretScroll
+        }               // switch (m_d)
+        return nullptr; // unreachable
+    }                   // fn reinterpretScroll
     void setScroll()
     {
         m_d = D::scroll;
@@ -1556,8 +1572,9 @@ class ActionFunction
         case D::undefined:
             throw std::runtime_error{
                 "in 'ActionFunction.hh': This ActionFunction is undefined"};
-        } // switch (m_d)
-    }     // fn reinterpretFriction
+        }               // switch (m_d)
+        return nullptr; // unreachable
+    }                   // fn reinterpretFriction
     void setFriction()
     {
         m_d = D::friction;
@@ -1638,8 +1655,9 @@ class ActionFunction
         case D::undefined:
             throw std::runtime_error{
                 "in 'ActionFunction.hh': This ActionFunction is undefined"};
-        } // switch (m_d)
-    }     // fn reinterpretPusher
+        }               // switch (m_d)
+        return nullptr; // unreachable
+    }                   // fn reinterpretPusher
     void setPusher()
     {
         m_d = D::pusher;
@@ -1695,8 +1713,9 @@ class ActionFunction
             return m_d == other.m_d && m_pusher == other.m_pusher;
         case D::undefined:
             return other.m_d == D::undefined;
-        } // switch (m_d)
-    }     // fn operator==
+        }             // switch (m_d)
+        return false; // unreachable
+    }                 // fn operator==
     [[nodiscard]] constexpr bool operator!=(const ActionFunction &other) const
     {
         return !(*this == other);

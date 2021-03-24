@@ -107,6 +107,8 @@ def generate(union):
                 union_file.write(f"m_{field.name}_t {field.name}")
             elif field.is_pointer():
                 union_file.write(f"{field.ty} {field.name}")
+            else:
+                union_file.write(f"{field.ty} {field.name}")
             union_file.write(
                 f"): m_{field.name}({field.name}), m_d(D::{underscore(field.name)}) {{}}"
             )
@@ -175,6 +177,7 @@ def generate(union):
                     f"throw std::runtime_error{{\"in '{union.name}.hh': This {union.name} is undefined\"}};"
                 )
                 union_file.write("} // switch (m_d)\n")
+                union_file.write("return nullptr;// unreachable\n")
                 union_file.write(f"}} // fn reinterpret{field.name.title()}\n")
 
             union_file.write(f"void set{field.name.title()}() {{")
@@ -202,6 +205,7 @@ def generate(union):
             )
         union_file.write(f"case D::undefined:return other.m_d == D::undefined;")
         union_file.write("} // switch (m_d)\n")
+        union_file.write("return false;// unreachable\n")
         union_file.write("} // fn operator==\n")
 
         union_file.write(

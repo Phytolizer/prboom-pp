@@ -141,7 +141,7 @@ sfxinfo_t doom_S_sfx[] = {
     // sfx_dbcls
     {{"dbcls"}, false, 64, nullptr, -1, -1, nullptr},
     // sfx_dbload
-    {{"dbload", "dblod2", "dblod3"}, false, 64, nullptr, -1, -1, nullptr},
+    {{"dbload"}, false, 64, nullptr, -1, -1, nullptr},
     // sfx_plasma
     {{"plasma"}, false, 64, nullptr, -1, -1, nullptr},
     // sfx_bfg
@@ -183,7 +183,7 @@ sfxinfo_t doom_S_sfx[] = {
     // sfx_possessed_pain
     {{"popain"}, true, 96, nullptr, -1, -1, nullptr},
     // sfx_archvile_pain
-    {{"vipain", "vilpn2", "vilpn3", "vilpn4"},
+    {{"vipain"},
      false,
      96,
      nullptr,
@@ -239,17 +239,7 @@ sfxinfo_t doom_S_sfx[] = {
     // sfx_pinky_attack
     {{"sgtatk"}, false, 70, nullptr, -1, -1, nullptr},
     // sfx_skepch
-    {{"skepch"},
-     false,
-     70,
-     nullptr,
-     -1,
-     -1,
-     nullptr,
-     0,
-     {-1},
-     0,
-     {"skpch", "skpch2", "skpch3", "skpch4"}},
+    {{"skepch"}, false, 70, nullptr, -1, -1, nullptr},
     // sfx_vilatk
     {{"vilatk"}, false, 70, nullptr, -1, -1, nullptr},
     // sfx_claw
@@ -275,7 +265,7 @@ sfxinfo_t doom_S_sfx[] = {
     // sfx_cacodemon_death
     {{"cacdth"}, false, 70, nullptr, -1, -1, nullptr},
     // sfx_lostsoul_death
-    {{"firxpl"}, false, 70, nullptr, -1, -1, nullptr, 0, {-1}, 0, {"skldth"}},
+    {{"firxpl"}, false, 70, nullptr, -1, -1, nullptr},
     // sfx_baron_death
     {{"brsdth"}, false, 32, nullptr, -1, -1, nullptr},
     // sfx_cyberdemon_death
@@ -297,17 +287,7 @@ sfxinfo_t doom_S_sfx[] = {
     // sfx_imp_active
     {{"bgact"}, false, 120, nullptr, -1, -1, nullptr},
     // sfx_baron_active
-    {{"dmact"},
-     false,
-     120,
-     nullptr,
-     -1,
-     -1,
-     nullptr,
-     0,
-     {-1},
-     0,
-     {"bract1", "bract2"}},
+    {{"dmact"}, false, 120, nullptr, -1, -1, nullptr},
     // sfx_arachnotron_active
     {{"bspact"}, false, 100, nullptr, -1, -1, nullptr},
     // sfx_arachnotron_walk
@@ -317,13 +297,13 @@ sfxinfo_t doom_S_sfx[] = {
     // sfx_noway
     {{"noway"}, false, 78, nullptr, -1, -1, nullptr},
     // sfx_barexp
-    {{"barexp", "barex2", "barex3"}, false, 60, nullptr, -1, -1, nullptr},
+    {{"barexp"}, false, 60, nullptr, -1, -1, nullptr},
     // sfx_punch
-    {{"punch", "punch2", "punch3"}, false, 64, nullptr, -1, -1, nullptr},
+    {{"punch"}, false, 64, nullptr, -1, -1, nullptr},
     // sfx_hoof
-    {{"hoof", "hoof2", "hoof3", "hoof4"}, false, 70, nullptr, -1, -1, nullptr},
+    {{"hoof"}, false, 70, nullptr, -1, -1, nullptr},
     // sfx_metal
-    {{"metal", "metal2", "metal3"}, false, 70, nullptr, -1, -1, nullptr},
+    {{"metal"}, false, 70, nullptr, -1, -1, nullptr},
     // sfx_tink
     {{"tink"}, false, 60, nullptr, -1, -1, nullptr},
     // sfx_bdopn
