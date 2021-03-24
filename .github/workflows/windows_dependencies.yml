@@ -49,7 +49,7 @@ jobs:
       - name: Build libclang
         run: |
           vcpkg update
-          vcpkg install llvm[clang]
+          vcpkg install llvm[clang] --triplet ${{ matrix.config.triplet }}
 
       - name: Set LIBCLANG_PATH
         run: echo "LIBCLANG_PATH=$((gcm clang).source -replace "clang.exe")" >> $env:GITHUB_ENV
