@@ -44,7 +44,12 @@ jobs:
         id: vars
         shell: cmd
         run: |
-          echo ::set-output name=common_options::sdl2-image sdl2-mixer[dynamic-load,libflac,libmodplug,libvorbis,mpg123,opusfile] sdl2-net libmad fluidsynth dumb portmidi llvm[clang] --triplet ${{ matrix.config.triplet }}
+          echo ::set-output name=common_options::sdl2-image sdl2-mixer[dynamic-load,libflac,libmodplug,libvorbis,mpg123,opusfile] sdl2-net libmad fluidsynth dumb portmidi --triplet ${{ matrix.config.triplet }}
+
+      - name: Build libclang
+        run: |
+          vcpkg update
+          vcpkg install llvm[clang]
 
       - name: Set LIBCLANG_PATH
         run: echo "LIBCLANG_PATH=$((gcm clang).source -replace "clang.exe")" >> $env:GITHUB_ENV
@@ -54,7 +59,6 @@ jobs:
         run: |
           xcopy .github\workflows\dumb %VCPKG_INSTALLATION_ROOT%\ports\dumb\
           xcopy .github\workflows\portmidi %VCPKG_INSTALLATION_ROOT%\ports\portmidi\ /y
-          vcpkg update
           vcpkg install ${{ steps.vars.outputs.common_options }}
 
       - name: Export
