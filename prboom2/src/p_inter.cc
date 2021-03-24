@@ -142,7 +142,10 @@ static dboolean P_GiveAmmo(player_t *player, ammotype_t ammo, int num)
         }
     }
 
-    num = num * ammo_pickup_multiplier / 100;
+    if (!demoplayback && !demorecording && !demo_insurance)
+    {
+        num = num * ammo_pickup_multiplier / 100;
+    }
 
     oldammo = player->ammo[ammo];
     player->ammo[ammo] += num;
@@ -308,7 +311,16 @@ dboolean P_GiveBody(player_t *player, int num)
     {
         return (false);
     }
-    player->health += health_pickup_multiplier * num / 100;
+
+    if (!demoplayback && !demorecording && !demo_insurance)
+    {
+        player->health += health_pickup_multiplier * num / 100;
+    }
+    else
+    {
+        player->health += num;
+    }
+
     if (player->health > max)
     {
         player->health = max;

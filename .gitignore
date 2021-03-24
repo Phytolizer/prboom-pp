@@ -4,6 +4,10 @@ prboom2/release
 # VS Code
 .vscode/
 build/
+*.code-workspace
+
+# VS
+.vs/
 
 # CLion
 .idea/
