@@ -13,10 +13,11 @@ jobs:
     name: msys2
     runs-on: windows-latest
     steps:
-      uses: msys2/setup-msys2@v2
-      shell: msys2
-      run: |
-        pacman -S mingw-w64-x86_64-clang
+      - uses: msys2/setup-msys2@v2
+      - name: "Install MSYS2"
+        shell: msys2
+        run: |
+          pacman -S mingw-w64-x86_64-clang
   build:
     name: ${{ matrix.config.name }}
     runs-on: ${{ matrix.config.os }}
@@ -63,7 +64,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v1
-      - uses: msys2/setup-msys2@v2
 
       - name: Install Dependencies
         shell: bash
