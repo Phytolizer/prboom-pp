@@ -44,7 +44,10 @@ jobs:
         id: vars
         shell: cmd
         run: |
-          echo ::set-output name=common_options::sdl2-image sdl2-mixer[dynamic-load,libflac,libmodplug,libvorbis,mpg123,opusfile] sdl2-net libmad fluidsynth dumb portmidi llvm[clang] --triplet ${{ matrix.config.triplet }}
+          echo ::set-output name=common_options::sdl2-image sdl2-mixer[dynamic-load,libflac,libmodplug,libvorbis,mpg123,opusfile] sdl2-net libmad fluidsynth dumb portmidi --triplet ${{ matrix.config.triplet }}
+
+      - name: Set LIBCLANG_PATH
+        run: echo "LIBCLANG_PATH=$((gcm clang).source -replace "clang.exe")" >> $env:GITHUB_ENV
 
       - name: Install
         shell: cmd

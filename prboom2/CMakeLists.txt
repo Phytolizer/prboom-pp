@@ -218,8 +218,8 @@ set(PRBOOM_OUTPUT_PATH ${CMAKE_BINARY_DIR})
 
 set(WAD_DATA_PATH "${PRBOOM_OUTPUT_PATH}/${WAD_DATA}")
 
-set(Rust_TOOLCHAIN stable-x86_64-pc-windows-gnu)
-set(Rust_CARGO_TARGET x86_64-pc-windows-gnu)
+set(Rust_TOOLCHAIN stable-x86_64-pc-windows-msvc)
+set(Rust_CARGO_TARGET x86_64-pc-windows-msvc)
 
 include(FetchContent)
 
