@@ -2244,7 +2244,8 @@ void P_AutoUseHealth(player_t *player, int saveHealth)
 
 void P_RegenerateHealth(player_t *player)
 {
-    if (player->health < maxhealth)
+    if (!demoplayback && !demorecording && !demo_insurance &&
+        player->health < maxhealth)
     {
         player->health += health_regeneration;
         if (player->health > maxhealth)
