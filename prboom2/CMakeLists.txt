@@ -1,6 +1,9 @@
-cmake_minimum_required(VERSION 3.14)
+cmake_minimum_required(VERSION 3.13)
 
-project("PrBoom++" VERSION 0.1.0)
+project("PrBoom++" 
+    VERSION 0.1.0
+    LANGUAGES CXX
+)
 
 #set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -pedantic -Wformat -pedantic-errors -Werror -Wimplicit-int-conversion -Warith-conversion -Wconversion -Waddress")
 set(CMAKE_CXX_STANDARD 17)
@@ -218,15 +221,7 @@ set(PRBOOM_OUTPUT_PATH ${CMAKE_BINARY_DIR})
 
 set(WAD_DATA_PATH "${PRBOOM_OUTPUT_PATH}/${WAD_DATA}")
 
-include(FetchContent)
-
-FetchContent_Declare(
-    Corrosion
-    GIT_REPOSITORY https://github.com/AndrewGaspar/corrosion.git
-    GIT_TAG origin/master # Optionally specify a version tag or branch here
-)
-
-FetchContent_MakeAvailable(Corrosion)
+add_subdirectory("deps/corrosion")
 
 add_subdirectory(data)
 add_subdirectory(doc)
