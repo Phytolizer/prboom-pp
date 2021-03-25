@@ -9,6 +9,7 @@ vscode-build/
 
 # VS
 .vs/
+out/
 
 # CLion
 .idea/
