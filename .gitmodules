@@ -4,3 +4,7 @@
 [submodule "prboom2/deps/corrosion"]
 	path = prboom2/deps/corrosion
 	url = https://github.com/AndrewGaspar/corrosion.git
+[submodule "prboom2/deps/rust"]
+	path = prboom2/deps/rust
+	url = https://github.com/rust-lang/rust.git
+	branch = stable
