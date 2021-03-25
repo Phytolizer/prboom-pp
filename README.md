@@ -1,5 +1,6 @@
 # PrBoom++ v0.1.0
 [![Language grade: Python](https://img.shields.io/lgtm/grade/python/g/onContentStop/prboom-pp.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/onContentStop/prboom-pp/context:python)
+
 This is a fork of prboom+ with extra tooling for demo recording and playback, with a focus on speedrunning.
 
 ### Heretic Support (beta)
