@@ -32,6 +32,7 @@ int dsda_skip_next_wipe;
 int dsda_wipe_at_full_speed;
 int dsda_track_attempts;
 int dsda_fine_sensitivity;
+int dsda_hide_horns;
 
 void dsda_InitSettings()
 {
@@ -172,4 +173,8 @@ dboolean dsda_SkipWipe()
     }
 
     return !render_wipescreen;
+}
+
+dboolean dsda_HideHorns(void) {
+  return dsda_hide_horns;
 }

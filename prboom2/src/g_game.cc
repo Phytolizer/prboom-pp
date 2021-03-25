@@ -91,6 +91,7 @@
 #include "dsda/key_frame.hh"
 #include "dsda/settings.hh"
 #include "dsda/input.hh"
+#include "dsda/options.hh"
 #include "statdump.hh"
 
 // ano - used for version 255+ demos, like EE or MBF
@@ -1512,7 +1513,8 @@ void G_Ticker()
     // e6y
     // do nothing if a pause has been pressed during playback
     // pausing during intermission can cause desynchs without that
-    if (paused & 2 && gamestate != GS_LEVEL)
+    if ((paused & 2 || (!demoplayback && menuactive && !netgame)) &&
+        gamestate != GS_LEVEL)
     {
         return;
     }
@@ -2543,8 +2545,6 @@ void RecalculateDrawnSubsectors()
 #endif
 }
 
-// HERETIC_TODO: ignoring save / load differences
-
 void G_DoLoadGame()
 {
     int length, i;
@@ -3127,54 +3127,53 @@ void G_Compatibility()
     }
 }
 
-/* killough 7/19/98: Marine's best friend :) */
-static int G_GetHelpers()
-{
-    int j = M_CheckParm("-dog");
-
-    if (!j)
-    {
-        j = M_CheckParm("-dogs");
-    }
-    return j ? j + 1 < myargc ? atoi(myargv[j + 1]) : 1 : default_dogs;
-}
-
 // killough 3/1/98: function to reload all the default parameter
 // settings before a new game begins
 
 void G_ReloadDefaults()
 {
+    const dsda_options_t *options;
+
+    compatibility_level = default_compatibility_level;
+    {
+        int l;
+        l = dsda_CompatibilityLevel();
+        if (l != UNSPECIFIED_COMPLEVEL)
+            compatibility_level = l;
+    }
+    if (compatibility_level == -1)
+        compatibility_level = best_compatibility;
+
     // killough 3/1/98: Initialize options based on config file
     // (allows functions above to load different values for demos
     // and savegames without messing up defaults).
 
-    weapon_recoil = default_weapon_recoil; // weapon recoil
+    options = dsda_Options();
+
+    weapon_recoil = options->weapon_recoil; // weapon recoil
 
     player_bobbing = default_player_bobbing; // whether player bobs or not
+                                             /* never implemented */
+    variable_friction = 1;
+    allow_pushers = 1;
+    monsters_remember = options->monsters_remember; // remember former enemies
 
-    /* cph 2007/06/31 - for some reason, the default_* of the next 2 vars was
-     * never implemented */
-    variable_friction = default_variable_friction;
-    allow_pushers = default_allow_pushers;
+    monster_infighting = options->monster_infighting; // killough 7/19/98
 
-    monsters_remember = default_monsters_remember; // remember former enemies
+    dogs = netgame ? 0 : options->player_helpers; // killough 7/19/98
+    dog_jumping = options->dog_jumping;
 
-    monster_infighting = default_monster_infighting; // killough 7/19/98
+    distfriend = options->friend_distance; // killough 8/8/98
 
-    dogs = netgame ? 0 : G_GetHelpers(); // killough 7/19/98
-    dog_jumping = default_dog_jumping;
+    monster_backing = options->monster_backing; // killough 9/8/98
 
-    distfriend = default_distfriend; // killough 8/8/98
+    monster_avoid_hazards = options->monster_avoid_hazards; // killough 9/9/98
 
-    monster_backing = default_monster_backing; // killough 9/8/98
+    monster_friction = options->monster_friction; // killough 10/98
 
-    monster_avoid_hazards = default_monster_avoid_hazards; // killough 9/9/98
+    help_friends = options->help_friends; // killough 9/9/98
 
-    monster_friction = default_monster_friction; // killough 10/98
-
-    help_friends = default_help_friends; // killough 9/9/98
-
-    monkeys = default_monkeys;
+    monkeys = options->monkeys;
 
     // jff 1/24/98 reset play mode to command line spec'd version
     // killough 3/1/98: moved to here
@@ -3198,24 +3197,40 @@ void G_ReloadDefaults()
 
     consoleplayer = 0;
 
-    compatibility_level = default_compatibility_level;
-    {
-        int l;
-        l = dsda_CompatibilityLevel();
-        if (l != UNSPECIFIED_COMPLEVEL)
-        {
-            compatibility_level = l;
-        }
-    }
-    if (compatibility_level == -1)
-    {
-        compatibility_level = best_compatibility;
-    }
-
+    // MBF introduced configurable compatibility settings
     if (mbf_features)
     {
-        memcpy(comp, default_comp, sizeof comp);
+        comp[comp_telefrag] = options->comp_telefrag;
+        comp[comp_dropoff] = options->comp_dropoff;
+        comp[comp_vile] = options->comp_vile;
+        comp[comp_pain] = options->comp_pain;
+        comp[comp_skull] = options->comp_skull;
+        comp[comp_blazing] = options->comp_blazing;
+        comp[comp_doorlight] = options->comp_doorlight;
+        comp[comp_model] = options->comp_model;
+        comp[comp_god] = options->comp_god;
+        comp[comp_falloff] = options->comp_falloff;
+        comp[comp_floors] = options->comp_floors;
+        comp[comp_skymap] = options->comp_skymap;
+        comp[comp_pursuit] = options->comp_pursuit;
+        comp[comp_doorstuck] = options->comp_doorstuck;
+        comp[comp_staylift] = options->comp_staylift;
+        comp[comp_zombie] = options->comp_zombie;
+        comp[comp_stairs] = options->comp_stairs;
+        comp[comp_infcheat] = options->comp_infcheat;
+        comp[comp_zerotags] = options->comp_zerotags;
+
+        comp[comp_moveblock] = options->comp_moveblock;
+        comp[comp_respawn] = options->comp_respawn;
+        comp[comp_sound] = options->comp_sound;
+        comp[comp_666] = options->comp_666;
+        comp[comp_soul] = options->comp_soul;
+        comp[comp_maskedanim] = options->comp_maskedanim;
+        comp[comp_ouchface] = options->comp_ouchface;
+        comp[comp_maxhealth] = options->comp_maxhealth;
+        comp[comp_translucency] = options->comp_translucency;
     }
+
     G_Compatibility();
 
     // killough 3/31/98, 4/5/98: demo sync insurance
@@ -3405,8 +3420,9 @@ void G_InitNew(skill_t skill, int episode, int map)
         episode = 1;
     }
 
-    if (!EpiCustom) // Disable all sanity checks if there are custom episode
-                    // definitions. They do not make sense in this case.
+    // Disable all sanity checks if there are custom episode definitions. They
+    // do not make sense in this case.
+    if (!EpiCustom && W_CheckNumForName(MAPNAME(episode, map)) == -1)
     {
         if (heretic)
         {

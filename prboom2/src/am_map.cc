@@ -2074,7 +2074,8 @@ static void AM_ProcessNiceThing(mobj_t *mobj, angle_t angle, fixed_t x,
         {SPR_BFS1, am_icon_bullet, 12, 0, 119, 255, 111},
         {SPR_BFE1, am_icon_bullet, 12, 0, 119, 255, 111},
 
-        {static_cast<spritenum_t>(-1)}};
+    {NUMSPRITES}
+  };
 
     need_shadow = true;
 
@@ -2129,7 +2130,7 @@ static void AM_ProcessNiceThing(mobj_t *mobj, angle_t angle, fixed_t x,
     else
     {
         i = 0;
-        while (icons[i].sprite > 0)
+    while (icons[i].sprite < NUMSPRITES)
         {
             if (mobj->sprite == icons[i].sprite)
             {

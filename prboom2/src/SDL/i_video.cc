@@ -117,6 +117,7 @@ int render_vsync;
 int screen_multiply;
 int render_screen_multiply;
 int integer_scaling;
+int exclusive_fullscreen;
 SDL_Surface *screen;
 static SDL_Surface *buffer;
 SDL_Window *sdl_window;

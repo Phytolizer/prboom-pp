@@ -41,10 +41,14 @@ set(COMMON_SRC
         dsda/key_frame.hh
         dsda/msecnode.cc
         dsda/msecnode.hh
+        dsda/options.cc
+        dsda/options.hh
         dsda/palette.cc
         dsda/palette.hh
         dsda/settings.cc
         dsda/settings.hh
+        dsda/time.cc
+        dsda/time.hh
         dstrings.cc
         dstrings.hh
         d_deh.cc

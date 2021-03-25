@@ -96,6 +96,7 @@ int g_door_open;
 int g_st_height;
 int g_mf_translucent;
 int g_mf_shadow;
+int g_border_offset;
 
 int g_cr_gray;
 int g_cr_green;

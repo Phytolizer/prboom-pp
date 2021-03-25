@@ -213,7 +213,16 @@ void S_Stop()
 // Kills playing sounds at start of level,
 //  determines music if any, changes music.
 //
-void S_Start()
+
+static inline int WRAP(int i, int w)
+{
+  while (i < 0)
+    i += w;
+
+  return i % w;
+}
+
+void S_Start(void)
 {
     int mnum;
 
@@ -243,7 +252,7 @@ void S_Start()
     }
     else if (gamemode == commercial)
     {
-        mnum = mus_runnin + gamemap - 1;
+      mnum = mus_runnin + WRAP(gamemap - 1, NUMMUSIC - mus_runnin);
     }
     else
     {
@@ -262,15 +271,16 @@ void S_Start()
 
         if (heretic)
         {
-            mnum = heretic_mus_e1m1 + (gameepisode - 1) * 9 + gamemap - 1;
+          mnum = heretic_mus_e1m1 +
+                 WRAP((gameepisode - 1) * 9 + gamemap - 1, HERETIC_NUMMUSIC - heretic_mus_e1m1);
         }
         else if (gameepisode < 4)
         {
-            mnum = mus_e1m1 + (gameepisode - 1) * 9 + gamemap - 1;
+          mnum = mus_e1m1 + WRAP((gameepisode - 1) * 9 + gamemap - 1, mus_runnin - mus_e1m1);
         }
         else
         {
-            mnum = spmus[gamemap - 1];
+          mnum = spmus[WRAP(gamemap - 1, 9)];
         }
     }
 
@@ -654,7 +664,6 @@ void S_ChangeMusic(int musicnum, int looping)
     // load & register it
     music->data = W_CacheLumpNum(music->lumpnum);
     music->handle = I_RegisterSong(music->data, W_LumpLength(music->lumpnum));
-    I_RegisterSong(music->data, W_LumpLength(music->lumpnum));
 
     // play it
     I_PlaySong(music->handle, looping);

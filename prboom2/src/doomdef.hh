@@ -365,19 +365,16 @@ typedef enum
 // Defines Setup Screen groups that config variables appear in.
 // Used when resetting the defaults for every item in a Setup group.
 
-typedef enum
-{
-    ss_none,
-    ss_keys,
-    ss_weap,
-    ss_stat,
-    ss_auto,
-    ss_enem,
-    ss_mess,
-    ss_chat,
-    ss_gen,  /* killough 10/98 */
-    ss_comp, /* killough 10/98 */
-    ss_max
+typedef enum {
+  ss_none,
+  ss_keys,
+  ss_weap,
+  ss_stat,
+  ss_auto,
+  ss_mess,
+  ss_chat,
+  ss_gen,       /* killough 10/98 */
+  ss_max
 } ss_types;
 
 // phares 3/20/98:

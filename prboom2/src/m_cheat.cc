@@ -44,6 +44,7 @@
 #include "p_map.hh"
 #include "d_deh.hh" // Ty 03/27/98 - externalized strings
 /* cph 2006/07/23 - needs direct access to thinkercap */
+#include "w_wad.hh"
 
 #include "dsda/input.hh"
 #include "dsda/settings.hh"
@@ -423,22 +424,26 @@ static void cheat_behold()
 
 static dboolean cannot_clev(int epsd, int map)
 {
-    if (heretic)
-    {
-        return (epsd < 1 || epsd > 6 || map < 1 || map > 9 ||
-                (gamemode != retail && epsd > 3) ||
-                (gamemode == shareware && epsd > 1) || (epsd == 6 && map > 3));
-    }
+  char *next;
 
-    return (
-        epsd < 1 || map < 1 ||
-        // e6y: The fourth episode for pre-ultimate complevels is not allowed.
-        (compatibility_level < ultdoom_compatibility && (epsd > 3)) ||
-        (gamemode == retail && (epsd > 4 || map > 9)) ||
-        (gamemode == registered && (epsd > 3 || map > 9)) ||
+  if (
+    epsd < 1 ||
+    map < 0 ||
+    ((gamemode == retail || gamemode == registered) && (epsd > 9 || map > 9)) ||
         (gamemode == shareware && (epsd > 1 || map > 9)) ||
-        (gamemode == commercial && (epsd > 1 || map > 33)) ||
-        (!bfgedition && map == 33) || (gamemission == pack_nerve && map > 9));
+    (gamemode == commercial && (epsd > 1 || map > 99)) ||
+    (gamemission == pack_nerve && map > 9)
+  ) return true;
+
+  // Catch invalid maps.
+  next = MAPNAME(epsd, map);
+  if (W_CheckNumForName(next) == -1)
+  {
+	  doom_printf("IDCLEV target not found: %s", next);
+	  return true;
+  }
+
+  return false;
 }
 
 extern int EpiCustom;

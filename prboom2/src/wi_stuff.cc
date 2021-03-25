@@ -558,6 +558,9 @@ void WI_drawEL()
             WI_levelNameLump(wbs->nextep, wbs->next, lname);
         }
 
+    if (W_CheckNumForName(lname) == -1)
+      return;
+
         // draw level
         y += (5 * V_NamePatchHeight(lname)) / 4;
 
