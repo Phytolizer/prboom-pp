@@ -189,7 +189,7 @@ static dsda_option_t option_list[] = {
     // { "comp_30", &mbf_options.comp_30, 0, 1 },
     // { "comp_31", &mbf_options.comp_31, 0, 1 },
     // { "comp_32", &mbf_options.comp_32, 0, 1 },
-    {0}};
+    {nullptr}};
 
 #define OPTIONS_LINE_LENGTH 80
 
@@ -202,7 +202,7 @@ typedef struct
 static const char *dsda_ReadOption(char *buf, size_t size, options_lump_t *lump)
 {
     if (lump->length <= 0)
-        return NULL;
+        return nullptr;
 
     while (size > 1 && *lump->data && lump->length)
     {
