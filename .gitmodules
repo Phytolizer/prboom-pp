@@ -1,6 +1,3 @@
-[submodule "prboom2/CMakeRust"]
-	path = prboom2/CMakeRust
-	url = git@github.com:Devolutions/CMakeRust.git
 [submodule "prboom2/deps/corrosion"]
 	path = prboom2/deps/corrosion
 	url = https://github.com/AndrewGaspar/corrosion.git
