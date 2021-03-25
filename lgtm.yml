@@ -1,0 +1,7 @@
+extraction:
+  cpp:
+    after_prepare: "mkdir -p ${LGTM_SRC}/build"
+    configure:
+      command: "(cd ${LGTM_SRC}/build; cmake ../prboom2 -DCMAKE_BUILD_TYPE=Debug -G Ninja -Wno-dev)"
+    index:
+      build_command: "(cd ${LGTM_SRC}/build; make)"

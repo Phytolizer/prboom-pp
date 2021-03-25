@@ -4,6 +4,7 @@ prboom2/release
 # VS Code
 .vscode/
 build/
+vscode-build/
 *.code-workspace
 
 # VS
@@ -17,7 +18,7 @@ cmake-build-*
 _lgtm_build_dir/
 _lgtm_detected_source_root
 merge_queue.txt
-db/
+queries/
 
 # rust
 target/
