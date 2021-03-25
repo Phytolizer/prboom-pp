@@ -55,7 +55,7 @@ jobs:
     steps:
       - uses: actions/checkout@v1
         with:
-          submodules: 'recursive'
+          submodules: true
 
       - name: Install Dependencies
         shell: bash
