@@ -223,15 +223,20 @@ set(WAD_DATA_PATH "${PRBOOM_OUTPUT_PATH}/${WAD_DATA}")
 
 add_subdirectory("deps/corrosion")
 
-if (WIN32)
-    set(RUSTC_COMMAND mingw32-make.exe rust)
+if (DEFINED ENV{MAKE})
 else ()
-    set(RUSTC_COMMAND make rust)
-endif ()
+    if (WIN32)
+        set(ENV{MAKE} mingw32-make.exe)
+    else ()
+        set(ENV{MAKE} make)
+    endif ()
+endif()
+
+execute_process(COMMAND $ENV{MAKE} clean WORKING_DIRECTORY "${CMAKE_CURRENT_LIST_DIR}/deps")
 
 add_custom_target(
     rustc
-    COMMAND ${RUSTC_COMMAND}
+    COMMAND $ENV{MAKE} rust
     WORKING_DIRECTORY "${CMAKE_CURRENT_LIST_DIR}/deps"
 )
 
