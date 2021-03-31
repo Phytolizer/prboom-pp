@@ -25,20 +25,10 @@ before_install:
       brew install sdl2 sdl2_image sdl2_mixer sdl2_net pcre mad fluidsynth dumb portmidi llvm
       sudo ln -s "$(brew --prefix llvm)/bin/clang-tidy" /usr/local/bin/clang-tidy
     fi
+  - |
+    cmake -DCMAKE_BUILD_TYPE=Release -Wno-dev -B build
+    cmake --build build -j 9
 
 branches:
   only:
     - master
-
-jobs:
-  include:
-    - name: "Windows VS 64-bit"
-      os:
-        - windows
-    - name: "Linux 64-bit"
-      os:
-        - linux
-    - name: "Mac OSX"
-      os:
-        - osx
-      osx_image: xcode12.4
