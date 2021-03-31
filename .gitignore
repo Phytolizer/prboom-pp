@@ -6,6 +6,7 @@ prboom2/release
 build/
 vscode-build/
 *.code-workspace
+.cache/
 
 # VS
 .vs/
