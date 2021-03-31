@@ -1,10 +1,14 @@
 # PrBoom++ v0.1.0
 [![Language grade: Python](https://img.shields.io/lgtm/grade/python/g/onContentStop/prboom-pp.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/onContentStop/prboom-pp/context:python)
 
-This is a fork of prboom+ with extra tooling for demo recording and playback, with a focus on speedrunning.
+## IMPORTANT NOTE: THIS PROJECT CURRENTLY DOES NOT BUILD ON WINDOWS OR MAC OS. I AM WORKING ON IT :)
+
+This is a fork of prboom+ with extra tooling for demo recording and playback, with a focus on quality-of-life and gameplay options.
+The fork includes several cheat options at the end of the primary settings menu for those who aren't looking for the typical Doom challenge
+that modern megawads demand.
 
 ### Heretic Support (beta)
-- DSDA-Doom includes demo-compatible support for heretic (all the demos stored on dsda are in sync).
+- PrBoom++ includes demo-compatible support for heretic (all the demos stored on dsda are in sync).
 - Not everything is a 1 to 1 match with vanilla heretic (similar to doom in prboom+) - some of this will be fixed and refined. The game should be identical _mechanically_.
 - Heretic game logic should be set automatically if you use `HERETIC.WAD` as the iwad. If it doesn't work, please use the `-heretic` commandline option. This flips a switch in the engine that determines all the core game data.
 - You do not need to (and can't) set the complevel when playing heretic. It is implicitly set to `0`, since heretic is based on doom v1.2.
