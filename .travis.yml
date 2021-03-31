@@ -1,0 +1,44 @@
+language: cpp
+compiler:
+  - clang
+  - gcc
+os:
+  - linux
+  - windows
+  - osx
+dist: xenial
+before_install:
+  - echo $LANG
+  - echo $LC_ALL
+  - |
+    if [ $TRAVIS_OS_NAME == linux ]
+    then sudo apt-get install libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-net-dev \
+      libpcre3-dev libmad0-dev libfluidsynth-dev libdumb1-dev libvorbis-dev libportmidi-dev clang-tidy
+    fi
+  - |
+    if [ $TRAVIS_OS_NAME == windows ]
+    then cd prboom2/deps && mingw32-make.exe rust
+    fi
+  - |
+    if [ $TRAVIS_OS_NAME == osx ]
+    then 
+      brew install sdl2 sdl2_image sdl2_mixer sdl2_net pcre mad fluidsynth dumb portmidi llvm
+      sudo ln -s "$(brew --prefix llvm)/bin/clang-tidy" /usr/local/bin/clang-tidy
+    fi
+
+branches:
+  only:
+    - master
+
+jobs:
+  include:
+    - name: "Windows VS 64-bit"
+      os:
+        - windows
+    - name: "Linux 64-bit"
+      os:
+        - linux
+    - name: "Mac OSX"
+      os:
+        - osx
+      osx_image: xcode12.4
