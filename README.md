@@ -1,6 +1,8 @@
 # PrBoom++ v0.1.0
 [![Language grade: Python](https://img.shields.io/lgtm/grade/python/g/onContentStop/prboom-pp.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/onContentStop/prboom-pp/context:python)
 
+## IMPORTANT NOTE: THIS PROJECT CURRENTLY DOES NOT BUILD ON WINDOWS OR MAC OS. I AM WORKING ON IT :)
+
 This is a fork of prboom+ with extra tooling for demo recording and playback, with a focus on quality-of-life and gameplay options.
 The fork includes several cheat options at the end of the primary settings menu for those who aren't looking for the typical Doom challenge
 that modern megawads demand.
