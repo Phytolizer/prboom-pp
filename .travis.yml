@@ -31,7 +31,8 @@ before_install:
       brew install sdl2 sdl2_image sdl2_mixer sdl2_net pcre mad fluidsynth dumb portmidi llvm;
       sudo ln -s "$(brew --prefix llvm)/bin/clang-tidy" /usr/local/bin/clang-tidy;
     fi
-  - cmake -DCMAKE_BUILD_TYPE=Release -Wno-dev -B build
+  - mkdir build
+  - cmake -DCMAKE_BUILD_TYPE=Release -Wno-dev -B build prboom2
   - cmake --build build -j 9;
 
 branches:
