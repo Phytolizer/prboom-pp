@@ -37,13 +37,9 @@
 #ifndef HAVE_LIBDUMB
 #include <string.h>
 
-static const char *db_name(void) { return "dumb tracker player (DISABLED)"; }
+const char *db_name(void) { return "dumb tracker player (DISABLED)"; }
 
-static int db_init(int samplerate) { return 0; }
-
-const music_player_t db_player = {db_name, db_init, nullptr, nullptr,
-                                  nullptr, nullptr, nullptr, nullptr,
-                                  nullptr, nullptr, nullptr};
+int db_init(int samplerate) { return 0; }
 
 #else // HAVE_DUMB
 

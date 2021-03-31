@@ -33,8 +33,20 @@
 
 #include "musicplayer.hh"
 
+#ifdef HAVE_CONFIG_H
+#include <config.h>
+#endif
+
 const char *db_name(void);
 int db_init(int samplerate);
+
+#ifndef HAVE_DUMB
+
+constexpr music_player_t db_player = {db_name, db_init, nullptr, nullptr,
+                                      nullptr, nullptr, nullptr, nullptr,
+                                      nullptr, nullptr, nullptr};
+#else
+
 void db_shutdown(void);
 void db_setvolume(int v);
 void db_pause(void);
@@ -49,5 +61,7 @@ constexpr music_player_t db_player = {
     db_name,  db_init,   db_shutdown,     db_setvolume,
     db_pause, db_resume, db_registersong, db_unregistersong,
     db_play,  db_stop,   db_render};
+
+#endif
 
 #endif // DUMBPLAYER_H
