@@ -5,3 +5,6 @@
 	path = prboom2/deps/rust
 	url = https://github.com/rust-lang/rust.git
 	branch = stable
+[submodule "prboom2/deps/SDL2"]
+	path = prboom2/deps/SDL2
+	url = https://github.com/libsdl-org/SDL.git
