@@ -1137,13 +1137,6 @@ void P_DamageMobj(mobj_t *target, mobj_t *inflictor, mobj_t *source, int damage)
     player_t *player;
     dboolean justhit = false; /* killough 11/98 */
 
-    int base = damage / 4;
-    if (source && source->info->damage)
-    {
-        base = source->info->damage;
-    }
-    damage = P_GetDamageValue(base, 8);
-
     lprintf(LO_INFO, "Damage: %d\n", damage);
 
     /* killough 8/31/98: allow bouncers to take damage */
