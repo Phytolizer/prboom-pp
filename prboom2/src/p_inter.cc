@@ -31,27 +31,28 @@
  *
  *-----------------------------------------------------------------------------*/
 
+#include "am_map.hh"
 #include "cpp/settings.hh"
+#include "d_deh.hh" // Ty 03/22/98 - externalized strings
 #include "doomstat.hh"
 #include "dstrings.hh"
+#include "lprintf.hh"
 #include "m_random.hh"
-#include "am_map.hh"
+#include "p_tick.hh"
 #include "r_main.hh"
 #include "s_sound.hh"
 #include "sounds.hh"
-#include "d_deh.hh" // Ty 03/22/98 - externalized strings
-#include "p_tick.hh"
-#include "lprintf.hh"
 
-#include "p_inter.hh"
-#include "p_enemy.hh"
-#include "hu_tracers.hh"
-#include "p_inter.hh"
-#include "e6y.hh" //e6y
 #include "dsda.hh"
+#include "e6y.hh" //e6y
+#include "hu_tracers.hh"
+#include "p_enemy.hh"
+#include "p_inter.hh"
+#include "rust/rust.hh"
 
 #include "heretic/def.hh"
 #include "heretic/sb_bar.hh"
+#include <stdexcept>
 
 #define BONUSADD 6
 
@@ -945,6 +946,20 @@ static void P_KillMobj(mobj_t *source, mobj_t *target)
                 }
             }
         }
+        else
+        {
+            rust::add_kill(source->player->readyweapon, target->type);
+
+            rust::RawWeaponStats stats(0, nullptr, 0);
+            int status = rust::get_stats(source->player->readyweapon, &stats);
+            if (status != 0)
+            {
+                throw std::runtime_error{"Getting weapon stats failed!"};
+            }
+            lprintf(LO_INFO, "Stats for weapon #%d: %lu total kills\n",
+                    source->player->readyweapon, stats.kills);
+            rust::cleanup_stats(&stats);
+        }
     }
     else if (target->flags & MF_COUNTKILL)
     { /* Add to kills tally */
@@ -1136,8 +1151,6 @@ void P_DamageMobj(mobj_t *target, mobj_t *inflictor, mobj_t *source, int damage)
 {
     player_t *player;
     dboolean justhit = false; /* killough 11/98 */
-
-    lprintf(LO_INFO, "Damage: %d\n", damage);
 
     /* killough 8/31/98: allow bouncers to take damage */
     if (!(target->flags & (MF_SHOOTABLE | MF_BOUNCES)))

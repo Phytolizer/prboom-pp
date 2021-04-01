@@ -96,7 +96,7 @@ inline static CONSTFUNC fixed_t FixedMul(fixed_t a, fixed_t b)
  * Fixed Point Division
  */
 
-[[maybe_unused]] static CONSTFUNC fixed_t FixedDiv(fixed_t a, fixed_t b)
+static CONSTFUNC fixed_t FixedDiv(fixed_t a, fixed_t b)
 {
     return (D_abs(a) >> 14) >= D_abs(b)
                ? ((a ^ b) >> 31) ^ INT_MAX

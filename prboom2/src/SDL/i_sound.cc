@@ -411,9 +411,6 @@ int I_StartSound(int id, int channel, int vol, int sep, int pitch, int priority)
         lump = lumps[0];
     }
 
-    lprintf(LO_CONFIRM, "Out of %zu lumps, %d was chosen for SFX #%d\n",
-            lumps.size(), lump, id);
-
     // We will handle the new SFX.
     // Set pointer to raw data.
     len = W_LumpLength(lump);

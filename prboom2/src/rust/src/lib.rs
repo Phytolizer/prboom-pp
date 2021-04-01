@@ -1,6 +1,14 @@
 #![allow(non_upper_case_globals)]
 #![allow(non_camel_case_types)]
 #![allow(non_snake_case)]
+#![deny(unused_unsafe)]
+#![deny(unused_variables)]
+#![deny(unused_mut)]
+#![deny(unused_qualifications)]
+#![deny(unused_lifetimes)]
+#![deny(unused_imports)]
+#![deny(unused_crate_dependencies)]
+#![deny(unused_allocation)]
 
 use std::collections::HashMap;
 use std::ffi::CString;
@@ -27,6 +35,8 @@ use nom::{combinator, IResult};
 // use pom::parser::tag;
 //
 mod c;
+mod stats;
+pub use stats::*;
 
 #[repr(C)]
 #[derive(Clone, Copy)]
