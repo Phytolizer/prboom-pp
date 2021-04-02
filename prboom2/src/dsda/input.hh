@@ -154,6 +154,7 @@ using dsda_input_identifier_t = enum
     dsda_input_idrate,
     dsda_input_iddt,
     dsda_input_cycle_palette,
+    dsda_input_stats,
     DSDA_INPUT_IDENTIFIER_COUNT
 };
 

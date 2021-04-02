@@ -44,7 +44,7 @@ impl Default for RawWeaponStats {
 #[derive(Debug, Serialize, Deserialize)]
 struct WeaponStats {
     kills: usize,
-    enemies: HashMap<mobjtype_t, usize>,
+    enemies: HashMap<String, usize>,
 }
 
 impl Default for WeaponStats {
@@ -58,11 +58,38 @@ impl Default for WeaponStats {
 
 #[no_mangle]
 pub extern "C" fn weapon_name(weapon: weapontype_t) -> *const c_char {
-    CString::new(rust_weapon_name(weapon))
-        .unwrap()
-        .as_bytes_with_nul()
-        .as_ptr() as *const c_char
+    match weapon {
+        0 => FIST.as_ptr(),
+        1 => PISTOL.as_ptr(),
+        2 => SHOTGUN.as_ptr(),
+        3 => CHAINGUN.as_ptr(),
+        4 => ROCKET_LAUNCHER.as_ptr(),
+        5 => PLASMA_RIFLE.as_ptr(),
+        6 => BFG_9000.as_ptr(),
+        7 => CHAINSAW.as_ptr(),
+        8 => SUPER_SHOTGUN.as_ptr(),
+        _ => unreachable!(),
+    }
 }
+
+static FIST: Lazy<CString> =
+    Lazy::new(|| CString::new(rust_weapon_name(weapontype_t_wp_fist)).unwrap());
+static PISTOL: Lazy<CString> =
+    Lazy::new(|| CString::new(rust_weapon_name(weapontype_t_wp_pistol)).unwrap());
+static SHOTGUN: Lazy<CString> =
+    Lazy::new(|| CString::new(rust_weapon_name(weapontype_t_wp_shotgun)).unwrap());
+static CHAINGUN: Lazy<CString> =
+    Lazy::new(|| CString::new(rust_weapon_name(weapontype_t_wp_chaingun)).unwrap());
+static ROCKET_LAUNCHER: Lazy<CString> =
+    Lazy::new(|| CString::new(rust_weapon_name(weapontype_t_wp_missile)).unwrap());
+static PLASMA_RIFLE: Lazy<CString> =
+    Lazy::new(|| CString::new(rust_weapon_name(weapontype_t_wp_plasma)).unwrap());
+static BFG_9000: Lazy<CString> =
+    Lazy::new(|| CString::new(rust_weapon_name(weapontype_t_wp_bfg)).unwrap());
+static CHAINSAW: Lazy<CString> =
+    Lazy::new(|| CString::new(rust_weapon_name(weapontype_t_wp_chainsaw)).unwrap());
+static SUPER_SHOTGUN: Lazy<CString> =
+    Lazy::new(|| CString::new(rust_weapon_name(weapontype_t_wp_supershotgun)).unwrap());
 
 const fn rust_weapon_name(weapon: weapontype_t) -> &'static str {
     match weapon {
@@ -182,7 +209,7 @@ pub extern "C" fn add_kill(weapon: weapontype_t, enemy: mobjtype_t) {
     let mut kill_stats = KILL_STATS.lock();
     let stats = kill_stats.get_mut(rust_weapon_name(weapon)).unwrap();
     stats.kills += 1;
-    let enemy_stats = stats.enemies.entry(enemy);
+    let enemy_stats = stats.enemies.entry(format!("{}", enemy));
     enemy_stats.and_modify(|v| *v += 1).or_insert(1);
 }
 
@@ -214,8 +241,8 @@ pub unsafe extern "C" fn get_stats(weapon: weapontype_t, raw_stats: *mut RawWeap
     let mut enemy_stats = stats
         .enemies
         .iter()
-        .map(|(&enemy, &kills)| EnemyStats {
-            enemy,
+        .map(|(enemy, &kills)| EnemyStats {
+            enemy: enemy.parse().unwrap(),
             kills: kills as c_ulong,
         })
         .collect::<Vec<_>>();

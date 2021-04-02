@@ -35,6 +35,7 @@
  *
  *-----------------------------------------------------------------------------*/
 
+#include "rust/rust.hh"
 #ifdef HAVE_CONFIG_H
 #include "config.h"
 #endif
@@ -3469,6 +3470,13 @@ setup_menu_t dsda_keys_settings[] = {
      KB_Y + 5 * 8,
      {nullptr},
      dsda_input_cycle_palette},
+    {"Show weapon stats",
+     S_INPUT,
+     m_scrn,
+     KB_X,
+     KB_Y + 6 * 8,
+     {nullptr},
+     dsda_input_stats},
 
     {"<- PREV",
      S_SKIP | S_PREV,
@@ -7184,6 +7192,15 @@ dboolean M_Responder(event_t *ev)
             doom_printf("Palette %s", dsda_PlayPalData()->lump_name);
             S_StartSound(nullptr, g_sfx_swtchn);
             return true;
+        }
+
+        if (dsda_InputActivated(dsda_input_stats))
+        {
+            rust::RawWeaponStats stats{0, nullptr, 0};
+            rust::get_stats(players[consoleplayer].readyweapon, &stats);
+            doom_printf("%s: %zu total kills",
+                        rust::weapon_name(players[consoleplayer].readyweapon),
+                        stats.kills);
         }
 
         if (dsda_InputActivated(dsda_input_walkcamera))
