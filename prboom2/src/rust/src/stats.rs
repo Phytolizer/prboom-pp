@@ -11,7 +11,6 @@ use std::os::raw::c_int;
 use std::os::raw::c_ulong;
 use std::path::PathBuf;
 use std::ptr;
-use std::str::FromStr;
 
 use once_cell::sync::Lazy;
 use parking_lot::Mutex;
@@ -91,13 +90,14 @@ static KILL_STATS: Lazy<Mutex<HashMap<weapontype_t, WeaponStats>>> = Lazy::new(|
 
 unsafe fn get_weapon_stats_filename() -> PathBuf {
     let prbdir_len = size_of_val(&prboom_dir) / size_of::<*const c_char>();
-    PathBuf::from_str(&String::from_raw_parts(
-        prboom_dir.as_mut_ptr() as *mut u8,
-        prbdir_len,
-        prbdir_len,
-    ))
-    .unwrap()
-    .join("weapon_stats.toml")
+    dirs::home_dir()
+        .unwrap()
+        .join(String::from_raw_parts(
+            prboom_dir.as_mut_ptr() as *mut u8,
+            prbdir_len,
+            prbdir_len,
+        ))
+        .join("weapon_stats.toml")
 }
 
 /// # Safety
