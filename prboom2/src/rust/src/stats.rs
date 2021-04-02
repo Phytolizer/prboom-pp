@@ -2,13 +2,21 @@
 #![deny(improper_ctypes_definitions)]
 
 use std::collections::HashMap;
+use std::fs;
 use std::mem::forget;
+use std::mem::size_of;
+use std::mem::size_of_val;
+use std::os::raw::c_char;
 use std::os::raw::c_int;
 use std::os::raw::c_ulong;
+use std::path::PathBuf;
 use std::ptr;
+use std::str::FromStr;
 
 use once_cell::sync::Lazy;
 use parking_lot::Mutex;
+use serde::Deserialize;
+use serde::Serialize;
 
 use crate::c::*;
 
@@ -35,7 +43,7 @@ impl Default for RawWeaponStats {
     }
 }
 
-#[derive(Debug)]
+#[derive(Debug, Serialize, Deserialize)]
 struct WeaponStats {
     kills: usize,
     enemies: HashMap<mobjtype_t, usize>,
@@ -64,6 +72,62 @@ static KILL_STATS: Lazy<Mutex<HashMap<weapontype_t, WeaponStats>>> = Lazy::new(|
 
     Mutex::new(map)
 });
+
+unsafe fn get_weapon_stats_filename() -> PathBuf {
+    let prbdir_len = size_of_val(&prboom_dir) / size_of::<*const c_char>();
+    PathBuf::from_str(&String::from_raw_parts(
+        prboom_dir.as_mut_ptr() as *mut u8,
+        prbdir_len,
+        prbdir_len,
+    ))
+    .unwrap()
+    .join("weapon_stats.toml")
+}
+
+/// # Safety
+/// This function just needs the prboom_dir value as a String.
+/// It's probably fine, as that is a constant.
+#[no_mangle]
+pub unsafe extern "C" fn load_weapon_stats() -> c_int {
+    let contents = match fs::read(get_weapon_stats_filename()) {
+        Ok(c) => c,
+        Err(e) => {
+            eprintln!("Couldn't read weapon stats: {}", e);
+            return 1;
+        }
+    };
+
+    *KILL_STATS.lock() = match toml::from_slice(&contents) {
+        Ok(ks) => ks,
+        Err(e) => {
+            eprintln!("Couldn't parse weapon stats: {}", e);
+            return 2;
+        }
+    };
+
+    0
+}
+
+/// # Safety
+/// This function just needs to get the prboom_dir value as a String. It's probably fine.
+#[no_mangle]
+pub unsafe extern "C" fn save_weapon_stats() -> c_int {
+    let contents = match toml::to_string_pretty(&*KILL_STATS.lock()) {
+        Ok(c) => c,
+        Err(_) => return 1,
+    };
+
+    if let Err(e) = fs::write(get_weapon_stats_filename(), contents) {
+        eprintln!(
+            "Couldn't write to {}: {}",
+            get_weapon_stats_filename().to_string_lossy(),
+            e
+        );
+        return 2;
+    }
+
+    0
+}
 
 #[no_mangle]
 pub extern "C" fn add_kill(weapon: weapontype_t, enemy: mobjtype_t) {

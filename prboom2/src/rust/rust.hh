@@ -135,6 +135,9 @@ void parse_sndinfo(bool heretic,
                    SoundInfo **buf,
                    unsigned long *buf_len);
 
+int load_weapon_stats();
+int save_weapon_stats();
+
 } // extern "C"
 
 } // namespace rust

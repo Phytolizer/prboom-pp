@@ -54,30 +54,30 @@ typedef BOOL(WINAPI *SetAffinityFunc)(HANDLE hProcess, DWORD mask);
 
 #include "TEXTSCREEN/txt_main.hh"
 
-#include "doomdef.hh"
-#include "m_argv.hh"
 #include "d_main.hh"
-#include "m_fixed.hh"
+#include "doomdef.hh"
 #include "i_system.hh"
 #include "i_video.hh"
+#include "m_argv.hh"
+#include "m_fixed.hh"
 
-#include "lprintf.hh"
-#include "m_random.hh"
 #include "doomstat.hh"
 #include "g_game.hh"
-#include "m_misc.hh"
-#include "i_sound.hh"
 #include "i_main.hh"
-#include "r_fps.hh"
+#include "i_sound.hh"
 #include "lprintf.hh"
+#include "m_misc.hh"
+#include "m_random.hh"
+#include "r_fps.hh"
+#include "rust/rust.hh"
 
 #include <csignal>
 #include <cstdio>
 #include <cstdlib>
 
-#include "e6y.hh"
 #include "dsda.hh"
 #include "dsda/settings.hh"
+#include "e6y.hh"
 
 /* Most of the following has been rewritten by Lee Killough
  *
@@ -391,6 +391,7 @@ static void I_Quit()
         {
             G_CheckDemoStatus();
         }
+        rust::save_weapon_stats();
         M_SaveDefaults();
         I_DemoExShutdown();
         dsda_WriteAnalysis();
@@ -551,6 +552,8 @@ int main(int argc, char **argv)
     // in some cases. Added checks to prevent this.
     // Example: glboom.exe -record mydemo -playdemo demoname
     ParamsMatchingCheck();
+
+    rust::load_weapon_stats();
 
     // e6y: was moved from D_DoomMainSetup
     // init subsystems
