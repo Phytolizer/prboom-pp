@@ -58,6 +58,22 @@ impl Default for WeaponStats {
     }
 }
 
+#[no_mangle]
+pub extern "C" fn weapon_name(weapon: weapontype_t) -> *const c_char {
+    match weapon {
+        0 => b"fist\0" as *const u8 as *const i8,
+        1 => b"pistol\0" as *const u8 as *const i8,
+        2 => b"shotgun\0" as *const u8 as *const i8,
+        3 => b"chaingun\0" as *const u8 as *const i8,
+        4 => b"rocket launcher\0" as *const u8 as *const i8,
+        5 => b"plasma rifle\0" as *const u8 as *const i8,
+        6 => b"BFG 9000\0" as *const u8 as *const i8,
+        7 => b"chainsaw\0" as *const u8 as *const i8,
+        8 => b"super shotgun\0" as *const u8 as *const i8,
+        _ => b"(invalid weapon)\0" as *const u8 as *const i8,
+    }
+}
+
 static KILL_STATS: Lazy<Mutex<HashMap<weapontype_t, WeaponStats>>> = Lazy::new(|| {
     let mut map = HashMap::new();
     map.insert(weapontype_t_wp_fist, WeaponStats::default());

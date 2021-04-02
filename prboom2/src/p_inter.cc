@@ -956,8 +956,9 @@ static void P_KillMobj(mobj_t *source, mobj_t *target)
             {
                 throw std::runtime_error{"Getting weapon stats failed!"};
             }
-            lprintf(LO_INFO, "Stats for weapon #%d: %lu total kills\n",
-                    source->player->readyweapon, stats.kills);
+            lprintf(LO_INFO, "Stats for %s: %lu total kills\n",
+                    rust::weapon_name(source->player->readyweapon),
+                    stats.kills);
             rust::cleanup_stats(&stats);
         }
     }

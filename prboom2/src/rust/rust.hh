@@ -138,6 +138,8 @@ void parse_sndinfo(bool heretic,
 int load_weapon_stats();
 int save_weapon_stats();
 
+const char *weapon_name(weapontype_t weapon);
+
 } // extern "C"
 
 } // namespace rust
