@@ -18,6 +18,7 @@ use std::os::raw::c_ulong;
 use std::process::exit;
 
 use nom::branch::alt;
+use nom::bytes::complete::take_till1;
 use nom::bytes::complete::take_while1;
 use nom::bytes::complete::{tag, take_while};
 use nom::character::complete::char;
@@ -166,7 +167,7 @@ pub unsafe extern "C" fn deallocate_rust_sound_info(ptr: *mut SoundInfo, len: c_
     drop(Vec::from_raw_parts(ptr, len as usize, len as usize));
 }
 
-unsafe fn sfx_for_sound(snd: &RustKey) -> Option<c::sfxenum_t> {
+fn sfx_for_sound(snd: &RustKey) -> Option<c::sfxenum_t> {
     match snd.class.as_str() {
         "weapons" => match snd.name.as_str() {
             s if s.starts_with("sshotl") => Some(c::sfxenum_t_sfx_dbload),
@@ -602,24 +603,23 @@ fn volume(text: &str) -> IResult<&str, Statement> {
     )(text)
 }
 
+fn bad_stmt(text: &str) -> IResult<&str, Statement> {
+    map(take_till1(|c| c == '\n'), |_| Statement::Ignored)(text)
+}
+
 fn sndinfo_parser(text: &str) -> IResult<&str, Vec<Statement>> {
     all_consuming(many0(terminated(
-        alt((non_if_stmt, if_stmt)),
+        alt((non_if_stmt, if_stmt, bad_stmt)),
         opt(any_whitespace),
     )))(text)
 }
 
-unsafe fn do_parse_sndinfo(text: String) -> SndInfo {
+fn do_parse_sndinfo(text: String) -> SndInfo {
     let text = text.replace("\r", "");
-    let (_, info) = sndinfo_parser(&text)
-        .map_err(|e| {
-            eprintln!("{}", e);
-            exit(1);
-        })
+    dbg!(sndinfo_parser(&text))
+        .ok()
+        .map(|(_, info)| SndInfo(info))
         .unwrap()
-        .clone();
-
-    SndInfo(info)
 }
 
 #[cfg(test)]
