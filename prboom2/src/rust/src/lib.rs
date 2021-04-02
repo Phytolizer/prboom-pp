@@ -621,25 +621,3 @@ fn do_parse_sndinfo(text: String) -> SndInfo {
         .map(|(_, info)| SndInfo(info))
         .unwrap()
 }
-
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn please_work() {
-        assert_eq!(
-            sound_stmt("misc/icebreak icebrk1a"),
-            Ok((
-                "",
-                Statement::Sound(
-                    RustKey {
-                        class: "misc".to_string(),
-                        name: "icebreak".to_string()
-                    },
-                    Lump("icebrk1a".to_string())
-                )
-            ))
-        );
-    }
-}
