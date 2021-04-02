@@ -502,6 +502,9 @@ char *I_FindFileInternal(const char *wfname, const char *ext, dboolean isStatic)
             {nullptr, "doom/iwad", "HOME"}, // ~/doom/iwad
             {nullptr, "doom/pwad", "HOME"}, // ~/doom/pwad
             {nullptr, nullptr, "HOME"},     // ~
+            {"/public/doom"},
+            {"/public/doom/iwad"},
+            {"/public/doom/pwad"},
             {"/usr/local/share/games/doom"},
             {"/usr/share/games/doom"},
             {"/usr/local/share/doom"},
