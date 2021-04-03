@@ -4310,7 +4310,7 @@ void M_LoadDefaults()
             for (c = 0; c < DSDA_INPUT_PROFILE_COUNT; ++c)
             {
                 dsda_InputSetSpecific(c, defaults[i].identifier,
-                                      defaults[i].inputs[dsda_input_profile]);
+                                      defaults[i].inputs[c]);
             }
         }
         else

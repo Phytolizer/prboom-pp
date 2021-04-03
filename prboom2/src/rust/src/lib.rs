@@ -656,7 +656,7 @@ struct Input {
 enum DefaultValue {
     Str { s: String },
     Int { i: i32 },
-    Arr { a: Vec<String> },
+    Arr { a: Vec<Vec<u8>> },
     Input { inp: Input },
 }
 
@@ -669,7 +669,14 @@ pub unsafe extern "C" fn load_defaults() -> c_int {
     for i in 0..c::numdefaults {
         println!("Hi i'm here");
         let default = *(c::defaults.as_ptr().offset(i as isize));
-        if default.type_ == c::default_s_type_t_def_str
+        if default.type_ == c::default_s_type_t_def_input {
+            for c in 0..(c::DSDA_INPUT_PROFILE_COUNT as i32) {
+                c::dsda_InputSetSpecific(c, default.identifier, default.inputs[c as usize]);
+            }
+        }
+        if default.location.pi != std::ptr::null_mut() {
+            *(default.location.pi) = default.defaultvalue.i;
+        } else if default.type_ == c::default_s_type_t_def_str
             && dbg!(default.location.ppsz) != std::ptr::null_mut()
         {
             println!(
@@ -679,7 +686,7 @@ pub unsafe extern "C" fn load_defaults() -> c_int {
                     c::strlen(default.name) as usize
                 ))
             );
-            *(default.location.ppsz) = default.defaultvalue.psz;
+            *(default.location.ppsz) = c::strdup(default.defaultvalue.psz);
         }
     }
 
@@ -733,6 +740,18 @@ pub unsafe extern "C" fn load_defaults() -> c_int {
         }
     }
 
+    *c::wad_files.as_mut_ptr() = c::I_FindFile(
+        c::WAD_DATA.as_ptr() as *const c_char,
+        CString::new("").unwrap().as_bytes_with_nul().as_ptr() as *const c_char,
+    );
+
+    if c::wad_files.as_ptr() == std::ptr::null() {
+        panic!(
+            "{} not found. Can't continue.",
+            std::str::from_utf8(c::WAD_DATA).unwrap()
+        );
+    }
+
     0
 }
 
@@ -767,14 +786,13 @@ pub unsafe extern "C" fn save_defaults() {
             .unwrap();
             defaults.insert(name.to_string(), DefaultValue::Str { s: s.to_string() });
         } else if default.type_ == c::default_s_type_t_def_arr {
-            let mut arr = Vec::<String>::with_capacity(default.defaultvalue.array_size as usize);
+            let mut arr = Vec::<Vec<u8>>::with_capacity(default.defaultvalue.array_size as usize);
             for j in 0..default.defaultvalue.array_size {
-                let s = std::str::from_utf8(std::slice::from_raw_parts(
+                let s = std::slice::from_raw_parts(
                     *default.defaultvalue.array_data.offset(j as isize) as *const u8,
                     c::strlen(*default.defaultvalue.array_data.offset(j as isize)) as usize,
-                ))
-                .unwrap();
-                arr.push(s.to_string());
+                ).to_vec();
+                arr.push(s);
             }
             defaults.insert(name.to_string(), DefaultValue::Arr { a: arr });
         } else if default.type_ == c::default_s_type_t_def_input {
