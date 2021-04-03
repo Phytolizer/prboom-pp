@@ -26,23 +26,23 @@ use nom::bytes::complete::take_while1;
 use nom::bytes::complete::{tag, take_while};
 use nom::character::complete::char;
 use nom::character::complete::one_of;
+use nom::combinator;
 use nom::combinator::all_consuming;
-use nom::combinator::{map, opt};
-use nom::multi::{many0, many1};
-use nom::sequence::{pair, preceded, terminated, tuple};
-use nom::{combinator, IResult};
+use nom::combinator::map;
+use nom::combinator::opt;
+use nom::multi::many0;
+use nom::multi::many1;
+use nom::sequence::pair;
+use nom::sequence::preceded;
+use nom::sequence::terminated;
+use nom::sequence::tuple;
+use nom::IResult;
+use once_cell::sync::Lazy;
 use serde::Deserialize;
 use serde::Serialize;
 
-// use pom::parser::is_a;
-// use pom::parser::one_of;
-// use pom::parser::Parser;
-// use pom::parser::sym;
-// use pom::parser::tag;
-//
 mod c;
 mod stats;
-use once_cell::sync::Lazy;
 pub use stats::*;
 
 static PRBOOM_DIR: Lazy<PathBuf> = Lazy::new(|| {
