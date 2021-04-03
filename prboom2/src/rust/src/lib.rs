@@ -709,23 +709,23 @@ pub unsafe extern "C" fn load_defaults() -> c_int {
                 let s = CString::new(s).unwrap();
                 let p = s.as_bytes_with_nul().as_ptr() as *const c_char;
                 mem::forget(s);
-                (*default).defaultvalue.psz = p;
+                *(*default).location.ppsz = p;
             }
             DefaultValue::Int { i } => {
-                (*default).defaultvalue.i = i;
+                *(*default).location.pi = i;
             }
             DefaultValue::Arr { a } => {
-                let mut ptrs = Vec::<*const c_char>::new();
-                for elem in a {
-                    let p = elem.as_ptr() as *const c_char;
+                let mut ptrs = Vec::<*mut c_char>::new();
+                for mut elem in a {
+                    let p = elem.as_mut_ptr() as *mut c_char;
                     mem::forget(elem);
                     ptrs.push(p);
                 }
-                let p = ptrs.as_ptr();
+                let p = ptrs.as_mut_ptr();
                 let l = ptrs.len();
                 mem::forget(ptrs);
-                (*default).defaultvalue.array_data = p;
-                (*default).defaultvalue.array_size = l as i32;
+                *(*default).location.array_data = p;
+                *(*default).location.array_size = l as i32;
             }
             DefaultValue::Input { inp } => {
                 for (i, p) in [inp.profile0, inp.profile1, inp.profile2]
@@ -775,13 +775,13 @@ pub unsafe extern "C" fn save_defaults() {
             defaults.insert(
                 name.to_string(),
                 DefaultValue::Int {
-                    i: default.defaultvalue.i,
+                    i: *default.location.pi,
                 },
             );
         } else if default.type_ == c::default_s_type_t_def_str {
             let s = std::str::from_utf8(std::slice::from_raw_parts(
-                default.defaultvalue.psz as *const u8,
-                c::strlen(default.defaultvalue.psz) as usize,
+                *default.location.ppsz as *const u8,
+                c::strlen(*default.location.ppsz) as usize,
             ))
             .unwrap();
             defaults.insert(name.to_string(), DefaultValue::Str { s: s.to_string() });
@@ -789,9 +789,10 @@ pub unsafe extern "C" fn save_defaults() {
             let mut arr = Vec::<Vec<u8>>::with_capacity(default.defaultvalue.array_size as usize);
             for j in 0..default.defaultvalue.array_size {
                 let s = std::slice::from_raw_parts(
-                    *default.defaultvalue.array_data.offset(j as isize) as *const u8,
-                    c::strlen(*default.defaultvalue.array_data.offset(j as isize)) as usize,
-                ).to_vec();
+                    *(*default.location.array_data).offset(j as isize) as *const u8,
+                    c::strlen(*(*default.location.array_data).offset(j as isize)) as usize,
+                )
+                .to_vec();
                 arr.push(s);
             }
             defaults.insert(name.to_string(), DefaultValue::Arr { a: arr });
