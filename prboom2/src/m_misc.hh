@@ -35,7 +35,7 @@
 #ifndef __M_MISC__
 #define __M_MISC__
 
-#include <cstdint>
+#include <stddef.h>
 
 #include "doomtype.hh"
 
@@ -45,7 +45,7 @@
 // MISC
 //
 
-dboolean M_WriteFile(char const *name, const void *source, std::size_t length);
+dboolean M_WriteFile(char const *name, const void *source, size_t length);
 
 int M_ReadFile(char const *name, byte **buffer);
 
@@ -92,7 +92,7 @@ typedef struct default_s
         const char *psz = nullptr;
         // e6y: arrays
         int array_size = 0;
-        const char **array_data = nullptr;
+        const char *const *array_data = nullptr;
     } defaultvalue; // CPhipps - default value
     // Limits (for an int)
     int minvalue; // jff 3/3/98 minimum allowed value
@@ -118,7 +118,7 @@ typedef struct default_s
 
     // composite input
     int identifier = 0;
-    dsda_input_default_t input{};
+    dsda_input_default_t inputs[3] = {{}, {}, {}};
 } default_t;
 
 #define IS_STRING(dv) ((dv).type == default_t::def_str)
@@ -136,6 +136,14 @@ char *M_Strlwr(char *str);
 char *M_Strupr(char *str);
 char *M_StrRTrim(char *str);
 
+enum default_e
+{
+};
+
+void M_CountDefaults();
+
 extern const char *screenshot_dir;
+extern int numdefaults;
+extern default_t defaults[];
 
 #endif

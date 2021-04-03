@@ -34,12 +34,13 @@
  *-----------------------------------------------------------------------------*/
 
 #include "doomdef.hh"
+#include "dsda/input.hh"
 #ifdef HAVE_CONFIG_H
 #include "config.h"
 #endif
 
-#include <cstdio>
 #include <cerrno>
+#include <cstdio>
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif
@@ -49,38 +50,38 @@
 #include <fcntl.h>
 #include <sys/stat.h>
 
-#include "cpp/settings.hh"
-#include "doomstat.hh"
-#include "m_argv.hh"
-#include "g_game.hh"
-#include "m_menu.hh"
 #include "am_map.hh"
-#include "w_wad.hh"
-#include "i_system.hh"
-#include "i_sound.hh"
-#include "i_video.hh"
-#include "v_video.hh"
-#include "hu_stuff.hh"
-#include "st_stuff.hh"
-#include "dstrings.hh"
-#include "m_misc.hh"
-#include "s_sound.hh"
-#include "sounds.hh"
-#include "i_joy.hh"
-#include "lprintf.hh"
-#include "d_main.hh"
+#include "cpp/settings.hh"
 #include "d_deh.hh"
-#include "r_draw.hh"
+#include "d_main.hh"
+#include "doomstat.hh"
+#include "dstrings.hh"
+#include "g_game.hh"
+#include "hu_stuff.hh"
+#include "i_joy.hh"
+#include "i_sound.hh"
+#include "i_system.hh"
+#include "i_video.hh"
+#include "lprintf.hh"
+#include "m_argv.hh"
+#include "m_menu.hh"
+#include "m_misc.hh"
 #include "r_demo.hh"
+#include "r_draw.hh"
 #include "r_fps.hh"
 #include "r_main.hh"
-#include "r_things.hh"
 #include "r_sky.hh"
+#include "r_things.hh"
+#include "s_sound.hh"
+#include "sounds.hh"
+#include "st_stuff.hh"
+#include "v_video.hh"
+#include "w_wad.hh"
 
 // e6y
-#include "gl_struct.hh"
-#include "g_overflow.hh"
 #include "e6y.hh"
+#include "g_overflow.hh"
+#include "gl_struct.hh"
 #ifdef USE_WINDOWS_LAUNCHER
 #include "e6y_launcher.hh"
 #endif
@@ -4123,6 +4124,11 @@ default_t defaults[] = {
 int numdefaults;
 static char *defaultfile; // CPhipps - static, const
 
+void M_CountDefaults()
+{
+    numdefaults = sizeof(defaults) / sizeof(default_t);
+}
+
 //
 // M_SaveDefaults
 //
@@ -4304,7 +4310,7 @@ void M_LoadDefaults()
             for (c = 0; c < DSDA_INPUT_PROFILE_COUNT; ++c)
             {
                 dsda_InputSetSpecific(c, defaults[i].identifier,
-                                      defaults[i].input);
+                                      defaults[i].inputs[dsda_input_profile]);
             }
         }
         else
@@ -4374,7 +4380,7 @@ void M_LoadDefaults()
 
     // check for a custom default file
 
-#define BOOM_CFG "prboom-pp.cfg"
+#define BOOM_CFG "prboom++.cfg"
 
     i = M_CheckParm("-config");
     if (i && i < myargc - 1)

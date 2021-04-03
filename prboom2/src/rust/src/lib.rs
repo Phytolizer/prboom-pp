@@ -12,9 +12,12 @@
 
 use std::collections::HashMap;
 use std::ffi::CString;
+use std::fs;
+use std::mem;
 use std::os::raw::c_char;
 use std::os::raw::c_int;
 use std::os::raw::c_ulong;
+use std::path::PathBuf;
 use std::process::exit;
 
 use nom::branch::alt;
@@ -28,6 +31,8 @@ use nom::combinator::{map, opt};
 use nom::multi::{many0, many1};
 use nom::sequence::{pair, preceded, terminated, tuple};
 use nom::{combinator, IResult};
+use serde::Deserialize;
+use serde::Serialize;
 
 // use pom::parser::is_a;
 // use pom::parser::one_of;
@@ -37,7 +42,17 @@ use nom::{combinator, IResult};
 //
 mod c;
 mod stats;
+use once_cell::sync::Lazy;
 pub use stats::*;
+
+static PRBOOM_DIR: Lazy<PathBuf> = Lazy::new(|| {
+    let len = unsafe { c::strlen(c::prboom_dir.as_ptr()) };
+    let suffix = dbg!(std::str::from_utf8(unsafe {
+        std::slice::from_raw_parts(c::prboom_dir.as_ptr() as *const u8, len as usize)
+    }))
+    .unwrap();
+    dirs::home_dir().unwrap().join(&suffix[1..])
+});
 
 #[repr(C)]
 #[derive(Clone, Copy)]
@@ -620,4 +635,187 @@ fn do_parse_sndinfo(text: String) -> SndInfo {
         .ok()
         .map(|(_, info)| SndInfo(info))
         .unwrap()
+}
+
+#[derive(Debug, Clone, Copy, Serialize, Deserialize)]
+struct InputProfile {
+    key: i32,
+    mouseb: i32,
+    joyb: i32,
+}
+
+#[derive(Debug, Serialize, Deserialize)]
+struct Input {
+    profile0: InputProfile,
+    profile1: InputProfile,
+    profile2: InputProfile,
+}
+
+#[derive(Debug, Serialize, Deserialize)]
+#[serde(tag = "type")]
+enum DefaultValue {
+    Str { s: String },
+    Int { i: i32 },
+    Arr { a: Vec<String> },
+    Input { inp: Input },
+}
+
+/// # Safety
+/// This function's safety relies on that of M_LookupDefault.
+/// Otherwise, it is safe.
+#[no_mangle]
+pub unsafe extern "C" fn load_defaults() -> c_int {
+    // first, initialize the defaults to some appropriate value
+    for i in 0..c::numdefaults {
+        println!("Hi i'm here");
+        let default = *(c::defaults.as_ptr().offset(i as isize));
+        if default.type_ == c::default_s_type_t_def_str
+            && dbg!(default.location.ppsz) != std::ptr::null_mut()
+        {
+            println!(
+                "Fixing {}",
+                std::str::from_utf8_unchecked(std::slice::from_raw_parts(
+                    default.name as *const u8,
+                    c::strlen(default.name) as usize
+                ))
+            );
+            *(default.location.ppsz) = default.defaultvalue.psz;
+        }
+    }
+
+    let contents = match fs::read(PRBOOM_DIR.join("prboom++.toml")) {
+        Ok(c) => c,
+        Err(_) => return 1,
+    };
+    let defaults: HashMap<String, DefaultValue> = match toml::from_slice(&contents) {
+        Ok(d) => d,
+        Err(_) => return 2,
+    };
+
+    for (name, value) in defaults {
+        let default = c::M_LookupDefault(
+            CString::new(name).unwrap().as_bytes_with_nul().as_ptr() as *const c_char
+        );
+
+        match value {
+            DefaultValue::Str { s } => {
+                let s = CString::new(s).unwrap();
+                let p = s.as_bytes_with_nul().as_ptr() as *const c_char;
+                mem::forget(s);
+                (*default).defaultvalue.psz = p;
+            }
+            DefaultValue::Int { i } => {
+                (*default).defaultvalue.i = i;
+            }
+            DefaultValue::Arr { a } => {
+                let mut ptrs = Vec::<*const c_char>::new();
+                for elem in a {
+                    let p = elem.as_ptr() as *const c_char;
+                    mem::forget(elem);
+                    ptrs.push(p);
+                }
+                let p = ptrs.as_ptr();
+                let l = ptrs.len();
+                mem::forget(ptrs);
+                (*default).defaultvalue.array_data = p;
+                (*default).defaultvalue.array_size = l as i32;
+            }
+            DefaultValue::Input { inp } => {
+                for (i, p) in [inp.profile0, inp.profile1, inp.profile2]
+                    .iter()
+                    .enumerate()
+                {
+                    (*default).inputs[i].key = p.key;
+                    (*default).inputs[i].mouseb = p.mouseb;
+                    (*default).inputs[i].joyb = p.joyb;
+                }
+            }
+        }
+    }
+
+    0
+}
+
+/// # Safety
+/// This function reads lots of raw C structs.
+#[no_mangle]
+pub unsafe extern "C" fn save_defaults() {
+    let mut defaults = HashMap::<String, DefaultValue>::new();
+    for i in 0..c::numdefaults {
+        let default = *c::defaults.as_ptr().offset(i as isize);
+        let name = std::str::from_utf8(std::slice::from_raw_parts(
+            default.name as *const u8,
+            c::strlen(default.name) as usize,
+        ))
+        .unwrap();
+        if default.type_ == c::default_s_type_t_def_int
+            || default.type_ == c::default_s_type_t_def_hex
+            || default.type_ == c::default_s_type_t_def_bool
+            || default.type_ == c::default_s_type_t_def_colour
+        {
+            defaults.insert(
+                name.to_string(),
+                DefaultValue::Int {
+                    i: default.defaultvalue.i,
+                },
+            );
+        } else if default.type_ == c::default_s_type_t_def_str {
+            let s = std::str::from_utf8(std::slice::from_raw_parts(
+                default.defaultvalue.psz as *const u8,
+                c::strlen(default.defaultvalue.psz) as usize,
+            ))
+            .unwrap();
+            defaults.insert(name.to_string(), DefaultValue::Str { s: s.to_string() });
+        } else if default.type_ == c::default_s_type_t_def_arr {
+            let mut arr = Vec::<String>::with_capacity(default.defaultvalue.array_size as usize);
+            for j in 0..default.defaultvalue.array_size {
+                let s = std::str::from_utf8(std::slice::from_raw_parts(
+                    *default.defaultvalue.array_data.offset(j as isize) as *const u8,
+                    c::strlen(*default.defaultvalue.array_data.offset(j as isize)) as usize,
+                ))
+                .unwrap();
+                arr.push(s.to_string());
+            }
+            defaults.insert(name.to_string(), DefaultValue::Arr { a: arr });
+        } else if default.type_ == c::default_s_type_t_def_input {
+            let mut input = Input {
+                profile0: InputProfile {
+                    key: -1,
+                    mouseb: -1,
+                    joyb: -1,
+                },
+                profile1: InputProfile {
+                    key: -1,
+                    mouseb: -1,
+                    joyb: -1,
+                },
+                profile2: InputProfile {
+                    key: -1,
+                    mouseb: -1,
+                    joyb: -1,
+                },
+            };
+            let profiles = [
+                &mut input.profile0,
+                &mut input.profile1,
+                &mut input.profile2,
+            ];
+            for j in 0..3 {
+                profiles[j as usize].key = default.inputs[j as usize].key;
+                profiles[j as usize].mouseb = default.inputs[j as usize].mouseb;
+                profiles[j as usize].joyb = default.inputs[j as usize].joyb;
+            }
+            defaults.insert(name.to_string(), DefaultValue::Input { inp: input });
+        }
+    }
+    fs::write(
+        PRBOOM_DIR.join("prboom++.toml"),
+        toml::to_string_pretty(&defaults)
+            .map_err(|e| {
+                panic!("Error serializing defaults: {}", e);
+            })
+            .unwrap()
+            .as_bytes(),
+    )
+    .unwrap();
 }

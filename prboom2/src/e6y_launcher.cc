@@ -33,26 +33,27 @@
 
 #ifdef _WIN32
 #define WIN32_LEAN_AND_MEAN
-#include <windows.h>
-#include <direct.h>
 #include <commctrl.h>
+#include <direct.h>
+#include <windows.h>
 
-#include "doomtype.hh"
-#include "w_wad.hh"
-#include "doomstat.hh"
-#include "lprintf.hh"
-#include "d_main.hh"
-#include "m_misc.hh"
-#include "i_system.hh"
-#include "m_argv.hh"
-#include "i_main.hh"
 #include ".\..\ICONS\resource.h"
+#include "d_main.hh"
+#include "doomstat.hh"
+#include "doomtype.hh"
+#include "i_main.hh"
+#include "i_system.hh"
+#include "lprintf.hh"
+#include "m_argv.hh"
+#include "m_misc.hh"
+#include "rust/rust.hh"
+#include "w_wad.hh"
 #ifdef HAVE_LIBPCREPOSIX
 #include "pcreposix.hh"
 #endif /* HAVE_LIBPCREPOSIX */
-#include "r_demo.hh"
 #include "e6y.hh"
 #include "e6y_launcher.hh"
+#include "r_demo.hh"
 
 #pragma comment(lib, "comctl32.lib")
 #pragma comment(lib, "advapi32.lib")
@@ -390,7 +391,8 @@ static void L_CommandOnChange(void)
 
             strcpy((char *)history->location.ppsz[0], "");
         }
-        M_SaveDefaults();
+        // M_SaveDefaults();
+        rust::save_defaults();
         L_FillHistoryList();
         SendMessage(launcher.listHistory, CB_SETCURSEL, -1, 0);
 
@@ -467,7 +469,8 @@ static void L_CommandOnChange(void)
             strcat(buf, " this Launcher for future use");
             SendMessage(launcher.listCMD, CB_INSERTSTRING, index, (LPARAM)buf);
 
-            M_SaveDefaults();
+            // M_SaveDefaults();
+            rust::save_defaults();
             sprintf(buf, "Successfully %s",
                     (launcher_enable != launcher_enable_never ? "enabled"
                                                               : "disabled"));
@@ -1592,7 +1595,8 @@ void LauncherShow(unsigned int params)
         I_SafeExit(-1);
         break;
     case 1:
-        M_SaveDefaults();
+        // M_SaveDefaults();
+        rust::save_defaults();
         break;
     }
 }

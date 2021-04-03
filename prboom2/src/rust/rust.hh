@@ -140,6 +140,9 @@ int save_weapon_stats();
 
 const char *weapon_name(weapontype_t weapon);
 
+int load_defaults();
+void save_defaults();
+
 } // extern "C"
 
 } // namespace rust

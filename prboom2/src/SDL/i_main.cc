@@ -60,6 +60,7 @@ typedef BOOL(WINAPI *SetAffinityFunc)(HANDLE hProcess, DWORD mask);
 #include "i_video.hh"
 #include "m_argv.hh"
 #include "m_fixed.hh"
+#include "m_misc.hh"
 
 #include "doomstat.hh"
 #include "g_game.hh"
@@ -392,7 +393,8 @@ static void I_Quit()
             G_CheckDemoStatus();
         }
         rust::save_weapon_stats();
-        M_SaveDefaults();
+        // M_SaveDefaults();
+        rust::save_defaults();
         I_DemoExShutdown();
         dsda_WriteAnalysis();
     }
@@ -560,6 +562,8 @@ int main(int argc, char **argv)
     // jff 9/3/98 use logical output routine
     lprintf(LO_INFO, "M_LoadDefaults: Load system defaults.\n");
     M_LoadDefaults(); // load before initing other systems
+    M_CountDefaults();
+    rust::load_defaults();
 
     /* Version info */
     lprintf(LO_INFO, "\n");

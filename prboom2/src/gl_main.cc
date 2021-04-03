@@ -33,6 +33,7 @@
  *---------------------------------------------------------------------
  */
 
+#include "rust/rust.hh"
 #ifdef HAVE_CONFIG_H
 #include "config.h"
 #endif
@@ -277,10 +278,9 @@ void gld_MultisamplingCheck()
         SDL_GL_GetAttribute(SDL_GL_MULTISAMPLESAMPLES, &test);
         if (test != render_multisampling)
         {
-            void M_SaveDefaults();
             int i = render_multisampling;
             render_multisampling = 0;
-            M_SaveDefaults();
+            rust::save_defaults();
             I_Error("Couldn't set %dX multisamples for %dx%d video mode", i,
                     SCREENWIDTH, SCREENHEIGHT);
         }

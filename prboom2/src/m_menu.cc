@@ -5715,7 +5715,8 @@ static void M_ResetDefaults()
                     {
                         if (dp->identifier == p->input)
                         {
-                            dsda_InputSet(dp->identifier, dp->input);
+                            dsda_InputSet(dp->identifier,
+                                          dp->inputs[dsda_input_profile]);
 
                             goto end;
                         }

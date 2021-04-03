@@ -18,8 +18,8 @@
 #ifndef __DSDA_INPUT__
 #define __DSDA_INPUT__
 
-#include "doomtype.hh"
-#include "d_event.hh"
+#include "../d_event.hh"
+#include "../doomtype.hh"
 
 #define DSDA_INPUT_PROFILE_COUNT 3
 #define NUMKEYS 512

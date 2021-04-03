@@ -35,8 +35,9 @@
  *-----------------------------------------------------------------------------
  */
 
-#include <cstdio>
+#include "rust/rust.hh"
 #include <cstdarg>
+#include <cstdio>
 #include <cstdlib>
 #ifdef _MSC_VER
 #include <io.h>
@@ -4819,7 +4820,8 @@ dboolean G_CheckDemoStatus()
         // killough -- added fps information and made it work for longer demos:
         unsigned realtics = endtime - starttime;
 
-        M_SaveDefaults();
+        // M_SaveDefaults();
+        rust::save_defaults();
 
         lprintf(LO_INFO,
                 "Timed %u gametics in %u realtics = %-.1f frames per second\n",
