@@ -637,9 +637,9 @@ fn do_parse_sndinfo(text: String) -> SndInfo {
         .unwrap()
 }
 
-#[derive(Debug, Clone, Copy, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 struct InputProfile {
-    key: i32,
+    key: Vec<i32>,
     mouseb: i32,
     joyb: i32,
 }
@@ -732,9 +732,12 @@ pub unsafe extern "C" fn load_defaults() -> c_int {
                     .iter()
                     .enumerate()
                 {
-                    (*default).inputs[i].key = p.key;
-                    (*default).inputs[i].mouseb = p.mouseb;
-                    (*default).inputs[i].joyb = p.joyb;
+                    c::dsda_InputResetSpecific(i as i32, (*default).identifier);
+                    c::dsda_InputAddSpecificMouseB(i as i32, (*default).identifier, p.mouseb);
+                    c::dsda_InputAddSpecificJoyB(i as i32, (*default).identifier, p.joyb);
+                    for key in p.key.iter().cloned() {
+                        c::dsda_InputAddSpecificKey(i as i32, (*default).identifier, key);
+                    }
                 }
             }
         }
@@ -799,17 +802,17 @@ pub unsafe extern "C" fn save_defaults() {
         } else if default.type_ == c::default_s_type_t_def_input {
             let mut input = Input {
                 profile0: InputProfile {
-                    key: -1,
+                    key: vec![-1],
                     mouseb: -1,
                     joyb: -1,
                 },
                 profile1: InputProfile {
-                    key: -1,
+                    key: vec![-1],
                     mouseb: -1,
                     joyb: -1,
                 },
                 profile2: InputProfile {
-                    key: -1,
+                    key: vec![-1],
                     mouseb: -1,
                     joyb: -1,
                 },
@@ -820,7 +823,15 @@ pub unsafe extern "C" fn save_defaults() {
                 &mut input.profile2,
             ];
             for j in 0..3 {
-                profiles[j as usize].key = default.inputs[j as usize].key;
+                let raw_input = *(*c::dsda_input.as_ptr().offset(j as isize))
+                    .as_ptr()
+                    .offset(default.identifier as isize);
+                let keys = Vec::from_raw_parts(
+                    raw_input.key,
+                    raw_input.num_keys as usize,
+                    raw_input.num_keys as usize,
+                );
+                profiles[j as usize].key = keys;
                 profiles[j as usize].mouseb = default.inputs[j as usize].mouseb;
                 profiles[j as usize].joyb = default.inputs[j as usize].joyb;
             }

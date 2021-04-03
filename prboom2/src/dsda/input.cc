@@ -21,8 +21,7 @@
 #include "input.hh"
 
 int dsda_input_profile = 0;
-static dsda_input_t dsda_input[DSDA_INPUT_PROFILE_COUNT]
-                              [DSDA_INPUT_IDENTIFIER_COUNT];
+dsda_input_t dsda_input[DSDA_INPUT_PROFILE_COUNT][DSDA_INPUT_IDENTIFIER_COUNT];
 
 using dsda_input_state_t = struct
 {

@@ -206,4 +206,7 @@ dboolean dsda_InputMouseBActive(int identifier);
 dboolean dsda_InputJoyBActive(int identifier);
 void dsda_InputCycleProfile();
 
+extern dsda_input_t dsda_input[DSDA_INPUT_PROFILE_COUNT]
+                              [DSDA_INPUT_IDENTIFIER_COUNT];
+
 #endif
