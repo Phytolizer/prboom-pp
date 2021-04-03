@@ -47,9 +47,9 @@ pub use stats::*;
 
 static PRBOOM_DIR: Lazy<PathBuf> = Lazy::new(|| {
     let len = unsafe { c::strlen(c::prboom_dir.as_ptr()) };
-    let suffix = dbg!(std::str::from_utf8(unsafe {
+    let suffix = std::str::from_utf8(unsafe {
         std::slice::from_raw_parts(c::prboom_dir.as_ptr() as *const u8, len as usize)
-    }))
+    })
     .unwrap();
     dirs::home_dir().unwrap().join(&suffix[1..])
 });
@@ -631,7 +631,7 @@ fn sndinfo_parser(text: &str) -> IResult<&str, Vec<Statement>> {
 
 fn do_parse_sndinfo(text: String) -> SndInfo {
     let text = text.replace("\r", "");
-    dbg!(sndinfo_parser(&text))
+    sndinfo_parser(&text)
         .ok()
         .map(|(_, info)| SndInfo(info))
         .unwrap()
@@ -667,7 +667,6 @@ enum DefaultValue {
 pub unsafe extern "C" fn load_defaults() -> c_int {
     // first, initialize the defaults to some appropriate value
     for i in 0..c::numdefaults {
-        println!("Hi i'm here");
         let default = *(c::defaults.as_ptr().offset(i as isize));
         if default.type_ == c::default_s_type_t_def_input {
             for c in 0..(c::DSDA_INPUT_PROFILE_COUNT as i32) {
@@ -677,7 +676,7 @@ pub unsafe extern "C" fn load_defaults() -> c_int {
         if default.location.pi != std::ptr::null_mut() {
             *(default.location.pi) = default.defaultvalue.i;
         } else if default.type_ == c::default_s_type_t_def_str
-            && dbg!(default.location.ppsz) != std::ptr::null_mut()
+            && default.location.ppsz != std::ptr::null_mut()
         {
             println!(
                 "Fixing {}",
@@ -802,17 +801,17 @@ pub unsafe extern "C" fn save_defaults() {
         } else if default.type_ == c::default_s_type_t_def_input {
             let mut input = Input {
                 profile0: InputProfile {
-                    key: vec![-1],
+                    key: vec![],
                     mouseb: -1,
                     joyb: -1,
                 },
                 profile1: InputProfile {
-                    key: vec![-1],
+                    key: vec![],
                     mouseb: -1,
                     joyb: -1,
                 },
                 profile2: InputProfile {
-                    key: vec![-1],
+                    key: vec![],
                     mouseb: -1,
                     joyb: -1,
                 },
