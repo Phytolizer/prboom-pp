@@ -702,6 +702,9 @@ pub unsafe extern "C" fn load_defaults() -> c_int {
         let default = c::M_LookupDefault(
             CString::new(name).unwrap().as_bytes_with_nul().as_ptr() as *const c_char
         );
+        if default == std::ptr::null_mut() {
+            continue;
+        }
 
         match value {
             DefaultValue::Str { s } => {
