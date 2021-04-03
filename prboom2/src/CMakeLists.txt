@@ -443,8 +443,6 @@ function(AddGameExecutable TARGET SOURCES)
 endfunction()
 
 corrosion_import_crate(MANIFEST_PATH rust/Cargo.toml)
-corrosion_import_crate(MANIFEST_PATH sounds_generator/Cargo.toml)
-target_include_directories(sounds_generator INTERFACE ${CMAKE_CURRENT_SOURCE_DIR})
 target_include_directories(rust INTERFACE ${CMAKE_CURRENT_SOURCE_DIR})
 
 AddGameExecutable(prboom++ "${PRBOOM_PLUS_SOURCES}")
