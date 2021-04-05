@@ -1,0 +1,2 @@
+[workspace]
+members = ["prboom2/src/rust"]
