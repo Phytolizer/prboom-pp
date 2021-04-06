@@ -33,7 +33,7 @@
  *---------------------------------------------------------------------
  */
 
-#include "rust/rust.hh"
+#include "misc/rust.hh"
 #ifdef HAVE_CONFIG_H
 #include "config.h"
 #endif

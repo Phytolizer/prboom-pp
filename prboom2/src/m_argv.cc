@@ -48,12 +48,12 @@ char **myargv;
 // or 0 if not present
 //
 
-int M_CheckParm(const char *check)
+int M_CheckParm(const std::string &check)
 {
     signed int i = myargc;
     while (--i > 0)
     {
-        if (!strcasecmp(check, myargv[i]))
+        if (!strcasecmp(check.c_str(), myargv[i]))
         {
             return i;
         }

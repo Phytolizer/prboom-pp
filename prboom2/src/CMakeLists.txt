@@ -11,6 +11,8 @@ endfunction()
 set(COMMON_SRC
         am_map.cc
         am_map.hh
+        cheater/lib.rs.cc
+        cheater/lib.rs.h
         cpp/chars.cc
         cpp/chars.hh
         cpp/settings.cc
@@ -442,11 +444,11 @@ function(AddGameExecutable TARGET SOURCES)
     endif ()
 endfunction()
 
-corrosion_import_crate(MANIFEST_PATH rust/Cargo.toml)
-target_include_directories(rust INTERFACE ${CMAKE_CURRENT_SOURCE_DIR})
-
 AddGameExecutable(prboom++ "${PRBOOM_PLUS_SOURCES}")
-target_link_libraries(prboom++ PRIVATE rust)
+
+corrosion_import_crate(MANIFEST_PATH misc/Cargo.toml)
+target_link_libraries(prboom++ PRIVATE misc)
+target_link_libraries(prboom++ PRIVATE cheater)
 
 
 # PrBoom-Plus server executable

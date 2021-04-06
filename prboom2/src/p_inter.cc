@@ -46,9 +46,9 @@
 #include "dsda.hh"
 #include "e6y.hh" //e6y
 #include "hu_tracers.hh"
+#include "misc/rust.hh"
 #include "p_enemy.hh"
 #include "p_inter.hh"
-#include "rust/rust.hh"
 
 #include "heretic/def.hh"
 #include "heretic/sb_bar.hh"

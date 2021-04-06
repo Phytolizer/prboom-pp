@@ -31,18 +31,19 @@
  *
  *-----------------------------------------------------------------------------*/
 
+#include "m_cheat.hh"
+#include "cheater/lib.rs.h"
+#include "d_deh.hh" // Ty 03/27/98 - externalized strings
 #include "doomstat.hh"
 #include "g_game.hh"
-#include "r_data.hh"
-#include "p_inter.hh"
-#include "p_tick.hh"
-#include "m_cheat.hh"
 #include "m_argv.hh"
+#include "p_inter.hh"
+#include "p_map.hh"
+#include "p_tick.hh"
+#include "r_data.hh"
+#include "r_main.hh"
 #include "s_sound.hh"
 #include "sounds.hh"
-#include "r_main.hh"
-#include "p_map.hh"
-#include "d_deh.hh" // Ty 03/27/98 - externalized strings
 /* cph 2006/07/23 - needs direct access to thinkercap */
 #include "w_wad.hh"
 
@@ -62,7 +63,7 @@ static int boom_cheat_route[MAX_COMPATIBILITY_LEVEL];
 
 static void cheat_mus(char *buf);
 static void cheat_choppers();
-static void cheat_god();
+void cheat_god();
 static void cheat_fa();
 static void cheat_k();
 static void cheat_kfa();
@@ -270,7 +271,7 @@ static void cheat_choppers()
     plyr->message = s_STSTR_CHOPPERS; // Ty 03/27/98 - externalized
 }
 
-static void cheat_god()
+void cheat_god()
 { // 'dqd' cheat for toggleable god mode
     // dead players are first respawned at the current position
     if (plyr->playerstate == PST_DEAD)
@@ -987,7 +988,7 @@ dboolean M_FindCheats(int key)
         return M_FindCheats_Boom(key);
     }
 
-    return M_FindCheats_Doom(key);
+    return M_FindCheats_Doom(key) || apply_cheats();
 }
 
 using cheat_input_t = struct cheat_input_s

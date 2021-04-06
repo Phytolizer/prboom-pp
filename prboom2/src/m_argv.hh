@@ -34,6 +34,8 @@
 #ifndef __M_ARGV__
 #define __M_ARGV__
 
+#include <string>
+
 /*
  * MISC
  */
@@ -42,7 +44,7 @@ extern char **myargv;
 
 /* Returns the position of the given parameter in the arg list (0 if not found).
  */
-int M_CheckParm(const char *check);
+int M_CheckParm(const std::string &check);
 
 /* Returns the position of the given parameter in the params list (-1 if not
  * found). */

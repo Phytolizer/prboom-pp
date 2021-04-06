@@ -1,9 +1,9 @@
 #include "sndinfo.hh"
-#include "rust/rust.hh"
 #include "doomstat.hh"
+#include "m_argv.hh"
+#include "misc/rust.hh"
 #include "sounds.hh"
 #include "w_wad.hh"
-#include "m_argv.hh"
 #include <iostream>
 #include <map>
 

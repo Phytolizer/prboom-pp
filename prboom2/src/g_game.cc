@@ -35,7 +35,7 @@
  *-----------------------------------------------------------------------------
  */
 
-#include "rust/rust.hh"
+#include "misc/rust.hh"
 #include <cstdarg>
 #include <cstdio>
 #include <cstdlib>

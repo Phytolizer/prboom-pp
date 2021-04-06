@@ -1,7 +1,7 @@
 #pragma once
 
+#include "misc/rust.hh"
 #include <vector>
-#include "rust/rust.hh"
 
 namespace sndinfo
 {

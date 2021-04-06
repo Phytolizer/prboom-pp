@@ -69,8 +69,8 @@ typedef BOOL(WINAPI *SetAffinityFunc)(HANDLE hProcess, DWORD mask);
 #include "lprintf.hh"
 #include "m_misc.hh"
 #include "m_random.hh"
+#include "misc/rust.hh"
 #include "r_fps.hh"
-#include "rust/rust.hh"
 
 #include <csignal>
 #include <cstdio>
