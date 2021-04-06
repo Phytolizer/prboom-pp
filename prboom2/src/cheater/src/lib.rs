@@ -12,8 +12,8 @@ mod ffi {
     }
 
     extern "C++" {
-        include!("../m_cheat.hh");
-        include!("../m_argv.hh");
+        include!("cheater/../m_cheat.hh");
+        include!("cheater/../m_argv.hh");
 
         unsafe fn M_CheckParm(parm: &CxxString) -> i32;
         unsafe fn cheat_god();

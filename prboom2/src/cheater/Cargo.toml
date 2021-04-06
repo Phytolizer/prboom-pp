@@ -13,3 +13,6 @@ crate-type = ["staticlib"]
 cxx = "1.0"
 parking_lot = "0.11"
 once_cell = "1.7"
+
+[build-dependencies]
+cxx-build = "1.0"
