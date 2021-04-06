@@ -34,30 +34,32 @@
 
 #include <cmath>
 
+#include "am_map.hh"
+#include "cheater/lib.rs.h"
 #include "doomstat.hh"
-#include "m_bbox.hh"
-#include "m_argv.hh"
+#include "dsda.hh"
+#include "e6y.hh" //e6y
 #include "g_game.hh"
-#include "w_wad.hh"
-#include "r_main.hh"
-#include "r_things.hh"
-#include "p_maputl.hh"
+#include "g_overflow.hh"
+#include "hu_tracers.hh"
+#include "lprintf.hh" //jff 10/6/98 for debug outputs
+#include "m_argv.hh"
+#include "m_bbox.hh"
+#include "m_cheat.hh"
+#include "p_enemy.hh"
 #include "p_map.hh"
+#include "p_maputl.hh"
 #include "p_setup.hh"
 #include "p_spec.hh"
 #include "p_tick.hh"
-#include "p_enemy.hh"
-#include "s_sound.hh"
-#include "s_advsound.hh"
-#include "lprintf.hh" //jff 10/6/98 for debug outputs
-#include "v_video.hh"
 #include "r_demo.hh"
 #include "r_fps.hh"
-#include "hu_tracers.hh"
-#include "g_overflow.hh"
-#include "am_map.hh"
-#include "e6y.hh" //e6y
-#include "dsda.hh"
+#include "r_main.hh"
+#include "r_things.hh"
+#include "s_advsound.hh"
+#include "s_sound.hh"
+#include "v_video.hh"
+#include "w_wad.hh"
 
 #include "config.h"
 #ifdef HAVE_LIBZ
@@ -3110,6 +3112,11 @@ void P_SetupLevel(int episode, int map, int playermask, skill_t skill)
     TracerClearStarts();
 
     P_MapStart();
+
+    for (auto cht : rust::cheater::start_game())
+    {
+        cheat[static_cast<int>(cht)].func();
+    }
 
     P_InitAmbientSound();
     P_InitMonsters();

@@ -133,6 +133,8 @@ name = "cheater"
 version = "0.1.0"
 dependencies = [
  "cxx",
+ "once_cell",
+ "parking_lot",
 ]
 
 [[package]]
