@@ -1,2 +1,2 @@
 [workspace]
-members = ["prboom2/src/misc", "prboom2/src/cheater"]
+members = ["prboom2/src/misc", "prboom2/src/cheater", "prboom2/src/cheater/cheater_macros"]

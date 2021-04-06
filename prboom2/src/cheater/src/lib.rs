@@ -1,6 +1,7 @@
 use cxx::let_cxx_string;
 use once_cell::sync::Lazy;
 use parking_lot::Mutex;
+use cheater_macros::check_cheat_param;
 
 static GAME_STARTED: Lazy<Mutex<bool>> = Lazy::new(|| Mutex::new(false));
 
@@ -11,16 +12,66 @@ mod ffi {
         fn start_game() -> Vec<Cheats>;
     }
 
-    extern "C++" {
+    unsafe extern "C++" {
         include!("cheater/../m_cheat.hh");
         include!("cheater/../m_argv.hh");
 
-        unsafe fn M_CheckParm(parm: &CxxString) -> i32;
-        unsafe fn cheat_god();
+        fn M_CheckParm(parm: &CxxString) -> i32;
+        fn cheat_god();
+        fn cheat_buddha();
     }
 
     enum Cheats {
-        God,
+        IDMUS,
+        IDCHOPPERS,
+        IDDQD,
+        IDKFA,
+        IDFA,
+        IDSPISPOPD,
+        IDCLIP,
+        IDBEHOLDH,
+        IDBEHOLDM,
+        IDBEHOLDV,
+        IDBEHOLDS,
+        IDBEHOLDI,
+        IDBEHOLDR,
+        IDBEHOLDA,
+        IDBEHOLDL,
+        IDBEHOLD,
+        IDCLEV,
+        IDMYPOS,
+        IDRATE,
+        TNTCOMP,
+        TNTEM,
+        IDDT,
+        TNTHOM,
+        TNTKEY,
+        TNTKEYR,
+        TNTKEYY,
+        TNTKEYB,
+        TNTKEYRC,
+        TNTKEYYC,
+        TNTKEYBC,
+        TNTKEYRS,
+        TNTKEYYS,
+        TNTKEYBS,
+        TNTKA,
+        TNTWEAP,
+        TNTWEAPX,
+        TNTAMMO,
+        TNTAMMOX,
+        TNTTRAN,
+        TNTSMART,
+        TNTPITCH,
+        TNTRAN,
+        TNTAMO,
+        TNTAMOX,
+        TNTFAST,
+        TNTICE,
+        TNTPUSH,
+        NOTARGET,
+        FLY,
+        BUDDHA,
     }
 }
 
@@ -29,19 +80,16 @@ fn start_game() -> Vec<ffi::Cheats> {
         return vec![];
     }
     *GAME_STARTED.lock() = true;
-    if unsafe { check_god_param() } {
-        return vec![ffi::Cheats::God];
+    let mut cheats = vec![];
+    if unsafe { check_god_cheat() } {
+        cheats.push(ffi::Cheats::IDDQD);
+    }
+    if unsafe { check_buddha_cheat() } {
+        cheats.push(ffi::Cheats::BUDDHA);
     }
 
     vec![]
 }
 
-unsafe fn check_god_param() -> bool {
-    let_cxx_string!(cheat = "-god");
-    if ffi::M_CheckParm(&cheat) != 0 {
-        ffi::cheat_god();
-        return true;
-    }
-
-    false
-}
+check_cheat_param!("god" => cheat_god);
+check_cheat_param!("buddha" => cheat_buddha);

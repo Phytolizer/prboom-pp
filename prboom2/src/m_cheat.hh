@@ -71,5 +71,6 @@ extern cheatseq_t cheat[];
 
 dboolean M_CheatResponder(event_t *ev);
 void cheat_god();
+void cheat_buddha();
 
 #endif

@@ -33,12 +33,14 @@
 
 #include "m_cheat.hh"
 #include "cheater/lib.rs.h"
+#include "cpp/enums/cheat_when_t.hh"
 #include "d_deh.hh" // Ty 03/27/98 - externalized strings
 #include "doomstat.hh"
 #include "g_game.hh"
 #include "m_argv.hh"
 #include "p_inter.hh"
 #include "p_map.hh"
+#include "p_mobj.hh"
 #include "p_tick.hh"
 #include "r_data.hh"
 #include "r_main.hh"
@@ -211,6 +213,8 @@ cheatseq_t cheat[] = {
     CHEAT("notarget", nullptr, cheat_when_t::cht_never, cheat_notarget, 0),
     // fly mode is active
     CHEAT("fly", nullptr, cheat_when_t::cht_never, cheat_fly, 0),
+    // buddha mode
+    CHEAT("buddha", nullptr, cheat_when_t::cht_never, cheat_buddha, 0),
     // end-of-list marker
     {nullptr}};
 
@@ -425,26 +429,25 @@ static void cheat_behold()
 
 static dboolean cannot_clev(int epsd, int map)
 {
-  char *next;
+    char *next;
 
-  if (
-    epsd < 1 ||
-    map < 0 ||
-    ((gamemode == retail || gamemode == registered) && (epsd > 9 || map > 9)) ||
+    if (epsd < 1 || map < 0 ||
+        ((gamemode == retail || gamemode == registered) &&
+         (epsd > 9 || map > 9)) ||
         (gamemode == shareware && (epsd > 1 || map > 9)) ||
-    (gamemode == commercial && (epsd > 1 || map > 99)) ||
-    (gamemission == pack_nerve && map > 9)
-  ) return true;
+        (gamemode == commercial && (epsd > 1 || map > 99)) ||
+        (gamemission == pack_nerve && map > 9))
+        return true;
 
-  // Catch invalid maps.
-  next = MAPNAME(epsd, map);
-  if (W_CheckNumForName(next) == -1)
-  {
-	  doom_printf("IDCLEV target not found: %s", next);
-	  return true;
-  }
+    // Catch invalid maps.
+    next = MAPNAME(epsd, map);
+    if (W_CheckNumForName(next) == -1)
+    {
+        doom_printf("IDCLEV target not found: %s", next);
+        return true;
+    }
 
-  return false;
+    return false;
 }
 
 extern int EpiCustom;
@@ -770,6 +773,23 @@ static void cheat_fly()
             plyr->mo->flags &= ~MF_NOGRAVITY;
             plyr->mo->flags &= ~MF_FLY;
             plyr->message = "Fly mode OFF";
+        }
+    }
+}
+
+void cheat_buddha()
+{
+    if (plyr->mo != nullptr)
+    {
+        plyr->cheats ^= CF_BUDDHA;
+        buddha_mode = static_cast<bool>(plyr->cheats & CF_BUDDHA);
+        if (plyr->cheats & CF_BUDDHA)
+        {
+            plyr->message = "Buddha mode ON";
+        }
+        else
+        {
+            plyr->message = "Buddha mode OFF";
         }
     }
 }

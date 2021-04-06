@@ -1,0 +1,13 @@
+[package]
+name = "cheater_macros"
+version = "0.1.0"
+authors = ["onContentStop <kylecoffey1999@gmail.com>"]
+edition = "2018"
+
+[lib]
+crate-type = ["proc-macro"]
+
+[dependencies]
+quote = "1.0"
+syn = "1.0"
+proc-macro2 = "1.0"

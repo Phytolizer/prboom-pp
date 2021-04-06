@@ -80,6 +80,8 @@ typedef enum
     CF_NOTARGET = 8,
     // [RH] Flying player
     CF_FLY = 16,
+    // Buddha mode player (damage scales w health)
+    CF_BUDDHA = 32,
 } cheat_t;
 
 // heretic
