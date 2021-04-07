@@ -1,6 +1,6 @@
 #pragma once
-#include "../m_cheat.hh"
-#include "../m_argv.hh"
+#include "cheater/../m_cheat.hh"
+#include "cheater/../m_argv.hh"
 #include <algorithm>
 #include <array>
 #include <cassert>
@@ -639,7 +639,56 @@ enum class Cheats : ::std::uint8_t;
 #ifndef CXXBRIDGE1_ENUM_Cheats
 #define CXXBRIDGE1_ENUM_Cheats
 enum class Cheats : ::std::uint8_t {
-  God = 0,
+  IDMUS = 0,
+  IDCHOPPERS = 1,
+  IDDQD = 2,
+  IDKFA = 3,
+  IDFA = 4,
+  IDSPISPOPD = 5,
+  IDCLIP = 6,
+  IDBEHOLDH = 7,
+  IDBEHOLDM = 8,
+  IDBEHOLDV = 9,
+  IDBEHOLDS = 10,
+  IDBEHOLDI = 11,
+  IDBEHOLDR = 12,
+  IDBEHOLDA = 13,
+  IDBEHOLDL = 14,
+  IDBEHOLD = 15,
+  IDCLEV = 16,
+  IDMYPOS = 17,
+  IDRATE = 18,
+  TNTCOMP = 19,
+  TNTEM = 20,
+  IDDT = 21,
+  TNTHOM = 22,
+  TNTKEY = 23,
+  TNTKEYR = 24,
+  TNTKEYY = 25,
+  TNTKEYB = 26,
+  TNTKEYRC = 27,
+  TNTKEYYC = 28,
+  TNTKEYBC = 29,
+  TNTKEYRS = 30,
+  TNTKEYYS = 31,
+  TNTKEYBS = 32,
+  TNTKA = 33,
+  TNTWEAP = 34,
+  TNTWEAPX = 35,
+  TNTAMMO = 36,
+  TNTAMMOX = 37,
+  TNTTRAN = 38,
+  TNTSMART = 39,
+  TNTPITCH = 40,
+  TNTRAN = 41,
+  TNTAMO = 42,
+  TNTAMOX = 43,
+  TNTFAST = 44,
+  TNTICE = 45,
+  TNTPUSH = 46,
+  NOTARGET = 47,
+  FLY = 48,
+  BUDDHA = 49,
 };
 #endif // CXXBRIDGE1_ENUM_Cheats
 
