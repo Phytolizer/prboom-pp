@@ -66,18 +66,8 @@ jobs:
             declare -x DEPS_FILENAME=windows_dependencies_v4.zip
             curl -LO https://github.com/coelckers/prboom-plus/releases/download/windows_dependencies/${DEPS_FILENAME}
             7z x ${DEPS_FILENAME} -o..
-            [[ ! -f C:/tools/msys64/msys2_shell.cmd ]] && rm -rf C:/tools/msys64
-            choco uninstall -y mingw
-            choco upgrade -y msys2
-            export msys2='cmd //C RefreshEnv.cmd'
-            export msys2+='& set MSYS=winsymlinks:nativestrict '
-            export msys2+='& C:\\tools\\msys64\\msys2_shell.cmd -defterm -no-start'
-            export mingw64="$msys2 -mingw64 -full-path -here -c "\"\$@"\" --"
-            export msys2+=" -msys2 -c "\"\$@"\" --"
-            $msys2 pacman --sync --noconfirm --needed mingw-w64-x86_64-toolchain mingw-w64-x86_64-rust mingw-w64-i686-rust
-            ## Install more MSYS2 packages from https://packages.msys2.org/base here
-            export PATH=/C/tools/msys64/mingw64/bin:$PATH
-            export MAKE=mingw32-make  # so that Autotools can find it
+            export LIBCLANG_PATH="C:\\Program Files\\LLVM\\\\bin"
+            export TARGET="x86_64-pc-windows-msvc"
           elif [[ "${{ runner.os }}" == 'Linux' ]]; then
             sudo apt update
             sudo apt install libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-net-dev \
