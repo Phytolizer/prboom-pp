@@ -39,22 +39,22 @@
 #include "config.h"
 #endif
 
-#include <cassert>
 #include <SDL.h>
+#include <cassert>
 
 #include "doomdef.hh"
 #include "doomstat.hh"
-#include "r_main.hh"
-#include "r_draw.hh"
-#include "r_patch.hh"
-#include "m_bbox.hh"
-#include "w_wad.hh" /* needed for color translation lump lookup */
-#include "v_video.hh"
-#include "i_video.hh"
-#include "r_filter.hh"
-#include "lprintf.hh"
-#include "st_stuff.hh"
 #include "e6y.hh"
+#include "i_video.hh"
+#include "lprintf.hh"
+#include "m_bbox.hh"
+#include "r_draw.hh"
+#include "r_filter.hh"
+#include "r_main.hh"
+#include "r_patch.hh"
+#include "st_stuff.hh"
+#include "v_video.hh"
+#include "w_wad.hh" /* needed for color translation lump lookup */
 
 #include "dsda/global.hh"
 #include "dsda/palette.hh"

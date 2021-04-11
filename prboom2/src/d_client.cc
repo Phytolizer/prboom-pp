@@ -51,25 +51,25 @@
 #include "SDL.h"
 #endif
 
-#include "doomtype.hh"
-#include "doomstat.hh"
 #include "d_net.hh"
+#include "doomstat.hh"
+#include "doomtype.hh"
 
 #include "d_main.hh"
 #include "g_game.hh"
 #include "m_menu.hh"
 #include "p_checksum.hh"
 
-#include "protocol.hh"
+#include "dsda/settings.hh"
+#include "e6y.hh"
+#include "i_main.hh"
 #include "i_network.hh"
 #include "i_system.hh"
-#include "i_main.hh"
 #include "i_video.hh"
-#include "m_argv.hh"
-#include "r_fps.hh"
 #include "lprintf.hh"
-#include "e6y.hh"
-#include "dsda/settings.hh"
+#include "m_argv.hh"
+#include "protocol.hh"
+#include "r_fps.hh"
 
 static dboolean server;
 static int remotetic;  // Tic expected from the remote

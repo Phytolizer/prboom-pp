@@ -16,8 +16,8 @@
 //
 
 #include "doomstat.hh"
-#include "m_argv.hh"
 #include "e6y.hh"
+#include "m_argv.hh"
 #include "r_things.hh"
 
 #include "settings.hh"
@@ -175,6 +175,7 @@ dboolean dsda_SkipWipe()
     return !render_wipescreen;
 }
 
-dboolean dsda_HideHorns(void) {
-  return dsda_hide_horns;
+dboolean dsda_HideHorns(void)
+{
+    return dsda_hide_horns;
 }

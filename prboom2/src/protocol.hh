@@ -35,10 +35,10 @@
 
 #include <cstring>
 
-#include "doomtype.hh"
-#include "d_ticcmd.hh"
-#include "m_swap.hh"
 #include "cpp/enums/packet_type_e.hh"
+#include "d_ticcmd.hh"
+#include "doomtype.hh"
+#include "m_swap.hh"
 
 // enum packet_type_e
 //{

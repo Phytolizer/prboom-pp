@@ -33,8 +33,8 @@
 #ifndef __P_SPEC__
 #define __P_SPEC__
 
-#include "r_defs.hh"
 #include "d_player.hh"
+#include "r_defs.hh"
 
 //      Define values for map objects
 #define MO_TELEPORTMAN 14

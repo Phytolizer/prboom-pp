@@ -40,14 +40,14 @@
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif
-#include <SDL.h>
 #include "doomstat.hh"
-#include "v_video.hh"
-#include "gl_intern.hh"
 #include "doomtype.hh"
+#include "gl_intern.hh"
 #include "i_video.hh"
-#include "m_argv.hh"
 #include "lprintf.hh"
+#include "m_argv.hh"
+#include "v_video.hh"
+#include <SDL.h>
 
 #ifndef HIBYTE
 #define HIBYTE(W) (((W) >> 8) & 0xFF)

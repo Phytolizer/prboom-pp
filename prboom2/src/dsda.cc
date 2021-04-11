@@ -15,24 +15,24 @@
 //	DSDA Tools
 //
 
-#include <cstdlib>
 #include <cstdio>
+#include <cstdlib>
 
-#include "m_argv.hh"
+#include "am_map.hh"
 #include "doomstat.hh"
+#include "g_game.hh"
+#include "m_argv.hh"
 #include "p_inter.hh"
 #include "p_tick.hh"
-#include "g_game.hh"
-#include "sounds.hh"
 #include "s_sound.hh"
-#include "am_map.hh"
+#include "sounds.hh"
 
-#include "dsda_mobj_extension.hh"
+#include "dsda.hh"
 #include "dsda/ghost.hh"
 #include "dsda/hud.hh"
 #include "dsda/key_frame.hh"
 #include "dsda/settings.hh"
-#include "dsda.hh"
+#include "dsda_mobj_extension.hh"
 
 #define TELEFRAG_DAMAGE 10000
 #define STROLLER_THRESHOLD 25

@@ -49,15 +49,14 @@
 #endif
 
 #include "doomstat.hh"
-#include "w_wad.hh"
-#include "r_main.hh"
-#include "r_draw.hh"
-#include "r_things.hh"
-#include "r_sky.hh"
-#include "r_plane.hh"
-#include "r_main.hh"
-#include "v_video.hh"
 #include "lprintf.hh"
+#include "r_draw.hh"
+#include "r_main.hh"
+#include "r_plane.hh"
+#include "r_sky.hh"
+#include "r_things.hh"
+#include "v_video.hh"
+#include "w_wad.hh"
 
 #define MAXVISPLANES 128 /* must be a power of 2 */
 
@@ -602,9 +601,8 @@ static void R_DoDrawPlane(visplane_t *pl)
                     break;
                 case 4:
                     // Scroll_EastLavaDamage
-                    dsvars.source =
-                        dsvars.source +
-                        ((63 - ((leveltime >> 1) & 63)) << 3 & 63);
+                    dsvars.source = dsvars.source +
+                                    ((63 - ((leveltime >> 1) & 63)) << 3 & 63);
                     break;
                 }
             }

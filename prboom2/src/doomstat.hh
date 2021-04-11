@@ -85,40 +85,41 @@ extern int demo_insurance, default_demo_insurance; // killough 4/5/98
 // -------------------------------------------
 // killough 10/98: compatibility vector
 
-enum {
-  comp_telefrag,
-  comp_dropoff,
-  comp_vile,
-  comp_pain,
-  comp_skull,
-  comp_blazing,
-  comp_doorlight,
-  comp_model,
-  comp_god,
-  comp_falloff,
-  comp_floors,
-  comp_skymap,
-  comp_pursuit,
-  comp_doorstuck,
-  comp_staylift,
-  comp_zombie,
-  comp_stairs,
-  comp_infcheat,
-  comp_zerotags,
-  comp_moveblock,
-  comp_respawn,  /* cph - alias of comp_respawnfix from eternity */
-  comp_sound,
-  comp_666,
-  comp_soul,
-  comp_maskedanim,
+enum
+{
+    comp_telefrag,
+    comp_dropoff,
+    comp_vile,
+    comp_pain,
+    comp_skull,
+    comp_blazing,
+    comp_doorlight,
+    comp_model,
+    comp_god,
+    comp_falloff,
+    comp_floors,
+    comp_skymap,
+    comp_pursuit,
+    comp_doorstuck,
+    comp_staylift,
+    comp_zombie,
+    comp_stairs,
+    comp_infcheat,
+    comp_zerotags,
+    comp_moveblock,
+    comp_respawn, /* cph - alias of comp_respawnfix from eternity */
+    comp_sound,
+    comp_666,
+    comp_soul,
+    comp_maskedanim,
 
-  //e6y
-  comp_ouchface,
-  comp_maxhealth,
-  comp_translucency,
+    // e6y
+    comp_ouchface,
+    comp_maxhealth,
+    comp_translucency,
 
-  COMP_NUM,      /* cph - should be last in sequence */
-  COMP_TOTAL=32  // Some extra room for additional variables
+    COMP_NUM,       /* cph - should be last in sequence */
+    COMP_TOTAL = 32 // Some extra room for additional variables
 };
 
 enum
@@ -134,7 +135,7 @@ enum
 };
 
 extern int comp[COMP_TOTAL];
-extern int /*comperr[COMPERR_NUM], */default_comperr[COMPERR_NUM];
+extern int /*comperr[COMPERR_NUM], */ default_comperr[COMPERR_NUM];
 
 // -------------------------------------------
 // Language.
@@ -317,19 +318,19 @@ extern int ticdup;
 
 //-----------------------------------------------------------------------------
 
-extern int allow_pushers;         // MT_PUSH Things    // phares 3/10/98
+extern int allow_pushers; // MT_PUSH Things    // phares 3/10/98
 
-extern int variable_friction;  // ice & mud            // phares 3/10/98
+extern int variable_friction; // ice & mud            // phares 3/10/98
 
-extern int monsters_remember;                          // killough 3/1/98
+extern int monsters_remember; // killough 3/1/98
 
-extern int weapon_recoil;          // weapon recoil    // phares
+extern int weapon_recoil; // weapon recoil    // phares
 
 extern int player_bobbing; // whether player bobs or not   // phares 2/25/98
 extern int default_player_bobbing; // killough 3/1/98: make local to each game
 
-extern int dogs;     // killough 7/19/98: Marine's best friend :)
-extern int dog_jumping;   // killough 10/98
+extern int dogs;        // killough 7/19/98: Marine's best friend :)
+extern int dog_jumping; // killough 10/98
 
 /* killough 8/8/98: distance friendly monsters tend to stay from player */
 extern int distfriend;

@@ -37,8 +37,8 @@
 #include <cstddef>
 #include <vector>
 
-#include "sounds.hh"
 #include "doomtype.hh"
+#include "sounds.hh"
 
 #define SNDSERV
 #undef SNDINTR

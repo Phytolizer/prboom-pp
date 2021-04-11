@@ -21,16 +21,16 @@
 ========================
 */
 
-#include "doomstat.hh"
 #include "d_event.hh"
-#include "s_sound.hh"
-#include "sounds.hh"
+#include "doomstat.hh"
+#include "g_game.hh"
 #include "i_system.hh"
 #include "i_video.hh"
-#include "v_video.hh"
 #include "lprintf.hh"
+#include "s_sound.hh"
+#include "sounds.hh"
+#include "v_video.hh"
 #include "w_wad.hh"
-#include "g_game.hh"
 
 #include "dsda/hud.hh"
 

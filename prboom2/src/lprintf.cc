@@ -39,21 +39,21 @@
 #ifdef _MSC_VER
 #include <io.h>
 #endif
+#include <cassert>
+#include <cstdarg>
 #include <cstdio>
 #include <cstdlib>
-#include <cstdarg>
 #include <cstring>
-#include <cassert>
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif
 #include "doomtype.hh"
-#include "lprintf.hh"
-#include "i_main.hh"
-#include "i_system.hh"
-#include "m_argv.hh"
 #include "e6y.hh" //e6y
 #include "i_capture.hh"
+#include "i_main.hh"
+#include "i_system.hh"
+#include "lprintf.hh"
+#include "m_argv.hh"
 
 int cons_error_mask = -1 - LO_INFO; /* all but LO_INFO when redir'd */
 int cons_output_mask = -1;          /* all output enabled */

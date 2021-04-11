@@ -32,22 +32,22 @@
  *
  *-----------------------------------------------------------------------------*/
 
-#include "doomstat.hh"
-#include "r_main.hh"
-#include "p_map.hh"
-#include "p_inter.hh"
 #include "p_pspr.hh"
-#include "p_enemy.hh"
-#include "p_tick.hh"
-#include "m_random.hh"
-#include "s_sound.hh"
-#include "sounds.hh"
 #include "d_event.hh"
-#include "r_demo.hh"
+#include "doomstat.hh"
+#include "dsda.hh"
+#include "e6y.hh" //e6y
 #include "g_game.hh"
 #include "lprintf.hh"
-#include "e6y.hh" //e6y
-#include "dsda.hh"
+#include "m_random.hh"
+#include "p_enemy.hh"
+#include "p_inter.hh"
+#include "p_map.hh"
+#include "p_tick.hh"
+#include "r_demo.hh"
+#include "r_main.hh"
+#include "s_sound.hh"
+#include "sounds.hh"
 
 #define LOWERSPEED (FRACUNIT * 6)
 #define RAISESPEED (FRACUNIT * 6)
@@ -1195,8 +1195,8 @@ void P_MovePsprites(player_t *player)
 // heretic
 
 #include "heretic/def.hh"
-#include "p_user.hh"
 #include "p_maputl.hh"
+#include "p_user.hh"
 
 #define MAGIC_JUNK 1234
 #define FLAME_THROWER_TICS 10 * 35

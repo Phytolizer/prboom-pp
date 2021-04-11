@@ -76,9 +76,9 @@
 
 #include "gl_opengl.hh"
 
-#include "v_video.hh"
 #include "gl_intern.hh"
 #include "r_main.hh"
+#include "v_video.hh"
 
 using vertexsplit_info_t = struct vertexsplit_info_s
 {

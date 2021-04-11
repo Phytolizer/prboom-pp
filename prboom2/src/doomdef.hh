@@ -45,20 +45,20 @@
 #define __attribute__(x)
 #endif
 
+#include <ctype.h>
+#include <limits.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <ctype.h>
-#include <limits.h>
 
 // this should go here, not in makefile/configure.ac -- josh
 #ifndef O_BINARY
 #define O_BINARY 0
 #endif
 
+#include "doomtype.hh"
 #include "m_swap.hh"
 #include "version.hh"
-#include "doomtype.hh"
 
 extern dboolean bfgedition;
 
@@ -365,16 +365,17 @@ typedef enum
 // Defines Setup Screen groups that config variables appear in.
 // Used when resetting the defaults for every item in a Setup group.
 
-typedef enum {
-  ss_none,
-  ss_keys,
-  ss_weap,
-  ss_stat,
-  ss_auto,
-  ss_mess,
-  ss_chat,
-  ss_gen,       /* killough 10/98 */
-  ss_max
+typedef enum
+{
+    ss_none,
+    ss_keys,
+    ss_weap,
+    ss_stat,
+    ss_auto,
+    ss_mess,
+    ss_chat,
+    ss_gen, /* killough 10/98 */
+    ss_max
 } ss_types;
 
 // phares 3/20/98:

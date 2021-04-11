@@ -15,8 +15,8 @@
 //	DSDA Input
 //
 
-#include <cstring>
 #include <cstdlib>
+#include <cstring>
 
 #include "input.hh"
 

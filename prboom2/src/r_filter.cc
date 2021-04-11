@@ -28,8 +28,8 @@
  *
  *-----------------------------------------------------------------------------*/
 
-#include "doomtype.hh"
 #include "r_filter.hh"
+#include "doomtype.hh"
 
 #define DMR 16
 byte filter_ditherMatrix[DITHER_DIM][DITHER_DIM] = {

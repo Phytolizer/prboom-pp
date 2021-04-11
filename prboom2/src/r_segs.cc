@@ -39,15 +39,15 @@
 #include "SDL.h"
 
 #include "doomstat.hh"
-#include "r_main.hh"
-#include "r_bsp.hh"
-#include "r_segs.hh"
-#include "r_plane.hh"
-#include "r_things.hh"
-#include "r_draw.hh"
-#include "w_wad.hh"
-#include "v_video.hh"
 #include "lprintf.hh"
+#include "r_bsp.hh"
+#include "r_draw.hh"
+#include "r_main.hh"
+#include "r_plane.hh"
+#include "r_segs.hh"
+#include "r_things.hh"
+#include "v_video.hh"
+#include "w_wad.hh"
 
 // OPTIMIZE: closed two sided lines as single sided
 

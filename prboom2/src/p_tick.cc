@@ -31,13 +31,13 @@
  *
  *-----------------------------------------------------------------------------*/
 
-#include "doomstat.hh"
-#include "p_user.hh"
-#include "p_spec.hh"
 #include "p_tick.hh"
-#include "p_map.hh"
-#include "r_fps.hh"
+#include "doomstat.hh"
 #include "e6y.hh"
+#include "p_map.hh"
+#include "p_spec.hh"
+#include "p_user.hh"
+#include "r_fps.hh"
 #include "s_advsound.hh"
 
 int leveltime;

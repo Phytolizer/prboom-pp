@@ -32,8 +32,8 @@
  *-----------------------------------------------------------------------------
  */
 
-#include "doomdef.hh"
 #include "version.hh"
+#include "doomdef.hh"
 
 #ifndef BUILD_DATE
 #define BUILD_DATE __DATE__

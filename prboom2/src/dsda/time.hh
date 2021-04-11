@@ -18,11 +18,12 @@
 #ifndef __DSDA_TIME__
 #define __DSDA_TIME__
 
-typedef enum {
-  dsda_timer_displaytime,
-  dsda_timer_tic,
-  dsda_timer_realtime,
-  DSDA_TIMER_COUNT
+typedef enum
+{
+    dsda_timer_displaytime,
+    dsda_timer_tic,
+    dsda_timer_realtime,
+    DSDA_TIMER_COUNT
 } dsda_timer_t;
 
 void dsda_StartTimer(int timer);

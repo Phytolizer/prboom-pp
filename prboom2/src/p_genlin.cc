@@ -33,13 +33,13 @@
  *-----------------------------------------------------------------------------*/
 
 #include "doomstat.hh" //jff 6/19/98 for demo_compatibility
-#include "r_main.hh"
+#include "e6y.hh"
+#include "m_random.hh"
 #include "p_spec.hh"
 #include "p_tick.hh"
-#include "m_random.hh"
+#include "r_main.hh"
 #include "s_sound.hh"
 #include "sounds.hh"
-#include "e6y.hh"
 
 //////////////////////////////////////////////////////////
 //

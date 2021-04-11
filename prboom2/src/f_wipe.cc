@@ -37,10 +37,10 @@
 #endif
 
 #include "doomdef.hh"
-#include "i_video.hh"
-#include "v_video.hh"
-#include "m_random.hh"
 #include "f_wipe.hh"
+#include "i_video.hh"
+#include "m_random.hh"
+#include "v_video.hh"
 #ifdef GL_DOOM
 #include "gl_struct.hh"
 #endif

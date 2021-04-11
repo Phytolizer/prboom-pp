@@ -58,18 +58,18 @@
 **---------------------------------------------------------------------------
 */
 
+#include "r_patch.hh"
 #include "doomstat.hh"
-#include "w_wad.hh"
+#include "i_system.hh"
+#include "lprintf.hh"
+#include "p_tick.hh"
+#include "r_bsp.hh"
+#include "r_draw.hh"
 #include "r_main.hh"
 #include "r_sky.hh"
-#include "r_bsp.hh"
 #include "r_things.hh"
-#include "p_tick.hh"
-#include "i_system.hh"
-#include "r_draw.hh"
-#include "lprintf.hh"
-#include "r_patch.hh"
 #include "v_video.hh"
+#include "w_wad.hh"
 #include <cassert>
 
 #include "dsda/palette.hh"

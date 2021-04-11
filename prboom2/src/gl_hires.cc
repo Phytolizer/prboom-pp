@@ -44,25 +44,25 @@
 #else
 #include <unistd.h>
 #endif
-#include <sys/stat.h>
 #include <SDL.h>
+#include <sys/stat.h>
 #ifdef HAVE_LIBSDL2_IMAGE
 #include <SDL_image.h>
 #endif
 #include "doomstat.hh"
-#include "v_video.hh"
+#include "e6y.hh"
 #include "gl_intern.hh"
-#include "i_system.hh"
-#include "w_wad.hh"
-#include "lprintf.hh"
-#include "i_video.hh"
 #include "hu_lib.hh"
 #include "hu_stuff.hh"
-#include "r_main.hh"
-#include "r_sky.hh"
+#include "i_system.hh"
+#include "i_video.hh"
+#include "lprintf.hh"
 #include "m_argv.hh"
 #include "m_misc.hh"
-#include "e6y.hh"
+#include "r_main.hh"
+#include "r_sky.hh"
+#include "v_video.hh"
+#include "w_wad.hh"
 
 unsigned int gl_has_hires = 0;
 int gl_texture_external_hires = -1;
@@ -248,7 +248,7 @@ typedef struct _DDRAW_H_DDPIXELFORMAT
         unsigned long dwYUVBitCount;     // how many bits per pixel
         unsigned long dwZBufferBitDepth; // how many total bits/pixel in z
         // buffer (including any stencil bits)
-        unsigned long dwAlphaBitDepth;   // how many bits for alpha channels
+        unsigned long dwAlphaBitDepth;     // how many bits for alpha channels
         unsigned long dwLuminanceBitCount; // how many bits per pixel
         unsigned long dwBumpBitCount;      // how many bits per "buxel", total
         unsigned long
@@ -257,9 +257,9 @@ typedef struct _DDRAW_H_DDPIXELFORMAT
         // list and if DDPF_D3DFORMAT is set
     } u1;
     union {
-        unsigned long dwRBitMask;         // mask for red bit
-        unsigned long dwYBitMask;         // mask for Y bits
-        unsigned long dwStencilBitDepth;  // how many stencil bits (note:
+        unsigned long dwRBitMask;        // mask for red bit
+        unsigned long dwYBitMask;        // mask for Y bits
+        unsigned long dwStencilBitDepth; // how many stencil bits (note:
         // dwZBufferBitDepth-dwStencilBitDepth
         // is total Z-only bits)
         unsigned long dwLuminanceBitMask; // mask for luminance bits
@@ -323,7 +323,7 @@ typedef struct _DDRAW_H_DDSURFACEDESC2
     void *lpSurface;               // pointer to the associated surface memory
     union {
         DDRAW_H_DDCOLORKEY
-            ddckCKDestOverlay; // color key for destination overlay use
+        ddckCKDestOverlay; // color key for destination overlay use
         unsigned long
             dwEmptyFaceColor; // Physical color for empty cubemap faces
     } u3;
@@ -332,7 +332,7 @@ typedef struct _DDRAW_H_DDSURFACEDESC2
     DDRAW_H_DDCOLORKEY ddckCKSrcBlt;     // color key for source blt use
     union {
         DDRAW_H_DDPIXELFORMAT
-            ddpfPixelFormat;     // pixel format description of the surface
+        ddpfPixelFormat;     // pixel format description of the surface
         unsigned long dwFVF; // vertex format description of vertex buffers
     } u4;
     DDRAW_H_DDSCAPS2 ddsCaps;     // direct draw surface capabilities

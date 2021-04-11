@@ -32,20 +32,20 @@
  *-----------------------------------------------------------------------------
  */
 
-#include "doomstat.hh"
-#include "m_random.hh"
-#include "w_wad.hh"
-#include "g_game.hh"
-#include "r_main.hh"
-#include "v_video.hh"
 #include "wi_stuff.hh"
+#include "doomstat.hh"
+#include "dsda/hud.hh"
+#include "g_game.hh"
+#include "heretic/in_lude.hh"
+#include "hu_stuff.hh"
+#include "lprintf.hh" // jff 08/03/98 - declaration of lprintf
+#include "m_random.hh"
+#include "r_draw.hh"
+#include "r_main.hh"
 #include "s_sound.hh"
 #include "sounds.hh"
-#include "lprintf.hh" // jff 08/03/98 - declaration of lprintf
-#include "r_draw.hh"
-#include "hu_stuff.hh"
-#include "dsda/hud.hh"
-#include "heretic/in_lude.hh"
+#include "v_video.hh"
+#include "w_wad.hh"
 
 // Ty 03/17/98: flag that new par times have been loaded in d_deh
 extern dboolean deh_pars;
@@ -558,8 +558,8 @@ void WI_drawEL()
             WI_levelNameLump(wbs->nextep, wbs->next, lname);
         }
 
-    if (W_CheckNumForName(lname) == -1)
-      return;
+        if (W_CheckNumForName(lname) == -1)
+            return;
 
         // draw level
         y += (5 * V_NamePatchHeight(lname)) / 4;

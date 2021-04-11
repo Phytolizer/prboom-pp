@@ -39,29 +39,29 @@
  *
  *-----------------------------------------------------------------------------*/
 
-#include "doomstat.hh"
 #include "p_spec.hh"
-#include "p_tick.hh"
-#include "p_setup.hh"
-#include "m_random.hh"
+#include "d_deh.hh"
 #include "d_englsh.hh"
-#include "m_argv.hh"
-#include "w_wad.hh"
-#include "r_main.hh"
-#include "p_maputl.hh"
-#include "p_map.hh"
+#include "doomstat.hh"
+#include "dsda.hh"
+#include "e6y.hh" //e6y
 #include "g_game.hh"
+#include "hu_stuff.hh"
+#include "i_sound.hh"
+#include "lprintf.hh"
+#include "m_argv.hh"
+#include "m_bbox.hh" // phares 3/20/98
+#include "m_random.hh"
 #include "p_inter.hh"
+#include "p_map.hh"
+#include "p_maputl.hh"
+#include "p_setup.hh"
+#include "p_tick.hh"
+#include "r_main.hh"
+#include "r_plane.hh"
 #include "s_sound.hh"
 #include "sounds.hh"
-#include "i_sound.hh"
-#include "m_bbox.hh" // phares 3/20/98
-#include "d_deh.hh"
-#include "r_plane.hh"
-#include "hu_stuff.hh"
-#include "lprintf.hh"
-#include "e6y.hh" //e6y
-#include "dsda.hh"
+#include "w_wad.hh"
 
 #include "dsda/global.hh"
 

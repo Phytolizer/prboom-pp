@@ -32,15 +32,15 @@
  *-----------------------------------------------------------------------------
  */
 
-#include "doomstat.hh"
+#include "heretic/f_finale.hh"
+#include "d_deh.hh" // Ty 03/22/98 - externalizations
 #include "d_event.hh"
+#include "doomstat.hh"
 #include "g_game.hh"
-#include "v_video.hh"
-#include "w_wad.hh"
 #include "s_sound.hh"
 #include "sounds.hh"
-#include "d_deh.hh" // Ty 03/22/98 - externalizations
-#include "heretic/f_finale.hh"
+#include "v_video.hh"
+#include "w_wad.hh"
 
 #include "f_finale.hh" // CPhipps - hmm...
 

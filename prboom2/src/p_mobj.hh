@@ -36,8 +36,8 @@
 
 // Basics.
 #include "doomtype.hh"
-#include "tables.hh"
 #include "m_fixed.hh"
+#include "tables.hh"
 
 // We need the thinker_t stuff.
 #include "d_think.hh"

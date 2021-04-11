@@ -34,9 +34,9 @@
 
 #include <string>
 
-#include "doomdef.hh"
 #include "d_event.hh"
 #include "d_ticcmd.hh"
+#include "doomdef.hh"
 
 //
 // GAME

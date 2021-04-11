@@ -31,15 +31,15 @@
  *
  *-----------------------------------------------------------------------------*/
 
+#include "r_bsp.hh" // cph - sanity checking
 #include "doomstat.hh"
+#include "lprintf.hh"
 #include "m_bbox.hh"
 #include "r_main.hh"
-#include "r_segs.hh"
 #include "r_plane.hh"
+#include "r_segs.hh"
 #include "r_things.hh"
-#include "r_bsp.hh" // cph - sanity checking
 #include "v_video.hh"
-#include "lprintf.hh"
 
 int currentsubsectornum;
 
@@ -769,8 +769,8 @@ static void R_Subsector(int num)
                                       frontsector->sky & PL_SKYFLAT
                                   ? frontsector->sky
                                   : frontsector->floorpic,
-                              floorlightlevel,          // killough 3/16/98
-                  frontsector->special,
+                              floorlightlevel, // killough 3/16/98
+                              frontsector->special,
                               frontsector->floor_xoffs, // killough 3/7/98
                               frontsector->floor_yoffs)
                 : nullptr;
@@ -786,8 +786,8 @@ static void R_Subsector(int num)
                                       frontsector->sky & PL_SKYFLAT
                                   ? frontsector->sky
                                   : frontsector->ceilingpic,
-                              ceilinglightlevel,          // killough 4/11/98
-                  frontsector->special,
+                              ceilinglightlevel, // killough 4/11/98
+                              frontsector->special,
                               frontsector->ceiling_xoffs, // killough 3/7/98
                               frontsector->ceiling_yoffs)
                 : nullptr;
@@ -815,7 +815,7 @@ static void R_Subsector(int num)
                     dummyfloorplane.height = tmpsec->floorheight;
                     dummyfloorplane.lightlevel = tmpsec->lightlevel;
                     dummyfloorplane.picnum = tmpsec->floorpic;
-            dummyfloorplane.special = tmpsec->special;
+                    dummyfloorplane.special = tmpsec->special;
                     floorplane = &dummyfloorplane;
                 }
             }
@@ -832,7 +832,7 @@ static void R_Subsector(int num)
                     dummyceilingplane.height = tmpsec->ceilingheight;
                     dummyceilingplane.lightlevel = tmpsec->lightlevel;
                     dummyceilingplane.picnum = tmpsec->ceilingpic;
-            dummyceilingplane.special = tmpsec->special;
+                    dummyceilingplane.special = tmpsec->special;
                     ceilingplane = &dummyceilingplane;
                 }
             }

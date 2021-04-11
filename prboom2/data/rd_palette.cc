@@ -8,8 +8,8 @@
 #include <cstring>
 #include <iostream>
 
-#include "rd_util.hh"
 #include "rd_palette.hh"
+#include "rd_util.hh"
 
 static unsigned char *palette_data;
 

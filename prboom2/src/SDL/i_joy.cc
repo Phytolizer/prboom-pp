@@ -38,13 +38,13 @@
 #include <cstdlib>
 
 #include "SDL.h"
-#include "doomdef.hh"
-#include "doomtype.hh"
-#include "m_argv.hh"
 #include "d_event.hh"
 #include "d_main.hh"
+#include "doomdef.hh"
+#include "doomtype.hh"
 #include "i_joy.hh"
 #include "lprintf.hh"
+#include "m_argv.hh"
 
 int usejoystick;
 

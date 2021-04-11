@@ -39,23 +39,23 @@
 #ifdef HAVE_NETINET_IN_H
 #include <netinet/in.h>
 #endif
-#include <cstdlib>
 #include <cerrno>
+#include <cstdlib>
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif
 #include <cstdio>
-#include <fcntl.h>
 #include <cstring>
+#include <fcntl.h>
 
 #ifdef HAVE_NET
 
 #include "SDL.h"
 #include "SDL_net.h"
 
-#include "protocol.hh"
 #include "i_network.hh"
 #include "lprintf.hh"
+#include "protocol.hh"
 //#include "doomstat.hh"
 
 /* cph -

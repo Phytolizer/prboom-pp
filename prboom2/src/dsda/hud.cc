@@ -15,10 +15,10 @@
 //	DSDA Hud
 //
 
-#include "st_stuff.hh"
+#include "doomstat.hh"
 #include "hu_lib.hh"
 #include "hu_stuff.hh"
-#include "doomstat.hh"
+#include "st_stuff.hh"
 
 #include "dsda.hh"
 #include "dsda/global.hh"

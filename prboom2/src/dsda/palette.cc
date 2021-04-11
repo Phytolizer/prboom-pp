@@ -15,8 +15,8 @@
 //	DSDA Palette Management
 //
 
-#include "w_wad.hh"
 #include "v_video.hh"
+#include "w_wad.hh"
 
 #include "palette.hh"
 

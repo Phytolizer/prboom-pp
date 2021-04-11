@@ -31,16 +31,16 @@
  *
  *-----------------------------------------------------------------------------*/
 
+#include "d_deh.hh" // Ty 03/27/98 - externalized
 #include "doomstat.hh"
+#include "dstrings.hh"
+#include "e6y.hh" //e6y
+#include "lprintf.hh"
 #include "p_spec.hh"
 #include "p_tick.hh"
+#include "r_main.hh"
 #include "s_sound.hh"
 #include "sounds.hh"
-#include "r_main.hh"
-#include "dstrings.hh"
-#include "d_deh.hh" // Ty 03/27/98 - externalized
-#include "lprintf.hh"
-#include "e6y.hh" //e6y
 
 ///////////////////////////////////////////////////////////////
 //
@@ -807,8 +807,8 @@ void P_SpawnDoorRaiseIn5Mins(sector_t *sec, int /* secnum */)
 
 // heretic
 
-#include "p_inter.hh"
 #include "heretic/dstrings.hh"
+#include "p_inter.hh"
 
 void Heretic_EV_VerticalDoor(line_t *line, mobj_t *thing)
 {

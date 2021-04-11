@@ -32,25 +32,25 @@
  *
  *-----------------------------------------------------------------------------*/
 
-#include "doomstat.hh"
-#include "r_main.hh"
-#include "p_mobj.hh"
-#include "p_maputl.hh"
 #include "p_map.hh"
-#include "p_setup.hh"
-#include "p_spec.hh"
-#include "s_sound.hh"
-#include "sounds.hh"
-#include "p_inter.hh"
-#include "m_random.hh"
-#include "m_bbox.hh"
-#include "lprintf.hh"
-#include "m_argv.hh"
+#include "doomstat.hh"
+#include "dsda.hh"
+#include "e6y.hh" //e6y
 #include "g_game.hh"
 #include "g_overflow.hh"
 #include "hu_tracers.hh"
-#include "e6y.hh" //e6y
-#include "dsda.hh"
+#include "lprintf.hh"
+#include "m_argv.hh"
+#include "m_bbox.hh"
+#include "m_random.hh"
+#include "p_inter.hh"
+#include "p_maputl.hh"
+#include "p_mobj.hh"
+#include "p_setup.hh"
+#include "p_spec.hh"
+#include "r_main.hh"
+#include "s_sound.hh"
+#include "sounds.hh"
 
 #include "heretic/def.hh"
 
@@ -2543,7 +2543,7 @@ inline static void P_PutSecnode(msecnode_t *node)
 {
     Z_BFree(&secnodezone, node);
 }
-#else // USE_BLOCK_MEMORY_ALLOCATOR
+#else  // USE_BLOCK_MEMORY_ALLOCATOR
 // phares 3/21/98
 //
 // Maintain a freelist of msecnode_t's to reduce memory allocs and frees.

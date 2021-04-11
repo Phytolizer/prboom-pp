@@ -54,8 +54,8 @@ complevel_t compatibility_level, default_compatibility_level;
 // example
 int demover;
 
-int comp[COMP_TOTAL];    // killough 10/98
-int /*comperr[COMPERR_NUM], */default_comperr[COMPERR_NUM];
+int comp[COMP_TOTAL]; // killough 10/98
+int /*comperr[COMPERR_NUM], */ default_comperr[COMPERR_NUM];
 
 // v1.1-like pitched sounds
 int pitched_sounds; // killough
@@ -65,23 +65,23 @@ dboolean general_translucency; // true if translucency is ok // phares
 
 int demo_insurance, default_demo_insurance; // killough 1/16/98
 
-int  allow_pushers = 1;      // MT_PUSH Things              // phares 3/10/98
+int allow_pushers = 1; // MT_PUSH Things              // phares 3/10/98
 
-int  variable_friction = 1;      // ice & mud               // phares 3/10/98
+int variable_friction = 1; // ice & mud               // phares 3/10/98
 
-int  weapon_recoil = 0;              // weapon recoil                   // phares
+int weapon_recoil = 0; // weapon recoil                   // phares
 
 int player_bobbing; // whether player bobs or not          // phares 2/25/98
 int default_player_bobbing; // killough 3/1/98: make local to each game
 
-int monsters_remember = 1;          // killough 3/1/98
+int monsters_remember = 1; // killough 3/1/98
 
-int monster_infighting=1;       // killough 7/19/98: monster<=>monster attacks
+int monster_infighting = 1; // killough 7/19/98: monster<=>monster attacks
 
-int monster_friction=1;       // killough 10/98: monsters affected by friction
+int monster_friction = 1; // killough 10/98: monsters affected by friction
 
-int dogs;         // killough 7/19/98: Marine's best friend :)
-int dog_jumping;   // killough 10/98
+int dogs;        // killough 7/19/98: Marine's best friend :)
+int dog_jumping; // killough 10/98
 
 // killough 8/8/98: distance friends tend to move towards players
 int distfriend = 128;
@@ -103,12 +103,12 @@ int monkeys;
 
 char *MAPNAME(int e, int m)
 {
-  static char name[9];
+    static char name[9];
 
-  if (gamemode == commercial)
-    snprintf(name, sizeof(name), "MAP%02d", m);
-  else
-    snprintf(name, sizeof(name), "E%dM%d", e, m);
+    if (gamemode == commercial)
+        snprintf(name, sizeof(name), "MAP%02d", m);
+    else
+        snprintf(name, sizeof(name), "E%dM%d", e, m);
 
-  return name;
+    return name;
 }

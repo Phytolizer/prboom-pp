@@ -36,8 +36,8 @@
 #define __R_DATA__
 
 #include "r_defs.hh"
-#include "r_state.hh"
 #include "r_patch.hh"
+#include "r_state.hh"
 
 // A single patch from a texture definition, basically
 // a rectangular area within the texture rectangle.

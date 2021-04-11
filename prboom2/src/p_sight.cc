@@ -33,14 +33,14 @@
 
 #include "doomstat.hh"
 #include "doomtype.hh"
-#include "r_main.hh"
+#include "e6y.hh" //e6y
+#include "g_overflow.hh"
+#include "lprintf.hh"
+#include "m_bbox.hh"
 #include "p_map.hh"
 #include "p_maputl.hh"
 #include "p_setup.hh"
-#include "m_bbox.hh"
-#include "lprintf.hh"
-#include "g_overflow.hh"
-#include "e6y.hh" //e6y
+#include "r_main.hh"
 
 /*
 ==============================================================================

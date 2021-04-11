@@ -40,12 +40,12 @@
 #include "SDL_image.h"
 #endif
 
-#include "gl_opengl.hh"
-#include "gl_intern.hh"
-#include "w_wad.hh"
-#include "m_misc.hh"
 #include "am_map.hh"
+#include "gl_intern.hh"
+#include "gl_opengl.hh"
 #include "lprintf.hh"
+#include "m_misc.hh"
+#include "w_wad.hh"
 
 am_icon_t am_icons[am_icon_count + 1] = {
     {static_cast<GLuint>(-1), "M_SHADOW"},
@@ -148,14 +148,14 @@ void gld_AddNiceThing(int type, float x, float y, float radius, float angle,
 
 #define MAP_NICE_THING_INIT(index, _x, _y, _u, _v)                             \
     {                                                                          \
-        thing.v[index].x = _x;                                                \
-        thing.v[index].y = _y;                                                \
-        thing.v[index].u = _u;                                                \
-        thing.v[index].v = _v;                                                \
-        thing.v[index].r = r;                                                 \
-        thing.v[index].g = g;                                                 \
-        thing.v[index].b = b;                                                 \
-        thing.v[index].a = a;                                                 \
+        thing.v[index].x = _x;                                                 \
+        thing.v[index].y = _y;                                                 \
+        thing.v[index].u = _u;                                                 \
+        thing.v[index].v = _v;                                                 \
+        thing.v[index].r = r;                                                  \
+        thing.v[index].g = g;                                                  \
+        thing.v[index].b = b;                                                  \
+        thing.v[index].a = a;                                                  \
     }
 
     MAP_NICE_THING_INIT(0, x + sina_r + cosa_r, y - cosa_r + sina_r, 1.0f,

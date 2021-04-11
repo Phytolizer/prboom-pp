@@ -1,6 +1,6 @@
 #pragma once
-#include <cstdint>
 #include "../smart_enum.hh"
+#include <cstdint>
 namespace midi_controller_t
 {
 class Type final : public SmartEnum<uint32_t, Type>

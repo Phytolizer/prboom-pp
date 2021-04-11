@@ -37,17 +37,17 @@
 #include "config.h"
 #endif
 
+#include <climits>
 #include <cstdio>
 #include <cstdlib>
-#include <ctime>
-#include <climits>
 #include <cstring>
+#include <ctime>
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif
+#include <csignal>
 #include <cstdarg>
 #include <fcntl.h>
-#include <csignal>
 #include <sys/types.h>
 
 #ifdef USE_SDL_NET
@@ -55,8 +55,8 @@
 #endif
 
 #include "doomtype.hh"
-#include "protocol.hh"
 #include "i_network.hh"
+#include "protocol.hh"
 #ifndef PRBOOM_SERVER
 #include "m_fixed.hh"
 #endif

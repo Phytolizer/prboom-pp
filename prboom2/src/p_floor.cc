@@ -33,15 +33,15 @@
  *-----------------------------------------------------------------------------*/
 
 #include "doomstat.hh"
-#include "r_main.hh"
+#include "e6y.hh" //e6y
+#include "g_overflow.hh"
+#include "lprintf.hh"
 #include "p_map.hh"
 #include "p_spec.hh"
 #include "p_tick.hh"
+#include "r_main.hh"
 #include "s_sound.hh"
 #include "sounds.hh"
-#include "lprintf.hh"
-#include "g_overflow.hh"
-#include "e6y.hh" //e6y
 
 // e6y
 #define STAIRS_UNINITIALIZED_CRUSH_FIELD_VALUE 10

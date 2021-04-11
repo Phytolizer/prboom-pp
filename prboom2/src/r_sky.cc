@@ -38,8 +38,8 @@
 #pragma implementation "r_sky.h"
 #endif
 #include "r_sky.hh"
-#include "r_main.hh"
 #include "e6y.hh"
+#include "r_main.hh"
 
 //
 // sky mapping

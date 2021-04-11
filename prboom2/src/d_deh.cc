@@ -35,22 +35,22 @@
  *--------------------------------------------------------------------*/
 
 // killough 5/2/98: fixed headers, removed rendunant external declarations:
-#include <algorithm>
-#include "doomdef.hh"
-#include "doomtype.hh"
-#include "doomstat.hh"
 #include "d_deh.hh"
-#include "sounds.hh"
-#include "info.hh"
-#include "m_cheat.hh"
-#include "p_inter.hh"
-#include "p_enemy.hh"
-#include "g_game.hh"
 #include "d_think.hh"
-#include "w_wad.hh"
-#include "m_argv.hh"
-#include "m_misc.hh"
+#include "doomdef.hh"
+#include "doomstat.hh"
+#include "doomtype.hh"
 #include "e6y.hh" //e6y
+#include "g_game.hh"
+#include "info.hh"
+#include "m_argv.hh"
+#include "m_cheat.hh"
+#include "m_misc.hh"
+#include "p_enemy.hh"
+#include "p_inter.hh"
+#include "sounds.hh"
+#include "w_wad.hh"
+#include <algorithm>
 
 // CPhipps - modify to use logical output routine
 #include "lprintf.hh"
@@ -942,7 +942,7 @@ using deh_block = struct
 #define DEH_BUFFERMAX 1024 // input buffer area size, hardcodedfor now
 // killough 8/9/98: make DEH_BLOCKMAX self-adjusting
 #define DEH_BLOCKMAX (sizeof deh_blocks / sizeof *deh_blocks) // size of array
-#define DEH_MAXKEYLEN 32 // as much of any key as we'll look at
+#define DEH_MAXKEYLEN 32   // as much of any key as we'll look at
 #define DEH_MOBJINFOMAX 25 // number of ints in the mobjinfo_t structure (!)
 
 // Put all the block header values, and the function to be called when that
@@ -1048,15 +1048,15 @@ static const struct deh_mobjflags_s deh_mobjflags[] = {
     {"SLIDE", MF_SLIDE},               // keep info about sliding along walls
     {"FLOAT", MF_FLOAT},               // allow movement to any height
     {"TELEPORT", MF_TELEPORT},         // don't cross lines or look at heights
-    {"MISSILE", MF_MISSILE},     // don't hit same species, explode on block
-    {"DROPPED", MF_DROPPED},     // dropped, not spawned (like ammo clip)
-    {"SHADOW", MF_SHADOW},       // use fuzzy draw like spectres
-    {"NOBLOOD", MF_NOBLOOD},     // puffs instead of blood when shot
-    {"CORPSE", MF_CORPSE},       // so it will slide down steps when dead
-    {"INFLOAT", MF_INFLOAT},     // float but not to target height
-    {"COUNTKILL", MF_COUNTKILL}, // count toward the kills total
-    {"COUNTITEM", MF_COUNTITEM}, // count toward the items total
-    {"SKULLFLY", MF_SKULLFLY},   // special handling for flying skulls
+    {"MISSILE", MF_MISSILE},         // don't hit same species, explode on block
+    {"DROPPED", MF_DROPPED},         // dropped, not spawned (like ammo clip)
+    {"SHADOW", MF_SHADOW},           // use fuzzy draw like spectres
+    {"NOBLOOD", MF_NOBLOOD},         // puffs instead of blood when shot
+    {"CORPSE", MF_CORPSE},           // so it will slide down steps when dead
+    {"INFLOAT", MF_INFLOAT},         // float but not to target height
+    {"COUNTKILL", MF_COUNTKILL},     // count toward the kills total
+    {"COUNTITEM", MF_COUNTITEM},     // count toward the items total
+    {"SKULLFLY", MF_SKULLFLY},       // special handling for flying skulls
     {"NOTDMATCH", MF_NOTDEATHMATCH}, // do not spawn in deathmatch
 
     // killough 10/98: TRANSLATION consists of 2 bits, not 1:
@@ -1404,8 +1404,8 @@ void deh_changeCompTranslucency()
     int i;
     int predefined_translucency[] = {
         MT_FIRE,      MT_SMOKE,    MT_FATSHOT, MT_BARON_SHOT, MT_SPAWNFIRE,
-        MT_TROOPSHOT, MT_HEADSHOT, MT_PLASMA,  MT_BFG,         MT_ARACHPLAZ,
-        MT_PUFF,      MT_TFOG,     MT_IFOG,    MT_MISC12,      MT_INV,
+        MT_TROOPSHOT, MT_HEADSHOT, MT_PLASMA,  MT_BFG,        MT_ARACHPLAZ,
+        MT_PUFF,      MT_TFOG,     MT_IFOG,    MT_MISC12,     MT_INV,
         MT_INS,       MT_MEGA};
 
     for (i = 0; (size_t)i < sizeof(predefined_translucency) /
@@ -1819,8 +1819,8 @@ static uint_64_t getConvertedDEHBits(uint_64_t bits)
         MF_COUNTITEM, // 23 Affects item % - affects percentage items gathered
                       // on level summary.
         MF_SKULLFLY,  // 24 Running - special handling for flying skulls.
-        MF_NOTDEATHMATCH, // 25 Not in deathmatch - do not spawn in deathmatch (like
-                      // keys)
+        MF_NOTDEATHMATCH, // 25 Not in deathmatch - do not spawn in deathmatch
+                          // (like keys)
         MF_TRANSLATION1, // 26 Color 1 (grey / red)
         MF_TRANSLATION2, // 27 Color 2 (brown / red)
         // Convert bit 28 to MF_TOUCHY, not (MF_TRANSLATION1|MF_TRANSLATION2)

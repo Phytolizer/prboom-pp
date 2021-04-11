@@ -39,18 +39,18 @@
 #include "config.h"
 #endif
 
+#include "d_main.hh"
 #include "doomstat.hh"
-#include "s_sound.hh"
-#include "s_advsound.hh"
+#include "e6y.hh"
 #include "i_sound.hh"
 #include "i_system.hh"
-#include "d_main.hh"
-#include "r_main.hh"
-#include "m_random.hh"
-#include "w_wad.hh"
 #include "lprintf.hh"
+#include "m_random.hh"
+#include "r_main.hh"
+#include "s_advsound.hh"
+#include "s_sound.hh"
 #include "sc_man.hh"
-#include "e6y.hh"
+#include "w_wad.hh"
 
 // when to clip out sounds
 // Does not fit the large outdoor areas.
@@ -216,10 +216,10 @@ void S_Stop()
 
 static inline int WRAP(int i, int w)
 {
-  while (i < 0)
-    i += w;
+    while (i < 0)
+        i += w;
 
-  return i % w;
+    return i % w;
 }
 
 void S_Start(void)
@@ -252,7 +252,7 @@ void S_Start(void)
     }
     else if (gamemode == commercial)
     {
-      mnum = mus_runnin + WRAP(gamemap - 1, NUMMUSIC - mus_runnin);
+        mnum = mus_runnin + WRAP(gamemap - 1, NUMMUSIC - mus_runnin);
     }
     else
     {
@@ -271,16 +271,17 @@ void S_Start(void)
 
         if (heretic)
         {
-          mnum = heretic_mus_e1m1 +
-                 WRAP((gameepisode - 1) * 9 + gamemap - 1, HERETIC_NUMMUSIC - heretic_mus_e1m1);
+            mnum = heretic_mus_e1m1 + WRAP((gameepisode - 1) * 9 + gamemap - 1,
+                                           HERETIC_NUMMUSIC - heretic_mus_e1m1);
         }
         else if (gameepisode < 4)
         {
-          mnum = mus_e1m1 + WRAP((gameepisode - 1) * 9 + gamemap - 1, mus_runnin - mus_e1m1);
+            mnum = mus_e1m1 + WRAP((gameepisode - 1) * 9 + gamemap - 1,
+                                   mus_runnin - mus_e1m1);
         }
         else
         {
-          mnum = spmus[WRAP(gamemap - 1, 9)];
+            mnum = spmus[WRAP(gamemap - 1, 9)];
         }
     }
 

@@ -19,11 +19,11 @@
 #include <cstdlib>
 #include <cstring>
 
-#include "doomtype.hh"
 #include "doomstat.hh"
-#include "m_misc.hh"
-#include "lprintf.hh"
+#include "doomtype.hh"
 #include "e6y.hh"
+#include "lprintf.hh"
+#include "m_misc.hh"
 
 #include "demo.hh"
 

@@ -32,16 +32,16 @@
  *---------------------------------------------------------------------
  */
 
-#include "doomstat.hh"
-#include "r_defs.hh"
-#include "r_state.hh"
-#include "p_spec.hh"
-#include "r_demo.hh"
 #include "r_fps.hh"
-#include "i_system.hh"
-#include "i_capture.hh"
-#include "e6y.hh"
+#include "doomstat.hh"
 #include "dsda/settings.hh"
+#include "e6y.hh"
+#include "i_capture.hh"
+#include "i_system.hh"
+#include "p_spec.hh"
+#include "r_defs.hh"
+#include "r_demo.hh"
+#include "r_state.hh"
 
 int movement_smooth_default;
 int movement_smooth;
@@ -87,7 +87,7 @@ void M_ChangeUncappedFrameRate()
 
 void R_InitInterpolation()
 {
-  tic_vars.tics_per_usec = dsda_RealticClockRate() * TICRATE / 100000000.0f;
+    tic_vars.tics_per_usec = dsda_RealticClockRate() * TICRATE / 100000000.0f;
 }
 
 typedef fixed_t fixed2_t[2];

@@ -37,15 +37,15 @@
  *-----------------------------------------------------------------------------
  */
 
-#include "doomstat.hh"
+#include "d_deh.hh" // Ty 03/22/98 - externalizations
 #include "d_event.hh"
+#include "doomstat.hh"
+#include "f_finale.hh" // CPhipps - hmm...
 #include "g_game.hh"
-#include "v_video.hh"
-#include "w_wad.hh"
 #include "s_sound.hh"
 #include "sounds.hh"
-#include "d_deh.hh"    // Ty 03/22/98 - externalizations
-#include "f_finale.hh" // CPhipps - hmm...
+#include "v_video.hh"
+#include "w_wad.hh"
 
 void F_StartCast();
 void F_TextWrite();

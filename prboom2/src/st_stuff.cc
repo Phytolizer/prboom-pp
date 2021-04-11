@@ -33,22 +33,22 @@
  *
  *-----------------------------------------------------------------------------*/
 
-#include <array>
+#include "st_stuff.hh"
+#include "am_map.hh"
 #include "doomdef.hh"
 #include "doomstat.hh"
-#include "m_random.hh"
+#include "dstrings.hh"
+#include "e6y.hh" //e6y
 #include "i_video.hh"
-#include "w_wad.hh"
-#include "st_stuff.hh"
-#include "st_lib.hh"
-#include "r_main.hh"
-#include "am_map.hh"
 #include "m_cheat.hh"
+#include "m_random.hh"
+#include "r_draw.hh"
+#include "r_main.hh"
 #include "s_sound.hh"
 #include "sounds.hh"
-#include "dstrings.hh"
-#include "r_draw.hh"
-#include "e6y.hh" //e6y
+#include "st_lib.hh"
+#include "w_wad.hh"
+#include <array>
 
 #include "dsda/settings.hh"
 

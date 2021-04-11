@@ -14,8 +14,8 @@
 // GNU General Public License for more details.
 //
 
-#include "doomtype.hh"
 #include "sounds.hh"
+#include "doomtype.hh"
 
 musicinfo_t heretic_S_music[] = {
     {nullptr},       {"MUS_E1M1", 0}, // 1-1

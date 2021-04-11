@@ -35,16 +35,16 @@
 
 #include <cstdint>
 
+#include "am_map.hh"
 #include "doomstat.hh"
-#include "w_wad.hh"
-#include "r_main.hh"
+#include "g_game.hh"
+#include "lprintf.hh"
 #include "r_draw.hh"
 #include "r_filter.hh"
-#include "v_video.hh"
+#include "r_main.hh"
 #include "st_stuff.hh"
-#include "g_game.hh"
-#include "am_map.hh"
-#include "lprintf.hh"
+#include "v_video.hh"
+#include "w_wad.hh"
 
 //
 // All drawing to the view buffer is accomplished in this file.
@@ -1290,7 +1290,7 @@ void R_FillBackScreen()
             V_FillFlat(grnrock.lumpnum, 1, SCREENWIDTH - wide_offsetx,
                        stbar_top, wide_offsetx, ST_SCALED_HEIGHT, VPT_NONE);
 
-      // heretic_note: I think this looks bad, so I'm skipping it...
+            // heretic_note: I think this looks bad, so I'm skipping it...
             if (heretic)
             {
                 return;
@@ -1321,22 +1321,30 @@ void R_FillBackScreen()
                     SCREENWIDTH, brdr_b.height, VPT_NONE);
     }
 
-  V_FillPatch(brdr_t.lumpnum, 1, viewwindowx, viewwindowy - g_border_offset, scaledviewwidth, brdr_t.height, VPT_NONE);
+    V_FillPatch(brdr_t.lumpnum, 1, viewwindowx, viewwindowy - g_border_offset,
+                scaledviewwidth, brdr_t.height, VPT_NONE);
 
-  V_FillPatch(brdr_b.lumpnum, 1, viewwindowx, viewwindowy + viewheight, scaledviewwidth, brdr_b.height, VPT_NONE);
+    V_FillPatch(brdr_b.lumpnum, 1, viewwindowx, viewwindowy + viewheight,
+                scaledviewwidth, brdr_b.height, VPT_NONE);
 
-  V_FillPatch(brdr_l.lumpnum, 1, viewwindowx - g_border_offset, viewwindowy, brdr_l.width, viewheight, VPT_NONE);
+    V_FillPatch(brdr_l.lumpnum, 1, viewwindowx - g_border_offset, viewwindowy,
+                brdr_l.width, viewheight, VPT_NONE);
 
-  V_FillPatch(brdr_r.lumpnum, 1, viewwindowx + scaledviewwidth, viewwindowy, brdr_r.width, viewheight, VPT_NONE);
+    V_FillPatch(brdr_r.lumpnum, 1, viewwindowx + scaledviewwidth, viewwindowy,
+                brdr_r.width, viewheight, VPT_NONE);
 
     // Draw beveled edge.
-  V_DrawNumPatch(viewwindowx - g_border_offset, viewwindowy - g_border_offset, 1, brdr_tl.lumpnum, CR_DEFAULT, VPT_NONE);
+    V_DrawNumPatch(viewwindowx - g_border_offset, viewwindowy - g_border_offset,
+                   1, brdr_tl.lumpnum, CR_DEFAULT, VPT_NONE);
 
-  V_DrawNumPatch(viewwindowx + scaledviewwidth, viewwindowy - g_border_offset, 1, brdr_tr.lumpnum, CR_DEFAULT, VPT_NONE);
+    V_DrawNumPatch(viewwindowx + scaledviewwidth, viewwindowy - g_border_offset,
+                   1, brdr_tr.lumpnum, CR_DEFAULT, VPT_NONE);
 
-  V_DrawNumPatch(viewwindowx - g_border_offset, viewwindowy + viewheight, 1, brdr_bl.lumpnum, CR_DEFAULT, VPT_NONE);
+    V_DrawNumPatch(viewwindowx - g_border_offset, viewwindowy + viewheight, 1,
+                   brdr_bl.lumpnum, CR_DEFAULT, VPT_NONE);
 
-  V_DrawNumPatch(viewwindowx + scaledviewwidth, viewwindowy + viewheight, 1, brdr_br.lumpnum, CR_DEFAULT, VPT_NONE);
+    V_DrawNumPatch(viewwindowx + scaledviewwidth, viewwindowy + viewheight, 1,
+                   brdr_br.lumpnum, CR_DEFAULT, VPT_NONE);
 }
 
 //

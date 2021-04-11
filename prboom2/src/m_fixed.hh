@@ -38,8 +38,8 @@
 #include "config.h"
 #endif
 
-#include <stdlib.h>
 #include "doomtype.hh"
+#include <stdlib.h>
 
 /*
  * Fixed point, 32bit as 16.16.

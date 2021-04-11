@@ -74,8 +74,8 @@
 #include <SDL.h>
 
 #include "doomstat.hh"
-#include "v_video.hh"
 #include "gl_intern.hh"
+#include "v_video.hh"
 
 extern int gl_texture_hqresize;
 const char *gl_hqresizemodes[hq_scale_max] = {"Off", "Scale2x", "Scale3x",

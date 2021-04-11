@@ -1,6 +1,6 @@
 #pragma once
-#include <cstdint>
 #include "../smart_enum.hh"
+#include <cstdint>
 namespace packet_type_e
 {
 class Type final : public SmartEnum<uint8_t, Type>

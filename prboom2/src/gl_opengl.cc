@@ -37,8 +37,8 @@
 
 #include <cstdio>
 
-#include <SDL.h>
 #include "gl_opengl.hh"
+#include <SDL.h>
 
 #include "doomtype.hh"
 #include "lprintf.hh"

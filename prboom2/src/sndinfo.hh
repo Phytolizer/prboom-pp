@@ -6,7 +6,8 @@
 namespace sndinfo
 {
 
-struct SoundInfo {
+struct SoundInfo
+{
     std::vector<std::string> lumps;
     bool singularity;
     int pitch;

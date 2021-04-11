@@ -36,8 +36,8 @@
 #include "s_sound.hh"
 #include "w_wad.hh"
 
-#include "opl.hh"
 #include "midifile.hh"
+#include "opl.hh"
 
 #include "musicplayer.hh"
 

@@ -46,13 +46,13 @@
 
 #include "gl_opengl.hh"
 
+#include "am_map.hh"
 #include "doomstat.hh"
 #include "gl_intern.hh"
 #include "gl_struct.hh"
+#include "lprintf.hh"
 #include "p_maputl.hh"
 #include "r_main.hh"
-#include "am_map.hh"
-#include "lprintf.hh"
 
 static FILE *levelinfo;
 

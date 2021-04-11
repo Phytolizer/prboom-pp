@@ -20,7 +20,7 @@
 
 #include "r_defs.hh"
 
-enum dsda_split_class_t 
+enum dsda_split_class_t
 {
     DSDA_SPLIT_BLUE_KEY,
     DSDA_SPLIT_YELLOW_KEY,

@@ -37,20 +37,20 @@
 
 #ifdef USE_SHADERS
 
+#include "doomstat.hh"
+#include "e6y.hh"
+#include "gl_intern.hh"
+#include "gl_opengl.hh"
+#include "i_system.hh"
+#include "lprintf.hh"
+#include "r_bsp.hh"
+#include "r_main.hh"
+#include "r_things.hh"
+#include "v_video.hh"
+#include "w_wad.hh"
 #include <SDL.h>
 #include <SDL_opengl.h>
 #include <cmath>
-#include "doomstat.hh"
-#include "v_video.hh"
-#include "gl_opengl.hh"
-#include "gl_intern.hh"
-#include "r_main.hh"
-#include "w_wad.hh"
-#include "i_system.hh"
-#include "r_bsp.hh"
-#include "lprintf.hh"
-#include "e6y.hh"
-#include "r_things.hh"
 
 GLShader *sh_main = nullptr;
 static GLShader *active_shader = nullptr;

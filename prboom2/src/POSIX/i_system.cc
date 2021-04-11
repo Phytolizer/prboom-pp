@@ -39,18 +39,18 @@
 
 #include <cstdio>
 
-#include <cstdarg>
-#include <cstdlib>
-#include <unistd.h>
-#include <sys/time.h>
 #include <cctype>
 #include <csignal>
+#include <cstdarg>
+#include <cstdlib>
 #include <cstring>
+#include <sys/time.h>
+#include <unistd.h>
 
-#include "doomtype.hh"
-#include "m_fixed.hh"
-#include "i_system.hh"
 #include "doomdef.hh"
+#include "doomtype.hh"
+#include "i_system.hh"
+#include "m_fixed.hh"
 
 #ifdef __GNUG__
 #pragma implementation "i_system.h"

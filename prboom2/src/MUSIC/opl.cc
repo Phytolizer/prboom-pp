@@ -28,9 +28,9 @@
 #include <cstdio>
 #include <cstdlib>
 
+#include "dbopl.hh"
 #include "opl.hh"
 #include "opl_queue.hh"
-#include "dbopl.hh"
 
 #include "i_sound.hh" // mus_opl_gain
 

@@ -37,13 +37,13 @@
  *-----------------------------------------------------------------------------
  */
 
-#include "doomdef.hh"
-#include "sounds.hh"
-#include "m_fixed.hh"
-#include "p_mobj.hh"
-#include "p_enemy.hh"
-#include "p_pspr.hh"
 #include "info.hh"
+#include "doomdef.hh"
+#include "m_fixed.hh"
+#include "p_enemy.hh"
+#include "p_mobj.hh"
+#include "p_pspr.hh"
+#include "sounds.hh"
 
 // killough 10/98: beta lost souls attacked different
 void A_BetaSkullAttack(mobj_t *);

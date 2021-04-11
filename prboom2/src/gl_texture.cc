@@ -46,29 +46,29 @@
 #ifndef CALLBACK
 #define CALLBACK
 #endif
-#include <cstdio>
-#include <cstring>
-#include <SDL.h>
-#include "doomtype.hh"
-#include "w_wad.hh"
-#include "m_argv.hh"
 #include "d_event.hh"
-#include "v_video.hh"
 #include "doomstat.hh"
-#include "r_bsp.hh"
-#include "r_main.hh"
-#include "r_draw.hh"
-#include "r_sky.hh"
-#include "r_plane.hh"
-#include "r_data.hh"
-#include "p_maputl.hh"
-#include "p_tick.hh"
-#include "m_bbox.hh"
-#include "lprintf.hh"
+#include "doomtype.hh"
+#include "e6y.hh"
 #include "gl_intern.hh"
 #include "gl_struct.hh"
+#include "lprintf.hh"
+#include "m_argv.hh"
+#include "m_bbox.hh"
+#include "p_maputl.hh"
 #include "p_spec.hh"
-#include "e6y.hh"
+#include "p_tick.hh"
+#include "r_bsp.hh"
+#include "r_data.hh"
+#include "r_draw.hh"
+#include "r_main.hh"
+#include "r_plane.hh"
+#include "r_sky.hh"
+#include "v_video.hh"
+#include "w_wad.hh"
+#include <SDL.h>
+#include <cstdio>
+#include <cstring>
 
 int imageformats[5] = {0, GL_LUMINANCE, GL_LUMINANCE_ALPHA, GL_RGB, GL_RGBA};
 

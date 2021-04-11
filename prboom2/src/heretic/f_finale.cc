@@ -16,10 +16,10 @@
 // F_finale.c
 
 #include "doomstat.hh"
-#include "w_wad.hh"
-#include "v_video.hh"
 #include "s_sound.hh"
 #include "sounds.hh"
+#include "v_video.hh"
+#include "w_wad.hh"
 
 #include "dsda/palette.hh"
 

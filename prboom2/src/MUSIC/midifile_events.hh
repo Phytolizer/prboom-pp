@@ -1,6 +1,6 @@
 #pragma once
-#include "doomtype.hh"
 #include "cpp/enums/midi_meta_event_type_t.hh"
+#include "doomtype.hh"
 
 struct midi_meta_event_data_t
 {

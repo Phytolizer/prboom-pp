@@ -33,25 +33,25 @@
  *
  *-----------------------------------------------------------------------------*/
 
-#include "doomstat.hh"
+#include "p_user.hh"
 #include "d_event.hh"
-#include "r_main.hh"
+#include "doomstat.hh"
+#include "e6y.hh" //e6y
+#include "g_game.hh"
 #include "p_map.hh"
 #include "p_spec.hh"
-#include "p_user.hh"
 #include "r_demo.hh"
 #include "r_fps.hh"
-#include "g_game.hh"
-#include "e6y.hh" //e6y
+#include "r_main.hh"
 
 #include "dsda/settings.hh"
 
 // heretic needs
 #include "heretic/def.hh"
+#include "m_random.hh"
+#include "p_inter.hh"
 #include "s_sound.hh"
 #include "sounds.hh"
-#include "p_inter.hh"
-#include "m_random.hh"
 
 //
 // Movement.

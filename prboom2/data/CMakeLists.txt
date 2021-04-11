@@ -1,29 +1,29 @@
 # PrBoom-Plus WAD creation tool
 
 if(NOT CMAKE_CROSSCOMPILING)
-    add_executable(rdatawad
-        rd_main.cc
-        rd_util.cc
-        rd_util.hh
-        rd_output.cc
-        rd_output.hh
-        rd_sound.cc
-        rd_sound.hh
-        rd_palette.cc
-        rd_palette.hh
-        rd_graphic.cc
-        rd_graphic.hh
-    )
-    target_include_directories(rdatawad PRIVATE ${CMAKE_BINARY_DIR})
+  add_executable(
+    rdatawad
+    rd_main.cc
+    rd_util.cc
+    rd_util.hh
+    rd_output.cc
+    rd_output.hh
+    rd_sound.cc
+    rd_sound.hh
+    rd_palette.cc
+    rd_palette.hh
+    rd_graphic.cc
+    rd_graphic.hh)
+  target_include_directories(rdatawad PRIVATE ${CMAKE_BINARY_DIR})
 
-    set(CROSS_EXPORTS ${CROSS_EXPORTS} rdatawad PARENT_SCOPE)
+  set(CROSS_EXPORTS
+      ${CROSS_EXPORTS} rdatawad
+      PARENT_SCOPE)
 endif()
 
 # PrBoom-Plus internal WAD
 
-set(PALETTE
-    palette.rgb
-)
+set(PALETTE palette.rgb)
 
 set(LUMPS
     lumps/switches.lmp
@@ -38,12 +38,9 @@ set(LUMPS
     lumps/crblue.lmp
     lumps/crblue2.lmp
     lumps/crorange.lmp
-    lumps/cryellow.lmp
-)
+    lumps/cryellow.lmp)
 
-set(COLORMAPS
-    lumps/watermap.lmp
-)
+set(COLORMAPS lumps/watermap.lmp)
 
 set(TABLES
     lumps/sinetabl.lmp
@@ -66,16 +63,10 @@ set(TABLES
     lumps/m_shadow.lmp
     lumps/m_power.lmp
     lumps/m_weap.lmp
-    lumps/m_mark.lmp
-)
+    lumps/m_mark.lmp)
 
-set(SOUNDS
-    sounds/dsdgsit.wav
-    sounds/dsdgatk.wav
-    sounds/dsdgact.wav
-    sounds/dsdgdth.wav
-    sounds/dsdgpain.wav
-)
+set(SOUNDS sounds/dsdgsit.wav sounds/dsdgatk.wav sounds/dsdgact.wav
+           sounds/dsdgdth.wav sounds/dsdgpain.wav)
 
 set(GRAPHICS
     graphics/dig033.ppm
@@ -198,16 +189,11 @@ set(GRAPHICS
     graphics/m_vbox.ppm
     graphics/cross1.ppm
     graphics/cross2.ppm
-    graphics/cross3.ppm
-)
+    graphics/cross3.ppm)
 
-set(FLATS
-    flats/-n0_tex-.ppm
-)
+set(FLATS flats/-n0_tex-.ppm)
 
-set(SPRITES
-    sprites/tnt1a0.ppm
-)
+set(SPRITES sprites/tnt1a0.ppm)
 set(SPRITEP "0,0,sprites/tnt1a0.ppm")
 
 set(SPRITES
@@ -281,8 +267,7 @@ set(SPRITES
     sprites/dogsk0.ppm
     sprites/dogsl0.ppm
     sprites/dogsm0.ppm
-    sprites/dogsn0.ppm
-)
+    sprites/dogsn0.ppm)
 set(SPRITEP
     ${SPRITEP}
     "33,66,sprites/dogsa1.ppm"
@@ -354,8 +339,7 @@ set(SPRITEP
     "33,67,sprites/dogsk0.ppm"
     "33,67,sprites/dogsl0.ppm"
     "33,68,sprites/dogsm0.ppm"
-    "33,69,sprites/dogsn0.ppm"
-)
+    "33,69,sprites/dogsn0.ppm")
 
 set(SPRITES
     ${SPRITES}
@@ -370,8 +354,7 @@ set(SPRITES
     sprites/pls2b0.ppm
     sprites/pls2c0.ppm
     sprites/pls2d0.ppm
-    sprites/pls2e0.ppm
-)
+    sprites/pls2e0.ppm)
 set(SPRITEP
     ${SPRITEP}
     "9,11,sprites/pls1a0.ppm"
@@ -385,8 +368,7 @@ set(SPRITEP
     "8,13,sprites/pls2b0.ppm"
     "11,18,sprites/pls2c0.ppm"
     "16,27,sprites/pls2d0.ppm"
-    "18,27,sprites/pls2e0.ppm"
-)
+    "18,27,sprites/pls2e0.ppm")
 
 set(WAD_SRC
     ${PALETTE}
@@ -396,24 +378,49 @@ set(WAD_SRC
     ${SOUNDS}
     ${GRAPHICS}
     ${FLATS}
-    ${SPRITES}
-)
+    ${SPRITES})
 
 set(WAD_CMDLINE
-    -palette ${PALETTE}
-    -lumps ${LUMPS}
-    -marker C_START -lumps ${COLORMAPS} -marker C_END
-    -marker B_START -lumps ${TABLES} -marker B_END
-    -sounds ${SOUNDS}
-    -graphics ${GRAPHICS}
-    -marker FF_START -flats ${FLATS} -marker FF_END
-    -marker SS_START -sprites ${SPRITEP} -marker SS_END
-)
+    -palette
+    ${PALETTE}
+    -lumps
+    ${LUMPS}
+    -marker
+    C_START
+    -lumps
+    ${COLORMAPS}
+    -marker
+    C_END
+    -marker
+    B_START
+    -lumps
+    ${TABLES}
+    -marker
+    B_END
+    -sounds
+    ${SOUNDS}
+    -graphics
+    ${GRAPHICS}
+    -marker
+    FF_START
+    -flats
+    ${FLATS}
+    -marker
+    FF_END
+    -marker
+    SS_START
+    -sprites
+    ${SPRITEP}
+    -marker
+    SS_END)
 
 add_custom_command(
-    OUTPUT "${WAD_DATA_PATH}"
-    COMMAND rdatawad -I "${CMAKE_CURRENT_SOURCE_DIR}" ${WAD_CMDLINE} -o "${WAD_DATA_PATH}"
-    DEPENDS rdatawad ${WAD_SRC}
-)
+  OUTPUT "${WAD_DATA_PATH}"
+  COMMAND rdatawad -I "${CMAKE_CURRENT_SOURCE_DIR}" ${WAD_CMDLINE} -o
+          "${WAD_DATA_PATH}"
+  DEPENDS rdatawad ${WAD_SRC})
 add_custom_target(prboom-pp-wad DEPENDS ${WAD_DATA_PATH})
-install(FILES ${WAD_DATA_PATH} DESTINATION ${DOOMWADDIR} COMPONENT "PrBoom-PP internal WAD")
+install(
+  FILES ${WAD_DATA_PATH}
+  DESTINATION ${DOOMWADDIR}
+  COMPONENT "PrBoom-PP internal WAD")

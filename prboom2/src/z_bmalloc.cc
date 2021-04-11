@@ -35,10 +35,10 @@
 #include "config.h"
 #endif
 
-#include <cstdlib>
 #include "doomtype.hh"
-#include "z_bmalloc.hh"
 #include "lprintf.hh"
+#include "z_bmalloc.hh"
+#include <cstdlib>
 
 using bmalpool_t = struct bmalpool_s
 {

@@ -35,17 +35,17 @@
 #include "config.h"
 #endif
 
-#include <cstdio>
 #include <cstdarg>
 #include <cstdint>
+#include <cstdio>
 
 #include "g_overflow.hh"
 
 #include "doomstat.hh"
+#include "e6y.hh"
 #include "lprintf.hh"
 #include "m_argv.hh"
 #include "m_misc.hh"
-#include "e6y.hh"
 
 int overflows_enabled = true;
 

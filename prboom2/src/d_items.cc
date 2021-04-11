@@ -33,9 +33,9 @@
  */
 
 // We are referring to sprite numbers.
+#include "d_items.hh"
 #include "doomtype.hh"
 #include "info.hh"
-#include "d_items.hh"
 
 //
 // PSPRITE ACTIONS for waepons.

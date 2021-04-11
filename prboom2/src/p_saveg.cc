@@ -33,18 +33,18 @@
 
 #include <cstdint>
 
+#include "am_map.hh"
 #include "doomstat.hh"
-#include "r_main.hh"
+#include "e6y.hh" //e6y
+#include "lprintf.hh"
+#include "m_random.hh"
+#include "p_enemy.hh"
 #include "p_maputl.hh"
+#include "p_saveg.hh"
 #include "p_spec.hh"
 #include "p_tick.hh"
-#include "p_saveg.hh"
-#include "m_random.hh"
-#include "am_map.hh"
-#include "p_enemy.hh"
-#include "lprintf.hh"
+#include "r_main.hh"
 #include "s_advsound.hh"
-#include "e6y.hh" //e6y
 
 #include "dsda/msecnode.hh"
 

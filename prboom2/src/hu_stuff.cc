@@ -33,29 +33,28 @@
 
 // killough 5/3/98: remove unnecessary headers
 
-#include "doomstat.hh"
 #include "hu_stuff.hh"
-#include "hu_lib.hh"
-#include "hu_tracers.hh"
-#include "st_stuff.hh" /* jff 2/16/98 need loc of status bar */
-#include "s_sound.hh"
-#include "dstrings.hh"
-#include "sounds.hh"
 #include "d_deh.hh" /* Ty 03/27/98 - externalization of mapnamesx arrays */
-#include "g_game.hh"
-#include "r_main.hh"
-#include "p_inter.hh"
-#include "p_tick.hh"
-#include "p_map.hh"
-#include "sc_man.hh"
-#include "m_misc.hh"
-#include "r_main.hh"
-#include "lprintf.hh"
-#include "e6y.hh" //e6y
+#include "doomstat.hh"
 #include "dsda.hh"
 #include "dsda/hud.hh"
 #include "dsda/settings.hh"
+#include "dstrings.hh"
+#include "e6y.hh" //e6y
+#include "g_game.hh"
 #include "g_overflow.hh"
+#include "hu_lib.hh"
+#include "hu_tracers.hh"
+#include "lprintf.hh"
+#include "m_misc.hh"
+#include "p_inter.hh"
+#include "p_map.hh"
+#include "p_tick.hh"
+#include "r_main.hh"
+#include "s_sound.hh"
+#include "sc_man.hh"
+#include "sounds.hh"
+#include "st_stuff.hh" /* jff 2/16/98 need loc of status bar */
 
 // global heads up display controls
 
@@ -271,56 +270,56 @@ static void HU_SetLumpTrans(const char *name)
     }
 }
 
-static const char* HU_Title(void)
+static const char *HU_Title(void)
 {
-  if (gamestate == GS_LEVEL && gamemap > 0 && gameepisode > 0)
-  {
-    if (heretic)
+    if (gamestate == GS_LEVEL && gamemap > 0 && gameepisode > 0)
     {
-      if (gameepisode < 6 && gamemap < 10)
-      {
-        return LevelNames[(gameepisode - 1) * 9 + gamemap - 1];
-      }
-    }
-    else
-    {
-      switch (gamemode)
-      {
-        case shareware:
-        case registered:
-        case retail:
-          // Chex.exe always uses the episode 1 level title
-          // eg. E2M1 gives the title for E1M1
-          if (gamemission == chex && gamemap < 10)
-          {
-            return *mapnames[gamemap - 1];
-          }
-          else if (gameepisode < 6 && gamemap < 10)
-          {
-            return *mapnames[(gameepisode - 1) * 9 + gamemap - 1];
-          }
-          break;
+        if (heretic)
+        {
+            if (gameepisode < 6 && gamemap < 10)
+            {
+                return LevelNames[(gameepisode - 1) * 9 + gamemap - 1];
+            }
+        }
+        else
+        {
+            switch (gamemode)
+            {
+            case shareware:
+            case registered:
+            case retail:
+                // Chex.exe always uses the episode 1 level title
+                // eg. E2M1 gives the title for E1M1
+                if (gamemission == chex && gamemap < 10)
+                {
+                    return *mapnames[gamemap - 1];
+                }
+                else if (gameepisode < 6 && gamemap < 10)
+                {
+                    return *mapnames[(gameepisode - 1) * 9 + gamemap - 1];
+                }
+                break;
 
-        case commercial:
-        default:  // Ty 08/27/98 - modified to check mission for TNT/Plutonia
-          if (gamemission == pack_tnt && gamemap < 33)
-          {
-            return *mapnamest[gamemap - 1];
-          }
-          else if (gamemission == pack_plut && gamemap < 33)
-          {
-            return *mapnamesp[gamemap - 1];
-          }
-          else if (gamemap < 34)
-          {
-            return *mapnames2[gamemap - 1];
-          }
-          break;
-      }
+            case commercial:
+            default: // Ty 08/27/98 - modified to check mission for TNT/Plutonia
+                if (gamemission == pack_tnt && gamemap < 33)
+                {
+                    return *mapnamest[gamemap - 1];
+                }
+                else if (gamemission == pack_plut && gamemap < 33)
+                {
+                    return *mapnamesp[gamemap - 1];
+                }
+                else if (gamemap < 34)
+                {
+                    return *mapnames2[gamemap - 1];
+                }
+                break;
+            }
+        }
     }
-  }
 
-  return MAPNAME(gameepisode, gamemap);
+    return MAPNAME(gameepisode, gamemap);
 }
 
 //
@@ -630,11 +629,9 @@ void HU_Start()
     }
     else
     {
-    s = HU_Title();
-            {
+        s = HU_Title();
+        {} { /* cph - stop SEGV here when not in level */
         }
-            { /* cph - stop SEGV here when not in level */
-                }
 
         while (*s)
             HUlib_addCharToTextLine(&w_title, *(s++));
@@ -757,7 +754,6 @@ struct hud_cfg_item_t
     int x;
     int y;
 };
-
 
 using hud_widget_t = struct hud_widget_s
 {

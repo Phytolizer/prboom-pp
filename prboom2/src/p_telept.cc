@@ -33,15 +33,15 @@
 
 #include "doomdef.hh"
 #include "doomstat.hh"
-#include "p_spec.hh"
-#include "p_maputl.hh"
 #include "p_map.hh"
-#include "r_main.hh"
+#include "p_maputl.hh"
+#include "p_spec.hh"
 #include "p_tick.hh"
-#include "s_sound.hh"
-#include "sounds.hh"
 #include "p_user.hh"
 #include "r_demo.hh"
+#include "r_main.hh"
+#include "s_sound.hh"
+#include "sounds.hh"
 
 static mobj_t *P_TeleportDestination(line_t *line)
 {

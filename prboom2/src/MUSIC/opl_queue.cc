@@ -24,9 +24,9 @@
 //
 //-----------------------------------------------------------------------------
 
+#include "lprintf.hh"
 #include <cstdlib>
 #include <cstring>
-#include "lprintf.hh"
 
 #include "opl_queue.hh"
 

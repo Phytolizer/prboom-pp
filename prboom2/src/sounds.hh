@@ -38,9 +38,9 @@
 #ifdef __cplusplus
 
 #include "doomtype.hh"
-#include <vector>
-#include <string_view>
 #include <string>
+#include <string_view>
+#include <vector>
 
 //
 // SoundFX struct.

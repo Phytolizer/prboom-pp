@@ -31,12 +31,12 @@
 #include "SDL.h"
 #include "SDL_thread.h"
 
-#include <cstdio>
-#include <cstdlib>
+#include "i_capture.hh"
 #include "i_sound.hh"
 #include "i_video.hh"
 #include "lprintf.hh"
-#include "i_capture.hh"
+#include <cstdio>
+#include <cstdlib>
 
 int capturing_video = 0;
 static const char *vid_fname;
@@ -140,8 +140,8 @@ static void my_pclose3(pipeinfo_t *p);
 #ifndef WIN32_LEAN_AND_MEAN
 #define WIN32_LEAN_AND_MEAN 1
 #endif
-#include <windows.h>
 #include <io.h>
+#include <windows.h>
 
 typedef struct
 {
@@ -295,9 +295,9 @@ static void my_pclose3(pipeinfo_t *p)
 #else // _WIN32
 // posix implementation
 // not tested
-#include <unistd.h>
 #include <sys/types.h>
 #include <sys/wait.h>
+#include <unistd.h>
 
 using puser_t = struct
 {

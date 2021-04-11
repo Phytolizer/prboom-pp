@@ -34,17 +34,17 @@
  *
  *-----------------------------------------------------------------------------*/
 
+#include "p_maputl.hh"
 #include "doomstat.hh"
 #include "doomtype.hh"
-#include "m_bbox.hh"
-#include "r_main.hh"
-#include "p_maputl.hh"
-#include "p_map.hh"
-#include "p_setup.hh"
-#include "lprintf.hh"
+#include "e6y.hh" //e6y
 #include "g_game.hh"
 #include "g_overflow.hh"
-#include "e6y.hh" //e6y
+#include "lprintf.hh"
+#include "m_bbox.hh"
+#include "p_map.hh"
+#include "p_setup.hh"
+#include "r_main.hh"
 
 //
 // P_AproxDistance

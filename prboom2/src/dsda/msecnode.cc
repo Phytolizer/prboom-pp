@@ -15,11 +15,11 @@
 //	DSDA MSecNode Management
 //
 
-#include "r_defs.hh"
-#include "p_saveg.hh"
 #include "lprintf.hh"
-#include "p_tick.hh"
 #include "p_mobj.hh"
+#include "p_saveg.hh"
+#include "p_tick.hh"
+#include "r_defs.hh"
 
 #include "msecnode.hh"
 

@@ -36,9 +36,9 @@
 #ifdef HAVE_CONFIG_H
 #include "config.h"
 #endif
+#include <algorithm>
 #include <cmath>
 #include <string>
-#include <algorithm>
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif
@@ -52,20 +52,20 @@
 
 #include "SDL_endian.h"
 
-#include "SDL_version.h"
 #include "SDL_thread.h"
+#include "SDL_version.h"
 #ifdef HAVE_MIXER
 #define USE_RWOPS
 #include "SDL_mixer.h"
 #endif
 
-#include "m_swap.hh"
 #include "i_sound.hh"
+#include "lprintf.hh"
 #include "m_argv.hh"
 #include "m_misc.hh"
-#include "w_wad.hh"
-#include "lprintf.hh"
+#include "m_swap.hh"
 #include "s_sound.hh"
+#include "w_wad.hh"
 
 #include "doomdef.hh"
 #include "doomstat.hh"
@@ -74,8 +74,8 @@
 #include "d_main.hh"
 
 // e6y
-#include "i_pcsound.hh"
 #include "e6y.hh"
+#include "i_pcsound.hh"
 
 int snd_pcspeaker;
 
@@ -1298,12 +1298,12 @@ const char *snd_mididev;   // midi device to use (portmidiplayer)
 
 #include "MUSIC/musicplayer.hh"
 
-#include "MUSIC/oplplayer.hh"
-#include "MUSIC/madplayer.hh"
 #include "MUSIC/dumbplayer.hh"
 #include "MUSIC/flplayer.hh"
-#include "MUSIC/vorbisplayer.hh"
+#include "MUSIC/madplayer.hh"
+#include "MUSIC/oplplayer.hh"
 #include "MUSIC/portmidiplayer.hh"
+#include "MUSIC/vorbisplayer.hh"
 
 // list of possible music players
 static const music_player_t *music_players[] =

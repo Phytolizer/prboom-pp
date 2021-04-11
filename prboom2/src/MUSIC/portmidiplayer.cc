@@ -38,8 +38,8 @@
 #include "musicplayer.hh"
 
 #ifndef HAVE_LIBPORTMIDI
-#include <string.h>
 #include "portmidiplayer.hh"
+#include <string.h>
 
 const char *pm_name(void)
 {
@@ -56,14 +56,14 @@ const music_player_t pm_player = {pm_name, pm_init, nullptr, NULL, NULL, NULL,
 
 #else // HAVE_LIBPORTMIDI
 
-#include <portmidi.h>
-#include <porttime.h>
+#include "i_sound.hh" // for snd_mididev
+#include "lprintf.hh"
+#include "midifile.hh"
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
-#include "lprintf.hh"
-#include "midifile.hh"
-#include "i_sound.hh" // for snd_mididev
+#include <portmidi.h>
+#include <porttime.h>
 
 static midi_event_t **events;
 static int eventpos;
@@ -95,8 +95,8 @@ static int sysexbufflen;
 
 #ifdef _MSC_VER
 #define WIN32_LEAN_AND_MEAN
-#include <windows.h>
 #include <delayimp.h>
+#include <windows.h>
 #endif
 
 void pm_stop();

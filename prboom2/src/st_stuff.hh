@@ -36,8 +36,8 @@
 #ifndef __STSTUFF_H__
 #define __STSTUFF_H__
 
-#include "doomtype.hh"
 #include "d_event.hh"
+#include "doomtype.hh"
 #include "r_defs.hh"
 
 // Size of statusbar.

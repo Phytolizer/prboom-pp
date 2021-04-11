@@ -24,10 +24,10 @@
 //-----------------------------------------------------------------------------
 
 #include "cpp/enums/midi_event_type_t.hh"
+#include <cassert>
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
-#include <cassert>
 #include <vector>
 
 #ifndef TEST

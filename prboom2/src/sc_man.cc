@@ -16,8 +16,8 @@
 
 #include "cpp/strings.hh"
 #include "doomtype.hh"
-#include "w_wad.hh"
 #include "m_misc.hh"
+#include "w_wad.hh"
 
 #include "lprintf.hh"
 

@@ -33,25 +33,25 @@
  *
  *-----------------------------------------------------------------------------*/
 
+#include "p_enemy.hh"
 #include "doomstat.hh"
+#include "dsda.hh"
+#include "e6y.hh" //e6y
+#include "g_game.hh"
+#include "hu_stuff.hh"
+#include "i_sound.hh"
+#include "lprintf.hh"
+#include "m_bbox.hh"
 #include "m_random.hh"
-#include "r_main.hh"
-#include "p_maputl.hh"
+#include "p_inter.hh"
 #include "p_map.hh"
+#include "p_maputl.hh"
 #include "p_setup.hh"
 #include "p_spec.hh"
+#include "p_tick.hh"
+#include "r_main.hh"
 #include "s_sound.hh"
 #include "sounds.hh"
-#include "p_inter.hh"
-#include "g_game.hh"
-#include "p_enemy.hh"
-#include "p_tick.hh"
-#include "i_sound.hh"
-#include "m_bbox.hh"
-#include "hu_stuff.hh"
-#include "lprintf.hh"
-#include "e6y.hh" //e6y
-#include "dsda.hh"
 #include "w_wad.hh"
 
 static mobj_t *current_actor;

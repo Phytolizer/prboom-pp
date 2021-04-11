@@ -23,8 +23,8 @@ buffer to a file.
 #include <cstdlib>
 #include <cstring>
 
-#include "doomdef.hh"
 #include "d_player.hh"
+#include "doomdef.hh"
 #include "m_argv.hh"
 
 #include "statdump.hh"

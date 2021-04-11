@@ -21,15 +21,17 @@
 
 static struct timespec dsda_time[DSDA_TIMER_COUNT];
 
-void dsda_StartTimer(int timer) {
-  clock_gettime(CLOCK_MONOTONIC, &dsda_time[timer]);
+void dsda_StartTimer(int timer)
+{
+    clock_gettime(CLOCK_MONOTONIC, &dsda_time[timer]);
 }
 
-unsigned long long dsda_ElapsedTime(int timer) {
-  struct timespec now;
+unsigned long long dsda_ElapsedTime(int timer)
+{
+    struct timespec now;
 
-  clock_gettime(CLOCK_MONOTONIC, &now);
+    clock_gettime(CLOCK_MONOTONIC, &now);
 
-  return (now.tv_nsec - dsda_time[timer].tv_nsec) / 1000 +
-         (now.tv_sec - dsda_time[timer].tv_sec) * 1000000;
+    return (now.tv_nsec - dsda_time[timer].tv_nsec) / 1000 +
+           (now.tv_sec - dsda_time[timer].tv_sec) * 1000000;
 }

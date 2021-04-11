@@ -16,10 +16,10 @@
 
 // D_main.c
 
-#include "sounds.hh"
-#include "g_game.hh"
 #include "d_main.hh"
 #include "../d_main.hh"
+#include "g_game.hh"
+#include "sounds.hh"
 
 #include "heretic/dstrings.hh"
 

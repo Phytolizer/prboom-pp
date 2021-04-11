@@ -44,11 +44,11 @@
 #include <SDL_image.h>
 #endif
 
-#include "doomstat.hh"
 #include "doomdef.hh"
+#include "doomstat.hh"
 #include "doomtype.hh"
-#include "v_video.hh"
 #include "i_video.hh"
+#include "v_video.hh"
 
 #include "lprintf.hh"
 

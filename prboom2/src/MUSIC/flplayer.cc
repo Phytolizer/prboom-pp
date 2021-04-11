@@ -53,15 +53,15 @@ const music_player_t fl_player = {fl_name, fl_init, nullptr, nullptr,
 
 #else // HAVE_LIBFLUIDSYNTH
 
-#include <fluidsynth.h>
+#include "fl_object.hh"
+#include "fl_settings.hh"
 #include "i_sound.hh"  // for snd_soundfont, mus_fluidsynth_gain
 #include "i_system.hh" // for I_FindFile()
 #include "lprintf.hh"
 #include "midifile.hh"
-#include "fl_settings.hh"
-#include "fl_object.hh"
 #include <cstdlib>
 #include <cstring>
+#include <fluidsynth.h>
 
 static fl::FluidSynthSettings *f_set;
 static fl::FluidSynthObject *f_syn;
@@ -91,8 +91,8 @@ const char *fl_name()
 #ifndef WIN32_LEAN_AND_MEAN
 #define WIN32_LEAN_AND_MEAN 1
 #endif
-#include <windows.h>
 #include <delayimp.h>
+#include <windows.h>
 #endif
 
 int fl_init(int samplerate)

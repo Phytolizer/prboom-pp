@@ -40,12 +40,12 @@
 #include <cmath>
 
 #include "doomstat.hh"
-#include "lprintf.hh"
-#include "v_video.hh"
-#include "r_main.hh"
+#include "e6y.hh"
 #include "gl_intern.hh"
 #include "gl_opengl.hh"
-#include "e6y.hh"
+#include "lprintf.hh"
+#include "r_main.hh"
+#include "v_video.hh"
 
 gl_lightmode_t gl_lightmode;
 gl_lightmode_t gl_lightmode_default;

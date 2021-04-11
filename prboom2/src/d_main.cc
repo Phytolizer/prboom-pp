@@ -43,55 +43,54 @@
 #include "SDL_timer.h"
 
 #ifdef _MSC_VER
-#include <io.h>
 #include <direct.h>
+#include <io.h>
 #else
 #include <unistd.h>
 #endif
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <fcntl.h>
 #include <cstdlib>
+#include <fcntl.h>
+#include <sys/stat.h>
+#include <sys/types.h>
 
-#include "doomdef.hh"
-#include "doomtype.hh"
-#include "doomstat.hh"
 #include "d_net.hh"
+#include "doomdef.hh"
+#include "doomstat.hh"
+#include "doomtype.hh"
 #include "dstrings.hh"
 #include "sounds.hh"
 
-#include "w_wad.hh"
-#include "s_sound.hh"
-#include "v_video.hh"
+#include "am_map.hh"
+#include "d_deh.hh" // Ty 04/08/98 - Externalizations
+#include "d_main.hh"
 #include "f_finale.hh"
 #include "f_wipe.hh"
-#include "m_argv.hh"
-#include "m_misc.hh"
-#include "m_menu.hh"
-#include "p_checksum.hh"
-#include "i_main.hh"
-#include "i_system.hh"
-#include "i_sound.hh"
-#include "i_video.hh"
 #include "g_game.hh"
 #include "hu_stuff.hh"
-#include "wi_stuff.hh"
-#include "st_stuff.hh"
-#include "am_map.hh"
+#include "i_main.hh"
+#include "i_sound.hh"
+#include "i_system.hh"
+#include "i_video.hh"
+#include "lprintf.hh" // jff 08/03/98 - declaration of lprintf
+#include "m_argv.hh"
+#include "m_menu.hh"
+#include "m_misc.hh"
+#include "p_checksum.hh"
 #include "p_setup.hh"
 #include "r_draw.hh"
-#include "r_main.hh"
 #include "r_fps.hh"
-#include "d_main.hh"
-#include "d_deh.hh"   // Ty 04/08/98 - Externalizations
-#include "lprintf.hh" // jff 08/03/98 - declaration of lprintf
-#include "am_map.hh"
-#include "umapinfo.hh"
+#include "r_main.hh"
+#include "s_sound.hh"
+#include "st_stuff.hh"
 #include "statdump.hh"
+#include "umapinfo.hh"
+#include "v_video.hh"
+#include "w_wad.hh"
+#include "wi_stuff.hh"
 
 // e6y
-#include "r_demo.hh"
 #include "e6y.hh"
+#include "r_demo.hh"
 #ifdef USE_WINDOWS_LAUNCHER
 #include "e6y_launcher.hh"
 #endif
@@ -2040,10 +2039,11 @@ static void D_DoomMainSetup()
     lprintf(LO_INFO, "W_Init: Init WADfiles.\n");
     W_Init(); // CPhipps - handling of wadfiles init changed
 
-  lprintf(LO_INFO, "G_ReloadDefaults: Checking OPTIONS.\n");
-  G_ReloadDefaults();
+    lprintf(LO_INFO, "G_ReloadDefaults: Checking OPTIONS.\n");
+    G_ReloadDefaults();
 
-  lprintf(LO_INFO,"\n");     // killough 3/6/98: add a newline, by popular demand :)
+    lprintf(LO_INFO,
+            "\n"); // killough 3/6/98: add a newline, by popular demand :)
 
     // e6y
     // option to disable automatic loading of dehacked-in-wad lump

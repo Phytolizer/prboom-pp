@@ -37,8 +37,8 @@
 #ifndef __V_VIDEO__
 #define __V_VIDEO__
 
-#include "doomtype.hh"
 #include "doomdef.hh"
+#include "doomtype.hh"
 // Needed because we are refering to patches.
 #include "r_data.hh"
 

@@ -42,22 +42,22 @@
 #include "gl_opengl.hh"
 #endif
 
-#include "doomstat.hh"
-#include "st_stuff.hh"
-#include "r_main.hh"
-#include "p_setup.hh"
-#include "p_maputl.hh"
-#include "w_wad.hh"
-#include "v_video.hh"
-#include "p_spec.hh"
 #include "am_map.hh"
-#include "d_deh.hh"   // Ty 03/27/98 - externalizations
-#include "lprintf.hh" // jff 08/03/98 - declaration of lprintf
+#include "d_deh.hh" // Ty 03/27/98 - externalizations
+#include "doomstat.hh"
 #include "g_game.hh"
-#include "r_fps.hh"
-#include "r_demo.hh"
-#include "m_misc.hh"
+#include "lprintf.hh" // jff 08/03/98 - declaration of lprintf
 #include "m_bbox.hh"
+#include "m_misc.hh"
+#include "p_maputl.hh"
+#include "p_setup.hh"
+#include "p_spec.hh"
+#include "r_demo.hh"
+#include "r_fps.hh"
+#include "r_main.hh"
+#include "st_stuff.hh"
+#include "v_video.hh"
+#include "w_wad.hh"
 
 #include "dsda/input.hh"
 
@@ -2074,8 +2074,7 @@ static void AM_ProcessNiceThing(mobj_t *mobj, angle_t angle, fixed_t x,
         {SPR_BFS1, am_icon_bullet, 12, 0, 119, 255, 111},
         {SPR_BFE1, am_icon_bullet, 12, 0, 119, 255, 111},
 
-    {NUMSPRITES}
-  };
+        {NUMSPRITES}};
 
     need_shadow = true;
 
@@ -2130,7 +2129,7 @@ static void AM_ProcessNiceThing(mobj_t *mobj, angle_t angle, fixed_t x,
     else
     {
         i = 0;
-    while (icons[i].sprite < NUMSPRITES)
+        while (icons[i].sprite < NUMSPRITES)
         {
             if (mobj->sprite == icons[i].sprite)
             {

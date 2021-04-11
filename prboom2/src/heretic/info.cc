@@ -13,10 +13,10 @@
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
-#include "p_mobj.hh"
-#include "p_action.hh"
-#include "sounds.hh"
 #include "info.hh"
+#include "p_action.hh"
+#include "p_mobj.hh"
+#include "sounds.hh"
 
 const char *heretic_sprnames[HERETIC_NUMSPRITES + 1] = {
     "IMPX", "ACLO", "PTN1", "SHLD", "SHD2", "BAGH", "SPMP", "INVS", "PTN2",
@@ -8570,28 +8570,28 @@ heretic_mobjinfo_t heretic_mobjinfo[HERETIC_NUMMOBJTYPES] = {
 
     {
         // MT_CHICPLAYER
-        -1,                                                  // doomednum
-        HERETIC_S_CHICPLAY,                                  // spawnstate
-        100,                                                 // spawnhealth
-        HERETIC_S_CHICPLAY_RUN1,                             // seestate
-        heretic_sfx_None,                                    // seesound
-        0,                                                   // reactiontime
-        heretic_sfx_None,                                    // attacksound
-        HERETIC_S_CHICPLAY_PAIN,                             // painstate
-        255,                                                 // painchance
-        heretic_sfx_chicpai,                                 // painsound
-        HERETIC_S_NULL,                                      // meleestate
-        HERETIC_S_CHICPLAY_ATK1,                             // missilestate
-        HERETIC_S_NULL,                                      // crashstate
-        HERETIC_S_CHICKEN_DIE1,                              // deathstate
-        HERETIC_S_NULL,                                      // xdeathstate
-        heretic_sfx_chicdth,                                 // deathsound
-        0,                                                   // speed
-        16 * FRACUNIT,                                       // radius
-        24 * FRACUNIT,                                       // height
-        100,                                                 // mass
-        0,                                                   // damage
-        heretic_sfx_None,                                    // activesound
+        -1,                                                      // doomednum
+        HERETIC_S_CHICPLAY,                                      // spawnstate
+        100,                                                     // spawnhealth
+        HERETIC_S_CHICPLAY_RUN1,                                 // seestate
+        heretic_sfx_None,                                        // seesound
+        0,                                                       // reactiontime
+        heretic_sfx_None,                                        // attacksound
+        HERETIC_S_CHICPLAY_PAIN,                                 // painstate
+        255,                                                     // painchance
+        heretic_sfx_chicpai,                                     // painsound
+        HERETIC_S_NULL,                                          // meleestate
+        HERETIC_S_CHICPLAY_ATK1,                                 // missilestate
+        HERETIC_S_NULL,                                          // crashstate
+        HERETIC_S_CHICKEN_DIE1,                                  // deathstate
+        HERETIC_S_NULL,                                          // xdeathstate
+        heretic_sfx_chicdth,                                     // deathsound
+        0,                                                       // speed
+        16 * FRACUNIT,                                           // radius
+        24 * FRACUNIT,                                           // height
+        100,                                                     // mass
+        0,                                                       // damage
+        heretic_sfx_None,                                        // activesound
         MF_SOLID | MF_SHOOTABLE | MF_DROPOFF | MF_NOTDEATHMATCH, // flags
         MF2_WINDTHRUST | MF2_SLIDE | MF2_PASSMOBJ | MF2_FOOTCLIP | MF2_LOGRAV |
             MF2_TELESTOMP // flags2
@@ -9835,86 +9835,86 @@ heretic_mobjinfo_t heretic_mobjinfo[HERETIC_NUMMOBJTYPES] = {
 
     {
         // MT_AKYY
-        73,                        // doomednum
-        HERETIC_S_AKYY1,           // spawnstate
-        1000,                      // spawnhealth
-        HERETIC_S_NULL,            // seestate
-        heretic_sfx_None,          // seesound
-        8,                         // reactiontime
-        heretic_sfx_None,          // attacksound
-        HERETIC_S_NULL,            // painstate
-        0,                         // painchance
-        heretic_sfx_None,          // painsound
-        HERETIC_S_NULL,            // meleestate
-        HERETIC_S_NULL,            // missilestate
-        HERETIC_S_NULL,            // crashstate
-        HERETIC_S_NULL,            // deathstate
-        HERETIC_S_NULL,            // xdeathstate
-        heretic_sfx_None,          // deathsound
-        0,                         // speed
-        20 * FRACUNIT,             // radius
-        16 * FRACUNIT,             // height
-        100,                       // mass
-        0,                         // damage
-        heretic_sfx_None,          // activesound
+        73,                            // doomednum
+        HERETIC_S_AKYY1,               // spawnstate
+        1000,                          // spawnhealth
+        HERETIC_S_NULL,                // seestate
+        heretic_sfx_None,              // seesound
+        8,                             // reactiontime
+        heretic_sfx_None,              // attacksound
+        HERETIC_S_NULL,                // painstate
+        0,                             // painchance
+        heretic_sfx_None,              // painsound
+        HERETIC_S_NULL,                // meleestate
+        HERETIC_S_NULL,                // missilestate
+        HERETIC_S_NULL,                // crashstate
+        HERETIC_S_NULL,                // deathstate
+        HERETIC_S_NULL,                // xdeathstate
+        heretic_sfx_None,              // deathsound
+        0,                             // speed
+        20 * FRACUNIT,                 // radius
+        16 * FRACUNIT,                 // height
+        100,                           // mass
+        0,                             // damage
+        heretic_sfx_None,              // activesound
         MF_SPECIAL | MF_NOTDEATHMATCH, // flags
-        0                          // flags2
+        0                              // flags2
     },
 
     {
         // MT_BKYY
-        79,                        // doomednum
-        HERETIC_S_BKYY1,           // spawnstate
-        1000,                      // spawnhealth
-        HERETIC_S_NULL,            // seestate
-        heretic_sfx_None,          // seesound
-        8,                         // reactiontime
-        heretic_sfx_None,          // attacksound
-        HERETIC_S_NULL,            // painstate
-        0,                         // painchance
-        heretic_sfx_None,          // painsound
-        HERETIC_S_NULL,            // meleestate
-        HERETIC_S_NULL,            // missilestate
-        HERETIC_S_NULL,            // crashstate
-        HERETIC_S_NULL,            // deathstate
-        HERETIC_S_NULL,            // xdeathstate
-        heretic_sfx_None,          // deathsound
-        0,                         // speed
-        20 * FRACUNIT,             // radius
-        16 * FRACUNIT,             // height
-        100,                       // mass
-        0,                         // damage
-        heretic_sfx_None,          // activesound
+        79,                            // doomednum
+        HERETIC_S_BKYY1,               // spawnstate
+        1000,                          // spawnhealth
+        HERETIC_S_NULL,                // seestate
+        heretic_sfx_None,              // seesound
+        8,                             // reactiontime
+        heretic_sfx_None,              // attacksound
+        HERETIC_S_NULL,                // painstate
+        0,                             // painchance
+        heretic_sfx_None,              // painsound
+        HERETIC_S_NULL,                // meleestate
+        HERETIC_S_NULL,                // missilestate
+        HERETIC_S_NULL,                // crashstate
+        HERETIC_S_NULL,                // deathstate
+        HERETIC_S_NULL,                // xdeathstate
+        heretic_sfx_None,              // deathsound
+        0,                             // speed
+        20 * FRACUNIT,                 // radius
+        16 * FRACUNIT,                 // height
+        100,                           // mass
+        0,                             // damage
+        heretic_sfx_None,              // activesound
         MF_SPECIAL | MF_NOTDEATHMATCH, // flags
-        0                          // flags2
+        0                              // flags2
     },
 
     {
         // MT_CKEY
-        80,                        // doomednum
-        HERETIC_S_CKYY1,           // spawnstate
-        1000,                      // spawnhealth
-        HERETIC_S_NULL,            // seestate
-        heretic_sfx_None,          // seesound
-        8,                         // reactiontime
-        heretic_sfx_None,          // attacksound
-        HERETIC_S_NULL,            // painstate
-        0,                         // painchance
-        heretic_sfx_None,          // painsound
-        HERETIC_S_NULL,            // meleestate
-        HERETIC_S_NULL,            // missilestate
-        HERETIC_S_NULL,            // crashstate
-        HERETIC_S_NULL,            // deathstate
-        HERETIC_S_NULL,            // xdeathstate
-        heretic_sfx_None,          // deathsound
-        0,                         // speed
-        20 * FRACUNIT,             // radius
-        16 * FRACUNIT,             // height
-        100,                       // mass
-        0,                         // damage
-        heretic_sfx_None,          // activesound
+        80,                            // doomednum
+        HERETIC_S_CKYY1,               // spawnstate
+        1000,                          // spawnhealth
+        HERETIC_S_NULL,                // seestate
+        heretic_sfx_None,              // seesound
+        8,                             // reactiontime
+        heretic_sfx_None,              // attacksound
+        HERETIC_S_NULL,                // painstate
+        0,                             // painchance
+        heretic_sfx_None,              // painsound
+        HERETIC_S_NULL,                // meleestate
+        HERETIC_S_NULL,                // missilestate
+        HERETIC_S_NULL,                // crashstate
+        HERETIC_S_NULL,                // deathstate
+        HERETIC_S_NULL,                // xdeathstate
+        heretic_sfx_None,              // deathsound
+        0,                             // speed
+        20 * FRACUNIT,                 // radius
+        16 * FRACUNIT,                 // height
+        100,                           // mass
+        0,                             // damage
+        heretic_sfx_None,              // activesound
         MF_SPECIAL | MF_NOTDEATHMATCH, // flags
-        0                          // flags2
+        0                              // flags2
     },
 
     {

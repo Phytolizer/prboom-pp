@@ -17,19 +17,19 @@
 
 #include <cstdio>
 
-#include "m_argv.hh"
-#include "lprintf.hh"
-#include "doomtype.hh"
 #include "doomstat.hh"
+#include "doomtype.hh"
 #include "info.hh"
+#include "lprintf.hh"
+#include "m_argv.hh"
 #include "p_maputl.hh"
 #include "p_tick.hh"
 #include "sounds.hh"
 
 #include "w_wad.hh"
 
-#include "settings.hh"
 #include "ghost.hh"
+#include "settings.hh"
 
 #define DSDA_GHOST_MIN_VERSION 1
 #define DSDA_GHOST_VERSION 2
@@ -69,19 +69,19 @@ using dsda_ghost_file_t = struct
 };
 
 mobjinfo_t dsda_ghost_info = {-1,                             // doomednum
-                              S_PLAYER,                         // spawnstate
+                              S_PLAYER,                       // spawnstate
                               0,                              // spawnhealth
-                              S_PLAYER_RUN1,                    // seestate
+                              S_PLAYER_RUN1,                  // seestate
                               sfx_none,                       // seesound
                               0,                              // reactiontime
                               sfx_none,                       // attacksound
-                              S_PLAYER_PAIN,                    // painstate
+                              S_PLAYER_PAIN,                  // painstate
                               0,                              // painchance
                               sfx_none,                       // painsound
                               S_NULL,                         // meleestate
-                              S_PLAYER_ATTACK1,                    // missilestate
-                              S_PLAYER_DEATH1,                    // deathstate
-                              S_PLAYER_GIB1,                   // xdeathstate
+                              S_PLAYER_ATTACK1,               // missilestate
+                              S_PLAYER_DEATH1,                // deathstate
+                              S_PLAYER_GIB1,                  // xdeathstate
                               sfx_none,                       // deathsound
                               0,                              // speed
                               0,                              // radius

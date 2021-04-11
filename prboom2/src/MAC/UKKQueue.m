@@ -1,28 +1,27 @@
 /* =============================================================================
-	FILE:		UKKQueue.m
-	PROJECT:	Filie
-    
+    FILE:		UKKQueue.m
+    PROJECT:	Filie
+
     COPYRIGHT:  (c) 2003 M. Uli Kusterer, all rights reserved.
-    
-	AUTHORS:	M. Uli Kusterer - UK
-    
+
+    AUTHORS:	M. Uli Kusterer - UK
+
     LICENSES:   GPL, Modified BSD
 
-	REVISIONS:
+    REVISIONS:
         2004-12-28  UK  Several threading fixes.
-		2003-12-21	UK	Created.
+        2003-12-21	UK	Created.
    ========================================================================== */
 
 // -----------------------------------------------------------------------------
 //  Headers:
 // -----------------------------------------------------------------------------
 
-#import <AppKit/NSWorkspace.h>
 #import "UKKQueue.h"
 #import "UKMainThreadProxy.h"
-#import <unistd.h>
+#import <AppKit/NSWorkspace.h>
 #import <fcntl.h>
-
+#import <unistd.h>
 
 // -----------------------------------------------------------------------------
 //  Macros:
@@ -32,18 +31,16 @@
 //  this class is thread-safe on Panther but still compiles on older OSs.
 
 #if MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_3
-#define AT_SYNCHRONIZED(n)      @synchronized(n)
+#define AT_SYNCHRONIZED(n) @synchronized(n)
 #else
 #define AT_SYNCHRONIZED(n)
 #endif
-
 
 // -----------------------------------------------------------------------------
 //  Globals:
 // -----------------------------------------------------------------------------
 
-static UKKQueue * gUKKQueueSharedQueueSingleton = nil;
-
+static UKKQueue *gUKKQueueSharedQueueSingleton = nil;
 
 @implementation UKKQueue
 
@@ -60,17 +57,17 @@ static UKKQueue * gUKKQueueSharedQueueSingleton = nil;
 //      2005-07-02  UK  Created.
 // -----------------------------------------------------------------------------
 
-+(UKKQueue*) sharedQueue
++ (UKKQueue *)sharedQueue
 {
-    AT_SYNCHRONIZED( self )
+    AT_SYNCHRONIZED(self)
     {
-        if( !gUKKQueueSharedQueueSingleton )
-            gUKKQueueSharedQueueSingleton = [[UKKQueue alloc] init];	// This is a singleton, and thus an intentional "leak".
+        if (!gUKKQueueSharedQueueSingleton)
+            gUKKQueueSharedQueueSingleton = [[UKKQueue alloc]
+                init]; // This is a singleton, and thus an intentional "leak".
     }
-    
+
     return gUKKQueueSharedQueueSingleton;
 }
-
 
 // -----------------------------------------------------------------------------
 //	* CONSTRUCTOR:
@@ -84,29 +81,30 @@ static UKKQueue * gUKKQueueSharedQueueSingleton = nil;
 //		2004-03-13	UK	Documented.
 // -----------------------------------------------------------------------------
 
--(id)   init
+- (id)init
 {
-	self = [super init];
-	if( self )
-	{
-		queueFD = kqueue();
-		if( queueFD == -1 )
-		{
-			[self release];
-			return nil;
-		}
-		
-		watchedPaths = [[NSMutableArray alloc] init];
-		watchedFDs = [[NSMutableArray alloc] init];
-		
-		// Start new thread that fetches and processes our events:
-		keepThreadRunning = YES;
-		[NSThread detachNewThreadSelector:@selector(watcherThread:) toTarget:self withObject:nil];
-	}
-	
-	return self;
-}
+    self = [super init];
+    if (self)
+    {
+        queueFD = kqueue();
+        if (queueFD == -1)
+        {
+            [self release];
+            return nil;
+        }
 
+        watchedPaths = [[NSMutableArray alloc] init];
+        watchedFDs = [[NSMutableArray alloc] init];
+
+        // Start new thread that fetches and processes our events:
+        keepThreadRunning = YES;
+        [NSThread detachNewThreadSelector:@selector(watcherThread:)
+                                 toTarget:self
+                               withObject:nil];
+    }
+
+    return self;
+}
 
 // -----------------------------------------------------------------------------
 //	release:
@@ -118,18 +116,18 @@ static UKKQueue * gUKKQueueSharedQueueSingleton = nil;
 //		2004-11-12	UK	Created.
 // -----------------------------------------------------------------------------
 
--(oneway void) release
+- (oneway void)release
 {
     AT_SYNCHRONIZED(self)
     {
-        //NSLog(@"%@ (%d)", self, [self retainCount]);
-        if( [self retainCount] == 2 && keepThreadRunning )
+        // NSLog(@"%@ (%d)", self, [self retainCount]);
+        if ([self retainCount] == 2 && keepThreadRunning)
             keepThreadRunning = NO;
     }
-    
+
     [super release];
 }
-    
+
 // -----------------------------------------------------------------------------
 //	* DESTRUCTOR:
 //		Releases the kqueue again.
@@ -138,33 +136,32 @@ static UKKQueue * gUKKQueueSharedQueueSingleton = nil;
 //		2004-03-13	UK	Documented.
 // -----------------------------------------------------------------------------
 
--(void) dealloc
+- (void)dealloc
 {
-	delegate = nil;
-	[delegateProxy release];
-	
-	if( keepThreadRunning )
-		keepThreadRunning = NO;
-	
-	// Close all our file descriptors so the files can be deleted:
-	NSEnumerator*	enny = [watchedFDs objectEnumerator];
-	NSNumber*		fdNum;
-	while( (fdNum = [enny nextObject]) )
-	{
-    	if( close( [fdNum intValue] ) == -1 )
+    delegate = nil;
+    [delegateProxy release];
+
+    if (keepThreadRunning)
+        keepThreadRunning = NO;
+
+    // Close all our file descriptors so the files can be deleted:
+    NSEnumerator *enny = [watchedFDs objectEnumerator];
+    NSNumber *fdNum;
+    while ((fdNum = [enny nextObject]))
+    {
+        if (close([fdNum intValue]) == -1)
             NSLog(@"dealloc: Couldn't close file descriptor (%d)", errno);
     }
-	
-	[watchedPaths release];
-	watchedPaths = nil;
-	[watchedFDs release];
-	watchedFDs = nil;
-	
-	[super dealloc];
-    
-    //NSLog(@"kqueue released.");
-}
 
+    [watchedPaths release];
+    watchedPaths = nil;
+    [watchedFDs release];
+    watchedFDs = nil;
+
+    [super dealloc];
+
+    // NSLog(@"kqueue released.");
+}
 
 // -----------------------------------------------------------------------------
 //	queueFD:
@@ -175,11 +172,10 @@ static UKKQueue * gUKKQueueSharedQueueSingleton = nil;
 //		2004-03-13	UK	Documented.
 // -----------------------------------------------------------------------------
 
--(int)  queueFD
+- (int)queueFD
 {
-	return queueFD;
+    return queueFD;
 }
-
 
 // -----------------------------------------------------------------------------
 //	addPathToQueue:
@@ -191,23 +187,21 @@ static UKKQueue * gUKKQueueSharedQueueSingleton = nil;
 //		2004-03-13	UK	Documented.
 // -----------------------------------------------------------------------------
 
--(void) addPathToQueue: (NSString*)path
+- (void)addPathToQueue:(NSString *)path
 {
-	[self addPathToQueue: path notifyingAbout: UKKQueueNotifyAboutRename
-												| UKKQueueNotifyAboutWrite
-												| UKKQueueNotifyAboutDelete
-												| UKKQueueNotifyAboutAttributeChange];
+    [self addPathToQueue:path
+          notifyingAbout:UKKQueueNotifyAboutRename | UKKQueueNotifyAboutWrite |
+                         UKKQueueNotifyAboutDelete |
+                         UKKQueueNotifyAboutAttributeChange];
 }
 
-
--(void) addPath: (NSString*)path
+- (void)addPath:(NSString *)path
 {
-	[self addPathToQueue: path notifyingAbout: UKKQueueNotifyAboutRename
-												| UKKQueueNotifyAboutWrite
-												| UKKQueueNotifyAboutDelete
-												| UKKQueueNotifyAboutAttributeChange];
+    [self addPathToQueue:path
+          notifyingAbout:UKKQueueNotifyAboutRename | UKKQueueNotifyAboutWrite |
+                         UKKQueueNotifyAboutDelete |
+                         UKKQueueNotifyAboutAttributeChange];
 }
-
 
 // -----------------------------------------------------------------------------
 //	addPathToQueue:notfyingAbout:
@@ -217,37 +211,35 @@ static UKKQueue * gUKKQueueSharedQueueSingleton = nil;
 //	REVISIONS:
 //      2005-06-29  UK  Files are now opened using O_EVTONLY instead of O_RDONLY
 //                      which allows ejecting or deleting watched files/folders.
-//                      Thanks to Phil Hargett for finding this flag in the docs.
+//                      Thanks to Phil Hargett for finding this flag in the
+//                      docs.
 //		2004-03-13	UK	Documented.
 // -----------------------------------------------------------------------------
 
--(void) addPathToQueue: (NSString*)path notifyingAbout: (u_int)fflags
+- (void)addPathToQueue:(NSString *)path notifyingAbout:(u_int)fflags
 {
-	struct timespec		nullts = { 0, 0 };
-	struct kevent		ev;
-	int					fd = open( [path fileSystemRepresentation], O_EVTONLY, 0 );
-	
-    if( fd >= 0 )
+    struct timespec nullts = {0, 0};
+    struct kevent ev;
+    int fd = open([path fileSystemRepresentation], O_EVTONLY, 0);
+
+    if (fd >= 0)
     {
-        EV_SET( &ev, fd, EVFILT_VNODE,
-				EV_ADD | EV_ENABLE | EV_CLEAR,
-				fflags, 0, (void*)path );
-		
-        AT_SYNCHRONIZED( self )
+        EV_SET(&ev, fd, EVFILT_VNODE, EV_ADD | EV_ENABLE | EV_CLEAR, fflags, 0,
+               (void *)path);
+
+        AT_SYNCHRONIZED(self)
         {
-            [watchedPaths addObject: path];
-            [watchedFDs addObject: [NSNumber numberWithInt: fd]];
-            kevent( queueFD, &ev, 1, NULL, 0, &nullts );
+            [watchedPaths addObject:path];
+            [watchedFDs addObject:[NSNumber numberWithInt:fd]];
+            kevent(queueFD, &ev, 1, NULL, 0, &nullts);
         }
     }
 }
 
-
--(void) removePath: (NSString*)path
+- (void)removePath:(NSString *)path
 {
-    [self removePathFromQueue: path];
+    [self removePathFromQueue:path];
 }
-
 
 // -----------------------------------------------------------------------------
 //	removePathFromQueue:
@@ -259,28 +251,28 @@ static UKKQueue * gUKKQueueSharedQueueSingleton = nil;
 //		2004-03-13	UK	Documented.
 // -----------------------------------------------------------------------------
 
--(void) removePathFromQueue: (NSString*)path
+- (void)removePathFromQueue:(NSString *)path
 {
-    int		index = 0;
-    int		fd = -1;
-    
-    AT_SYNCHRONIZED( self )
-    {
-        index = [watchedPaths indexOfObject: path];
-        
-        if( index == NSNotFound )
-            return;
-        
-        fd = [[watchedFDs objectAtIndex: index] intValue];
-        
-        [watchedFDs removeObjectAtIndex: index];
-        [watchedPaths removeObjectAtIndex: index];
-    }
-	
-	if( close( fd ) == -1 )
-        NSLog(@"removePathFromQueue: Couldn't close file descriptor (%d)", errno);
-}
+    int index = 0;
+    int fd = -1;
 
+    AT_SYNCHRONIZED(self)
+    {
+        index = [watchedPaths indexOfObject:path];
+
+        if (index == NSNotFound)
+            return;
+
+        fd = [[watchedFDs objectAtIndex:index] intValue];
+
+        [watchedFDs removeObjectAtIndex:index];
+        [watchedPaths removeObjectAtIndex:index];
+    }
+
+    if (close(fd) == -1)
+        NSLog(@"removePathFromQueue: Couldn't close file descriptor (%d)",
+              errno);
+}
 
 // -----------------------------------------------------------------------------
 //	removeAllPathsFromQueue:
@@ -291,21 +283,20 @@ static UKKQueue * gUKKQueueSharedQueueSingleton = nil;
 //      2004-12-28  UK  Added as suggested by bbum.
 // -----------------------------------------------------------------------------
 
--(void) removeAllPathsFromQueue;
+- (void)removeAllPathsFromQueue;
 {
-    AT_SYNCHRONIZED( self )
+    AT_SYNCHRONIZED(self)
     {
-        NSEnumerator *  fdEnumerator = [watchedFDs objectEnumerator];
-        NSNumber     *  anFD;
-        
-        while( (anFD = [fdEnumerator nextObject]) != nil )
-            close( [anFD intValue] );
+        NSEnumerator *fdEnumerator = [watchedFDs objectEnumerator];
+        NSNumber *anFD;
+
+        while ((anFD = [fdEnumerator nextObject]) != nil)
+            close([anFD intValue]);
 
         [watchedFDs removeAllObjects];
         [watchedPaths removeAllObjects];
     }
 }
-
 
 // -----------------------------------------------------------------------------
 //	watcherThread:
@@ -327,60 +318,73 @@ static UKKQueue * gUKKQueueSharedQueueSingleton = nil;
 //		2004-03-13	UK	Documented.
 // -----------------------------------------------------------------------------
 
--(void)		watcherThread: (id)sender
+- (void)watcherThread:(id)sender
 {
-	int					n;
-    struct kevent		ev;
-    struct timespec     timeout = { 5, 0 }; // 5 seconds timeout.
-	int					theFD = queueFD;	// So we don't have to risk accessing iVars when the thread is terminated.
-    
-    while( keepThreadRunning )
-    {
-		NSAutoreleasePool*  pool = [[NSAutoreleasePool alloc] init];
-		
-		NS_DURING
-			n = kevent( queueFD, NULL, 0, &ev, 1, &timeout );
-			if( n > 0 )
-			{
-				if( ev.filter == EVFILT_VNODE )
-				{
-					if( ev.fflags )
-					{
-						NSString*		fpath = [[(NSString *)ev.udata retain] autorelease];    // In case one of the notified folks removes the path.
-						//NSLog(@"UKKQueue: Detected file change: %@", fpath);
-						[[NSWorkspace sharedWorkspace] noteFileSystemChanged: fpath];
-						
-						if( (ev.fflags & NOTE_RENAME) == NOTE_RENAME )
-							[self postNotification: UKKQueueFileRenamedNotification forFile: fpath];
-						if( (ev.fflags & NOTE_WRITE) == NOTE_WRITE )
-							[self postNotification: UKKQueueFileWrittenToNotification forFile: fpath];
-						if( (ev.fflags & NOTE_DELETE) == NOTE_DELETE )
-							[self postNotification: UKKQueueFileDeletedNotification forFile: fpath];
-						if( (ev.fflags & NOTE_ATTRIB) == NOTE_ATTRIB )
-							[self postNotification: UKKQueueFileAttributesChangedNotification forFile: fpath];
-						if( (ev.fflags & NOTE_EXTEND) == NOTE_EXTEND )
-							[self postNotification: UKKQueueFileSizeIncreasedNotification forFile: fpath];
-						if( (ev.fflags & NOTE_LINK) == NOTE_LINK )
-							[self postNotification: UKKQueueFileLinkCountChangedNotification forFile: fpath];
-						if( (ev.fflags & NOTE_REVOKE) == NOTE_REVOKE )
-							[self postNotification: UKKQueueFileAccessRevocationNotification forFile: fpath];
-					}
-				}
-			}
-		NS_HANDLER
-			NSLog(@"Error in UKKQueue watcherThread: %@",localException);
-		NS_ENDHANDLER
-		
-		[pool release];
-    }
-    
-	// Close our kqueue's file descriptor:
-	if( close( theFD ) == -1 )
-		NSLog(@"release: Couldn't close main kqueue (%d)", errno);
-	
-    //NSLog(@"exiting kqueue watcher thread.");
-}
+    int n;
+    struct kevent ev;
+    struct timespec timeout = {5, 0}; // 5 seconds timeout.
+    int theFD = queueFD; // So we don't have to risk accessing iVars when the
+                         // thread is terminated.
 
+    while (keepThreadRunning)
+    {
+        NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+
+        NS_DURING
+        n = kevent(queueFD, NULL, 0, &ev, 1, &timeout);
+        if (n > 0)
+        {
+            if (ev.filter == EVFILT_VNODE)
+            {
+                if (ev.fflags)
+                {
+                    NSString *fpath = [[(NSString *)ev.udata retain]
+                        autorelease]; // In case one of the notified folks
+                                      // removes the path.
+                    // NSLog(@"UKKQueue: Detected file change: %@", fpath);
+                    [[NSWorkspace sharedWorkspace] noteFileSystemChanged:fpath];
+
+                    if ((ev.fflags & NOTE_RENAME) == NOTE_RENAME)
+                        [self postNotification:UKKQueueFileRenamedNotification
+                                       forFile:fpath];
+                    if ((ev.fflags & NOTE_WRITE) == NOTE_WRITE)
+                        [self postNotification:UKKQueueFileWrittenToNotification
+                                       forFile:fpath];
+                    if ((ev.fflags & NOTE_DELETE) == NOTE_DELETE)
+                        [self postNotification:UKKQueueFileDeletedNotification
+                                       forFile:fpath];
+                    if ((ev.fflags & NOTE_ATTRIB) == NOTE_ATTRIB)
+                        [self postNotification:
+                                  UKKQueueFileAttributesChangedNotification
+                                       forFile:fpath];
+                    if ((ev.fflags & NOTE_EXTEND) == NOTE_EXTEND)
+                        [self postNotification:
+                                  UKKQueueFileSizeIncreasedNotification
+                                       forFile:fpath];
+                    if ((ev.fflags & NOTE_LINK) == NOTE_LINK)
+                        [self postNotification:
+                                  UKKQueueFileLinkCountChangedNotification
+                                       forFile:fpath];
+                    if ((ev.fflags & NOTE_REVOKE) == NOTE_REVOKE)
+                        [self postNotification:
+                                  UKKQueueFileAccessRevocationNotification
+                                       forFile:fpath];
+                }
+            }
+        }
+        NS_HANDLER
+        NSLog(@"Error in UKKQueue watcherThread: %@", localException);
+        NS_ENDHANDLER
+
+        [pool release];
+    }
+
+    // Close our kqueue's file descriptor:
+    if (close(theFD) == -1)
+        NSLog(@"release: Couldn't close main kqueue (%d)", errno);
+
+    // NSLog(@"exiting kqueue watcher thread.");
+}
 
 // -----------------------------------------------------------------------------
 //	postNotification:forFile:
@@ -398,51 +402,52 @@ static UKKQueue * gUKKQueueSharedQueueSingleton = nil;
 //		2004-03-13	UK	Documented.
 // -----------------------------------------------------------------------------
 
--(void) postNotification: (NSString*)nm forFile: (NSString*)fp
+- (void)postNotification:(NSString *)nm forFile:(NSString *)fp
 {
-	if( delegateProxy )
+    if (delegateProxy)
     {
-        #if UKKQUEUE_BACKWARDS_COMPATIBLE
-        if( ![delegateProxy respondsToSelector: @selector(watcher:receivedNotification:forPath:)] )
-            [delegateProxy kqueue: self receivedNotification: nm forFile: fp];
+#if UKKQUEUE_BACKWARDS_COMPATIBLE
+        if (![delegateProxy respondsToSelector:@selector
+                            (watcher:receivedNotification:forPath:)])
+            [delegateProxy kqueue:self receivedNotification:nm forFile:fp];
         else
-        #endif
-            [delegateProxy watcher: self receivedNotification: nm forPath: fp];
+#endif
+            [delegateProxy watcher:self receivedNotification:nm forPath:fp];
     }
-	
-	if( !delegateProxy || alwaysNotify )
-		[[[NSWorkspace sharedWorkspace] notificationCenter] postNotificationName: nm object: fp];
-	//NSLog(@"Notification: %@ (%@)", nm, fp);
+
+    if (!delegateProxy || alwaysNotify)
+        [[[NSWorkspace sharedWorkspace] notificationCenter]
+            postNotificationName:nm
+                          object:fp];
+    // NSLog(@"Notification: %@ (%@)", nm, fp);
 }
 
--(id)	delegate
+- (id)delegate
 {
     return delegate;
 }
 
--(void)	setDelegate: (id)newDelegate
+- (void)setDelegate:(id)newDelegate
 {
-	id	oldProxy = delegateProxy;
-	delegate = newDelegate;
-	delegateProxy = [delegate copyMainThreadProxy];
-	[oldProxy release];
+    id oldProxy = delegateProxy;
+    delegate = newDelegate;
+    delegateProxy = [delegate copyMainThreadProxy];
+    [oldProxy release];
 }
 
 // -----------------------------------------------------------------------------
 //	Flag to send a notification even if we have a delegate:
 // -----------------------------------------------------------------------------
 
--(BOOL)	alwaysNotify
+- (BOOL)alwaysNotify
 {
-	return alwaysNotify;
+    return alwaysNotify;
 }
 
-
--(void)	setAlwaysNotify: (BOOL)n
+- (void)setAlwaysNotify:(BOOL)n
 {
-	alwaysNotify = n;
+    alwaysNotify = n;
 }
-
 
 // -----------------------------------------------------------------------------
 //	description:
@@ -454,9 +459,12 @@ static UKKQueue * gUKKQueueSharedQueueSingleton = nil;
 //		2004-11-12	UK	Created.
 // -----------------------------------------------------------------------------
 
--(NSString*)	description
+- (NSString *)description
 {
-	return [NSString stringWithFormat: @"%@ { watchedPaths = %@, alwaysNotify = %@ }", NSStringFromClass([self class]), watchedPaths, (alwaysNotify? @"YES" : @"NO") ];
+    return [NSString
+        stringWithFormat:@"%@ { watchedPaths = %@, alwaysNotify = %@ }",
+                         NSStringFromClass([self class]), watchedPaths,
+                         (alwaysNotify ? @"YES" : @"NO")];
 }
 
 @end

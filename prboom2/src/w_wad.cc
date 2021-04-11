@@ -40,13 +40,13 @@
 #include <unistd.h>
 #endif
 #ifdef _MSC_VER
-#include <stddef.h>
 #include <io.h>
+#include <stddef.h>
 #endif
 #include <fcntl.h>
 
-#include "doomstat.hh"
 #include "d_net.hh"
+#include "doomstat.hh"
 #include "doomtype.hh"
 #include "i_system.hh"
 #include "r_main.hh"
@@ -54,12 +54,12 @@
 #ifdef __GNUG__
 #pragma implementation "w_wad.h"
 #endif
-#include "w_wad.hh"
 #include "lprintf.hh"
+#include "w_wad.hh"
 
 // e6y
-#include "r_demo.hh"
 #include "e6y.hh"
+#include "r_demo.hh"
 
 //
 // GLOBALS

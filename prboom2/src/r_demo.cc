@@ -46,25 +46,25 @@
 #include <cerrno>
 #include <fcntl.h>
 
+#include "d_deh.hh"
+#include "d_main.hh"
 #include "doomdef.hh"
-#include "doomtype.hh"
 #include "doomstat.hh"
-#include "r_demo.hh"
-#include "r_fps.hh"
-#include "lprintf.hh"
+#include "doomtype.hh"
+#include "dsda/demo.hh"
+#include "e6y.hh"
+#include "g_game.hh"
+#include "g_overflow.hh"
+#include "hu_stuff.hh"
 #include "i_system.hh"
 #include "i_video.hh"
-#include "m_misc.hh"
+#include "lprintf.hh"
 #include "m_argv.hh"
-#include "w_wad.hh"
-#include "d_main.hh"
-#include "d_deh.hh"
-#include "g_game.hh"
+#include "m_misc.hh"
 #include "p_map.hh"
-#include "hu_stuff.hh"
-#include "g_overflow.hh"
-#include "e6y.hh"
-#include "dsda/demo.hh"
+#include "r_demo.hh"
+#include "r_fps.hh"
+#include "w_wad.hh"
 
 int IsDemoPlayback()
 {

@@ -16,8 +16,8 @@
 //
 
 #include "doomstat.hh"
-#include "w_wad.hh"
 #include "lprintf.hh"
+#include "w_wad.hh"
 
 #include "options.hh"
 

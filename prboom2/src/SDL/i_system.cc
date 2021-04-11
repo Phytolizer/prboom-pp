@@ -40,18 +40,18 @@
 
 #include <cstdio>
 
+#include <cctype>
+#include <csignal>
 #include <cstdarg>
 #include <cstdlib>
-#include <cctype>
-#include <ctime>
-#include <csignal>
 #include <cstring>
+#include <ctime>
 #ifdef _MSC_VER
 #define F_OK 0 /* Check for file existence */
 #define W_OK 2 /* Check for write permission */
 #define R_OK 4 /* Check for read permission */
-#include <io.h>
 #include <direct.h>
+#include <io.h>
 #else
 #include <unistd.h>
 #endif
@@ -68,22 +68,22 @@
 #ifdef _MSC_VER
 #include <io.h>
 #endif
+#include <cerrno>
 #include <fcntl.h>
 #include <sys/stat.h>
-#include <cerrno>
 
 #ifndef PRBOOM_SERVER
 #include "m_argv.hh"
 #endif
-#include "lprintf.hh"
-#include "doomtype.hh"
 #include "doomdef.hh"
+#include "doomtype.hh"
 #include "dsda/time.hh"
+#include "lprintf.hh"
 #ifndef PRBOOM_SERVER
 #include "d_player.hh"
+#include "e6y.hh"
 #include "m_fixed.hh"
 #include "r_fps.hh"
-#include "e6y.hh"
 #endif
 #include "i_system.hh"
 

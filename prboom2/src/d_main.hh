@@ -34,8 +34,8 @@
 #ifndef __D_MAIN__
 #define __D_MAIN__
 
-#include "m_fixed.hh"
 #include "d_event.hh"
+#include "m_fixed.hh"
 #include "w_wad.hh"
 
 /* CPhipps - removed wadfiles[] stuff to w_wad.h */

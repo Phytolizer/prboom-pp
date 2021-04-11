@@ -53,12 +53,12 @@ const music_player_t vorb_player = {vorb_name, vorb_init, nullptr, NULL,
 
 #else // HAVE_LIBVORBISFILE
 
+#include "lprintf.hh"
 #include <cstdlib>
 #include <cstring>
-#include "lprintf.hh"
 
-#include <vorbis/vorbisfile.h>
 #include <vorbis/codec.h>
+#include <vorbis/vorbisfile.h>
 
 #include "i_sound.hh"
 
@@ -214,8 +214,8 @@ static unsigned parsetag(const char *str, int samplerate)
 
 #ifdef _MSC_VER
 #define WIN32_LEAN_AND_MEAN
-#include <windows.h>
 #include <delayimp.h>
+#include <windows.h>
 #endif
 
 int vorb_init(int samplerate)

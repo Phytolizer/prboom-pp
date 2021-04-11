@@ -1,12 +1,12 @@
-#include <cstdio>
-#include <cstring>
 #include <cerrno>
+#include <cstdio>
 #include <cstdlib> /* exit(), atexit() */
+#include <cstring>
 
-#include "p_checksum.hh"
-#include "md5.hh"
 #include "doomstat.hh" /* players{,ingame} */
 #include "lprintf.hh"
+#include "md5.hh"
+#include "p_checksum.hh"
 
 /* forward decls */
 static void p_checksum_cleanup();

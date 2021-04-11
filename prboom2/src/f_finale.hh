@@ -34,8 +34,8 @@
 #ifndef __F_FINALE__
 #define __F_FINALE__
 
-#include "doomtype.hh"
 #include "d_event.hh"
+#include "doomtype.hh"
 
 /*
  * FINALE

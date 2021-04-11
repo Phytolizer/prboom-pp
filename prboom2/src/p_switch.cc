@@ -32,14 +32,14 @@
  *-----------------------------------------------------------------------------*/
 
 #include "doomstat.hh"
-#include "w_wad.hh"
-#include "r_main.hh"
-#include "p_spec.hh"
+#include "e6y.hh" //e6y
 #include "g_game.hh"
+#include "lprintf.hh"
+#include "p_spec.hh"
+#include "r_main.hh"
 #include "s_sound.hh"
 #include "sounds.hh"
-#include "lprintf.hh"
-#include "e6y.hh" //e6y
+#include "w_wad.hh"
 
 //==================================================================
 //

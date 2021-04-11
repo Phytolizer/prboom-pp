@@ -1,7 +1,7 @@
 #pragma once
+#include "MUSIC/midifile_events.hh"
 #include <cstdint>
 #include <stdexcept>
-#include "MUSIC/midifile_events.hh"
 class MidiEventData
 {
     midi_channel_event_data_t m_channel{};

@@ -5,12 +5,12 @@
 
 #include "config.h"
 
-#include <cstdlib>
 #include <cstdio>
+#include <cstdlib>
 #include <cstring>
 
-#include "rd_util.hh"
 #include "rd_sound.hh"
+#include "rd_util.hh"
 
 //
 // wav_to_doom

@@ -31,14 +31,14 @@
  *
  *-----------------------------------------------------------------------------*/
 
+#include "st_lib.hh"
 #include "doomdef.hh"
 #include "doomstat.hh"
+#include "lprintf.hh"
+#include "r_main.hh"
+#include "st_stuff.hh"
 #include "v_video.hh"
 #include "w_wad.hh"
-#include "st_stuff.hh"
-#include "st_lib.hh"
-#include "r_main.hh"
-#include "lprintf.hh"
 
 int sts_always_red;      // jff 2/18/98 control to disable status color changes
 int sts_pct_always_gray; // killough 2/21/98: always gray %'s? bug or feature?

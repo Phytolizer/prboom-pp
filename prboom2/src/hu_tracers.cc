@@ -39,9 +39,9 @@
 
 #include "doomdef.hh"
 #include "doomstat.hh"
+#include "lprintf.hh"
 #include "m_argv.hh"
 #include "m_misc.hh"
-#include "lprintf.hh"
 
 #include "hu_tracers.hh"
 

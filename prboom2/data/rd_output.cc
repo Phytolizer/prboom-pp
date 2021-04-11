@@ -5,13 +5,13 @@
 
 #include "config.h"
 
-#include <cstdlib>
-#include <cstdio>
-#include <cstring>
 #include <cctype>
+#include <cstdio>
+#include <cstdlib>
+#include <cstring>
 
-#include "rd_util.hh"
 #include "rd_output.hh"
+#include "rd_util.hh"
 
 struct lump
 {

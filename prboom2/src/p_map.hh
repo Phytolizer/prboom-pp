@@ -34,8 +34,8 @@
 #ifndef __P_MAP__
 #define __P_MAP__
 
-#include "r_defs.hh"
 #include "d_player.hh"
+#include "r_defs.hh"
 
 #define USERANGE (64 * FRACUNIT)
 #define MELEERANGE (64 * FRACUNIT)

@@ -52,8 +52,8 @@
 #endif
 #include "w_wad.hh"
 
-#include "lprintf.hh"
 #include "i_system.hh"
+#include "lprintf.hh"
 
 #include "e6y.hh" //e6y
 

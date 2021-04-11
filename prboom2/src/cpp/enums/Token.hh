@@ -1,6 +1,6 @@
 #pragma once
-#include <cstdint>
 #include "../smart_enum.hh"
+#include <cstdint>
 namespace Token
 {
 class Type final : public SmartEnum<std::size_t, Type>

@@ -34,8 +34,8 @@
 #ifndef __D_NET__
 #define __D_NET__
 
-#include "doomstat.hh"
 #include "d_player.hh"
+#include "doomstat.hh"
 
 //
 // Network play related stuff.

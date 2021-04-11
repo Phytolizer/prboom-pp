@@ -38,27 +38,27 @@
 #endif
 #include "SDL.h"
 
-#include "doomstat.hh"
 #include "d_net.hh"
-#include "w_wad.hh"
-#include "r_main.hh"
-#include "r_things.hh"
-#include "r_plane.hh"
-#include "r_bsp.hh"
-#include "r_draw.hh"
-#include "m_bbox.hh"
-#include "r_sky.hh"
-#include "v_video.hh"
-#include "lprintf.hh"
-#include "st_stuff.hh"
+#include "doomstat.hh"
+#include "e6y.hh" //e6y
+#include "g_game.hh"
 #include "i_main.hh"
 #include "i_system.hh"
-#include "g_game.hh"
+#include "lprintf.hh"
+#include "m_bbox.hh"
+#include "r_bsp.hh"
 #include "r_demo.hh"
+#include "r_draw.hh"
 #include "r_fps.hh"
-#include <cmath>
-#include "e6y.hh" //e6y
+#include "r_main.hh"
+#include "r_plane.hh"
+#include "r_sky.hh"
+#include "r_things.hh"
+#include "st_stuff.hh"
+#include "v_video.hh"
+#include "w_wad.hh"
 #include "xs_Float.hh"
+#include <cmath>
 
 // e6y
 // Now they are variables. Depends from render_doom_lightmaps variable.

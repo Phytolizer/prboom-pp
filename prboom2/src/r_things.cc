@@ -31,19 +31,19 @@
  *
  *-----------------------------------------------------------------------------*/
 
-#include "doomstat.hh"
-#include "p_mobj.hh"
-#include "w_wad.hh"
-#include "r_main.hh"
-#include "r_bsp.hh"
-#include "r_segs.hh"
-#include "r_draw.hh"
 #include "r_things.hh"
-#include "r_fps.hh"
-#include "v_video.hh"
-#include "p_pspr.hh"
-#include "lprintf.hh"
+#include "doomstat.hh"
 #include "e6y.hh" //e6y
+#include "lprintf.hh"
+#include "p_mobj.hh"
+#include "p_pspr.hh"
+#include "r_bsp.hh"
+#include "r_draw.hh"
+#include "r_fps.hh"
+#include "r_main.hh"
+#include "r_segs.hh"
+#include "v_video.hh"
+#include "w_wad.hh"
 
 #define BASEYCENTER 100
 
@@ -1030,15 +1030,15 @@ static void R_ApplyWeaponBob(fixed_t *sx, dboolean bobx, fixed_t *sy,
 
 // heretic
 static int PSpriteSY[NUMWEAPONS] = {
-    0,                          // staff
-    5 * FRACUNIT,               // goldwand
-    15 * FRACUNIT,              // crossbow
-    15 * FRACUNIT,              // blaster
-    15 * FRACUNIT,              // skullrod
-    15 * FRACUNIT,              // phoenix rod
-    15 * FRACUNIT,              // mace
-    15 * FRACUNIT,              // gauntlets
-    15 * FRACUNIT               // beak
+    0,             // staff
+    5 * FRACUNIT,  // goldwand
+    15 * FRACUNIT, // crossbow
+    15 * FRACUNIT, // blaster
+    15 * FRACUNIT, // skullrod
+    15 * FRACUNIT, // phoenix rod
+    15 * FRACUNIT, // mace
+    15 * FRACUNIT, // gauntlets
+    15 * FRACUNIT  // beak
 };
 
 static void R_DrawPSprite(pspdef_t *psp)
@@ -1124,10 +1124,10 @@ static void R_DrawPSprite(pspdef_t *psp)
     vis->texturemid =
         (BASEYCENTER << FRACBITS) /* +  FRACUNIT/2 */ - (psp_sy - topoffset);
 
-  if (viewheight == SCREENHEIGHT && heretic)
-  {
-    vis->texturemid -= PSpriteSY[players[consoleplayer].readyweapon];
-  }
+    if (viewheight == SCREENHEIGHT && heretic)
+    {
+        vis->texturemid -= PSpriteSY[players[consoleplayer].readyweapon];
+    }
 
     // Move the weapon down for 1280x1024.
     vis->texturemid -= psprite_offset;

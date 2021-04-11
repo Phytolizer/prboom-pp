@@ -46,14 +46,14 @@
 #include <SDL.h>
 
 #include "doomstat.hh"
-#include "v_video.hh"
 #include "gl_intern.hh"
+#include "lprintf.hh"
+#include "m_misc.hh"
+#include "r_main.hh"
 #include "r_plane.hh"
 #include "r_sky.hh"
-#include "r_main.hh"
 #include "sc_man.hh"
-#include "m_misc.hh"
-#include "lprintf.hh"
+#include "v_video.hh"
 
 #include "e6y.hh"
 

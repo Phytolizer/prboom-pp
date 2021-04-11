@@ -31,13 +31,13 @@
  *-----------------------------------------------------------------------------
  */
 
+#include "hu_lib.hh"
 #include "doomdef.hh"
 #include "doomstat.hh"
-#include "v_video.hh"
-#include "hu_lib.hh"
 #include "hu_stuff.hh"
-#include "r_main.hh"
 #include "r_draw.hh"
+#include "r_main.hh"
+#include "v_video.hh"
 
 //
 // not used currently

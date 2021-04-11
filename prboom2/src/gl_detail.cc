@@ -45,15 +45,15 @@
 
 #include <cmath>
 
-#include "v_video.hh"
-#include "r_main.hh"
-#include "gl_intern.hh"
-#include "w_wad.hh"
-#include "lprintf.hh"
-#include "p_spec.hh"
-#include "m_misc.hh"
-#include "sc_man.hh"
 #include "e6y.hh"
+#include "gl_intern.hh"
+#include "lprintf.hh"
+#include "m_misc.hh"
+#include "p_spec.hh"
+#include "r_main.hh"
+#include "sc_man.hh"
+#include "v_video.hh"
+#include "w_wad.hh"
 
 int render_usedetail;
 int gl_allow_detail_textures;

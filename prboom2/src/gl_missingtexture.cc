@@ -42,15 +42,15 @@
 #include <SDL_image.h>
 #endif
 #include "doomstat.hh"
-#include "v_video.hh"
+#include "e6y.hh"
 #include "gl_intern.hh"
-#include "i_system.hh"
-#include "lprintf.hh"
-#include "i_video.hh"
 #include "hu_lib.hh"
 #include "hu_stuff.hh"
+#include "i_system.hh"
+#include "i_video.hh"
+#include "lprintf.hh"
 #include "r_main.hh"
-#include "e6y.hh"
+#include "v_video.hh"
 
 using fakegroup_t = struct
 {

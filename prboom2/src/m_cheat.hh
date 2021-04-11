@@ -34,9 +34,9 @@
 #ifndef __M_CHEAT__
 #define __M_CHEAT__
 
+#include "cpp/enums/cheat_when_t.hh"
 #include "d_event.hh"
 #include "doomtype.hh"
-#include "cpp/enums/cheat_when_t.hh"
 
 #define CHEAT(cheat, deh_cheat, when, func, arg)                               \
     {                                                                          \

@@ -49,9 +49,9 @@
 #include "config.h"
 #endif
 
-#include <cstddef>
-#include "w_wad.hh"
 #include "tables.hh"
+#include "w_wad.hh"
+#include <cstddef>
 
 // killough 5/3/98: reformatted
 
@@ -87,8 +87,8 @@ fixed_t finesine[10240];
 
 angle_t tantoangle[2049];
 
-#include "m_swap.hh"
 #include "lprintf.hh"
+#include "m_swap.hh"
 
 // R_LoadTrigTables
 // Load trig tables from a wad file lump

@@ -18,17 +18,17 @@
 #include <cstdlib>
 #include <cstring>
 
-#include "m_argv.hh"
-#include "info.hh"
 #include "d_items.hh"
+#include "d_main.hh"
+#include "heretic/d_main.hh"
+#include "heretic/def.hh"
+#include "hu_stuff.hh"
+#include "info.hh"
+#include "m_argv.hh"
 #include "p_inter.hh"
 #include "p_spec.hh"
 #include "sounds.hh"
-#include "d_main.hh"
 #include "v_video.hh"
-#include "hu_stuff.hh"
-#include "heretic/def.hh"
-#include "heretic/d_main.hh"
 
 #include "global.hh"
 

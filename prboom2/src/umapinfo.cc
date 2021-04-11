@@ -17,18 +17,18 @@
 //
 //-----------------------------------------------------------------------------
 
-#include <cstdlib>
-#include <cstring>
-#include <cctype>
-#include <cassert>
-#include <cpp/strings.hh>
 #include "umapinfo.hh"
 #include "scanner.hh"
+#include <cassert>
+#include <cctype>
+#include <cpp/strings.hh>
+#include <cstdlib>
+#include <cstring>
 
-#include "m_misc.hh"
-#include "g_game.hh"
 #include "doomdef.hh"
 #include "doomstat.hh"
+#include "g_game.hh"
+#include "m_misc.hh"
 
 void M_AddEpisode(const std::string &map, std::string *def);
 

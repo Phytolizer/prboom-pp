@@ -42,9 +42,9 @@
 #include <SDL_opengl.h>
 #endif
 
+#include "SDL.h"
 #include "doomtype.hh"
 #include "v_video.hh"
-#include "SDL.h"
 
 extern int render_vsync;
 extern int render_screen_multiply;
@@ -96,8 +96,8 @@ void I_StartTic(void);
 
 void I_StartFrame(void);
 
-extern int use_fullscreen;  /* proff 21/05/2000 */
-extern int desired_fullscreen; //e6y
+extern int use_fullscreen;     /* proff 21/05/2000 */
+extern int desired_fullscreen; // e6y
 extern int exclusive_fullscreen;
 
 void I_UpdateRenderSize(void); // Handle potential

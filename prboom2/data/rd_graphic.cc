@@ -5,14 +5,14 @@
 
 #include "config.h"
 
-#include <cstdlib>
-#include <cstdio>
-#include <cstring>
 #include <cctype>
+#include <cstdio>
+#include <cstdlib>
+#include <cstring>
 
-#include "rd_util.hh"
-#include "rd_palette.hh"
 #include "rd_graphic.hh"
+#include "rd_palette.hh"
+#include "rd_util.hh"
 
 //
 // parseppm

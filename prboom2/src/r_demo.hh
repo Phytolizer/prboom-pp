@@ -35,10 +35,10 @@
 #ifndef __R_DEMO__
 #define __R_DEMO__
 
+#include "d_player.hh"
 #include "doomdef.hh"
 #include "doomtype.hh"
 #include "tables.hh"
-#include "d_player.hh"
 #include "w_wad.hh"
 
 //

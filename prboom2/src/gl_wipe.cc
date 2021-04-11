@@ -37,11 +37,11 @@
 
 #include "gl_opengl.hh"
 
-#include "v_video.hh"
-#include "gl_intern.hh"
-#include "m_random.hh"
-#include "lprintf.hh"
 #include "e6y.hh"
+#include "gl_intern.hh"
+#include "lprintf.hh"
+#include "m_random.hh"
+#include "v_video.hh"
 
 static GLuint wipe_scr_start_tex = 0;
 static GLuint wipe_scr_end_tex = 0;

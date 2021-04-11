@@ -19,8 +19,8 @@
 #include "doomstat.hh"
 #include "m_cheat.hh"
 #include "m_random.hh"
-#include "v_video.hh"
 #include "r_main.hh"
+#include "v_video.hh"
 #include "w_wad.hh"
 
 #include "dsda/settings.hh"
@@ -583,8 +583,8 @@ void DrawCommonBar()
 
     if (!dsda_HideHorns())
     {
-      V_DrawNumPatch(0,  148, 0, LumpLTFCTOP, CR_DEFAULT, VPT_STRETCH);
-      V_DrawNumPatch(290,  148, 0, LumpRTFCTOP, CR_DEFAULT, VPT_STRETCH);
+        V_DrawNumPatch(0, 148, 0, LumpLTFCTOP, CR_DEFAULT, VPT_STRETCH);
+        V_DrawNumPatch(290, 148, 0, LumpRTFCTOP, CR_DEFAULT, VPT_STRETCH);
     }
 
     if (oldhealth != HealthMarker)

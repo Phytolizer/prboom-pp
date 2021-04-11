@@ -32,14 +32,14 @@
  *-----------------------------------------------------------------------------*/
 
 #include "doomstat.hh"
+#include "e6y.hh" //e6y
+#include "lprintf.hh"
 #include "m_random.hh"
-#include "r_main.hh"
 #include "p_spec.hh"
 #include "p_tick.hh"
+#include "r_main.hh"
 #include "s_sound.hh"
 #include "sounds.hh"
-#include "lprintf.hh"
-#include "e6y.hh" //e6y
 
 platlist_t *activeplats; // killough 2/14/98: made global again
 

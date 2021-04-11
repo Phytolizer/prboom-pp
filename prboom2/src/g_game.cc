@@ -44,56 +44,55 @@
 #else
 #include <unistd.h>
 #endif
-#include <fcntl.h>
 #include <cpp/strings.hh>
+#include <fcntl.h>
 
 #ifdef HAVE_CONFIG_H
 #include "config.h"
 #endif
 
-#include "doomstat.hh"
-#include "d_net.hh"
-#include "f_finale.hh"
-#include "m_argv.hh"
-#include "m_misc.hh"
-#include "m_menu.hh"
-#include "m_random.hh"
-#include "p_setup.hh"
-#include "p_saveg.hh"
-#include "p_tick.hh"
-#include "p_map.hh"
-#include "p_checksum.hh"
-#include "d_main.hh"
-#include "wi_stuff.hh"
-#include "hu_stuff.hh"
-#include "st_stuff.hh"
 #include "am_map.hh"
-#include "w_wad.hh"
-#include "r_main.hh"
-#include "r_draw.hh"
-#include "p_map.hh"
-#include "s_sound.hh"
-#include "s_advsound.hh"
-#include "dstrings.hh"
-#include "sounds.hh"
-#include "r_data.hh"
-#include "r_sky.hh"
 #include "d_deh.hh" // Ty 3/27/98 deh declarations
-#include "p_inter.hh"
-#include "g_game.hh"
-#include "lprintf.hh"
-#include "i_main.hh"
-#include "i_system.hh"
-#include "r_demo.hh"
-#include "r_fps.hh"
-#include "e6y.hh" //e6y
+#include "d_main.hh"
+#include "d_net.hh"
+#include "doomstat.hh"
 #include "dsda.hh"
 #include "dsda/demo.hh"
-#include "dsda/key_frame.hh"
-#include "dsda/settings.hh"
 #include "dsda/input.hh"
+#include "dsda/key_frame.hh"
 #include "dsda/options.hh"
+#include "dsda/settings.hh"
+#include "dstrings.hh"
+#include "e6y.hh" //e6y
+#include "f_finale.hh"
+#include "g_game.hh"
+#include "hu_stuff.hh"
+#include "i_main.hh"
+#include "i_system.hh"
+#include "lprintf.hh"
+#include "m_argv.hh"
+#include "m_menu.hh"
+#include "m_misc.hh"
+#include "m_random.hh"
+#include "p_checksum.hh"
+#include "p_inter.hh"
+#include "p_map.hh"
+#include "p_saveg.hh"
+#include "p_setup.hh"
+#include "p_tick.hh"
+#include "r_data.hh"
+#include "r_demo.hh"
+#include "r_draw.hh"
+#include "r_fps.hh"
+#include "r_main.hh"
+#include "r_sky.hh"
+#include "s_advsound.hh"
+#include "s_sound.hh"
+#include "sounds.hh"
+#include "st_stuff.hh"
 #include "statdump.hh"
+#include "w_wad.hh"
+#include "wi_stuff.hh"
 
 // ano - used for version 255+ demos, like EE or MBF
 static char prdemosig[] = "PR+UM";
@@ -265,8 +264,8 @@ int bodyqueslot, bodyquesize; // killough 2/8/98
 mobj_t **bodyque = nullptr;   // phares 8/10/98
 
 // heretic
-#include "p_user.hh"
 #include "heretic/def.hh"
+#include "p_user.hh"
 
 int inventoryTics;
 int lookheld;
