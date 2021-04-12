@@ -1821,8 +1821,8 @@ static uint_64_t getConvertedDEHBits(uint_64_t bits)
         MF_SKULLFLY,  // 24 Running - special handling for flying skulls.
         MF_NOTDEATHMATCH, // 25 Not in deathmatch - do not spawn in deathmatch
                           // (like keys)
-        MF_TRANSLATION1, // 26 Color 1 (grey / red)
-        MF_TRANSLATION2, // 27 Color 2 (brown / red)
+        MF_TRANSLATION1,  // 26 Color 1 (grey / red)
+        MF_TRANSLATION2,  // 27 Color 2 (brown / red)
         // Convert bit 28 to MF_TOUCHY, not (MF_TRANSLATION1|MF_TRANSLATION2)
         // fixes bug #1576151 (part 1)
         MF_TOUCHY,     // 28 - explodes on contact (MBF)
