@@ -601,6 +601,7 @@ static void P_ZMovement(mobj_t *mo)
                 if (mo->flags & MF_TOUCHY && mo->intflags & MIF_ARMED &&
                     mo->health > 0)
                 {
+                    int damage = P_GetDamageValue(4, 8, pr_heretic);
                     P_DamageMobj(mo, nullptr, nullptr, mo->health);
                 }
                 else if (mo->flags & MF_FLOAT && sentient(mo))

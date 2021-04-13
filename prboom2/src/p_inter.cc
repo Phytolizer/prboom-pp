@@ -1125,15 +1125,14 @@ static void P_KillMobj(mobj_t *source, mobj_t *target)
 #endif
 }
 
-int P_GetDamageValue(int base, int nd)
+int P_GetDamageValue(int base, int nsides, pr_class_t pr_class)
 {
     if (normally_distributed_damage)
     {
-        return std::normal_distribution<double>(base * nd / 2,
-                                                base * nd / 3)(random_device);
+        // TODO();
     }
 
-    return base * (X_Random() % nd + 1);
+    return base * (P_Random(pr_class) % nsides + 1);
 }
 
 //

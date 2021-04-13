@@ -1746,7 +1746,7 @@ void A_SargAttack(mobj_t *actor)
     {
         if (P_CheckMeleeRange(actor))
         {
-            int damage = ((P_Random(pr_sargattack) % 10) + 1) * 4;
+            int damage = P_GetDamageValue(4, 10, pr_sargattack);
             P_DamageMobj(actor->target, actor, actor, damage);
         }
     }
@@ -1779,8 +1779,15 @@ void A_HeadAttack(mobj_t *actor)
 
     if (P_CheckMeleeRange(actor))
     {
-        int damage =
-            heretic ? HITDICE(6) : (P_Random(pr_headattack) % 6 + 1) * 10;
+        int damage;
+        if (heretic)
+        {
+            damage = P_GetDamageValue(6, 8, pr_heretic);
+        }
+        else
+        {
+            damage = P_GetDamageValue(10, 6, pr_headattack);
+        }
         P_DamageMobj(target, actor, actor, damage);
         return;
     }
@@ -1864,7 +1871,7 @@ void A_BruisAttack(mobj_t *actor)
         {
             S_StartSound(actor, sfx_hellknight_attack);
         }
-        int damage = (P_Random(pr_bruisattack) % 8 + 1) * 10;
+        int damage = P_GetDamageValue(10, 8, pr_bruisattack);
         P_DamageMobj(actor->target, actor, actor, damage);
         return;
     }
@@ -2021,7 +2028,7 @@ void A_SkelFist(mobj_t *actor)
     A_FaceTarget(actor);
     if (P_CheckMeleeRange(actor))
     {
-        int damage = ((P_Random(pr_skelfist) % 10) + 1) * 6;
+        int damage = P_GetDamageValue(6, 10, pr_skelfist);
         S_StartSound(actor, sfx_revenant_punch);
         P_DamageMobj(actor->target, actor, actor, damage);
     }
@@ -2467,7 +2474,7 @@ void A_BetaSkullAttack(mobj_t *actor)
 
     S_StartSound(actor, actor->info->attacksound);
     A_FaceTarget(actor);
-    damage = (P_Random(pr_skullfly) % 8 + 1) * actor->info->damage;
+    damage = P_GetDamageValue(actor->info->damage, 8, pr_skullfly);
     P_DamageMobj(actor->target, actor, actor, damage);
 }
 
@@ -4382,7 +4389,8 @@ void A_WizAtk3(mobj_t *actor)
     S_StartSound(actor, actor->info->attacksound);
     if (P_CheckMeleeRange(actor))
     {
-        P_DamageMobj(actor->target, actor, actor, HITDICE(4));
+        int damage = P_GetDamageValue(4, 8, pr_heretic);
+        P_DamageMobj(actor->target, actor, actor, damage);
         return;
     }
     mo = P_SpawnMissile(actor, actor->target, HERETIC_MT_WIZFX1);

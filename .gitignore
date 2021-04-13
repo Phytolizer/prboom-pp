@@ -21,6 +21,8 @@ _lgtm_build_dir/
 _lgtm_detected_source_root
 merge_queue.txt
 queries/
+/db/
+/db.zip
 
 # rust
 target/

@@ -35,6 +35,7 @@
 #define __P_INTER__
 
 #include "d_player.hh"
+#include "m_random.hh"
 #include "p_mobj.hh"
 
 /* Ty 03/09/98 Moved to an int in p_inter.c for deh and externalization */
@@ -45,6 +46,7 @@
 
 dboolean P_GivePower(player_t *, int);
 void P_TouchSpecialThing(mobj_t *special, mobj_t *toucher);
+int P_GetDamageValue(int base, int nsides, pr_class_t pr_class);
 void P_DamageMobj(mobj_t *target, mobj_t *inflictor, mobj_t *source,
                   int damage);
 
