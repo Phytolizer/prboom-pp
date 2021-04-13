@@ -1,6 +1,6 @@
 #pragma once
-#include "cheater/../m_argv.hh"
-#include "cheater/../m_cheat.hh"
+#include "../m_argv.hh"
+#include "../m_cheat.hh"
 #include <algorithm>
 #include <array>
 #include <cassert>
