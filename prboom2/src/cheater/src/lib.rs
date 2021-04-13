@@ -1,7 +1,7 @@
+use cheater_macros::check_cheat_param;
 use cxx::let_cxx_string;
 use once_cell::sync::Lazy;
 use parking_lot::Mutex;
-use cheater_macros::check_cheat_param;
 
 static GAME_STARTED: Lazy<Mutex<bool>> = Lazy::new(|| Mutex::new(false));
 
@@ -13,8 +13,8 @@ mod ffi {
     }
 
     unsafe extern "C++" {
-        include!("cheater/../m_cheat.hh");
-        include!("cheater/../m_argv.hh");
+        include!(concat!(env!("CARGO_MANIFEST_DIR"), "../m_cheat.hh"));
+        include!(concat!(env!("CARGO_MANIFEST_DIR"), "../m_argv.hh"));
 
         fn M_CheckParm(parm: &CxxString) -> i32;
         fn cheat_god();
