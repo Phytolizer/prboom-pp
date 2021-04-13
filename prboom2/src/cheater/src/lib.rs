@@ -13,8 +13,8 @@ mod ffi {
     }
 
     unsafe extern "C++" {
-        include!(concat!(env!("CARGO_MANIFEST_DIR"), "../m_cheat.hh"));
-        include!(concat!(env!("CARGO_MANIFEST_DIR"), "../m_argv.hh"));
+        include!("m_cheat.hh");
+        include!("m_argv.hh");
 
         fn M_CheckParm(parm: &CxxString) -> i32;
         fn cheat_god();
