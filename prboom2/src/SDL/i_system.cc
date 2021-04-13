@@ -85,6 +85,7 @@
 #include "m_fixed.hh"
 #include "r_fps.hh"
 #endif
+#include "dirs/dirs.hh"
 #include "i_system.hh"
 
 #ifdef __GNUG__
@@ -416,27 +417,17 @@ const char *I_GetTempDir(void)
 // cph - V.Aguilar (5/30/99) suggested return ~/.lxdoom/, creating
 //  if non-existant
 // cph 2006/07/23 - give prboom+ its own dir
-const char prboom_dir[] = {"/.prboom++"}; // Mead rem extra slash 8/21/03
-
 const char *I_DoomExeDir()
 {
-    static char *base;
-    if (!base) // cache multiple requests
+    static rust::String base;
+    if (base.length() == 0) // cache multiple requests
     {
         char *home = getenv("HOME");
         size_t len = strlen(home);
 
-        base = static_cast<char *>(malloc(len + strlen(prboom_dir) + 1));
-        strcpy(base, home);
-        // I've had trouble with trailing slashes before...
-        if (base[len - 1] == '/')
-        {
-            base[len - 1] = 0;
-        }
-        strcat(base, prboom_dir);
-        mkdir(base, S_IRUSR | S_IWUSR | S_IXUSR); // Make sure it exists
+        base = rust::dirs::get_config_dir();
     }
-    return base;
+    return base.c_str();
 }
 
 const char *I_GetTempDir()

@@ -17,6 +17,7 @@ use serde::Deserialize;
 use serde::Serialize;
 
 use crate::c::*;
+use crate::PRBOOM_DIR;
 
 #[repr(C)]
 pub struct EnemyStats {
@@ -149,17 +150,7 @@ static KILL_STATS: Lazy<Mutex<HashMap<String, WeaponStats>>> = Lazy::new(|| {
 });
 
 unsafe fn get_weapon_stats_filename() -> PathBuf {
-    let prbdir_len = strlen(prboom_dir.as_ptr()) as usize;
-    dirs::home_dir()
-        .unwrap()
-        .join({
-            &std::str::from_utf8(std::slice::from_raw_parts(
-                prboom_dir.as_ptr() as *const u8,
-                prbdir_len,
-            ))
-            .unwrap()[1..]
-        })
-        .join("weapon_stats.toml")
+    PathBuf::from(PRBOOM_DIR.as_str()).join("weapon_stats.toml")
 }
 
 /// # Safety

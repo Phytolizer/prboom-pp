@@ -43,16 +43,10 @@ use serde::Serialize;
 
 mod c;
 mod stats;
+pub use dirs::*;
 pub use stats::*;
 
-static PRBOOM_DIR: Lazy<PathBuf> = Lazy::new(|| {
-    let len = unsafe { c::strlen(c::prboom_dir.as_ptr()) };
-    let suffix = std::str::from_utf8(unsafe {
-        std::slice::from_raw_parts(c::prboom_dir.as_ptr() as *const u8, len as usize)
-    })
-    .unwrap();
-    dirs::home_dir().unwrap().join(&suffix[1..])
-});
+static PRBOOM_DIR: Lazy<String> = Lazy::new(get_config_dir);
 
 #[repr(C)]
 #[derive(Clone, Copy)]
@@ -689,7 +683,7 @@ pub unsafe extern "C" fn load_defaults() -> c_int {
         }
     }
 
-    let contents = match fs::read(PRBOOM_DIR.join("prboom++.toml")) {
+    let contents = match fs::read(PathBuf::from(PRBOOM_DIR.as_str()).join("prboom++.toml")) {
         Ok(c) => c,
         Err(_) => return 1,
     };
@@ -841,7 +835,7 @@ pub unsafe extern "C" fn save_defaults() {
         }
     }
     fs::write(
-        PRBOOM_DIR.join("prboom++.toml"),
+        PathBuf::from(PRBOOM_DIR.as_str()).join("prboom++.toml"),
         toml::to_string_pretty(&defaults)
             .map_err(|e| {
                 panic!("Error serializing defaults: {}", e);
