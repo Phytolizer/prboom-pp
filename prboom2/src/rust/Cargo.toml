@@ -12,8 +12,8 @@ crate-type = ["staticlib"]
 nom = "6.1"
 once_cell = "1.7"
 parking_lot = "0.11"
-toml = "0.5"
 dirs = "3.0"
+ron = "0.6.4"
 
 [dependencies.serde]
 version = "1.0"

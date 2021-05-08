@@ -20,7 +20,7 @@ use crate::c::*;
 
 #[repr(C)]
 pub struct EnemyStats {
-    enemy: mobjtype_t,
+    enemy: mobjtype_t::Type,
     kills: c_ulong,
 }
 
@@ -106,6 +106,54 @@ const fn rust_weapon_name(weapon: weapontype_t) -> &'static str {
     }
 }
 
+const fn rust_monster_name(monster: mobjtype_t::Type) -> &'static str {
+    match monster {
+        mobjtype_t::MT_PLAYER => "player",
+        mobjtype_t::MT_POSSESSED => "zombieman",
+        mobjtype_t::MT_SHOTGUY => "shotgunner",
+        mobjtype_t::MT_VILE => "archvile",
+        mobjtype_t::MT_FIRE => "fire",
+        mobjtype_t::MT_UNDEAD => "revenant",
+        mobjtype_t::MT_TRACER => "revenant's tracer",
+        mobjtype_t::MT_SMOKE => "smoke",
+        mobjtype_t::MT_FATSO => "mancubus",
+        mobjtype_t::MT_FATSHOT => "mancubus' fireball",
+        mobjtype_t::MT_CHAINGUY => "chaingunner",
+        mobjtype_t::MT_TROOP => "imp",
+        mobjtype_t::MT_SERGEANT => "pinky",
+        mobjtype_t::MT_SHADOWS => "spectre",
+        mobjtype_t::MT_HEAD => "cacodemon",
+        mobjtype_t::MT_BRUISER => "baron of hell",
+        mobjtype_t::MT_BARON_SHOT => "baron of hell's shot",
+        mobjtype_t::MT_KNIGHT => "hell knight",
+        mobjtype_t::MT_SKULL => "lost soul",
+        mobjtype_t::MT_SPIDER => "spider mastermind",
+        mobjtype_t::MT_BABY => "arachnotron",
+        mobjtype_t::MT_CYBORG => "cyberdemon",
+        mobjtype_t::MT_PAIN => "pain elemental",
+        mobjtype_t::MT_WOLFSS => "nazi",
+        mobjtype_t::MT_KEEN => "commander keen",
+        mobjtype_t::MT_BOSSBRAIN => "icon of sin",
+        mobjtype_t::MT_BOSSSPIT => "monster cube",
+        mobjtype_t::MT_BOSSTARGET => "icon of sin target",
+        mobjtype_t::MT_SPAWNSHOT => "spawn shot (?)",
+        mobjtype_t::MT_BARREL => "explosive barrel",
+        mobjtype_t::MT_TROOPSHOT => "imp's fireball",
+        mobjtype_t::MT_HEADSHOT => "cacodemon's fireball",
+        mobjtype_t::MT_ROCKET => "rocket",
+        mobjtype_t::MT_PLASMA => "plasma shot",
+        mobjtype_t::MT_BFG => "bfg shot",
+        mobjtype_t::MT_ARACHPLAZ => "arachnotron's plasma",
+        mobjtype_t::MT_PUFF => "bullet puff",
+        mobjtype_t::MT_BLOOD => "blood",
+        mobjtype_t::MT_TFOG => "teleport fog",
+        mobjtype_t::MT_IFOG => "i fog (?)",
+        mobjtype_t::MT_TELEPORTMAN => "teleport man (?)",
+        mobjtype_t::MT_EXTRABFG => "old bfg shot",
+        _ => "(unknown monster)",
+    }
+}
+
 static KILL_STATS: Lazy<Mutex<HashMap<String, WeaponStats>>> = Lazy::new(|| {
     let mut map = HashMap::new();
     map.insert(
@@ -159,7 +207,7 @@ unsafe fn get_weapon_stats_filename() -> PathBuf {
             ))
             .unwrap()[1..]
         })
-        .join("weapon_stats.toml")
+        .join("weapon_stats.ron")
 }
 
 /// # Safety
@@ -175,7 +223,7 @@ pub unsafe extern "C" fn load_weapon_stats() -> c_int {
         }
     };
 
-    *KILL_STATS.lock() = match toml::from_slice(&contents) {
+    *KILL_STATS.lock() = match ron::de::from_bytes(&contents) {
         Ok(ks) => ks,
         Err(e) => {
             eprintln!("Couldn't parse weapon stats: {}", e);
@@ -190,7 +238,9 @@ pub unsafe extern "C" fn load_weapon_stats() -> c_int {
 /// This function just needs to get the prboom_dir value as a String. It's probably fine.
 #[no_mangle]
 pub unsafe extern "C" fn save_weapon_stats() -> c_int {
-    let contents = toml::to_string_pretty(&*(KILL_STATS.lock())).unwrap();
+    let contents =
+        ron::ser::to_string_pretty(&*(KILL_STATS.lock()), ron::ser::PrettyConfig::default())
+            .unwrap();
 
     if let Err(e) = fs::write(get_weapon_stats_filename(), contents) {
         eprintln!(
@@ -205,7 +255,7 @@ pub unsafe extern "C" fn save_weapon_stats() -> c_int {
 }
 
 #[no_mangle]
-pub extern "C" fn add_kill(weapon: weapontype_t, enemy: mobjtype_t) {
+pub extern "C" fn add_kill(weapon: weapontype_t, enemy: mobjtype_t::Type) {
     let mut kill_stats = KILL_STATS.lock();
     let stats = kill_stats.get_mut(rust_weapon_name(weapon)).unwrap();
     stats.kills += 1;

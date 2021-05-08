@@ -689,14 +689,15 @@ pub unsafe extern "C" fn load_defaults() -> c_int {
         }
     }
 
-    let contents = match fs::read(PRBOOM_DIR.join("prboom++.toml")) {
+    let contents = match fs::read(PRBOOM_DIR.join("prboom++.ron")) {
         Ok(c) => c,
         Err(_) => return 1,
     };
-    let defaults: HashMap<String, DefaultValue> = match toml::from_slice(&contents) {
-        Ok(d) => d,
-        Err(_) => return 2,
-    };
+    let defaults: HashMap<String, DefaultValue> =
+        match ron::from_str(String::from_utf8_lossy(&contents).as_ref()) {
+            Ok(d) => d,
+            Err(_) => return 2,
+        };
 
     for (name, value) in defaults {
         let default = c::M_LookupDefault(
@@ -841,8 +842,8 @@ pub unsafe extern "C" fn save_defaults() {
         }
     }
     fs::write(
-        PRBOOM_DIR.join("prboom++.toml"),
-        toml::to_string_pretty(&defaults)
+        PRBOOM_DIR.join("prboom++.ron"),
+        ron::ser::to_string_pretty(&defaults, ron::ser::PrettyConfig::default())
             .map_err(|e| {
                 panic!("Error serializing defaults: {}", e);
             })

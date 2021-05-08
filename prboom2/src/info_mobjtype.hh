@@ -6,7 +6,7 @@
  * Note that many of these are generically named for the ornamentals
  */
 
-typedef enum
+enum mobjtype_t
 {
     MT_NULL = -1, // ferk: null/invalid mobj (zero is reserved for MT_PLAYER)
     MT_PLAYER,
@@ -443,4 +443,4 @@ typedef enum
     HERETIC_NUMMOBJTYPES,
 
     TOTAL_NUMMOBJTYPES = HERETIC_NUMMOBJTYPES
-} mobjtype_t;
+};

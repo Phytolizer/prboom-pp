@@ -18,6 +18,7 @@ fn main() {
         .whitelist_type("sfxenum_t")
         .whitelist_type("weapontype_t")
         .whitelist_type("mobjtype_t")
+        .constified_enum_module("mobjtype_t")
         .whitelist_type("setup_menu_s")
         .whitelist_type("ss_types")
         .whitelist_type("dsda_input_t")
