@@ -1,17 +1,12 @@
 use proc_macro::TokenStream;
-use proc_macro2::Punct;
 use proc_macro2::Spacing;
-use proc_macro2::TokenTree;
-use quote::quote;
 use quote::format_ident;
-use quote::ToTokens;
-use syn::buffer::Cursor;
+use quote::quote;
 use syn::parse::Parse;
 use syn::parse::ParseStream;
 use syn::parse::StepCursor;
 use syn::parse_macro_input;
 use syn::Ident;
-use syn::Lit;
 use syn::LitStr;
 
 fn take_cheat_name(input: ParseStream) -> syn::Result<String> {

@@ -11,7 +11,7 @@ crate-type = ["staticlib"]
 
 [dependencies]
 cxx = "1.0"
-parking_lot = "0.11"
+parking_lot = "0.12"
 once_cell = "1.7"
 
 [dependencies.cheater_macros]

@@ -5,6 +5,7 @@ use parking_lot::Mutex;
 
 static GAME_STARTED: Lazy<Mutex<bool>> = Lazy::new(|| Mutex::new(false));
 
+#[allow(dead_code)]
 #[cxx::bridge]
 mod ffi {
     #[namespace = "rust::cheater"]

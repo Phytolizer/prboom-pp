@@ -376,7 +376,7 @@ function(AddGameExecutable TARGET SOURCES)
   endif()
   if(PortMidi_FOUND)
     target_include_directories(${TARGET} PRIVATE ${PORTMIDI_INCLUDE_DIR})
-    target_link_libraries(${TARGET} PRIVATE ${PORTMIDI_LIBRARIES})
+    target_link_libraries(${TARGET} PRIVATE ${PORTMIDI_LIBRARIES} porttime)
   endif()
   add_dependencies(${TARGET} prboom-pp-wad)
 

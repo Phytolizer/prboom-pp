@@ -106,6 +106,7 @@ if(BUILD_GL)
   find_package(OpenGL)
 endif()
 
+set(VIDEO_WAYLAND CACHE BOOL OFF)
 add_subdirectory(deps/SDL2)
 
 option(WITH_IMAGE "Use SDL2_image if available" ON)

@@ -9,9 +9,9 @@ crate-type = ["staticlib"]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 [dependencies]
-nom = "6.1"
+nom = "7.1"
 once_cell = "1.7"
-parking_lot = "0.11"
+parking_lot = "0.12"
 toml = "0.5"
 dirs = { path = "../dirs" }
 
@@ -23,4 +23,4 @@ version = "1.0"
 features = ["derive"]
 
 [build-dependencies]
-bindgen = "0.58"
+bindgen = "0.60"

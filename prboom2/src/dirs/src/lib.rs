@@ -11,12 +11,10 @@ mod ffi {
 }
 
 pub fn get_config_dir() -> String {
-    let d = ProjectDirs::from("com", "oncontentstop", "prboom++")
-        .unwrap()
-        .config_dir()
-        .to_string_lossy()
-        .to_string();
+    let project_dirs = ProjectDirs::from("com", "oncontentstop", "prboom++").unwrap();
+    let d = project_dirs.config_dir();
+    let d_str = d.to_str().unwrap();
 
-    create_dir_all(d.as_str()).unwrap();
-    d
+    create_dir_all(d).unwrap();
+    d_str.to_string()
 }
