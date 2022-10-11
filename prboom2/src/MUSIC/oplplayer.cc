@@ -28,6 +28,7 @@
 #include <cstdlib>
 #include <cstring>
 
+#include "cpp/enums/midi_controller_t.hh"
 #include "doomdef.hh"
 #include "memio.hh"
 #include "mus2mid.hh"

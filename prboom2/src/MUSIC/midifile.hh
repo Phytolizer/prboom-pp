@@ -28,9 +28,7 @@
 
 #include <cstddef>
 
-#include "cpp/enums/midi_controller_t.hh"
 #include "cpp/enums/midi_event_type_t.hh"
-#include "cpp/enums/midi_meta_event_type_t.hh"
 #include "doomtype.hh"
 
 struct midi_track_t;
