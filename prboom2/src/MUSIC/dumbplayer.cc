@@ -233,7 +233,8 @@ void db_render(void *dest, unsigned nsamp)
                     db_stop();
                     lprintf(
                         LO_WARN,
-                        "db_render: problem (0 length tracker file on loop?\n");
+                        "db_render: problem (0 length tracker file on loop?\n"
+                    );
                     return;
                 }
 

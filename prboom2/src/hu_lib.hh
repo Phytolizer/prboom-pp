@@ -144,10 +144,11 @@ typedef struct
 // clear a line of text
 void HUlib_clearTextLine(hu_textline_t *t);
 
-void HUlib_initTextLine(hu_textline_t *t, int x, int y, const patchnum_t *f,
-                        int sc,
-                        int cm, // jff 2/16/98 add color range parameter
-                        enum patch_translation_e flags);
+void HUlib_initTextLine(
+    hu_textline_t *t, int x, int y, const patchnum_t *f, int sc,
+    int cm, // jff 2/16/98 add color range parameter
+    enum patch_translation_e flags
+);
 
 // returns success
 dboolean HUlib_addCharToTextLine(hu_textline_t *t, char ch);
@@ -163,14 +164,16 @@ void HUlib_eraseTextLine(hu_textline_t *l);
 //
 
 // initialize an stext widget
-void HUlib_initSText(hu_stext_t *s, int x, int y, int h, const patchnum_t *font,
-                     int startchar,
-                     int cm, // jff 2/16/98 add color range parameter
-                     enum patch_translation_e flags, dboolean *on);
+void HUlib_initSText(
+    hu_stext_t *s, int x, int y, int h, const patchnum_t *font, int startchar,
+    int cm, // jff 2/16/98 add color range parameter
+    enum patch_translation_e flags, dboolean *on
+);
 
 // add a text message to an stext widget
-void HUlib_addMessageToSText(hu_stext_t *s, const char *prefix,
-                             const char *msg);
+void HUlib_addMessageToSText(
+    hu_stext_t *s, const char *prefix, const char *msg
+);
 
 // draws stext
 void HUlib_drawSText(hu_stext_t *s);
@@ -180,15 +183,17 @@ void HUlib_eraseSText(hu_stext_t *s);
 
 // jff 2/26/98 message refresh widget
 // initialize refresh text widget
-void HUlib_initMText(hu_mtext_t *m, int x, int y, int w, int h,
-                     const patchnum_t *font, int startchar, int cm,
-                     const patchnum_t *bgfont, enum patch_translation_e flags,
-                     dboolean *on);
+void HUlib_initMText(
+    hu_mtext_t *m, int x, int y, int w, int h, const patchnum_t *font,
+    int startchar, int cm, const patchnum_t *bgfont,
+    enum patch_translation_e flags, dboolean *on
+);
 
 // jff 2/26/98 message refresh widget
 // add a text message to refresh text widget
-void HUlib_addMessageToMText(hu_mtext_t *m, const char *prefix,
-                             const char *msg);
+void HUlib_addMessageToMText(
+    hu_mtext_t *m, const char *prefix, const char *msg
+);
 
 // jff 2/26/98 new routine to display a background on which
 // the list of last hud_msg_lines are displayed
@@ -202,10 +207,11 @@ void HUlib_drawMText(hu_mtext_t *m);
 void HUlib_eraseMText(hu_mtext_t *m);
 
 // Input Text Line widget routines
-void HUlib_initIText(hu_itext_t *it, int x, int y, const patchnum_t *font,
-                     int startchar,
-                     int cm, // jff 2/16/98 add color range parameter
-                     enum patch_translation_e flags, dboolean *on);
+void HUlib_initIText(
+    hu_itext_t *it, int x, int y, const patchnum_t *font, int startchar,
+    int cm, // jff 2/16/98 add color range parameter
+    enum patch_translation_e flags, dboolean *on
+);
 
 // resets line and left margin
 void HUlib_resetIText(hu_itext_t *it);

@@ -85,8 +85,8 @@ int mapcolor_frnd;  // friendly sprite color
 int mapcolor_enemy; // enemy sprite color
 int mapcolor_hair;  // crosshair color
 int mapcolor_sngl;  // single player arrow color
-int mapcolor_plyr[4] = {112, 88, 64,
-                        32}; // colors for player arrows in multiplayer
+int mapcolor_plyr[4] = {
+    112, 88, 64, 32}; // colors for player arrows in multiplayer
 
 static int heretic_mapcolor_back = 13 * 8 - 1;
 static int heretic_mapcolor_grid = 5 * 8;
@@ -214,10 +214,10 @@ int map_overlay_pos_width;
 int map_overlay_pos_height;
 
 map_things_appearance_t map_things_appearance;
-const char *map_things_appearance_list[map_things_appearance_max] = {"classic",
-                                                                     "scaled",
+const char *map_things_appearance_list[map_things_appearance_max] = {
+    "classic", "scaled",
 #if defined(HAVE_LIBSDL2_IMAGE) && defined(GL_DOOM)
-                                                                     "icons"
+    "icons"
 #endif
 };
 
@@ -264,13 +264,14 @@ using mline_t = struct
 //   starting from the middle.
 //
 #define R ((8 * PLAYERRADIUS) / 7)
-mline_t player_arrow[] = {{{-R + R / 8, 0}, {R, 0}},    // -----
-                          {{R, 0}, {R - R / 2, R / 4}}, // ----->
-                          {{R, 0}, {R - R / 2, -R / 4}},
-                          {{-R + R / 8, 0}, {-R - R / 8, R / 4}}, // >---->
-                          {{-R + R / 8, 0}, {-R - R / 8, -R / 4}},
-                          {{-R + 3 * R / 8, 0}, {-R + R / 8, R / 4}}, // >>--->
-                          {{-R + 3 * R / 8, 0}, {-R + R / 8, -R / 4}}};
+mline_t player_arrow[] = {
+    {{-R + R / 8, 0}, {R, 0}},    // -----
+    {{R, 0}, {R - R / 2, R / 4}}, // ----->
+    {{R, 0}, {R - R / 2, -R / 4}},
+    {{-R + R / 8, 0}, {-R - R / 8, R / 4}}, // >---->
+    {{-R + R / 8, 0}, {-R - R / 8, -R / 4}},
+    {{-R + 3 * R / 8, 0}, {-R + R / 8, R / 4}}, // >>--->
+    {{-R + 3 * R / 8, 0}, {-R + R / 8, -R / 4}}};
 #undef R
 #define NUMPLYRLINES (sizeof(player_arrow) / sizeof(mline_t))
 
@@ -483,8 +484,9 @@ void AM_setMarkParams(int num)
     markpoints[num].w = 0;
     markpoints[num].h = 0;
 
-    doom_snprintf(markpoints[num].label, sizeof(markpoints[num].label), "%d",
-                  num);
+    doom_snprintf(
+        markpoints[num].label, sizeof(markpoints[num].label), "%d", num
+    );
     for (i = 0; i < (int)strlen(markpoints[num].label); i++)
     {
         namebuf[6] = markpoints[num].label[i];
@@ -512,7 +514,8 @@ static void AM_addMark()
         markpoints = static_cast<markpoint_t *>(realloc(
             markpoints,
             (markpointnum_max = markpointnum_max ? markpointnum_max * 2 : 16) *
-                sizeof(*markpoints)));
+                sizeof(*markpoints)
+        ));
     }
 
     markpoints[markpointnum].x = m_x + m_w / 2;
@@ -794,8 +797,8 @@ static void AM_LevelInit()
 //
 void AM_Stop()
 {
-    static event_t st_notify = {static_cast<evtype_t>(0), ev_keyup,
-                                AM_MSGEXITED, 0};
+    static event_t st_notify = {
+        static_cast<evtype_t>(0), ev_keyup, AM_MSGEXITED, 0};
 
     AM_unloadPics();
     automapmode = static_cast<automapmode_e>(automapmode & ~am_active);
@@ -947,9 +950,7 @@ dboolean AM_Responder(event_t *ev)
             m_paninc.y = 0;
         }
     }
-    else if (dsda_InputActivated(dsda_input_map_zoomout) ||
-             (map_wheel_zoom && ev->type == ev_keydown &&
-              ev->data1 == KEYD_MWHEELDOWN))
+    else if (dsda_InputActivated(dsda_input_map_zoomout) || (map_wheel_zoom && ev->type == ev_keydown && ev->data1 == KEYD_MWHEELDOWN))
     {
         mtof_zoommul = M_ZOOMOUT;
         ftom_zoommul = M_ZOOMIN;
@@ -958,9 +959,7 @@ dboolean AM_Responder(event_t *ev)
 
         return true;
     }
-    else if (dsda_InputActivated(dsda_input_map_zoomin) ||
-             (map_wheel_zoom && ev->type == ev_keydown &&
-              ev->data1 == KEYD_MWHEELUP))
+    else if (dsda_InputActivated(dsda_input_map_zoomin) || (map_wheel_zoom && ev->type == ev_keydown && ev->data1 == KEYD_MWHEELUP))
     {
         mtof_zoommul = M_ZOOMIN;
         ftom_zoommul = M_ZOOMOUT;
@@ -987,8 +986,8 @@ dboolean AM_Responder(event_t *ev)
     else if (dsda_InputActivated(dsda_input_map_follow))
     {
         automapmode = static_cast<automapmode_e>(
-            automapmode ^
-            am_follow); // CPhipps - put all automap mode stuff into one enum
+            automapmode ^ am_follow
+        ); // CPhipps - put all automap mode stuff into one enum
         // Ty 03/27/98 - externalized
         plr->message =
             (automapmode & am_follow) ? s_AMSTR_FOLLOWON : s_AMSTR_FOLLOWOFF;
@@ -1053,10 +1052,7 @@ dboolean AM_Responder(event_t *ev)
         return true;
 #endif
     }
-    else if (dsda_InputDeactivated(dsda_input_map_zoomout) ||
-             dsda_InputDeactivated(dsda_input_map_zoomin) ||
-             (map_wheel_zoom && ev->type == ev_keyup &&
-              (ev->data1 == KEYD_MWHEELDOWN || ev->data1 == KEYD_MWHEELUP)))
+    else if (dsda_InputDeactivated(dsda_input_map_zoomout) || dsda_InputDeactivated(dsda_input_map_zoomin) || (map_wheel_zoom && ev->type == ev_keyup && (ev->data1 == KEYD_MWHEELDOWN || ev->data1 == KEYD_MWHEELUP)))
     {
         stop_zooming = true;
 
@@ -1681,27 +1677,31 @@ static void AM_drawWalls()
                         {
                         case 1:
                             /*bluekey*/
-                            AM_drawMline(&l, (*mapcolor_bdor_p)
-                                                 ? (*mapcolor_bdor_p)
-                                                 : (*mapcolor_cchg_p));
+                            AM_drawMline(
+                                &l, (*mapcolor_bdor_p) ? (*mapcolor_bdor_p)
+                                                       : (*mapcolor_cchg_p)
+                            );
                             continue;
                         case 2:
                             /*yellowkey*/
-                            AM_drawMline(&l, (*mapcolor_ydor_p)
-                                                 ? (*mapcolor_ydor_p)
-                                                 : (*mapcolor_cchg_p));
+                            AM_drawMline(
+                                &l, (*mapcolor_ydor_p) ? (*mapcolor_ydor_p)
+                                                       : (*mapcolor_cchg_p)
+                            );
                             continue;
                         case 0:
                             /*redkey*/
-                            AM_drawMline(&l, (*mapcolor_rdor_p)
-                                                 ? (*mapcolor_rdor_p)
-                                                 : (*mapcolor_cchg_p));
+                            AM_drawMline(
+                                &l, (*mapcolor_rdor_p) ? (*mapcolor_rdor_p)
+                                                       : (*mapcolor_cchg_p)
+                            );
                             continue;
                         case 3:
                             /*any or all*/
-                            AM_drawMline(&l, (*mapcolor_clsd_p)
-                                                 ? (*mapcolor_clsd_p)
-                                                 : (*mapcolor_cchg_p));
+                            AM_drawMline(
+                                &l, (*mapcolor_clsd_p) ? (*mapcolor_clsd_p)
+                                                       : (*mapcolor_cchg_p)
+                            );
                             continue;
                         }
                     }
@@ -1726,7 +1726,8 @@ static void AM_drawWalls()
                      (!map_secret_after && P_WasSecret(lines[i].frontsector))))
                 {
                     AM_drawMline(
-                        &l, (*mapcolor_secr_p)); // line bounding secret sector
+                        &l, (*mapcolor_secr_p)
+                    ); // line bounding secret sector
                 }
                 else
                 { // jff 2/16/98 fixed bug
@@ -1756,9 +1757,11 @@ static void AM_drawWalls()
                           (lines[i].frontsector->floorheight ==
                            lines[i].frontsector->ceilingheight)))
                 {
-                    AM_drawMline(&l,
-                                 (*mapcolor_clsd_p)); // non-secret closed door
-                } // jff 1/6/98 show secret sector 2S lines
+                    AM_drawMline(
+                        &l,
+                        (*mapcolor_clsd_p)
+                    ); // non-secret closed door
+                }      // jff 1/6/98 show secret sector 2S lines
                 else if ((*mapcolor_secr_p) && // jff 2/16/98 fixed bug
                          ( // special was cleared after getting it
                              (map_secret_after &&
@@ -1777,8 +1780,9 @@ static void AM_drawWalls()
                                   P_WasSecret(lines[i].backsector)))))
                 {
                     AM_drawMline(
-                        &l, (*mapcolor_secr_p)); // line bounding secret sector
-                } // jff 1/6/98 end secret sector line change
+                        &l, (*mapcolor_secr_p)
+                    ); // line bounding secret sector
+                }      // jff 1/6/98 end secret sector line change
                 else if (lines[i].backsector->floorheight !=
                          lines[i].frontsector->floorheight)
                 {
@@ -1787,8 +1791,10 @@ static void AM_drawWalls()
                 else if (lines[i].backsector->ceilingheight !=
                          lines[i].frontsector->ceilingheight)
                 {
-                    AM_drawMline(&l,
-                                 (*mapcolor_cchg_p)); // ceiling level change
+                    AM_drawMline(
+                        &l,
+                        (*mapcolor_cchg_p)
+                    ); // ceiling level change
                 }
                 else if ((*mapcolor_flat_p) && ddt_cheating)
                 {
@@ -1799,8 +1805,8 @@ static void AM_drawWalls()
         } // now draw the lines only visible because the player has computermap
         else if (plr->powers[pw_allmap]) // computermap visible lines
         {
-            if (!(lines[i].flags &
-                  ML_DONTDRAW)) // invisible flag lines do not show
+            if (!(lines[i].flags & ML_DONTDRAW
+                )) // invisible flag lines do not show
             {
                 if ((*mapcolor_flat_p) || !lines[i].backsector ||
                     lines[i].backsector->floorheight !=
@@ -1825,9 +1831,10 @@ static void AM_drawWalls()
 // the color to draw it with, and the map coordinates to draw it at.
 // Returns nothing
 //
-static void AM_drawLineCharacter(mline_t *lineguy, int lineguylines,
-                                 fixed_t scale, angle_t angle, int color,
-                                 fixed_t x, fixed_t y)
+static void AM_drawLineCharacter(
+    mline_t *lineguy, int lineguylines, fixed_t scale, angle_t angle, int color,
+    fixed_t x, fixed_t y
+)
 {
     int i;
     mline_t l;
@@ -1891,8 +1898,10 @@ INLINE static void AM_GetMobjPosition(mobj_t *mo, mpoint_t *p, angle_t *angle)
         if (mo->player)
         {
             *angle = mo->player->prev_viewangle +
-                     FixedMul(tic_vars.frac, R_SmoothPlaying_Get(mo->player) -
-                                                 mo->player->prev_viewangle);
+                     FixedMul(
+                         tic_vars.frac, R_SmoothPlaying_Get(mo->player) -
+                                            mo->player->prev_viewangle
+                     );
         }
         else
         {
@@ -1937,8 +1946,9 @@ static void AM_drawPlayers()
 
     if (map_things_appearance == map_things_appearance_scaled)
     {
-        scale = (BETWEEN(4 << FRACBITS, 256 << FRACBITS, plr->mo->radius) >>
-                 FRACTOMAPBITS);
+        scale =
+            (BETWEEN(4 << FRACBITS, 256 << FRACBITS, plr->mo->radius) >>
+             FRACTOMAPBITS);
     }
     else
     {
@@ -1960,13 +1970,17 @@ static void AM_drawPlayers()
 
         if (ddt_cheating)
         {
-            AM_drawLineCharacter(cheat_player_arrow, NUMCHEATPLYRLINES, scale,
-                                 viewangle, (*mapcolor_sngl_p), pt.x, pt.y);
+            AM_drawLineCharacter(
+                cheat_player_arrow, NUMCHEATPLYRLINES, scale, viewangle,
+                (*mapcolor_sngl_p), pt.x, pt.y
+            );
         }
         else
         {
-            AM_drawLineCharacter(player_arrow, NUMPLYRLINES, scale, viewangle,
-                                 (*mapcolor_sngl_p), pt.x, pt.y);
+            AM_drawLineCharacter(
+                player_arrow, NUMPLYRLINES, scale, viewangle,
+                (*mapcolor_sngl_p), pt.x, pt.y
+            );
         }
         return;
     }
@@ -1998,13 +2012,15 @@ static void AM_drawPlayers()
                 p->powers[pw_invisibility]
                     ? 246                 /* *close* to black */
                     : mapcolor_plyr_p[i], // jff 1/6/98 use default color
-                pt.x, pt.y);
+                pt.x, pt.y
+            );
         }
     }
 }
 
-static void AM_ProcessNiceThing(mobj_t *mobj, angle_t angle, fixed_t x,
-                                fixed_t y)
+static void AM_ProcessNiceThing(
+    mobj_t *mobj, angle_t angle, fixed_t x, fixed_t y
+)
 {
 #ifdef GL_DOOM
     const float shadow_scale_factor = 1.3f;
@@ -2173,8 +2189,9 @@ static void AM_ProcessNiceThing(mobj_t *mobj, angle_t angle, fixed_t x,
     gld_AddNiceThing(type, fx, fy, fradius, rot, r, g, b, a);
     if (need_shadow)
     {
-        gld_AddNiceThing(am_icon_shadow, fx, fy, shadow_radius, rot, 0, 0, 0,
-                         128);
+        gld_AddNiceThing(
+            am_icon_shadow, fx, fy, shadow_radius, rot, 0, 0, 0, 128
+        );
     }
 #endif
 }
@@ -2284,9 +2301,10 @@ static void AM_DrawNiceThings()
                 markpoint.fx = CXMTOF_F(markpoint.fx);
                 markpoint.fy = CYMTOF_F(markpoint.fy);
 
-                gld_AddNiceThing(am_icon_mark, markpoint.fx, markpoint.fy,
-                                 radius, 0, 255, 255, 0,
-                                 (unsigned char)anim_flash_level);
+                gld_AddNiceThing(
+                    am_icon_mark, markpoint.fx, markpoint.fy, radius, 0, 255,
+                    255, 0, (unsigned char)anim_flash_level
+                );
             }
         }
     }
@@ -2445,8 +2463,10 @@ static void AM_drawThings()
 
                     if (color != -1)
                     {
-                        AM_drawLineCharacter(cross_mark, NUMCROSSMARKLINES,
-                                             scale, t->angle, color, p.x, p.y);
+                        AM_drawLineCharacter(
+                            cross_mark, NUMCROSSMARKLINES, scale, t->angle,
+                            color, p.x, p.y
+                        );
                         t = t->snext;
                         continue;
                     }
@@ -2459,14 +2479,15 @@ static void AM_drawThings()
                         ? (*mapcolor_frnd_p)
                         :
                         /* cph 2006/07/30 - Show count-as-kills in red. */
-                        ((t->flags & (MF_COUNTKILL | MF_CORPSE)) ==
-                         MF_COUNTKILL)
+                        ((t->flags & (MF_COUNTKILL | MF_CORPSE)) == MF_COUNTKILL
+                        )
                         ? (*mapcolor_enemy_p)
                         :
                         /* bbm 2/28/03 Show countable items in yellow. */
                         t->flags & MF_COUNTITEM ? (*mapcolor_item_p)
                                                 : (*mapcolor_sprt_p),
-                    p.x, p.y);
+                    p.x, p.y
+                );
                 t = t->snext;
             }
         }
@@ -2549,15 +2570,20 @@ static void AM_drawMarks()
                                 (float)p.fy * 200.0f / SCREENHEIGHT, FB,
                                 namebuf, CR_DEFAULT,
                                 static_cast<patch_translation_e>(
-                                    VPT_ALIGN_WIDE | VPT_STRETCH));
+                                    VPT_ALIGN_WIDE | VPT_STRETCH
+                                )
+                            );
                         }
                         else
                         {
-                            V_DrawNamePatch(p.x * 320 / SCREENWIDTH,
-                                            p.y * 200 / SCREENHEIGHT, FB,
-                                            namebuf, CR_DEFAULT,
-                                            static_cast<patch_translation_e>(
-                                                VPT_ALIGN_WIDE | VPT_STRETCH));
+                            V_DrawNamePatch(
+                                p.x * 320 / SCREENWIDTH,
+                                p.y * 200 / SCREENHEIGHT, FB, namebuf,
+                                CR_DEFAULT,
+                                static_cast<patch_translation_e>(
+                                    VPT_ALIGN_WIDE | VPT_STRETCH
+                                )
+                            );
                         }
                     }
 
@@ -2731,7 +2757,8 @@ void AM_Drawer()
         // background for the automap
         V_FillRect(
             FB, f_x, f_y, f_w, f_h,
-            (byte)(*mapcolor_back_p)); // jff 1/5/98 background default color
+            (byte)(*mapcolor_back_p)
+        ); // jff 1/5/98 background default color
     }
 
     if (map_textured)

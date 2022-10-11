@@ -123,12 +123,13 @@ static inline Bit32u Chip__ForwardNoise(Chip *self);
 
 // C++'s template<> sure is useful sometimes.
 
-static Channel *Channel__BlockTemplate(Channel *self, Chip *chip,
-                                       Bit32u samples, Bit32s *output,
-                                       SynthMode mode);
+static Channel *Channel__BlockTemplate(
+    Channel *self, Chip *chip, Bit32u samples, Bit32s *output, SynthMode mode
+);
 #define BLOCK_TEMPLATE(mode)                                                   \
     static Channel *Channel__BlockTemplate_##mode(                             \
-        Channel *self, Chip *chip, Bit32u samples, Bit32s *output)             \
+        Channel *self, Chip *chip, Bit32u samples, Bit32s *output              \
+    )                                                                          \
     {                                                                          \
         return Channel__BlockTemplate(self, chip, samples, output, mode);      \
     }
@@ -702,8 +703,8 @@ static inline Bits Operator__GetWave(Operator *self, Bitu index, Bitu vol)
 #if (DBOPL_WAVE == WAVE_HANDLER)
     return self->waveHandler(index, vol << (3 - ENV_EXTRA));
 #elif (DBOPL_WAVE == WAVE_TABLEMUL)
-    return (self->waveBase[index & self->waveMask] *
-            MulTable[vol >> ENV_EXTRA]) >>
+    return (self->waveBase[index & self->waveMask] * MulTable[vol >> ENV_EXTRA]
+           ) >>
            MUL_SH;
 #elif (DBOPL_WAVE == WAVE_TABLELOG)
     Bit32s wave = self->waveBase[index & self->waveMask];
@@ -800,8 +801,9 @@ static void Channel__SetChanData(Channel *self, const Chip *chip, Bit32u data)
     }
 }
 
-static void Channel__UpdateFrequency(Channel *self, const Chip *chip,
-                                     Bit8u fourOp)
+static void Channel__UpdateFrequency(
+    Channel *self, const Chip *chip, Bit8u fourOp
+)
 {
     // Extrace the frequency bits
     Bit32u data = self->chanData & 0xffff;
@@ -983,8 +985,9 @@ static void Channel__ResetC0(Channel *self, const Chip *chip)
     Channel__WriteC0(self, chip, val);
 };
 
-static inline void Channel__GeneratePercussion(Channel *self, Chip *chip,
-                                               Bit32s *output, int opl3Mode)
+static inline void Channel__GeneratePercussion(
+    Channel *self, Chip *chip, Bit32s *output, int opl3Mode
+)
 {
     Bit32u noiseBit, c2, c5, phaseBit, hhVol, sdVol, tcVol;
     Bit32s sample;
@@ -1051,8 +1054,9 @@ static inline void Channel__GeneratePercussion(Channel *self, Chip *chip,
     }
 }
 
-Channel *Channel__BlockTemplate(Channel *self, Chip *chip, Bit32u samples,
-                                Bit32s *output, SynthMode mode)
+Channel *Channel__BlockTemplate(
+    Channel *self, Chip *chip, Bit32u samples, Bit32s *output, SynthMode mode
+)
 {
     Bitu i;
 
@@ -1584,9 +1588,9 @@ void Chip__Setup(Chip *self, Bit32u rate)
     {
         Bit8u index, shift;
         EnvelopeSelect((Bit8u)i, &index, &shift);
-        self->linearRates[i] =
-            (Bit32u)(scale * (EnvelopeIncreaseTable[index]
-                              << (RATE_SH + ENV_EXTRA - shift - 3)));
+        self->linearRates[i] = (Bit32u
+        )(scale *
+          (EnvelopeIncreaseTable[index] << (RATE_SH + ENV_EXTRA - shift - 3)));
     }
     // Generate the best matching attack rate
     for (i = 0; i < 62; i++)
@@ -1598,8 +1602,8 @@ void Chip__Setup(Chip *self, Bit32u rate)
         // Original amount of samples the attack would take
         original = (Bit32u)((AttackSamplesTable[index] << shift) / scale);
 
-        guessAdd = (Bit32u)(
-            scale * (EnvelopeIncreaseTable[index] << (RATE_SH - shift - 3)));
+        guessAdd = (Bit32u
+        )(scale * (EnvelopeIncreaseTable[index] << (RATE_SH - shift - 3)));
         bestAdd = guessAdd;
         bestDiff = 1 << 30;
 
@@ -1724,8 +1728,8 @@ void DBOPL_InitTables(void)
     // Do a PI sinetable instead of the original 0.5 PI
     for (i = 0; i < 512; i++)
     {
-        SinTable[i] = (Bit16s)(0.5 - log10(sin((i + 0.5) * (PI / 512.0))) /
-                                         log10(2.0) * 256);
+        SinTable[i] = (Bit16s
+        )(0.5 - log10(sin((i + 0.5) * (PI / 512.0))) / log10(2.0) * 256);
     }
 #endif
 #if (DBOPL_WAVE == WAVE_TABLEMUL)
@@ -1748,8 +1752,8 @@ void DBOPL_InitTables(void)
     // Exponential wave
     for (i = 0; i < 256; i++)
     {
-        WaveTable[0x700 + i] = (Bit16s)(
-            0.5 + (pow(2.0, -1.0 + (255 - i * 8) * (1.0 / 256))) * 4085);
+        WaveTable[0x700 + i] = (Bit16s
+        )(0.5 + (pow(2.0, -1.0 + (255 - i * 8) * (1.0 / 256))) * 4085);
         WaveTable[0x6ff - i] = -WaveTable[0x700 + i];
     }
 #endif
@@ -1757,8 +1761,8 @@ void DBOPL_InitTables(void)
     // Sine Wave Base
     for (i = 0; i < 512; i++)
     {
-        WaveTable[0x0200 + i] = (Bit16s)(
-            0.5 - log10(sin((i + 0.5) * (PI / 512.0))) / log10(2.0) * 256);
+        WaveTable[0x0200 + i] = (Bit16s
+        )(0.5 - log10(sin((i + 0.5) * (PI / 512.0))) / log10(2.0) * 256);
         WaveTable[0x0000 + i] = ((Bit16s)0x8000) | WaveTable[0x200 + i];
     }
     // Exponential wave

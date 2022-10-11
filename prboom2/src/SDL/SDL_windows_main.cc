@@ -21,14 +21,16 @@
 #endif /* main */
 
 #define WIN_WStringToUTF8(S)                                                   \
-    SDL_iconv_string("UTF-8", "UTF-16LE", (char *)(S),                         \
-                     (SDL_wcslen(S) + 1) * sizeof(WCHAR))
+    SDL_iconv_string(                                                          \
+        "UTF-8", "UTF-16LE", (char *)(S), (SDL_wcslen(S) + 1) * sizeof(WCHAR)  \
+    )
 
 /* Pop up an out of memory message, returns to Windows */
 static BOOL OutOfMemory(void)
 {
-    SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Fatal Error",
-                             "Out of memory - aborting", nullptr);
+    SDL_ShowSimpleMessageBox(
+        SDL_MESSAGEBOX_ERROR, "Fatal Error", "Out of memory - aborting", nullptr
+    );
     return FALSE;
 }
 

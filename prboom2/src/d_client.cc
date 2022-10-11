@@ -158,8 +158,10 @@ void D_InitNetGame()
         xtratics = sinfo->extratic;
         G_ReadOptions(sinfo->game_options);
 
-        lprintf(LO_INFO, "\tjoined game as player %d/%d; %d WADs specified\n",
-                consoleplayer + 1, numplayers = sinfo->players, sinfo->numwads);
+        lprintf(
+            LO_INFO, "\tjoined game as player %d/%d; %d WADs specified\n",
+            consoleplayer + 1, numplayers = sinfo->players, sinfo->numwads
+        );
         {
             char *p = reinterpret_cast<char *>(sinfo->wadnames);
             int i = sinfo->numwads;
@@ -210,13 +212,15 @@ void D_InitNetGame(void)
 #ifdef HAVE_NET
 void D_CheckNetGame()
 {
-    packet_header_t *packet = static_cast<packet_header_t *>(
-        std::malloc(sizeof(packet_header_t) + 1));
+    packet_header_t *packet =
+        static_cast<packet_header_t *>(std::malloc(sizeof(packet_header_t) + 1)
+        );
 
     if (server)
     {
-        lprintf(LO_INFO,
-                "D_CheckNetGame: waiting for server to signal game start\n");
+        lprintf(
+            LO_INFO, "D_CheckNetGame: waiting for server to signal game start\n"
+        );
         do
         {
             while (!I_GetPacket(packet, sizeof(packet_header_t) + 1))
@@ -375,7 +379,8 @@ void NetUpdate()
             case packet_type_e::PKT_QUIT.value():  // Player quit
                 // Queue packet to be processed when its tic time is reached
                 queuedpacket = static_cast<packet_header_t **>(std::realloc(
-                    queuedpacket, ++numqueuedpackets * sizeof *queuedpacket));
+                    queuedpacket, ++numqueuedpackets * sizeof *queuedpacket
+                ));
                 queuedpacket[numqueuedpackets - 1] =
                     static_cast<packet_header_t *>(std::malloc(recvlen));
                 memcpy(queuedpacket[numqueuedpackets - 1], packet, recvlen);
@@ -437,8 +442,9 @@ void NetUpdate()
                 remotesend = 0;
             }
 
-            sendtics = MIN(maketic - remotesend,
-                           128); // limit number of sent tics (CVE-2019-20797)
+            sendtics =
+                MIN(maketic - remotesend,
+                    128); // limit number of sent tics (CVE-2019-20797)
             {
                 size_t pkt_size =
                     sizeof(packet_header_t) + 2 + sendtics * sizeof(ticcmd_t);
@@ -524,8 +530,9 @@ static void CheckQueuedPackets()
                 switch (LittleLong(*p))
                 {
                 case nm_plcolour:
-                    G_ChangedPlayerColour(LittleLong(*(p + 1)),
-                                          LittleLong(*(p + 3)));
+                    G_ChangedPlayerColour(
+                        LittleLong(*(p + 1)), LittleLong(*(p + 3))
+                    );
                     break;
                 case nm_savegamename:
                     if (len < SAVEDESCLEN)
@@ -553,7 +560,8 @@ static void CheckQueuedPackets()
             if (doom_ntohl(queuedpacket[i]->tic) > gametic)
             {
                 newqueue = static_cast<packet_header_t **>(
-                    std::realloc(newqueue, ++newnum * sizeof *newqueue));
+                    std::realloc(newqueue, ++newnum * sizeof *newqueue)
+                );
                 newqueue[newnum - 1] = queuedpacket[i];
             }
             else
@@ -605,8 +613,10 @@ void TryRunTics()
                 {
                     char buf[sizeof(packet_header_t) + 1];
                     remotesend--;
-                    packet_set((packet_header_t *)buf,
-                               packet_type_e::PKT_RETRANS, remotetic);
+                    packet_set(
+                        (packet_header_t *)buf, packet_type_e::PKT_RETRANS,
+                        remotetic
+                    );
                     buf[sizeof(buf) - 1] = consoleplayer;
                     I_SendPacket((packet_header_t *)buf, sizeof buf);
                 }

@@ -205,16 +205,18 @@ static int my_popen3(pipeinfo_t *p)
     siStartInfo.hStdError = child_herr;
     siStartInfo.dwFlags = STARTF_USESTDHANDLES;
 
-    if (!CreateProcess(nullptr,            // application name
-                       (LPTSTR)p->command, // command line
-                       nullptr,            // process security attributes
-                       nullptr,            // primary thread security attributes
-                       TRUE,               // handles are inherited
-                       DETACHED_PROCESS,   // creation flags
-                       nullptr,            // use parent's environment
-                       nullptr,            // use parent's current directory
-                       &siStartInfo,       // STARTUPINFO pointer
-                       &piProcInfo))       // receives PROCESS_INFORMATION
+    if (!CreateProcess(
+            nullptr,            // application name
+            (LPTSTR)p->command, // command line
+            nullptr,            // process security attributes
+            nullptr,            // primary thread security attributes
+            TRUE,               // handles are inherited
+            DETACHED_PROCESS,   // creation flags
+            nullptr,            // use parent's environment
+            nullptr,            // use parent's current directory
+            &siStartInfo,       // STARTUPINFO pointer
+            &piProcInfo
+        )) // receives PROCESS_INFORMATION
     {
         goto fail;
     }
@@ -503,26 +505,31 @@ void I_CapturePrep(const char *fn)
 {
     vid_fname = fn;
 
-    if (!parsecommand(soundpipe.command, cap_soundcommand,
-                      sizeof(soundpipe.command)))
+    if (!parsecommand(
+            soundpipe.command, cap_soundcommand, sizeof(soundpipe.command)
+        ))
     {
-        lprintf(LO_ERROR, "I_CapturePrep: malformed command %s\n",
-                cap_soundcommand);
+        lprintf(
+            LO_ERROR, "I_CapturePrep: malformed command %s\n", cap_soundcommand
+        );
         capturing_video = 0;
         return;
     }
-    if (!parsecommand(videopipe.command, cap_videocommand,
-                      sizeof(videopipe.command)))
+    if (!parsecommand(
+            videopipe.command, cap_videocommand, sizeof(videopipe.command)
+        ))
     {
-        lprintf(LO_ERROR, "I_CapturePrep: malformed command %s\n",
-                cap_videocommand);
+        lprintf(
+            LO_ERROR, "I_CapturePrep: malformed command %s\n", cap_videocommand
+        );
         capturing_video = 0;
         return;
     }
     if (!parsecommand(muxpipe.command, cap_muxcommand, sizeof(muxpipe.command)))
     {
-        lprintf(LO_ERROR, "I_CapturePrep: malformed command %s\n",
-                cap_muxcommand);
+        lprintf(
+            LO_ERROR, "I_CapturePrep: malformed command %s\n", cap_muxcommand
+        );
         capturing_video = 0;
         return;
     }

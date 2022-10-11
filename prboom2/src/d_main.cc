@@ -103,8 +103,10 @@
 // NSM
 #include "i_capture.hh"
 
-void GetFirstMap(int *ep,
-                 int *map); // Ty 08/29/98 - add "-warp x" functionality
+void GetFirstMap(
+    int *ep,
+    int *map
+); // Ty 08/29/98 - add "-warp x" functionality
 static void D_PageDrawer();
 
 // CPhipps - removed wadfiles[] stuff
@@ -196,8 +198,8 @@ void D_PostEvent(event_t *ev)
             // use key is used for seeing the current frame
             if (!dsda_InputActivated(dsda_input_use) &&
                 !dsda_InputActivated(dsda_input_demo_skip) &&
-                (ev->type == ev_keydown ||
-                 ev->type == ev_keyup) // is this condition important?
+                (ev->type == ev_keydown || ev->type == ev_keyup
+                ) // is this condition important?
             )
             {
                 return;
@@ -427,10 +429,11 @@ void D_Display(fixed_t frac)
 
         R_RestoreInterpolations();
 
-        ST_Drawer(((viewheight != SCREENHEIGHT) ||
-                   ((automapmode & am_active) && !(automapmode & am_overlay))),
-                  redrawborderstuff || BorderNeedRefresh,
-                  (menuactive == mnact_full));
+        ST_Drawer(
+            ((viewheight != SCREENHEIGHT) ||
+             ((automapmode & am_active) && !(automapmode & am_overlay))),
+            redrawborderstuff || BorderNeedRefresh, (menuactive == mnact_full)
+        );
 
         BorderNeedRefresh = false;
         if (V_GetMode() != VID_MODEGL)
@@ -454,8 +457,10 @@ void D_Display(fixed_t frac)
         {
             // Simplified the "logic" here and no need for x-coord caching -
             // POPE
-            V_DrawNamePatch((320 - V_NamePatchWidth("M_PAUSE")) / 2, 4, 0,
-                            "M_PAUSE", CR_DEFAULT, VPT_STRETCH);
+            V_DrawNamePatch(
+                (320 - V_NamePatchWidth("M_PAUSE")) / 2, 4, 0, "M_PAUSE",
+                CR_DEFAULT, VPT_STRETCH
+            );
         }
     }
 
@@ -590,11 +595,13 @@ static void D_DoomLoop()
             int len;
             char *avi_shot_curr_fname;
             avi_shot_num++;
-            len = snprintf(nullptr, 0, "%s%06d.tga", avi_shot_fname,
-                           avi_shot_num);
+            len = snprintf(
+                nullptr, 0, "%s%06d.tga", avi_shot_fname, avi_shot_num
+            );
             avi_shot_curr_fname = static_cast<char *>(malloc(len + 1));
-            sprintf(avi_shot_curr_fname, "%s%06d.tga", avi_shot_fname,
-                    avi_shot_num);
+            sprintf(
+                avi_shot_curr_fname, "%s%06d.tga", avi_shot_fname, avi_shot_num
+            );
             M_DoScreenShot(avi_shot_curr_fname);
             free(avi_shot_curr_fname);
         }
@@ -797,7 +804,8 @@ void D_DoAdvanceDemo()
     }
 
     demostates[demosequence][gamemode].func(
-        demostates[demosequence][gamemode].name);
+        demostates[demosequence][gamemode].name
+    );
 }
 
 //
@@ -825,9 +833,11 @@ void D_AddFile(const char *file, wad_source_t source)
     int len;
 
     wadfiles = static_cast<wadfile_info_t *>(
-        std::realloc(wadfiles, sizeof(*wadfiles) * (numwadfiles + 1)));
+        std::realloc(wadfiles, sizeof(*wadfiles) * (numwadfiles + 1))
+    );
     wadfiles[numwadfiles].name = AddDefaultExtension(
-        strcpy(static_cast<char *>(malloc(strlen(file) + 5)), file), ".wad");
+        strcpy(static_cast<char *>(malloc(strlen(file) + 5)), file), ".wad"
+    );
     wadfiles[numwadfiles].src = source; // Ty 08/29/98
     wadfiles[numwadfiles].handle = 0;
 
@@ -843,7 +853,8 @@ void D_AddFile(const char *file, wad_source_t source)
     // proff: automatically try to add the gwa files
     // proff - moved from w_wad.c
     gwa_filename = AddDefaultExtension(
-        strcpy(static_cast<char *>(malloc(strlen(file) + 5)), file), ".wad");
+        strcpy(static_cast<char *>(malloc(strlen(file) + 5)), file), ".wad"
+    );
     if (strlen(gwa_filename) > 4)
     {
         if (!strcasecmp(gwa_filename + (strlen(gwa_filename) - 4), ".wad"))
@@ -854,7 +865,8 @@ void D_AddFile(const char *file, wad_source_t source)
             ext[2] = 'w';
             ext[3] = 'a';
             wadfiles = static_cast<wadfile_info_t *>(
-                std::realloc(wadfiles, sizeof(*wadfiles) * (numwadfiles + 1)));
+                std::realloc(wadfiles, sizeof(*wadfiles) * (numwadfiles + 1))
+            );
             wadfiles[numwadfiles].name = gwa_filename;
             wadfiles[numwadfiles].src = source; // Ty 08/29/98
             wadfiles[numwadfiles].handle = 0;
@@ -909,8 +921,10 @@ void CheckIWAD(const char *iwadname, GameMode_t *gmode, dboolean *hassec)
                 size_t length;
                 filelump_t *fileinfo;
 
-                if (strncmp(header.identification, "IWAD",
-                            4)) // missing IWAD tag in header
+                if (strncmp(
+                        header.identification, "IWAD",
+                        4
+                    )) // missing IWAD tag in header
                 {
                     noiwad = true;
                 }
@@ -920,7 +934,8 @@ void CheckIWAD(const char *iwadname, GameMode_t *gmode, dboolean *hassec)
                 header.infotableofs = LittleLong(header.infotableofs);
                 length = header.numlumps;
                 fileinfo = static_cast<filelump_t *>(
-                    malloc(length * sizeof(filelump_t)));
+                    malloc(length * sizeof(filelump_t))
+                );
                 if (fseek(fp, header.infotableofs, SEEK_SET) ||
                     fread(fileinfo, sizeof(filelump_t), length, fp) != length ||
                     fclose(fp))
@@ -1038,8 +1053,10 @@ void AddIWAD(const char *iwad)
     }
 
     // jff 9/3/98 use logical output routine
-    lprintf(LO_CONFIRM, "IWAD found: %s\n",
-            iwad); // jff 4/20/98 print only if found
+    lprintf(
+        LO_CONFIRM, "IWAD found: %s\n",
+        iwad
+    ); // jff 4/20/98 print only if found
     CheckIWAD(iwad, &gamemode, &haswolflevels);
 
     /* jff 8/23/98 set gamemission global appropriately in all cases
@@ -1212,8 +1229,10 @@ static void IdentifyVersion()
         // jff 9/3/98 use logical output routine
         else
         {
-            lprintf(LO_ERROR, "Error: -save path does not exist, using %s\n",
-                    basesavegame);
+            lprintf(
+                LO_ERROR, "Error: -save path does not exist, using %s\n",
+                basesavegame
+            );
         }
     }
 
@@ -1262,8 +1281,9 @@ static void FindResponseFile()
             int index;
             int indexinfile;
             byte *file = nullptr;
-            const char **moreargs = static_cast<const char **>(
-                malloc(myargc * sizeof(const char *)));
+            const char **moreargs =
+                static_cast<const char **>(malloc(myargc * sizeof(const char *))
+                );
             char **newargv;
             // proff 04/05/2000: Added for searching responsefile
             char *fname;
@@ -1279,11 +1299,13 @@ static void FindResponseFile()
             // proff 04/05/2000: Added for searching responsefile
             if (size < 0)
             {
-                size_t fnlen = doom_snprintf(nullptr, 0, "%s/%s",
-                                             I_DoomExeDir(), &myargv[i][1]);
+                size_t fnlen = doom_snprintf(
+                    nullptr, 0, "%s/%s", I_DoomExeDir(), &myargv[i][1]
+                );
                 fname = static_cast<char *>(realloc(fname, fnlen + 4 + 1));
-                doom_snprintf(fname, fnlen + 1, "%s/%s", I_DoomExeDir(),
-                              &myargv[i][1]);
+                doom_snprintf(
+                    fname, fnlen + 1, "%s/%s", I_DoomExeDir(), &myargv[i][1]
+                );
                 AddDefaultExtension(fname, ".rsp");
                 size = M_ReadFile(fname, &file);
             }
@@ -1320,8 +1342,10 @@ static void FindResponseFile()
             }
 
             // KEEP ALL CMDLINE ARGS FOLLOWING @RESPONSEFILE ARG
-            memcpy((void *)moreargs, &myargv[i + 1],
-                   (index = myargc - i - 1) * sizeof(myargv[0]));
+            memcpy(
+                (void *)moreargs, &myargv[i + 1],
+                (index = myargc - i - 1) * sizeof(myargv[0])
+            );
 
             {
                 char *firstargv = myargv[0];
@@ -1374,7 +1398,8 @@ static void FindResponseFile()
                         // Terminate string, realloc and add to argv
                         *p = 0;
                         newargv = static_cast<char **>(realloc(
-                            newargv, sizeof(newargv[0]) * (indexinfile + 1)));
+                            newargv, sizeof(newargv[0]) * (indexinfile + 1)
+                        ));
                         newargv[indexinfile++] =
                             static_cast<char *>(realloc(s, strlen(s) + 1));
                     }
@@ -1383,9 +1408,12 @@ static void FindResponseFile()
             free(file);
 
             newargv = static_cast<char **>(
-                realloc(newargv, sizeof(newargv[0]) * (indexinfile + index)));
-            memcpy((void *)&newargv[indexinfile], moreargs,
-                   index * sizeof(moreargs[0]));
+                realloc(newargv, sizeof(newargv[0]) * (indexinfile + index))
+            );
+            memcpy(
+                (void *)&newargv[indexinfile], moreargs,
+                index * sizeof(moreargs[0])
+            );
             free((void *)moreargs);
 
             myargc = indexinfile + index;
@@ -1449,24 +1477,26 @@ static void DoLooseFiles()
         const char *ext;
         char ***list = nullptr;
         int *count = nullptr;
-    } looses[] = {{".wad", &wads, &wadcount},
-                  {".lmp", &lmps, &lmpcount},
-                  {".deh", &dehs, &dehcount},
-                  {".bex", &dehs, &dehcount},
-                  // assume wad if no extension or length of the extention is
-                  // not equal to 3 must be last entrie
-                  {"", &wads, &wadcount},
-                  {nullptr}};
+    } looses[] = {
+        {".wad", &wads, &wadcount},
+        {".lmp", &lmps, &lmpcount},
+        {".deh", &dehs, &dehcount},
+        {".bex", &dehs, &dehcount},
+        // assume wad if no extension or length of the extention is
+        // not equal to 3 must be last entrie
+        {"", &wads, &wadcount},
+        {nullptr}};
 
     struct
     {
         const char *cmdparam;
         char ***list = nullptr;
         int *count = nullptr;
-    } params[] = {{"-file", &wads, &wadcount},
-                  {"-deh", &dehs, &dehcount},
-                  {"-playdemo", &lmps, &lmpcount},
-                  {nullptr}};
+    } params[] = {
+        {"-file", &wads, &wadcount},
+        {"-deh", &dehs, &dehcount},
+        {"-playdemo", &lmps, &lmpcount},
+        {nullptr}};
 
     wads = static_cast<char **>(malloc(myargc * sizeof(*wads)));
     lmps = static_cast<char **>(malloc(myargc * sizeof(*lmps)));
@@ -1744,7 +1774,8 @@ static void D_DoomMainSetup()
             char *tempverstr;
             const char bfgverstr[] = " (BFG Edition)";
             tempverstr = static_cast<char *>(malloc(
-                sizeof(char) * (strlen(doomverstr) + strlen(bfgverstr) + 1)));
+                sizeof(char) * (strlen(doomverstr) + strlen(bfgverstr) + 1)
+            ));
             strcpy(tempverstr, doomverstr);
             strcat(tempverstr, bfgverstr);
             doomverstr = strdup(tempverstr);
@@ -1753,14 +1784,16 @@ static void D_DoomMainSetup()
 
         /* cphipps - the main display. This shows the build date, copyright, and
          * game type */
-        lprintf(LO_ALWAYS,
-                PACKAGE_NAME
-                " (built %s), playing: %s\n" PACKAGE_NAME
-                " is released under the GNU General Public license v2.0.\n"
-                "You are welcome to redistribute it under certain conditions.\n"
-                "It comes with ABSOLUTELY NO WARRANTY. See the file COPYING "
-                "for details.\n",
-                version_date, doomverstr);
+        lprintf(
+            LO_ALWAYS,
+            PACKAGE_NAME
+            " (built %s), playing: %s\n" PACKAGE_NAME
+            " is released under the GNU General Public license v2.0.\n"
+            "You are welcome to redistribute it under certain conditions.\n"
+            "It comes with ABSOLUTELY NO WARRANTY. See the file COPYING "
+            "for details.\n",
+            version_date, doomverstr
+        );
     }
 
     if (devparm)
@@ -1822,15 +1855,19 @@ static void D_DoomMainSetup()
     {
         int time = atoi(myargv[p + 1]);
         // jff 9/3/98 use logical output routine
-        lprintf(LO_CONFIRM, "Levels will end after %d minute%s.\n", time,
-                time > 1 ? "s" : "");
+        lprintf(
+            LO_CONFIRM, "Levels will end after %d minute%s.\n", time,
+            time > 1 ? "s" : ""
+        );
     }
 
     if ((p = M_CheckParm("-avg")) && p < myargc - 1 && deathmatch)
     {
         // jff 9/3/98 use logical output routine
-        lprintf(LO_CONFIRM,
-                "Austin Virtual Gaming: Levels will end after 20 minutes\n");
+        lprintf(
+            LO_CONFIRM,
+            "Austin Virtual Gaming: Levels will end after 20 minutes\n"
+        );
     }
 
     if ((p = M_CheckParm("-warp")) || // killough 5/2/98
@@ -1987,8 +2024,9 @@ static void D_DoomMainSetup()
             if ((p = IsDemoContinue()))
             {
                 democontinue = true;
-                AddDefaultExtension(strcpy(democontinuename, myargv[p + 2]),
-                                    ".lmp");
+                AddDefaultExtension(
+                    strcpy(democontinuename, myargv[p + 2]), ".lmp"
+                );
             }
             else
             {
@@ -1999,8 +2037,8 @@ static void D_DoomMainSetup()
 
     if (p && p < myargc - 1)
     {
-        char *file = static_cast<char *>(
-            malloc(strlen(myargv[p + 1]) + 4 + 1)); // cph - localised
+        char *file = static_cast<char *>(malloc(strlen(myargv[p + 1]) + 4 + 1)
+        ); // cph - localised
         strcpy(file, myargv[p + 1]);
         AddDefaultExtension(file, ".lmp"); // killough
         D_AddFile(file, source_lmp);
@@ -2042,8 +2080,10 @@ static void D_DoomMainSetup()
     lprintf(LO_INFO, "G_ReloadDefaults: Checking OPTIONS.\n");
     G_ReloadDefaults();
 
-    lprintf(LO_INFO,
-            "\n"); // killough 3/6/98: add a newline, by popular demand :)
+    lprintf(
+        LO_INFO,
+        "\n"
+    ); // killough 3/6/98: add a newline, by popular demand :)
 
     // e6y
     // option to disable automatic loading of dehacked-in-wad lump
@@ -2058,8 +2098,10 @@ static void D_DoomMainSetup()
                 lumpinfo[p].source == source_pre ||
                 lumpinfo[p].source == source_auto_load)
             {
-                ProcessDehFile(nullptr, D_dehout(),
-                               p); // cph - add dehacked-in-a-wad support
+                ProcessDehFile(
+                    nullptr, D_dehout(),
+                    p
+                ); // cph - add dehacked-in-a-wad support
             }
         }
 
@@ -2171,7 +2213,8 @@ static void D_DoomMainSetup()
             {
                 I_Error(
                     "D_DoomMainSetup: Cannot find .deh or .bex file named %s",
-                    myargv[p]);
+                    myargv[p]
+                );
             }
         }
     }
@@ -2323,17 +2366,18 @@ static void D_DoomMainSetup()
     else
         // e6y
         if ((p = IsDemoContinue()))
-    {
-        G_DeferedPlayDemo(myargv[p + 1]);
-        G_CheckDemoContinue();
-    }
+        {
+            G_DeferedPlayDemo(myargv[p + 1]);
+            G_CheckDemoContinue();
+        }
 
     if (slot && ++slot < myargc)
     {
         slot = atoi(myargv[slot]); // killough 3/16/98: add slot info
         G_LoadGame(
             slot,
-            true); // killough 5/15/98: add command flag // cph - no filename
+            true
+        ); // killough 5/15/98: add command flag // cph - no filename
     }
     else if (!singledemo)
     { /* killough 12/98 */
@@ -2448,7 +2492,9 @@ void GetFirstMap(int *ep, int *map)
             }
         }
         // jff 9/3/98 use logical output routine
-        lprintf(LO_CONFIRM, "Auto-warping to first %slevel: %s\n",
-                newlevel ? "new " : "", name); // Ty 10/04/98 - new level test
+        lprintf(
+            LO_CONFIRM, "Auto-warping to first %slevel: %s\n",
+            newlevel ? "new " : "", name
+        ); // Ty 10/04/98 - new level test
     }
 }

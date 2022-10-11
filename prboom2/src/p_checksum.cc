@@ -41,8 +41,10 @@ void P_RecordChecksum(const char *file)
         outfile = fopen(file, "wb");
         if (nullptr == outfile)
         {
-            I_Error("cannot open %s for writing checksum:\n%s\n", file,
-                    strerror(errno));
+            I_Error(
+                "cannot open %s for writing checksum:\n%s\n", file,
+                strerror(errno)
+            );
         }
         atexit(p_checksum_cleanup);
     }

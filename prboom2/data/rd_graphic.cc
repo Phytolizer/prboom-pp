@@ -20,8 +20,9 @@
 // try to read a ppm file header and get width/height of image
 //
 
-static unsigned char *parseppm(char *ppm, size_t size, const char *file,
-                               int *width, int *height)
+static unsigned char *parseppm(
+    char *ppm, size_t size, const char *file, int *width, int *height
+)
 {
     int maxcol, numpixels;
     char *pos = ppm;
@@ -65,8 +66,9 @@ static unsigned char *parseppm(char *ppm, size_t size, const char *file,
 // (random access to which is easier while building a patch column)
 //
 
-static void pixels_to_colours(int *colours, unsigned char *pixels, int width,
-                              int height, int x)
+static void pixels_to_colours(
+    int *colours, unsigned char *pixels, int width, int height, int x
+)
 {
     int i = height;
     int *colour = colours;
@@ -144,8 +146,9 @@ static size_t createcolumn(unsigned char **column, int *colours, int height)
 // insert_x and insert_y are the graphic/sprite insertion point
 //
 
-size_t ppm_to_patch(void **lumpdata, const char *filename, int insert_x,
-                    int insert_y)
+size_t ppm_to_patch(
+    void **lumpdata, const char *filename, int insert_x, int insert_y
+)
 {
     void *data;
     size_t size = read_or_die(&data, filename);
@@ -157,11 +160,14 @@ size_t ppm_to_patch(void **lumpdata, const char *filename, int insert_x,
     pixels =
         parseppm(static_cast<char *>(data), size, filename, &width, &height);
     columns = static_cast<unsigned char **>(
-        xmalloc(static_cast<size_t>(width) * sizeof(*columns)));
+        xmalloc(static_cast<size_t>(width) * sizeof(*columns))
+    );
     columnsizes = static_cast<size_t *>(
-        xmalloc(static_cast<size_t>(width) * sizeof(*columnsizes)));
+        xmalloc(static_cast<size_t>(width) * sizeof(*columnsizes))
+    );
     column_colours = static_cast<int *>(
-        xmalloc(static_cast<size_t>(height) * sizeof(*column_colours)));
+        xmalloc(static_cast<size_t>(height) * sizeof(*column_colours))
+    );
 
     for (totalcolumnsize = i = 0; i < width; i++)
     {
@@ -171,7 +177,8 @@ size_t ppm_to_patch(void **lumpdata, const char *filename, int insert_x,
     }
 
     patch = static_cast<unsigned char *>(
-        xmalloc(static_cast<size_t>(8 + 4 * width) + totalcolumnsize));
+        xmalloc(static_cast<size_t>(8 + 4 * width) + totalcolumnsize)
+    );
 
     ((short *)patch)[0] = SHORT(width);
     ((short *)patch)[1] = SHORT(height);
@@ -214,17 +221,20 @@ size_t ppm_to_bitmap(void **lumpdata, const char *filename)
     int i, j, width, height;
     unsigned char *pixels, *bitmap;
 
-    pixels = parseppm(reinterpret_cast<char *>(data), size, filename, &width,
-                      &height);
-    bitmap = static_cast<unsigned char *>(
-        xmalloc(static_cast<size_t>(width * height)));
+    pixels = parseppm(
+        reinterpret_cast<char *>(data), size, filename, &width, &height
+    );
+    bitmap =
+        static_cast<unsigned char *>(xmalloc(static_cast<size_t>(width * height)
+        ));
 
     for (j = 0; j < height; j++)
     {
         for (i = 0; i < width; i++)
         {
             bitmap[width * j + i] = static_cast<unsigned char>(
-                palette_getindex(&pixels[3 * (width * j + i)]));
+                palette_getindex(&pixels[3 * (width * j + i)])
+            );
         }
     }
 

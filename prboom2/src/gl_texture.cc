@@ -265,8 +265,8 @@ static GLTexture *gld_AddNewGLTexItem(int num, int count, GLTexture ***items)
         // if (gl_boom_colormaps)
         {
             GLTexture *texture = (*items)[num];
-            int dims[3] = {(CR_LIMIT + MAXPLAYERS), (PLAYERCOLORMAP_COUNT),
-                           numcolormaps};
+            int dims[3] = {
+                (CR_LIMIT + MAXPLAYERS), (PLAYERCOLORMAP_COUNT), numcolormaps};
             texture->glTexExID =
                 static_cast<GLuint ***>(NewIntDynArray(3, dims));
         }
@@ -310,11 +310,10 @@ void gld_SetTexturePalette(GLenum target)
     GLEXT_glColorTableEXT(target, GL_RGBA, 256, GL_RGBA, GL_UNSIGNED_BYTE, pal);
 }
 
-static void gld_AddPatchToTexture_UnTranslated(GLTexture *gltexture,
-                                               unsigned char *buffer,
-                                               const rpatch_t *patch,
-                                               int originx, int originy,
-                                               int paletted)
+static void gld_AddPatchToTexture_UnTranslated(
+    GLTexture *gltexture, unsigned char *buffer, const rpatch_t *patch,
+    int originx, int originy, int paletted
+)
 {
     int x, y, j;
     int xs, xe;
@@ -363,10 +362,12 @@ static void gld_AddPatchToTexture_UnTranslated(GLTexture *gltexture,
 #ifdef RANGECHECK
         if (x >= patch->width)
         {
-            lprintf(LO_ERROR,
-                    "gld_AddPatchToTexture_UnTranslated x>=patch->width (%i >= "
-                    "%i)\n",
-                    x, patch->width);
+            lprintf(
+                LO_ERROR,
+                "gld_AddPatchToTexture_UnTranslated x>=patch->width (%i >= "
+                "%i)\n",
+                x, patch->width
+            );
             return;
         }
 #endif
@@ -402,10 +403,12 @@ static void gld_AddPatchToTexture_UnTranslated(GLTexture *gltexture,
 #ifdef RANGECHECK
                     if (pos >= gltexture->buffer_size)
                     {
-                        lprintf(LO_ERROR,
-                                "gld_AddPatchToTexture_UnTranslated pos>=size "
-                                "(%i >= %i)\n",
-                                pos + 3, gltexture->buffer_size);
+                        lprintf(
+                            LO_ERROR,
+                            "gld_AddPatchToTexture_UnTranslated pos>=size "
+                            "(%i >= %i)\n",
+                            pos + 3, gltexture->buffer_size
+                        );
                         return;
                     }
 #endif
@@ -420,10 +423,12 @@ static void gld_AddPatchToTexture_UnTranslated(GLTexture *gltexture,
 #ifdef RANGECHECK
                     if ((pos + 3) >= gltexture->buffer_size)
                     {
-                        lprintf(LO_ERROR,
-                                "gld_AddPatchToTexture_UnTranslated "
-                                "pos+3>=size (%i >= %i)\n",
-                                pos + 3, gltexture->buffer_size);
+                        lprintf(
+                            LO_ERROR,
+                            "gld_AddPatchToTexture_UnTranslated "
+                            "pos+3>=size (%i >= %i)\n",
+                            pos + 3, gltexture->buffer_size
+                        );
                         return;
                     }
 #endif
@@ -451,9 +456,10 @@ static void gld_AddPatchToTexture_UnTranslated(GLTexture *gltexture,
     }
 }
 
-void gld_AddPatchToTexture(GLTexture *gltexture, unsigned char *buffer,
-                           const rpatch_t *patch, int originx, int originy,
-                           int cm, int paletted)
+void gld_AddPatchToTexture(
+    GLTexture *gltexture, unsigned char *buffer, const rpatch_t *patch,
+    int originx, int originy, int cm, int paletted
+)
 {
     int x, y, j;
     int xs, xe;
@@ -474,8 +480,9 @@ void gld_AddPatchToTexture(GLTexture *gltexture, unsigned char *buffer,
     }
     if ((cm == CR_DEFAULT) || (cm == CR_LIMIT))
     {
-        gld_AddPatchToTexture_UnTranslated(gltexture, buffer, patch, originx,
-                                           originy, paletted);
+        gld_AddPatchToTexture_UnTranslated(
+            gltexture, buffer, patch, originx, originy, paletted
+        );
         return;
     }
     if (cm < CR_LIMIT)
@@ -517,9 +524,10 @@ void gld_AddPatchToTexture(GLTexture *gltexture, unsigned char *buffer,
 #ifdef RANGECHECK
         if (x >= patch->width)
         {
-            lprintf(LO_ERROR,
-                    "gld_AddPatchToTexture x>=patch->width (%i >= %i)\n", x,
-                    patch->width);
+            lprintf(
+                LO_ERROR, "gld_AddPatchToTexture x>=patch->width (%i >= %i)\n",
+                x, patch->width
+            );
             return;
         }
 #endif
@@ -555,10 +563,12 @@ void gld_AddPatchToTexture(GLTexture *gltexture, unsigned char *buffer,
 #ifdef RANGECHECK
                     if (pos >= gltexture->buffer_size)
                     {
-                        lprintf(LO_ERROR,
-                                "gld_AddPatchToTexture_UnTranslated pos>=size "
-                                "(%i >= %i)\n",
-                                pos + 3, gltexture->buffer_size);
+                        lprintf(
+                            LO_ERROR,
+                            "gld_AddPatchToTexture_UnTranslated pos>=size "
+                            "(%i >= %i)\n",
+                            pos + 3, gltexture->buffer_size
+                        );
                         return;
                     }
 #endif
@@ -576,7 +586,8 @@ void gld_AddPatchToTexture(GLTexture *gltexture, unsigned char *buffer,
                         lprintf(
                             LO_ERROR,
                             "gld_AddPatchToTexture pos+3>=size (%i >= %i)\n",
-                            pos + 3, gltexture->buffer_size);
+                            pos + 3, gltexture->buffer_size
+                        );
                         return;
                     }
 #endif
@@ -605,8 +616,10 @@ void gld_AddPatchToTexture(GLTexture *gltexture, unsigned char *buffer,
     }
 }
 
-static void gld_AddFlatToTexture(GLTexture *gltexture, unsigned char *buffer,
-                                 const unsigned char *flat, int paletted)
+static void gld_AddFlatToTexture(
+    GLTexture *gltexture, unsigned char *buffer, const unsigned char *flat,
+    int paletted
+)
 {
     int x, y, pos;
     const unsigned char *playpal;
@@ -629,9 +642,10 @@ static void gld_AddFlatToTexture(GLTexture *gltexture, unsigned char *buffer,
 #ifdef RANGECHECK
                 if (pos >= gltexture->buffer_size)
                 {
-                    lprintf(LO_ERROR,
-                            "gld_AddFlatToTexture pos>=size (%i >= %i)\n", pos,
-                            gltexture->buffer_size);
+                    lprintf(
+                        LO_ERROR, "gld_AddFlatToTexture pos>=size (%i >= %i)\n",
+                        pos, gltexture->buffer_size
+                    );
                     return;
                 }
 #endif
@@ -650,9 +664,11 @@ static void gld_AddFlatToTexture(GLTexture *gltexture, unsigned char *buffer,
 #ifdef RANGECHECK
                 if ((pos + 3) >= gltexture->buffer_size)
                 {
-                    lprintf(LO_ERROR,
-                            "gld_AddFlatToTexture pos+3>=size (%i >= %i)\n",
-                            pos + 3, gltexture->buffer_size);
+                    lprintf(
+                        LO_ERROR,
+                        "gld_AddFlatToTexture pos+3>=size (%i >= %i)\n",
+                        pos + 3, gltexture->buffer_size
+                    );
                     return;
                 }
 #endif
@@ -766,8 +782,9 @@ GLTexture *gld_RegisterTexture(int texture_num, dboolean mipmap, dboolean force)
     return gltexture;
 }
 
-unsigned char *gld_GetTextureBuffer(GLuint texid, int miplevel, int *width,
-                                    int *height)
+unsigned char *gld_GetTextureBuffer(
+    GLuint texid, int miplevel, int *width, int *height
+)
 {
     int w, h;
     static unsigned char *buf = nullptr;
@@ -854,8 +871,10 @@ static void gld_RecolorMipLevels(byte *data)
             }
 
             gld_BlendOverTexture((byte *)buf, w * h, mipBlendColors[miplevel]);
-            glTexImage2D(GL_TEXTURE_2D, miplevel, gl_tex_format, w, h, 0,
-                         GL_RGBA, GL_UNSIGNED_BYTE, buf);
+            glTexImage2D(
+                GL_TEXTURE_2D, miplevel, gl_tex_format, w, h, 0, GL_RGBA,
+                GL_UNSIGNED_BYTE, buf
+            );
         }
     }
 }
@@ -905,8 +924,9 @@ void gld_SetTexFilters(GLTexture *gltexture)
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, min_filter);
     if (aniso_filter > 0.0f)
     {
-        glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT,
-                        aniso_filter);
+        glTexParameterf(
+            GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, aniso_filter
+        );
     }
 }
 
@@ -927,8 +947,9 @@ void gld_SetTexClamp(GLTexture *gltexture, unsigned int flags)
             if (!has_clamp_x)
             {
                 *gltexture->texflags_p |= GLTEXTURE_CLAMPX;
-                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S,
-                                GLEXT_CLAMP_TO_EDGE);
+                glTexParameteri(
+                    GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GLEXT_CLAMP_TO_EDGE
+                );
             }
         }
         else
@@ -945,8 +966,9 @@ void gld_SetTexClamp(GLTexture *gltexture, unsigned int flags)
             if (!has_clamp_y)
             {
                 *gltexture->texflags_p |= GLTEXTURE_CLAMPY;
-                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T,
-                                GLEXT_CLAMP_TO_EDGE);
+                glTexParameteri(
+                    GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GLEXT_CLAMP_TO_EDGE
+                );
             }
         }
         else
@@ -960,8 +982,9 @@ void gld_SetTexClamp(GLTexture *gltexture, unsigned int flags)
     }
 }
 
-int gld_BuildTexture(GLTexture *gltexture, void *data, dboolean readonly,
-                     int width, int height)
+int gld_BuildTexture(
+    GLTexture *gltexture, void *data, dboolean readonly, int width, int height
+)
 {
     int result = false;
 
@@ -977,10 +1000,13 @@ int gld_BuildTexture(GLTexture *gltexture, void *data, dboolean readonly,
     {
         glTexParameteri(
             GL_TEXTURE_2D, GL_GENERATE_MIPMAP,
-            ((gltexture->flags & GLTEXTURE_MIPMAP) ? GL_TRUE : GL_FALSE));
+            ((gltexture->flags & GLTEXTURE_MIPMAP) ? GL_TRUE : GL_FALSE)
+        );
 
-        glTexImage2D(GL_TEXTURE_2D, 0, gl_tex_format, tex_width, tex_height, 0,
-                     GL_RGBA, GL_UNSIGNED_BYTE, data);
+        glTexImage2D(
+            GL_TEXTURE_2D, 0, gl_tex_format, tex_width, tex_height, 0, GL_RGBA,
+            GL_UNSIGNED_BYTE, data
+        );
 
         gld_RecolorMipLevels(static_cast<byte *>(data));
 
@@ -993,8 +1019,10 @@ int gld_BuildTexture(GLTexture *gltexture, void *data, dboolean readonly,
 #ifdef USE_GLU_MIPMAP
     if (gltexture->flags & GLTEXTURE_MIPMAP)
     {
-        gluBuild2DMipmaps(GL_TEXTURE_2D, gl_tex_format, width, height, GL_RGBA,
-                          GL_UNSIGNED_BYTE, data);
+        gluBuild2DMipmaps(
+            GL_TEXTURE_2D, gl_tex_format, width, height, GL_RGBA,
+            GL_UNSIGNED_BYTE, data
+        );
 
         gld_RecolorMipLevels(static_cast<byte *>(data));
 
@@ -1015,11 +1043,15 @@ int gld_BuildTexture(GLTexture *gltexture, void *data, dboolean readonly,
                 goto l_exit;
             }
 
-            gluScaleImage(GL_RGBA, width, height, GL_UNSIGNED_BYTE, data,
-                          tex_width, tex_height, GL_UNSIGNED_BYTE, tex_buffer);
+            gluScaleImage(
+                GL_RGBA, width, height, GL_UNSIGNED_BYTE, data, tex_width,
+                tex_height, GL_UNSIGNED_BYTE, tex_buffer
+            );
 
-            glTexImage2D(GL_TEXTURE_2D, 0, gl_tex_format, tex_width, tex_height,
-                         0, GL_RGBA, GL_UNSIGNED_BYTE, tex_buffer);
+            glTexImage2D(
+                GL_TEXTURE_2D, 0, gl_tex_format, tex_width, tex_height, 0,
+                GL_RGBA, GL_UNSIGNED_BYTE, tex_buffer
+            );
         }
         else
 #endif // USE_GLU_IMAGESCALE
@@ -1035,13 +1067,15 @@ int gld_BuildTexture(GLTexture *gltexture, void *data, dboolean readonly,
                 else
                 {
                     int y;
-                    tex_buffer = static_cast<unsigned char *>(
-                        calloc(1, tex_buffer_size));
+                    tex_buffer =
+                        static_cast<unsigned char *>(calloc(1, tex_buffer_size)
+                        );
                     for (y = 0; y < height; y++)
                     {
-                        memcpy(tex_buffer + y * tex_width * 4,
-                               ((unsigned char *)data) + y * width * 4,
-                               width * 4);
+                        memcpy(
+                            tex_buffer + y * tex_width * 4,
+                            ((unsigned char *)data) + y * width * 4, width * 4
+                        );
                     }
                 }
             }
@@ -1053,15 +1087,17 @@ int gld_BuildTexture(GLTexture *gltexture, void *data, dboolean readonly,
             if (gl_paletted_texture)
             {
                 gld_SetTexturePalette(GL_TEXTURE_2D);
-                glTexImage2D(GL_TEXTURE_2D, 0, GL_COLOR_INDEX8_EXT, tex_width,
-                             tex_height, 0, GL_COLOR_INDEX, GL_UNSIGNED_BYTE,
-                             tex_buffer);
+                glTexImage2D(
+                    GL_TEXTURE_2D, 0, GL_COLOR_INDEX8_EXT, tex_width,
+                    tex_height, 0, GL_COLOR_INDEX, GL_UNSIGNED_BYTE, tex_buffer
+                );
             }
             else
             {
-                glTexImage2D(GL_TEXTURE_2D, 0, gl_tex_format, tex_width,
-                             tex_height, 0, GL_RGBA, GL_UNSIGNED_BYTE,
-                             tex_buffer);
+                glTexImage2D(
+                    GL_TEXTURE_2D, 0, gl_tex_format, tex_width, tex_height, 0,
+                    GL_RGBA, GL_UNSIGNED_BYTE, tex_buffer
+                );
             }
         }
 
@@ -1141,9 +1177,10 @@ void gld_BindTexture(GLTexture *gltexture, unsigned int flags)
         memset(buffer, 0, gltexture->buffer_size);
     }
     patch = R_CacheTextureCompositePatchNum(gltexture->index);
-    gld_AddPatchToTexture(gltexture, buffer, patch, 0, 0, CR_DEFAULT,
-                          !(gltexture->flags & GLTEXTURE_MIPMAP) &&
-                              gl_paletted_texture);
+    gld_AddPatchToTexture(
+        gltexture, buffer, patch, 0, 0, CR_DEFAULT,
+        !(gltexture->flags & GLTEXTURE_MIPMAP) && gl_paletted_texture
+    );
     R_UnlockTextureCompositePatchNum(gltexture->index);
     if (*gltexture->texid_p == 0)
     {
@@ -1156,8 +1193,10 @@ void gld_BindTexture(GLTexture *gltexture, unsigned int flags)
         SmoothEdges(buffer, gltexture->buffer_width, gltexture->buffer_height);
     }
 
-    buffer = gld_HQResize(gltexture, buffer, gltexture->buffer_width,
-                          gltexture->buffer_height, &w, &h);
+    buffer = gld_HQResize(
+        gltexture, buffer, gltexture->buffer_width, gltexture->buffer_height,
+        &w, &h
+    );
 
     gld_BuildTexture(gltexture, buffer, false, w, h);
 
@@ -1303,8 +1342,9 @@ void gld_BindPatch(GLTexture *gltexture, int cm)
     {
         memset(buffer, 0, gltexture->buffer_size);
     }
-    gld_AddPatchToTexture(gltexture, buffer, patch, 0, 0, cm,
-                          gl_paletted_texture);
+    gld_AddPatchToTexture(
+        gltexture, buffer, patch, 0, 0, cm, gl_paletted_texture
+    );
 
     // e6y
     // Post-process the texture data after the buffer has been created.
@@ -1330,8 +1370,10 @@ void gld_BindPatch(GLTexture *gltexture, int cm)
     }
     glBindTexture(GL_TEXTURE_2D, *gltexture->texid_p);
 
-    buffer = gld_HQResize(gltexture, buffer, gltexture->buffer_width,
-                          gltexture->buffer_height, &w, &h);
+    buffer = gld_HQResize(
+        gltexture, buffer, gltexture->buffer_width, gltexture->buffer_height,
+        &w, &h
+    );
 
     gld_BuildTexture(gltexture, buffer, false, w, h);
 
@@ -1459,17 +1501,20 @@ void gld_BindFlat(GLTexture *gltexture, unsigned int flags)
     {
         memset(buffer, 0, gltexture->buffer_size);
     }
-    gld_AddFlatToTexture(gltexture, buffer, flat,
-                         !(gltexture->flags & GLTEXTURE_MIPMAP) &&
-                             gl_paletted_texture);
+    gld_AddFlatToTexture(
+        gltexture, buffer, flat,
+        !(gltexture->flags & GLTEXTURE_MIPMAP) && gl_paletted_texture
+    );
     if (*gltexture->texid_p == 0)
     {
         glGenTextures(1, gltexture->texid_p);
     }
     glBindTexture(GL_TEXTURE_2D, *gltexture->texid_p);
 
-    buffer = gld_HQResize(gltexture, buffer, gltexture->buffer_width,
-                          gltexture->buffer_height, &w, &h);
+    buffer = gld_HQResize(
+        gltexture, buffer, gltexture->buffer_width, gltexture->buffer_height,
+        &w, &h
+    );
 
     gld_BuildTexture(gltexture, buffer, false, w, h);
 
@@ -1504,7 +1549,8 @@ static void gld_CleanTexItems(int count, GLTexture ***items)
                         if ((*items) && (*items)[i]->glTexExID[j][n][cm])
                         {
                             glDeleteTextures(
-                                1, &((*items)[i]->glTexExID[j][n][cm]));
+                                1, &((*items)[i]->glTexExID[j][n][cm])
+                            );
                         }
                     }
                 }
@@ -1538,8 +1584,9 @@ void gld_FlushTextures()
     gld_ResetDrawInfo();
 }
 
-static void CalcHitsCount(const byte *hitlist, int size, int *hit,
-                          int *hitcount)
+static void CalcHitsCount(
+    const byte *hitlist, int size, int *hit, int *hitcount
+)
 {
     int i;
 
@@ -1594,8 +1641,9 @@ void gld_Precache()
 
     {
         size_t size = numflats > numsprites ? numflats : numsprites;
-        hitlist = static_cast<byte *>(std::malloc(
-            (size_t)numtextures > size ? (size_t)numtextures : size));
+        hitlist = static_cast<byte *>(
+            std::malloc((size_t)numtextures > size ? (size_t)numtextures : size)
+        );
     }
 
     // Precache flats.
@@ -1609,8 +1657,8 @@ void gld_Precache()
         int floorpic = sectors[i].floorpic;
         int ceilingpic = sectors[i].ceilingpic;
 
-        anim_t *flatanims[2] = {anim_flats[floorpic].anim,
-                                anim_flats[ceilingpic].anim};
+        anim_t *flatanims[2] = {
+            anim_flats[floorpic].anim, anim_flats[ceilingpic].anim};
 
         hitlist[floorpic] = hitlist[ceilingpic] = 1;
 
@@ -1787,8 +1835,9 @@ void gld_Precache()
                 do
                 {
                     gld_ProgressUpdate("Loading Sprites...", ++hit, hitcount);
-                    gltexture = gld_RegisterPatch(firstspritelump + sflump[k],
-                                                  CR_LIMIT, true);
+                    gltexture = gld_RegisterPatch(
+                        firstspritelump + sflump[k], CR_LIMIT, true
+                    );
                     if (gltexture)
                     {
                         gld_BindPatch(gltexture, CR_LIMIT);
@@ -1825,8 +1874,10 @@ void gld_Precache()
             sprintf(map, "E%iM%i", gameepisode, gamemap);
         }
 
-        lprintf(LO_INFO, "gld_Precache: %s done in %d ms\n", map,
-                SDL_GetTicks() - tics);
+        lprintf(
+            LO_INFO, "gld_Precache: %s done in %d ms\n", map,
+            SDL_GetTicks() - tics
+        );
     }
 }
 

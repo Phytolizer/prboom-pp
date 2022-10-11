@@ -404,8 +404,9 @@ void P_MovePlayer(player_t *player)
             if (cmd->sidemove)
             {
                 P_Bob(player, mo->angle - ANG90, cmd->sidemove * bobfactor);
-                P_SideThrust(player, mo->angle - ANG90,
-                             cmd->sidemove * movefactor);
+                P_SideThrust(
+                    player, mo->angle - ANG90, cmd->sidemove * movefactor
+                );
             }
         }
         else if (comperr(comperr_allowjump))
@@ -507,8 +508,10 @@ void P_DeathThink(player_t *player)
 
     if (player->attacker && player->attacker != player->mo)
     {
-        angle = R_PointToAngle2(player->mo->x, player->mo->y,
-                                player->attacker->x, player->attacker->y);
+        angle = R_PointToAngle2(
+            player->mo->x, player->mo->y, player->attacker->x,
+            player->attacker->y
+        );
 
         delta = angle - player->mo->angle;
 
@@ -678,8 +681,9 @@ void P_PlayerThink(player_t *player)
         //  when the weapon psprite can do it
         //  (read: not in the middle of an attack).
 
-        newweapon = static_cast<weapontype_t>((cmd->buttons & BT_WEAPONMASK) >>
-                                              BT_WEAPONSHIFT);
+        newweapon = static_cast<weapontype_t>(
+            (cmd->buttons & BT_WEAPONMASK) >> BT_WEAPONSHIFT
+        );
 
         // killough 3/22/98: For demo compatibility we must perform the fist
         // and SSG weapons switches here, rather than in G_BuildTiccmd(). For
@@ -691,7 +695,8 @@ void P_PlayerThink(player_t *player)
             if (!prboom_comp[PC_ALLOW_SSG_DIRECT].state)
             {
                 newweapon = static_cast<weapontype_t>(
-                    (cmd->buttons & BT_WEAPONMASK_OLD) >> BT_WEAPONSHIFT);
+                    (cmd->buttons & BT_WEAPONMASK_OLD) >> BT_WEAPONSHIFT
+                );
             }
 
             if (newweapon == g_wp_fist && player->weaponowned[g_wp_chainsaw] &&
@@ -820,8 +825,7 @@ void P_PlayerThink(player_t *player)
                 player->ammo[am_phoenixrod] -= USE_PHRD_AMMO_2;
                 player->refire = 0;
             }
-            else if ((player->readyweapon == wp_gauntlets) ||
-                     (player->readyweapon == wp_staff))
+            else if ((player->readyweapon == wp_gauntlets) || (player->readyweapon == wp_staff))
             {
                 player->pendingweapon = player->readyweapon;
             }
@@ -986,8 +990,10 @@ dboolean P_UndoPlayerChicken(player_t *player)
     player->health = mo->health = MAXHEALTH;
     player->mo = mo;
     angle >>= ANGLETOFINESHIFT;
-    fog = P_SpawnMobj(x + 20 * finecosine[angle], y + 20 * finesine[angle],
-                      z + TELEFOGHEIGHT, HERETIC_MT_TFOG);
+    fog = P_SpawnMobj(
+        x + 20 * finecosine[angle], y + 20 * finesine[angle], z + TELEFOGHEIGHT,
+        HERETIC_MT_TFOG
+    );
     S_StartSound(fog, heretic_sfx_telept);
     P_PostChickenWeapon(player, weapon);
     return (true);
@@ -1189,11 +1195,12 @@ dboolean P_UseArtifact(player_t *player, artitype_t arti)
         //   (player->mo->flags2 & (MF2_FEETARECLIPPED != 0)),
         // Which simplifies to:
         //   (player->mo->flags2 & 1),
-        mo = P_SpawnMobj(player->mo->x + 24 * finecosine[angle],
-                         player->mo->y + 24 * finesine[angle],
-                         player->mo->z -
-                             15 * FRACUNIT * (player->mo->flags2 & 1),
-                         HERETIC_MT_FIREBOMB);
+        mo = P_SpawnMobj(
+            player->mo->x + 24 * finecosine[angle],
+            player->mo->y + 24 * finesine[angle],
+            player->mo->z - 15 * FRACUNIT * (player->mo->flags2 & 1),
+            HERETIC_MT_FIREBOMB
+        );
         P_SetTarget(&mo->target, player->mo);
         break;
     case arti_egg:
@@ -1233,8 +1240,9 @@ void Heretic_P_MovePlayer(player_t *player)
         R_SmoothPlaying_Add(cmd->angleturn << 16);
     }
 
-    onground = (player->mo->z <= player->mo->floorz ||
-                (player->mo->flags2 & MF2_ONMOBJ));
+    onground =
+        (player->mo->z <= player->mo->floorz ||
+         (player->mo->flags2 & MF2_ONMOBJ));
 
     if (player->chickenTics)
     { // Chicken speed

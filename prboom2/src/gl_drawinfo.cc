@@ -97,9 +97,9 @@ void gld_ResetDrawInfo()
 static void gld_AddDrawRange(int size)
 {
     gld_drawinfo.maxsize++;
-    gld_drawinfo.data = static_cast<GLDrawDataItem_t *>(
-        realloc(gld_drawinfo.data,
-                gld_drawinfo.maxsize * sizeof(gld_drawinfo.data[0])));
+    gld_drawinfo.data = static_cast<GLDrawDataItem_t *>(realloc(
+        gld_drawinfo.data, gld_drawinfo.maxsize * sizeof(gld_drawinfo.data[0])
+    ));
 
     gld_drawinfo.data[gld_drawinfo.size].maxsize = size;
     gld_drawinfo.data[gld_drawinfo.size].data =
@@ -117,23 +117,24 @@ void gld_AddDrawItem(GLDrawItemType itemtype, void *itemdata)
     int itemsize = 0;
     byte *item_p = nullptr;
 
-    static int itemsizes[GLDIT_TYPES] = {0,
-                                         SIZEOF8(GLWall),
-                                         SIZEOF8(GLWall),
-                                         SIZEOF8(GLWall),
-                                         SIZEOF8(GLWall),
-                                         SIZEOF8(GLWall),
-                                         SIZEOF8(GLWall),
-                                         SIZEOF8(GLWall),
-                                         SIZEOF8(GLFlat),
-                                         SIZEOF8(GLFlat),
-                                         SIZEOF8(GLFlat),
-                                         SIZEOF8(GLFlat),
-                                         SIZEOF8(GLSprite),
-                                         SIZEOF8(GLSprite),
-                                         SIZEOF8(GLSprite),
-                                         SIZEOF8(GLShadow),
-                                         SIZEOF8(GLHealthBar)};
+    static int itemsizes[GLDIT_TYPES] = {
+        0,
+        SIZEOF8(GLWall),
+        SIZEOF8(GLWall),
+        SIZEOF8(GLWall),
+        SIZEOF8(GLWall),
+        SIZEOF8(GLWall),
+        SIZEOF8(GLWall),
+        SIZEOF8(GLWall),
+        SIZEOF8(GLFlat),
+        SIZEOF8(GLFlat),
+        SIZEOF8(GLFlat),
+        SIZEOF8(GLFlat),
+        SIZEOF8(GLSprite),
+        SIZEOF8(GLSprite),
+        SIZEOF8(GLSprite),
+        SIZEOF8(GLShadow),
+        SIZEOF8(GLHealthBar)};
 
     itemsize = itemsizes[itemtype];
     if (itemsize == 0)
@@ -166,10 +167,10 @@ void gld_AddDrawItem(GLDrawItemType itemtype, void *itemdata)
     if (gld_drawinfo.num_items[itemtype] >= gld_drawinfo.max_items[itemtype])
     {
         gld_drawinfo.max_items[itemtype] += 64;
-        gld_drawinfo.items[itemtype] = static_cast<GLDrawItem *>(
-            realloc(gld_drawinfo.items[itemtype],
-                    gld_drawinfo.max_items[itemtype] *
-                        sizeof(gld_drawinfo.items[0][0])));
+        gld_drawinfo.items[itemtype] = static_cast<GLDrawItem *>(realloc(
+            gld_drawinfo.items[itemtype],
+            gld_drawinfo.max_items[itemtype] * sizeof(gld_drawinfo.items[0][0])
+        ));
     }
 
     gld_drawinfo.items[itemtype][gld_drawinfo.num_items[itemtype]].item.item =

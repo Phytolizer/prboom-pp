@@ -181,10 +181,11 @@ const char *WINError(void)
         LocalFree(WinEBuff);
     }
 
-    if (FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER |
-                          FORMAT_MESSAGE_FROM_SYSTEM,
-                      nullptr, err, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
-                      (LPTSTR)&WinEBuff, 0, nullptr) == 0)
+    if (FormatMessage(
+            FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM,
+            nullptr, err, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
+            (LPTSTR)&WinEBuff, 0, nullptr
+        ) == 0)
     {
         return "Unknown error";
     }
@@ -399,10 +400,11 @@ int G_GotoNextLevel()
     static byte doom2_next[33] = {2,  3,  4,  5,  6,  7,  8,  9,  10, 11, 12,
                                   13, 14, 15, 31, 17, 18, 19, 20, 21, 22, 23,
                                   24, 25, 26, 27, 28, 29, 30, 1,  32, 16, 3};
-    static byte doom_next[4][9] = {{12, 13, 19, 15, 16, 17, 18, 21, 14},
-                                   {22, 23, 24, 25, 29, 27, 28, 31, 26},
-                                   {32, 33, 34, 35, 36, 39, 38, 41, 37},
-                                   {42, 49, 44, 45, 46, 47, 48, 11, 43}};
+    static byte doom_next[4][9] = {
+        {12, 13, 19, 15, 16, 17, 18, 21, 14},
+        {22, 23, 24, 25, 29, 27, 28, 31, 26},
+        {32, 33, 34, 35, 36, 39, 38, 41, 37},
+        {42, 49, 44, 45, 46, 47, 48, 11, 43}};
     static byte heretic_next[6][9] = {
         {12, 13, 14, 15, 16, 19, 18, 21, 17},
         {22, 23, 24, 29, 26, 27, 28, 31, 25},
@@ -462,12 +464,13 @@ int G_GotoNextLevel()
         // shareware doom has only episode 1
         doom_next[0][7] = (gamemode == shareware ? 11 : 21);
 
-        doom_next[2][7] = ((gamemode == registered) ||
-                                   // the fourth episode for pre-ultimate
-                                   // complevels is not allowed.
-                                   (compatibility_level < ultdoom_compatibility)
-                               ? 11
-                               : 41);
+        doom_next[2][7] =
+            ((gamemode == registered) ||
+                     // the fourth episode for pre-ultimate
+                     // complevels is not allowed.
+                     (compatibility_level < ultdoom_compatibility)
+                 ? 11
+                 : 41);
 
         // doom2_next and doom_next are 0 based, unlike gameepisode and gamemap
         epsd = gameepisode - 1;
@@ -614,8 +617,10 @@ void M_ChangeFOV()
 
     if ((p = M_CheckParm("-aspect")) && (p + 1 < myargc) &&
         (strlen(myargv[p + 1]) <= 21) &&
-        (2 == sscanf(myargv[p + 1], "%dx%d", &render_aspect_width,
-                     &render_aspect_height)))
+        (2 ==
+         sscanf(
+             myargv[p + 1], "%dx%d", &render_aspect_width, &render_aspect_height
+         )))
     {
         SetRatio(SCREENWIDTH, SCREENHEIGHT);
         render_fovratio =
@@ -638,9 +643,8 @@ void M_ChangeFOV()
         }
     }
 
-    render_fovy =
-        (float)(2 *
-                RAD2DEG(atan(tan(DEG2RAD(render_fov) / 2) / render_fovratio)));
+    render_fovy = (float
+    )(2 * RAD2DEG(atan(tan(DEG2RAD(render_fov) / 2) / render_fovratio)));
 
     screen_skybox_zplane = 320.0f / 2.0f / (float)tan(DEG2RAD(render_fov / 2));
 
@@ -667,9 +671,10 @@ void M_ChangeMultiSample()
 
 void M_ChangeSpriteClip()
 {
-    gl_sprite_offset = (gl_spriteclip != spriteclip_const
-                            ? 0
-                            : (.01f * (float)gl_sprite_offset_default));
+    gl_sprite_offset =
+        (gl_spriteclip != spriteclip_const
+             ? 0
+             : (.01f * (float)gl_sprite_offset_default));
     gl_spriteclip_threshold_f = (float)gl_spriteclip_threshold / MAP_COEFF;
 }
 
@@ -754,8 +759,9 @@ void MouseAccelChanging()
 float viewPitch;
 dboolean transparentpresent;
 
-int StepwiseSum(int value, int direction, int step, int minval, int maxval,
-                int defval)
+int StepwiseSum(
+    int value, int direction, int step, int minval, int maxval, int defval
+)
 {
     static int prev_value = 0;
     static int prev_direction = 0;
@@ -772,8 +778,9 @@ int StepwiseSum(int value, int direction, int step, int minval, int maxval,
 
     if (step != 0)
     {
-        newvalue = (prev_direction * direction < 0 ? prev_value
-                                                   : value + direction * step);
+        newvalue =
+            (prev_direction * direction < 0 ? prev_value
+                                            : value + direction * step);
     }
     else
     {
@@ -833,8 +840,10 @@ int I_MessageBox(const char * /* text */, unsigned int /* type */)
 #ifdef _WIN32
     {
         HWND current_hwnd = GetForegroundWindow();
-        result = MessageBox(GetDesktopWindow(), text, PACKAGE_NAME,
-                            type | MB_TASKMODAL | MB_TOPMOST);
+        result = MessageBox(
+            GetDesktopWindow(), text, PACKAGE_NAME,
+            type | MB_TASKMODAL | MB_TOPMOST
+        );
         I_SwitchToWindow(current_hwnd);
         return result;
     }
@@ -929,7 +938,8 @@ void e6y_G_DoCompleted()
     {
         levels_max = levels_max ? levels_max * 2 : 32;
         stats = static_cast<timetable_t *>(
-            realloc(stats, sizeof(*stats) * levels_max));
+            realloc(stats, sizeof(*stats) * levels_max)
+        );
     }
 
     memset(&stats[numlevels], 0, sizeof(timetable_t));
@@ -1018,16 +1028,20 @@ void e6y_WriteStats()
                 char strtmp[200];
                 strcpy(str, tmp.kill[0] == '\0' ? "%s%d" : "%s+%d");
 
-                doom_snprintf(strtmp, sizeof(strtmp), str, tmp.kill,
-                              stats[level].kill[i]);
+                doom_snprintf(
+                    strtmp, sizeof(strtmp), str, tmp.kill, stats[level].kill[i]
+                );
                 strcpy(tmp.kill, strtmp);
 
-                doom_snprintf(strtmp, sizeof(strtmp), str, tmp.item,
-                              stats[level].item[i]);
+                doom_snprintf(
+                    strtmp, sizeof(strtmp), str, tmp.item, stats[level].item[i]
+                );
                 strcpy(tmp.item, strtmp);
 
-                doom_snprintf(strtmp, sizeof(strtmp), str, tmp.secret,
-                              stats[level].secret[i]);
+                doom_snprintf(
+                    strtmp, sizeof(strtmp), str, tmp.secret,
+                    stats[level].secret[i]
+                );
                 strcpy(tmp.secret, strtmp);
             }
         }
@@ -1074,25 +1088,27 @@ void e6y_WriteStats()
 
     for (level = 0; level < numlevels; level++)
     {
-        sprintf(str,
-                "%%s - %%%dd:%%05.2f (%%%dd:%%02d)  K: %%%dd/%%-%dd%%%lds  I: "
-                "%%%dd/%%-%dd%%%lds  S: %%%dd/%%-%dd %%%lds\r\n",
-                max.stat[TT_TIME], max.stat[TT_TOTALTIME], max.stat[TT_ALLKILL],
-                max.stat[TT_TOTALKILL], (long)allkills_len,
-                max.stat[TT_ALLITEM], max.stat[TT_TOTALITEM],
-                (long)allitems_len, max.stat[TT_ALLSECRET],
-                max.stat[TT_TOTALSECRET], (long)allsecrets_len);
+        sprintf(
+            str,
+            "%%s - %%%dd:%%05.2f (%%%dd:%%02d)  K: %%%dd/%%-%dd%%%lds  I: "
+            "%%%dd/%%-%dd%%%lds  S: %%%dd/%%-%dd %%%lds\r\n",
+            max.stat[TT_TIME], max.stat[TT_TOTALTIME], max.stat[TT_ALLKILL],
+            max.stat[TT_TOTALKILL], (long)allkills_len, max.stat[TT_ALLITEM],
+            max.stat[TT_TOTALITEM], (long)allitems_len, max.stat[TT_ALLSECRET],
+            max.stat[TT_TOTALSECRET], (long)allsecrets_len
+        );
 
-        fprintf(f, str, stats[level].map,
-                stats[level].stat[TT_TIME] / TICRATE / 60,
-                (float)(stats[level].stat[TT_TIME] % (60 * TICRATE)) / TICRATE,
-                (stats[level].stat[TT_TOTALTIME]) / TICRATE / 60,
-                (stats[level].stat[TT_TOTALTIME] % (60 * TICRATE)) / TICRATE,
-                stats[level].stat[TT_ALLKILL], stats[level].stat[TT_TOTALKILL],
-                all[level].kill, stats[level].stat[TT_ALLITEM],
-                stats[level].stat[TT_TOTALITEM], all[level].item,
-                stats[level].stat[TT_ALLSECRET],
-                stats[level].stat[TT_TOTALSECRET], all[level].secret);
+        fprintf(
+            f, str, stats[level].map, stats[level].stat[TT_TIME] / TICRATE / 60,
+            (float)(stats[level].stat[TT_TIME] % (60 * TICRATE)) / TICRATE,
+            (stats[level].stat[TT_TOTALTIME]) / TICRATE / 60,
+            (stats[level].stat[TT_TOTALTIME] % (60 * TICRATE)) / TICRATE,
+            stats[level].stat[TT_ALLKILL], stats[level].stat[TT_TOTALKILL],
+            all[level].kill, stats[level].stat[TT_ALLITEM],
+            stats[level].stat[TT_TOTALITEM], all[level].item,
+            stats[level].stat[TT_ALLSECRET], stats[level].stat[TT_TOTALSECRET],
+            all[level].secret
+        );
     }
 
     fclose(f);
@@ -1178,8 +1194,9 @@ void e6y_G_Compatibility()
             {
 #ifdef RANGECHECK
                 if (b[i] >= 256)
-                    I_Error("Wrong version number of package: %s",
-                            PACKAGE_VERSION);
+                    I_Error(
+                        "Wrong version number of package: %s", PACKAGE_VERSION
+                    );
 #endif
                 emulated_version += b[i] * k;
             }
@@ -1279,8 +1296,9 @@ void NormalizeSlashes2(char *str)
     }
 }
 
-unsigned int AfxGetFileName(const char *lpszPathName, char *lpszTitle,
-                            unsigned int nMax)
+unsigned int AfxGetFileName(
+    const char *lpszPathName, char *lpszTitle, unsigned int nMax
+)
 {
     char *lpszTemp = PathFindFileName(lpszPathName);
 
@@ -1378,8 +1396,9 @@ int HU_DrawDemoProgress(int force)
         ((doSkip && demo_skiptics > 0) ? MIN(demo_skiptics, demo_tics_count)
                                        : demo_tics_count) *
         demo_playerscount;
-    len = MIN(SCREENWIDTH,
-              (int)((int_64_t)SCREENWIDTH * demo_curr_tic / tics_count));
+    len =
+        MIN(SCREENWIDTH,
+            (int)((int_64_t)SCREENWIDTH * demo_curr_tic / tics_count));
 
     if (!force)
     {
@@ -1415,8 +1434,9 @@ int HU_DrawDemoProgress(int force)
 }
 
 #ifdef _WIN32
-int GetFullPath(const char *FileName, const char *ext, char *Buffer,
-                size_t BufferLength)
+int GetFullPath(
+    const char *FileName, const char *ext, char *Buffer, size_t BufferLength
+)
 {
     int i, Result;
     char *p;

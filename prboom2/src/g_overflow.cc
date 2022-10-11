@@ -55,8 +55,9 @@ const char *overflow_cfgname[OVERFLOW_MAX] = {
     "overrun_intercept_emulate", "overrun_playeringame_emulate",
     "overrun_donut_emulate",     "overrun_missedbackside_emulate"};
 
-static void ShowOverflowWarning(overrun_list_t overflow, int fatal,
-                                const char *params, ...)
+static void ShowOverflowWarning(
+    overrun_list_t overflow, int fatal, const char *params, ...
+)
 {
     overflows[overflow].shit_happens = true;
 
@@ -86,11 +87,13 @@ static void ShowOverflowWarning(overrun_list_t overflow, int fatal,
 
         overflows[overflow].promted = true;
 
-        sprintf(buffer, (fatal ? str1 : (EMULATE(overflow) ? str2 : str3)),
-                name[overflow],
-                "\nYou can change PrBoom behaviour for this overflow through "
-                "in-game menu.",
-                params);
+        sprintf(
+            buffer, (fatal ? str1 : (EMULATE(overflow) ? str2 : str3)),
+            name[overflow],
+            "\nYou can change PrBoom behaviour for this overflow through "
+            "in-game menu.",
+            params
+        );
 
         va_start(argptr, params);
         I_vWarning(buffer, argptr);
@@ -172,8 +175,9 @@ void InterceptsOverrun(int num_intercepts, intercept_t *intercept)
 
             InterceptsMemoryOverrun(location, intercept->frac);
             InterceptsMemoryOverrun(location + 4, intercept->isaline);
-            InterceptsMemoryOverrun(location + 8,
-                                    (int)(intptr_t)intercept->d.thing);
+            InterceptsMemoryOverrun(
+                location + 8, (int)(intptr_t)intercept->d.thing
+            );
         }
     }
 }
@@ -229,7 +233,8 @@ void SpechitOverrun(spechit_overrun_param_t *params)
             "%d, %d, %d, %d.",
             spechit[0]->iLineID, spechit[1]->iLineID, spechit[2]->iLineID,
             spechit[3]->iLineID, spechit[4]->iLineID, spechit[5]->iLineID,
-            spechit[6]->iLineID, spechit[7]->iLineID, spechit[8]->iLineID);
+            spechit[6]->iLineID, spechit[7]->iLineID, spechit[8]->iLineID
+        );
 
         if (EMULATE(OVERFLOW_SPECHIT))
         {
@@ -287,10 +292,12 @@ void SpechitOverrun(spechit_overrun_param_t *params)
                     break;
 
                 default:
-                    fprintf(stderr,
-                            "SpechitOverrun: Warning: unable to emulate"
-                            "an overrun where numspechit=%i\n",
-                            numspechit);
+                    fprintf(
+                        stderr,
+                        "SpechitOverrun: Warning: unable to emulate"
+                        "an overrun where numspechit=%i\n",
+                        numspechit
+                    );
                     break;
                 }
             }
@@ -312,10 +319,12 @@ void SpechitOverrun(spechit_overrun_param_t *params)
                     break;
 
                 default:
-                    lprintf(LO_ERROR,
-                            "SpechitOverrun: Warning: unable to emulate"
-                            " an overrun where numspechit=%i\n",
-                            numspechit);
+                    lprintf(
+                        LO_ERROR,
+                        "SpechitOverrun: Warning: unable to emulate"
+                        " an overrun where numspechit=%i\n",
+                        numspechit
+                    );
                     break;
                 }
             }
@@ -351,8 +360,9 @@ void RejectOverrun(int rejectlump, const byte **rejectmatrix, int totallines)
         // allocate a new block and copy the reject table into it; zero the rest
         // PU_LEVEL => will be freed on level exit
         newreject = static_cast<byte *>(std::malloc(required));
-        *rejectmatrix = static_cast<const byte *>(
-            memmove(newreject, *rejectmatrix, length));
+        *rejectmatrix =
+            static_cast<const byte *>(memmove(newreject, *rejectmatrix, length)
+            );
 
         // e6y
         // PrBoom 2.2.5 and 2.2.6 padded a short REJECT with 0xff
@@ -369,9 +379,10 @@ void RejectOverrun(int rejectlump, const byte **rejectmatrix, int totallines)
 
         if (demo_compatibility && PROCESS(OVERFLOW_REJECT))
         {
-            ShowOverflowWarning(OVERFLOW_REJECT,
-                                (required - length > 16) || (length % 4 != 0),
-                                "");
+            ShowOverflowWarning(
+                OVERFLOW_REJECT, (required - length > 16) || (length % 4 != 0),
+                ""
+            );
 
             if (EMULATE(OVERFLOW_REJECT))
             {
@@ -404,8 +415,10 @@ void RejectOverrun(int rejectlump, const byte **rejectmatrix, int totallines)
             }
         }
 
-        lprintf(LO_WARN, "P_LoadReject: REJECT too short (%u<%u) - padded\n",
-                length, required);
+        lprintf(
+            LO_WARN, "P_LoadReject: REJECT too short (%u<%u) - padded\n",
+            length, required
+        );
     }
 }
 
@@ -516,8 +529,9 @@ int DonutOverrun(fixed_t *pfloorheight, short *pfloorpic)
                 // bounds-check floorpic
                 if ((*pfloorpic) <= 0 || (*pfloorpic) >= numflats)
                 {
-                    *pfloorpic = MIN(static_cast<short>(numflats - 1),
-                                     DONUT_FLOORPIC_DEFAULT);
+                    *pfloorpic =
+                        MIN(static_cast<short>(numflats - 1),
+                            DONUT_FLOORPIC_DEFAULT);
                 }
 
                 return true;
@@ -537,7 +551,8 @@ int MissedBackSideOverrun(line_t *line)
             ShowOverflowWarning(
                 OVERFLOW_MISSEDBACKSIDE, 0,
                 "\n\nLinedef %d has two-sided flag set, but no second sidedef",
-                line->iLineID);
+                line->iLineID
+            );
         }
         else
         {

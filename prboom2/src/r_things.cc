@@ -134,7 +134,8 @@ void R_InitSpritesRes()
     }
 
     xtoviewangle = static_cast<angle_t *>(
-        calloc(1, (SCREENWIDTH + 1) * sizeof(*xtoviewangle)));
+        calloc(1, (SCREENWIDTH + 1) * sizeof(*xtoviewangle))
+    );
     negonearray =
         static_cast<int *>(calloc(1, SCREENWIDTH * sizeof(*negonearray)));
     screenheightarray =
@@ -154,8 +155,9 @@ void R_InitSpritesRes()
 // Local function for R_InitSprites.
 //
 
-static void R_InstallSpriteLump(int lump, unsigned frame, char rot,
-                                dboolean flipped)
+static void R_InstallSpriteLump(
+    int lump, unsigned frame, char rot, dboolean flipped
+)
 {
     unsigned int rotation;
 
@@ -278,8 +280,8 @@ static void R_InitSpriteDefs(const char *const *namelist)
     // Create hash table based on just the first four letters of each sprite
     // killough 1/31/98
 
-    hash = static_cast<hash_t *>(
-        std::malloc(sizeof(*hash) * numentries)); // allocate hash table
+    hash = static_cast<hash_t *>(std::malloc(sizeof(*hash) * numentries)
+    ); // allocate hash table
 
     for (i = 0; (size_t)i < numentries; i++)
     { // initialize hash table as empty
@@ -326,14 +328,16 @@ static void R_InitSpriteDefs(const char *const *namelist)
                       (lump->name[2] ^ spritename[2]) |
                       (lump->name[3] ^ spritename[3])))
                 {
-                    R_InstallSpriteLump(j + firstspritelump,
-                                        lump->name[4] - 'A', lump->name[5],
-                                        false);
+                    R_InstallSpriteLump(
+                        j + firstspritelump, lump->name[4] - 'A', lump->name[5],
+                        false
+                    );
                     if (lump->name[6])
                     {
-                        R_InstallSpriteLump(j + firstspritelump,
-                                            lump->name[6] - 'A', lump->name[7],
-                                            true);
+                        R_InstallSpriteLump(
+                            j + firstspritelump, lump->name[6] - 'A',
+                            lump->name[7], true
+                        );
                     }
                 }
             } while ((j = hash[j].next) >= 0);
@@ -392,9 +396,11 @@ static void R_InitSpriteDefs(const char *const *namelist)
                         {
                             if (sprtemp[frame].lump[rot] == -1)
                             {
-                                I_Error("R_InitSprites: Sprite %.8s frame %c "
-                                        "is missing rotations",
-                                        namelist[i], frame + 'A');
+                                I_Error(
+                                    "R_InitSprites: Sprite %.8s frame %c "
+                                    "is missing rotations",
+                                    namelist[i], frame + 'A'
+                                );
                             }
                         }
                         break;
@@ -405,8 +411,9 @@ static void R_InitSpriteDefs(const char *const *namelist)
                 {
                     if (sprtemp[frame].rotate == -1)
                     {
-                        memset(&sprtemp[frame].lump, 0,
-                               sizeof(sprtemp[0].lump));
+                        memset(
+                            &sprtemp[frame].lump, 0, sizeof(sprtemp[0].lump)
+                        );
                         sprtemp[frame].flip = 0;
                         sprtemp[frame].rotate = 0;
                     }
@@ -414,9 +421,12 @@ static void R_InitSpriteDefs(const char *const *namelist)
 
                 // allocate space for the frames present and copy sprtemp to it
                 sprites[i].spriteframes = static_cast<spriteframe_t *>(
-                    std::malloc(maxframe * sizeof(spriteframe_t)));
-                memcpy(sprites[i].spriteframes, sprtemp,
-                       maxframe * sizeof(spriteframe_t));
+                    std::malloc(maxframe * sizeof(spriteframe_t))
+                );
+                memcpy(
+                    sprites[i].spriteframes, sprtemp,
+                    maxframe * sizeof(spriteframe_t)
+                );
             }
         }
     }
@@ -468,12 +478,15 @@ static vissprite_t *R_NewVisSprite()
         num_vissprite_alloc =
             num_vissprite_alloc ? num_vissprite_alloc * 2 : 128;
         vissprites = static_cast<vissprite_t *>(
-            realloc(vissprites, num_vissprite_alloc * sizeof(*vissprites)));
+            realloc(vissprites, num_vissprite_alloc * sizeof(*vissprites))
+        );
 
         // e6y: set all fields to zero
-        memset(vissprites + num_vissprite_alloc_prev, 0,
-               (num_vissprite_alloc - num_vissprite_alloc_prev) *
-                   sizeof(*vissprites));
+        memset(
+            vissprites + num_vissprite_alloc_prev, 0,
+            (num_vissprite_alloc - num_vissprite_alloc_prev) *
+                sizeof(*vissprites)
+        );
     }
     return vissprites + num_vissprite++;
 }
@@ -490,10 +503,11 @@ int *mceilingclip; // dropoff overflow
 fixed_t spryscale;
 int_64_t sprtopscreen; // R_WiggleFix
 
-void R_DrawMaskedColumn(const rpatch_t *patch, R_DrawColumn_f colfunc,
-                        draw_column_vars_t *dcvars, const rcolumn_t *column,
-                        const rcolumn_t *prevcolumn,
-                        const rcolumn_t *nextcolumn)
+void R_DrawMaskedColumn(
+    const rpatch_t *patch, R_DrawColumn_f colfunc, draw_column_vars_t *dcvars,
+    const rcolumn_t *column, const rcolumn_t *prevcolumn,
+    const rcolumn_t *nextcolumn
+)
 {
     int i;
     int_64_t topscreen;    // R_WiggleFix
@@ -585,37 +599,42 @@ static void R_DrawVisSprite(vissprite_t *vis)
 
     if (!dcvars.colormap)
     { // nullptr colormap = shadow draw
-        colfunc = R_GetDrawColumnFunc(RDC_PIPELINE_FUZZ, filter,
-                                      filterz); // killough 3/14/98
+        colfunc = R_GetDrawColumnFunc(
+            RDC_PIPELINE_FUZZ, filter,
+            filterz
+        ); // killough 3/14/98
     }
     else
         // [FG] colored blood and gibs
         if (vis->mobjflags & MF_COLOREDBLOOD)
-    {
-        colfunc = R_GetDrawColumnFunc(RDC_PIPELINE_TRANSLATED, filter, filterz);
-        dcvars.translation = (vis->mobjflags & MF_TRANSLATION1)
-                                 ? colrngs[CR_BLUE2]
-                                 : colrngs[CR_GREEN];
-    }
-    else if (vis->mobjflags & MF_TRANSLATION)
-    {
-        colfunc = R_GetDrawColumnFunc(RDC_PIPELINE_TRANSLATED, filter, filterz);
-        dcvars.translation =
-            translationtables - 256 +
-            ((vis->mobjflags & MF_TRANSLATION) >> (MF_TRANSSHIFT - 8));
-    }
-    else if (vis->mobjflags & g_mf_translucent &&
-             general_translucency) // phares
-    {
-        colfunc =
-            R_GetDrawColumnFunc(RDC_PIPELINE_TRANSLUCENT, filter, filterz);
-        tranmap = main_tranmap; // killough 4/11/98
-    }
-    else
-    {
-        colfunc = R_GetDrawColumnFunc(RDC_PIPELINE_STANDARD, filter,
-                                      filterz); // killough 3/14/98, 4/11/98
-    }
+        {
+            colfunc =
+                R_GetDrawColumnFunc(RDC_PIPELINE_TRANSLATED, filter, filterz);
+            dcvars.translation = (vis->mobjflags & MF_TRANSLATION1)
+                                     ? colrngs[CR_BLUE2]
+                                     : colrngs[CR_GREEN];
+        }
+        else if (vis->mobjflags & MF_TRANSLATION)
+        {
+            colfunc =
+                R_GetDrawColumnFunc(RDC_PIPELINE_TRANSLATED, filter, filterz);
+            dcvars.translation =
+                translationtables - 256 +
+                ((vis->mobjflags & MF_TRANSLATION) >> (MF_TRANSSHIFT - 8));
+        }
+        else if (vis->mobjflags & g_mf_translucent && general_translucency) // phares
+        {
+            colfunc =
+                R_GetDrawColumnFunc(RDC_PIPELINE_TRANSLUCENT, filter, filterz);
+            tranmap = main_tranmap; // killough 4/11/98
+        }
+        else
+        {
+            colfunc = R_GetDrawColumnFunc(
+                RDC_PIPELINE_STANDARD, filter,
+                filterz
+            ); // killough 3/14/98, 4/11/98
+        }
 
     // proff 11/06/98: Changed for high-res
     dcvars.iscale = FixedDiv(FRACUNIT, vis->scale);
@@ -644,10 +663,12 @@ static void R_DrawVisSprite(vissprite_t *vis)
         texturecolumn = frac >> FRACBITS;
         dcvars.texu = frac;
 
-        R_DrawMaskedColumn(patch, colfunc, &dcvars,
-                           R_GetPatchColumnClamped(patch, texturecolumn),
-                           R_GetPatchColumnClamped(patch, texturecolumn - 1),
-                           R_GetPatchColumnClamped(patch, texturecolumn + 1));
+        R_DrawMaskedColumn(
+            patch, colfunc, &dcvars,
+            R_GetPatchColumnClamped(patch, texturecolumn),
+            R_GetPatchColumnClamped(patch, texturecolumn - 1),
+            R_GetPatchColumnClamped(patch, texturecolumn + 1)
+        );
     }
     R_UnlockPatchNum(vis->patch + firstspritelump); // cph - release lump
 }
@@ -756,14 +777,18 @@ static void R_ProjectSprite(mobj_t *thing, int lightlevel)
 
 #ifdef RANGECHECK
     if ((thing->frame & FF_FRAMEMASK) >= sprdef->numframes)
-        I_Error("R_ProjectSprite: Invalid sprite frame %i : %i", thing->sprite,
-                thing->frame);
+        I_Error(
+            "R_ProjectSprite: Invalid sprite frame %i : %i", thing->sprite,
+            thing->frame
+        );
 #endif
 
     if (!sprdef->spriteframes)
     {
-        I_Error("R_ProjectSprite: Missing spriteframes %i : %i", thing->sprite,
-                thing->frame);
+        I_Error(
+            "R_ProjectSprite: Missing spriteframes %i : %i", thing->sprite,
+            thing->frame
+        );
     }
 
     sprframe = &sprdef->spriteframes[thing->frame & FF_FRAMEMASK];
@@ -997,8 +1022,9 @@ void R_AddAllAliveMonstersSprites()
 }
 
 // [crispy] apply bobbing (or centering) to the player's weapon sprite
-static void R_ApplyWeaponBob(fixed_t *sx, dboolean bobx, fixed_t *sy,
-                             dboolean boby)
+static void R_ApplyWeaponBob(
+    fixed_t *sx, dboolean bobx, fixed_t *sy, dboolean boby
+)
 {
     const angle_t angle = (128 * leveltime) & FINEMASK;
 
@@ -1018,8 +1044,9 @@ static void R_ApplyWeaponBob(fixed_t *sx, dboolean bobx, fixed_t *sy,
 
         if (boby)
         {
-            *sy += FixedMul(viewplayer->bob,
-                            finesine[angle & (FINEANGLES / 2 - 1)]);
+            *sy += FixedMul(
+                viewplayer->bob, finesine[angle & (FINEANGLES / 2 - 1)]
+            );
         }
     }
 }
@@ -1059,16 +1086,19 @@ static void R_DrawPSprite(pspdef_t *psp)
 
 #ifdef RANGECHECK
     if ((unsigned)psp->state->sprite >= (unsigned)numsprites)
-        I_Error("R_ProjectSprite: Invalid sprite number %i",
-                psp->state->sprite);
+        I_Error(
+            "R_ProjectSprite: Invalid sprite number %i", psp->state->sprite
+        );
 #endif
 
     sprdef = &sprites[psp->state->sprite];
 
 #ifdef RANGECHECK
     if ((psp->state->frame & FF_FRAMEMASK) >= sprdef->numframes)
-        I_Error("R_ProjectSprite: Invalid sprite frame %i : %li",
-                psp->state->sprite, psp->state->frame);
+        I_Error(
+            "R_ProjectSprite: Invalid sprite frame %i : %li",
+            psp->state->sprite, psp->state->frame
+        );
 #endif
 
     sprframe = &sprdef->spriteframes[psp->state->frame & FF_FRAMEMASK];
@@ -1082,15 +1112,18 @@ static void R_DrawPSprite(pspdef_t *psp)
         const weaponinfo_t *const winfo = &weaponinfo[viewplayer->readyweapon];
         const int state = viewplayer->psprites[ps_weapon].state - states;
 
-        R_ApplyWeaponBob(&psp_sx, weapon_attack_alignment == CENTERWEAPON_BOB,
-                         nullptr, false);
+        R_ApplyWeaponBob(
+            &psp_sx, weapon_attack_alignment == CENTERWEAPON_BOB, nullptr, false
+        );
 
         // [crispy] don't center vertically during lowering and raising states
         if (weapon_attack_alignment >= CENTERWEAPON_HORVER &&
             state != winfo->downstate && state != winfo->upstate)
         {
-            R_ApplyWeaponBob(nullptr, false, &psp_sy,
-                             weapon_attack_alignment == CENTERWEAPON_BOB);
+            R_ApplyWeaponBob(
+                nullptr, false, &psp_sy,
+                weapon_attack_alignment == CENTERWEAPON_BOB
+            );
         }
     }
 
@@ -1211,9 +1244,11 @@ static void R_DrawPSprite(pspdef_t *psp)
             vis->x1 = psp_inter.x1 +
                       FixedMul(tic_vars.frac, (vis->x1 - psp_inter.x1));
             vis->x2 = vis->x1 + deltax;
-            vis->texturemid = psp_inter.texturemid +
-                              FixedMul(tic_vars.frac, (vis->texturemid -
-                                                       psp_inter.texturemid));
+            vis->texturemid =
+                psp_inter.texturemid +
+                FixedMul(
+                    tic_vars.frac, (vis->texturemid - psp_inter.texturemid)
+                );
         }
         else
         {
@@ -1243,8 +1278,10 @@ static void R_DrawPSprite(pspdef_t *psp)
         {
             //      lightlevel = (viewplayer->mo->subsector->sector->lightlevel)
             //      + (extralight << LIGHTSEGSHIFT);
-            R_FakeFlat(viewplayer->mo->subsector->sector, &tmpsec,
-                       &floorlightlevel, &ceilinglightlevel, false);
+            R_FakeFlat(
+                viewplayer->mo->subsector->sector, &tmpsec, &floorlightlevel,
+                &ceilinglightlevel, false
+            );
             lightlevel = ((floorlightlevel + ceilinglightlevel) >> 1) +
                          (extralight << LIGHTSEGSHIFT);
             if (!gl_hardware_gamma)
@@ -1379,9 +1416,10 @@ void R_SortVisSprites()
         if (num_vissprite_ptrs < num_vissprite * 2)
         {
             free(vissprite_ptrs); // better than realloc -- no preserving needed
-            vissprite_ptrs = static_cast<vissprite_t **>(
-                malloc((num_vissprite_ptrs = num_vissprite_alloc * 2) *
-                       sizeof *vissprite_ptrs));
+            vissprite_ptrs = static_cast<vissprite_t **>(malloc(
+                (num_vissprite_ptrs = num_vissprite_alloc * 2) *
+                sizeof *vissprite_ptrs
+            ));
         }
 
         if (sprites_doom_order)
@@ -1531,15 +1569,15 @@ static void R_DrawSprite(vissprite_t *spr)
             }
             else // clip top
                 if (phs != -1 && viewz <= sectors[phs].floorheight)
-            { // killough 11/98
-                for (x = spr->x1; x <= spr->x2; x++)
-                {
-                    if (cliptop[x] == -2 || h > cliptop[x])
+                { // killough 11/98
+                    for (x = spr->x1; x <= spr->x2; x++)
                     {
-                        cliptop[x] = h;
+                        if (cliptop[x] == -2 || h > cliptop[x])
+                        {
+                            cliptop[x] = h;
+                        }
                     }
                 }
-            }
         }
 
         if ((mh = sectors[spr->heightsec].ceilingheight) < spr->gzt &&
@@ -1623,10 +1661,11 @@ void R_DrawMasked()
             for (i = 0; i < DS_RANGES_COUNT; i++)
             {
                 drawsegs_xranges[i].items =
-                    static_cast<drawseg_xrange_item_t *>(
-                        realloc(drawsegs_xranges[i].items,
-                                drawsegs_xrange_size *
-                                    sizeof(drawsegs_xranges[i].items[0])));
+                    static_cast<drawseg_xrange_item_t *>(realloc(
+                        drawsegs_xranges[i].items,
+                        drawsegs_xrange_size *
+                            sizeof(drawsegs_xranges[i].items[0])
+                    ));
             }
         }
         for (ds = ds_p; ds-- > drawsegs;)

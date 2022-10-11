@@ -215,40 +215,44 @@ static point_t lnodes[NUMEPISODES][NUMMAPS] = {
 // Using patches saves a lot of space,
 //  as they replace 320x200 full screen frames.
 //
-static anim_t epsd0animinfo[] = {{ANIM_ALWAYS, TICRATE / 3, 3, {224, 104}},
-                                 {ANIM_ALWAYS, TICRATE / 3, 3, {184, 160}},
-                                 {ANIM_ALWAYS, TICRATE / 3, 3, {112, 136}},
-                                 {ANIM_ALWAYS, TICRATE / 3, 3, {72, 112}},
-                                 {ANIM_ALWAYS, TICRATE / 3, 3, {88, 96}},
-                                 {ANIM_ALWAYS, TICRATE / 3, 3, {64, 48}},
-                                 {ANIM_ALWAYS, TICRATE / 3, 3, {192, 40}},
-                                 {ANIM_ALWAYS, TICRATE / 3, 3, {136, 16}},
-                                 {ANIM_ALWAYS, TICRATE / 3, 3, {80, 16}},
-                                 {ANIM_ALWAYS, TICRATE / 3, 3, {64, 24}}};
+static anim_t epsd0animinfo[] = {
+    {ANIM_ALWAYS, TICRATE / 3, 3, {224, 104}},
+    {ANIM_ALWAYS, TICRATE / 3, 3, {184, 160}},
+    {ANIM_ALWAYS, TICRATE / 3, 3, {112, 136}},
+    {ANIM_ALWAYS, TICRATE / 3, 3, {72, 112}},
+    {ANIM_ALWAYS, TICRATE / 3, 3, {88, 96}},
+    {ANIM_ALWAYS, TICRATE / 3, 3, {64, 48}},
+    {ANIM_ALWAYS, TICRATE / 3, 3, {192, 40}},
+    {ANIM_ALWAYS, TICRATE / 3, 3, {136, 16}},
+    {ANIM_ALWAYS, TICRATE / 3, 3, {80, 16}},
+    {ANIM_ALWAYS, TICRATE / 3, 3, {64, 24}}};
 
-static anim_t epsd1animinfo[] = {{ANIM_LEVEL, TICRATE / 3, 1, {128, 136}, 1},
-                                 {ANIM_LEVEL, TICRATE / 3, 1, {128, 136}, 2},
-                                 {ANIM_LEVEL, TICRATE / 3, 1, {128, 136}, 3},
-                                 {ANIM_LEVEL, TICRATE / 3, 1, {128, 136}, 4},
-                                 {ANIM_LEVEL, TICRATE / 3, 1, {128, 136}, 5},
-                                 {ANIM_LEVEL, TICRATE / 3, 1, {128, 136}, 6},
-                                 {ANIM_LEVEL, TICRATE / 3, 1, {128, 136}, 7},
-                                 {ANIM_LEVEL, TICRATE / 3, 3, {192, 144}, 8},
-                                 {ANIM_LEVEL, TICRATE / 3, 1, {128, 136}, 8}};
+static anim_t epsd1animinfo[] = {
+    {ANIM_LEVEL, TICRATE / 3, 1, {128, 136}, 1},
+    {ANIM_LEVEL, TICRATE / 3, 1, {128, 136}, 2},
+    {ANIM_LEVEL, TICRATE / 3, 1, {128, 136}, 3},
+    {ANIM_LEVEL, TICRATE / 3, 1, {128, 136}, 4},
+    {ANIM_LEVEL, TICRATE / 3, 1, {128, 136}, 5},
+    {ANIM_LEVEL, TICRATE / 3, 1, {128, 136}, 6},
+    {ANIM_LEVEL, TICRATE / 3, 1, {128, 136}, 7},
+    {ANIM_LEVEL, TICRATE / 3, 3, {192, 144}, 8},
+    {ANIM_LEVEL, TICRATE / 3, 1, {128, 136}, 8}};
 
-static anim_t epsd2animinfo[] = {{ANIM_ALWAYS, TICRATE / 3, 3, {104, 168}},
-                                 {ANIM_ALWAYS, TICRATE / 3, 3, {40, 136}},
-                                 {ANIM_ALWAYS, TICRATE / 3, 3, {160, 96}},
-                                 {ANIM_ALWAYS, TICRATE / 3, 3, {104, 80}},
-                                 {ANIM_ALWAYS, TICRATE / 3, 3, {120, 32}},
-                                 {ANIM_ALWAYS, TICRATE / 4, 3, {40, 0}}};
+static anim_t epsd2animinfo[] = {
+    {ANIM_ALWAYS, TICRATE / 3, 3, {104, 168}},
+    {ANIM_ALWAYS, TICRATE / 3, 3, {40, 136}},
+    {ANIM_ALWAYS, TICRATE / 3, 3, {160, 96}},
+    {ANIM_ALWAYS, TICRATE / 3, 3, {104, 80}},
+    {ANIM_ALWAYS, TICRATE / 3, 3, {120, 32}},
+    {ANIM_ALWAYS, TICRATE / 4, 3, {40, 0}}};
 
-static int NUMANIMS[NUMEPISODES] = {sizeof(epsd0animinfo) / sizeof(anim_t),
-                                    sizeof(epsd1animinfo) / sizeof(anim_t),
-                                    sizeof(epsd2animinfo) / sizeof(anim_t)};
+static int NUMANIMS[NUMEPISODES] = {
+    sizeof(epsd0animinfo) / sizeof(anim_t),
+    sizeof(epsd1animinfo) / sizeof(anim_t),
+    sizeof(epsd2animinfo) / sizeof(anim_t)};
 
-static anim_t *anims[NUMEPISODES] = {epsd0animinfo, epsd1animinfo,
-                                     epsd2animinfo};
+static anim_t *anims[NUMEPISODES] = {
+    epsd0animinfo, epsd1animinfo, epsd2animinfo};
 
 //
 // GENERAL DATA
@@ -474,7 +478,8 @@ static void WI_DrawString(int cx, int cy, const char *ch)
 
         V_DrawNumPatch(
             cx, cy, 0, hu_font[c].lumpnum, CR_GRAY,
-            static_cast<patch_translation_e>(VPT_STRETCH | VPT_TRANS));
+            static_cast<patch_translation_e>(VPT_STRETCH | VPT_TRANS)
+        );
         cx += w;
     }
 }
@@ -510,16 +515,20 @@ void WI_drawLF()
             WI_levelNameLump(wbs->epsd, wbs->last, lname);
         }
         // CPhipps - patch drawing updated
-        V_DrawNamePatch((320 - V_NamePatchWidth(lname)) / 2, y, FB, lname,
-                        CR_DEFAULT, VPT_STRETCH);
+        V_DrawNamePatch(
+            (320 - V_NamePatchWidth(lname)) / 2, y, FB, lname, CR_DEFAULT,
+            VPT_STRETCH
+        );
 
         // draw "Finished!"
         y += (5 * V_NamePatchHeight(lname)) / 4;
     }
 
     // CPhipps - patch drawing updated
-    V_DrawNamePatch((320 - V_NamePatchWidth(finished)) / 2, y, FB, finished,
-                    CR_DEFAULT, VPT_STRETCH);
+    V_DrawNamePatch(
+        (320 - V_NamePatchWidth(finished)) / 2, y, FB, finished, CR_DEFAULT,
+        VPT_STRETCH
+    );
 }
 
 // ====================================================================
@@ -535,8 +544,10 @@ void WI_drawEL()
 
     // draw "Entering"
     // CPhipps - patch drawing updated
-    V_DrawNamePatch((320 - V_NamePatchWidth(entering)) / 2, y, FB, entering,
-                    CR_DEFAULT, VPT_STRETCH);
+    V_DrawNamePatch(
+        (320 - V_NamePatchWidth(entering)) / 2, y, FB, entering, CR_DEFAULT,
+        VPT_STRETCH
+    );
 
     if (wbs->nextmapinfo != nullptr && !wbs->nextmapinfo->levelname.empty() &&
         wbs->nextmapinfo->levelpic[0] == 0)
@@ -565,8 +576,10 @@ void WI_drawEL()
         y += (5 * V_NamePatchHeight(lname)) / 4;
 
         // CPhipps - patch drawing updated
-        V_DrawNamePatch((320 - V_NamePatchWidth(lname)) / 2, y, FB, lname,
-                        CR_DEFAULT, VPT_STRETCH);
+        V_DrawNamePatch(
+            (320 - V_NamePatchWidth(lname)) / 2, y, FB, lname, CR_DEFAULT,
+            VPT_STRETCH
+        );
     }
 }
 
@@ -611,8 +624,10 @@ void WI_drawOnLnode // draw stuff at a location by episode/map#
     if (fits && i < 2)
     {
         // CPhipps - patch drawing updated
-        V_DrawNamePatch(lnodes[wbs->epsd][n].x, lnodes[wbs->epsd][n].y, FB,
-                        c[i], CR_DEFAULT, VPT_STRETCH);
+        V_DrawNamePatch(
+            lnodes[wbs->epsd][n].x, lnodes[wbs->epsd][n].y, FB, c[i],
+            CR_DEFAULT, VPT_STRETCH
+        );
     }
     else
     {
@@ -788,8 +803,10 @@ void WI_drawAnimatedBack()
         if (a->ctr >= 0)
         {
             // CPhipps - patch drawing updated
-            V_DrawNumPatch(a->loc.x, a->loc.y, FB, a->p[a->ctr].lumpnum,
-                           CR_DEFAULT, VPT_STRETCH);
+            V_DrawNumPatch(
+                a->loc.x, a->loc.y, FB, a->p[a->ctr].lumpnum, CR_DEFAULT,
+                VPT_STRETCH
+            );
         }
     }
 }
@@ -926,8 +943,9 @@ static void WI_drawTime(int x, int y, int t)
     else
     { // "sucks" (maybe should be "addicted", even I've never had a 100 hour
         // game ;)
-        V_DrawNamePatch(x - V_NamePatchWidth(sucks), y, FB, sucks, CR_DEFAULT,
-                        VPT_STRETCH);
+        V_DrawNamePatch(
+            x - V_NamePatchWidth(sucks), y, FB, sucks, CR_DEFAULT, VPT_STRETCH
+        );
     }
 }
 
@@ -984,8 +1002,9 @@ static void WI_drawTimeStats(int cnt_time, int cnt_total_time, int cnt_par)
     V_DrawNamePatch(SP_TIMEX, SP_TIMEY, FB, time1, CR_DEFAULT, VPT_STRETCH);
     WI_drawTime(320 / 2 - SP_TIMEX, SP_TIMEY, cnt_time);
 
-    V_DrawNamePatch(SP_TIMEX, (SP_TIMEY + 200) / 2, FB, total, CR_DEFAULT,
-                    VPT_STRETCH);
+    V_DrawNamePatch(
+        SP_TIMEX, (SP_TIMEY + 200) / 2, FB, total, CR_DEFAULT, VPT_STRETCH
+    );
     WI_drawTime(320 / 2 - SP_TIMEX, (SP_TIMEY + 200) / 2, cnt_total_time);
 
     // Ty 04/11/98: redid logic: should skip only if with pwad but
@@ -998,8 +1017,9 @@ static void WI_drawTimeStats(int cnt_time, int cnt_total_time, int cnt_par)
     {
         if (wbs->epsd < 4)
         {
-            V_DrawNamePatch(320 / 2 + SP_TIMEX, SP_TIMEY, FB, par, CR_DEFAULT,
-                            VPT_STRETCH);
+            V_DrawNamePatch(
+                320 / 2 + SP_TIMEX, SP_TIMEY, FB, par, CR_DEFAULT, VPT_STRETCH
+            );
             WI_drawTime(320 - SP_TIMEX, SP_TIMEY, cnt_par);
         }
     }
@@ -1239,8 +1259,9 @@ void WI_initDeathmatchStats()
         if (playeringame[i])
         {
             // CPhipps - allocate frags line
-            dm_frags[i] = static_cast<short *>(calloc(
-                MAXPLAYERS, sizeof(**dm_frags))); // set all counts to zero
+            dm_frags[i] =
+                static_cast<short *>(calloc(MAXPLAYERS, sizeof(**dm_frags))
+                ); // set all counts to zero
 
             dm_totals[i] = 0;
         }
@@ -1421,14 +1442,17 @@ void WI_drawDeathmatchStats()
     WI_drawLF();
 
     // draw stat titles (top line)
-    V_DrawNamePatch(DM_TOTALSX - V_NamePatchWidth(total) / 2,
-                    DM_MATRIXY - WI_SPACINGY + 10, FB, total, CR_DEFAULT,
-                    VPT_STRETCH);
+    V_DrawNamePatch(
+        DM_TOTALSX - V_NamePatchWidth(total) / 2, DM_MATRIXY - WI_SPACINGY + 10,
+        FB, total, CR_DEFAULT, VPT_STRETCH
+    );
 
-    V_DrawNamePatch(DM_KILLERSX, DM_KILLERSY, FB, killers, CR_DEFAULT,
-                    VPT_STRETCH);
-    V_DrawNamePatch(DM_VICTIMSX, DM_VICTIMSY, FB, victims, CR_DEFAULT,
-                    VPT_STRETCH);
+    V_DrawNamePatch(
+        DM_KILLERSX, DM_KILLERSY, FB, killers, CR_DEFAULT, VPT_STRETCH
+    );
+    V_DrawNamePatch(
+        DM_VICTIMSX, DM_VICTIMSY, FB, victims, CR_DEFAULT, VPT_STRETCH
+    );
 
     // draw P?
     x = DM_MATRIXX + DM_SPACINGX;
@@ -1439,21 +1463,30 @@ void WI_drawDeathmatchStats()
         if (playeringame[i])
         {
             // int trans = playernumtotrans[i];
-            V_DrawNamePatch(x - halfface, DM_MATRIXY - WI_SPACINGY, FB,
-                            facebackp, i ? CR_LIMIT + i : CR_DEFAULT,
-                            static_cast<patch_translation_e>(
-                                VPT_STRETCH | (i ? VPT_TRANS : 0)));
-            V_DrawNamePatch(DM_MATRIXX - halfface, y, FB, facebackp,
-                            i ? CR_LIMIT + i : CR_DEFAULT,
-                            static_cast<patch_translation_e>(
-                                VPT_STRETCH | (i ? VPT_TRANS : 0)));
+            V_DrawNamePatch(
+                x - halfface, DM_MATRIXY - WI_SPACINGY, FB, facebackp,
+                i ? CR_LIMIT + i : CR_DEFAULT,
+                static_cast<patch_translation_e>(
+                    VPT_STRETCH | (i ? VPT_TRANS : 0)
+                )
+            );
+            V_DrawNamePatch(
+                DM_MATRIXX - halfface, y, FB, facebackp,
+                i ? CR_LIMIT + i : CR_DEFAULT,
+                static_cast<patch_translation_e>(
+                    VPT_STRETCH | (i ? VPT_TRANS : 0)
+                )
+            );
 
             if (i == me)
             {
-                V_DrawNamePatch(x - halfface, DM_MATRIXY - WI_SPACINGY, FB,
-                                bstar, CR_DEFAULT, VPT_STRETCH);
-                V_DrawNamePatch(DM_MATRIXX - halfface, y, FB, star, CR_DEFAULT,
-                                VPT_STRETCH);
+                V_DrawNamePatch(
+                    x - halfface, DM_MATRIXY - WI_SPACINGY, FB, bstar,
+                    CR_DEFAULT, VPT_STRETCH
+                );
+                V_DrawNamePatch(
+                    DM_MATRIXX - halfface, y, FB, star, CR_DEFAULT, VPT_STRETCH
+                );
             }
         }
         x += DM_SPACINGX;
@@ -1799,19 +1832,27 @@ void WI_drawNetgameStats()
     WI_drawLF();
 
     // draw stat titles (top line)
-    V_DrawNamePatch(NG_STATSX + NG_SPACINGX - V_NamePatchWidth(kills),
-                    NG_STATSY, FB, kills, CR_DEFAULT, VPT_STRETCH);
+    V_DrawNamePatch(
+        NG_STATSX + NG_SPACINGX - V_NamePatchWidth(kills), NG_STATSY, FB, kills,
+        CR_DEFAULT, VPT_STRETCH
+    );
 
-    V_DrawNamePatch(NG_STATSX + 2 * NG_SPACINGX - V_NamePatchWidth(items),
-                    NG_STATSY, FB, items, CR_DEFAULT, VPT_STRETCH);
+    V_DrawNamePatch(
+        NG_STATSX + 2 * NG_SPACINGX - V_NamePatchWidth(items), NG_STATSY, FB,
+        items, CR_DEFAULT, VPT_STRETCH
+    );
 
-    V_DrawNamePatch(NG_STATSX + 3 * NG_SPACINGX - V_NamePatchWidth(secret),
-                    NG_STATSY, FB, secret, CR_DEFAULT, VPT_STRETCH);
+    V_DrawNamePatch(
+        NG_STATSX + 3 * NG_SPACINGX - V_NamePatchWidth(secret), NG_STATSY, FB,
+        secret, CR_DEFAULT, VPT_STRETCH
+    );
 
     if (dofrags)
     {
-        V_DrawNamePatch(NG_STATSX + 4 * NG_SPACINGX - V_NamePatchWidth(frags),
-                        NG_STATSY, FB, frags, CR_DEFAULT, VPT_STRETCH);
+        V_DrawNamePatch(
+            NG_STATSX + 4 * NG_SPACINGX - V_NamePatchWidth(frags), NG_STATSY,
+            FB, frags, CR_DEFAULT, VPT_STRETCH
+        );
     }
 
     // draw stats
@@ -1826,10 +1867,10 @@ void WI_drawNetgameStats()
         }
 
         x = NG_STATSX;
-        V_DrawNamePatch(x - fwidth, y, FB, facebackp,
-                        i ? CR_LIMIT + i : CR_DEFAULT,
-                        static_cast<patch_translation_e>(VPT_STRETCH |
-                                                         (i ? VPT_TRANS : 0)));
+        V_DrawNamePatch(
+            x - fwidth, y, FB, facebackp, i ? CR_LIMIT + i : CR_DEFAULT,
+            static_cast<patch_translation_e>(VPT_STRETCH | (i ? VPT_TRANS : 0))
+        );
 
         if (i == me)
         {
@@ -1864,8 +1905,10 @@ void WI_drawNetgameStats()
     if (y <= SP_TIMEY)
     {
         // cph - show times in coop on the entering screen
-        WI_drawTimeStats(plrs[me].stime / TICRATE, wbs->totaltimes / TICRATE,
-                         wbs->partime / TICRATE);
+        WI_drawTimeStats(
+            plrs[me].stime / TICRATE, wbs->totaltimes / TICRATE,
+            wbs->partime / TICRATE
+        );
     }
 }
 
@@ -2104,15 +2147,17 @@ void WI_drawStats()
         WI_drawPercent(320 - SP_STATSX, SP_STATSY, cnt_kills[0]);
     }
 
-    V_DrawNamePatch(SP_STATSX, SP_STATSY + lh, FB, items, CR_DEFAULT,
-                    VPT_STRETCH);
+    V_DrawNamePatch(
+        SP_STATSX, SP_STATSY + lh, FB, items, CR_DEFAULT, VPT_STRETCH
+    );
     if (cnt_items)
     {
         WI_drawPercent(320 - SP_STATSX, SP_STATSY + lh, cnt_items[0]);
     }
 
-    V_DrawNamePatch(SP_STATSX, SP_STATSY + 2 * lh, FB, sp_secret, CR_DEFAULT,
-                    VPT_STRETCH);
+    V_DrawNamePatch(
+        SP_STATSX, SP_STATSY + 2 * lh, FB, sp_secret, CR_DEFAULT, VPT_STRETCH
+    );
     if (cnt_secret)
     {
         WI_drawPercent(320 - SP_STATSX, SP_STATSY + 2 * lh, cnt_secret[0]);
@@ -2259,8 +2304,9 @@ void WI_loadData()
                     if (wbs->epsd != 1 || j != 8)
                     {
                         // animations
-                        snprintf(name, sizeof(name), "WIA%d%.2d%.2d", wbs->epsd,
-                                 j, i);
+                        snprintf(
+                            name, sizeof(name), "WIA%d%.2d%.2d", wbs->epsd, j, i
+                        );
                         R_SetPatchNum(&a->p[i], name);
                     }
                     else

@@ -118,7 +118,8 @@ char *__progname = "prboom_server";
  * getopt --
  *  Parse argc/argv argument vector.
  */
-int getopt(nargc, nargv, ostr) int nargc;
+int getopt(nargc, nargv, ostr)
+int nargc;
 char *const nargv[];
 const char *ostr;
 {
@@ -163,8 +164,8 @@ const char *ostr;
         if (*place == 0)
             ++optind;
         if (opterr && *ostr != ':')
-            (void)fprintf(stderr, "%s: illegal option -- %c\n", __progname,
-                          optopt);
+            (void
+            )fprintf(stderr, "%s: illegal option -- %c\n", __progname, optopt);
         return (BADCH);
     }
 
@@ -191,8 +192,10 @@ const char *ostr;
             if (*ostr == ':')
                 return (BADARG);
             if (opterr)
-                (void)fprintf(stderr, "%s: option requires an argument -- %c\n",
-                              __progname, optopt);
+                (void)fprintf(
+                    stderr, "%s: option requires an argument -- %c\n",
+                    __progname, optopt
+                );
             return (BADCH);
         }
         place = EMSG;
@@ -281,59 +284,60 @@ byte def_game_options[GAME_OPTIONS_SIZE] = {
 
 #define nosuch "NOSUCHCONFIGITEM"
 
-const char *gameopt_config_names[] = {"monsters_remember",
-                                      nosuch,
-                                      "weapon_recoil",
-                                      nosuch,
-                                      nosuch,
-                                      "player_bobbing",
-                                      nosuch,
-                                      nosuch,
-                                      nosuch,
-                                      "demo_insurance",
-                                      nosuch,
-                                      nosuch,
-                                      nosuch,
-                                      nosuch, // RNG seed
-                                      "monster_infighting",
-                                      "player_helpers",
-                                      nosuch,
-                                      nosuch,
-                                      nosuch,
-                                      nosuch, // distfriend
-                                      "monster_backing",
-                                      "monster_avoid_hazards",
-                                      "monster_friction",
-                                      "help_friends",
-                                      "dog_jumping",
-                                      "monkeys",
-                                      "comp_telefrag",
-                                      "comp_dropoff",
-                                      "comp_vile",
-                                      "comp_pain",
-                                      "comp_skull",
-                                      "comp_blazing",
-                                      "comp_doorlight",
-                                      "comp_model",
-                                      "comp_god",
-                                      "comp_falloff",
-                                      "comp_floors",
-                                      "comp_skymap",
-                                      "comp_pursuit",
-                                      "comp_doorstuck",
-                                      "comp_staylift",
-                                      "comp_zombie",
-                                      "comp_stairs",
-                                      "comp_infcheat",
-                                      "comp_zerotags",
-                                      "comp_moveblock",
-                                      "comp_respawn",
-                                      "comp_sound",
-                                      "comp_666",
-                                      "comp_maskedanim",
-                                      "comp_ouchface",
-                                      "comp_maxhealth",
-                                      "comp_translucency"}; // e6y
+const char *gameopt_config_names[] = {
+    "monsters_remember",
+    nosuch,
+    "weapon_recoil",
+    nosuch,
+    nosuch,
+    "player_bobbing",
+    nosuch,
+    nosuch,
+    nosuch,
+    "demo_insurance",
+    nosuch,
+    nosuch,
+    nosuch,
+    nosuch, // RNG seed
+    "monster_infighting",
+    "player_helpers",
+    nosuch,
+    nosuch,
+    nosuch,
+    nosuch, // distfriend
+    "monster_backing",
+    "monster_avoid_hazards",
+    "monster_friction",
+    "help_friends",
+    "dog_jumping",
+    "monkeys",
+    "comp_telefrag",
+    "comp_dropoff",
+    "comp_vile",
+    "comp_pain",
+    "comp_skull",
+    "comp_blazing",
+    "comp_doorlight",
+    "comp_model",
+    "comp_god",
+    "comp_falloff",
+    "comp_floors",
+    "comp_skymap",
+    "comp_pursuit",
+    "comp_doorstuck",
+    "comp_staylift",
+    "comp_zombie",
+    "comp_stairs",
+    "comp_infcheat",
+    "comp_zerotags",
+    "comp_moveblock",
+    "comp_respawn",
+    "comp_sound",
+    "comp_666",
+    "comp_maskedanim",
+    "comp_ouchface",
+    "comp_maxhealth",
+    "comp_translucency"}; // e6y
 
 const int num_gameopts =
     sizeof gameopt_config_names / sizeof gameopt_config_names[0];
@@ -536,9 +540,11 @@ int main(int argc, char **argv)
                 {
                     char *p;
                     wadname = static_cast<char **>(
-                        realloc(wadname, ++numwads * sizeof *wadname));
+                        realloc(wadname, ++numwads * sizeof *wadname)
+                    );
                     wadget = static_cast<char **>(
-                        realloc(wadget, numwads * sizeof *wadget));
+                        realloc(wadget, numwads * sizeof *wadget)
+                    );
                     wadname[numwads - 1] = strdup(optarg);
                     if ((p = strchr(wadname[numwads - 1], ',')))
                     {
@@ -570,8 +576,9 @@ int main(int argc, char **argv)
     }
     I_InitSockets(localport);
 
-    printf("Listening on port %d, waiting for %d players\n", localport,
-           numplayers);
+    printf(
+        "Listening on port %d, waiting for %d players\n", localport, numplayers
+    );
 
     { // no players initially
         int i;
@@ -630,7 +637,8 @@ int main(int argc, char **argv)
                             int n;
                             setup_packet_t *sinfo =
                                 static_cast<setup_packet_t *>(
-                                    (void *)(packet + 1));
+                                    (void *)(packet + 1)
+                                );
 
                             /* Find player number and add to the game */
                             n = *(short *)(packet + 1);
@@ -677,22 +685,27 @@ int main(int argc, char **argv)
                                 sinfo->numwads = numwads;
                                 for (i = 0; i < numwads; i++)
                                 {
-                                    strcpy(reinterpret_cast<char *>(
-                                               sinfo->wadnames + extrabytes),
-                                           wadname[i]);
+                                    strcpy(
+                                        reinterpret_cast<char *>(
+                                            sinfo->wadnames + extrabytes
+                                        ),
+                                        wadname[i]
+                                    );
                                     extrabytes += strlen(wadname[i]) + 1;
                                 }
-                                I_SendPacketTo(packet,
-                                               sizeof *packet +
-                                                   sizeof setupinfo +
-                                                   extrabytes,
-                                               remoteaddr + n);
+                                I_SendPacketTo(
+                                    packet,
+                                    sizeof *packet + sizeof setupinfo +
+                                        extrabytes,
+                                    remoteaddr + n
+                                );
                                 I_uSleep(10000);
-                                I_SendPacketTo(packet,
-                                               sizeof *packet +
-                                                   sizeof setupinfo +
-                                                   extrabytes,
-                                               remoteaddr + n);
+                                I_SendPacketTo(
+                                    packet,
+                                    sizeof *packet + sizeof setupinfo +
+                                        extrabytes,
+                                    remoteaddr + n
+                                );
                             }
                         }
                     }
@@ -731,21 +744,27 @@ int main(int argc, char **argv)
 
                     if (verbose > 2)
                     {
-                        printf("tics %ld - %ld from %d\n", ptic(packet),
-                               ptic(packet) + tics - 1, from);
+                        printf(
+                            "tics %ld - %ld from %d\n", ptic(packet),
+                            ptic(packet) + tics - 1, from
+                        );
                     }
                     if (ptic(packet) > remoteticfrom[from])
                     {
                         // Missed tics, so request a resend
-                        packet_set(packet, packet_type_e::PKT_RETRANS,
-                                   remoteticfrom[from]);
-                        I_SendPacketTo(packet, sizeof *packet,
-                                       remoteaddr + from);
+                        packet_set(
+                            packet, packet_type_e::PKT_RETRANS,
+                            remoteticfrom[from]
+                        );
+                        I_SendPacketTo(
+                            packet, sizeof *packet, remoteaddr + from
+                        );
                     }
                     else
                     {
                         ticcmd_t *newtic = static_cast<ticcmd_t *>(
-                            (void *)(((byte *)(packet + 1)) + 2));
+                            (void *)(((byte *)(packet + 1)) + 2)
+                        );
                         if (ptic(packet) + tics < remoteticfrom[from])
                         {
                             break; // Won't help
@@ -768,8 +787,9 @@ int main(int argc, char **argv)
 
                     if (verbose > 2)
                     {
-                        printf("%d requests resend from %ld\n", from,
-                               ptic(packet));
+                        printf(
+                            "%d requests resend from %ld\n", from, ptic(packet)
+                        );
                     }
                     remoteticto[from] = ptic(packet);
                 }
@@ -799,8 +819,10 @@ int main(int argc, char **argv)
                         --curplayers;
                         if (verbose)
                         {
-                            printf("%d quits at %ld (%d left)\n", from,
-                                   ptic(packet), curplayers);
+                            printf(
+                                "%d quits at %ld (%d left)\n", from,
+                                ptic(packet), curplayers
+                            );
                         }
                         if (ingame && !curplayers)
                         {
@@ -816,8 +838,9 @@ int main(int argc, char **argv)
                     {
                         if (verbose > 2)
                         {
-                            printf("misc from %d\n",
-                                   *(((byte *)(packet + 1)) + 1));
+                            printf(
+                                "misc from %d\n", *(((byte *)(packet + 1)) + 1)
+                            );
                         }
                     }
                     break;
@@ -860,8 +883,10 @@ int main(int argc, char **argv)
                         reply = static_cast<packet_header_t *>(malloc(size));
                         packet_set(reply, packet_type_e::PKT_WAD, 0);
                         strcpy((char *)(reply + 1), wadname[i]);
-                        strcpy((char *)(reply + 1) + strlen(wadname[i]) + 1,
-                               wadget[i]);
+                        strcpy(
+                            (char *)(reply + 1) + strlen(wadname[i]) + 1,
+                            wadget[i]
+                        );
                         printf("sending %s\n", wadget[i]);
                         I_SendPacketTo(reply, size, remoteaddr + from);
                         free(reply);
@@ -869,8 +894,9 @@ int main(int argc, char **argv)
                 }
                 break;
                 default:
-                    printf("Unrecognised packet type %d\n",
-                           packet->type.value());
+                    printf(
+                        "Unrecognised packet type %d\n", packet->type.value()
+                    );
                     break;
                 }
             }
@@ -906,9 +932,11 @@ int main(int argc, char **argv)
                     if (playerstate[i] == pc_ready)
                     {
                         playerstate[i] = pc_unused;
-                        printf("Player %d dropped, no PKT_GO received in "
-                               "confirmation\n",
-                               i);
+                        printf(
+                            "Player %d dropped, no PKT_GO received in "
+                            "confirmation\n",
+                            i
+                        );
                     }
                     if (playerstate[i] == pc_confirmedready)
                     {
@@ -962,18 +990,20 @@ int main(int argc, char **argv)
                         {
                             remoteticto[i] = 0;
                         }
-                        tics = MIN(
-                            lowtic - remoteticto[i],
-                            128); // limit number of sent tics (CVE-2019-20797)
+                        tics =
+                            MIN(lowtic - remoteticto[i],
+                                128
+                            ); // limit number of sent tics (CVE-2019-20797)
                         {
                             byte *p;
                             packet = static_cast<packet_header_t *>(malloc(
                                 sizeof(packet_header_t) + 1 +
-                                tics *
-                                    (1 + numplayers * (1 + sizeof(ticcmd_t)))));
+                                tics * (1 + numplayers * (1 + sizeof(ticcmd_t)))
+                            ));
                             p = static_cast<byte *>((void *)(packet + 1));
-                            packet_set(packet, packet_type_e::PKT_TICS,
-                                       remoteticto[i]);
+                            packet_set(
+                                packet, packet_type_e::PKT_TICS, remoteticto[i]
+                            );
                             *p++ = tics;
                             if (verbose > 1)
                             {
@@ -989,10 +1019,13 @@ int main(int argc, char **argv)
                                         (playerleftgame[j] > remoteticto[i]))
                                     {
                                         *p++ = j;
-                                        memcpy(p,
-                                               &netcmds[j][remoteticto[i] %
-                                                           BACKUPTICS],
-                                               sizeof(ticcmd_t));
+                                        memcpy(
+                                            p,
+                                            &netcmds[j]
+                                                    [remoteticto[i] %
+                                                     BACKUPTICS],
+                                            sizeof(ticcmd_t)
+                                        );
                                         p += sizeof(ticcmd_t);
                                         playersthistic++;
                                     }
@@ -1000,8 +1033,9 @@ int main(int argc, char **argv)
                                 *q = playersthistic;
                                 remoteticto[i]++;
                             }
-                            I_SendPacketTo(packet, p - ((byte *)packet),
-                                           remoteaddr + i);
+                            I_SendPacketTo(
+                                packet, p - ((byte *)packet), remoteaddr + i
+                            );
                             free(packet);
                         }
                         {
@@ -1017,18 +1051,21 @@ int main(int argc, char **argv)
                                 {
                                     packet_header_t *packet =
                                         static_cast<packet_header_t *>(
-                                            malloc(sizeof(packet_header_t)));
-                                    packet_set(packet,
-                                               packet_type_e::PKT_BACKOFF,
-                                               remoteticto[i]);
-                                    I_SendPacketTo(packet, sizeof *packet,
-                                                   remoteaddr + i);
+                                            malloc(sizeof(packet_header_t))
+                                        );
+                                    packet_set(
+                                        packet, packet_type_e::PKT_BACKOFF,
+                                        remoteticto[i]
+                                    );
+                                    I_SendPacketTo(
+                                        packet, sizeof *packet, remoteaddr + i
+                                    );
                                     backoffcounter[i] = 0;
                                     if (verbose)
                                     {
                                         printf(
-                                            "telling client %d to back off\n",
-                                            i);
+                                            "telling client %d to back off\n", i
+                                        );
                                     }
                                     free(packet);
                                 }

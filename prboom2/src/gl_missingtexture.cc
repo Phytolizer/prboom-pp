@@ -66,8 +66,9 @@ static fakegroup_t *fakeplanes = nullptr;
 static sector_t **sectors2 = nullptr;
 
 static void gld_PrepareSectorSpecialEffects();
-static void gld_PreprocessFakeSector(int ceiling, sector_t *sector,
-                                     int groupid);
+static void gld_PreprocessFakeSector(
+    int ceiling, sector_t *sector, int groupid
+);
 
 static void gld_PrepareSectorSpecialEffects()
 {
@@ -134,7 +135,8 @@ static void gld_PreprocessFakeSector(int ceiling, sector_t *sector, int groupid)
         if (groupid >= numfakeplanes)
         {
             fakeplanes = static_cast<fakegroup_t *>(
-                realloc(fakeplanes, (numfakeplanes + 1) * sizeof(fakegroup_t)));
+                realloc(fakeplanes, (numfakeplanes + 1) * sizeof(fakegroup_t))
+            );
             memset(&fakeplanes[numfakeplanes], 0, sizeof(fakegroup_t));
             numfakeplanes++;
         }
@@ -229,7 +231,8 @@ void gld_PreprocessFakeSectors()
                     gld_PreprocessFakeSector(ceiling, &sectors[i], groupid);
                     fakeplanes[groupid].ceiling = ceiling;
                     fakeplanes[groupid].list = static_cast<sector_t **>(
-                        malloc(fakeplanes[groupid].count * sizeof(sector_t *)));
+                        malloc(fakeplanes[groupid].count * sizeof(sector_t *))
+                    );
                     for (j = 0, k = 0; k < fakeplanes[groupid].count; k++)
                     {
                         if (!(sectors2[k]->flags & no_texture_flag))
@@ -331,8 +334,10 @@ void gld_SetupFloodStencil(GLWall *wall)
     // Create stencil
     glStencilFunc(GL_EQUAL, recursion, ~0); // create stencil
     glStencilOp(GL_KEEP, GL_KEEP, GL_INCR); // increment stencil of valid pixels
-    glColorMask(GL_FALSE, GL_FALSE, GL_FALSE,
-                GL_FALSE); // don't write to the graphics buffer
+    glColorMask(
+        GL_FALSE, GL_FALSE, GL_FALSE,
+        GL_FALSE
+    ); // don't write to the graphics buffer
     gld_EnableTexture2D(GL_TEXTURE0_ARB, false);
     glColor3f(1, 1, 1);
     glEnable(GL_DEPTH_TEST);
@@ -346,11 +351,15 @@ void gld_SetupFloodStencil(GLWall *wall)
     glEnd();
 
     glStencilFunc(GL_EQUAL, recursion + 1, ~0); // draw sky into stencil
-    glStencilOp(GL_KEEP, GL_KEEP,
-                GL_KEEP); // this stage doesn't modify the stencil
+    glStencilOp(
+        GL_KEEP, GL_KEEP,
+        GL_KEEP
+    ); // this stage doesn't modify the stencil
 
-    glColorMask(GL_TRUE, GL_TRUE, GL_TRUE,
-                GL_TRUE); // don't write to the graphics buffer
+    glColorMask(
+        GL_TRUE, GL_TRUE, GL_TRUE,
+        GL_TRUE
+    ); // don't write to the graphics buffer
     gld_EnableTexture2D(GL_TEXTURE0_ARB, true);
     glDisable(GL_DEPTH_TEST);
     glDepthMask(false);
@@ -362,8 +371,10 @@ void gld_ClearFloodStencil(GLWall *wall)
 
     glStencilOp(GL_KEEP, GL_KEEP, GL_DECR);
     gld_EnableTexture2D(GL_TEXTURE0_ARB, false);
-    glColorMask(GL_FALSE, GL_FALSE, GL_FALSE,
-                GL_FALSE); // don't write to the graphics buffer
+    glColorMask(
+        GL_FALSE, GL_FALSE, GL_FALSE,
+        GL_FALSE
+    ); // don't write to the graphics buffer
     glColor3f(1, 1, 1);
 
     glBegin(GL_TRIANGLE_FAN);
@@ -441,8 +452,9 @@ void gld_SetupFloodedPlaneLight(GLWall *wall)
     if (wall->seg->backsector)
     {
         float light;
-        light = gld_CalcLightLevel(wall->seg->backsector->lightlevel +
-                                   (extralight << 5));
+        light = gld_CalcLightLevel(
+            wall->seg->backsector->lightlevel + (extralight << 5)
+        );
         gld_StaticLightAlpha(light, wall->alpha);
     }
     else

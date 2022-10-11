@@ -89,7 +89,8 @@ static void R_ClipWallSegment(int first, int last, dboolean solid)
         if (solidcol[first])
         {
             if (!(p = static_cast<byte *>(
-                      memchr(solidcol + first, 0, last - first))))
+                      memchr(solidcol + first, 0, last - first)
+                  )))
             {
                 return; // All solid
             }
@@ -99,7 +100,8 @@ static void R_ClipWallSegment(int first, int last, dboolean solid)
         {
             int to;
             if (!(p = static_cast<byte *>(
-                      memchr(solidcol + first, 1, last - first))))
+                      memchr(solidcol + first, 1, last - first)
+                  )))
             {
                 to = last;
             }
@@ -154,7 +156,8 @@ static void R_RecalcLineFlags(line_t *linedef)
             // properly render skies (consider door "open" if both ceilings are
             // sky):
             && (backsector->ceilingpic != skyflatnum ||
-                frontsector->ceilingpic != skyflatnum)))
+                frontsector->ceilingpic != skyflatnum)
+        ))
     {
         linedef->r_flags = line_t::RF_CLOSED;
     }
@@ -169,16 +172,18 @@ static void R_RecalcLineFlags(line_t *linedef)
         if (backsector->ceilingheight != frontsector->ceilingheight ||
             backsector->floorheight != frontsector->floorheight ||
             curline->sidedef->midtexture ||
-            memcmp(&backsector->floor_xoffs, &frontsector->floor_xoffs,
-                   sizeof(frontsector->floor_xoffs) +
-                       sizeof(frontsector->floor_yoffs) +
-                       sizeof(frontsector->ceiling_xoffs) +
-                       sizeof(frontsector->ceiling_yoffs) +
-                       sizeof(frontsector->ceilingpic) +
-                       sizeof(frontsector->floorpic) +
-                       sizeof(frontsector->lightlevel) +
-                       sizeof(frontsector->floorlightsec) +
-                       sizeof(frontsector->ceilinglightsec)))
+            memcmp(
+                &backsector->floor_xoffs, &frontsector->floor_xoffs,
+                sizeof(frontsector->floor_xoffs) +
+                    sizeof(frontsector->floor_yoffs) +
+                    sizeof(frontsector->ceiling_xoffs) +
+                    sizeof(frontsector->ceiling_yoffs) +
+                    sizeof(frontsector->ceilingpic) +
+                    sizeof(frontsector->floorpic) +
+                    sizeof(frontsector->lightlevel) +
+                    sizeof(frontsector->floorlightsec) +
+                    sizeof(frontsector->ceilinglightsec)
+            ))
         {
             linedef->r_flags = static_cast<line_t::r_flags_t>(0);
             return;
@@ -200,11 +205,12 @@ static void R_RecalcLineFlags(line_t *linedef)
 
         /* Does top texture need tiling */
         if ((c = frontsector->ceilingheight - backsector->ceilingheight) > 0 &&
-            (textureheight[texturetranslation[curline->sidedef->toptexture]] >
-             c))
+            (textureheight[texturetranslation[curline->sidedef->toptexture]] > c
+            ))
         {
             linedef->r_flags = static_cast<line_t::r_flags_t>(
-                linedef->r_flags | line_t::RF_TOP_TILE);
+                linedef->r_flags | line_t::RF_TOP_TILE
+            );
         }
 
         /* Does bottom texture need tiling */
@@ -213,7 +219,8 @@ static void R_RecalcLineFlags(line_t *linedef)
                  [texturetranslation[curline->sidedef->bottomtexture]] > c))
         {
             linedef->r_flags = static_cast<line_t::r_flags_t>(
-                linedef->r_flags | line_t::RF_BOT_TILE);
+                linedef->r_flags | line_t::RF_BOT_TILE
+            );
         }
     }
     else
@@ -221,11 +228,12 @@ static void R_RecalcLineFlags(line_t *linedef)
         int c;
         /* Does middle texture need tiling */
         if ((c = frontsector->ceilingheight - frontsector->floorheight) > 0 &&
-            (textureheight[texturetranslation[curline->sidedef->midtexture]] >
-             c))
+            (textureheight[texturetranslation[curline->sidedef->midtexture]] > c
+            ))
         {
             linedef->r_flags = static_cast<line_t::r_flags_t>(
-                linedef->r_flags | line_t::RF_MID_TILE);
+                linedef->r_flags | line_t::RF_MID_TILE
+            );
         }
     }
 }
@@ -243,8 +251,10 @@ static void R_RecalcLineFlags(line_t *linedef)
 // killough 4/11/98, 4/13/98: fix bugs, add 'back' parameter
 //
 
-sector_t *R_FakeFlat(sector_t *sec, sector_t *tempsec, int *floorlightlevel,
-                     int *ceilinglightlevel, dboolean back)
+sector_t *R_FakeFlat(
+    sector_t *sec, sector_t *tempsec, int *floorlightlevel,
+    int *ceilinglightlevel, dboolean back
+)
 {
     if (floorlightlevel)
     {
@@ -318,8 +328,7 @@ sector_t *R_FakeFlat(sector_t *sec, sector_t *tempsec, int *floorlightlevel,
                                                .lightlevel; // killough 4/11/98
             }
         }
-        else if (heightsec != -1 && viewz >= sectors[heightsec].ceilingheight &&
-                 sec->ceilingheight > s->ceilingheight)
+        else if (heightsec != -1 && viewz >= sectors[heightsec].ceilingheight && sec->ceilingheight > s->ceilingheight)
         { // Above-ceiling hack
             tempsec->ceilingheight = s->ceilingheight;
             tempsec->floorheight = s->ceilingheight + 1;
@@ -363,8 +372,9 @@ sector_t *R_FakeFlat(sector_t *sec, sector_t *tempsec, int *floorlightlevel,
 // e6y: Check whether the player can look beyond this line
 //
 
-static dboolean CheckClip(seg_t *seg, sector_t *frontsector,
-                          sector_t *backsector)
+static dboolean CheckClip(
+    seg_t *seg, sector_t *frontsector, sector_t *backsector
+)
 {
     static sector_t tempsec_back, tempsec_front;
 
@@ -502,7 +512,8 @@ static void R_AddLine(seg_t *line)
             unsigned pos = ds_p - drawsegs; // jff 8/9/98 fix from ZDOOM1.14a
             unsigned newmax = maxdrawsegs ? maxdrawsegs * 2 : 128; // killough
             drawsegs = static_cast<drawseg_t *>(
-                realloc(drawsegs, newmax * sizeof(*drawsegs)));
+                realloc(drawsegs, newmax * sizeof(*drawsegs))
+            );
             ds_p = drawsegs + pos; // jff 8/9/98 fix from ZDOOM1.14a
             maxdrawsegs = newmax;
         }
@@ -753,8 +764,9 @@ static void R_Subsector(int num)
         frontsector = sub->sector;
 
         // killough 3/8/98, 4/4/98: Deep water / fake ceiling effect
-        frontsector = R_FakeFlat(frontsector, &tempsec, &floorlightlevel,
-                                 &ceilinglightlevel, false); // killough 4/11/98
+        frontsector = R_FakeFlat(
+            frontsector, &tempsec, &floorlightlevel, &ceilinglightlevel, false
+        ); // killough 4/11/98
 
         // killough 3/7/98: Add (x,y) offsets to flats, add deep water check
         // killough 3/16/98: add floorlightlevel
@@ -763,16 +775,17 @@ static void R_Subsector(int num)
             frontsector->floorheight < viewz || // killough 3/7/98
                     (frontsector->heightsec != -1 &&
                      sectors[frontsector->heightsec].ceilingpic == skyflatnum)
-                ? R_FindPlane(frontsector->floorheight,
-                              frontsector->floorpic ==
-                                          skyflatnum && // kilough 10/98
-                                      frontsector->sky & PL_SKYFLAT
-                                  ? frontsector->sky
-                                  : frontsector->floorpic,
-                              floorlightlevel, // killough 3/16/98
-                              frontsector->special,
-                              frontsector->floor_xoffs, // killough 3/7/98
-                              frontsector->floor_yoffs)
+                ? R_FindPlane(
+                      frontsector->floorheight,
+                      frontsector->floorpic == skyflatnum && // kilough 10/98
+                              frontsector->sky & PL_SKYFLAT
+                          ? frontsector->sky
+                          : frontsector->floorpic,
+                      floorlightlevel, // killough 3/16/98
+                      frontsector->special,
+                      frontsector->floor_xoffs, // killough 3/7/98
+                      frontsector->floor_yoffs
+                  )
                 : nullptr;
 
         ceilingplane =
@@ -780,16 +793,17 @@ static void R_Subsector(int num)
                     frontsector->ceilingpic == skyflatnum ||
                     (frontsector->heightsec != -1 &&
                      sectors[frontsector->heightsec].floorpic == skyflatnum)
-                ? R_FindPlane(frontsector->ceilingheight, // killough 3/8/98
-                              frontsector->ceilingpic ==
-                                          skyflatnum && // kilough 10/98
-                                      frontsector->sky & PL_SKYFLAT
-                                  ? frontsector->sky
-                                  : frontsector->ceilingpic,
-                              ceilinglightlevel, // killough 4/11/98
-                              frontsector->special,
-                              frontsector->ceiling_xoffs, // killough 3/7/98
-                              frontsector->ceiling_yoffs)
+                ? R_FindPlane(
+                      frontsector->ceilingheight, // killough 3/8/98
+                      frontsector->ceilingpic == skyflatnum && // kilough 10/98
+                              frontsector->sky & PL_SKYFLAT
+                          ? frontsector->sky
+                          : frontsector->ceilingpic,
+                      ceilinglightlevel, // killough 4/11/98
+                      frontsector->special,
+                      frontsector->ceiling_xoffs, // killough 3/7/98
+                      frontsector->ceiling_yoffs
+                  )
                 : nullptr;
     }
 

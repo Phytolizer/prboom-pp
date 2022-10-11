@@ -277,17 +277,20 @@ void R_RenderMaskedSegRange(drawseg_t *ds, int x1, int x2)
 
     // killough 4/11/98: draw translucent 2s normal textures
 
-    colfunc = R_GetDrawColumnFunc(RDC_PIPELINE_STANDARD, drawvars.filterwall,
-                                  drawvars.filterz);
+    colfunc = R_GetDrawColumnFunc(
+        RDC_PIPELINE_STANDARD, drawvars.filterwall, drawvars.filterz
+    );
     if (curline->linedef->tranlump >= 0 && general_translucency)
     {
-        colfunc = R_GetDrawColumnFunc(RDC_PIPELINE_TRANSLUCENT,
-                                      drawvars.filterwall, drawvars.filterz);
+        colfunc = R_GetDrawColumnFunc(
+            RDC_PIPELINE_TRANSLUCENT, drawvars.filterwall, drawvars.filterz
+        );
         tranmap = main_tranmap;
         if (curline->linedef->tranlump > 0)
         {
             tranmap = static_cast<const byte *>(
-                W_CacheLumpNum(curline->linedef->tranlump - 1));
+                W_CacheLumpNum(curline->linedef->tranlump - 1)
+            );
         }
     }
     // killough 4/11/98: end translucent 2s normal code
@@ -364,8 +367,9 @@ void R_RenderMaskedSegRange(drawseg_t *ds, int x1, int x2)
 
             if (!fixedcolormap)
             {
-                int index = (int)(((int_64_t)spryscale * 160 / wide_centerx) >>
-                                  LIGHTSCALESHIFT);
+                int index = (int
+                )(((int_64_t)spryscale * 160 / wide_centerx) >> LIGHTSCALESHIFT
+                );
                 if (index >= MAXLIGHTSCALE)
                 {
                     index = MAXLIGHTSCALE - 1;
@@ -417,7 +421,8 @@ void R_RenderMaskedSegRange(drawseg_t *ds, int x1, int x2)
                 patch, colfunc, &dcvars,
                 R_GetPatchColumnWrapped(patch, maskedtexturecol[dcvars.x]),
                 R_GetPatchColumnWrapped(patch, maskedtexturecol[dcvars.x] - 1),
-                R_GetPatchColumnWrapped(patch, maskedtexturecol[dcvars.x] + 1));
+                R_GetPatchColumnWrapped(patch, maskedtexturecol[dcvars.x] + 1)
+            );
 
             maskedtexturecol[dcvars.x] = INT_MAX; // dropoff overflow
         }
@@ -449,7 +454,8 @@ static void R_RenderSegLoop()
 {
     const rpatch_t *tex_patch;
     R_DrawColumn_f colfunc = R_GetDrawColumnFunc(
-        RDC_PIPELINE_STANDARD, drawvars.filterwall, drawvars.filterz);
+        RDC_PIPELINE_STANDARD, drawvars.filterwall, drawvars.filterz
+    );
     draw_column_vars_t dcvars;
     fixed_t texturecolumn = 0; // shut up compiler warning
 
@@ -531,8 +537,8 @@ static void R_RenderSegLoop()
             // calculate lighting
             if (!fixedcolormap)
             {
-                int index = (int)(((int_64_t)rw_scale * 160 / wide_centerx) >>
-                                  LIGHTSCALESHIFT);
+                int index = (int
+                )(((int_64_t)rw_scale * 160 / wide_centerx) >> LIGHTSCALESHIFT);
                 if (index >= MAXLIGHTSCALE)
                 {
                     index = MAXLIGHTSCALE - 1;
@@ -697,9 +703,11 @@ static fixed_t R_PointToDist(fixed_t x, fixed_t y)
         dy = t;
     }
 
-    return FixedDiv(dx,
-                    finesine[(tantoangle[FixedDiv(dy, dx) >> DBITS] + ANG90) >>
-                             ANGLETOFINESHIFT]);
+    return FixedDiv(
+        dx, finesine
+                [(tantoangle[FixedDiv(dy, dx) >> DBITS] + ANG90) >>
+                 ANGLETOFINESHIFT]
+    );
 }
 
 //
@@ -717,7 +725,8 @@ void R_StoreWallRange(const int start, const int stop)
         unsigned pos = ds_p - drawsegs; // jff 8/9/98 fix from ZDOOM1.14a
         unsigned newmax = maxdrawsegs ? maxdrawsegs * 2 : 128; // killough
         drawsegs = static_cast<drawseg_t *>(
-            realloc(drawsegs, newmax * sizeof(*drawsegs)));
+            realloc(drawsegs, newmax * sizeof(*drawsegs))
+        );
         ds_p = drawsegs + pos; // jff 8/9/98 fix from ZDOOM1.14a
         maxdrawsegs = newmax;
     }
@@ -786,7 +795,8 @@ void R_StoreWallRange(const int start, const int stop)
                 maxopenings = maxopenings ? maxopenings * 2 : 16384;
             } while (need > maxopenings);
             openings = static_cast<int *>(
-                realloc(openings, maxopenings * sizeof(*openings)));
+                realloc(openings, maxopenings * sizeof(*openings))
+            );
             lastopening = openings + pos;
 
             // jff 8/9/98 borrowed fix for openings from ZDOOM1.14
@@ -1134,16 +1144,20 @@ void R_StoreWallRange(const int start, const int stop)
     // save sprite clipping info
     if ((ds_p->silhouette & SIL_TOP || maskedtexture) && !ds_p->sprtopclip)
     {
-        memcpy(lastopening, ceilingclip + start,
-               sizeof(*lastopening) * (rw_stopx - start)); // dropoff overflow
+        memcpy(
+            lastopening, ceilingclip + start,
+            sizeof(*lastopening) * (rw_stopx - start)
+        ); // dropoff overflow
         ds_p->sprtopclip = lastopening - start;
         lastopening += rw_stopx - start;
     }
     if ((ds_p->silhouette & SIL_BOTTOM || maskedtexture) &&
         !ds_p->sprbottomclip)
     {
-        memcpy(lastopening, floorclip + start,
-               sizeof(*lastopening) * (rw_stopx - start)); // dropoff overflow
+        memcpy(
+            lastopening, floorclip + start,
+            sizeof(*lastopening) * (rw_stopx - start)
+        ); // dropoff overflow
         ds_p->sprbottomclip = lastopening - start;
         lastopening += rw_stopx - start;
     }

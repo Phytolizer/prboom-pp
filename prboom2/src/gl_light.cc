@@ -87,12 +87,15 @@ static float gld_CalcLightLevel_gzdoom(int lightlevel);
 static float gld_CalcLightLevel_fogbased(int lightlevel);
 static float gld_CalcLightLevel_shaders(int lightlevel);
 
-static float gld_CalcFogDensity_glboom(sector_t *sector, int lightlevel,
-                                       GLDrawItemType type);
-static float gld_CalcFogDensity_gzdoom(sector_t *sector, int lightlevel,
-                                       GLDrawItemType type);
-static float gld_CalcFogDensity_fogbased(sector_t *sector, int lightlevel,
-                                         GLDrawItemType type);
+static float gld_CalcFogDensity_glboom(
+    sector_t *sector, int lightlevel, GLDrawItemType type
+);
+static float gld_CalcFogDensity_gzdoom(
+    sector_t *sector, int lightlevel, GLDrawItemType type
+);
+static float gld_CalcFogDensity_fogbased(
+    sector_t *sector, int lightlevel, GLDrawItemType type
+);
 
 static GLLight gld_light[gl_lightmode_last] = {
     // gl_lightmode_glboom
@@ -124,10 +127,12 @@ void M_ChangeLightMode()
         if (gl_lightmode_default == gl_lightmode_fogbased ||
             gl_lightmode_default == gl_lightmode_shaders)
         {
-            lprintf(LO_INFO,
-                    "M_ChangeLightMode: '%s' sector light mode is not allowed "
-                    "in gl_compatibility mode\n",
-                    gl_lightmodes[gl_lightmode_default]);
+            lprintf(
+                LO_INFO,
+                "M_ChangeLightMode: '%s' sector light mode is not allowed "
+                "in gl_compatibility mode\n",
+                gl_lightmodes[gl_lightmode_default]
+            );
             gl_lightmode_default = gl_lightmode_glboom;
         }
     }
@@ -185,9 +190,9 @@ static void gld_InitLightTable_glboom()
     {
         for (i = 0; i < 256; i++)
         {
-            lighttable_glboom[g][i] =
-                (float)((1.0f - exp(pow(i / 255.0f, 3) * gamma[g])) /
-                        (1.0f - exp(1.0f * gamma[g])));
+            lighttable_glboom[g][i] = (float
+            )((1.0f - exp(pow(i / 255.0f, 3) * gamma[g])) /
+              (1.0f - exp(1.0f * gamma[g])));
         }
     }
 }
@@ -342,9 +347,8 @@ void M_ChangeAllowFog()
         }
         else if (i < 230)
         {
-            distfogtable[0][i] =
-                (float)((gl_distfog >> 1) -
-                        (gl_distfog >> 1) * (i - 164) / (230 - 164));
+            distfogtable[0][i] = (float
+            )((gl_distfog >> 1) - (gl_distfog >> 1) * (i - 164) / (230 - 164));
         }
         else
         {
@@ -392,14 +396,16 @@ void M_ChangeAllowFog()
     }
 }
 
-static float gld_CalcFogDensity_glboom(sector_t *sector, int lightlevel,
-                                       GLDrawItemType type)
+static float gld_CalcFogDensity_glboom(
+    sector_t *sector, int lightlevel, GLDrawItemType type
+)
 {
     return 0;
 }
 
-static float gld_CalcFogDensity_gzdoom(sector_t *sector, int lightlevel,
-                                       GLDrawItemType type)
+static float gld_CalcFogDensity_gzdoom(
+    sector_t *sector, int lightlevel, GLDrawItemType type
+)
 {
     if ((!gl_use_fog) || (sector && (sector->ceilingpic == skyflatnum ||
                                      sector->floorpic == skyflatnum)))
@@ -410,8 +416,9 @@ static float gld_CalcFogDensity_gzdoom(sector_t *sector, int lightlevel,
     return distfogtable[1][BETWEEN(0, 255, lightlevel)];
 }
 
-static float gld_CalcFogDensity_fogbased(sector_t *sector, int lightlevel,
-                                         GLDrawItemType type)
+static float gld_CalcFogDensity_fogbased(
+    sector_t *sector, int lightlevel, GLDrawItemType type
+)
 {
     if (players[displayplayer].fixedcolormap)
     {

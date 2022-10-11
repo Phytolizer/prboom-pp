@@ -125,8 +125,8 @@ static std::string ParseMultiString(Scanner &scanner, int /* error */)
     {
         if (!stricmp(scanner.string, "clear"))
         {
-            return strdup(
-                "-"); // this was explicitly deleted to override the default.
+            return strdup("-"
+            ); // this was explicitly deleted to override the default.
         }
 
         scanner.ErrorF("Either 'clear' or string constant expected");
@@ -367,7 +367,8 @@ static int ParseStandardProperty(Scanner &scanner, MapEntry *mape)
                 }
                 mape->bossactions = (struct BossAction *)realloc(
                     mape->bossactions,
-                    sizeof(struct BossAction) * mape->numbossactions);
+                    sizeof(struct BossAction) * mape->numbossactions
+                );
                 mape->bossactions[mape->numbossactions - 1].type = i;
                 mape->bossactions[mape->numbossactions - 1].special = special;
                 mape->bossactions[mape->numbossactions - 1].tag = tag;
@@ -428,8 +429,9 @@ static int ParseMapEntry(Scanner &scanner, MapEntry *val)
 //
 // -----------------------------------------------
 
-int ParseUMapInfo(const unsigned char *buffer, size_t length,
-                  umapinfo_errorfunc err)
+int ParseUMapInfo(
+    const unsigned char *buffer, size_t length, umapinfo_errorfunc err
+)
 {
     Scanner scanner((const char *)buffer, length);
     unsigned int i;
@@ -474,8 +476,7 @@ int ParseUMapInfo(const unsigned char *buffer, size_t length,
             {
                 strcpy(parsed.endpic, "ENDPIC");
             }
-            else if (gamemission == chex &&
-                     !str::caseInsensitiveCompare(parsed.mapname, "E1M5"))
+            else if (gamemission == chex && !str::caseInsensitiveCompare(parsed.mapname, "E1M5"))
             {
                 strcpy(parsed.endpic, "CREDIT");
             }
@@ -509,8 +510,9 @@ int ParseUMapInfo(const unsigned char *buffer, size_t length,
         if (i == Maps.mapcount)
         {
             Maps.mapcount++;
-            Maps.maps = (MapEntry *)realloc(Maps.maps,
-                                            sizeof(MapEntry) * Maps.mapcount);
+            Maps.maps = (MapEntry *)realloc(
+                Maps.maps, sizeof(MapEntry) * Maps.mapcount
+            );
             Maps.maps[Maps.mapcount - 1] = parsed;
         }
     }

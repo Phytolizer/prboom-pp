@@ -125,8 +125,10 @@ unsigned long I_GetRandomTimeSeed()
  */
 const char *I_GetVersionString(char *buf, size_t sz)
 {
-    snprintf(buf, sz, "%s v%s (https://github.com/Phytolizer/prboom-pp)",
-             PACKAGE_NAME, PACKAGE_VERSION);
+    snprintf(
+        buf, sz, "%s v%s (https://github.com/Phytolizer/prboom-pp)",
+        PACKAGE_NAME, PACKAGE_VERSION
+    );
     return buf;
 }
 

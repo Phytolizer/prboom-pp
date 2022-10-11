@@ -319,8 +319,9 @@ typedef struct
 void gld_AddDrawItem(GLDrawItemType itemtype, void *itemdata);
 
 void gld_DrawTriangleStrip(GLWall *wall, gl_strip_coords_t *c);
-void gld_DrawTriangleStripARB(GLWall *wall, gl_strip_coords_t *c1,
-                              gl_strip_coords_t *c2);
+void gld_DrawTriangleStripARB(
+    GLWall *wall, gl_strip_coords_t *c1, gl_strip_coords_t *c2
+);
 
 extern float roll;
 extern float yaw;
@@ -354,8 +355,9 @@ extern float xCamera, yCamera, zCamera;
 // detail
 //
 
-int gld_IsDetailVisible(float x0, float y0, float x1, float y1, float x2,
-                        float y2);
+int gld_IsDetailVisible(
+    float x0, float y0, float x1, float y1, float x2, float y2
+);
 void gld_InitDetail(void);
 void gld_InitFrameDetails(void);
 void gld_ParseDetail(void);
@@ -379,8 +381,9 @@ extern int scene_has_wall_details;
 extern int scene_has_flat_details;
 
 extern GLuint *last_glTexID;
-GLTexture *gld_RegisterTexture(int texture_num, dboolean mipmap,
-                               dboolean force);
+GLTexture *gld_RegisterTexture(
+    int texture_num, dboolean mipmap, dboolean force
+);
 void gld_BindTexture(GLTexture *gltexture, unsigned int flags);
 GLTexture *gld_RegisterPatch(int lump, int cm, dboolean is_sprite);
 void gld_BindPatch(GLTexture *gltexture, int cm);
@@ -405,11 +408,13 @@ void gld_RecalcVertexHeights(const vertex_t *v);
 void gld_InitGLVersion(void);
 void gld_ResetLastTexture(void);
 
-unsigned char *gld_GetTextureBuffer(GLuint texid, int miplevel, int *width,
-                                    int *height);
+unsigned char *gld_GetTextureBuffer(
+    GLuint texid, int miplevel, int *width, int *height
+);
 
-int gld_BuildTexture(GLTexture *gltexture, void *data, dboolean readonly,
-                     int width, int height);
+int gld_BuildTexture(
+    GLTexture *gltexture, void *data, dboolean readonly, int width, int height
+);
 
 // hires
 extern unsigned int gl_has_hires;
@@ -467,14 +472,15 @@ extern int gl_fog;
 extern int gl_use_fog;
 void gl_EnableFog(int on);
 void gld_SetFog(float fogdensity);
-typedef float (*gld_CalcFogDensity_f)(sector_t *sector, int lightlevel,
-                                      GLDrawItemType type);
+typedef float (*gld_CalcFogDensity_f
+)(sector_t *sector, int lightlevel, GLDrawItemType type);
 extern gld_CalcFogDensity_f gld_CalcFogDensity;
 
 // HQ resize
-unsigned char *gld_HQResize(GLTexture *gltexture, unsigned char *inputBuffer,
-                            int inWidth, int inHeight, int *outWidth,
-                            int *outHeight);
+unsigned char *gld_HQResize(
+    GLTexture *gltexture, unsigned char *inputBuffer, int inWidth, int inHeight,
+    int *outWidth, int *outHeight
+);
 
 // SkyBox
 #define SKY_NONE 0

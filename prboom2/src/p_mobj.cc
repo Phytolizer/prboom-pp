@@ -93,8 +93,9 @@ dboolean P_SetMobjState(mobj_t *mobj, statenum_t state)
     ret = true;
 
     if (recursion++)
-        seenstate = tempstate = static_cast<statenum_t *>(
-            calloc(NUMSTATES, sizeof(statenum_t))); // allocate state table
+        seenstate = tempstate =
+            static_cast<statenum_t *>(calloc(NUMSTATES, sizeof(statenum_t))
+            ); // allocate state table
 
     do
     {
@@ -135,8 +136,8 @@ dboolean P_SetMobjState(mobj_t *mobj, statenum_t state)
     {
         for (; (state = seenstate[i]); i = static_cast<statenum_t>(state - 1))
         {
-            seenstate[i] = static_cast<statenum_t>(
-                0); // killough 4/9/98: erase memory of states
+            seenstate[i] = static_cast<statenum_t>(0
+            ); // killough 4/9/98: erase memory of states
         }
     }
 
@@ -430,8 +431,8 @@ static void P_XYMovement(mobj_t *mo)
         {
             if (player->chickenTics)
             {
-                if ((unsigned)(player->mo->state - states -
-                               HERETIC_S_CHICPLAY_RUN1) < 4)
+                if ((unsigned
+                    )(player->mo->state - states - HERETIC_S_CHICPLAY_RUN1) < 4)
                 {
                     P_SetMobjState(player->mo, HERETIC_S_CHICPLAY);
                 }
@@ -443,8 +444,9 @@ static void P_XYMovement(mobj_t *mo)
                     if (heretic || player->mo == mo ||
                         compatibility_level >= lxdoom_1_compatibility)
                     {
-                        P_SetMobjState(player->mo,
-                                       static_cast<statenum_t>(g_s_play));
+                        P_SetMobjState(
+                            player->mo, static_cast<statenum_t>(g_s_play)
+                        );
                     }
                 }
             }
@@ -683,8 +685,8 @@ static void P_ZMovement(mobj_t *mo)
 
     if (mo->player && // e6y: restoring original visual behaviour for
                       // demo_compatibility
-        (demo_compatibility ||
-         mo->player->mo == mo) && // killough 5/12/98: exclude voodoo dolls
+        (demo_compatibility || mo->player->mo == mo
+        ) && // killough 5/12/98: exclude voodoo dolls
         mo->z < mo->floorz)
     {
         mo->player->viewheight -= mo->floorz - mo->z;
@@ -861,8 +863,7 @@ floater:
             return;
         }
     }
-    else if (mo->flags2 & MF2_LOGRAV ||
-             (mo->type == MT_GIBDTH && !demorecording && !demoplayback))
+    else if (mo->flags2 & MF2_LOGRAV || (mo->type == MT_GIBDTH && !demorecording && !demoplayback))
     {
         if (mo->momz == 0)
         {
@@ -976,9 +977,11 @@ static void P_NightmareRespawn(mobj_t *mobj)
     // spawn a teleport fog at old spot
     // because of removal of the body?
 
-    mo = P_SpawnMobj(mobj->x, mobj->y,
-                     mobj->subsector->sector->floorheight + g_telefog_height,
-                     static_cast<mobjtype_t>(g_mt_tfog));
+    mo = P_SpawnMobj(
+        mobj->x, mobj->y,
+        mobj->subsector->sector->floorheight + g_telefog_height,
+        static_cast<mobjtype_t>(g_mt_tfog)
+    );
 
     // initiate teleport sound
 
@@ -988,8 +991,10 @@ static void P_NightmareRespawn(mobj_t *mobj)
 
     ss = R_PointInSubsector(x, y);
 
-    mo = P_SpawnMobj(x, y, ss->sector->floorheight + g_telefog_height,
-                     static_cast<mobjtype_t>(g_mt_tfog));
+    mo = P_SpawnMobj(
+        x, y, ss->sector->floorheight + g_telefog_height,
+        static_cast<mobjtype_t>(g_mt_tfog)
+    );
 
     S_StartSound(mo, g_sfx_telept);
 
@@ -1742,7 +1747,8 @@ mobj_t *P_SpawnMapThing(const mapthing_t &mthing, int index)
             lprintf(
                 LO_WARN,
                 "P_SpawnMapThing: correcting bad flags (%u) (thing type %d)\n",
-                options, thingtype);
+                options, thingtype
+            );
         }
         options &=
             MTF_EASY | MTF_NORMAL | MTF_HARD | MTF_AMBUSH | MTF_NOTSINGLE;
@@ -1766,9 +1772,10 @@ mobj_t *P_SpawnMapThing(const mapthing_t &mthing, int index)
         {
             num_deathmatchstarts =
                 num_deathmatchstarts ? num_deathmatchstarts * 2 : 16;
-            deathmatchstarts = static_cast<mapthing_t *>(
-                realloc(deathmatchstarts,
-                        num_deathmatchstarts * sizeof(*deathmatchstarts)));
+            deathmatchstarts = static_cast<mapthing_t *>(realloc(
+                deathmatchstarts,
+                num_deathmatchstarts * sizeof(*deathmatchstarts)
+            ));
             deathmatch_p = deathmatchstarts + offset;
         }
         memcpy(deathmatch_p++, &mthing, sizeof(mthing));
@@ -1800,8 +1807,9 @@ mobj_t *P_SpawnMapThing(const mapthing_t &mthing, int index)
                 }
                 else
                 {
-                    doom_printf("Invalid value %i for helper, ignored.",
-                                HelperThing);
+                    doom_printf(
+                        "Invalid value %i for helper, ignored.", HelperThing
+                    );
                     i = MT_DOGS;
                 }
             }
@@ -1841,8 +1849,10 @@ mobj_t *P_SpawnMapThing(const mapthing_t &mthing, int index)
         // Check for boss spots
         if (mthing.type == 56) // Monster_BossSpot
         {
-            P_AddBossSpot(mthing.x << FRACBITS, mthing.y << FRACBITS,
-                          ANG45 * (mthing.angle / 45));
+            P_AddBossSpot(
+                mthing.x << FRACBITS, mthing.y << FRACBITS,
+                ANG45 * (mthing.angle / 45)
+            );
             return nullptr;
         }
     }
@@ -1896,8 +1906,10 @@ mobj_t *P_SpawnMapThing(const mapthing_t &mthing, int index)
 
     if (i == num_mobj_types)
     {
-        lprintf(LO_INFO, "P_SpawnMapThing: Unknown Thing type %i at (%i, %i)\n",
-                thingtype, mthing.x, mthing.y);
+        lprintf(
+            LO_INFO, "P_SpawnMapThing: Unknown Thing type %i at (%i, %i)\n",
+            thingtype, mthing.x, mthing.y
+        );
         return nullptr;
     }
 
@@ -1987,18 +1999,20 @@ spawnit:
     // RjY
     // Print a warning when a solid hanging body is used in a sector where
     // the player can walk under it, to help people with map debugging
-    if (!((~mobj->flags) &
-          (MF_SOLID | MF_SPAWNCEILING)) // solid and hanging
-                                        // invert everything, then both bits
-                                        // should be clear
+    if (!((~mobj->flags) & (MF_SOLID | MF_SPAWNCEILING)
+        ) // solid and hanging
+          // invert everything, then both bits
+          // should be clear
         &&
         mobj->floorz + mobjinfo[g_mt_player].height <= mobj->z) // head <= base
     // player under body's head height <= bottom of body
     {
-        lprintf(LO_WARN,
-                "P_SpawnMapThing: solid hanging body in tall sector at "
-                "%d,%d (type=%d)\n",
-                mthing.x, mthing.y, thingtype);
+        lprintf(
+            LO_WARN,
+            "P_SpawnMapThing: solid hanging body in tall sector at "
+            "%d,%d (type=%d)\n",
+            mthing.x, mthing.y, thingtype
+        );
     }
 
     return mobj;
@@ -2253,13 +2267,15 @@ mobj_t *P_SpawnPlayerMissile(mobj_t *source, mobjtype_t type)
             slope = P_AimLineAttack(source, an, 16 * 64 * FRACUNIT, mask);
             if (!linetarget)
             {
-                slope = P_AimLineAttack(source, an += 1 << 26,
-                                        16 * 64 * FRACUNIT, mask);
+                slope = P_AimLineAttack(
+                    source, an += 1 << 26, 16 * 64 * FRACUNIT, mask
+                );
             }
             if (!linetarget)
             {
-                slope = P_AimLineAttack(source, an -= 2 << 26,
-                                        16 * 64 * FRACUNIT, mask);
+                slope = P_AimLineAttack(
+                    source, an -= 2 << 26, 16 * 64 * FRACUNIT, mask
+                );
             }
             if (!linetarget)
             {
@@ -2393,8 +2409,9 @@ void A_ContMobjSound(mobj_t *actor)
     }
 }
 
-mobj_t *P_SpawnMissileAngle(mobj_t *source, mobjtype_t type, angle_t angle,
-                            fixed_t momz)
+mobj_t *P_SpawnMissileAngle(
+    mobj_t *source, mobjtype_t type, angle_t angle, fixed_t momz
+)
 {
     fixed_t z;
     mobj_t *mo;

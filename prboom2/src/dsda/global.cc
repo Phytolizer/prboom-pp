@@ -265,8 +265,9 @@ static void dsda_InitHeretic()
     int i, j;
     heretic_mobjinfo_t *mobjinfo_p;
 
-    dsda_AllocateMobjInfo(HERETIC_MT_ZERO, HERETIC_NUMMOBJTYPES,
-                          TOTAL_NUMMOBJTYPES);
+    dsda_AllocateMobjInfo(
+        HERETIC_MT_ZERO, HERETIC_NUMMOBJTYPES, TOTAL_NUMMOBJTYPES
+    );
     dsda_SetStates(heretic_states, HERETIC_NUMSTATES);
     dsda_SetSpriteNames(heretic_sprnames, HERETIC_NUMSPRITES);
     dsda_SetSfx(heretic_S_sfx, HERETIC_NUMSFX);

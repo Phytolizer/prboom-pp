@@ -67,9 +67,10 @@ static Uint16 gl_oldHardwareGamma[3][256];
 void gld_CheckHardwareGamma()
 {
     gl_DeviceSupportsGamma =
-        (-1 != SDL_GetWindowGammaRamp(sdl_window, gl_oldHardwareGamma[0],
-                                      gl_oldHardwareGamma[1],
-                                      gl_oldHardwareGamma[2]));
+        (-1 != SDL_GetWindowGammaRamp(
+                   sdl_window, gl_oldHardwareGamma[0], gl_oldHardwareGamma[1],
+                   gl_oldHardwareGamma[2]
+               ));
 
     if (gl_DeviceSupportsGamma)
     {
@@ -95,8 +96,10 @@ void gld_CheckHardwareGamma()
         {
             int g;
 
-            lprintf(LO_WARN, "gld_CheckHardwareGamma: suspicious gamma tables, "
-                             "using linear ramp for restoration\n");
+            lprintf(
+                LO_WARN, "gld_CheckHardwareGamma: suspicious gamma tables, "
+                         "using linear ramp for restoration\n"
+            );
 
             for (g = 0; g < 255; g++)
             {
@@ -109,8 +112,9 @@ void gld_CheckHardwareGamma()
 
     if (!gl_DeviceSupportsGamma)
     {
-        lprintf(LO_WARN,
-                "gld_CheckHardwareGamma: device has broken gamma support\n");
+        lprintf(
+            LO_WARN, "gld_CheckHardwareGamma: device has broken gamma support\n"
+        );
     }
 }
 
@@ -133,9 +137,11 @@ int gld_SetGammaRamp(int gamma)
 
     if (gamma == -1)
     {
-        succeeded = (SDL_SetWindowGammaRamp(sdl_window, gl_oldHardwareGamma[0],
-                                            gl_oldHardwareGamma[1],
-                                            gl_oldHardwareGamma[2]) != -1);
+        succeeded =
+            (SDL_SetWindowGammaRamp(
+                 sdl_window, gl_oldHardwareGamma[0], gl_oldHardwareGamma[1],
+                 gl_oldHardwareGamma[2]
+             ) != -1);
     }
     else
     {
@@ -163,12 +169,16 @@ int gld_SetGammaRamp(int gamma)
         // has no effect sometimes on Intel Graphics
         // do it twice!
         SDL_SetWindowGammaRamp(sdl_window, gammatable, gammatable, gammatable);
-        succeeded = (SDL_SetWindowGammaRamp(sdl_window, gammatable, gammatable,
-                                            gammatable) != -1);
+        succeeded =
+            (SDL_SetWindowGammaRamp(
+                 sdl_window, gammatable, gammatable, gammatable
+             ) != -1);
         if (!succeeded)
         {
-            lprintf(LO_WARN, "gld_SetGammaRamp: hardware gamma adjustment is "
-                             "not supported\n");
+            lprintf(
+                LO_WARN, "gld_SetGammaRamp: hardware gamma adjustment is "
+                         "not supported\n"
+            );
             gl_lightmode = gl_lightmode_glboom;
         }
     }
@@ -184,8 +194,10 @@ void gld_ResetGammaRamp()
     {
         if (gld_SetGammaRamp(1))
         {
-            lprintf(LO_WARN, "gld_ResetGammaRamp: suspicious gamma tables, "
-                             "using linear ramp for restoration\n");
+            lprintf(
+                LO_WARN, "gld_ResetGammaRamp: suspicious gamma tables, "
+                         "using linear ramp for restoration\n"
+            );
             _exit(0);
         }
     }

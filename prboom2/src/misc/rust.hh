@@ -43,9 +43,10 @@ struct RawWeaponStats
     unsigned long num_enemies;
     unsigned long enemies_capacity;
 
-    RawWeaponStats(unsigned long const &kills, EnemyStats *const &enemies,
-                   unsigned long const &num_enemies,
-                   unsigned long const &enemies_capacity)
+    RawWeaponStats(
+        unsigned long const &kills, EnemyStats *const &enemies,
+        unsigned long const &num_enemies, unsigned long const &enemies_capacity
+    )
         : kills(kills), enemies(enemies), num_enemies(num_enemies),
           enemies_capacity(enemies_capacity)
     {
@@ -75,9 +76,11 @@ struct SoundInfo
     int pitch;
     int volume;
 
-    SoundInfo(sfxenum_t const &sfx, const uint8_t *const *const &lumps,
-              const size_t *const &lump_lens, size_t const &num_lumps,
-              bool const &singularity, int const &pitch, int const &volume)
+    SoundInfo(
+        sfxenum_t const &sfx, const uint8_t *const *const &lumps,
+        const size_t *const &lump_lens, size_t const &num_lumps,
+        bool const &singularity, int const &pitch, int const &volume
+    )
         : sfx(sfx), lumps(lumps), lump_lens(lump_lens), num_lumps(num_lumps),
           singularity(singularity), pitch(pitch), volume(volume)
     {
@@ -130,9 +133,10 @@ extern "C"
     /// This function uses a ptr/length pair to construct a slice.
     /// It is a safe conversion as long as W_LumpLength and W_CacheLumpNum
     /// return accurate values.
-    void parse_sndinfo(bool heretic, bool strict, const char *lump,
-                       int lump_length, SoundInfo **buf,
-                       unsigned long *buf_len);
+    void parse_sndinfo(
+        bool heretic, bool strict, const char *lump, int lump_length,
+        SoundInfo **buf, unsigned long *buf_len
+    );
 
     /// # Safety
     /// This function reads lots of raw C structs.

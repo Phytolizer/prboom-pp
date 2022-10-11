@@ -49,12 +49,14 @@ using bmalpool_t = struct bmalpool_s
 
 inline static void *getelem(bmalpool_t *p, size_t size, size_t n)
 {
-    return (((byte *)p) + sizeof(bmalpool_t) + sizeof(byte) * (p->blocks) +
-            size * n);
+    return (
+        ((byte *)p) + sizeof(bmalpool_t) + sizeof(byte) * (p->blocks) + size * n
+    );
 }
 
-inline static PUREFUNC int iselem(const bmalpool_t *pool, size_t size,
-                                  const void *p)
+inline static PUREFUNC int iselem(
+    const bmalpool_t *pool, size_t size, const void *p
+)
 {
     // CPhipps - need portable # of bytes between pointers
     int dif = (const char *)p - (const char *)pool;
@@ -80,9 +82,10 @@ void *Z_BMalloc(struct block_memory_alloc_t *pzone)
     bmalpool_t **pool = (bmalpool_t **)&(pzone->firstpool);
     while (*pool != nullptr)
     {
-        byte *p = static_cast<byte *>(
-            memchr((*pool)->used, unused_block,
-                   (*pool)->blocks)); // Scan for unused marker
+        byte *p = static_cast<byte *>(memchr(
+            (*pool)->used, unused_block,
+            (*pool)->blocks
+        )); // Scan for unused marker
         if (p)
         {
             int n = p - (*pool)->used;
@@ -106,7 +109,8 @@ void *Z_BMalloc(struct block_memory_alloc_t *pzone)
 
         *pool = newpool = static_cast<bmalpool_t *>(std::calloc(
             sizeof(*newpool) + (sizeof(byte) + pzone->size) * (pzone->perpool),
-            1));
+            1
+        ));
         newpool->nextpool = nullptr; // NULL = (void*)0 so this is redundant
 
         // Return element 0 from this pool to satisfy the request

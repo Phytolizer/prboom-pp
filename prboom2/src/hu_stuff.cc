@@ -503,96 +503,118 @@ void HU_Start()
 
     // create the message widget
     // messages to player in upper-left of screen
-    HUlib_initSText(&w_message, HU_MSGX, HU_MSGY, HU_MSGHEIGHT, hu_font,
-                    HU_FONTSTART, hudcolor_mesg, VPT_ALIGN_LEFT_TOP,
-                    &message_on);
+    HUlib_initSText(
+        &w_message, HU_MSGX, HU_MSGY, HU_MSGHEIGHT, hu_font, HU_FONTSTART,
+        hudcolor_mesg, VPT_ALIGN_LEFT_TOP, &message_on
+    );
 
     // jff 2/16/98 added some HUD widgets
     // create the map title widget - map title display in lower left of automap
-    HUlib_initTextLine(&w_title, heretic ? 20 : HU_TITLEX,
-                       heretic ? 145 : HU_TITLEY, hu_font, HU_FONTSTART,
-                       hudcolor_titl, VPT_ALIGN_LEFT_BOTTOM);
+    HUlib_initTextLine(
+        &w_title, heretic ? 20 : HU_TITLEX, heretic ? 145 : HU_TITLEY, hu_font,
+        HU_FONTSTART, hudcolor_titl, VPT_ALIGN_LEFT_BOTTOM
+    );
 
     // create the hud health widget
     // bargraph and number for amount of health,
     // lower left or upper right of screen
-    HUlib_initTextLine(&w_health, 0, 0, hu_font2, HU_FONTSTART, CR_GREEN,
-                       VPT_NONE);
+    HUlib_initTextLine(
+        &w_health, 0, 0, hu_font2, HU_FONTSTART, CR_GREEN, VPT_NONE
+    );
 
-    HUlib_initTextLine(&w_health_big, 0, 0, hu_font_hud, HU_FONTSTART, CR_RED,
-                       VPT_NONE);
+    HUlib_initTextLine(
+        &w_health_big, 0, 0, hu_font_hud, HU_FONTSTART, CR_RED, VPT_NONE
+    );
 
-    HUlib_initTextLine(&w_medict_icon_big, 0, 0, hu_font_hud, HU_FONTSTART,
-                       CR_RED, VPT_NONE);
+    HUlib_initTextLine(
+        &w_medict_icon_big, 0, 0, hu_font_hud, HU_FONTSTART, CR_RED, VPT_NONE
+    );
 
-    HUlib_initTextLine(&w_medict_icon_small, 0, 0, hu_font_hud, HU_FONTSTART,
-                       CR_RED, VPT_NONE);
+    HUlib_initTextLine(
+        &w_medict_icon_small, 0, 0, hu_font_hud, HU_FONTSTART, CR_RED, VPT_NONE
+    );
 
-    HUlib_initTextLine(&w_medict_icon_custom, 0, 0, hu_font_hud, HU_FONTSTART,
-                       CR_RED, VPT_NONE);
+    HUlib_initTextLine(
+        &w_medict_icon_custom, 0, 0, hu_font_hud, HU_FONTSTART, CR_RED, VPT_NONE
+    );
 
     // create the hud armor widget
     // bargraph and number for amount of armor,
     // lower left or upper right of screen
-    HUlib_initTextLine(&w_armor, 0, 0, hu_font2, HU_FONTSTART, CR_GREEN,
-                       VPT_NONE);
+    HUlib_initTextLine(
+        &w_armor, 0, 0, hu_font2, HU_FONTSTART, CR_GREEN, VPT_NONE
+    );
 
-    HUlib_initTextLine(&w_armor_big, 0, 0, hu_font_hud, HU_FONTSTART, CR_RED,
-                       VPT_NONE);
+    HUlib_initTextLine(
+        &w_armor_big, 0, 0, hu_font_hud, HU_FONTSTART, CR_RED, VPT_NONE
+    );
 
-    HUlib_initTextLine(&w_armor_icon_big, 0, 0, hu_font_hud, HU_FONTSTART,
-                       CR_RED, VPT_NONE);
+    HUlib_initTextLine(
+        &w_armor_icon_big, 0, 0, hu_font_hud, HU_FONTSTART, CR_RED, VPT_NONE
+    );
 
-    HUlib_initTextLine(&w_armor_icon_small, 0, 0, hu_font_hud, HU_FONTSTART,
-                       CR_RED, VPT_NONE);
+    HUlib_initTextLine(
+        &w_armor_icon_small, 0, 0, hu_font_hud, HU_FONTSTART, CR_RED, VPT_NONE
+    );
 
-    HUlib_initTextLine(&w_armor_icon_custom, 0, 0, hu_font_hud, HU_FONTSTART,
-                       CR_RED, VPT_NONE);
+    HUlib_initTextLine(
+        &w_armor_icon_custom, 0, 0, hu_font_hud, HU_FONTSTART, CR_RED, VPT_NONE
+    );
 
     // create the hud ammo widget
     // bargraph and number for amount of ammo for current weapon,
     // lower left or lower right of screen
-    HUlib_initTextLine(&w_ammo, 0, 0, hu_font2, HU_FONTSTART, CR_GOLD,
-                       VPT_NONE);
+    HUlib_initTextLine(
+        &w_ammo, 0, 0, hu_font2, HU_FONTSTART, CR_GOLD, VPT_NONE
+    );
 
     // create the hud weapons widget
     // list of numbers of weapons possessed
     // lower left or lower right of screen
-    HUlib_initTextLine(&w_weapon, 0, 0, hu_font2, HU_FONTSTART, CR_GRAY,
-                       VPT_NONE);
+    HUlib_initTextLine(
+        &w_weapon, 0, 0, hu_font2, HU_FONTSTART, CR_GRAY, VPT_NONE
+    );
 
     // create the hud keys widget
     // display of key letters possessed
     // lower left of screen
-    HUlib_initTextLine(&w_keys, 0, 0, hu_font2, HU_FONTSTART, CR_GRAY,
-                       VPT_NONE);
+    HUlib_initTextLine(
+        &w_keys, 0, 0, hu_font2, HU_FONTSTART, CR_GRAY, VPT_NONE
+    );
 
     // create the hud graphic keys widget
     // display of key graphics possessed
     // lower left of screen
-    HUlib_initTextLine(&w_gkeys, 0, 0, hu_fontk, HU_FONTSTART, CR_RED,
-                       VPT_NONE);
+    HUlib_initTextLine(
+        &w_gkeys, 0, 0, hu_fontk, HU_FONTSTART, CR_RED, VPT_NONE
+    );
 
     // create the hud monster/secret widget
     // totals and current values for kills, items, secrets
     // lower left of screen
-    HUlib_initTextLine(&w_monsec, 0, 0, hu_font2, HU_FONTSTART, CR_GRAY,
-                       VPT_NONE);
+    HUlib_initTextLine(
+        &w_monsec, 0, 0, hu_font2, HU_FONTSTART, CR_GRAY, VPT_NONE
+    );
 
-    HUlib_initTextLine(&w_medict_percent, 0, 0, hu_font_hud, HU_FONTSTART,
-                       CR_GRAY, VPT_NONE);
+    HUlib_initTextLine(
+        &w_medict_percent, 0, 0, hu_font_hud, HU_FONTSTART, CR_GRAY, VPT_NONE
+    );
 
-    HUlib_initTextLine(&w_armor_percent, 0, 0, hu_font_hud, HU_FONTSTART,
-                       CR_GRAY, VPT_NONE);
+    HUlib_initTextLine(
+        &w_armor_percent, 0, 0, hu_font_hud, HU_FONTSTART, CR_GRAY, VPT_NONE
+    );
 
-    HUlib_initTextLine(&w_ammo_big, 0, 0, hu_font_hud, HU_FONTSTART, CR_RED,
-                       VPT_NONE);
+    HUlib_initTextLine(
+        &w_ammo_big, 0, 0, hu_font_hud, HU_FONTSTART, CR_RED, VPT_NONE
+    );
 
-    HUlib_initTextLine(&w_ammo_icon, 0, 0, hu_font_hud, HU_FONTSTART, CR_RED,
-                       VPT_NONE);
+    HUlib_initTextLine(
+        &w_ammo_icon, 0, 0, hu_font_hud, HU_FONTSTART, CR_RED, VPT_NONE
+    );
 
-    HUlib_initTextLine(&w_keys_icon, 0, 0, hu_fontk, HU_FONTSTART, CR_RED,
-                       VPT_NONE);
+    HUlib_initTextLine(
+        &w_keys_icon, 0, 0, hu_fontk, HU_FONTSTART, CR_RED, VPT_NONE
+    );
 
     // create the hud text refresh widget
     // scrolling display of last hud_msg_lines messages received
@@ -603,11 +625,12 @@ void HU_Start()
     // jff 4/21/98 if setup has disabled message list while active, turn it off
     message_list = hud_msg_lines > 1; // jff 8/8/98 initialize both ways
     // jff 2/26/98 add the text refresh widget initialization
-    HUlib_initMText(&w_rtext, 0, 0, 320,
-                    //    SCREENWIDTH,
-                    (hud_msg_lines + 2) * HU_REFRESHSPACING, hu_font,
-                    HU_FONTSTART, hudcolor_list, hu_msgbg, VPT_ALIGN_LEFT_TOP,
-                    &message_list);
+    HUlib_initMText(
+        &w_rtext, 0, 0, 320,
+        //    SCREENWIDTH,
+        (hud_msg_lines + 2) * HU_REFRESHSPACING, hu_font, HU_FONTSTART,
+        hudcolor_list, hu_msgbg, VPT_ALIGN_LEFT_TOP, &message_list
+    );
 
     if (gamemapinfo != nullptr)
     {
@@ -640,33 +663,50 @@ void HU_Start()
     // create the automaps coordinate widget
     // jff 3/3/98 split coord widget into three lines: x,y,z
     // jff 2/16/98 added
-    HUlib_initTextLine(&w_coordx, HU_COORDX, HU_COORDX_Y, hu_font, HU_FONTSTART,
-                       hudcolor_xyco, VPT_ALIGN_RIGHT_TOP);
-    HUlib_initTextLine(&w_coordy, HU_COORDX, HU_COORDY_Y, hu_font, HU_FONTSTART,
-                       hudcolor_xyco, VPT_ALIGN_RIGHT_TOP);
-    HUlib_initTextLine(&w_coordz, HU_COORDX, HU_COORDZ_Y, hu_font, HU_FONTSTART,
-                       hudcolor_xyco, VPT_ALIGN_RIGHT_TOP);
+    HUlib_initTextLine(
+        &w_coordx, HU_COORDX, HU_COORDX_Y, hu_font, HU_FONTSTART, hudcolor_xyco,
+        VPT_ALIGN_RIGHT_TOP
+    );
+    HUlib_initTextLine(
+        &w_coordy, HU_COORDX, HU_COORDY_Y, hu_font, HU_FONTSTART, hudcolor_xyco,
+        VPT_ALIGN_RIGHT_TOP
+    );
+    HUlib_initTextLine(
+        &w_coordz, HU_COORDX, HU_COORDZ_Y, hu_font, HU_FONTSTART, hudcolor_xyco,
+        VPT_ALIGN_RIGHT_TOP
+    );
     // e6y
-    HUlib_initTextLine(&w_map_monsters, HU_MAP_STAT_X, HU_MAP_MONSTERS_Y,
-                       hu_font, HU_FONTSTART, hudcolor_mapstat_title,
-                       VPT_ALIGN_LEFT_TOP);
-    HUlib_initTextLine(&w_map_secrets, HU_MAP_STAT_X, HU_MAP_SECRETS_Y, hu_font,
-                       HU_FONTSTART, hudcolor_mapstat_title,
-                       VPT_ALIGN_LEFT_TOP);
-    HUlib_initTextLine(&w_map_items, HU_MAP_STAT_X, HU_MAP_ITEMS_Y, hu_font,
-                       HU_FONTSTART, hudcolor_mapstat_title,
-                       VPT_ALIGN_LEFT_TOP);
-    HUlib_initTextLine(&w_map_time, HU_MAP_STAT_X, HU_MAP_TIME_Y, hu_font,
-                       HU_FONTSTART, hudcolor_mapstat_time, VPT_ALIGN_LEFT_TOP);
-    HUlib_initTextLine(&w_map_totaltime, HU_MAP_STAT_X, HU_MAP_TOTALTIME_Y,
-                       hu_font, HU_FONTSTART, hudcolor_mapstat_time,
-                       VPT_ALIGN_LEFT_TOP);
-    HUlib_initTextLine(&w_hudadd, 0, 0, hu_font2, HU_FONTSTART, CR_GRAY,
-                       VPT_NONE);
-    HUlib_initTextLine(&w_centermsg, HU_CENTERMSGX, HU_CENTERMSGY, hu_font,
-                       HU_FONTSTART, hudcolor_titl, VPT_STRETCH);
-    HUlib_initTextLine(&w_precache, 16, 186, hu_font, HU_FONTSTART, CR_RED,
-                       VPT_ALIGN_LEFT_BOTTOM);
+    HUlib_initTextLine(
+        &w_map_monsters, HU_MAP_STAT_X, HU_MAP_MONSTERS_Y, hu_font,
+        HU_FONTSTART, hudcolor_mapstat_title, VPT_ALIGN_LEFT_TOP
+    );
+    HUlib_initTextLine(
+        &w_map_secrets, HU_MAP_STAT_X, HU_MAP_SECRETS_Y, hu_font, HU_FONTSTART,
+        hudcolor_mapstat_title, VPT_ALIGN_LEFT_TOP
+    );
+    HUlib_initTextLine(
+        &w_map_items, HU_MAP_STAT_X, HU_MAP_ITEMS_Y, hu_font, HU_FONTSTART,
+        hudcolor_mapstat_title, VPT_ALIGN_LEFT_TOP
+    );
+    HUlib_initTextLine(
+        &w_map_time, HU_MAP_STAT_X, HU_MAP_TIME_Y, hu_font, HU_FONTSTART,
+        hudcolor_mapstat_time, VPT_ALIGN_LEFT_TOP
+    );
+    HUlib_initTextLine(
+        &w_map_totaltime, HU_MAP_STAT_X, HU_MAP_TOTALTIME_Y, hu_font,
+        HU_FONTSTART, hudcolor_mapstat_time, VPT_ALIGN_LEFT_TOP
+    );
+    HUlib_initTextLine(
+        &w_hudadd, 0, 0, hu_font2, HU_FONTSTART, CR_GRAY, VPT_NONE
+    );
+    HUlib_initTextLine(
+        &w_centermsg, HU_CENTERMSGX, HU_CENTERMSGY, hu_font, HU_FONTSTART,
+        hudcolor_titl, VPT_STRETCH
+    );
+    HUlib_initTextLine(
+        &w_precache, 16, 186, hu_font, HU_FONTSTART, CR_RED,
+        VPT_ALIGN_LEFT_BOTTOM
+    );
     strcpy(hud_add, "");
     s = hud_add;
     while (*s)
@@ -676,9 +716,10 @@ void HU_Start()
 
     for (i = 0; i < NUMTRACES; i++)
     {
-        HUlib_initTextLine(&w_traces[i], HU_TRACERX, HU_TRACERY + i * HU_GAPY,
-                           hu_font2, HU_FONTSTART, CR_GRAY,
-                           VPT_ALIGN_LEFT_BOTTOM);
+        HUlib_initTextLine(
+            &w_traces[i], HU_TRACERX, HU_TRACERY + i * HU_GAPY, hu_font2,
+            HU_FONTSTART, CR_GRAY, VPT_ALIGN_LEFT_BOTTOM
+        );
 
         strcpy(traces[i].hudstr, "");
         s = traces[i].hudstr;
@@ -712,14 +753,18 @@ void HU_Start()
     strcpy(hud_monsecstr, "STS ");
 
     // create the chat widget
-    HUlib_initIText(&w_chat, HU_INPUTX, HU_INPUTY, hu_font, HU_FONTSTART,
-                    hudcolor_chat, VPT_NONE, &chat_on);
+    HUlib_initIText(
+        &w_chat, HU_INPUTX, HU_INPUTY, hu_font, HU_FONTSTART, hudcolor_chat,
+        VPT_NONE, &chat_on
+    );
 
     // create the inputbuffer widgets, one per player
     for (i = 0; i < MAXPLAYERS; i++)
     {
-        HUlib_initIText(&w_inputbuffer[i], 0, 0, nullptr, 0, hudcolor_chat,
-                        VPT_NONE, &always_off);
+        HUlib_initIText(
+            &w_inputbuffer[i], 0, 0, nullptr, 0, hudcolor_chat, VPT_NONE,
+            &always_off
+        );
     }
 
     HU_init_crosshair();
@@ -925,7 +970,8 @@ void HU_LoadHUDDefs()
                 // setup new hud
                 huds_count++;
                 huds = static_cast<hud_widgets_list_t *>(
-                    std::realloc(huds, huds_count * sizeof(huds[0])));
+                    std::realloc(huds, huds_count * sizeof(huds[0]))
+                );
                 list = &huds[huds_count - 1];
                 list->items = nullptr;
                 list->count = 0;
@@ -950,8 +996,9 @@ void HU_LoadHUDDefs()
             st[sizeof(st) - 1] = 0;
 
             // hud_widget x y
-            params_count = sscanf(st, "%s %d %d", &cfg_item.name[0],
-                                  &cfg_item.x, &cfg_item.y);
+            params_count = sscanf(
+                st, "%s %d %d", &cfg_item.name[0], &cfg_item.x, &cfg_item.y
+            );
             if (params_count == 3)
             {
                 for (i = 0; hud_name_widget[i].name; i++)
@@ -962,7 +1009,8 @@ void HU_LoadHUDDefs()
 
                         list->count++;
                         list->items = static_cast<hud_widget_t *>(std::realloc(
-                            list->items, list->count * sizeof(list->items[0])));
+                            list->items, list->count * sizeof(list->items[0])
+                        ));
 
                         item = &list->items[list->count - 1];
 
@@ -984,7 +1032,8 @@ void HU_LoadHUDDefs()
                                                        : VPT_ALIGN_RIGHT_TOP);
                         }
                         item->flags = static_cast<patch_translation_e>(
-                            item->flags | hud_name_widget[i].flags);
+                            item->flags | hud_name_widget[i].flags
+                        );
 
                         item->build = hud_name_widget[i].build;
                         item->draw = hud_name_widget[i].draw;
@@ -1100,8 +1149,9 @@ int HU_GetArmorColor(int armor, int def)
     return result;
 }
 
-int HU_GetAmmoColor(int ammo, int fullammo, int def, int tofire,
-                    dboolean backpack)
+int HU_GetAmmoColor(
+    int ammo, int fullammo, int def, int tofire, dboolean backpack
+)
 {
     int result, ammopct;
 
@@ -1109,9 +1159,7 @@ int HU_GetAmmoColor(int ammo, int fullammo, int def, int tofire,
     {
         result = CR_BROWN;
     }
-    else if ((ammo == fullammo) ||
-             (ammo_colour_behaviour == ammo_colour_behaviour_no && backpack &&
-              ammo * 2 >= fullammo))
+    else if ((ammo == fullammo) || (ammo_colour_behaviour == ammo_colour_behaviour_no && backpack && ammo * 2 >= fullammo))
     {
         result = def;
     }
@@ -1194,9 +1242,10 @@ void HU_widget_build_ammo()
         strcat(hud_ammostr, ammostr);
 
         // set the display color from the percentage of total ammo held
-        w_ammo.cm =
-            HU_GetAmmoColor(ammo, fullammo, CR_BLUE,
-                            ammopershot[plr->readyweapon], plr->backpack);
+        w_ammo.cm = HU_GetAmmoColor(
+            ammo, fullammo, CR_BLUE, ammopershot[plr->readyweapon],
+            plr->backpack
+        );
     }
     // transfer the init string to the widget
     s = hud_ammostr;
@@ -1353,8 +1402,9 @@ void HU_widget_build_armor_icon_custom()
 {
     // transfer the graphic key text to the widget
     HUlib_clearTextLine(&w_armor_icon_custom);
-    HUlib_addCharToTextLine(&w_armor_icon_custom,
-                            (char)('!' + plr->armortype + 1 + 30));
+    HUlib_addCharToTextLine(
+        &w_armor_icon_custom, (char)('!' + plr->armortype + 1 + 30)
+    );
 }
 
 void HU_widget_draw_armor_icon_custom()
@@ -1465,8 +1515,9 @@ void HU_widget_build_armor_icon_big()
 {
     // transfer the graphic key text to the widget
     HUlib_clearTextLine(&w_armor_icon_big);
-    HUlib_addCharToTextLine(&w_armor_icon_big,
-                            (char)('!' + plr->armortype + 1 + 4));
+    HUlib_addCharToTextLine(
+        &w_armor_icon_big, (char)('!' + plr->armortype + 1 + 4)
+    );
 }
 
 void HU_widget_draw_armor_icon_big()
@@ -1478,8 +1529,9 @@ void HU_widget_build_armor_icon_small()
 {
     // transfer the graphic key text to the widget
     HUlib_clearTextLine(&w_armor_icon_small);
-    HUlib_addCharToTextLine(&w_armor_icon_small,
-                            (char)('!' + plr->armortype + 1 + 8));
+    HUlib_addCharToTextLine(
+        &w_armor_icon_small, (char)('!' + plr->armortype + 1 + 8)
+    );
 }
 
 void HU_widget_draw_armor_icon_small()
@@ -1550,10 +1602,7 @@ void HU_widget_build_weapon()
         {
             hud_weapstr[i++] = '0' + CR_BROWN;
         }
-        else if (fullammo &&
-                 ((ammo == fullammo) ||
-                  (ammo_colour_behaviour == ammo_colour_behaviour_no &&
-                   plr->backpack && ammo * 2 >= fullammo)))
+        else if (fullammo && ((ammo == fullammo) || (ammo_colour_behaviour == ammo_colour_behaviour_no && plr->backpack && ammo * 2 >= fullammo)))
         {
             hud_weapstr[i++] = '0' + CR_BLUE;
         }
@@ -1620,7 +1669,8 @@ void HU_widget_build_keys()
             }
 
             hud_gkeysstr[i++] = static_cast<char>(
-                '!' + k);            // key number plus '!' is char for key
+                '!' + k
+            );                       // key number plus '!' is char for key
             hud_gkeysstr[i++] = ' '; // spacing
             hud_gkeysstr[i++] = ' ';
         }
@@ -1866,11 +1916,13 @@ void HU_widget_build_monsec()
     HUlib_clearTextLine(&w_monsec);
     if (!hudadd_maxtotals || deathmatch)
     {
-        sprintf(hud_monsecstr,
-                "STS \x1b\x36K \x1b\x33%d \x1b\x36M \x1b\x33%d \x1b\x37I "
-                "\x1b\x33%d/%d \x1b\x35S \x1b\x33%d/%d",
-                plr->killcount, totallive, plr->itemcount, totalitems,
-                plr->secretcount, totalsecret);
+        sprintf(
+            hud_monsecstr,
+            "STS \x1b\x36K \x1b\x33%d \x1b\x36M \x1b\x33%d \x1b\x37I "
+            "\x1b\x33%d/%d \x1b\x35S \x1b\x33%d/%d",
+            plr->killcount, totallive, plr->itemcount, totalitems,
+            plr->secretcount, totalsecret
+        );
     }
     else
     {
@@ -1890,11 +1942,13 @@ void HU_widget_build_monsec()
                 color = i == displayplayer ? 0x33 : 0x32;
                 if (playerscount == 0)
                 {
-                    allkills_len = sprintf(allkills, "\x1b%c%d", color,
-                                           players[i].killcount -
-                                               players[i].maxkilldiscount);
-                    allsecrets_len = sprintf(allsecrets, "\x1b%c%d", color,
-                                             players[i].secretcount);
+                    allkills_len = sprintf(
+                        allkills, "\x1b%c%d", color,
+                        players[i].killcount - players[i].maxkilldiscount
+                    );
+                    allsecrets_len = sprintf(
+                        allsecrets, "\x1b%c%d", color, players[i].secretcount
+                    );
                 }
                 else
                 {
@@ -1902,10 +1956,12 @@ void HU_widget_build_monsec()
                     {
                         allkills_len += sprintf(
                             &allkills[allkills_len], "\x1b%c+%d", color,
-                            players[i].killcount - players[i].maxkilldiscount);
-                        allsecrets_len +=
-                            sprintf(&allsecrets[allsecrets_len], "\x1b%c+%d",
-                                    color, players[i].secretcount);
+                            players[i].killcount - players[i].maxkilldiscount
+                        );
+                        allsecrets_len += sprintf(
+                            &allsecrets[allsecrets_len], "\x1b%c+%d", color,
+                            players[i].secretcount
+                        );
                     }
                 }
                 playerscount++;
@@ -1920,21 +1976,25 @@ void HU_widget_build_monsec()
         itemcolor = (fullitemcount >= totalitems ? 0x37 : 0x35);
         if (playerscount < 2)
         {
-            sprintf(hud_monsecstr,
-                    "STS \x1b\x36K \x1b%c%d/%d \x1b\x36I \x1b%c%d/%d \x1b\x36S "
-                    "\x1b%c%d/%d",
-                    killcolor, fullkillcount, max_kill_requirement, itemcolor,
-                    plr->itemcount, totalitems, secretcolor, fullsecretcount,
-                    totalsecret);
+            sprintf(
+                hud_monsecstr,
+                "STS \x1b\x36K \x1b%c%d/%d \x1b\x36I \x1b%c%d/%d \x1b\x36S "
+                "\x1b%c%d/%d",
+                killcolor, fullkillcount, max_kill_requirement, itemcolor,
+                plr->itemcount, totalitems, secretcolor, fullsecretcount,
+                totalsecret
+            );
         }
         else
         {
-            sprintf(hud_monsecstr,
-                    "STS \x1b\x36K %s \x1b%c%d/%d \x1b\x36I \x1b%c%d/%d "
-                    "\x1b\x36S %s \x1b%c%d/%d",
-                    allkills, killcolor, fullkillcount, max_kill_requirement,
-                    itemcolor, plr->itemcount, totalitems, allsecrets,
-                    secretcolor, fullsecretcount, totalsecret);
+            sprintf(
+                hud_monsecstr,
+                "STS \x1b\x36K %s \x1b%c%d/%d \x1b\x36I \x1b%c%d/%d "
+                "\x1b\x36S %s \x1b%c%d/%d",
+                allkills, killcolor, fullkillcount, max_kill_requirement,
+                itemcolor, plr->itemcount, totalitems, allsecrets, secretcolor,
+                fullsecretcount, totalsecret
+            );
         }
     }
 
@@ -1963,8 +2023,9 @@ void HU_widget_build_hudadd()
 
     if (hudadd_gamespeed)
     {
-        sprintf(hud_add, "\x1b\x32speed \x1b\x33%.2d ",
-                dsda_RealticClockRate());
+        sprintf(
+            hud_add, "\x1b\x32speed \x1b\x33%.2d ", dsda_RealticClockRate()
+        );
     }
     if ((hudadd_leveltime) || (demoplayback && hudadd_demotime))
     {
@@ -1973,17 +2034,21 @@ void HU_widget_build_hudadd()
             demoplayback && hudadd_demotime ? demo_len_st : demo_len_null;
         if (totalleveltimes)
         {
-            sprintf(hud_add + strlen(hud_add),
-                    "\x1b\x32time \x1b\x35%d:%02d%s \x1b\x33%d:%05.2f ",
-                    (totalleveltimes + leveltime) / 35 / 60,
-                    ((totalleveltimes + leveltime) % (60 * 35)) / 35, demo_len,
-                    leveltime / 35 / 60, (float)(leveltime % (60 * 35)) / 35);
+            sprintf(
+                hud_add + strlen(hud_add),
+                "\x1b\x32time \x1b\x35%d:%02d%s \x1b\x33%d:%05.2f ",
+                (totalleveltimes + leveltime) / 35 / 60,
+                ((totalleveltimes + leveltime) % (60 * 35)) / 35, demo_len,
+                leveltime / 35 / 60, (float)(leveltime % (60 * 35)) / 35
+            );
         }
         else
         {
-            sprintf(hud_add + strlen(hud_add),
-                    "\x1b\x32time \x1b\x33%d:%05.2f%s ", leveltime / 35 / 60,
-                    (float)(leveltime % (60 * 35)) / 35, demo_len);
+            sprintf(
+                hud_add + strlen(hud_add), "\x1b\x32time \x1b\x33%d:%05.2f%s ",
+                leveltime / 35 / 60, (float)(leveltime % (60 * 35)) / 35,
+                demo_len
+            );
         }
     }
     HUlib_clearTextLine(&w_hudadd);
@@ -2087,9 +2152,10 @@ void HU_widget_build_ammo_big()
         // set the display color from the percentage of total ammo held
         if (!sts_always_red)
         {
-            w_ammo_big.cm =
-                HU_GetAmmoColor(ammo, fullammo, CR_BLUE2,
-                                ammopershot[plr->readyweapon], plr->backpack);
+            w_ammo_big.cm = HU_GetAmmoColor(
+                ammo, fullammo, CR_BLUE2, ammopershot[plr->readyweapon],
+                plr->backpack
+            );
         }
 
         // transfer the init string to the widget
@@ -2184,8 +2250,8 @@ void HU_widget_draw_gkeys()
     HUlib_drawTextLine(&w_keys_icon, false);
 }
 
-const char *crosshair_nam[HU_CROSSHAIRS] = {nullptr, "CROSS1", "CROSS2",
-                                            "CROSS3"};
+const char *crosshair_nam[HU_CROSSHAIRS] = {
+    nullptr, "CROSS1", "CROSS2", "CROSS3"};
 const char *crosshair_str[HU_CROSSHAIRS] = {"none", "cross", "angle", "dot"};
 crosshair_t crosshair;
 
@@ -2299,13 +2365,15 @@ void HU_draw_crosshair()
         {
             if (!linetarget)
             {
-                slope = P_AimLineAttack(plr->mo, an += 1 << 26,
-                                        16 * 64 * FRACUNIT, 0);
+                slope = P_AimLineAttack(
+                    plr->mo, an += 1 << 26, 16 * 64 * FRACUNIT, 0
+                );
             }
             if (!linetarget)
             {
-                slope = P_AimLineAttack(plr->mo, an -= 2 << 26,
-                                        16 * 64 * FRACUNIT, 0);
+                slope = P_AimLineAttack(
+                    plr->mo, an -= 2 << 26, 16 * 64 * FRACUNIT, 0
+                );
             }
         }
         overflows_enabled = true;
@@ -2334,7 +2402,8 @@ void HU_draw_crosshair()
         float y = crosshair.target_screen_y;
         V_DrawNumPatchPrecise(
             x, y, 0, crosshair.lump, cm,
-            static_cast<patch_translation_e>(crosshair.flags));
+            static_cast<patch_translation_e>(crosshair.flags)
+        );
     }
     else
     {
@@ -2353,8 +2422,10 @@ void HU_draw_crosshair()
             y = (200 - st_height - crosshair.h) / 2;
         }
 
-        V_DrawNumPatch(x, y, 0, crosshair.lump, cm,
-                       static_cast<patch_translation_e>(crosshair.flags));
+        V_DrawNumPatch(
+            x, y, 0, crosshair.lump, cm,
+            static_cast<patch_translation_e>(crosshair.flags)
+        );
     }
 }
 
@@ -2449,10 +2520,12 @@ void HU_Drawer()
             int time = leveltime / TICRATE;
             int ttime = (totalleveltimes + leveltime) / TICRATE;
 
-            sprintf(str, "Monsters: \x1b%c%d/%d", '0' + hudcolor_mapstat_value,
-                    players[consoleplayer].killcount -
-                        players[consoleplayer].maxkilldiscount,
-                    totalkills);
+            sprintf(
+                str, "Monsters: \x1b%c%d/%d", '0' + hudcolor_mapstat_value,
+                players[consoleplayer].killcount -
+                    players[consoleplayer].maxkilldiscount,
+                totalkills
+            );
             HUlib_clearTextLine(&w_map_monsters);
             s = str;
             while (*s)
@@ -2461,8 +2534,10 @@ void HU_Drawer()
             }
             HUlib_drawTextLine(&w_map_monsters, false);
 
-            sprintf(str, "Secrets: \x1b%c%d/%d", '0' + hudcolor_mapstat_value,
-                    players[consoleplayer].secretcount, totalsecret);
+            sprintf(
+                str, "Secrets: \x1b%c%d/%d", '0' + hudcolor_mapstat_value,
+                players[consoleplayer].secretcount, totalsecret
+            );
             HUlib_clearTextLine(&w_map_secrets);
             s = str;
             while (*s)
@@ -2471,8 +2546,10 @@ void HU_Drawer()
             }
             HUlib_drawTextLine(&w_map_secrets, false);
 
-            sprintf(str, "Items: \x1b%c%d/%d", '0' + hudcolor_mapstat_value,
-                    players[consoleplayer].itemcount, totalitems);
+            sprintf(
+                str, "Items: \x1b%c%d/%d", '0' + hudcolor_mapstat_value,
+                players[consoleplayer].itemcount, totalitems
+            );
             HUlib_clearTextLine(&w_map_items);
             s = str;
             while (*s)
@@ -2481,8 +2558,10 @@ void HU_Drawer()
             }
             HUlib_drawTextLine(&w_map_items, false);
 
-            sprintf(str, "%02d:%02d:%02d", time / 3600, (time % 3600) / 60,
-                    time % 60);
+            sprintf(
+                str, "%02d:%02d:%02d", time / 3600, (time % 3600) / 60,
+                time % 60
+            );
             HUlib_clearTextLine(&w_map_time);
             s = str;
             while (*s)
@@ -2493,8 +2572,10 @@ void HU_Drawer()
 
             if (totalleveltimes > 0)
             {
-                sprintf(str, "%02d:%02d:%02d", ttime / 3600,
-                        (ttime % 3600) / 60, ttime % 60);
+                sprintf(
+                    str, "%02d:%02d:%02d", ttime / 3600, (ttime % 3600) / 60,
+                    ttime % 60
+                );
                 HUlib_clearTextLine(&w_map_totaltime);
                 s = str;
                 while (*s)
@@ -2751,8 +2832,10 @@ void HU_Ticker()
                             (chat_dest[i] == consoleplayer + 1 ||
                              chat_dest[i] == HU_BROADCAST))
                         {
-                            HUlib_addMessageToSText(&w_message, player_names[i],
-                                                    w_inputbuffer[i].l.l);
+                            HUlib_addMessageToSText(
+                                &w_message, player_names[i],
+                                w_inputbuffer[i].l.l
+                            );
 
                             message_nottobefuckedwith = true;
                             message_on = true;
@@ -3021,14 +3104,17 @@ void T_ShowMessage(message_thinker_t *message)
         return;
     }
 
-    SetCustomMessage(message->plr, message->msg.msg, 0, message->msg.ticks,
-                     message->msg.cm, message->msg.sfx);
+    SetCustomMessage(
+        message->plr, message->msg.msg, 0, message->msg.ticks, message->msg.cm,
+        message->msg.sfx
+    );
 
     P_RemoveThinker(&message->thinker); // unlink and free
 }
 
-int SetCustomMessage(int player, const char *msg, int delay, int ticks, int cm,
-                     int sfx)
+int SetCustomMessage(
+    int player, const char *msg, int delay, int ticks, int cm, int sfx
+)
 {
     custom_message_t item;
 

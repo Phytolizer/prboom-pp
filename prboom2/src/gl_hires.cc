@@ -195,8 +195,9 @@ void gld_ProgressUpdate(const char *text, int progress, int total)
 #ifdef HAVE_LIBSDL2_IMAGE
 
 static const char *gld_HiRes_GetInternalName(GLTexture *gltexture);
-static int gld_HiRes_GetExternalName(GLTexture *gltexture, char *img_path,
-                                     char *dds_path);
+static int gld_HiRes_GetExternalName(
+    GLTexture *gltexture, char *img_path, char *dds_path
+);
 static void gld_HiRes_Bind(GLTexture *gltexture, GLuint *glTexID);
 
 #define DDRAW_H_MAKEFOURCC(ch0, ch1, ch2, ch3)                                 \
@@ -402,7 +403,8 @@ GLGenericImage *ReadDDSFile(const char *filename, int *bufsize, int *numMipmaps)
                                    ? ddsd.u1.dwLinearSize * factor
                                    : ddsd.u1.dwLinearSize;
                     genericImage->pixels = static_cast<GLubyte *>(
-                        malloc(*bufsize * sizeof(unsigned char)));
+                        malloc(*bufsize * sizeof(unsigned char))
+                    );
 
                     if (fread(genericImage->pixels, 1, *bufsize, fp) > 0)
                     {
@@ -471,8 +473,9 @@ static const char *gld_HiRes_GetInternalName(GLTexture *gltexture)
     return texname;
 }
 
-static int gld_HiRes_GetExternalName(GLTexture *gltexture, char *img_path,
-                                     char *dds_path)
+static int gld_HiRes_GetExternalName(
+    GLTexture *gltexture, char *img_path, char *dds_path
+)
 {
     using hires_path_item_t = struct hires_path_item_s
     {
@@ -656,9 +659,10 @@ static int gld_HiRes_GetExternalName(GLTexture *gltexture, char *img_path,
     hires_path_item_t *checklist = nullptr;
     GLTexType useType = gltexture->textype;
 
-    dboolean supported = (gl_texture_external_hires &&
-                          ((useType == GLDT_TEXTURE) ||
-                           (useType == GLDT_FLAT) || (useType == GLDT_PATCH)));
+    dboolean supported =
+        (gl_texture_external_hires &&
+         ((useType == GLDT_TEXTURE) || (useType == GLDT_FLAT) ||
+          (useType == GLDT_PATCH)));
 
     img_path[0] = '\0';
     dds_path[0] = '\0';
@@ -759,8 +763,9 @@ static int gld_HiRes_GetExternalName(GLTexture *gltexture, char *img_path,
 
         if (checklist->exists == -1)
         {
-            doom_snprintf(checkName, sizeof(checkName), checklist->path,
-                          hiresdir, "", "");
+            doom_snprintf(
+                checkName, sizeof(checkName), checklist->path, hiresdir, "", ""
+            );
             if (!access(checkName, F_OK))
             {
                 checklist->exists = 1;
@@ -779,8 +784,10 @@ static int gld_HiRes_GetExternalName(GLTexture *gltexture, char *img_path,
 
             if (GLEXT_glCompressedTexImage2DARB && dds_path[0] == '\0')
             {
-                doom_snprintf(checkName, sizeof(checkName), checklist->path,
-                              hiresdir, texname, "dds");
+                doom_snprintf(
+                    checkName, sizeof(checkName), checklist->path, hiresdir,
+                    texname, "dds"
+                );
                 if (!access(checkName, F_OK))
                 {
                     strcpy(dds_path, checkName);
@@ -789,8 +796,10 @@ static int gld_HiRes_GetExternalName(GLTexture *gltexture, char *img_path,
 
             for (extp = extensions; *extp; extp++)
             {
-                doom_snprintf(checkName, sizeof(checkName), checklist->path,
-                              hiresdir, texname, *extp);
+                doom_snprintf(
+                    checkName, sizeof(checkName), checklist->path, hiresdir,
+                    texname, *extp
+                );
 
                 if (!access(checkName, F_OK))
                 {
@@ -873,14 +882,15 @@ void gld_HiRes_ProcessColormap(unsigned char *buffer, int bufSize)
 
         if (gl_hires_24bit_colormap)
         {
-            color = RGB2PAL[(buffer[pos + 0] << 16) + (buffer[pos + 1] << 8) +
-                            buffer[pos + 2]];
+            color = RGB2PAL
+                [(buffer[pos + 0] << 16) + (buffer[pos + 1] << 8) +
+                 buffer[pos + 2]];
         }
         else
         {
-            color =
-                RGB2PAL[((buffer[pos + 0] >> 3) << 10) +
-                        ((buffer[pos + 1] >> 3) << 5) + (buffer[pos + 2] >> 3)];
+            color = RGB2PAL
+                [((buffer[pos + 0] >> 3) << 10) +
+                 ((buffer[pos + 1] >> 3) << 5) + (buffer[pos + 2] >> 3)];
         }
 
         buffer[pos + 0] = playpal[colormap[color] * 3 + 0];
@@ -1027,8 +1037,9 @@ int gld_HiRes_BuildTables()
 
         if (gl_hires_24bit_colormap)
         {
-            doom_snprintf(fname, sizeof(fname), "%s/" RGB2PAL_NAME ".dat",
-                          I_DoomExeDir());
+            doom_snprintf(
+                fname, sizeof(fname), "%s/" RGB2PAL_NAME ".dat", I_DoomExeDir()
+            );
             RGB2PAL_fp = fopen(fname, "wb");
             ok = RGB2PAL_fp != nullptr;
         }
@@ -1135,8 +1146,9 @@ void gld_InitHiRes()
     gld_PrecacheGUIPatches();
 }
 
-static int gld_HiRes_LoadDDSTexture(GLTexture *gltexture, GLuint *texid,
-                                    const char *dds_path)
+static int gld_HiRes_LoadDDSTexture(
+    GLTexture *gltexture, GLuint *texid, const char *dds_path
+)
 {
     int result = false;
     int tex_width, tex_height;
@@ -1191,7 +1203,8 @@ static int gld_HiRes_LoadDDSTexture(GLTexture *gltexture, GLuint *texid,
 
                     GLEXT_glCompressedTexImage2DARB(
                         GL_TEXTURE_2D, i, ddsimage->format, ddsimage->width,
-                        ddsimage->height, 0, size, ddsimage->pixels + offset);
+                        ddsimage->height, 0, size, ddsimage->pixels + offset
+                    );
 
                     //      GLErrorReport();
                     offset += size;
@@ -1212,8 +1225,9 @@ static int gld_HiRes_LoadDDSTexture(GLTexture *gltexture, GLuint *texid,
     return result;
 }
 
-static int gld_HiRes_LoadFromCache(GLTexture *gltexture, GLuint *texid,
-                                   const char *img_path)
+static int gld_HiRes_LoadFromCache(
+    GLTexture *gltexture, GLuint *texid, const char *img_path
+)
 {
     int result = false;
     int tex_width = 0;
@@ -1236,8 +1250,9 @@ static int gld_HiRes_LoadFromCache(GLTexture *gltexture, GLuint *texid,
     {
         if (fread(&tex_width, sizeof(tex_width), 1, cachefp) == 1 &&
             fread(&tex_height, sizeof(tex_height), 1, cachefp) == 1 &&
-            fread(&cache_stat.st_mtime, sizeof(cache_stat.st_mtime), 1,
-                  cachefp) == 1)
+            fread(
+                &cache_stat.st_mtime, sizeof(cache_stat.st_mtime), 1, cachefp
+            ) == 1)
         {
             if (cache_stat.st_mtime == tex_stat.st_mtime)
             {
@@ -1250,8 +1265,9 @@ static int gld_HiRes_LoadFromCache(GLTexture *gltexture, GLuint *texid,
                     if (fread(tex_buffer, tex_buffer_size, 1, cachefp) == 1)
                     {
                         gld_HiRes_Bind(gltexture, texid);
-                        gld_BuildTexture(gltexture, tex_buffer, false,
-                                         tex_width, tex_height);
+                        gld_BuildTexture(
+                            gltexture, tex_buffer, false, tex_width, tex_height
+                        );
 
                         result = true;
                     }
@@ -1266,8 +1282,9 @@ static int gld_HiRes_LoadFromCache(GLTexture *gltexture, GLuint *texid,
     return result;
 }
 
-static int gld_HiRes_WriteCache(GLTexture *gltexture, GLuint *texid,
-                                const char *img_path)
+static int gld_HiRes_WriteCache(
+    GLTexture *gltexture, GLuint *texid, const char *img_path
+)
 {
     int result = false;
     int w, h;
@@ -1276,8 +1293,10 @@ static int gld_HiRes_WriteCache(GLTexture *gltexture, GLuint *texid,
     struct stat tex_stat;
     FILE *cachefp;
 
-    doom_snprintf(reinterpret_cast<char *>(cache_filename),
-                  sizeof(cache_filename), "%s.cache", img_path);
+    doom_snprintf(
+        reinterpret_cast<char *>(cache_filename), sizeof(cache_filename),
+        "%s.cache", img_path
+    );
     if (access(reinterpret_cast<const char *>(cache_filename), F_OK))
     {
         buf = gld_GetTextureBuffer(*texid, 0, &w, &h);
@@ -1291,8 +1310,10 @@ static int gld_HiRes_WriteCache(GLTexture *gltexture, GLuint *texid,
             {
                 result = (fwrite(&w, sizeof(w), 1, cachefp) == 1) &&
                          (fwrite(&h, sizeof(h), 1, cachefp) == 1) &&
-                         (fwrite(&tex_stat.st_mtime, sizeof(tex_stat.st_mtime),
-                                 1, cachefp) == 1) &&
+                         (fwrite(
+                              &tex_stat.st_mtime, sizeof(tex_stat.st_mtime), 1,
+                              cachefp
+                          ) == 1) &&
                          (fwrite(buf, w * h * 4, 1, cachefp) == 1);
 
                 fclose(cachefp);
@@ -1302,15 +1323,18 @@ static int gld_HiRes_WriteCache(GLTexture *gltexture, GLuint *texid,
 
     if (!result)
     {
-        lprintf(LO_WARN, "gld_HiRes_WriteCache: error writing '%s'.\n",
-                cache_filename);
+        lprintf(
+            LO_WARN, "gld_HiRes_WriteCache: error writing '%s'.\n",
+            cache_filename
+        );
     }
 
     return result;
 }
 
-static int gld_HiRes_LoadFromFile(GLTexture *gltexture, GLuint *texid,
-                                  const char *img_path)
+static int gld_HiRes_LoadFromFile(
+    GLTexture *gltexture, GLuint *texid, const char *img_path
+)
 {
     int result = false;
     SDL_Surface *surf = nullptr;
@@ -1331,8 +1355,10 @@ static int gld_HiRes_LoadFromFile(GLTexture *gltexture, GLuint *texid,
         {
             if (SDL_LockSurface(surf) >= 0)
             {
-                if (SmoothEdges(static_cast<unsigned char *>(surf->pixels),
-                                surf->pitch / 4, surf->h))
+                if (SmoothEdges(
+                        static_cast<unsigned char *>(surf->pixels),
+                        surf->pitch / 4, surf->h
+                    ))
                 {
                     gltexture->flags |= GLTEXTURE_HASHOLES;
                 }
@@ -1343,8 +1369,9 @@ static int gld_HiRes_LoadFromFile(GLTexture *gltexture, GLuint *texid,
                 SDL_UnlockSurface(surf);
             }
             gld_HiRes_Bind(gltexture, texid);
-            result = gld_BuildTexture(gltexture, surf->pixels, true, surf->w,
-                                      surf->h);
+            result = gld_BuildTexture(
+                gltexture, surf->pixels, true, surf->w, surf->h
+            );
 
             SDL_FreeSurface(surf);
         }
@@ -1379,7 +1406,8 @@ int gld_LoadHiresTex(GLTexture *gltexture, int cm)
                     if (lump != -1)
                     {
                         SDL_RWops *rw_data = SDL_RWFromConstMem(
-                            W_CacheLumpNum(lump), W_LumpLength(lump));
+                            W_CacheLumpNum(lump), W_LumpLength(lump)
+                        );
                         SDL_Surface *surf_tmp = IMG_Load_RW(rw_data, false);
 
                         // SDL can't load some TGA with common method
@@ -1392,8 +1420,10 @@ int gld_LoadHiresTex(GLTexture *gltexture, int cm)
 
                         if (!surf_tmp)
                         {
-                            lprintf(LO_WARN, "gld_LoadHiresTex: %s\n",
-                                    SDL_GetError());
+                            lprintf(
+                                LO_WARN, "gld_LoadHiresTex: %s\n",
+                                SDL_GetError()
+                            );
                         }
                         else
                         {
@@ -1407,7 +1437,8 @@ int gld_LoadHiresTex(GLTexture *gltexture, int cm)
                                 {
                                     if (SmoothEdges(
                                             static_cast<byte *>(surf->pixels),
-                                            surf->pitch / 4, surf->h))
+                                            surf->pitch / 4, surf->h
+                                        ))
                                     {
                                         gltexture->flags |= GLTEXTURE_HASHOLES;
                                     }
@@ -1418,8 +1449,10 @@ int gld_LoadHiresTex(GLTexture *gltexture, int cm)
                                     SDL_UnlockSurface(surf);
                                 }
                                 gld_HiRes_Bind(gltexture, texid);
-                                gld_BuildTexture(gltexture, surf->pixels, true,
-                                                 surf->w, surf->h);
+                                gld_BuildTexture(
+                                    gltexture, surf->pixels, true, surf->w,
+                                    surf->h
+                                );
 
                                 SDL_FreeSurface(surf);
                             }
@@ -1437,19 +1470,22 @@ int gld_LoadHiresTex(GLTexture *gltexture, int cm)
                 {
                     if (!gld_HiRes_LoadDDSTexture(gltexture, texid, dds_path))
                     {
-                        if (!gld_HiRes_LoadFromCache(gltexture, texid,
-                                                     img_path))
+                        if (!gld_HiRes_LoadFromCache(
+                                gltexture, texid, img_path
+                            ))
                         {
-                            if (gld_HiRes_LoadFromFile(gltexture, texid,
-                                                       img_path))
+                            if (gld_HiRes_LoadFromFile(
+                                    gltexture, texid, img_path
+                                ))
                             {
                                 if ((gltexture->realtexwidth !=
                                      gltexture->tex_width) ||
                                     (gltexture->realtexheight !=
                                      gltexture->tex_height))
                                 {
-                                    gld_HiRes_WriteCache(gltexture, texid,
-                                                         img_path);
+                                    gld_HiRes_WriteCache(
+                                        gltexture, texid, img_path
+                                    );
                                 }
                             }
                         }
@@ -1487,8 +1523,9 @@ int gld_LoadHiresTex(GLTexture *gltexture, int cm)
                                 buf = gld_GetTextureBuffer(*texid, 0, &w, &h);
                                 gld_HiRes_Bind(gltexture, gltexture->texid_p);
                                 gld_HiRes_ProcessColormap(buf, w * h * 4);
-                                if (gld_BuildTexture(gltexture, buf, true, w,
-                                                     h))
+                                if (gld_BuildTexture(
+                                        gltexture, buf, true, w, h
+                                    ))
                                 {
                                     result = true;
                                 }
@@ -1578,8 +1615,9 @@ int gld_PrecacheGUIPatches()
                 gld_BindPatch(gltexture, CR_DEFAULT);
                 if (gltexture && (gltexture->flags & GLTEXTURE_HIRES))
                 {
-                    gld_ProgressUpdate("Loading GUI Patches...", ++count,
-                                       total);
+                    gld_ProgressUpdate(
+                        "Loading GUI Patches...", ++count, total
+                    );
                 }
             }
         }

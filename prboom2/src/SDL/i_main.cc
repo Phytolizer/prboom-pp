@@ -434,8 +434,8 @@ static void I_SetAffinityMask()
         if (kernel32_dll)
         {
             // Find the SetProcessAffinityMask function.
-            SetAffinity = (SetAffinityFunc)GetProcAddress(
-                kernel32_dll, "SetProcessAffinityMask");
+            SetAffinity = (SetAffinityFunc
+            )GetProcAddress(kernel32_dll, "SetProcessAffinityMask");
 
             // If the function was not found, we are on an old (Win9x) system
             // that doesn't have this function.  That's no problem, because
@@ -475,15 +475,18 @@ static void I_SetAffinityMask()
 
         if (errbuf == nullptr)
         {
-            lprintf(LO_INFO, "I_SetAffinityMask: manual affinity mask is %d\n",
-                    process_affinity_mask);
+            lprintf(
+                LO_INFO, "I_SetAffinityMask: manual affinity mask is %d\n",
+                process_affinity_mask
+            );
         }
         else
         {
             lprintf(
                 LO_ERROR,
                 "I_SetAffinityMask: failed to set process affinity mask (%s)\n",
-                errbuf);
+                errbuf
+            );
         }
     }
 }
@@ -518,16 +521,20 @@ void I_SetProcessPriority()
 
         if (errbuf == nullptr)
         {
-            lprintf(LO_INFO,
-                    "I_SetProcessPriority: priority for the process is %d\n",
-                    process_priority);
+            lprintf(
+                LO_INFO,
+                "I_SetProcessPriority: priority for the process is %d\n",
+                process_priority
+            );
         }
         else
         {
-            lprintf(LO_ERROR,
-                    "I_SetProcessPriority: failed to set priority for the "
-                    "process (%s)\n",
-                    errbuf);
+            lprintf(
+                LO_ERROR,
+                "I_SetProcessPriority: failed to set priority for the "
+                "process (%s)\n",
+                errbuf
+            );
         }
     }
 }
@@ -595,8 +602,9 @@ int main(int argc, char **argv)
     signal(SIGTERM, I_SignalHandler);
     signal(SIGFPE, I_SignalHandler);
     signal(SIGILL, I_SignalHandler);
-    signal(SIGINT,
-           I_SignalHandler); /* killough 3/6/98: allow CTRL-BRK during init */
+    signal(
+        SIGINT, I_SignalHandler
+    ); /* killough 3/6/98: allow CTRL-BRK during init */
     signal(SIGABRT, I_SignalHandler);
 #endif
 

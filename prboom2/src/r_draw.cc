@@ -810,15 +810,18 @@ static R_DrawColumn_f
                        },
 };
 
-R_DrawColumn_f R_GetDrawColumnFunc(enum column_pipeline_e type,
-                                   enum draw_filter_type_e filter,
-                                   enum draw_filter_type_e filterz)
+R_DrawColumn_f R_GetDrawColumnFunc(
+    enum column_pipeline_e type, enum draw_filter_type_e filter,
+    enum draw_filter_type_e filterz
+)
 {
     R_DrawColumn_f result = drawcolumnfuncs[V_GetMode()][filterz][filter][type];
     if (result == nullptr)
     {
-        I_Error("R_GetDrawColumnFunc: undefined function (%d, %d, %d)", type,
-                filter, filterz);
+        I_Error(
+            "R_GetDrawColumnFunc: undefined function (%d, %d, %d)", type,
+            filter, filterz
+        );
     }
     return result;
 }
@@ -1144,14 +1147,16 @@ static R_DrawSpan_f drawspanfuncs[VID_MODEMAX][RDRAW_FILTER_MAXFILTERS]
                                      },
 };
 
-R_DrawSpan_f R_GetDrawSpanFunc(enum draw_filter_type_e filter,
-                               enum draw_filter_type_e filterz)
+R_DrawSpan_f R_GetDrawSpanFunc(
+    enum draw_filter_type_e filter, enum draw_filter_type_e filterz
+)
 {
     R_DrawSpan_f result = drawspanfuncs[V_GetMode()][filterz][filter];
     if (result == nullptr)
     {
-        I_Error("R_GetDrawSpanFunc: undefined function (%d, %d)", filter,
-                filterz);
+        I_Error(
+            "R_GetDrawSpanFunc: undefined function (%d, %d)", filter, filterz
+        );
     }
     return result;
 }
@@ -1184,11 +1189,14 @@ void R_InitBuffersRes()
 
     solidcol = static_cast<byte *>(calloc(1, SCREENWIDTH * sizeof(*solidcol)));
     byte_tempbuf = static_cast<byte *>(
-        calloc(1, (SCREENHEIGHT * 4) * sizeof(*byte_tempbuf)));
+        calloc(1, (SCREENHEIGHT * 4) * sizeof(*byte_tempbuf))
+    );
     short_tempbuf = static_cast<unsigned short *>(
-        calloc(1, (SCREENHEIGHT * 4) * sizeof(*short_tempbuf)));
+        calloc(1, (SCREENHEIGHT * 4) * sizeof(*short_tempbuf))
+    );
     int_tempbuf = static_cast<unsigned int *>(
-        calloc(1, (SCREENHEIGHT * 4) * sizeof(*int_tempbuf)));
+        calloc(1, (SCREENHEIGHT * 4) * sizeof(*int_tempbuf))
+    );
 }
 
 //
@@ -1285,10 +1293,14 @@ void R_FillBackScreen()
         {
             int stbar_top = SCREENHEIGHT - ST_SCALED_HEIGHT;
 
-            V_FillFlat(grnrock.lumpnum, 1, 0, stbar_top, wide_offsetx,
-                       ST_SCALED_HEIGHT, VPT_NONE);
-            V_FillFlat(grnrock.lumpnum, 1, SCREENWIDTH - wide_offsetx,
-                       stbar_top, wide_offsetx, ST_SCALED_HEIGHT, VPT_NONE);
+            V_FillFlat(
+                grnrock.lumpnum, 1, 0, stbar_top, wide_offsetx,
+                ST_SCALED_HEIGHT, VPT_NONE
+            );
+            V_FillFlat(
+                grnrock.lumpnum, 1, SCREENWIDTH - wide_offsetx, stbar_top,
+                wide_offsetx, ST_SCALED_HEIGHT, VPT_NONE
+            );
 
             // heretic_note: I think this looks bad, so I'm skipping it...
             if (heretic)
@@ -1297,10 +1309,14 @@ void R_FillBackScreen()
             }
 
             // line between view and status bar
-            V_FillPatch(brdr_b.lumpnum, 1, 0, stbar_top, wide_offsetx,
-                        brdr_b.height, VPT_NONE);
-            V_FillPatch(brdr_b.lumpnum, 1, SCREENWIDTH - wide_offsetx,
-                        stbar_top, wide_offsetx, brdr_b.height, VPT_NONE);
+            V_FillPatch(
+                brdr_b.lumpnum, 1, 0, stbar_top, wide_offsetx, brdr_b.height,
+                VPT_NONE
+            );
+            V_FillPatch(
+                brdr_b.lumpnum, 1, SCREENWIDTH - wide_offsetx, stbar_top,
+                wide_offsetx, brdr_b.height, VPT_NONE
+            );
 
             return;
         }
@@ -1317,34 +1333,52 @@ void R_FillBackScreen()
     if ((ratio_multiplier != ratio_scale || wide_offsety) &&
         (automap || scaledviewwidth == SCREENWIDTH))
     {
-        V_FillPatch(brdr_b.lumpnum, 1, 0, SCREENHEIGHT - ST_SCALED_HEIGHT,
-                    SCREENWIDTH, brdr_b.height, VPT_NONE);
+        V_FillPatch(
+            brdr_b.lumpnum, 1, 0, SCREENHEIGHT - ST_SCALED_HEIGHT, SCREENWIDTH,
+            brdr_b.height, VPT_NONE
+        );
     }
 
-    V_FillPatch(brdr_t.lumpnum, 1, viewwindowx, viewwindowy - g_border_offset,
-                scaledviewwidth, brdr_t.height, VPT_NONE);
+    V_FillPatch(
+        brdr_t.lumpnum, 1, viewwindowx, viewwindowy - g_border_offset,
+        scaledviewwidth, brdr_t.height, VPT_NONE
+    );
 
-    V_FillPatch(brdr_b.lumpnum, 1, viewwindowx, viewwindowy + viewheight,
-                scaledviewwidth, brdr_b.height, VPT_NONE);
+    V_FillPatch(
+        brdr_b.lumpnum, 1, viewwindowx, viewwindowy + viewheight,
+        scaledviewwidth, brdr_b.height, VPT_NONE
+    );
 
-    V_FillPatch(brdr_l.lumpnum, 1, viewwindowx - g_border_offset, viewwindowy,
-                brdr_l.width, viewheight, VPT_NONE);
+    V_FillPatch(
+        brdr_l.lumpnum, 1, viewwindowx - g_border_offset, viewwindowy,
+        brdr_l.width, viewheight, VPT_NONE
+    );
 
-    V_FillPatch(brdr_r.lumpnum, 1, viewwindowx + scaledviewwidth, viewwindowy,
-                brdr_r.width, viewheight, VPT_NONE);
+    V_FillPatch(
+        brdr_r.lumpnum, 1, viewwindowx + scaledviewwidth, viewwindowy,
+        brdr_r.width, viewheight, VPT_NONE
+    );
 
     // Draw beveled edge.
-    V_DrawNumPatch(viewwindowx - g_border_offset, viewwindowy - g_border_offset,
-                   1, brdr_tl.lumpnum, CR_DEFAULT, VPT_NONE);
+    V_DrawNumPatch(
+        viewwindowx - g_border_offset, viewwindowy - g_border_offset, 1,
+        brdr_tl.lumpnum, CR_DEFAULT, VPT_NONE
+    );
 
-    V_DrawNumPatch(viewwindowx + scaledviewwidth, viewwindowy - g_border_offset,
-                   1, brdr_tr.lumpnum, CR_DEFAULT, VPT_NONE);
+    V_DrawNumPatch(
+        viewwindowx + scaledviewwidth, viewwindowy - g_border_offset, 1,
+        brdr_tr.lumpnum, CR_DEFAULT, VPT_NONE
+    );
 
-    V_DrawNumPatch(viewwindowx - g_border_offset, viewwindowy + viewheight, 1,
-                   brdr_bl.lumpnum, CR_DEFAULT, VPT_NONE);
+    V_DrawNumPatch(
+        viewwindowx - g_border_offset, viewwindowy + viewheight, 1,
+        brdr_bl.lumpnum, CR_DEFAULT, VPT_NONE
+    );
 
-    V_DrawNumPatch(viewwindowx + scaledviewwidth, viewwindowy + viewheight, 1,
-                   brdr_br.lumpnum, CR_DEFAULT, VPT_NONE);
+    V_DrawNumPatch(
+        viewwindowx + scaledviewwidth, viewwindowy + viewheight, 1,
+        brdr_br.lumpnum, CR_DEFAULT, VPT_NONE
+    );
 }
 
 //
@@ -1358,7 +1392,8 @@ void R_VideoErase(int x, int y, int count)
         memcpy(
             screens[0].data + y * screens[0].byte_pitch + x * V_GetPixelDepth(),
             screens[1].data + y * screens[1].byte_pitch + x * V_GetPixelDepth(),
-            count * V_GetPixelDepth()); // LFB copy.
+            count * V_GetPixelDepth()
+        ); // LFB copy.
     }
 }
 

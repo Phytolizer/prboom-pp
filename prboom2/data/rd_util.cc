@@ -118,6 +118,7 @@ size_t read_or_die(void **ptr, std::string_view file)
 void search_path(const char *path)
 {
     search_paths = static_cast<const char **>(
-        xrealloc(search_paths, (++num_search_paths) * sizeof(*search_paths)));
+        xrealloc(search_paths, (++num_search_paths) * sizeof(*search_paths))
+    );
     search_paths[num_search_paths - 1] = xstrdup(path);
 }

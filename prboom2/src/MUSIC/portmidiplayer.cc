@@ -101,8 +101,9 @@ static int sysexbufflen;
 
 void pm_stop();
 
-static void writeevent(unsigned long when, midi_event_type_t::Type eve,
-                       int channel, int v1, int v2)
+static void writeevent(
+    unsigned long when, midi_event_type_t::Type eve, int channel, int v1, int v2
+)
 {
     PmMessage m;
 
@@ -127,8 +128,10 @@ static int channelvol[16];
 static void pm_setchvolume(int ch, int v, unsigned long when)
 {
     channelvol[ch] = v;
-    writeevent(when, midi_event_type_t::CONTROLLER, ch, 7,
-               channelvol[ch] * pm_volume / 15);
+    writeevent(
+        when, midi_event_type_t::CONTROLLER, ch, 7,
+        channelvol[ch] * pm_volume / 15
+    );
 }
 
 static void pm_refreshvolume()
@@ -138,8 +141,10 @@ static void pm_refreshvolume()
 
     for (i = 0; i < 16; i++)
     {
-        writeevent(when, midi_event_type_t::CONTROLLER, i, 7,
-                   channelvol[i] * pm_volume / 15);
+        writeevent(
+            when, midi_event_type_t::CONTROLLER, i, 7,
+            channelvol[i] * pm_volume / 15
+        );
     }
 }
 
@@ -160,8 +165,10 @@ static void writesysex(unsigned long when, unsigned char *data, int len)
     // until it hits an 0xf7 terminator)
     if (len + sysexbufflen > SYSEX_BUFF_SIZE)
     {
-        lprintf(LO_WARN,
-                "portmidiplayer: ignoring large or malformed sysex message\n");
+        lprintf(
+            LO_WARN,
+            "portmidiplayer: ignoring large or malformed sysex message\n"
+        );
         sysexbufflen = 0;
         return;
     }
@@ -183,10 +190,14 @@ void pm_stop()
     // songs can be stopped at any time, so reset everything
     for (i = 0; i < 16; i++)
     {
-        writeevent(when, midi_event_type_t::CONTROLLER, i, 123,
-                   0); // all notes off
-        writeevent(when, midi_event_type_t::CONTROLLER, i, 121,
-                   0); // reset all parameters
+        writeevent(
+            when, midi_event_type_t::CONTROLLER, i, 123,
+            0
+        ); // all notes off
+        writeevent(
+            when, midi_event_type_t::CONTROLLER, i, 121,
+            0
+        ); // reset all parameters
 
         // RPN sequence to adjust pitch bend range (RPN value 0x0000)
         writeevent(when, midi_event_type_t::CONTROLLER, i, 0x65, 0x00);
@@ -248,8 +259,10 @@ void pm_render(void *vdest, unsigned int bufflen)
         {
         case midi_event_type_t::SYSEX.value():
         case midi_event_type_t::SYSEX_SPLIT.value():
-            writesysex(when, currevent->data.sysex().data,
-                       currevent->data.sysex().length);
+            writesysex(
+                when, currevent->data.sysex().data,
+                currevent->data.sysex().length
+            );
             break;
         case midi_event_type_t::META.value(): // tempo is the only meta message
                                               // we're interested in
@@ -258,8 +271,7 @@ void pm_render(void *vdest, unsigned int bufflen)
             {
                 spmc = MIDI_spmc(midifile, currevent, 1000);
             }
-            else if (currevent->data.meta().type ==
-                     midi_meta_event_type_t::END_OF_TRACK)
+            else if (currevent->data.meta().type == midi_meta_event_type_t::END_OF_TRACK)
             {
                 if (pm_looping)
                 {
@@ -270,8 +282,10 @@ void pm_render(void *vdest, unsigned int bufflen)
                     // loop point sdl_mixer does this as well
                     for (i = 0; i < 16; i++)
                     {
-                        writeevent(when, midi_event_type_t::CONTROLLER, i, 123,
-                                   0); // all notes off
+                        writeevent(
+                            when, midi_event_type_t::CONTROLLER, i, 123,
+                            0
+                        ); // all notes off
                     }
                     continue;
                 }
@@ -287,16 +301,19 @@ void pm_render(void *vdest, unsigned int bufflen)
                 if (!mus_extend_volume)
 #endif
                 {
-                    pm_setchvolume(currevent->data.channel().channel,
-                                   currevent->data.channel().param2, when);
+                    pm_setchvolume(
+                        currevent->data.channel().channel,
+                        currevent->data.channel().param2, when
+                    );
                     break;
                 }
             } // fall through
         default:
-            writeevent(when, currevent->event_type,
-                       currevent->data.channel().channel,
-                       currevent->data.channel().param1,
-                       currevent->data.channel().param2);
+            writeevent(
+                when, currevent->event_type, currevent->data.channel().channel,
+                currevent->data.channel().param1,
+                currevent->data.channel().param2
+            );
             break;
         }
         // if the event was a "reset all controllers", we need to additionally
@@ -357,8 +374,10 @@ void pm_pause()
     pm_paused = 1;
     for (i = 0; i < 16; i++)
     {
-        writeevent(when, midi_event_type_t::CONTROLLER, i, 123,
-                   0); // all notes off
+        writeevent(
+            when, midi_event_type_t::CONTROLLER, i, 123,
+            0
+        ); // all notes off
     }
 }
 void pm_setvolume(int v)
@@ -503,11 +522,15 @@ int pm_init(int samplerate)
 
     oinfo = Pm_GetDeviceInfo(outputdevice);
 
-    lprintf(LO_INFO, "portmidiplayer: Opening device %s:%s for output\n",
-            oinfo->interf, oinfo->name);
+    lprintf(
+        LO_INFO, "portmidiplayer: Opening device %s:%s for output\n",
+        oinfo->interf, oinfo->name
+    );
 
-    if (Pm_OpenOutput(&pm_stream, outputdevice, nullptr, DRIVER_BUFFER, nullptr,
-                      nullptr, DRIVER_LATENCY) != pmNoError)
+    if (Pm_OpenOutput(
+            &pm_stream, outputdevice, nullptr, DRIVER_BUFFER, nullptr, nullptr,
+            DRIVER_LATENCY
+        ) != pmNoError)
     {
         lprintf(LO_WARN, "portmidiplayer: Pm_OpenOutput () failed\n");
         Pm_Terminate();

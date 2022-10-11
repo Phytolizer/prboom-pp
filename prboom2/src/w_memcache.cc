@@ -63,8 +63,10 @@ void W_PrintLump(FILE *fp, void *p)
     for (i = 0; i < numlumps; i++)
         if (cachelump[i].cache == p)
         {
-            fprintf(fp, " %8.8s %6u %2d %6d", lumpinfo[i].name, W_LumpLength(i),
-                    cachelump[i].locks, gametic - cachelump[i].locktic);
+            fprintf(
+                fp, " %8.8s %6u %2d %6d", lumpinfo[i].name, W_LumpLength(i),
+                cachelump[i].locks, gametic - cachelump[i].locktic
+            );
             return;
         }
     fprintf(fp, " not found");
@@ -79,9 +81,11 @@ static void W_ReportLocks(void)
     for (i = 0; i < numlumps; i++)
     {
         if (cachelump[i].locks)
-            lprintf(LO_DEBUG, "%8.8s %6u %2d   %6d\n", lumpinfo[i].name,
-                    W_LumpLength(i), cachelump[i].locks,
-                    gametic - cachelump[i].locktic);
+            lprintf(
+                LO_DEBUG, "%8.8s %6u %2d   %6d\n", lumpinfo[i].name,
+                W_LumpLength(i), cachelump[i].locks,
+                gametic - cachelump[i].locktic
+            );
     }
 }
 #endif
@@ -160,8 +164,10 @@ void W_UnlockLumpNum(int lump)
     const int unlocks = 1;
 #ifdef SIMPLECHECKS
     if ((signed short)cachelump[lump].locks < unlocks)
-        lprintf(LO_DEBUG, "W_UnlockLumpNum: Excess unlocks on %8s (%d-%d)\n",
-                lumpinfo[lump].name, cachelump[lump].locks, unlocks);
+        lprintf(
+            LO_DEBUG, "W_UnlockLumpNum: Excess unlocks on %8s (%d-%d)\n",
+            lumpinfo[lump].name, cachelump[lump].locks, unlocks
+        );
 #endif
     cachelump[lump].locks -= unlocks;
     /* cph - Note: must only tell z_zone to make purgeable if currently locked,

@@ -121,10 +121,13 @@ int EV_Teleport(line_t *line, int side, mobj_t *thing)
 
         // spawn teleport fog and emit sound at destination
         S_StartSound(
-            P_SpawnMobj(m->x + 20 * finecosine[m->angle >> ANGLETOFINESHIFT],
-                        m->y + 20 * finesine[m->angle >> ANGLETOFINESHIFT],
-                        thing->z, MT_TFOG),
-            sfx_telept);
+            P_SpawnMobj(
+                m->x + 20 * finecosine[m->angle >> ANGLETOFINESHIFT],
+                m->y + 20 * finesine[m->angle >> ANGLETOFINESHIFT], thing->z,
+                MT_TFOG
+            ),
+            sfx_telept
+        );
 
         /* don't move for a bit
          * cph - DEMOSYNC - BOOM had (player) here? */
@@ -250,8 +253,9 @@ int EV_SilentTeleport(line_t *line, int side, mobj_t *thing)
 // maximum fixed_t units to move object to avoid hiccups
 #define FUDGEFACTOR 10
 
-int EV_SilentLineTeleport(line_t *line, int side, mobj_t *thing,
-                          dboolean reverse)
+int EV_SilentLineTeleport(
+    line_t *line, int side, mobj_t *thing, dboolean reverse
+)
 {
     int i;
     line_t *l;
@@ -461,8 +465,10 @@ dboolean P_Teleport(mobj_t *thing, fixed_t x, fixed_t y, angle_t angle)
     fog = P_SpawnMobj(oldx, oldy, oldz + fogDelta, HERETIC_MT_TFOG);
     S_StartSound(fog, heretic_sfx_telept);
     an = angle >> ANGLETOFINESHIFT;
-    fog = P_SpawnMobj(x + 20 * finecosine[an], y + 20 * finesine[an],
-                      thing->z + fogDelta, HERETIC_MT_TFOG);
+    fog = P_SpawnMobj(
+        x + 20 * finecosine[an], y + 20 * finesine[an], thing->z + fogDelta,
+        HERETIC_MT_TFOG
+    );
     S_StartSound(fog, heretic_sfx_telept);
     if (thing->player && !thing->player->powers[pw_weaponlevel2])
     { // Freeze player for about .5 sec

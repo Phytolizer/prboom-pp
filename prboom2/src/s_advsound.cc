@@ -101,17 +101,19 @@ void S_ParseMusInfo(const char *mapid)
                         }
                         else
                         {
-                            lprintf(LO_ERROR,
-                                    "S_ParseMusInfo: Unknown MUS lump %s",
-                                    sc_String);
+                            lprintf(
+                                LO_ERROR, "S_ParseMusInfo: Unknown MUS lump %s",
+                                sc_String
+                            );
                         }
                     }
                 }
                 else
                 {
-                    lprintf(LO_ERROR,
-                            "S_ParseMusInfo: Number not in range 1 to %d",
-                            MAX_MUS_ENTRIES - 1);
+                    lprintf(
+                        LO_ERROR, "S_ParseMusInfo: Number not in range 1 to %d",
+                        MAX_MUS_ENTRIES - 1
+                    );
                 }
             }
         }

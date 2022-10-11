@@ -18,22 +18,22 @@ template <typename Underlying, class Derived> class SmartEnum
         return m_value;
     }
 
-    constexpr SmartEnum operator&(
-        const SmartEnum<Underlying, Derived> &other) const
+    constexpr SmartEnum operator&(const SmartEnum<Underlying, Derived> &other
+    ) const
     {
         return SmartEnum<Underlying, Derived>{
             static_cast<Underlying>(m_value & other.m_value)};
     }
 
-    constexpr SmartEnum operator|(
-        const SmartEnum<Underlying, Derived> &other) const
+    constexpr SmartEnum operator|(const SmartEnum<Underlying, Derived> &other
+    ) const
     {
         return SmartEnum<Underlying, Derived>{
             static_cast<Underlying>(m_value | other.m_value)};
     }
 
-    constexpr SmartEnum operator^(
-        const SmartEnum<Underlying, Derived> &other) const
+    constexpr SmartEnum operator^(const SmartEnum<Underlying, Derived> &other
+    ) const
     {
         return SmartEnum<Underlying, Derived>{
             static_cast<Underlying>(m_value ^ other.m_value)};
@@ -63,36 +63,36 @@ template <typename Underlying, class Derived> class SmartEnum
         return *this;
     }
 
-    constexpr SmartEnum operator+(
-        const SmartEnum<Underlying, Derived> &other) const
+    constexpr SmartEnum operator+(const SmartEnum<Underlying, Derived> &other
+    ) const
     {
         return SmartEnum<Underlying, Derived>{
             static_cast<Underlying>(m_value + other.m_value)};
     }
 
-    constexpr SmartEnum operator-(
-        const SmartEnum<Underlying, Derived> &other) const
+    constexpr SmartEnum operator-(const SmartEnum<Underlying, Derived> &other
+    ) const
     {
         return SmartEnum<Underlying, Derived>{
             static_cast<Underlying>(m_value - other.m_value)};
     }
 
-    constexpr SmartEnum operator*(
-        const SmartEnum<Underlying, Derived> &other) const
+    constexpr SmartEnum operator*(const SmartEnum<Underlying, Derived> &other
+    ) const
     {
         return SmartEnum<Underlying, Derived>{
             static_cast<Underlying>(m_value * other.m_value)};
     }
 
-    constexpr SmartEnum operator/(
-        const SmartEnum<Underlying, Derived> &other) const
+    constexpr SmartEnum operator/(const SmartEnum<Underlying, Derived> &other
+    ) const
     {
         return SmartEnum<Underlying, Derived>{
             static_cast<Underlying>(m_value / other.m_value)};
     }
 
-    constexpr SmartEnum operator%(
-        const SmartEnum<Underlying, Derived> &other) const
+    constexpr SmartEnum operator%(const SmartEnum<Underlying, Derived> &other
+    ) const
     {
         return SmartEnum<Underlying, Derived>{
             static_cast<Underlying>(m_value % other.m_value)};

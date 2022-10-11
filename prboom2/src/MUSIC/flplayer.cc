@@ -112,8 +112,10 @@ int fl_init(int samplerate)
         int minor;
         int micro;
         fluid_version(&major, &minor, &micro);
-        lprintf(LO_INFO, "Fluidplayer: Fluidsynth version %i.%i.%i\n", major,
-                minor, micro);
+        lprintf(
+            LO_INFO, "Fluidplayer: Fluidsynth version %i.%i.%i\n", major, minor,
+            micro
+        );
         if (major >= 2 || (minor >= 1 && micro >= 4))
         {
             sratemin = 8000;
@@ -124,9 +126,11 @@ int fl_init(int samplerate)
         }
         if (f_soundrate < sratemin)
         {
-            lprintf(LO_INFO,
-                    "Fluidplayer: samplerates under %i are not supported\n",
-                    sratemin);
+            lprintf(
+                LO_INFO,
+                "Fluidplayer: samplerates under %i are not supported\n",
+                sratemin
+            );
             return 0;
         }
     }
@@ -188,8 +192,9 @@ int fl_init(int samplerate)
 
     if (f_font == FLUID_FAILED)
     {
-        lprintf(LO_WARN, "fl_init: error loading soundfont %s\n",
-                snd_soundfont);
+        lprintf(
+            LO_WARN, "fl_init: error loading soundfont %s\n", snd_soundfont
+        );
         return 0;
     }
 
@@ -347,8 +352,9 @@ static void writesysex(unsigned char *data, int len)
 
     if (len + sysexbufflen > SYSEX_BUFF_SIZE)
     {
-        lprintf(LO_WARN,
-                "fluidplayer: ignoring large or malformed sysex message\n");
+        lprintf(
+            LO_WARN, "fluidplayer: ignoring large or malformed sysex message\n"
+        );
         sysexbufflen = 0;
         return;
     }
@@ -356,14 +362,17 @@ static void writesysex(unsigned char *data, int len)
     sysexbufflen += len;
     if (sysexbuff[sysexbufflen - 1] == 0xf7) // terminator
     { // pass len-1 because fluidsynth does NOT want the final F7
-        fluid_synth_sysex(f_syn->get(), (const char *)sysexbuff,
-                          sysexbufflen - 1, nullptr, nullptr, &didrespond, 0);
+        fluid_synth_sysex(
+            f_syn->get(), (const char *)sysexbuff, sysexbufflen - 1, nullptr,
+            nullptr, &didrespond, 0
+        );
         sysexbufflen = 0;
     }
     if (!didrespond)
     {
-        lprintf(LO_WARN,
-                "fluidplayer: SYSEX message received but not understood\n");
+        lprintf(
+            LO_WARN, "fluidplayer: SYSEX message received but not understood\n"
+        );
     }
 }
 
@@ -412,42 +421,52 @@ void fl_render(void *vdest, unsigned length)
         switch (currevent->event_type.value())
         {
         case midi_event_type_t::NOTE_OFF.value():
-            fluid_synth_noteoff(f_syn->get(), currevent->data.channel().channel,
-                                currevent->data.channel().param1);
+            fluid_synth_noteoff(
+                f_syn->get(), currevent->data.channel().channel,
+                currevent->data.channel().param1
+            );
             break;
         case midi_event_type_t::NOTE_ON.value():
-            fluid_synth_noteon(f_syn->get(), currevent->data.channel().channel,
-                               currevent->data.channel().param1,
-                               currevent->data.channel().param2);
+            fluid_synth_noteon(
+                f_syn->get(), currevent->data.channel().channel,
+                currevent->data.channel().param1,
+                currevent->data.channel().param2
+            );
             break;
         case midi_event_type_t::AFTERTOUCH.value():
             // not suipported?
             break;
         case midi_event_type_t::CONTROLLER.value():
-            fluid_synth_cc(f_syn->get(), currevent->data.channel().channel,
-                           currevent->data.channel().param1,
-                           currevent->data.channel().param2);
+            fluid_synth_cc(
+                f_syn->get(), currevent->data.channel().channel,
+                currevent->data.channel().param1,
+                currevent->data.channel().param2
+            );
             break;
         case midi_event_type_t::PROGRAM_CHANGE.value():
-            fluid_synth_program_change(f_syn->get(),
-                                       currevent->data.channel().channel,
-                                       currevent->data.channel().param1);
+            fluid_synth_program_change(
+                f_syn->get(), currevent->data.channel().channel,
+                currevent->data.channel().param1
+            );
             break;
         case midi_event_type_t::CHAN_AFTERTOUCH.value():
-            fluid_synth_channel_pressure(f_syn->get(),
-                                         currevent->data.channel().channel,
-                                         currevent->data.channel().param1);
+            fluid_synth_channel_pressure(
+                f_syn->get(), currevent->data.channel().channel,
+                currevent->data.channel().param1
+            );
             break;
         case midi_event_type_t::PITCH_BEND.value():
-            fluid_synth_pitch_bend(f_syn->get(),
-                                   currevent->data.channel().channel,
-                                   currevent->data.channel().param1 |
-                                       currevent->data.channel().param2 << 7);
+            fluid_synth_pitch_bend(
+                f_syn->get(), currevent->data.channel().channel,
+                currevent->data.channel().param1 |
+                    currevent->data.channel().param2 << 7
+            );
             break;
         case midi_event_type_t::SYSEX.value():
         case midi_event_type_t::SYSEX_SPLIT.value():
-            writesysex(currevent->data.sysex().data,
-                       currevent->data.sysex().length);
+            writesysex(
+                currevent->data.sysex().data, currevent->data.sysex().length
+            );
             break;
         case midi_event_type_t::META.value():
             if (currevent->data.meta().type ==
@@ -455,8 +474,7 @@ void fl_render(void *vdest, unsigned length)
             {
                 spmc = MIDI_spmc(midifile, currevent, f_soundrate);
             }
-            else if (currevent->data.meta().type ==
-                     midi_meta_event_type_t::END_OF_TRACK)
+            else if (currevent->data.meta().type == midi_meta_event_type_t::END_OF_TRACK)
             {
                 if (f_looping)
                 {

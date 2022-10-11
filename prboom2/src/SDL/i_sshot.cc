@@ -81,9 +81,10 @@ int I_ScreenShot(const char *fname)
 
     if (pixels)
     {
-        screenshot =
-            SDL_CreateRGBSurfaceFrom(pixels, renderW, renderH, 24, renderW * 3,
-                                     0x000000ff, 0x0000ff00, 0x00ff0000, 0);
+        screenshot = SDL_CreateRGBSurfaceFrom(
+            pixels, renderW, renderH, 24, renderW * 3, 0x000000ff, 0x0000ff00,
+            0x00ff0000, 0
+        );
     }
 
     if (screenshot)
@@ -130,8 +131,9 @@ unsigned char *I_GrabScreen()
     if (pixels && size)
     {
         SDL_Rect screen = {0, 0, renderW, renderH};
-        SDL_RenderReadPixels(sdl_renderer, &screen, SDL_PIXELFORMAT_RGB24,
-                             pixels, renderW * 3);
+        SDL_RenderReadPixels(
+            sdl_renderer, &screen, SDL_PIXELFORMAT_RGB24, pixels, renderW * 3
+        );
     }
 
     return pixels;

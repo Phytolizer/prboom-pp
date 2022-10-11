@@ -285,9 +285,8 @@ void I_SetChannels()
     // I fail to see that this is currently used.
     for (i = -128; i < 128; i++)
     {
-        steptablemid[i] =
-            (int)(pow(1.2, ((double)i / (64.0 * snd_samplerate / 11025))) *
-                  65536.0);
+        steptablemid[i] = (int
+        )(pow(1.2, ((double)i / (64.0 * snd_samplerate / 11025))) * 65536.0);
     }
 
     // Generates volume lookup tables
@@ -310,11 +309,13 @@ static bool checkHasAlts(sfxinfo_t *sfx)
     std::string prefix = heretic ? "" : snd_pcspeaker ? "dp" : "ds";
 
     return !sfx->altNames.empty() &&
-           std::any_of(sfx->altNames.begin(), sfx->altNames.end(),
-                       [&prefix](const auto &name) {
-                           return W_SafeGetNumForName(
-                                      (prefix + name.data()).c_str()) != -1;
-                       });
+           std::any_of(
+               sfx->altNames.begin(), sfx->altNames.end(),
+               [&prefix](const auto &name) {
+                   return W_SafeGetNumForName((prefix + name.data()).c_str()) !=
+                          -1;
+               }
+           );
 }
 
 //
@@ -701,8 +702,9 @@ void I_InitSound()
     // haleyjd: the docs say we should do this
     if (SDL_InitSubSystem(SDL_INIT_AUDIO))
     {
-        lprintf(LO_INFO, "Couldn't initialize SDL audio (%s))\n",
-                SDL_GetError());
+        lprintf(
+            LO_INFO, "Couldn't initialize SDL audio (%s))\n", SDL_GetError()
+        );
         nosfxparm = true;
         nomusicparm = true;
         return;
@@ -725,11 +727,14 @@ void I_InitSound()
         SAMPLECOUNT = 512;
         audio_buffers = SAMPLECOUNT * snd_samplerate / 11025;
 
-        if (Mix_OpenAudio(audio_rate, MIX_DEFAULT_FORMAT, audio_channels,
-                          audio_buffers) < 0)
+        if (Mix_OpenAudio(
+                audio_rate, MIX_DEFAULT_FORMAT, audio_channels, audio_buffers
+            ) < 0)
         {
-            lprintf(LO_INFO, "couldn't open audio with desired format (%s)\n",
-                    SDL_GetError());
+            lprintf(
+                LO_INFO, "couldn't open audio with desired format (%s)\n",
+                SDL_GetError()
+            );
             nosfxparm = true;
             nomusicparm = true;
             return;
@@ -738,8 +743,10 @@ void I_InitSound()
         sound_inited = true;
         SAMPLECOUNT = audio_buffers;
         Mix_SetPostMix(I_UpdateSound, nullptr);
-        lprintf(LO_INFO, " configured audio device with %d samples/slice\n",
-                SAMPLECOUNT);
+        lprintf(
+            LO_INFO, " configured audio device with %d samples/slice\n",
+            SAMPLECOUNT
+        );
     }
     else
 #else  // HAVE_MIXER
@@ -758,8 +765,10 @@ void I_InitSound()
         audio.callback = I_UpdateSound;
         if (SDL_OpenAudio(&audio, nullptr) < 0)
         {
-            lprintf(LO_INFO, "couldn't open audio with desired format (%s))\n",
-                    SDL_GetError());
+            lprintf(
+                LO_INFO, "couldn't open audio with desired format (%s))\n",
+                SDL_GetError()
+            );
             nosfxparm = true;
             nomusicparm = true;
             return;
@@ -767,8 +776,10 @@ void I_InitSound()
         sound_inited_once = true; // e6y
         sound_inited = true;
         SAMPLECOUNT = audio.samples;
-        lprintf(LO_INFO, " configured audio device with %d samples/slice\n",
-                SAMPLECOUNT);
+        lprintf(
+            LO_INFO, " configured audio device with %d samples/slice\n",
+            SAMPLECOUNT
+        );
     }
     if (first_sound_init)
     {
@@ -831,9 +842,10 @@ unsigned char *I_GrabSound(int len)
 }
 
 // NSM helper routine for some of the streaming audio
-void I_ResampleStream(void *dest, unsigned nsamp,
-                      void (*proc)(void *dest, unsigned nsamp),
-                      unsigned sratein, unsigned srateout)
+void I_ResampleStream(
+    void *dest, unsigned nsamp, void (*proc)(void *dest, unsigned nsamp),
+    unsigned sratein, unsigned srateout
+)
 { // assumes 16 bit signed interleaved stereo
 
     unsigned i;
@@ -931,8 +943,9 @@ void I_ShutdownMusic()
         S_StopMusic();
         for (i = 0; i < MUSIC_TMP_EXT; i++)
         {
-            name = (char *)malloc(strlen(music_tmp) + strlen(music_tmp_ext[i]) +
-                                  1);
+            name = (char *)malloc(
+                strlen(music_tmp) + strlen(music_tmp_ext[i]) + 1
+            );
             sprintf(name, "%s%s", music_tmp, music_tmp_ext[i]);
             if (!unlink(name))
             {
@@ -962,9 +975,11 @@ void I_InitMusic()
             int fd = mkstemp(music_tmp);
             if (fd < 0)
             {
-                lprintf(LO_ERROR,
-                        "I_InitMusic: failed to create music temp file %s",
-                        music_tmp);
+                lprintf(
+                    LO_ERROR,
+                    "I_InitMusic: failed to create music temp file %s",
+                    music_tmp
+                );
                 free(music_tmp);
                 music_tmp = nullptr;
                 return;
@@ -979,8 +994,10 @@ void I_InitMusic()
     }
     return;
 #endif
-    lprintf(LO_INFO, "I_InitMusic: Was compiled without SDL_Mixer support.  "
-                     "You should enable experimental music.\n");
+    lprintf(
+        LO_INFO, "I_InitMusic: Was compiled without SDL_Mixer support.  "
+                 "You should enable experimental music.\n"
+    );
 }
 
 void I_PlaySong(int handle, int looping)
@@ -1136,8 +1153,9 @@ int I_RegisterSong(const void *data, size_t len)
         {
             // Current SDL_mixer (up to 1.2.8) cannot load some MP3 and OGG
             // without proper extension
-            name = (char *)malloc(strlen(music_tmp) + strlen(music_tmp_ext[i]) +
-                                  1);
+            name = (char *)malloc(
+                strlen(music_tmp) + strlen(music_tmp_ext[i]) + 1
+            );
             sprintf(name, "%s%s", music_tmp, music_tmp_ext[i]);
 
             if (strlen(music_tmp_ext[i]) == 0)
@@ -1339,8 +1357,8 @@ char music_player_order[NUM_MUS_PLAYERS][200] = {
 // prefered MIDI device
 const char *snd_midiplayer;
 
-const char *midiplayers[midi_player_last + 1] = {"sdl", "fluidsynth", "opl2",
-                                                 "portmidi", nullptr};
+const char *midiplayers[midi_player_last + 1] = {
+    "sdl", "fluidsynth", "opl2", "portmidi", nullptr};
 
 static int current_player = -1;
 static const void *music_handle = nullptr;
@@ -1532,27 +1550,33 @@ static int Exp_RegisterSongEx(const void *data, size_t len, int try_mus2mid)
                             current_player = i;
                             music_handle = temp_handle;
                             SDL_UnlockMutex(musmutex);
-                            lprintf(LO_INFO, "Exp_RegisterSongEx: Using %s\n",
-                                    music_players[i]->name());
+                            lprintf(
+                                LO_INFO, "Exp_RegisterSongEx: Using %s\n",
+                                music_players[i]->name()
+                            );
                             return 1;
                         }
                     }
                     else
                     {
-                        lprintf(LO_INFO,
-                                "Exp_RegisterSongEx: Music player %s on "
-                                "preferred list but it failed to init\n",
-                                music_players[i]->name());
+                        lprintf(
+                            LO_INFO,
+                            "Exp_RegisterSongEx: Music player %s on "
+                            "preferred list but it failed to init\n",
+                            music_players[i]->name()
+                        );
                     }
                 }
             }
             if (!found)
             {
-                lprintf(LO_INFO,
-                        "Exp_RegisterSongEx: Couldn't find preferred music "
-                        "player %s in list\n  (typo or support not included at "
-                        "compile time)\n",
-                        music_player_order[j]);
+                lprintf(
+                    LO_INFO,
+                    "Exp_RegisterSongEx: Couldn't find preferred music "
+                    "player %s in list\n  (typo or support not included at "
+                    "compile time)\n",
+                    music_player_order[j]
+                );
             }
         }
         // load failed

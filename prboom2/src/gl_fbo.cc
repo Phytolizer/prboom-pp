@@ -110,26 +110,31 @@ static dboolean gld_CreateScreenSizeFBO()
 
     internalFormat =
         (attach_stencil ? GL_DEPTH_STENCIL_EXT : GL_DEPTH_COMPONENT);
-    GLEXT_glRenderbufferStorageEXT(GL_RENDERBUFFER_EXT, internalFormat,
-                                   SCREENWIDTH, SCREENHEIGHT);
+    GLEXT_glRenderbufferStorageEXT(
+        GL_RENDERBUFFER_EXT, internalFormat, SCREENWIDTH, SCREENHEIGHT
+    );
 
     // attach a renderbuffer to depth attachment point
     GLEXT_glFramebufferRenderbufferEXT(
         GL_FRAMEBUFFER_EXT, GL_DEPTH_ATTACHMENT_EXT, GL_RENDERBUFFER_EXT,
-        glDepthBufferFBOTexID);
+        glDepthBufferFBOTexID
+    );
 
     if (attach_stencil)
     {
         // attach a renderbuffer to stencil attachment point
         GLEXT_glFramebufferRenderbufferEXT(
             GL_FRAMEBUFFER_EXT, GL_STENCIL_ATTACHMENT_EXT, GL_RENDERBUFFER_EXT,
-            glDepthBufferFBOTexID);
+            glDepthBufferFBOTexID
+        );
     }
 
     glGenTextures(1, &glSceneImageTextureFBOTexID);
     glBindTexture(GL_TEXTURE_2D, glSceneImageTextureFBOTexID);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, SCREENWIDTH, SCREENHEIGHT, 0,
-                 GL_RGBA, GL_UNSIGNED_BYTE, nullptr);
+    glTexImage2D(
+        GL_TEXTURE_2D, 0, GL_RGBA8, SCREENWIDTH, SCREENHEIGHT, 0, GL_RGBA,
+        GL_UNSIGNED_BYTE, nullptr
+    );
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
@@ -143,9 +148,10 @@ static dboolean gld_CreateScreenSizeFBO()
     // revision thus rendering the problem non-existent.
     PRBOOM_TRY(EXEPTION_glFramebufferTexture2DEXT)
     {
-        GLEXT_glFramebufferTexture2DEXT(GL_FRAMEBUFFER_EXT,
-                                        GL_COLOR_ATTACHMENT0_EXT, GL_TEXTURE_2D,
-                                        glSceneImageTextureFBOTexID, 0);
+        GLEXT_glFramebufferTexture2DEXT(
+            GL_FRAMEBUFFER_EXT, GL_COLOR_ATTACHMENT0_EXT, GL_TEXTURE_2D,
+            glSceneImageTextureFBOTexID, 0
+        );
         status = GLEXT_glCheckFramebufferStatusEXT(GL_FRAMEBUFFER_EXT);
     }
     PRBOOM_EXCEPT(EXEPTION_glFramebufferTexture2DEXT)
@@ -156,10 +162,12 @@ static dboolean gld_CreateScreenSizeFBO()
     }
     else
     {
-        lprintf(LO_ERROR,
-                "gld_CreateScreenSizeFBO: Cannot create framebuffer object "
-                "(error code: %d)\n",
-                status);
+        lprintf(
+            LO_ERROR,
+            "gld_CreateScreenSizeFBO: Cannot create framebuffer object "
+            "(error code: %d)\n",
+            status
+        );
     }
 
     return (status == GL_FRAMEBUFFER_COMPLETE_EXT);

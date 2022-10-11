@@ -85,8 +85,10 @@ static int PCSound_Linux_Init(pcsound_callback_func callback_func)
     {
         // Don't have permissions for the console device?
 
-        lprintf(LO_WARN, "PCSound_Linux_Init: Failed to open '%s': %s\n",
-                CONSOLE_DEVICE, strerror(errno));
+        lprintf(
+            LO_WARN, "PCSound_Linux_Init: Failed to open '%s': %s\n",
+            CONSOLE_DEVICE, strerror(errno)
+        );
         return 0;
     }
 

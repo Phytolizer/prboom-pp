@@ -92,7 +92,8 @@ void gld_InitMapPics()
 
             surf_raw = IMG_Load_RW(
                 SDL_RWFromConstMem(W_CacheLumpNum(lump), W_LumpLength(lump)),
-                true);
+                true
+            );
 
             surf = SDL_ConvertSurface(surf_raw, &RGBAFormat, 0);
             SDL_FreeSurface(surf_raw);
@@ -108,23 +109,27 @@ void gld_InitMapPics()
                 if (gl_arb_texture_non_power_of_two)
                 {
                     glTexParameteri(GL_TEXTURE_2D, GL_GENERATE_MIPMAP, GL_TRUE);
-                    glTexImage2D(GL_TEXTURE_2D, 0, gl_tex_format, surf->w,
-                                 surf->h, 0, GL_RGBA, GL_UNSIGNED_BYTE,
-                                 surf->pixels);
+                    glTexImage2D(
+                        GL_TEXTURE_2D, 0, gl_tex_format, surf->w, surf->h, 0,
+                        GL_RGBA, GL_UNSIGNED_BYTE, surf->pixels
+                    );
                 }
                 else
                 {
-                    gluBuild2DMipmaps(GL_TEXTURE_2D, gl_tex_format, surf->w,
-                                      surf->h, GL_RGBA, GL_UNSIGNED_BYTE,
-                                      surf->pixels);
+                    gluBuild2DMipmaps(
+                        GL_TEXTURE_2D, gl_tex_format, surf->w, surf->h, GL_RGBA,
+                        GL_UNSIGNED_BYTE, surf->pixels
+                    );
                 }
 
                 glTexParameteri(
                     GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,
-                    GL_LINEAR_MIPMAP_LINEAR); // tex_filter[MIP_PATCH].min_filter);
+                    GL_LINEAR_MIPMAP_LINEAR
+                ); // tex_filter[MIP_PATCH].min_filter);
                 glTexParameteri(
                     GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER,
-                    GL_LINEAR); // tex_filter[MIP_PATCH].mag_filter);
+                    GL_LINEAR
+                ); // tex_filter[MIP_PATCH].mag_filter);
                 glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
                 glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
 
@@ -136,9 +141,10 @@ void gld_InitMapPics()
     }
 }
 
-void gld_AddNiceThing(int type, float x, float y, float radius, float angle,
-                      unsigned char r, unsigned char g, unsigned char b,
-                      unsigned char a)
+void gld_AddNiceThing(
+    int type, float x, float y, float radius, float angle, unsigned char r,
+    unsigned char g, unsigned char b, unsigned char a
+)
 {
     map_things[type].emplace_back();
     map_nice_thing_t &thing = map_things[type].back();
@@ -158,14 +164,18 @@ void gld_AddNiceThing(int type, float x, float y, float radius, float angle,
         thing.v[index].a = a;                                                  \
     }
 
-    MAP_NICE_THING_INIT(0, x + sina_r + cosa_r, y - cosa_r + sina_r, 1.0f,
-                        0.0f);
-    MAP_NICE_THING_INIT(1, x + sina_r - cosa_r, y - cosa_r - sina_r, 0.0f,
-                        0.0f);
-    MAP_NICE_THING_INIT(2, x - sina_r - cosa_r, y + cosa_r - sina_r, 0.0f,
-                        1.0f);
-    MAP_NICE_THING_INIT(3, x - sina_r + cosa_r, y + cosa_r + sina_r, 1.0f,
-                        1.0f);
+    MAP_NICE_THING_INIT(
+        0, x + sina_r + cosa_r, y - cosa_r + sina_r, 1.0f, 0.0f
+    );
+    MAP_NICE_THING_INIT(
+        1, x + sina_r - cosa_r, y - cosa_r - sina_r, 0.0f, 0.0f
+    );
+    MAP_NICE_THING_INIT(
+        2, x - sina_r - cosa_r, y + cosa_r - sina_r, 0.0f, 1.0f
+    );
+    MAP_NICE_THING_INIT(
+        3, x - sina_r + cosa_r, y + cosa_r + sina_r, 1.0f, 1.0f
+    );
 
 #undef MAP_NICE_THING_INIT
 }
@@ -207,8 +217,9 @@ void gld_DrawNiceThings(int fx, int fy, int fw, int fh)
             // activate and specify pointers to arrays
             glVertexPointer(2, GL_FLOAT, sizeof(thing.v[0]), &thing.v[0].x);
             glTexCoordPointer(2, GL_FLOAT, sizeof(thing.v[0]), &thing.v[0].u);
-            glColorPointer(4, GL_UNSIGNED_BYTE, sizeof(thing.v[0]),
-                           &thing.v[0].r);
+            glColorPointer(
+                4, GL_UNSIGNED_BYTE, sizeof(thing.v[0]), &thing.v[0].r
+            );
 
             glDrawArrays(GL_QUADS, 0, things.size() * 4);
         }

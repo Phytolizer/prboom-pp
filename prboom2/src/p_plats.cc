@@ -62,8 +62,9 @@ void T_PlatRaise(plat_t *plat)
     switch (plat->status)
     {
     case up: // plat moving up
-        res = T_MovePlane(plat->sector, plat->speed, plat->high, plat->crush, 0,
-                          1);
+        res = T_MovePlane(
+            plat->sector, plat->speed, plat->high, plat->crush, 0, 1
+        );
 
         if (heretic && !(leveltime & 31))
         {
@@ -76,8 +77,9 @@ void T_PlatRaise(plat_t *plat)
         {
             if (!(leveltime & 7))
             {
-                S_StartSound((mobj_t *)&plat->sector->soundorg,
-                             g_sfx_stnmov_plats);
+                S_StartSound(
+                    (mobj_t *)&plat->sector->soundorg, g_sfx_stnmov_plats
+                );
             }
         }
 
@@ -94,11 +96,13 @@ void T_PlatRaise(plat_t *plat)
                 // For these types vanilla did not initialize plat->low in
                 // EV_DoPlat, so they may descend to any depth, or not at all.
                 // See https://sourceforge.net/p/prboom-plus/bugs/211/ .
-                lprintf(LO_WARN,
-                        "T_PlatRaise: raise-and-change type has reversed "
-                        "direction in compatibility mode - may lead to desync\n"
-                        " gametic: %d sector: %d complevel: %d\n",
-                        gametic, plat->sector->iSectorID, compatibility_level);
+                lprintf(
+                    LO_WARN,
+                    "T_PlatRaise: raise-and-change type has reversed "
+                    "direction in compatibility mode - may lead to desync\n"
+                    " gametic: %d sector: %d complevel: %d\n",
+                    gametic, plat->sector->iSectorID, compatibility_level
+                );
             }
         }
         else // else handle reaching end of up stroke
@@ -110,8 +114,9 @@ void T_PlatRaise(plat_t *plat)
                 {
                     plat->count = plat->wait;
                     plat->status = waiting;
-                    S_StartSound((mobj_t *)&plat->sector->soundorg,
-                                 g_sfx_pstop);
+                    S_StartSound(
+                        (mobj_t *)&plat->sector->soundorg, g_sfx_pstop
+                    );
                 }
                 else // else go into stasis awaiting next toggle activation
                 {

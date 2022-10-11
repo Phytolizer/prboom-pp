@@ -74,7 +74,8 @@ static void gld_AddGlobalVertexes(int count)
     {
         gld_max_vertexes += count + 1024;
         flats_vbo = static_cast<vbo_xyz_uv_t *>(
-            std::realloc(flats_vbo, gld_max_vertexes * sizeof(flats_vbo[0])));
+            std::realloc(flats_vbo, gld_max_vertexes * sizeof(flats_vbo[0]))
+        );
     }
 }
 
@@ -95,14 +96,17 @@ static void gld_AddGlobalVertexes(int count)
 static dboolean gld_PointOnSide(vertex_t *p, divline_t *d)
 {
     // We'll return false if the point c is on the left side.
-    return ((FIX2DBL(d->y) - FIX2DBL(p->y)) * FIX2DBL(d->dx) -
-                (FIX2DBL(d->x) - FIX2DBL(p->x)) * FIX2DBL(d->dy) >=
-            0);
+    return (
+        (FIX2DBL(d->y) - FIX2DBL(p->y)) * FIX2DBL(d->dx) -
+            (FIX2DBL(d->x) - FIX2DBL(p->x)) * FIX2DBL(d->dy) >=
+        0
+    );
 }
 
 // Lines start-end and fdiv must intersect.
-static void gld_CalcIntersectionVertex(vertex_t *s, vertex_t *e, divline_t *d,
-                                       vertex_t *i)
+static void gld_CalcIntersectionVertex(
+    vertex_t *s, vertex_t *e, divline_t *d, vertex_t *i
+)
 {
     double ax = FIX2DBL(s->x), ay = FIX2DBL(s->y), bx = FIX2DBL(e->x),
            by = FIX2DBL(e->y);
@@ -118,8 +122,9 @@ static void gld_CalcIntersectionVertex(vertex_t *s, vertex_t *e, divline_t *d,
 
 // Returns a pointer to the list of points. It must be used.
 //
-static vertex_t *gld_FlatEdgeClipper(int *numpoints, vertex_t *points,
-                                     int numclippers, divline_t *clippers)
+static vertex_t *gld_FlatEdgeClipper(
+    int *numpoints, vertex_t *points, int numclippers, divline_t *clippers
+)
 {
     unsigned char sidelist[MAX_CC_SIDES];
     int i, k, num = *numpoints;
@@ -150,24 +155,29 @@ static vertex_t *gld_FlatEdgeClipper(int *numpoints, vertex_t *points,
             {
                 vertex_t newvert;
 
-                gld_CalcIntersectionVertex(&points[startIdx], &points[endIdx],
-                                           curclip, &newvert);
+                gld_CalcIntersectionVertex(
+                    &points[startIdx], &points[endIdx], curclip, &newvert
+                );
 
                 // Add the new vertex. Also modify the sidelist.
-                points = (vertex_t *)std::realloc(points,
-                                                  (++num) * sizeof(vertex_t));
+                points = (vertex_t *)std::realloc(
+                    points, (++num) * sizeof(vertex_t)
+                );
                 if (num >= MAX_CC_SIDES)
                 {
                     I_Error("gld_FlatEdgeClipper: Too many points in carver");
                 }
 
                 // Make room for the new vertex.
-                memmove(&points[endIdx + 1], &points[endIdx],
-                        (num - endIdx - 1) * sizeof(vertex_t));
+                memmove(
+                    &points[endIdx + 1], &points[endIdx],
+                    (num - endIdx - 1) * sizeof(vertex_t)
+                );
                 memcpy(&points[endIdx], &newvert, sizeof(newvert));
 
-                memmove(&sidelist[endIdx + 1], &sidelist[endIdx],
-                        num - endIdx - 1);
+                memmove(
+                    &sidelist[endIdx + 1], &sidelist[endIdx], num - endIdx - 1
+                );
                 sidelist[endIdx] = 1;
 
                 // Skip over the new vertex.
@@ -180,8 +190,9 @@ static vertex_t *gld_FlatEdgeClipper(int *numpoints, vertex_t *points,
         {
             if (!sidelist[k])
             {
-                memmove(&points[k], &points[k + 1],
-                        (num - k - 1) * sizeof(vertex_t));
+                memmove(
+                    &points[k], &points[k + 1], (num - k - 1) * sizeof(vertex_t)
+                );
                 memmove(&sidelist[k], &sidelist[k + 1], num - k - 1);
                 num--;
                 k--;
@@ -200,8 +211,9 @@ static vertex_t *gld_FlatEdgeClipper(int *numpoints, vertex_t *points,
             points[i].y == points[previdx].y)
         {
             // This point (i) must be removed.
-            memmove(&points[i], &points[i + 1],
-                    sizeof(vertex_t) * (num - i - 1));
+            memmove(
+                &points[i], &points[i + 1], sizeof(vertex_t) * (num - i - 1)
+            );
             num--;
             i--;
         }
@@ -263,8 +275,10 @@ static void gld_FlatConvexCarver(int ssidx, int num, divline_t *list)
     {
         if (levelinfo)
         {
-            fprintf(levelinfo, "All carved away: subsector %li - sector %i\n",
-                    ssec - subsectors, ssec->sector->iSectorID);
+            fprintf(
+                levelinfo, "All carved away: subsector %li - sector %i\n",
+                ssec - subsectors, ssec->sector->iSectorID
+            );
         }
     }
     else
@@ -291,7 +305,8 @@ static void gld_FlatConvexCarver(int ssidx, int num, divline_t *list)
 
                 (*loopcount)++;
                 (*loop) = static_cast<GLLoopDef *>(
-                    std::realloc((*loop), sizeof(GLLoopDef) * (*loopcount)));
+                    std::realloc((*loop), sizeof(GLLoopDef) * (*loopcount))
+                );
                 ((*loop)[(*loopcount) - 1]).index = ssidx;
                 ((*loop)[(*loopcount) - 1]).mode = GL_TRIANGLE_FAN;
                 ((*loop)[(*loopcount) - 1]).vertexcount = numedgepoints;
@@ -398,9 +413,10 @@ static void CALLBACK ntessBegin(GLenum type)
     sectorloops[currentsector].loopcount++;
     // reallocate to get space for another loop
     // PU_LEVEL is used, so this gets freed before a new level is loaded
-    sectorloops[currentsector].loops = static_cast<GLLoopDef *>(
-        std::realloc(sectorloops[currentsector].loops,
-                     sizeof(GLLoopDef) * sectorloops[currentsector].loopcount));
+    sectorloops[currentsector].loops = static_cast<GLLoopDef *>(std::realloc(
+        sectorloops[currentsector].loops,
+        sizeof(GLLoopDef) * sectorloops[currentsector].loopcount
+    ));
     // set initial values for current loop
     // currentloop is -> sectorloops[currentsector].loopcount-1
     sectorloops[currentsector]
@@ -434,31 +450,38 @@ static void CALLBACK ntessError(GLenum error)
 //
 // called when the two or more vertexes are on the same coordinate
 
-static void CALLBACK ntessCombine(GLdouble coords[3], vertex_t *vert[4],
-                                  GLfloat w[4], void **dataOut)
+static void CALLBACK ntessCombine(
+    GLdouble coords[3], vertex_t *vert[4], GLfloat w[4], void **dataOut
+)
 {
 #ifdef PRBOOM_DEBUG
     if (levelinfo)
     {
-        fprintf(levelinfo,
-                "\t\tVertexCombine Coords: x %10.5f, y %10.5f z %10.5f\n",
-                coords[0], coords[1], coords[2]);
+        fprintf(
+            levelinfo,
+            "\t\tVertexCombine Coords: x %10.5f, y %10.5f z %10.5f\n",
+            coords[0], coords[1], coords[2]
+        );
         if (vert[0])
-            fprintf(levelinfo,
-                    "\t\tVertexCombine Vert1 : x %10i, y %10i p %p\n",
-                    vert[0]->x >> FRACBITS, vert[0]->y >> FRACBITS, vert[0]);
+            fprintf(
+                levelinfo, "\t\tVertexCombine Vert1 : x %10i, y %10i p %p\n",
+                vert[0]->x >> FRACBITS, vert[0]->y >> FRACBITS, vert[0]
+            );
         if (vert[1])
-            fprintf(levelinfo,
-                    "\t\tVertexCombine Vert2 : x %10i, y %10i p %p\n",
-                    vert[1]->x >> FRACBITS, vert[1]->y >> FRACBITS, vert[1]);
+            fprintf(
+                levelinfo, "\t\tVertexCombine Vert2 : x %10i, y %10i p %p\n",
+                vert[1]->x >> FRACBITS, vert[1]->y >> FRACBITS, vert[1]
+            );
         if (vert[2])
-            fprintf(levelinfo,
-                    "\t\tVertexCombine Vert3 : x %10i, y %10i p %p\n",
-                    vert[2]->x >> FRACBITS, vert[2]->y >> FRACBITS, vert[2]);
+            fprintf(
+                levelinfo, "\t\tVertexCombine Vert3 : x %10i, y %10i p %p\n",
+                vert[2]->x >> FRACBITS, vert[2]->y >> FRACBITS, vert[2]
+            );
         if (vert[3])
-            fprintf(levelinfo,
-                    "\t\tVertexCombine Vert4 : x %10i, y %10i p %p\n",
-                    vert[3]->x >> FRACBITS, vert[3]->y >> FRACBITS, vert[3]);
+            fprintf(
+                levelinfo, "\t\tVertexCombine Vert4 : x %10i, y %10i p %p\n",
+                vert[3]->x >> FRACBITS, vert[3]->y >> FRACBITS, vert[3]
+            );
     }
 #endif
     // just return the first vertex, because all vertexes are on the same
@@ -474,8 +497,10 @@ static void CALLBACK ntessVertex(vertex_t *vert)
 {
 #ifdef PRBOOM_DEBUG
     if (levelinfo)
-        fprintf(levelinfo, "\t\tVertex : x %10i, y %10i\n", vert->x >> FRACBITS,
-                vert->y >> FRACBITS);
+        fprintf(
+            levelinfo, "\t\tVertex : x %10i, y %10i\n", vert->x >> FRACBITS,
+            vert->y >> FRACBITS
+        );
 #endif
     // increase vertex count
     sectorloops[currentsector]
@@ -501,11 +526,13 @@ static void CALLBACK ntessEnd()
 {
 #ifdef PRBOOM_DEBUG
     if (levelinfo)
-        fprintf(levelinfo, "\t\tEnd loopcount %i vertexcount %i\n",
-                sectorloops[currentsector].loopcount,
-                sectorloops[currentsector]
-                    .loops[sectorloops[currentsector].loopcount - 1]
-                    .vertexcount);
+        fprintf(
+            levelinfo, "\t\tEnd loopcount %i vertexcount %i\n",
+            sectorloops[currentsector].loopcount,
+            sectorloops[currentsector]
+                .loops[sectorloops[currentsector].loopcount - 1]
+                .vertexcount
+        );
 #endif
 }
 
@@ -555,7 +582,8 @@ static void gld_PrecalculateSector(int num)
 
     currentsector = num;
     lineadded = static_cast<dboolean *>(
-        std::malloc(sectors[num].linecount * sizeof(dboolean)));
+        std::malloc(sectors[num].linecount * sizeof(dboolean))
+    );
     if (!lineadded)
     {
         if (levelinfo)
@@ -576,19 +604,25 @@ static void gld_PrecalculateSector(int num)
         return;
     }
     // set callbacks
-    gluTessCallback(tess, GLU_TESS_BEGIN,
-                    reinterpret_cast<GLvoid (*)()>(ntessBegin));
-    gluTessCallback(tess, GLU_TESS_VERTEX,
-                    reinterpret_cast<GLvoid (*)()>(ntessVertex));
-    gluTessCallback(tess, GLU_TESS_ERROR,
-                    reinterpret_cast<GLvoid (*)()>(ntessError));
-    gluTessCallback(tess, GLU_TESS_COMBINE,
-                    reinterpret_cast<GLvoid (*)()>(ntessCombine));
+    gluTessCallback(
+        tess, GLU_TESS_BEGIN, reinterpret_cast<GLvoid (*)()>(ntessBegin)
+    );
+    gluTessCallback(
+        tess, GLU_TESS_VERTEX, reinterpret_cast<GLvoid (*)()>(ntessVertex)
+    );
+    gluTessCallback(
+        tess, GLU_TESS_ERROR, reinterpret_cast<GLvoid (*)()>(ntessError)
+    );
+    gluTessCallback(
+        tess, GLU_TESS_COMBINE, reinterpret_cast<GLvoid (*)()>(ntessCombine)
+    );
     gluTessCallback(tess, GLU_TESS_END, ntessEnd);
     if (levelinfo)
     {
-        fprintf(levelinfo, "sector %i, %i lines in sector\n", num,
-                sectors[num].linecount);
+        fprintf(
+            levelinfo, "sector %i, %i lines in sector\n", num,
+            sectors[num].linecount
+        );
     }
     // remove any line which has both sides in the same sector (i.e. Doom2 Map01
     // Sector 1)
@@ -605,10 +639,12 @@ static void gld_PrecalculateSector(int num)
                     lineadded[i] = true;
                     if (levelinfo)
                     {
-                        fprintf(levelinfo,
-                                "line %4i (iLineID %4i) has both sides in same "
-                                "sector (removed)\n",
-                                i, sectors[num].lines[i]->iLineID);
+                        fprintf(
+                            levelinfo,
+                            "line %4i (iLineID %4i) has both sides in same "
+                            "sector (removed)\n",
+                            i, sectors[num].lines[i]->iLineID
+                        );
                     }
                 }
             }
@@ -667,8 +703,8 @@ static void gld_PrecalculateSector(int num)
                 {
                     currentline = i;
                     currentloop++;
-                    if ((sectors[num].lines[currentline]->sidenum[0] !=
-                         NO_INDEX)
+                    if ((sectors[num].lines[currentline]->sidenum[0] != NO_INDEX
+                        )
                             ? (sides
                                    [sectors[num].lines[currentline]->sidenum[0]]
                                        .sector == &sectors[num])
@@ -719,10 +755,12 @@ static void gld_PrecalculateSector(int num)
             // v2 is ending vertex
             currentvertex = sectors[num].lines[currentline]->v2;
             // calculate the angle of this line for use below
-            lineangle = R_PointToAngle2(sectors[num].lines[currentline]->v1->x,
-                                        sectors[num].lines[currentline]->v1->y,
-                                        sectors[num].lines[currentline]->v2->x,
-                                        sectors[num].lines[currentline]->v2->y);
+            lineangle = R_PointToAngle2(
+                sectors[num].lines[currentline]->v1->x,
+                sectors[num].lines[currentline]->v1->y,
+                sectors[num].lines[currentline]->v2->x,
+                sectors[num].lines[currentline]->v2->y
+            );
             lineangle = (lineangle >> ANGLETOFINESHIFT) * 360 / 8192;
 
             // e6y: direction of a line shouldn't be changed
@@ -731,11 +769,13 @@ static void gld_PrecalculateSector(int num)
 
             if (levelinfo)
             {
-                fprintf(levelinfo,
-                        "\t\tAdded Line %4i to Loop, iLineID %5i, Angle: %4i, "
-                        "flipped false\n",
-                        currentline, sectors[num].lines[currentline]->iLineID,
-                        lineangle);
+                fprintf(
+                    levelinfo,
+                    "\t\tAdded Line %4i to Loop, iLineID %5i, Angle: %4i, "
+                    "flipped false\n",
+                    currentline, sectors[num].lines[currentline]->iLineID,
+                    lineangle
+                );
             }
         }
         else // ... or on the back side
@@ -743,10 +783,12 @@ static void gld_PrecalculateSector(int num)
             // v1 is ending vertex
             currentvertex = sectors[num].lines[currentline]->v1;
             // calculate the angle of this line for use below
-            lineangle = R_PointToAngle2(sectors[num].lines[currentline]->v2->x,
-                                        sectors[num].lines[currentline]->v2->y,
-                                        sectors[num].lines[currentline]->v1->x,
-                                        sectors[num].lines[currentline]->v1->y);
+            lineangle = R_PointToAngle2(
+                sectors[num].lines[currentline]->v2->x,
+                sectors[num].lines[currentline]->v2->y,
+                sectors[num].lines[currentline]->v1->x,
+                sectors[num].lines[currentline]->v1->y
+            );
             lineangle = (lineangle >> ANGLETOFINESHIFT) * 360 / 8192;
 
             // e6y: direction of a line shouldn't be changed
@@ -755,18 +797,21 @@ static void gld_PrecalculateSector(int num)
 
             if (levelinfo)
             {
-                fprintf(levelinfo,
-                        "\t\tAdded Line %4i to Loop, iLineID %5i, Angle: %4i, "
-                        "flipped true\n",
-                        currentline, sectors[num].lines[currentline]->iLineID,
-                        lineangle);
+                fprintf(
+                    levelinfo,
+                    "\t\tAdded Line %4i to Loop, iLineID %5i, Angle: %4i, "
+                    "flipped true\n",
+                    currentline, sectors[num].lines[currentline]->iLineID,
+                    lineangle
+                );
             }
         }
         if (vertexnum >= maxvertexnum)
         {
             maxvertexnum += 512;
             v = static_cast<double *>(
-                std::realloc(v, maxvertexnum * 3 * sizeof(double)));
+                std::realloc(v, maxvertexnum * 3 * sizeof(double))
+            );
         }
         // calculate coordinates for the glu tesselation functions
         v[vertexnum * 3 + 0] = -(double)currentvertex->x / (double)MAP_SCALE;
@@ -777,8 +822,10 @@ static void gld_PrecalculateSector(int num)
         // vertex
         if (levelinfo)
         {
-            fprintf(levelinfo, "\t\tgluTessVertex(%i, %i)\n",
-                    currentvertex->x >> FRACBITS, currentvertex->y >> FRACBITS);
+            fprintf(
+                levelinfo, "\t\tgluTessVertex(%i, %i)\n",
+                currentvertex->x >> FRACBITS, currentvertex->y >> FRACBITS
+            );
         }
         gluTessVertex(tess, &v[vertexnum * 3], currentvertex);
         // increase vertexindex
@@ -811,17 +858,21 @@ static void gld_PrecalculateSector(int num)
                                    .sector == &sectors[num])
                             : false)
                     {
-                        angle = R_PointToAngle2(sectors[num].lines[i]->v1->x,
-                                                sectors[num].lines[i]->v1->y,
-                                                sectors[num].lines[i]->v2->x,
-                                                sectors[num].lines[i]->v2->y);
+                        angle = R_PointToAngle2(
+                            sectors[num].lines[i]->v1->x,
+                            sectors[num].lines[i]->v1->y,
+                            sectors[num].lines[i]->v2->x,
+                            sectors[num].lines[i]->v2->y
+                        );
                     }
                     else
                     {
-                        angle = R_PointToAngle2(sectors[num].lines[i]->v2->x,
-                                                sectors[num].lines[i]->v2->y,
-                                                sectors[num].lines[i]->v1->x,
-                                                sectors[num].lines[i]->v1->y);
+                        angle = R_PointToAngle2(
+                            sectors[num].lines[i]->v2->x,
+                            sectors[num].lines[i]->v2->y,
+                            sectors[num].lines[i]->v1->x,
+                            sectors[num].lines[i]->v1->y
+                        );
                     }
                     angle = (angle >> ANGLETOFINESHIFT) * 360 / 8192;
 
@@ -866,11 +917,11 @@ static void gld_PrecalculateSector(int num)
                         // (180 - AB)) == (angle-(180-lineangle))
                         if (D_abs((int)(angle - (180 - lineangle))) <
                             D_abs((int)bestangle))
-                    {
-                        bestline = i;
-                        bestangle = angle - (180 - lineangle);
-                        bestlinecount++;
-                    }
+                        {
+                            bestline = i;
+                            bestangle = angle - (180 - lineangle);
+                            bestlinecount++;
+                        }
                 }
             }
         }
@@ -881,8 +932,9 @@ static void gld_PrecalculateSector(int num)
             {
                 if (levelinfo)
                 {
-                    fprintf(levelinfo, "\t\tBestlinecount: %4i\n",
-                            bestlinecount);
+                    fprintf(
+                        levelinfo, "\t\tBestlinecount: %4i\n", bestlinecount
+                    );
                 }
             }
         }
@@ -954,7 +1006,8 @@ static void gld_GetSubSectorVertices()
 
             (*loopcount)++;
             (*loop) = static_cast<GLLoopDef *>(
-                std::realloc((*loop), sizeof(GLLoopDef) * (*loopcount)));
+                std::realloc((*loop), sizeof(GLLoopDef) * (*loopcount))
+            );
             ((*loop)[(*loopcount) - 1]).index = i;
             ((*loop)[(*loopcount) - 1]).mode = GL_TRIANGLE_FAN;
             ((*loop)[(*loopcount) - 1]).vertexcount = numedgepoints;
@@ -1124,7 +1177,8 @@ static void gld_PreprocessSectors()
     if (numsubsectors)
     {
         subsectorloops = static_cast<GLMapSubsector *>(
-            std::malloc(sizeof(GLMapSubsector) * numsubsectors));
+            std::malloc(sizeof(GLMapSubsector) * numsubsectors)
+        );
         if (!subsectorloops)
         {
             I_Error("gld_PreprocessSectors: Not enough memory for array "
@@ -1166,9 +1220,11 @@ static void gld_PreprocessSectors()
     if (numvertexes)
     {
         vertexcheck = static_cast<char *>(
-            std::malloc(numvertexes * sizeof(vertexcheck[0])));
+            std::malloc(numvertexes * sizeof(vertexcheck[0]))
+        );
         vertexcheck2 = static_cast<char *>(
-            std::malloc(numvertexes * sizeof(vertexcheck2[0])));
+            std::malloc(numvertexes * sizeof(vertexcheck2[0]))
+        );
         if (!vertexcheck || !vertexcheck2)
         {
             if (levelinfo)
@@ -1223,14 +1279,17 @@ static void gld_PreprocessSectors()
         if (sectors[i].linecount < 3)
         {
 #ifdef PRBOOM_DEBUG
-            lprintf(LO_ERROR, "sector %i is not closed! %i lines in sector\n",
-                    i, sectors[i].linecount);
+            lprintf(
+                LO_ERROR, "sector %i is not closed! %i lines in sector\n", i,
+                sectors[i].linecount
+            );
 #endif
             if (levelinfo)
             {
-                fprintf(levelinfo,
-                        "sector %i is not closed! %i lines in sector\n", i,
-                        sectors[i].linecount);
+                fprintf(
+                    levelinfo, "sector %i is not closed! %i lines in sector\n",
+                    i, sectors[i].linecount
+                );
             }
             sectors[i].flags &= ~SECTOR_IS_CLOSED;
         }
@@ -1242,17 +1301,21 @@ static void gld_PreprocessSectors()
                 if ((vertexcheck[j] == 1) || (vertexcheck[j] == 2))
                 {
 #ifdef PRBOOM_DEBUG
-                    lprintf(LO_ERROR,
-                            "sector %i is not closed at vertex %i ! %i lines "
-                            "in sector\n",
-                            i, j, sectors[i].linecount);
+                    lprintf(
+                        LO_ERROR,
+                        "sector %i is not closed at vertex %i ! %i lines "
+                        "in sector\n",
+                        i, j, sectors[i].linecount
+                    );
 #endif
                     if (levelinfo)
                     {
-                        fprintf(levelinfo,
-                                "sector %i is not closed at vertex %i ! %i "
-                                "lines in sector\n",
-                                i, j, sectors[i].linecount);
+                        fprintf(
+                            levelinfo,
+                            "sector %i is not closed at vertex %i ! %i "
+                            "lines in sector\n",
+                            i, j, sectors[i].linecount
+                        );
                     }
                     sectors[i].flags &= ~SECTOR_IS_CLOSED;
                 }
@@ -1269,7 +1332,8 @@ static void gld_PreprocessSectors()
             if (vertexcheck2[v1num] < 2 && vertexcheck2[v2num] < 2)
             {
                 sectors[i].lines[j]->r_flags = static_cast<line_t::r_flags_t>(
-                    sectors[i].lines[j]->r_flags | line_t::RF_ISOLATED);
+                    sectors[i].lines[j]->r_flags | line_t::RF_ISOLATED
+                );
             }
         }
 
@@ -1397,9 +1461,10 @@ void gld_PreprocessLevel()
             // bind VBO in order to use
             GLEXT_glBindBufferARB(GL_ARRAY_BUFFER, flats_vbo_id);
             // upload data to VBO
-            GLEXT_glBufferDataARB(GL_ARRAY_BUFFER,
-                                  gld_num_vertexes * sizeof(flats_vbo[0]),
-                                  flats_vbo, GL_STATIC_DRAW_ARB);
+            GLEXT_glBufferDataARB(
+                GL_ARRAY_BUFFER, gld_num_vertexes * sizeof(flats_vbo[0]),
+                flats_vbo, GL_STATIC_DRAW_ARB
+            );
 
             free(flats_vbo);
             flats_vbo = nullptr;

@@ -58,11 +58,12 @@ using dsda_split_state_t = struct
     int delay;
 };
 
-dsda_split_state_t dsda_split_state[] = {{"Blue Key", 0, 0},
-                                         {"Yellow Key", 0, 0},
-                                         {"Red Key", 0, 0},
-                                         {"Use", 2, 0},
-                                         {"Secret", 0, 0}};
+dsda_split_state_t dsda_split_state[] = {
+    {"Blue Key", 0, 0},
+    {"Yellow Key", 0, 0},
+    {"Red Key", 0, 0},
+    {"Use", 2, 0},
+    {"Secret", 0, 0}};
 
 dsda_split_text_t dsda_split;
 
@@ -72,23 +73,28 @@ dsda_text_t dsda_intermission_time;
 
 static void dsda_InitExHud(patchnum_t *font)
 {
-    HUlib_initTextLine(&dsda_exhud_timer.text, DSDA_TEXT_X,
-                       200 - g_st_height - 16, font, HU_FONTSTART, g_cr_gray,
-                       VPT_ALIGN_LEFT_BOTTOM);
+    HUlib_initTextLine(
+        &dsda_exhud_timer.text, DSDA_TEXT_X, 200 - g_st_height - 16, font,
+        HU_FONTSTART, g_cr_gray, VPT_ALIGN_LEFT_BOTTOM
+    );
 
-    HUlib_initTextLine(&dsda_exhud_max_totals.text, DSDA_TEXT_X,
-                       200 - g_st_height - 8, font, HU_FONTSTART, g_cr_gray,
-                       VPT_ALIGN_LEFT_BOTTOM);
+    HUlib_initTextLine(
+        &dsda_exhud_max_totals.text, DSDA_TEXT_X, 200 - g_st_height - 8, font,
+        HU_FONTSTART, g_cr_gray, VPT_ALIGN_LEFT_BOTTOM
+    );
 }
 
 void dsda_InitHud(patchnum_t *font)
 {
-    HUlib_initTextLine(&dsda_split.text, DSDA_TEXT_X, DSDA_SPLIT_Y, font,
-                       HU_FONTSTART, g_cr_gray, VPT_ALIGN_LEFT);
+    HUlib_initTextLine(
+        &dsda_split.text, DSDA_TEXT_X, DSDA_SPLIT_Y, font, HU_FONTSTART,
+        g_cr_gray, VPT_ALIGN_LEFT
+    );
 
-    HUlib_initTextLine(&dsda_intermission_time.text, DSDA_TEXT_X,
-                       DSDA_INTERMISSION_TIME_Y, font, HU_FONTSTART, g_cr_gray,
-                       VPT_ALIGN_LEFT);
+    HUlib_initTextLine(
+        &dsda_intermission_time.text, DSDA_TEXT_X, DSDA_INTERMISSION_TIME_Y,
+        font, HU_FONTSTART, g_cr_gray, VPT_ALIGN_LEFT
+    );
 
     dsda_InitExHud(font);
 }
@@ -97,9 +103,10 @@ void dsda_DrawIntermissionTime()
 {
     char *s;
 
-    snprintf(dsda_intermission_time.msg, sizeof(dsda_intermission_time.msg),
-             "%d:%05.2f", leveltime / 35 / 60,
-             (float)(leveltime % (60 * 35)) / 35);
+    snprintf(
+        dsda_intermission_time.msg, sizeof(dsda_intermission_time.msg),
+        "%d:%05.2f", leveltime / 35 / 60, (float)(leveltime % (60 * 35)) / 35
+    );
 
     HUlib_clearTextLine(&dsda_intermission_time.text);
 
@@ -116,8 +123,8 @@ static dboolean dsda_ExHudVisible()
 {
     return dsda_ExHud() &&               // extended hud turned on
            viewheight != SCREENHEIGHT && // not zoomed in
-           (!(automapmode & am_active) ||
-            (automapmode & am_overlay)); // automap inactive
+           (!(automapmode & am_active) || (automapmode & am_overlay)
+           ); // automap inactive
 }
 
 static void dsda_UpdateExHud()
@@ -127,19 +134,21 @@ static void dsda_UpdateExHud()
     // Timer - from hu_stuff.c
     if (totalleveltimes)
     {
-        snprintf(dsda_exhud_timer.msg, sizeof(dsda_exhud_timer.msg),
-                 "\x1b%ctime \x1b%c%d:%02d \x1b%c%d:%05.2f ", g_cr_gray + 0x30,
-                 g_cr_gold + 0x30, (totalleveltimes + leveltime) / 35 / 60,
-                 ((totalleveltimes + leveltime) % (60 * 35)) / 35,
-                 g_cr_green + 0x30, leveltime / 35 / 60,
-                 (float)(leveltime % (60 * 35)) / 35);
+        snprintf(
+            dsda_exhud_timer.msg, sizeof(dsda_exhud_timer.msg),
+            "\x1b%ctime \x1b%c%d:%02d \x1b%c%d:%05.2f ", g_cr_gray + 0x30,
+            g_cr_gold + 0x30, (totalleveltimes + leveltime) / 35 / 60,
+            ((totalleveltimes + leveltime) % (60 * 35)) / 35, g_cr_green + 0x30,
+            leveltime / 35 / 60, (float)(leveltime % (60 * 35)) / 35
+        );
     }
     else
     {
-        snprintf(dsda_exhud_timer.msg, sizeof(dsda_exhud_timer.msg),
-                 "\x1b%ctime \x1b%c%d:%05.2f ", g_cr_gray + 0x30,
-                 g_cr_green + 0x30, leveltime / 35 / 60,
-                 (float)(leveltime % (60 * 35)) / 35);
+        snprintf(
+            dsda_exhud_timer.msg, sizeof(dsda_exhud_timer.msg),
+            "\x1b%ctime \x1b%c%d:%05.2f ", g_cr_gray + 0x30, g_cr_green + 0x30,
+            leveltime / 35 / 60, (float)(leveltime % (60 * 35)) / 35
+        );
     }
 
     HUlib_clearTextLine(&dsda_exhud_timer.text);
@@ -177,11 +186,13 @@ static void dsda_UpdateExHud()
                     i == displayplayer ? 0x30 + g_cr_green : 0x30 + g_cr_gray;
                 if (playerscount == 0)
                 {
-                    allkills_len = sprintf(allkills, "\x1b%c%d", color,
-                                           players[i].killcount -
-                                               players[i].maxkilldiscount);
-                    allsecrets_len = sprintf(allsecrets, "\x1b%c%d", color,
-                                             players[i].secretcount);
+                    allkills_len = sprintf(
+                        allkills, "\x1b%c%d", color,
+                        players[i].killcount - players[i].maxkilldiscount
+                    );
+                    allsecrets_len = sprintf(
+                        allsecrets, "\x1b%c%d", color, players[i].secretcount
+                    );
                 }
                 else
                 {
@@ -189,10 +200,12 @@ static void dsda_UpdateExHud()
                     {
                         allkills_len += sprintf(
                             &allkills[allkills_len], "\x1b%c+%d", color,
-                            players[i].killcount - players[i].maxkilldiscount);
-                        allsecrets_len +=
-                            sprintf(&allsecrets[allsecrets_len], "\x1b%c+%d",
-                                    color, players[i].secretcount);
+                            players[i].killcount - players[i].maxkilldiscount
+                        );
+                        allsecrets_len += sprintf(
+                            &allsecrets[allsecrets_len], "\x1b%c+%d", color,
+                            players[i].secretcount
+                        );
                     }
                 }
                 playerscount++;
@@ -203,10 +216,12 @@ static void dsda_UpdateExHud()
                 kill_percent_count += players[i].killcount;
             }
         }
-        killcolor = (fullkillcount >= max_kill_requirement ? 0x30 + g_cr_blue
-                                                           : 0x30 + g_cr_gold);
-        secretcolor = (fullsecretcount >= totalsecret ? 0x30 + g_cr_blue
-                                                      : 0x30 + g_cr_gold);
+        killcolor =
+            (fullkillcount >= max_kill_requirement ? 0x30 + g_cr_blue
+                                                   : 0x30 + g_cr_gold);
+        secretcolor =
+            (fullsecretcount >= totalsecret ? 0x30 + g_cr_blue
+                                            : 0x30 + g_cr_gold);
         itemcolor =
             (fullitemcount >= totalitems ? 0x30 + g_cr_blue : 0x30 + g_cr_gold);
         kill_percent_color =
@@ -223,7 +238,8 @@ static void dsda_UpdateExHud()
                 0x30 + g_cr_red, killcolor, fullkillcount, max_kill_requirement,
                 kill_percent_color, kill_percent, 0x30 + g_cr_red, itemcolor,
                 players[displayplayer].itemcount, totalitems, 0x30 + g_cr_red,
-                secretcolor, fullsecretcount, totalsecret);
+                secretcolor, fullsecretcount, totalsecret
+            );
         }
         else
         {
@@ -235,7 +251,8 @@ static void dsda_UpdateExHud()
                 max_kill_requirement, kill_percent_color, kill_percent,
                 0x30 + g_cr_red, itemcolor, players[displayplayer].itemcount,
                 totalitems, 0x30 + g_cr_red, allsecrets, secretcolor,
-                fullsecretcount, totalsecret);
+                fullsecretcount, totalsecret
+            );
         }
     }
 
@@ -328,8 +345,10 @@ void dsda_AddSplit(dsda_split_class_t split_class)
     // to match the timer, we use the leveltime value at the end of the frame
     minutes = (leveltime + 1) / 35 / 60;
     seconds = (float)((leveltime + 1) % (60 * 35)) / 35;
-    snprintf(dsda_split.msg, DSDA_SPLIT_SIZE, "%d:%05.2f - %s", minutes,
-             seconds, split_state->msg);
+    snprintf(
+        dsda_split.msg, DSDA_SPLIT_SIZE, "%d:%05.2f - %s", minutes, seconds,
+        split_state->msg
+    );
 
     HUlib_clearTextLine(&dsda_split.text);
 

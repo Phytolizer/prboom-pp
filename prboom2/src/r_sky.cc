@@ -64,8 +64,9 @@ void R_InitSkyMap()
         skytexturemid = 100 * FRACUNIT;
         if (viewwidth != 0)
         {
-            skyiscale = (fixed_t)(((uint_64_t)FRACUNIT * SCREENWIDTH * 200) /
-                                  (viewwidth * SCREENHEIGHT));
+            skyiscale = (fixed_t
+            )(((uint_64_t)FRACUNIT * SCREENWIDTH * 200) /
+              (viewwidth * SCREENHEIGHT));
         }
     }
     else
@@ -114,8 +115,9 @@ void R_InitSkyMap()
         if (viewwidth != 0 && viewheight != 0)
         {
             // skyiscale = 200 * FRACUNIT / freelookviewheight;
-            skyiscale = (fixed_t)(((uint_64_t)FRACUNIT * SCREENWIDTH * 200) /
-                                  (viewwidth * SCREENHEIGHT));
+            skyiscale = (fixed_t
+            )(((uint_64_t)FRACUNIT * SCREENWIDTH * 200) /
+              (viewwidth * SCREENHEIGHT));
             // line below is from zdoom, but it works incorrectly with prboom
             // with widescreen resolutions (eg 1280x720) by some reasons
             // skyiscale = (fixed_t)((int_64_t)skyiscale * FieldOfView / 2048);

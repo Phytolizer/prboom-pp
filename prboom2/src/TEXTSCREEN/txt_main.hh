@@ -149,8 +149,9 @@ void TXT_StringCopy(char *dest, const char *src, std::size_t dest_len);
 void TXT_StringConcat(char *dest, const char *src, std::size_t dest_len);
 
 // Safe version of vsnprintf().
-int TXT_vsnprintf(char *buf, std::size_t buf_len, const char *s,
-                  std::va_list args);
+int TXT_vsnprintf(
+    char *buf, std::size_t buf_len, const char *s, std::va_list args
+);
 
 // Safe version of snprintf().
 int TXT_snprintf(char *buf, std::size_t buf_len, const char *s, ...);

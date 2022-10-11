@@ -117,8 +117,9 @@ int idmusnum;
 
 void S_StopChannel(int cnum);
 
-int S_AdjustSoundParams(mobj_t *listener, mobj_t *source, int *vol, int *sep,
-                        int *pitch);
+int S_AdjustSoundParams(
+    mobj_t *listener, mobj_t *source, int *vol, int *sep, int *pitch
+);
 
 static int S_getChannel(void *origin, sfxinfo_t *sfxinfo, int is_pickup);
 
@@ -131,8 +132,9 @@ static int AmbChan = -1;
 static void Heretic_S_StopSound(void *_origin);
 static void Heretic_S_UpdateSounds(mobj_t *listener);
 static void Heretic_S_StartSound(void *_origin, int sound_id);
-static void Heretic_S_StartSoundAtVolume(void *_origin, int sound_id,
-                                         int volume);
+static void Heretic_S_StartSoundAtVolume(
+    void *_origin, int sound_id, int volume
+);
 
 // Initializes sound stuff, including volume
 // Sets channels, SFX and music volume,
@@ -271,13 +273,17 @@ void S_Start(void)
 
         if (heretic)
         {
-            mnum = heretic_mus_e1m1 + WRAP((gameepisode - 1) * 9 + gamemap - 1,
-                                           HERETIC_NUMMUSIC - heretic_mus_e1m1);
+            mnum = heretic_mus_e1m1 + WRAP(
+                                          (gameepisode - 1) * 9 + gamemap - 1,
+                                          HERETIC_NUMMUSIC - heretic_mus_e1m1
+                                      );
         }
         else if (gameepisode < 4)
         {
-            mnum = mus_e1m1 + WRAP((gameepisode - 1) * 9 + gamemap - 1,
-                                   mus_runnin - mus_e1m1);
+            mnum = mus_e1m1 + WRAP(
+                                  (gameepisode - 1) * 9 + gamemap - 1,
+                                  mus_runnin - mus_e1m1
+                              );
         }
         else
         {
@@ -361,8 +367,7 @@ void S_StartSoundAtVolume(void *origin_p, int sfx_id, int volume)
         sep = NORM_SEP;
         volume *= 8;
     }
-    else if (S_AdjustSoundParams(players[displayplayer].mo, origin, &volume,
-                                 &sep, &pitch) == 0)
+    else if (S_AdjustSoundParams(players[displayplayer].mo, origin, &volume, &sep, &pitch) == 0)
     {
         return;
     }
@@ -563,9 +568,11 @@ void S_UpdateSounds(void *listener_p)
                 // or modify their params
                 if (c->origin && listener_p != c->origin) // killough 3/20/98
                 {
-                    if (!S_AdjustSoundParams(static_cast<mobj_t *>(listener),
-                                             static_cast<mobj_t *>(c->origin),
-                                             &volume, &sep, &pitch))
+                    if (!S_AdjustSoundParams(
+                            static_cast<mobj_t *>(listener),
+                            static_cast<mobj_t *>(c->origin), &volume, &sep,
+                            &pitch
+                        ))
                     {
                         S_StopChannel(cnum);
                     }
@@ -761,8 +768,8 @@ void S_StopMusic()
         I_UnRegisterSong(mus_playing->handle);
         if (mus_playing->lumpnum >= 0)
         {
-            W_UnlockLumpNum(
-                mus_playing->lumpnum); // cph - release the music data
+            W_UnlockLumpNum(mus_playing->lumpnum
+            ); // cph - release the music data
         }
 
         mus_playing->data = nullptr;
@@ -818,8 +825,9 @@ void S_StopChannel(int cnum)
 // Otherwise, modifies parameters and returns 1.
 //
 
-int S_AdjustSoundParams(mobj_t *listener, mobj_t *source, int *vol, int *sep,
-                        int *pitch)
+int S_AdjustSoundParams(
+    mobj_t *listener, mobj_t *source, int *vol, int *sep, int *pitch
+)
 {
     fixed_t adx, ady, approx_dist;
     angle_t angle;
@@ -1221,8 +1229,9 @@ static void Heretic_S_StartSound(void *_origin, int sound_id)
     }
 }
 
-static void Heretic_S_StartSoundAtVolume(void *_origin, int sound_id,
-                                         int volume)
+static void Heretic_S_StartSoundAtVolume(
+    void *_origin, int sound_id, int volume
+)
 {
     sfxinfo_t *sfx;
     mobj_t *origin;

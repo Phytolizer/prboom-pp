@@ -191,9 +191,10 @@ void R_SmoothPlaying_Reset(player_t *player)
             if (player->mo)
             {
                 smooth_playing_angle = player->mo->angle;
-                memset(smooth_playing_turns, 0,
-                       sizeof(smooth_playing_turns[0]) *
-                           SMOOTH_PLAYING_MAXFACTOR);
+                memset(
+                    smooth_playing_turns, 0,
+                    sizeof(smooth_playing_turns[0]) * SMOOTH_PLAYING_MAXFACTOR
+                );
                 smooth_playing_sum = 0;
                 smooth_playing_index = 0;
             }
@@ -344,8 +345,9 @@ void W_FreePWADTable(wadtbl_t *wadtbl)
     free(wadtbl->data);
 }
 
-void W_AddLump(wadtbl_t *wadtbl, const char *name, const byte *data,
-               size_t size)
+void W_AddLump(
+    wadtbl_t *wadtbl, const char *name, const byte *data, size_t size
+)
 {
     int lumpnum;
 
@@ -360,7 +362,8 @@ void W_AddLump(wadtbl_t *wadtbl, const char *name, const byte *data,
     if (name)
     {
         wadtbl->lumps = static_cast<filelump_t *>(
-            realloc(wadtbl->lumps, (lumpnum + 1) * sizeof(wadtbl->lumps[0])));
+            realloc(wadtbl->lumps, (lumpnum + 1) * sizeof(wadtbl->lumps[0]))
+        );
 
         memcpy(wadtbl->lumps[lumpnum].name, name, 8);
         wadtbl->lumps[lumpnum].size = size;
@@ -508,9 +511,12 @@ void R_DemoEx_WriteMLook(angle_t pitch)
             mlook_lump.maxtick = mlook_lump.tick * 2;
         }
         mlook_lump.data = static_cast<short *>(realloc(
-            mlook_lump.data, mlook_lump.maxtick * sizeof(mlook_lump.data[0])));
-        memset(mlook_lump.data + ticks, 0,
-               (mlook_lump.maxtick - ticks) * sizeof(mlook_lump.data[0]));
+            mlook_lump.data, mlook_lump.maxtick * sizeof(mlook_lump.data[0])
+        ));
+        memset(
+            mlook_lump.data + ticks, 0,
+            (mlook_lump.maxtick - ticks) * sizeof(mlook_lump.data[0])
+        );
     }
 
     mlook_lump.data[mlook_lump.tick] = (short)(pitch >> 16);
@@ -581,21 +587,24 @@ static void R_DemoEx_GetParams(const byte *pwad_p, waddata_t *waddata)
     M_ParseCmdLine(str, nullptr, nullptr, &paramscount, &i);
 
     params = static_cast<char **>(
-        malloc(paramscount * sizeof(char *) + i * sizeof(char) + 1));
+        malloc(paramscount * sizeof(char *) + i * sizeof(char) + 1)
+    );
     if (params)
     {
         struct
         {
             const char *param;
             wad_source_t source;
-        } files[] = {{"-iwad", source_iwad},
-                     {"-file", source_pwad},
-                     {"-deh", source_deh},
-                     {nullptr}};
+        } files[] = {
+            {"-iwad", source_iwad},
+            {"-file", source_pwad},
+            {"-deh", source_deh},
+            {nullptr}};
 
-        M_ParseCmdLine(str, params,
-                       ((char *)params) + sizeof(char *) * paramscount,
-                       &paramscount, &i);
+        M_ParseCmdLine(
+            str, params, ((char *)params) + sizeof(char *) * paramscount,
+            &paramscount, &i
+        );
 
         if (!M_CheckParm("-iwad") && !M_CheckParm("-file"))
         {
@@ -699,7 +708,8 @@ static void R_DemoEx_GetParams(const byte *pwad_p, waddata_t *waddata)
                 char *pstr, *mask;
 
                 mask = static_cast<char *>(
-                    malloc(strlen(overflow_cfgname[overflow]) + 16));
+                    malloc(strlen(overflow_cfgname[overflow]) + 16)
+                );
                 if (mask)
                 {
                     sprintf(mask, "-set %s", overflow_cfgname[overflow]);
@@ -867,8 +877,10 @@ static void R_DemoEx_AddParams(wadtbl_t *wadtbl)
         {
             if (overflows[overflow].shit_happens)
             {
-                sprintf(buf, "-set %s=%d ", overflow_cfgname[overflow],
-                        overflows[overflow].emulate);
+                sprintf(
+                    buf, "-set %s=%d ", overflow_cfgname[overflow],
+                    overflows[overflow].emulate
+                );
                 AddString(&files, buf);
             }
         }
@@ -876,8 +888,9 @@ static void R_DemoEx_AddParams(wadtbl_t *wadtbl)
 
     if (files)
     {
-        W_AddLump(wadtbl, DEMOEX_PARAMS_LUMPNAME, (const byte *)files,
-                  strlen(files));
+        W_AddLump(
+            wadtbl, DEMOEX_PARAMS_LUMPNAME, (const byte *)files, strlen(files)
+        );
     }
 }
 
@@ -895,8 +908,10 @@ static void R_DemoEx_AddMouseLookData(wadtbl_t *wadtbl)
     {
         if (mlook_lump.data[i] != 0)
         {
-            W_AddLump(wadtbl, mlook_lump.name, (const byte *)mlook_lump.data,
-                      mlook_lump.tick * sizeof(mlook_lump.data[0]));
+            W_AddLump(
+                wadtbl, mlook_lump.name, (const byte *)mlook_lump.data,
+                mlook_lump.tick * sizeof(mlook_lump.data[0])
+            );
             break;
         }
         i++;
@@ -1152,8 +1167,10 @@ static int G_ReadDemoFooter(const char *filename)
                 strcat(tmp_path, "/");
             }
 
-            doom_snprintf(demoex_filename, sizeof(demoex_filename),
-                          template_format, tmp_path);
+            doom_snprintf(
+                demoex_filename, sizeof(demoex_filename), template_format,
+                tmp_path
+            );
 #ifdef HAVE_MKSTEMP
             if (mkstemp(demoex_filename) == -1)
             {
@@ -1169,8 +1186,9 @@ static int G_ReadDemoFooter(const char *filename)
 
     if (!demoex_filename[0])
     {
-        lprintf(LO_ERROR,
-                "G_ReadDemoFooter: failed to create demoex temp file");
+        lprintf(
+            LO_ERROR, "G_ReadDemoFooter: failed to create demoex temp file"
+        );
     }
     else
     {
@@ -1183,65 +1201,70 @@ static int G_ReadDemoFooter(const char *filename)
             size_t i;
             waddata_t waddata;
 
-            if (!CheckWadBufIntegrity(reinterpret_cast<const char *>(demoex_p),
-                                      size))
+            if (!CheckWadBufIntegrity(
+                    reinterpret_cast<const char *>(demoex_p), size
+                ))
             {
-                lprintf(LO_ERROR,
-                        "G_ReadDemoFooter: demo footer is corrupted\n");
+                lprintf(
+                    LO_ERROR, "G_ReadDemoFooter: demo footer is corrupted\n"
+                );
             }
             else
                 // write an additional info from a demo to demoex.wad
                 if (!M_WriteFile(demoex_filename, demoex_p, size))
-            {
-                lprintf(
-                    LO_ERROR,
-                    "G_ReadDemoFooter: failed to create demoex temp file %s\n",
-                    demoex_filename);
-            }
-            else
-            {
-                // add demoex.wad to the wads list
-                D_AddFile(demoex_filename, source_auto_load);
-
-                // cache demoex.wad for immediately getting its data with
-                // W_CacheLumpName
-                W_Init();
-
-                WadDataInit(&waddata);
-
-                // enumerate and save all auto-loaded files and demo for future
-                // use
-                for (i = 0; i < numwadfiles; i++)
                 {
-                    if (wadfiles[i].src == source_auto_load ||
-                        wadfiles[i].src == source_pre ||
-                        wadfiles[i].src == source_lmp)
-                    {
-                        WadDataAddItem(&waddata, wadfiles[i].name,
-                                       wadfiles[i].src, 0);
-                    }
+                    lprintf(
+                        LO_ERROR,
+                        "G_ReadDemoFooter: failed to create demoex temp file "
+                        "%s\n",
+                        demoex_filename
+                    );
                 }
-
-                // get needed wads and dehs from demoex.wad
-                // restore all critical params like -spechit x
-                R_DemoEx_GetParams(buffer, &waddata);
-
-                // replace old wadfiles with the new ones
-                if (waddata.numwadfiles)
+                else
                 {
-                    for (i = 0; (size_t)i < waddata.numwadfiles; i++)
+                    // add demoex.wad to the wads list
+                    D_AddFile(demoex_filename, source_auto_load);
+
+                    // cache demoex.wad for immediately getting its data with
+                    // W_CacheLumpName
+                    W_Init();
+
+                    WadDataInit(&waddata);
+
+                    // enumerate and save all auto-loaded files and demo for
+                    // future use
+                    for (i = 0; i < numwadfiles; i++)
                     {
-                        if (waddata.wadfiles[i].src == source_iwad)
+                        if (wadfiles[i].src == source_auto_load ||
+                            wadfiles[i].src == source_pre ||
+                            wadfiles[i].src == source_lmp)
                         {
-                            W_ReleaseAllWads();
-                            WadDataToWadFiles(&waddata);
-                            result = true;
-                            break;
+                            WadDataAddItem(
+                                &waddata, wadfiles[i].name, wadfiles[i].src, 0
+                            );
                         }
                     }
+
+                    // get needed wads and dehs from demoex.wad
+                    // restore all critical params like -spechit x
+                    R_DemoEx_GetParams(buffer, &waddata);
+
+                    // replace old wadfiles with the new ones
+                    if (waddata.numwadfiles)
+                    {
+                        for (i = 0; (size_t)i < waddata.numwadfiles; i++)
+                        {
+                            if (waddata.wadfiles[i].src == source_iwad)
+                            {
+                                W_ReleaseAllWads();
+                                WadDataToWadFiles(&waddata);
+                                result = true;
+                                break;
+                            }
+                        }
+                    }
+                    WadDataFree(&waddata);
                 }
-                WadDataFree(&waddata);
-            }
             free(buffer);
         }
         else
@@ -1270,40 +1293,57 @@ void G_WriteDemoFooter()
     //
 
     // separators for eye-friendly looking
-    W_AddLump(&demoex, nullptr, (const byte *)DEMOEX_SEPARATOR,
-              strlen(DEMOEX_SEPARATOR));
-    W_AddLump(&demoex, nullptr, (const byte *)DEMOEX_SEPARATOR,
-              strlen(DEMOEX_SEPARATOR));
+    W_AddLump(
+        &demoex, nullptr, (const byte *)DEMOEX_SEPARATOR,
+        strlen(DEMOEX_SEPARATOR)
+    );
+    W_AddLump(
+        &demoex, nullptr, (const byte *)DEMOEX_SEPARATOR,
+        strlen(DEMOEX_SEPARATOR)
+    );
 
     // process format version
-    W_AddLump(&demoex, DEMOEX_VERSION_LUMPNAME, (const byte *)DEMOEX_VERSION,
-              strlen(DEMOEX_VERSION));
-    W_AddLump(&demoex, nullptr, (const byte *)DEMOEX_SEPARATOR,
-              strlen(DEMOEX_SEPARATOR));
+    W_AddLump(
+        &demoex, DEMOEX_VERSION_LUMPNAME, (const byte *)DEMOEX_VERSION,
+        strlen(DEMOEX_VERSION)
+    );
+    W_AddLump(
+        &demoex, nullptr, (const byte *)DEMOEX_SEPARATOR,
+        strlen(DEMOEX_SEPARATOR)
+    );
 
     // process mlook
     R_DemoEx_AddMouseLookData(&demoex);
-    W_AddLump(&demoex, nullptr, (const byte *)DEMOEX_SEPARATOR,
-              strlen(DEMOEX_SEPARATOR));
+    W_AddLump(
+        &demoex, nullptr, (const byte *)DEMOEX_SEPARATOR,
+        strlen(DEMOEX_SEPARATOR)
+    );
 
     // process port name
-    W_AddLump(&demoex, DEMOEX_PORTNAME_LUMPNAME,
-              (const byte *)(PACKAGE_NAME " " PACKAGE_VERSION),
-              strlen(PACKAGE_NAME " " PACKAGE_VERSION));
-    W_AddLump(&demoex, nullptr, (const byte *)DEMOEX_SEPARATOR,
-              strlen(DEMOEX_SEPARATOR));
+    W_AddLump(
+        &demoex, DEMOEX_PORTNAME_LUMPNAME,
+        (const byte *)(PACKAGE_NAME " " PACKAGE_VERSION),
+        strlen(PACKAGE_NAME " " PACKAGE_VERSION)
+    );
+    W_AddLump(
+        &demoex, nullptr, (const byte *)DEMOEX_SEPARATOR,
+        strlen(DEMOEX_SEPARATOR)
+    );
 
     // process iwad, pwads, dehs and critical for demos params like -spechit,
     // etc
     R_DemoEx_AddParams(&demoex);
-    W_AddLump(&demoex, nullptr, (const byte *)DEMOEX_SEPARATOR,
-              strlen(DEMOEX_SEPARATOR));
+    W_AddLump(
+        &demoex, nullptr, (const byte *)DEMOEX_SEPARATOR,
+        strlen(DEMOEX_SEPARATOR)
+    );
 
     // write pwad header, all data and lookup table to the end of a demo
     dsda_WriteToDemo(&demoex.header, sizeof(demoex.header));
     dsda_WriteToDemo(demoex.data, demoex.datasize);
-    dsda_WriteToDemo(demoex.lumps,
-                     demoex.header.numlumps * sizeof(demoex.lumps[0]));
+    dsda_WriteToDemo(
+        demoex.lumps, demoex.header.numlumps * sizeof(demoex.lumps[0])
+    );
 }
 
 int WadDataInit(waddata_t *waddata)
@@ -1338,8 +1378,9 @@ void WadDataFree(waddata_t *waddata)
     }
 }
 
-int WadDataAddItem(waddata_t *waddata, const char *filename,
-                   wad_source_t source, int handle)
+int WadDataAddItem(
+    waddata_t *waddata, const char *filename, wad_source_t source, int handle
+)
 {
     if (!waddata || !filename)
     {
@@ -1347,7 +1388,8 @@ int WadDataAddItem(waddata_t *waddata, const char *filename,
     }
 
     waddata->wadfiles = static_cast<wadfile_info_t *>(realloc(
-        waddata->wadfiles, sizeof(*wadfiles) * (waddata->numwadfiles + 1)));
+        waddata->wadfiles, sizeof(*wadfiles) * (waddata->numwadfiles + 1)
+    ));
     waddata->wadfiles[waddata->numwadfiles].name = strdup(filename);
     waddata->wadfiles[waddata->numwadfiles].src = source;
     waddata->wadfiles[waddata->numwadfiles].handle = handle;
@@ -1357,8 +1399,9 @@ int WadDataAddItem(waddata_t *waddata, const char *filename,
     return true;
 }
 
-int ParseDemoPattern(const char *str, waddata_t *waddata, char **missed,
-                     dboolean trytodownload)
+int ParseDemoPattern(
+    const char *str, waddata_t *waddata, char **missed, dboolean trytodownload
+)
 {
     int processed = 0;
     wadfile_info_t *wadfiles = nullptr;
@@ -1388,7 +1431,8 @@ int ParseDemoPattern(const char *str, waddata_t *waddata, char **missed,
 #endif
         {
             wadfiles = static_cast<wadfile_info_t *>(
-                realloc(wadfiles, sizeof(*wadfiles) * (numwadfiles + 1)));
+                realloc(wadfiles, sizeof(*wadfiles) * (numwadfiles + 1))
+            );
             wadfiles[numwadfiles].name = token;
             wadfiles[numwadfiles].handle = 0;
 
@@ -1418,7 +1462,8 @@ int ParseDemoPattern(const char *str, waddata_t *waddata, char **missed,
             {
                 int len = (*missed ? strlen(*missed) : 0);
                 *missed = static_cast<char *>(
-                    realloc(*missed, len + strlen(pToken) + 100));
+                    realloc(*missed, len + strlen(pToken) + 100)
+                );
                 sprintf(*missed + len, " %s not found\n", pToken);
             }
         }
@@ -1435,8 +1480,9 @@ int ParseDemoPattern(const char *str, waddata_t *waddata, char **missed,
 }
 
 #ifdef HAVE_LIBPCREPOSIX
-int DemoNameToWadData(const char *demoname, waddata_t *waddata,
-                      patterndata_t *patterndata)
+int DemoNameToWadData(
+    const char *demoname, waddata_t *waddata, patterndata_t *patterndata
+)
 {
     int numwadfiles_required = 0;
     int i;
@@ -1471,9 +1517,11 @@ int DemoNameToWadData(const char *demoname, waddata_t *waddata,
 
         if (result != 0)
         {
-            lprintf(LO_WARN,
-                    "Incorrect format of the <%s%d = \"%s\"> config entry\n",
-                    demo_patterns_mask, i, buf);
+            lprintf(
+                LO_WARN,
+                "Incorrect format of the <%s%d = \"%s\"> config entry\n",
+                demo_patterns_mask, i, buf
+            );
         }
         else
         {
@@ -1486,10 +1534,12 @@ int DemoNameToWadData(const char *demoname, waddata_t *waddata,
             if (result != 0)
             {
                 regerror(result, &preg, errbuf, sizeof(errbuf));
-                lprintf(LO_WARN,
-                        "Incorrect regular expressions in the <%s%d = \"%s\"> "
-                        "config entry - %s\n",
-                        demo_patterns_mask, i, buf, errbuf);
+                lprintf(
+                    LO_WARN,
+                    "Incorrect regular expressions in the <%s%d = \"%s\"> "
+                    "config entry - %s\n",
+                    demo_patterns_mask, i, buf, errbuf
+                );
             }
             else
             {
@@ -1499,11 +1549,13 @@ int DemoNameToWadData(const char *demoname, waddata_t *waddata,
                 {
                     numwadfiles_required = ParseDemoPattern(
                         buf + pmatch[3].rm_so, waddata,
-                        (patterndata ? &patterndata->missed : nullptr), true);
+                        (patterndata ? &patterndata->missed : nullptr), true
+                    );
 
                     waddata->wadfiles = static_cast<wadfile_info_t *>(realloc(
                         waddata->wadfiles,
-                        sizeof(*wadfiles) * (waddata->numwadfiles + 1)));
+                        sizeof(*wadfiles) * (waddata->numwadfiles + 1)
+                    ));
                     waddata->wadfiles[waddata->numwadfiles].name =
                         strdup(demoname);
                     waddata->wadfiles[waddata->numwadfiles].src = source_lmp;
@@ -1512,8 +1564,9 @@ int DemoNameToWadData(const char *demoname, waddata_t *waddata,
 
                     if (patterndata)
                     {
-                        len = MIN(pmatch[1].rm_eo - pmatch[1].rm_so,
-                                  sizeof(patterndata->pattern_name) - 1);
+                        len =
+                            MIN(pmatch[1].rm_eo - pmatch[1].rm_so,
+                                sizeof(patterndata->pattern_name) - 1);
                         strncpy(patterndata->pattern_name, buf, len);
                         patterndata->pattern_name[len] = '\0';
 
@@ -1536,8 +1589,9 @@ const char *D_dehout();
 
 void WadDataToWadFiles(waddata_t *waddata)
 {
-    void ProcessDehFile(const char *filename, const char *outfilename,
-                        int lumpnum);
+    void ProcessDehFile(
+        const char *filename, const char *outfilename, int lumpnum
+    );
 
     int i, iwadindex = -1;
 
@@ -1545,8 +1599,9 @@ void WadDataToWadFiles(waddata_t *waddata)
     size_t old_numwadfiles = numwadfiles;
 
     old_numwadfiles = numwadfiles;
-    old_wadfiles = static_cast<wadfile_info_t *>(
-        malloc(sizeof(*(wadfiles)) * numwadfiles));
+    old_wadfiles =
+        static_cast<wadfile_info_t *>(malloc(sizeof(*(wadfiles)) * numwadfiles)
+        );
     memcpy(old_wadfiles, wadfiles, sizeof(*(wadfiles)) * numwadfiles);
 
     free(wadfiles);
@@ -1574,7 +1629,8 @@ void WadDataToWadFiles(waddata_t *waddata)
             old_wadfiles[i].src == source_pre)
         {
             wadfiles = static_cast<wadfile_info_t *>(
-                realloc(wadfiles, sizeof(*wadfiles) * (numwadfiles + 1)));
+                realloc(wadfiles, sizeof(*wadfiles) * (numwadfiles + 1))
+            );
             wadfiles[numwadfiles].name = strdup(old_wadfiles[i].name);
             wadfiles[numwadfiles].src = old_wadfiles[i].src;
             wadfiles[numwadfiles].handle = old_wadfiles[i].handle;
@@ -1587,7 +1643,8 @@ void WadDataToWadFiles(waddata_t *waddata)
         if (waddata->wadfiles[i].src == source_auto_load)
         {
             wadfiles = static_cast<wadfile_info_t *>(
-                realloc(wadfiles, sizeof(*wadfiles) * (numwadfiles + 1)));
+                realloc(wadfiles, sizeof(*wadfiles) * (numwadfiles + 1))
+            );
             wadfiles[numwadfiles].name = strdup(waddata->wadfiles[i].name);
             wadfiles[numwadfiles].src = waddata->wadfiles[i].src;
             wadfiles[numwadfiles].handle = waddata->wadfiles[i].handle;
@@ -1649,8 +1706,9 @@ void WadFilesToWadData(waddata_t *waddata)
 
     for (i = 0; i < (int)numwadfiles; i++)
     {
-        WadDataAddItem(waddata, wadfiles[i].name, wadfiles[i].src,
-                       wadfiles[i].handle);
+        WadDataAddItem(
+            waddata, wadfiles[i].name, wadfiles[i].src, wadfiles[i].handle
+        );
     }
 }
 
@@ -1719,15 +1777,19 @@ int CheckAutoDemo()
                             waddata.numwadfiles &&
                         patterndata.missed)
                     {
-                        I_Warning("DataAutoload: pattern #%i is used\n"
-                                  "%s not all required files are found, may "
-                                  "not work\n",
-                                  patterndata.pattern_num, patterndata.missed);
+                        I_Warning(
+                            "DataAutoload: pattern #%i is used\n"
+                            "%s not all required files are found, may "
+                            "not work\n",
+                            patterndata.pattern_num, patterndata.missed
+                        );
                     }
                     else
                     {
-                        lprintf(LO_WARN, "DataAutoload: pattern #%i is used\n",
-                                patterndata.pattern_num);
+                        lprintf(
+                            LO_WARN, "DataAutoload: pattern #%i is used\n",
+                            patterndata.pattern_num
+                        );
                     }
                     WadDataToWadFiles(&waddata);
                 }
@@ -1766,8 +1828,9 @@ dboolean D_TryGetWad(const char *name)
     strncpy(wadname, PathFindFileName(name), sizeof(wadname) - 4);
     AddDefaultExtension(wadname, ".wad");
 
-    cmdline = static_cast<char *>(
-        malloc(strlen(getwad_cmdline) + strlen(wadname) + 2));
+    cmdline =
+        static_cast<char *>(malloc(strlen(getwad_cmdline) + strlen(wadname) + 2)
+        );
     wadname_p = strstr(getwad_cmdline, "%wadname%");
     if (wadname_p)
     {
@@ -1781,22 +1844,26 @@ dboolean D_TryGetWad(const char *name)
     }
 
     msg = static_cast<char *>(
-        malloc(strlen(format) + strlen(wadname) + strlen(cmdline)));
+        malloc(strlen(format) + strlen(wadname) + strlen(cmdline))
+    );
     sprintf(msg, format, wadname, cmdline);
 
     if (PRB_IDYES == I_MessageBox(msg, PRB_MB_DEFBUTTON2 | PRB_MB_YESNO))
     {
         int ret;
 
-        lprintf(LO_INFO, "D_TryGetWad: Trying to get %s from somewhere\n",
-                name);
+        lprintf(
+            LO_INFO, "D_TryGetWad: Trying to get %s from somewhere\n", name
+        );
 
         ret = system(cmdline);
 
         if (ret != 0)
         {
-            lprintf(LO_ERROR, "D_TryGetWad: Execution failed - %s\n",
-                    strerror(errno));
+            lprintf(
+                LO_ERROR, "D_TryGetWad: Execution failed - %s\n",
+                strerror(errno)
+            );
         }
         else
         {

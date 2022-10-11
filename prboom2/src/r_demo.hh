@@ -92,16 +92,19 @@ extern const char *demo_patterns_list_def[];
 extern const char *getwad_cmdline;
 
 int WadDataInit(waddata_t *waddata);
-int WadDataAddItem(waddata_t *waddata, const char *filename,
-                   wad_source_t source, int handle);
+int WadDataAddItem(
+    waddata_t *waddata, const char *filename, wad_source_t source, int handle
+);
 void WadDataFree(waddata_t *wadfiles);
 
 int CheckDemoExDemo(void);
 int CheckAutoDemo(void);
-int ParseDemoPattern(const char *str, waddata_t *waddata, char **missed,
-                     dboolean trytodownload);
-int DemoNameToWadData(const char *demoname, waddata_t *waddata,
-                      patterndata_t *patterndata);
+int ParseDemoPattern(
+    const char *str, waddata_t *waddata, char **missed, dboolean trytodownload
+);
+int DemoNameToWadData(
+    const char *demoname, waddata_t *waddata, patterndata_t *patterndata
+);
 void WadDataToWadFiles(waddata_t *waddata);
 void WadFilesToWadData(waddata_t *waddata);
 
@@ -114,8 +117,9 @@ void I_DemoExShutdown(void);
 
 void W_InitPWADTable(wadtbl_t *wadtbl);
 void W_FreePWADTable(wadtbl_t *wadtbl);
-void W_AddLump(wadtbl_t *wadtbl, const char *name, const byte *data,
-               size_t size);
+void W_AddLump(
+    wadtbl_t *wadtbl, const char *name, const byte *data, size_t size
+);
 
 extern dboolean use_demoex_info;
 void R_DemoEx_WriteMLook(angle_t pitch);

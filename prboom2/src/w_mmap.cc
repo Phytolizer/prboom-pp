@@ -73,8 +73,10 @@ void W_PrintLump(FILE *fp, void *p)
     for (i = 0; i < numlumps; i++)
         if (cachelump[i].cache == p)
         {
-            fprintf(fp, " %8.8s %6u %2d %6d", lumpinfo[i].name, W_LumpLength(i),
-                    cachelump[i].locks, gametic - cachelump[i].locktic);
+            fprintf(
+                fp, " %8.8s %6u %2d %6d", lumpinfo[i].name, W_LumpLength(i),
+                cachelump[i].locks, gametic - cachelump[i].locktic
+            );
             return;
         }
     fprintf(fp, " not found");
@@ -92,9 +94,11 @@ static void W_ReportLocks(void)
         {
             if (cachelump[i].locks > 0)
             {
-                lprintf(LO_DEBUG, "%8.8s %6u %2d   %6d\n", lumpinfo[i].name,
-                        W_LumpLength(i), cachelump[i].locks,
-                        gametic - cachelump[i].locktic);
+                lprintf(
+                    LO_DEBUG, "%8.8s %6u %2d   %6d\n", lumpinfo[i].name,
+                    W_LumpLength(i), cachelump[i].locks,
+                    gametic - cachelump[i].locktic
+                );
             }
         }
     }
@@ -175,27 +179,36 @@ void W_InitCache(void)
 #endif
             if (!mapped_wad[wad_index].data)
             {
-                mapped_wad[wad_index].hnd =
-                    CreateFile(wadfiles[wad_index].name, GENERIC_READ,
-                               FILE_SHARE_READ | FILE_SHARE_WRITE, nullptr,
-                               OPEN_EXISTING, 0, nullptr);
+                mapped_wad[wad_index].hnd = CreateFile(
+                    wadfiles[wad_index].name, GENERIC_READ,
+                    FILE_SHARE_READ | FILE_SHARE_WRITE, nullptr, OPEN_EXISTING,
+                    0, nullptr
+                );
                 if (mapped_wad[wad_index].hnd == INVALID_HANDLE_VALUE)
-                    I_Error("W_InitCache: CreateFile for memory mapping failed "
-                            "(LastError %i)",
-                            GetLastError());
-                mapped_wad[wad_index].hnd_map =
-                    CreateFileMapping(mapped_wad[wad_index].hnd, nullptr,
-                                      PAGE_READONLY, 0, 0, NULL);
+                    I_Error(
+                        "W_InitCache: CreateFile for memory mapping failed "
+                        "(LastError %i)",
+                        GetLastError()
+                    );
+                mapped_wad[wad_index].hnd_map = CreateFileMapping(
+                    mapped_wad[wad_index].hnd, nullptr, PAGE_READONLY, 0, 0,
+                    NULL
+                );
                 if (mapped_wad[wad_index].hnd_map == nullptr)
-                    I_Error("W_InitCache: CreateFileMapping for memory mapping "
-                            "failed (LastError %i)",
-                            GetLastError());
+                    I_Error(
+                        "W_InitCache: CreateFileMapping for memory mapping "
+                        "failed (LastError %i)",
+                        GetLastError()
+                    );
                 mapped_wad[wad_index].data = MapViewOfFile(
-                    mapped_wad[wad_index].hnd_map, FILE_MAP_READ, 0, 0, 0);
+                    mapped_wad[wad_index].hnd_map, FILE_MAP_READ, 0, 0, 0
+                );
                 if (mapped_wad[wad_index].data == nullptr)
-                    I_Error("W_InitCache: MapViewOfFile for memory mapping "
-                            "failed (LastError %i)",
-                            GetLastError());
+                    I_Error(
+                        "W_InitCache: MapViewOfFile for memory mapping "
+                        "failed (LastError %i)",
+                        GetLastError()
+                    );
             }
         }
     }
@@ -212,8 +225,8 @@ const void *W_CacheLumpNum(int lump)
 #endif
     if (!lumpinfo[lump].wadfile)
         return nullptr;
-    return (void *)((unsigned char *)mapped_wad[wad_index].data +
-                    lumpinfo[lump].position);
+    return (void
+                *)((unsigned char *)mapped_wad[wad_index].data + lumpinfo[lump].position);
 }
 
 #else
@@ -258,9 +271,10 @@ void W_InitCache()
                 int fd = lumpinfo[i].wadfile->handle;
                 if (!mapped_wad[fd])
                 {
-                    if ((mapped_wad[fd] = mmap(nullptr, I_Filelength(fd),
-                                               PROT_READ, MAP_SHARED, fd, 0)) ==
-                        MAP_FAILED)
+                    if ((mapped_wad[fd] = mmap(
+                             nullptr, I_Filelength(fd), PROT_READ, MAP_SHARED,
+                             fd, 0
+                         )) == MAP_FAILED)
                     {
                         I_Error("W_InitCache: failed to mmap");
                     }
@@ -365,8 +379,10 @@ void W_UnlockLumpNum(int lump)
 #ifdef SIMPLECHECKS
     if (cachelump[lump].locks == 0)
     {
-        lprintf(LO_DEBUG, "W_UnlockLumpNum: Excess unlocks on %8s\n",
-                lumpinfo[lump].name);
+        lprintf(
+            LO_DEBUG, "W_UnlockLumpNum: Excess unlocks on %8s\n",
+            lumpinfo[lump].name
+        );
     }
 #endif
     cachelump[lump].locks -= 1;

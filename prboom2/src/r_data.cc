@@ -140,11 +140,13 @@ static void R_InitTextures()
     // Load the patch names from pnames.lmp.
     name[8] = 0;
     names = static_cast<const char *>(
-        W_CacheLumpNum(names_lump = W_GetNumForName("PNAMES")));
+        W_CacheLumpNum(names_lump = W_GetNumForName("PNAMES"))
+    );
     nummappatches = LittleLong(*((const int *)names));
     name_p = names + 4;
-    patchlookup = static_cast<int *>(
-        std::malloc(nummappatches * sizeof(*patchlookup))); // killough
+    patchlookup =
+        static_cast<int *>(std::malloc(nummappatches * sizeof(*patchlookup))
+        ); // killough
 
     for (i = 0; i < nummappatches; i++)
     {
@@ -165,9 +167,10 @@ static void R_InitTextures()
             if (patchlookup[i] == -1 && devparm)
             {
                 // jff 8/3/98 use logical output routine
-                lprintf(LO_WARN,
-                        "\nWarning: patch %.8s, index %d does not exist", name,
-                        i);
+                lprintf(
+                    LO_WARN, "\nWarning: patch %.8s, index %d does not exist",
+                    name, i
+                );
             }
         }
     }
@@ -178,7 +181,8 @@ static void R_InitTextures()
     //  TEXTURE1 for shareware, plus TEXTURE2 for commercial.
 
     maptex = maptex1 = static_cast<const int *>(
-        W_CacheLumpNum(maptex_lump[0] = W_GetNumForName("TEXTURE1")));
+        W_CacheLumpNum(maptex_lump[0] = W_GetNumForName("TEXTURE1"))
+    );
     numtextures1 = LittleLong(*maptex);
     maxoff = W_LumpLength(maptex_lump[0]);
     directory = maptex + 1;
@@ -186,7 +190,8 @@ static void R_InitTextures()
     if (W_CheckNumForName("TEXTURE2") != -1)
     {
         maptex2 = static_cast<const int *>(
-            W_CacheLumpNum(maptex_lump[1] = W_GetNumForName("TEXTURE2")));
+            W_CacheLumpNum(maptex_lump[1] = W_GetNumForName("TEXTURE2"))
+        );
         numtextures2 = LittleLong(*maptex2);
         maxoff2 = W_LumpLength(maptex_lump[1]);
     }
@@ -203,8 +208,9 @@ static void R_InitTextures()
 
     textures =
         static_cast<texture_t **>(std::malloc(numtextures * sizeof *textures));
-    textureheight = static_cast<fixed_t *>(
-        std::malloc(numtextures * sizeof *textureheight));
+    textureheight =
+        static_cast<fixed_t *>(std::malloc(numtextures * sizeof *textureheight)
+        );
 
     for (i = 0; i < numtextures; i++, directory++)
     {
@@ -227,7 +233,8 @@ static void R_InitTextures()
 
         texture = textures[i] = static_cast<texture_t *>(std::malloc(
             sizeof(texture_t) +
-            sizeof(texpatch_t) * (LittleShort(mtexture->patchcount) - 1)));
+            sizeof(texpatch_t) * (LittleShort(mtexture->patchcount) - 1)
+        ));
 
         texture->width = LittleShort(mtexture->width);
         texture->height = LittleShort(mtexture->height);
@@ -283,10 +290,12 @@ static void R_InitTextures()
             if (patch->patch == -1)
             {
                 // jff 8/3/98 use logical output routine
-                lprintf(LO_ERROR,
-                        "\nR_InitTextures: Missing patch %d in texture %.8s",
-                        LittleShort(mpatch->patch),
-                        texture->name); // killough 4/17/98
+                lprintf(
+                    LO_ERROR,
+                    "\nR_InitTextures: Missing patch %d in texture %.8s",
+                    LittleShort(mpatch->patch),
+                    texture->name
+                ); // killough 4/17/98
                 ++errors;
             }
         }
@@ -312,10 +321,12 @@ static void R_InitTextures()
     if (errors)
     {
         const lumpinfo_t *info = W_GetLumpInfoByNum(names_lump);
-        lprintf(LO_INFO,
-                "\nR_InitTextures: The file %s seems to be incompatible with "
-                "\"%s\".\n",
-                info->wadfile->name, (doomverstr ? doomverstr : "DOOM"));
+        lprintf(
+            LO_INFO,
+            "\nR_InitTextures: The file %s seems to be incompatible with "
+            "\"%s\".\n",
+            info->wadfile->name, (doomverstr ? doomverstr : "DOOM")
+        );
         I_Error("R_InitTextures: %d errors", errors);
     }
 
@@ -342,7 +353,8 @@ static void R_InitTextures()
     // clean up malloc-ing to use sizeof
 
     texturetranslation = static_cast<int *>(
-        std::malloc((numtextures + 1) * sizeof *texturetranslation));
+        std::malloc((numtextures + 1) * sizeof *texturetranslation)
+    );
 
     for (i = 0; i < numtextures; i++)
     {
@@ -378,7 +390,8 @@ static void R_InitFlats()
     // clean up malloc-ing to use sizeof
 
     flattranslation = static_cast<int *>(
-        std::malloc((numflats + 1) * sizeof(*flattranslation)));
+        std::malloc((numflats + 1) * sizeof(*flattranslation))
+    );
 
     for (i = 0; i < numflats; i++)
     {
@@ -415,7 +428,8 @@ static void R_InitColormaps()
     lastcolormaplump = W_GetNumForName("C_END");
     numcolormaps = lastcolormaplump - firstcolormaplump;
     colormaps = static_cast<const lighttable_t **>(
-        std::malloc(sizeof(*colormaps) * numcolormaps));
+        std::malloc(sizeof(*colormaps) * numcolormaps)
+    );
     colormaps[0] = W_CacheLumpName<const lighttable_t *>("COLORMAP");
     for (i = 1; i < numcolormaps; i++)
     {
@@ -465,9 +479,9 @@ void R_InitTranMap(int progress)
         main_tranmap =
             static_cast<const byte *>(W_CacheLumpNum(lump)); // killough 4/11/98
     }
-    else if (W_CheckNumForName("PLAYPAL") !=
-             -1) // can be called before WAD loaded
-    {            // Compose a default transparent filter map based on PLAYPAL.
+    else if (W_CheckNumForName("PLAYPAL") != -1) // can be called before WAD
+                                                 // loaded
+    { // Compose a default transparent filter map based on PLAYPAL.
         const byte *playpal = (W_CacheLumpName<const byte *>("PLAYPAL"));
         byte *my_tranmap;
 
@@ -502,8 +516,10 @@ void R_InitTranMap(int progress)
 
             if (progress)
             {
-                lprintf(LO_INFO, "Tranmap build [        "
-                                 "]\x08\x08\x08\x08\x08\x08\x08\x08\x08");
+                lprintf(
+                    LO_INFO, "Tranmap build [        "
+                             "]\x08\x08\x08\x08\x08\x08\x08\x08\x08"
+                );
             }
 
             // First, convert playpal into long int type, and transpose array,
@@ -671,10 +687,12 @@ int PUREFUNC R_TextureNumForName(const char *name) // const added -- killough
     {
         int lump = W_GetNumForName("TEXTURE1");
         const lumpinfo_t *info = W_GetLumpInfoByNum(lump);
-        lprintf(LO_INFO,
-                "R_TextureNumForName: The file %s seems to be incompatible "
-                "with \"%s\".\n",
-                info->wadfile->name, (doomverstr ? doomverstr : "DOOM"));
+        lprintf(
+            LO_INFO,
+            "R_TextureNumForName: The file %s seems to be incompatible "
+            "with \"%s\".\n",
+            info->wadfile->name, (doomverstr ? doomverstr : "DOOM")
+        );
         I_Error("R_TextureNumForName: %.8s not found", name);
     }
     return i;
@@ -721,7 +739,8 @@ void R_PrecacheLevel()
     {
         int size = numflats > numsprites ? numflats : numsprites;
         hitlist = static_cast<byte *>(
-            std::malloc(numtextures > size ? numtextures : size));
+            std::malloc(numtextures > size ? numtextures : size)
+        );
     }
 
     // Precache flats.

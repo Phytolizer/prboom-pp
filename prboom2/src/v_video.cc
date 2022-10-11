@@ -159,8 +159,9 @@ void V_InitFlexTranTable()
             {
                 for (b = 0; b < 32; b++)
                 {
-                    RGB32k[r][g][b] = V_BestColor(palette, MAKECOLOR(r),
-                                                  MAKECOLOR(g), MAKECOLOR(b));
+                    RGB32k[r][g][b] = V_BestColor(
+                        palette, MAKECOLOR(r), MAKECOLOR(g), MAKECOLOR(b)
+                    );
                 }
             }
         }
@@ -221,8 +222,10 @@ void V_InitColorTranslation()
 //
 // No return.
 //
-static void FUNC_V_CopyRect(int srcscrn, int destscrn, int x, int y, int width,
-                            int height, enum patch_translation_e flags)
+static void FUNC_V_CopyRect(
+    int srcscrn, int destscrn, int x, int y, int width, int height,
+    enum patch_translation_e flags
+)
 {
     byte *src;
     byte *dest;
@@ -290,8 +293,10 @@ static void FUNC_V_CopyRect(int srcscrn, int destscrn, int x, int y, int width,
         }                                                                      \
     }
 
-static void FUNC_V_FillFlat(int lump, int scrn, int x, int y, int width,
-                            int height, enum patch_translation_e flags)
+static void FUNC_V_FillFlat(
+    int lump, int scrn, int x, int y, int width, int height,
+    enum patch_translation_e flags
+)
 {
     /* erase the entire screen to a tiled background */
     const byte *data;
@@ -348,8 +353,10 @@ static void FUNC_V_FillFlat(int lump, int scrn, int x, int y, int width,
     W_UnlockLumpNum(lump);
 }
 
-static void FUNC_V_FillPatch(int lump, int scrn, int x, int y, int width,
-                             int height, enum patch_translation_e flags)
+static void FUNC_V_FillPatch(
+    int lump, int scrn, int x, int y, int width, int height,
+    enum patch_translation_e flags
+)
 {
     int sx, sy, w, h;
 
@@ -414,8 +421,10 @@ void V_Init()
 //  means that their inner loops weren't so well optimised, so merging code may
 //  even speed them).
 //
-static void V_DrawMemPatch(int x, int y, int scrn, const rpatch_t *patch,
-                           int cm, enum patch_translation_e flags)
+static void V_DrawMemPatch(
+    int x, int y, int scrn, const rpatch_t *patch, int cm,
+    enum patch_translation_e flags
+)
 {
     const byte *trans;
 
@@ -462,11 +471,13 @@ static void V_DrawMemPatch(int x, int y, int scrn, const rpatch_t *patch,
             y + patch->height > ((flags & VPT_STRETCH) ? 200 : SCREENHEIGHT))
         {
             // killough 1/19/98: improved error message:
-            lprintf(LO_WARN,
-                    "V_DrawMemPatch8: Patch (%d,%d)-(%d,%d) exceeds LFB in "
-                    "vertical direction (horizontal is clipped)\n"
-                    "Bad V_DrawMemPatch8 (flags=%u)",
-                    x, y, x + patch->width, y + patch->height, flags);
+            lprintf(
+                LO_WARN,
+                "V_DrawMemPatch8: Patch (%d,%d)-(%d,%d) exceeds LFB in "
+                "vertical direction (horizontal is clipped)\n"
+                "Bad V_DrawMemPatch8 (flags=%u)",
+                x, y, x + patch->width, y + patch->height, flags
+            );
             return;
         }
 
@@ -588,15 +599,16 @@ static void V_DrawMemPatch(int x, int y, int scrn, const rpatch_t *patch,
 
         if (flags & VPT_TRANS)
         {
-            colfunc =
-                R_GetDrawColumnFunc(RDC_PIPELINE_TRANSLATED,
-                                    drawvars.filterpatch, RDRAW_FILTER_NONE);
+            colfunc = R_GetDrawColumnFunc(
+                RDC_PIPELINE_TRANSLATED, drawvars.filterpatch, RDRAW_FILTER_NONE
+            );
             dcvars.translation = trans;
         }
         else
         {
             colfunc = R_GetDrawColumnFunc(
-                RDC_PIPELINE_STANDARD, drawvars.filterpatch, RDRAW_FILTER_NONE);
+                RDC_PIPELINE_STANDARD, drawvars.filterpatch, RDRAW_FILTER_NONE
+            );
         }
 
         // e6y: predefined arrays are used
@@ -617,10 +629,12 @@ static void V_DrawMemPatch(int x, int y, int scrn, const rpatch_t *patch,
 
             // FIXME: Is it needed only for F_BunnyScroll?
 
-            left = (x < 0 || x > 320 ? (x * params->video->width) / 320
-                                     : params->video->x1lookup[x]);
-            top = (y < 0 || y > 200 ? (y * params->video->height) / 200
-                                    : params->video->y1lookup[y]);
+            left =
+                (x < 0 || x > 320 ? (x * params->video->width) / 320
+                                  : params->video->x1lookup[x]);
+            top =
+                (y < 0 || y > 200 ? (y * params->video->height) / 200
+                                  : params->video->y1lookup[y]);
 
             if (x + patch->width < 0 || x + patch->width > 320)
             {
@@ -689,8 +703,8 @@ static void V_DrawMemPatch(int x, int y, int scrn, const rpatch_t *patch,
             }
 
             dcvars.texu =
-                ((flags & VPT_FLIP) ? ((patch->width << FRACBITS) - col)
-                                    : col) %
+                ((flags & VPT_FLIP) ? ((patch->width << FRACBITS) - col) : col
+                ) %
                 (patch->width << FRACBITS);
 
             // step through the posts in a column
@@ -703,9 +717,10 @@ static void V_DrawMemPatch(int x, int y, int scrn, const rpatch_t *patch,
                 if (!(flags & VPT_STRETCH_MASK))
                 {
                     dcvars.yl = y + post->topdelta;
-                    dcvars.yh = ((((y + post->topdelta + post->length) << 16) -
-                                  (FRACUNIT >> 1)) >>
-                                 FRACBITS);
+                    dcvars.yh =
+                        ((((y + post->topdelta + post->length) << 16) -
+                          (FRACUNIT >> 1)) >>
+                         FRACBITS);
                 }
                 else
                 {
@@ -805,15 +820,17 @@ static void V_DrawMemPatch(int x, int y, int scrn, const rpatch_t *patch,
 // static inline; other compilers have different behaviour.
 // This inline is _only_ for the function below
 
-static void FUNC_V_DrawNumPatch(int x, int y, int scrn, int lump, int cm,
-                                enum patch_translation_e flags)
+static void FUNC_V_DrawNumPatch(
+    int x, int y, int scrn, int lump, int cm, enum patch_translation_e flags
+)
 {
     V_DrawMemPatch(x, y, scrn, R_CachePatchNum(lump), cm, flags);
     R_UnlockPatchNum(lump);
 }
 
-static void FUNC_V_DrawNumPatchPrecise(float x, float y, int scrn, int lump,
-                                       int cm, enum patch_translation_e flags)
+static void FUNC_V_DrawNumPatchPrecise(
+    float x, float y, int scrn, int lump, int cm, enum patch_translation_e flags
+)
 {
     V_DrawMemPatch((int)x, (int)y, scrn, R_CachePatchNum(lump), cm, flags);
     R_UnlockPatchNum(lump);
@@ -892,7 +909,8 @@ void V_UpdateTrueColorPalette(video_mode_t mode)
         {
             // set int palette
             playpal_data->Palettes32 = static_cast<unsigned int *>(
-                malloc(numPals * 256 * sizeof(int) * VID_NUMCOLORWEIGHTS));
+                malloc(numPals * 256 * sizeof(int) * VID_NUMCOLORWEIGHTS)
+            );
             for (p = 0; p < numPals; p++)
             {
                 for (i = 0; i < 256; i++)
@@ -914,9 +932,9 @@ void V_UpdateTrueColorPalette(video_mode_t mode)
                         nr = (int)(r * t + roundUpR);
                         ng = (int)(g * t + roundUpG);
                         nb = (int)(b * t + roundUpB);
-                        playpal_data
-                            ->Palettes32[((p * 256 + i) * VID_NUMCOLORWEIGHTS) +
-                                         w] = ((nr << 16) | (ng << 8) | nb);
+                        playpal_data->Palettes32
+                            [((p * 256 + i) * VID_NUMCOLORWEIGHTS) + w] =
+                            ((nr << 16) | (ng << 8) | nb);
                     }
                 }
             }
@@ -930,7 +948,8 @@ void V_UpdateTrueColorPalette(video_mode_t mode)
         {
             // set short palette
             playpal_data->Palettes16 = static_cast<unsigned short *>(
-                malloc(numPals * 256 * sizeof(short) * VID_NUMCOLORWEIGHTS));
+                malloc(numPals * 256 * sizeof(short) * VID_NUMCOLORWEIGHTS)
+            );
             for (p = 0; p < numPals; p++)
             {
                 for (i = 0; i < 256; i++)
@@ -952,9 +971,9 @@ void V_UpdateTrueColorPalette(video_mode_t mode)
                         nr = (int)((r >> 3) * t + roundUpR);
                         ng = (int)((g >> 2) * t + roundUpG);
                         nb = (int)((b >> 3) * t + roundUpB);
-                        playpal_data
-                            ->Palettes16[((p * 256 + i) * VID_NUMCOLORWEIGHTS) +
-                                         w] = ((nr << 11) | (ng << 5) | nb);
+                        playpal_data->Palettes16
+                            [((p * 256 + i) * VID_NUMCOLORWEIGHTS) + w] =
+                            ((nr << 11) | (ng << 5) | nb);
                     }
                 }
             }
@@ -968,7 +987,8 @@ void V_UpdateTrueColorPalette(video_mode_t mode)
         {
             // set short palette
             playpal_data->Palettes15 = static_cast<unsigned short *>(
-                malloc(numPals * 256 * sizeof(short) * VID_NUMCOLORWEIGHTS));
+                malloc(numPals * 256 * sizeof(short) * VID_NUMCOLORWEIGHTS)
+            );
             for (p = 0; p < numPals; p++)
             {
                 for (i = 0; i < 256; i++)
@@ -990,9 +1010,9 @@ void V_UpdateTrueColorPalette(video_mode_t mode)
                         nr = (int)((r >> 3) * t + roundUpR);
                         ng = (int)((g >> 3) * t + roundUpG);
                         nb = (int)((b >> 3) * t + roundUpB);
-                        playpal_data
-                            ->Palettes15[((p * 256 + i) * VID_NUMCOLORWEIGHTS) +
-                                         w] = ((nr << 10) | (ng << 5) | nb);
+                        playpal_data->Palettes15
+                            [((p * 256 + i) * VID_NUMCOLORWEIGHTS) + w] =
+                            ((nr << 10) | (ng << 5) | nb);
                     }
                 }
             }
@@ -1067,8 +1087,9 @@ void V_SetPlayPal(int playpal_index)
 // V_FillRect
 //
 // CPhipps - New function to fill a rectangle with a given colour
-static void V_FillRect8(int scrn, int x, int y, int width, int height,
-                        byte colour)
+static void V_FillRect8(
+    int scrn, int x, int y, int width, int height, byte colour
+)
 {
     byte *dest = screens[scrn].data + x + y * screens[scrn].byte_pitch;
     while (height--)
@@ -1078,8 +1099,9 @@ static void V_FillRect8(int scrn, int x, int y, int width, int height,
     }
 }
 
-static void V_FillRect15(int scrn, int x, int y, int width, int height,
-                         byte colour)
+static void V_FillRect15(
+    int scrn, int x, int y, int width, int height, byte colour
+)
 {
     unsigned short *dest = (unsigned short *)screens[scrn].data + x +
                            y * screens[scrn].short_pitch;
@@ -1095,8 +1117,9 @@ static void V_FillRect15(int scrn, int x, int y, int width, int height,
     }
 }
 
-static void V_FillRect16(int scrn, int x, int y, int width, int height,
-                         byte colour)
+static void V_FillRect16(
+    int scrn, int x, int y, int width, int height, byte colour
+)
 {
     unsigned short *dest = (unsigned short *)screens[scrn].data + x +
                            y * screens[scrn].short_pitch;
@@ -1112,8 +1135,9 @@ static void V_FillRect16(int scrn, int x, int y, int width, int height,
     }
 }
 
-static void V_FillRect32(int scrn, int x, int y, int width, int height,
-                         byte colour)
+static void V_FillRect32(
+    int scrn, int x, int y, int width, int height, byte colour
+)
 {
     unsigned int *dest =
         (unsigned int *)screens[scrn].data + x + y * screens[scrn].int_pitch;
@@ -1142,42 +1166,52 @@ static void V_PlotPixelWu16(int scrn, int x, int y, byte color, int weight);
 static void V_PlotPixelWu32(int scrn, int x, int y, byte color, int weight);
 
 #ifdef GL_DOOM
-static void WRAP_gld_FillRect(int scrn, int x, int y, int width, int height,
-                              byte colour)
+static void WRAP_gld_FillRect(
+    int scrn, int x, int y, int width, int height, byte colour
+)
 {
     gld_FillBlock(x, y, width, height, colour);
 }
-static void WRAP_gld_CopyRect(int srcscrn, int destscrn, int x, int y,
-                              int width, int height,
-                              enum patch_translation_e flags)
+static void WRAP_gld_CopyRect(
+    int srcscrn, int destscrn, int x, int y, int width, int height,
+    enum patch_translation_e flags
+)
 {
 }
 static void WRAP_gld_DrawBackground(const char *flatname, int n)
 {
     gld_FillFlatName(flatname, 0, 0, SCREENWIDTH, SCREENHEIGHT, VPT_NONE);
 }
-static void WRAP_gld_FillFlat(int lump, int n, int x, int y, int width,
-                              int height, enum patch_translation_e flags)
+static void WRAP_gld_FillFlat(
+    int lump, int n, int x, int y, int width, int height,
+    enum patch_translation_e flags
+)
 {
     gld_FillFlat(lump, x, y, width, height, flags);
 }
-static void WRAP_gld_FillPatch(int lump, int n, int x, int y, int width,
-                               int height, enum patch_translation_e flags)
+static void WRAP_gld_FillPatch(
+    int lump, int n, int x, int y, int width, int height,
+    enum patch_translation_e flags
+)
 {
     gld_FillPatch(lump, x, y, width, height, flags);
 }
-static void WRAP_gld_DrawNumPatch(int x, int y, int scrn, int lump, int cm,
-                                  enum patch_translation_e flags)
+static void WRAP_gld_DrawNumPatch(
+    int x, int y, int scrn, int lump, int cm, enum patch_translation_e flags
+)
 {
     gld_DrawNumPatch(x, y, lump, cm, flags);
 }
-static void WRAP_gld_DrawNumPatchPrecise(float x, float y, int scrn, int lump,
-                                         int cm, enum patch_translation_e flags)
+static void WRAP_gld_DrawNumPatchPrecise(
+    float x, float y, int scrn, int lump, int cm, enum patch_translation_e flags
+)
 {
     gld_DrawNumPatch_f(x, y, lump, cm, flags);
 }
-static void WRAP_gld_DrawBlock(int x, int y, int scrn, int width, int height,
-                               const byte *src, enum patch_translation_e flags)
+static void WRAP_gld_DrawBlock(
+    int x, int y, int scrn, int width, int height, const byte *src,
+    enum patch_translation_e flags
+)
 {
 }
 static void V_PlotPixelGL(int scrn, int x, int y, byte color)
@@ -1195,35 +1229,46 @@ static void WRAP_gld_DrawLine(fline_t *fl, int color)
 }
 #endif
 
-static void NULL_FillRect(int scrn, int x, int y, int width, int height,
-                          byte colour)
+static void NULL_FillRect(
+    int scrn, int x, int y, int width, int height, byte colour
+)
 {
 }
-static void NULL_CopyRect(int srcscrn, int destscrn, int x, int y, int width,
-                          int height, enum patch_translation_e flags)
+static void NULL_CopyRect(
+    int srcscrn, int destscrn, int x, int y, int width, int height,
+    enum patch_translation_e flags
+)
 {
 }
-static void NULL_FillFlat(int lump, int n, int x, int y, int width, int height,
-                          enum patch_translation_e flags)
+static void NULL_FillFlat(
+    int lump, int n, int x, int y, int width, int height,
+    enum patch_translation_e flags
+)
 {
 }
-static void NULL_FillPatch(int lump, int n, int x, int y, int width, int height,
-                           enum patch_translation_e flags)
+static void NULL_FillPatch(
+    int lump, int n, int x, int y, int width, int height,
+    enum patch_translation_e flags
+)
 {
 }
 static void NULL_DrawBackground(const char *flatname, int n)
 {
 }
-static void NULL_DrawNumPatch(int x, int y, int scrn, int lump, int cm,
-                              enum patch_translation_e flags)
+static void NULL_DrawNumPatch(
+    int x, int y, int scrn, int lump, int cm, enum patch_translation_e flags
+)
 {
 }
-static void NULL_DrawNumPatchPrecise(float x, float y, int scrn, int lump,
-                                     int cm, enum patch_translation_e flags)
+static void NULL_DrawNumPatchPrecise(
+    float x, float y, int scrn, int lump, int cm, enum patch_translation_e flags
+)
 {
 }
-static void NULL_DrawBlock(int x, int y, int scrn, int width, int height,
-                           const byte *src, enum patch_translation_e flags)
+static void NULL_DrawBlock(
+    int x, int y, int scrn, int width, int height, const byte *src,
+    enum patch_translation_e flags
+)
 {
 }
 static void NULL_PlotPixel(int scrn, int x, int y, byte color)
@@ -1700,11 +1745,14 @@ void WRAP_V_DrawLineWu(fline_t *fl, int color)
             y += 1; // advance y
 
             // the trick is in the trig!
-            V_PlotPixelWu(0, x, y, (byte)color,
-                          finecosine[erroracc >> wu_fineshift] >>
-                              wu_fixedshift);
-            V_PlotPixelWu(0, x + xdir, y, (byte)color,
-                          finesine[erroracc >> wu_fineshift] >> wu_fixedshift);
+            V_PlotPixelWu(
+                0, x, y, (byte)color,
+                finecosine[erroracc >> wu_fineshift] >> wu_fixedshift
+            );
+            V_PlotPixelWu(
+                0, x + xdir, y, (byte)color,
+                finesine[erroracc >> wu_fineshift] >> wu_fixedshift
+            );
         }
     }
     else
@@ -1729,11 +1777,14 @@ void WRAP_V_DrawLineWu(fline_t *fl, int color)
             x += xdir; // advance x
 
             // the trick is in the trig!
-            V_PlotPixelWu(0, x, y, (byte)color,
-                          finecosine[erroracc >> wu_fineshift] >>
-                              wu_fixedshift);
-            V_PlotPixelWu(0, x, y + 1, (byte)color,
-                          finesine[erroracc >> wu_fineshift] >> wu_fixedshift);
+            V_PlotPixelWu(
+                0, x, y, (byte)color,
+                finecosine[erroracc >> wu_fineshift] >> wu_fixedshift
+            );
+            V_PlotPixelWu(
+                0, x, y + 1, (byte)color,
+                finesine[erroracc >> wu_fineshift] >> wu_fixedshift
+            );
         }
     }
 
@@ -1786,17 +1837,23 @@ void V_FillBorder(int lump, byte color)
             // Top
             V_FillFlat(lump, 0, 0, 0, SCREENWIDTH, bordtop, VPT_NONE);
             // Bottom
-            V_FillFlat(lump, 0, 0, SCREENHEIGHT - bordbottom, SCREENWIDTH,
-                       bordbottom, VPT_NONE);
+            V_FillFlat(
+                lump, 0, 0, SCREENHEIGHT - bordbottom, SCREENWIDTH, bordbottom,
+                VPT_NONE
+            );
         }
         if (bordleft > 0)
         {
             // Left
-            V_FillFlat(lump, 0, 0, bordtop, bordleft,
-                       SCREENHEIGHT - bordbottom - bordtop, VPT_NONE);
+            V_FillFlat(
+                lump, 0, 0, bordtop, bordleft,
+                SCREENHEIGHT - bordbottom - bordtop, VPT_NONE
+            );
             // Right
-            V_FillFlat(lump, 0, SCREENWIDTH - bordright, bordtop, bordright,
-                       SCREENHEIGHT - bordbottom - bordtop, VPT_NONE);
+            V_FillFlat(
+                lump, 0, SCREENWIDTH - bordright, bordtop, bordright,
+                SCREENHEIGHT - bordbottom - bordtop, VPT_NONE
+            );
         }
     }
     else
@@ -1806,17 +1863,22 @@ void V_FillBorder(int lump, byte color)
             // Top
             V_FillRect(0, 0, 0, SCREENWIDTH, bordtop, color);
             // Bottom
-            V_FillRect(0, 0, SCREENHEIGHT - bordbottom, SCREENWIDTH, bordbottom,
-                       color);
+            V_FillRect(
+                0, 0, SCREENHEIGHT - bordbottom, SCREENWIDTH, bordbottom, color
+            );
         }
         if (bordleft > 0)
         {
             // Left
-            V_FillRect(0, 0, bordtop, bordleft,
-                       SCREENHEIGHT - bordbottom - bordtop, color);
+            V_FillRect(
+                0, 0, bordtop, bordleft, SCREENHEIGHT - bordbottom - bordtop,
+                color
+            );
             // Right
-            V_FillRect(0, SCREENWIDTH - bordright, bordtop, bordright,
-                       SCREENHEIGHT - bordbottom - bordtop, color);
+            V_FillRect(
+                0, SCREENWIDTH - bordright, bordtop, bordright,
+                SCREENHEIGHT - bordbottom - bordtop, color
+            );
         }
     }
 }
@@ -1855,8 +1917,9 @@ static void swap(unsigned int *num1, unsigned int *num2)
 // Set global variables for video scaling.
 void SetRatio(int width, int height)
 {
-    lprintf(LO_INFO, "SetRatio: width/height parameters %dx%d\n", width,
-            height);
+    lprintf(
+        LO_INFO, "SetRatio: width/height parameters %dx%d\n", width, height
+    );
 
     ratio_multiplier = width;
     ratio_scale = height;
@@ -1864,12 +1927,16 @@ void SetRatio(int width, int height)
 
     // The terms storage aspect ratio, pixel aspect ratio, and display aspect
     // ratio came from Wikipedia.  SAR x PAR = DAR
-    lprintf(LO_INFO, "SetRatio: storage aspect ratio %u:%u\n", ratio_multiplier,
-            ratio_scale);
+    lprintf(
+        LO_INFO, "SetRatio: storage aspect ratio %u:%u\n", ratio_multiplier,
+        ratio_scale
+    );
     if ((width == 320 && height == 200) || (width == 640 && height == 400))
     {
-        lprintf(LO_INFO,
-                "SetRatio: recognized VGA mode with pixel aspect ratio 5:6\n");
+        lprintf(
+            LO_INFO,
+            "SetRatio: recognized VGA mode with pixel aspect ratio 5:6\n"
+        );
         ratio_multiplier = 4;
         ratio_scale = 3;
     }
@@ -1877,8 +1944,10 @@ void SetRatio(int width, int height)
     {
         lprintf(LO_INFO, "SetRatio: assuming square pixels\n");
     }
-    lprintf(LO_INFO, "SetRatio: display aspect ratio %u:%u\n", ratio_multiplier,
-            ratio_scale);
+    lprintf(
+        LO_INFO, "SetRatio: display aspect ratio %u:%u\n", ratio_multiplier,
+        ratio_scale
+    );
 
     // If user wants to force aspect ratio, let them.
     {
@@ -1906,18 +1975,23 @@ void SetRatio(int width, int height)
             new_scale = 4;
             break;
         default:
-            lprintf(LO_ERROR, "SetRatio: render_aspect has invalid value %d\n",
-                    render_aspect);
+            lprintf(
+                LO_ERROR, "SetRatio: render_aspect has invalid value %d\n",
+                render_aspect
+            );
         }
 
         if (ratio_multiplier != new_multiplier || ratio_scale != new_scale)
         {
-            lprintf(LO_INFO,
-                    "SetRatio: overruled by user configuration setting\n");
+            lprintf(
+                LO_INFO, "SetRatio: overruled by user configuration setting\n"
+            );
             ratio_multiplier = new_multiplier;
             ratio_scale = new_scale;
-            lprintf(LO_INFO, "SetRatio: revised display aspect ratio %u:%u\n",
-                    ratio_multiplier, ratio_scale);
+            lprintf(
+                LO_INFO, "SetRatio: revised display aspect ratio %u:%u\n",
+                ratio_multiplier, ratio_scale
+            );
         }
     }
 
@@ -1936,7 +2010,8 @@ void SetRatio(int width, int height)
     {
         lprintf(
             LO_INFO,
-            "SetRatio: tallscreen aspect recognized; flipping multiplier\n");
+            "SetRatio: tallscreen aspect recognized; flipping multiplier\n"
+        );
         swap(&ratio_multiplier, &ratio_scale);
         psprite_offset = (int)(6.5 * FRACUNIT);
     }
@@ -1944,8 +2019,9 @@ void SetRatio(int width, int height)
     {
         psprite_offset = 0;
     }
-    lprintf(LO_INFO, "SetRatio: multiplier %u/%u\n", ratio_multiplier,
-            ratio_scale);
+    lprintf(
+        LO_INFO, "SetRatio: multiplier %u/%u\n", ratio_multiplier, ratio_scale
+    );
 
     // The rest is carried over from CheckRatio in PrBoom-Plus 2.5.1.3.
     if (tallscreen)
@@ -2027,8 +2103,9 @@ void SetRatio(int width, int height)
                      (WIDE_SCREENWIDTH == 320) && (WIDE_SCREENHEIGHT == 200);
 }
 
-void V_GetWideRect(int *x, int *y, int *w, int *h,
-                   enum patch_translation_e flags)
+void V_GetWideRect(
+    int *x, int *y, int *w, int *h, enum patch_translation_e flags
+)
 {
     stretch_param_t *params = &stretch_params[flags & VPT_ALIGN_MASK];
     int sx = *x;
@@ -2129,8 +2206,9 @@ void V_DrawRawScreen(const byte *raw)
     V_DrawRawScreenSection(raw, 0, 200);
 }
 
-void V_DrawRawScreenSection(const byte *raw, int dest_y_offset,
-                            int dest_y_limit)
+void V_DrawRawScreenSection(
+    const byte *raw, int dest_y_offset, int dest_y_limit
+)
 {
     int i, j;
     float x_factor, y_factor;

@@ -157,8 +157,9 @@ void dsda_ArchiveMSecNodes()
     }
 }
 
-static void dsda_UnArchiveMSecNodeMobj(msecnode_t *msecnode, mobj_t **mobj_p,
-                                       int mobj_count)
+static void dsda_UnArchiveMSecNodeMobj(
+    msecnode_t *msecnode, mobj_t **mobj_p, int mobj_count
+)
 {
     mobj_t *mobj;
 

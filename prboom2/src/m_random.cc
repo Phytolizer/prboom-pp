@@ -71,10 +71,11 @@ unsigned int rngseed = 1993; // killough 3/26/98: The seed
 
 std::random_device random_device;
 
-int(P_Random)(pr_class_t pr_class
+int(P_Random
+)(pr_class_t pr_class
 #ifdef INSTRUMENTED
-              ,
-              const char *file, int line
+  ,
+  const char *file, int line
 #endif
 )
 {

@@ -83,8 +83,9 @@ void InitTracers()
             while (count < 3 && p + count < myargc - 1 &&
                    M_StrToInt(myargv[p + 1 + count], &value))
             {
-                sprintf(traces[i].items[count].value, "\x1b\x36%d\x1b\x33 0",
-                        value);
+                sprintf(
+                    traces[i].items[count].value, "\x1b\x36%d\x1b\x33 0", value
+                );
                 traces[i].items[count].index = value;
 
                 if (traces[i].ApplyFunc)
@@ -107,8 +108,10 @@ void TracerApply(tracertype_t index)
     strcpy(traces[index].hudstr, traces[index].prefix);
     for (i = 0; i < traces[index].count; i++)
     {
-        sprintf(traces[index].hudstr + strlen(traces[index].hudstr),
-                "\x1b\x33%s ", traces[index].items[i].value);
+        sprintf(
+            traces[index].hudstr + strlen(traces[index].hudstr), "\x1b\x33%s ",
+            traces[index].items[i].value
+        );
     }
 }
 
@@ -121,10 +124,11 @@ void CheckThingsPickupTracer(mobj_t *mobj)
         {
             if (mobj->index == traces[TRACE_PICKUP].items[i].index)
             {
-                sprintf(traces[TRACE_PICKUP].items[i].value,
-                        "\x1b\x36%d \x1b\x33%05.2f",
-                        traces[TRACE_PICKUP].items[i].index,
-                        (float)(leveltime) / 35);
+                sprintf(
+                    traces[TRACE_PICKUP].items[i].value,
+                    "\x1b\x36%d \x1b\x33%05.2f",
+                    traces[TRACE_PICKUP].items[i].index, (float)(leveltime) / 35
+                );
             }
         }
     }
@@ -139,8 +143,10 @@ void CheckThingsHealthTracer(mobj_t *mobj)
         {
             if (mobj->index == traces[TRACE_HEALTH].items[i].index)
             {
-                sprintf(traces[TRACE_HEALTH].items[i].value,
-                        "\x1b\x36%d \x1b\x33%d", mobj->index, mobj->health);
+                sprintf(
+                    traces[TRACE_HEALTH].items[i].value,
+                    "\x1b\x36%d \x1b\x33%d", mobj->index, mobj->health
+                );
             }
         }
     }
@@ -159,10 +165,12 @@ void CheckLinesCrossTracer(line_t *line)
             {
                 if (!traces[TRACE_CROSS].items[i].data1)
                 {
-                    sprintf(traces[TRACE_CROSS].items[i].value,
-                            "\x1b\x36%d \x1b\x33%05.2f",
-                            traces[TRACE_CROSS].items[i].index,
-                            (float)(leveltime) / 35);
+                    sprintf(
+                        traces[TRACE_CROSS].items[i].value,
+                        "\x1b\x36%d \x1b\x33%05.2f",
+                        traces[TRACE_CROSS].items[i].index,
+                        (float)(leveltime) / 35
+                    );
                     traces[TRACE_CROSS].items[i].data1 = 1;
                 }
             }
@@ -221,10 +229,12 @@ void GivenDamageApply(tracertype_t index)
                 given_damage_pertic_saved[i] = given_damage_pertic[i];
             }
 
-            sprintf(traces[index].items[i].value,
-                    "\x1b\x36%d \x1b\x33%d/\x1b\x33%d",
-                    traces[index].items[i].index, given_damage_pertic_saved[i],
-                    given_damage_total[i]);
+            sprintf(
+                traces[index].items[i].value,
+                "\x1b\x36%d \x1b\x33%d/\x1b\x33%d",
+                traces[index].items[i].index, given_damage_pertic_saved[i],
+                given_damage_total[i]
+            );
             TracerApply(index);
         }
     }

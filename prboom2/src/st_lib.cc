@@ -61,8 +61,10 @@ void STlib_init()
 // to the value displayed, a pointer to the on/off control, and the width
 // Returns nothing
 //
-void STlib_initNum(st_number_t *n, int x, int y, const patchnum_t *pl, int *num,
-                   dboolean *on, int width)
+void STlib_initNum(
+    st_number_t *n, int x, int y, const patchnum_t *pl, int *num, dboolean *on,
+    int width
+)
 {
     n->x = x;
     n->y = y;
@@ -133,7 +135,8 @@ static void STlib_drawNum(st_number_t *n, int cm, dboolean refresh)
 
     V_CopyRect(
         BG, FG, x, n->y, w * numdigits, h,
-        static_cast<patch_translation_e>(VPT_STRETCH | VPT_ALIGN_BOTTOM));
+        static_cast<patch_translation_e>(VPT_STRETCH | VPT_ALIGN_BOTTOM)
+    );
 
     // if non-number, do not draw it
     if (num == 1994)
@@ -151,9 +154,11 @@ static void STlib_drawNum(st_number_t *n, int cm, dboolean refresh)
         V_DrawNumPatch(
             x - w, n->y, FG, n->p[0].lumpnum, cm,
             static_cast<patch_translation_e>(
-                (((cm != CR_DEFAULT) && !sts_always_red) ? VPT_TRANS
-                                                         : VPT_NONE) |
-                VPT_ALIGN_BOTTOM));
+                (((cm != CR_DEFAULT) && !sts_always_red) ? VPT_TRANS : VPT_NONE
+                ) |
+                VPT_ALIGN_BOTTOM
+            )
+        );
     }
 
     // draw the new number
@@ -165,9 +170,11 @@ static void STlib_drawNum(st_number_t *n, int cm, dboolean refresh)
         V_DrawNumPatch(
             x, n->y, FG, n->p[num % 10].lumpnum, cm,
             static_cast<patch_translation_e>(
-                (((cm != CR_DEFAULT) && !sts_always_red) ? VPT_TRANS
-                                                         : VPT_NONE) |
-                VPT_ALIGN_BOTTOM));
+                (((cm != CR_DEFAULT) && !sts_always_red) ? VPT_TRANS : VPT_NONE
+                ) |
+                VPT_ALIGN_BOTTOM
+            )
+        );
         num /= 10;
     }
 
@@ -180,9 +187,11 @@ static void STlib_drawNum(st_number_t *n, int cm, dboolean refresh)
         V_DrawNamePatch(
             x - w, n->y, FG, "STTMINUS", cm,
             static_cast<patch_translation_e>(
-                (((cm != CR_DEFAULT) && !sts_always_red) ? VPT_TRANS
-                                                         : VPT_NONE) |
-                VPT_ALIGN_BOTTOM));
+                (((cm != CR_DEFAULT) && !sts_always_red) ? VPT_TRANS : VPT_NONE
+                ) |
+                VPT_ALIGN_BOTTOM
+            )
+        );
     }
 }
 
@@ -215,8 +224,10 @@ void STlib_updateNum(st_number_t *n, int cm, dboolean refresh)
 // for the percent sign.
 // Returns nothing.
 //
-void STlib_initPercent(st_percent_t *p, int x, int y, const patchnum_t *pl,
-                       int *num, dboolean *on, const patchnum_t *percent)
+void STlib_initPercent(
+    st_percent_t *p, int x, int y, const patchnum_t *pl, int *num, dboolean *on,
+    const patchnum_t *percent
+)
 {
     STlib_initNum(&p->n, x, y, pl, num, on, 3);
     p->p = percent;
@@ -245,7 +256,9 @@ void STlib_updatePercent(st_percent_t *per, int cm, int refresh)
             per->n.x, per->n.y, FG, per->p->lumpnum,
             sts_pct_always_gray ? CR_GRAY : cm,
             static_cast<patch_translation_e>(
-                (sts_always_red ? VPT_NONE : VPT_TRANS) | VPT_ALIGN_BOTTOM));
+                (sts_always_red ? VPT_NONE : VPT_TRANS) | VPT_ALIGN_BOTTOM
+            )
+        );
     }
 
     STlib_updateNum(&per->n, cm, refresh);
@@ -261,8 +274,10 @@ void STlib_updatePercent(st_percent_t *per, int cm, int refresh)
 // to the numbers representing what to display, and pointer to the enable flag
 // Returns nothing.
 //
-void STlib_initMultIcon(st_multicon_t *i, int x, int y, const patchnum_t *il,
-                        int *inum, dboolean *on)
+void STlib_initMultIcon(
+    st_multicon_t *i, int x, int y, const patchnum_t *il, int *inum,
+    dboolean *on
+)
 {
     i->x = x;
     i->y = y;
@@ -303,14 +318,17 @@ void STlib_updateMultIcon(st_multicon_t *mi, dboolean refresh)
                 I_Error("STlib_updateMultIcon: y - ST_Y < 0");
 #endif
 
-            V_CopyRect(BG, FG, x, y, w, h,
-                       static_cast<patch_translation_e>(VPT_STRETCH |
-                                                        VPT_ALIGN_BOTTOM));
+            V_CopyRect(
+                BG, FG, x, y, w, h,
+                static_cast<patch_translation_e>(VPT_STRETCH | VPT_ALIGN_BOTTOM)
+            );
         }
         if (*mi->inum != -1)
         { // killough 2/16/98: redraw only if != -1
-            V_DrawNumPatch(mi->x, mi->y, FG, mi->p[*mi->inum].lumpnum,
-                           CR_DEFAULT, VPT_ALIGN_BOTTOM);
+            V_DrawNumPatch(
+                mi->x, mi->y, FG, mi->p[*mi->inum].lumpnum, CR_DEFAULT,
+                VPT_ALIGN_BOTTOM
+            );
         }
         mi->oldinum = *mi->inum;
     }
@@ -326,8 +344,10 @@ void STlib_updateMultIcon(st_multicon_t *mi, dboolean refresh)
 // to the flags representing what is displayed, and pointer to the enable flag
 // Returns nothing.
 //
-void STlib_initBinIcon(st_binicon_t *b, int x, int y, const patchnum_t *i,
-                       dboolean *val, dboolean *on)
+void STlib_initBinIcon(
+    st_binicon_t *b, int x, int y, const patchnum_t *i, dboolean *val,
+    dboolean *on
+)
 {
     b->x = x;
     b->y = y;
@@ -371,8 +391,9 @@ void STlib_updateBinIcon(st_binicon_t *bi, dboolean refresh)
 
         if (*bi->val)
         {
-            V_DrawNumPatch(bi->x, bi->y, FG, bi->p->lumpnum, CR_DEFAULT,
-                           VPT_STRETCH);
+            V_DrawNumPatch(
+                bi->x, bi->y, FG, bi->p->lumpnum, CR_DEFAULT, VPT_STRETCH
+            );
         }
         else
         {

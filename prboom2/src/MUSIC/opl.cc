@@ -131,8 +131,10 @@ void OPL_Shutdown()
 
 void OPL_SetCallback(unsigned int ms, opl_callback_t callback, void *data)
 {
-    OPL_Queue_Push(callback_queue, callback, data,
-                   current_time - pause_offset + (ms * opl_sample_rate) / 1000);
+    OPL_Queue_Push(
+        callback_queue, callback, data,
+        current_time - pause_offset + (ms * opl_sample_rate) / 1000
+    );
 }
 
 void OPL_ClearCallbacks()

@@ -128,8 +128,9 @@ void dsda_DisplayNotifications()
 {
     if (dsda_TrackAttempts() && dsda_session_attempts > dsda_shown_attempt)
     {
-        doom_printf("Attempt %d / %d", dsda_session_attempts,
-                    dsda_total_attempts);
+        doom_printf(
+            "Attempt %d / %d", dsda_session_attempts, dsda_total_attempts
+        );
 
         dsda_shown_attempt = dsda_session_attempts;
     }
@@ -177,8 +178,9 @@ void dsda_WatchCard(card_t card)
     }
 }
 
-void dsda_WatchDamage(mobj_t *target, mobj_t *inflictor, mobj_t *source,
-                      int damage)
+void dsda_WatchDamage(
+    mobj_t *target, mobj_t *inflictor, mobj_t *source, int damage
+)
 {
     if (((source && source->player) ||
          (inflictor && inflictor->dsda_extension.player_damaged_barrel)) &&
@@ -471,8 +473,9 @@ char *dsda_NewDemoName()
 
     for (; j <= 99999 && (fp = fopen(demo_name, "rb")) != nullptr; j++)
     {
-        snprintf(demo_name, demo_name_size, "%s-%05d.lmp", dsda_demo_name_base,
-                 j);
+        snprintf(
+            demo_name, demo_name_size, "%s-%05d.lmp", dsda_demo_name_base, j
+        );
         fclose(fp);
     }
 
@@ -503,8 +506,9 @@ static void dsda_ResetTracking()
     dsda_pacifist_note_shown = false;
 }
 
-void dsda_WatchDeferredInitNew(skill_t /* skill */, int /* episode */,
-                               int /* map */)
+void dsda_WatchDeferredInitNew(
+    skill_t /* skill */, int /* episode */, int /* map */
+)
 {
     char *demo_name;
 
@@ -632,12 +636,15 @@ const char *dsda_DetectCategory()
     dboolean satisfies_tyson;
     dboolean satisfies_100s;
 
-    satisfies_max = (dsda_missed_monsters == 0 && dsda_100s &&
-                     (dsda_any_secrets || dsda_any_counted_monsters));
-    satisfies_respawn = (dsda_100s && dsda_100k && dsda_any_monsters &&
-                         (dsda_any_secrets || dsda_any_counted_monsters));
-    satisfies_tyson = (dsda_missed_monsters == 0 && dsda_tyson_weapons &&
-                       dsda_any_counted_monsters);
+    satisfies_max =
+        (dsda_missed_monsters == 0 && dsda_100s &&
+         (dsda_any_secrets || dsda_any_counted_monsters));
+    satisfies_respawn =
+        (dsda_100s && dsda_100k && dsda_any_monsters &&
+         (dsda_any_secrets || dsda_any_counted_monsters));
+    satisfies_tyson =
+        (dsda_missed_monsters == 0 && dsda_tyson_weapons &&
+         dsda_any_counted_monsters);
     satisfies_100s = dsda_any_secrets && dsda_100s;
 
     if (dsda_turbo)

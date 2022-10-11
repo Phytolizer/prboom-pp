@@ -111,8 +111,8 @@ void T_VerticalDoor(vldoor_t *door)
             case raiseIn5Mins:
             case vld_raiseIn5Mins:
                 door->direction = 1; // time to raise then
-                door->type = static_cast<vldoor_e>(
-                    g_door_normal); // door acts just like normal 1 DR door now
+                door->type = static_cast<vldoor_e>(g_door_normal
+                ); // door acts just like normal 1 DR door now
                 S_StartSound((mobj_t *)&door->sector->soundorg, g_sfx_doropn);
                 break;
 
@@ -124,8 +124,10 @@ void T_VerticalDoor(vldoor_t *door)
 
     case -1:
         // Door is moving down
-        res = T_MovePlane(door->sector, door->speed, door->sector->floorheight,
-                          false, 1, door->direction);
+        res = T_MovePlane(
+            door->sector, door->speed, door->sector->floorheight, false, 1,
+            door->direction
+        );
 
         /* killough 10/98: implement gradual lighting effects */
         // e6y: "Tagged doors don't trigger special lighting" handled wrong
@@ -137,9 +139,11 @@ void T_VerticalDoor(vldoor_t *door)
         {
             EV_LightTurnOnPartway(
                 door->line,
-                FixedDiv(door->sector->ceilingheight -
-                             door->sector->floorheight,
-                         door->topheight - door->sector->floorheight));
+                FixedDiv(
+                    door->sector->ceilingheight - door->sector->floorheight,
+                    door->topheight - door->sector->floorheight
+                )
+            );
         }
 
         // handle door reaching bottom
@@ -236,8 +240,10 @@ void T_VerticalDoor(vldoor_t *door)
 
     case 1:
         // Door is moving up
-        res = T_MovePlane(door->sector, door->speed, door->topheight, false, 1,
-                          door->direction);
+        res = T_MovePlane(
+            door->sector, door->speed, door->topheight, false, 1,
+            door->direction
+        );
 
         /* killough 10/98: implement gradual lighting effects */
         // e6y: "Tagged doors don't trigger special lighting" handled wrong
@@ -249,9 +255,11 @@ void T_VerticalDoor(vldoor_t *door)
         {
             EV_LightTurnOnPartway(
                 door->line,
-                FixedDiv(door->sector->ceilingheight -
-                             door->sector->floorheight,
-                         door->topheight - door->sector->floorheight));
+                FixedDiv(
+                    door->sector->ceilingheight - door->sector->floorheight,
+                    door->topheight - door->sector->floorheight
+                )
+            );
         }
 
         // handle door reaching the top
@@ -655,9 +663,11 @@ int EV_VerticalDoor(line_t *line, mobj_t *thing)
                 }
                 else
                 {
-                    lprintf(LO_DEBUG,
-                            "EV_VerticalDoor: unknown thinker.function in "
-                            "thinker corruption emulation");
+                    lprintf(
+                        LO_DEBUG,
+                        "EV_VerticalDoor: unknown thinker.function in "
+                        "thinker corruption emulation"
+                    );
                 }
 
                 return 1;

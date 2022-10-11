@@ -66,8 +66,9 @@ void I_SetChannels(void);
 std::vector<int> I_GetSfxLumpNums(sfxinfo_t *sfxinfo);
 
 // Starts a sound in a particular sound channel.
-int I_StartSound(int id, int channel, int vol, int sep, int pitch,
-                 int priority);
+int I_StartSound(
+    int id, int channel, int vol, int sep, int pitch, int priority
+);
 
 // Stops a sound channel.
 void I_StopSound(int handle);
@@ -92,9 +93,10 @@ void I_SetSoundCap(void);
 unsigned char *I_GrabSound(int len);
 
 // NSM helper routine for some of the streaming audio
-void I_ResampleStream(void *dest, unsigned nsamp,
-                      void (*proc)(void *dest, unsigned nsamp),
-                      unsigned sratein, unsigned srateout);
+void I_ResampleStream(
+    void *dest, unsigned nsamp, void (*proc)(void *dest, unsigned nsamp),
+    unsigned sratein, unsigned srateout
+);
 
 //
 //  MUSIC I/O

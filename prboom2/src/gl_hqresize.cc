@@ -78,8 +78,8 @@
 #include "v_video.hh"
 
 extern int gl_texture_hqresize;
-const char *gl_hqresizemodes[hq_scale_max] = {"Off", "Scale2x", "Scale3x",
-                                              "Scale4x"};
+const char *gl_hqresizemodes[hq_scale_max] = {
+    "Off", "Scale2x", "Scale3x", "Scale4x"};
 
 int gl_texture_hqresize;
 int gl_texture_hqresize_maxinputsize = 512;
@@ -87,9 +87,10 @@ int gl_texture_hqresize_textures;
 int gl_texture_hqresize_sprites;
 int gl_texture_hqresize_patches;
 
-static void scale2x(unsigned int *inputBuffer, unsigned int *outputBuffer,
-                    int inWidth, int inHeight, int seamlessWidth,
-                    int seamlessHeight)
+static void scale2x(
+    unsigned int *inputBuffer, unsigned int *outputBuffer, int inWidth,
+    int inHeight, int seamlessWidth, int seamlessHeight
+)
 {
     int i, j;
     const int width = 2 * inWidth;
@@ -139,9 +140,10 @@ static void scale2x(unsigned int *inputBuffer, unsigned int *outputBuffer,
     }
 }
 
-static void scale3x(unsigned int *inputBuffer, unsigned int *outputBuffer,
-                    int inWidth, int inHeight, int seamlessWidth,
-                    int seamlessHeight)
+static void scale3x(
+    unsigned int *inputBuffer, unsigned int *outputBuffer, int inWidth,
+    int inHeight, int seamlessWidth, int seamlessHeight
+)
 {
     int i, j;
     const int width = 3 * inWidth;
@@ -200,16 +202,21 @@ static void scale3x(unsigned int *inputBuffer, unsigned int *outputBuffer,
     }
 }
 
-static void scale4x(unsigned int *inputBuffer, unsigned int *outputBuffer,
-                    int inWidth, int inHeight, int seamlessWidth,
-                    int seamlessHeight)
+static void scale4x(
+    unsigned int *inputBuffer, unsigned int *outputBuffer, int inWidth,
+    int inHeight, int seamlessWidth, int seamlessHeight
+)
 {
     unsigned int *buffer2x = static_cast<unsigned int *>(
-        malloc((2 * inWidth) * (2 * inHeight) * sizeof(unsigned int)));
-    scale2x(inputBuffer, buffer2x, inWidth, inHeight, seamlessWidth,
-            seamlessHeight);
-    scale2x(buffer2x, outputBuffer, 2 * inWidth, 2 * inHeight, seamlessWidth,
-            seamlessHeight);
+        malloc((2 * inWidth) * (2 * inHeight) * sizeof(unsigned int))
+    );
+    scale2x(
+        inputBuffer, buffer2x, inWidth, inHeight, seamlessWidth, seamlessHeight
+    );
+    scale2x(
+        buffer2x, outputBuffer, 2 * inWidth, 2 * inHeight, seamlessWidth,
+        seamlessHeight
+    );
     free(buffer2x);
 }
 
@@ -217,17 +224,21 @@ static unsigned char *HQScaleHelper(
     void (*scaleNxFunction)(unsigned int *, unsigned int *, int, int, int, int),
     const int N, unsigned char *inputBuffer, const int inWidth,
     const int inHeight, int *outWidth, int *outHeight, int seamlessWidth,
-    int seamlessHeight)
+    int seamlessHeight
+)
 {
     unsigned char *newBuffer;
 
     (*outWidth) = N * inWidth;
     (*outHeight) = N * inHeight;
     newBuffer = static_cast<unsigned char *>(
-        malloc((*outWidth) * (*outHeight) * 4 * sizeof(unsigned char)));
+        malloc((*outWidth) * (*outHeight) * 4 * sizeof(unsigned char))
+    );
 
-    scaleNxFunction((unsigned int *)inputBuffer, (unsigned int *)newBuffer,
-                    inWidth, inHeight, seamlessWidth, seamlessHeight);
+    scaleNxFunction(
+        (unsigned int *)inputBuffer, (unsigned int *)newBuffer, inWidth,
+        inHeight, seamlessWidth, seamlessHeight
+    );
     free(inputBuffer);
     inputBuffer = nullptr;
     return newBuffer;
@@ -239,9 +250,10 @@ static unsigned char *HQScaleHelper(
 //  the upsampled buffer.
 //
 //===========================================================================
-unsigned char *gld_HQResize(GLTexture *gltexture, unsigned char *inputBuffer,
-                            int inWidth, int inHeight, int *outWidth,
-                            int *outHeight)
+unsigned char *gld_HQResize(
+    GLTexture *gltexture, unsigned char *inputBuffer, int inWidth, int inHeight,
+    int *outWidth, int *outHeight
+)
 {
     int w = inWidth;
     int h = inHeight;
@@ -313,16 +325,19 @@ unsigned char *gld_HQResize(GLTexture *gltexture, unsigned char *inputBuffer,
     switch (scale_mode)
     {
     case hq_scale_2x:
-        result = HQScaleHelper(&scale2x, 2, inputBuffer, inWidth, inHeight, &w,
-                               &h, sw, sh);
+        result = HQScaleHelper(
+            &scale2x, 2, inputBuffer, inWidth, inHeight, &w, &h, sw, sh
+        );
         break;
     case hq_scale_3x:
-        result = HQScaleHelper(&scale3x, 3, inputBuffer, inWidth, inHeight, &w,
-                               &h, sw, sh);
+        result = HQScaleHelper(
+            &scale3x, 3, inputBuffer, inWidth, inHeight, &w, &h, sw, sh
+        );
         break;
     case hq_scale_4x:
-        result = HQScaleHelper(&scale4x, 4, inputBuffer, inWidth, inHeight, &w,
-                               &h, sw, sh);
+        result = HQScaleHelper(
+            &scale4x, 4, inputBuffer, inWidth, inHeight, &w, &h, sw, sh
+        );
         break;
     default:
         break;

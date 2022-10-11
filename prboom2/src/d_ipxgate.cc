@@ -143,16 +143,19 @@ int ExpandTics(int low, int maketic)
         return (maketic & ~0xff) - 256 + low;
     if (delta < -64)
         return (maketic & ~0xff) + 256 + low;
-    fprintf(stderr, "ExpandTics strange value %i at maketic %i\n", low,
-            maketic);
+    fprintf(
+        stderr, "ExpandTics strange value %i at maketic %i\n", low, maketic
+    );
     exit(-2);
 }
 
-void send_udp_packet(packet_type_e::Type type, unsigned tic, void *data,
-                     size_t len)
+void send_udp_packet(
+    packet_type_e::Type type, unsigned tic, void *data, size_t len
+)
 {
     packet_header_t *p = static_cast<packet_header_t *>(
-        calloc(sizeof(packet_header_t) + len + 1, 1));
+        calloc(sizeof(packet_header_t) + len + 1, 1)
+    );
     p->tic = doom_htonl(basetic = tic);
     p->type = type;
     if (!data)
@@ -199,8 +202,9 @@ void ipx_receive(int s)
             }
             else if (buf.u.d.checksum & NCMD_EXIT)
             {
-                send_udp_packet(packet_type_e::PKT_QUIT, buf.u.d.starttic,
-                                nullptr, 0);
+                send_udp_packet(
+                    packet_type_e::PKT_QUIT, buf.u.d.starttic, nullptr, 0
+                );
                 exit(0);
             }
             else if ((buf.u.d.checksum & NCMD_CHECKSUM) == buf.u.d.checksum)
@@ -211,11 +215,14 @@ void ipx_receive(int s)
                 outbuf[0] = tics = buf.u.d.numtics;
                 outbuf[1] = buf.u.d.player;
                 for (int i = 0; i < tics; i++)
-                    TicToRaw(outbuf + 2 + i * sizeof(ticcmd_t),
-                             &buf.u.d.cmds[i]);
-                send_udp_packet(packet_type_e::PKT_TICC,
-                                ExpandTics(buf.u.d.starttic, basetic), outbuf,
-                                2 + tics * sizeof(ticcmd_t));
+                    TicToRaw(
+                        outbuf + 2 + i * sizeof(ticcmd_t), &buf.u.d.cmds[i]
+                    );
+                send_udp_packet(
+                    packet_type_e::PKT_TICC,
+                    ExpandTics(buf.u.d.starttic, basetic), outbuf,
+                    2 + tics * sizeof(ticcmd_t)
+                );
             }
         }
     }
@@ -242,10 +249,12 @@ void udp_receive(int s)
                 static_cast<setup_packet_t *>((void *)(p + 1));
             consoleplayer = sinfo->yourplayer;
             send_udp_packet(packet_type_e::PKT_GO, 0, nullptr, 0);
-            write(ipxs,
-                  "\xff\xff\xff\xff\x00\x00\x00\x00\x02\x00\x02\x00\x00\x00\x00"
-                  "\x00",
-                  16);
+            write(
+                ipxs,
+                "\xff\xff\xff\xff\x00\x00\x00\x00\x02\x00\x02\x00\x00\x00\x00"
+                "\x00",
+                16
+            );
         }
         break;
         case packet_type_e::PKT_GO.value(): {

@@ -180,14 +180,14 @@ fixed_t I_GetTimeFrac()
         if ((interpolation_method == 0) || (prevsubframe <= 0) ||
             (renderer_fps <= 0))
         {
-            frac = (fixed_t)((now + displaytime) * FRACUNIT *
-                             tic_vars.tics_per_usec);
+            frac = (fixed_t
+            )((now + displaytime) * FRACUNIT * tic_vars.tics_per_usec);
         }
         else
         {
             frac = (fixed_t)(now * FRACUNIT / tic_vars.tics_per_usec);
-            frac = (unsigned int)((float)FRACUNIT * TICRATE * subframe /
-                                  renderer_fps);
+            frac = (unsigned int
+            )((float)FRACUNIT * TICRATE * subframe / renderer_fps);
         }
         frac = BETWEEN(0, FRACUNIT, frac);
     }
@@ -223,8 +223,10 @@ unsigned long I_GetRandomTimeSeed()
  */
 const char *I_GetVersionString(char *buf, size_t sz)
 {
-    snprintf(buf, sz, "%s v%s (https://github.com/Phytolizer/prboom-pp/)",
-             PACKAGE_NAME, PACKAGE_VERSION);
+    snprintf(
+        buf, sz, "%s v%s (https://github.com/Phytolizer/prboom-pp/)",
+        PACKAGE_NAME, PACKAGE_VERSION
+    );
     return buf;
 }
 
@@ -344,8 +346,8 @@ void I_SwitchToWindow(HWND hwnd)
     static TSwitchToThisWindow SwitchToThisWindow = nullptr;
 
     if (!SwitchToThisWindow)
-        SwitchToThisWindow = (TSwitchToThisWindow)GetProcAddress(
-            GetModuleHandle("user32.dll"), "SwitchToThisWindow");
+        SwitchToThisWindow = (TSwitchToThisWindow
+        )GetProcAddress(GetModuleHandle("user32.dll"), "SwitchToThisWindow");
 
     if (SwitchToThisWindow)
     {
@@ -445,12 +447,13 @@ const char *I_GetTempDir()
 
 dboolean HasTrailingSlash(const char *dn)
 {
-    return ((dn[strlen(dn) - 1] == '/')
+    return (
+        (dn[strlen(dn) - 1] == '/')
 #if defined(_WIN32)
-            || (dn[strlen(dn) - 1] == '\\')
+        || (dn[strlen(dn) - 1] == '\\')
 #endif
 #if defined(AMIGA)
-            || (dn[strlen(dn) - 1] == ':')
+        || (dn[strlen(dn) - 1] == ':')
 #endif
     );
 }
@@ -522,8 +525,9 @@ char *I_FindFileInternal(const char *wfname, const char *ext, dboolean isStatic)
 
         // initialize with the static lookup table
         num_search = sizeof(search0) / sizeof(*search0);
-        search = static_cast<struct search_t *>(
-            malloc(num_search * sizeof(*search)));
+        search =
+            static_cast<struct search_t *>(malloc(num_search * sizeof(*search))
+            );
         memcpy(search, search0, num_search * sizeof(*search));
 
         // add each directory from the $DOOMWADPATH environment variable
@@ -543,7 +547,8 @@ char *I_FindFileInternal(const char *wfname, const char *ext, dboolean isStatic)
 
                     num_search++;
                     search = static_cast<struct search_t *>(
-                        realloc(search, num_search * sizeof(*search)));
+                        realloc(search, num_search * sizeof(*search))
+                    );
                     memset(&search[num_search - 1], 0, sizeof(*search));
                     search[num_search - 1].dir = strdup(left);
 
@@ -557,7 +562,8 @@ char *I_FindFileInternal(const char *wfname, const char *ext, dboolean isStatic)
 
             num_search++;
             search = static_cast<struct search_t *>(
-                realloc(search, num_search * sizeof(*search)));
+                realloc(search, num_search * sizeof(*search))
+            );
             memset(&search[num_search - 1], 0, sizeof(*search));
             search[num_search - 1].dir = strdup(left);
 
@@ -594,12 +600,14 @@ char *I_FindFileInternal(const char *wfname, const char *ext, dboolean isStatic)
 
         if (!isStatic)
         {
-            p = (char *)std::malloc((d ? strlen(d) : 0) + (s ? strlen(s) : 0) +
-                                    pl);
+            p = (char *)std::malloc(
+                (d ? strlen(d) : 0) + (s ? strlen(s) : 0) + pl
+            );
         }
-        sprintf(p, "%s%s%s%s%s", d ? d : "",
-                (d && !HasTrailingSlash(d)) ? "/" : "", s ? s : "",
-                (s && !HasTrailingSlash(s)) ? "/" : "", wfname);
+        sprintf(
+            p, "%s%s%s%s%s", d ? d : "", (d && !HasTrailingSlash(d)) ? "/" : "",
+            s ? s : "", (s && !HasTrailingSlash(s)) ? "/" : "", wfname
+        );
 
         if (ext && access(p, F_OK))
         {

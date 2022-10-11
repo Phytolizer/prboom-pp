@@ -105,19 +105,24 @@ void gld_Init(int width, int height);
 void gld_InitCommandLine(void);
 void gld_InitTextureParams(void);
 
-void gld_DrawNumPatch(int x, int y, int lump, int cm,
-                      patch_translation_e flags);
-void gld_DrawNumPatch_f(float x, float y, int lump, int cm,
-                        patch_translation_e flags);
+void gld_DrawNumPatch(
+    int x, int y, int lump, int cm, patch_translation_e flags
+);
+void gld_DrawNumPatch_f(
+    float x, float y, int lump, int cm, patch_translation_e flags
+);
 
-void gld_FillFlat(int lump, int x, int y, int width, int height,
-                  patch_translation_e flags);
+void gld_FillFlat(
+    int lump, int x, int y, int width, int height, patch_translation_e flags
+);
 #define gld_FillFlatName(flatname, x, y, width, height, flags)                 \
-    gld_FillFlat(R_FlatNumForName(flatname), (x), (y), (width), (height),      \
-                 (flags))
+    gld_FillFlat(                                                              \
+        R_FlatNumForName(flatname), (x), (y), (width), (height), (flags)       \
+    )
 
-void gld_FillPatch(int lump, int x, int y, int width, int height,
-                   patch_translation_e flags);
+void gld_FillPatch(
+    int lump, int x, int y, int width, int height, patch_translation_e flags
+);
 #define gld_FillPatchName(name, x, y, width, height, flags)                    \
     gld_FillPatch(W_GetNumForName(name), (x), (y), (width), (height), (flags))
 
@@ -181,8 +186,9 @@ extern int gl_texture_hqresize_patches;
 // clipper
 dboolean gld_clipper_SafeCheckRange(angle_t startAngle, angle_t endAngle);
 void gld_clipper_SafeAddClipRange(angle_t startangle, angle_t endangle);
-void gld_clipper_SafeAddClipRangeRealAngles(angle_t startangle,
-                                            angle_t endangle);
+void gld_clipper_SafeAddClipRangeRealAngles(
+    angle_t startangle, angle_t endangle
+);
 void gld_clipper_Clear(void);
 angle_t gld_FrustumAngle(void);
 void gld_FrustrumSetup(void);
@@ -245,8 +251,10 @@ extern int gl_use_display_lists;
 
 void gld_ProcessTexturedMap(void);
 void gld_ResetTexturedAutomap(void);
-void gld_MapDrawSubsectors(player_t *plr, int fx, int fy, fixed_t mx,
-                           fixed_t my, int fw, int fh, fixed_t scale);
+void gld_MapDrawSubsectors(
+    player_t *plr, int fx, int fy, fixed_t mx, fixed_t my, int fw, int fh,
+    fixed_t scale
+);
 
 void gld_Init8InGLMode(void);
 void gld_Draw8InGL(void);
@@ -305,9 +313,10 @@ typedef struct am_icon_s
 extern am_icon_t am_icons[];
 
 void gld_InitMapPics(void);
-void gld_AddNiceThing(int type, float x, float y, float radius, float angle,
-                      unsigned char r, unsigned char g, unsigned char b,
-                      unsigned char a);
+void gld_AddNiceThing(
+    int type, float x, float y, float radius, float angle, unsigned char r,
+    unsigned char g, unsigned char b, unsigned char a
+);
 void gld_DrawNiceThings(int fx, int fy, int fw, int fh);
 void gld_ClearNiceThings(void);
 

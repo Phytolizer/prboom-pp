@@ -62,8 +62,10 @@ static void dsda_EnsureDemoBufferSpace(size_t length)
 
     dsda_demo_write_buffer_p = dsda_demo_write_buffer + offset;
 
-    lprintf(LO_INFO, "dsda_EnsureDemoBufferSpace: expanding demo buffer %d\n",
-            dsda_demo_write_buffer_length);
+    lprintf(
+        LO_INFO, "dsda_EnsureDemoBufferSpace: expanding demo buffer %d\n",
+        dsda_demo_write_buffer_length
+    );
 }
 
 void dsda_InitDemo(char *name)
@@ -138,8 +140,8 @@ void dsda_SetDemoBufferOffset(int offset)
     // Cannot load forward (demo buffer would desync)
     if (offset > dsda_DemoBufferOffset())
     {
-        I_Error(
-            "dsda_SetDemoBufferOffset: Impossible time traveling detected.");
+        I_Error("dsda_SetDemoBufferOffset: Impossible time traveling detected."
+        );
     }
 
     dsda_demo_write_buffer_p = dsda_demo_write_buffer + offset;

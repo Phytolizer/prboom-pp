@@ -85,9 +85,10 @@ int PCSound_Init(pcsound_callback_func callback_func)
                 }
                 else
                 {
-                    lprintf(LO_WARN,
-                            "Failed to initialise PC sound driver: %s\n",
-                            drivers[i]->name);
+                    lprintf(
+                        LO_WARN, "Failed to initialise PC sound driver: %s\n",
+                        drivers[i]->name
+                    );
                     break;
                 }
             }

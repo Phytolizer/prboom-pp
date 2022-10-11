@@ -90,8 +90,9 @@ void P_ZBumpCheck(mobj_t *); // phares
 //
 // killough 5/5/98: reformatted, cleaned up
 
-static void P_RecursiveSound(sector_t *sec, int soundblocks,
-                             mobj_t *soundtarget)
+static void P_RecursiveSound(
+    sector_t *sec, int soundblocks, mobj_t *soundtarget
+)
 {
     int i;
 
@@ -170,7 +171,8 @@ static dboolean P_CheckMeleeRange(mobj_t *actor)
         P_CheckSight(actor, actor->target) &&
         ( // finite height!
             !heretic || (pl->z <= actor->z + actor->height &&
-                         actor->z <= pl->z + pl->height));
+                         actor->z <= pl->z + pl->height)
+        );
 }
 
 //
@@ -182,12 +184,16 @@ static dboolean P_CheckMeleeRange(mobj_t *actor)
 static dboolean P_HitFriend(mobj_t *actor)
 {
     return actor->flags & MF_FRIEND && actor->target &&
-           (P_AimLineAttack(actor,
-                            R_PointToAngle2(actor->x, actor->y,
-                                            actor->target->x, actor->target->y),
-                            P_AproxDistance(actor->x - actor->target->x,
-                                            actor->y - actor->target->y),
-                            0),
+           (P_AimLineAttack(
+                actor,
+                R_PointToAngle2(
+                    actor->x, actor->y, actor->target->x, actor->target->y
+                ),
+                P_AproxDistance(
+                    actor->x - actor->target->x, actor->y - actor->target->y
+                ),
+                0
+            ),
             linetarget) &&
            linetarget != actor->target &&
            !((linetarget->flags ^ actor->flags) & MF_FRIEND);
@@ -236,8 +242,9 @@ static dboolean P_CheckMissileRange(mobj_t *actor)
     }
 
     // OPTIMIZE: get this from a global checksight
-    dist = P_AproxDistance(actor->x - actor->target->x,
-                           actor->y - actor->target->y) -
+    dist = P_AproxDistance(
+               actor->x - actor->target->x, actor->y - actor->target->y
+           ) -
            64 * FRACUNIT;
 
     if (!actor->info->meleestate)
@@ -384,8 +391,8 @@ static int P_IsUnderDamage(mobj_t *actor)
     for (seclist = actor->touching_sectorlist; seclist;
          seclist = seclist->m_tnext)
     {
-        if ((cl = static_cast<const ceiling_t *>(
-                 seclist->m_sector->ceilingdata)) &&
+        if ((cl = static_cast<const ceiling_t *>(seclist->m_sector->ceilingdata)
+            ) &&
             cl->thinker.function == T_MoveCeiling)
         {
             dir |= cl->direction;
@@ -790,12 +797,15 @@ static fixed_t P_AvoidDropoff(mobj_t *actor)
 {
     int yh =
         P_GetSafeBlockY((tmbbox[BOXTOP] = actor->y + actor->radius) - bmaporgy);
-    int yl = P_GetSafeBlockY((tmbbox[BOXBOTTOM] = actor->y - actor->radius) -
-                             bmaporgy);
-    int xh = P_GetSafeBlockX((tmbbox[BOXRIGHT] = actor->x + actor->radius) -
-                             bmaporgx);
-    int xl = P_GetSafeBlockX((tmbbox[BOXLEFT] = actor->x - actor->radius) -
-                             bmaporgx);
+    int yl = P_GetSafeBlockY(
+        (tmbbox[BOXBOTTOM] = actor->y - actor->radius) - bmaporgy
+    );
+    int xh = P_GetSafeBlockX(
+        (tmbbox[BOXRIGHT] = actor->x + actor->radius) - bmaporgx
+    );
+    int xl = P_GetSafeBlockX(
+        (tmbbox[BOXLEFT] = actor->x - actor->radius) - bmaporgx
+    );
     int bx, by;
 
     floorz = actor->z; // remember floor height
@@ -809,8 +819,10 @@ static fixed_t P_AvoidDropoff(mobj_t *actor)
     {
         for (by = yl; by <= yh; by++)
         {
-            P_BlockLinesIterator(bx, by,
-                                 PIT_AvoidDropoff); // all contacted lines
+            P_BlockLinesIterator(
+                bx, by,
+                PIT_AvoidDropoff
+            ); // all contacted lines
         }
     }
 
@@ -863,8 +875,7 @@ static void P_NewChaseDir(mobj_t *actor)
         {
             deltax = -deltax, deltay = -deltay;
         }
-        else if (target->health > 0 &&
-                 (actor->flags ^ target->flags) & MF_FRIEND)
+        else if (target->health > 0 && (actor->flags ^ target->flags) & MF_FRIEND)
         { // Live enemy target
             if (monster_backing && actor->info->missilestate &&
                 actor->type != MT_SKULL &&
@@ -1007,8 +1018,10 @@ static dboolean P_LookForPlayers(mobj_t *actor, dboolean allaround)
 
                     if (actor->info->missilestate)
                     {
-                        P_SetMobjState(actor, static_cast<statenum_t>(
-                                                  actor->info->seestate));
+                        P_SetMobjState(
+                            actor,
+                            static_cast<statenum_t>(actor->info->seestate)
+                        );
                         actor->flags &= ~MF_JUSTHIT;
                     }
 
@@ -1405,9 +1418,10 @@ void A_Chase(mobj_t *actor)
     {
         if (!P_LookForTargets(actor, true))
         { // look for a new target
-            P_SetMobjState(actor,
-                           static_cast<statenum_t>(
-                               actor->info->spawnstate)); // no new target
+            P_SetMobjState(
+                actor,
+                static_cast<statenum_t>(actor->info->spawnstate)
+            ); // no new target
         }
         return;
     }
@@ -1448,7 +1462,8 @@ void A_Chase(mobj_t *actor)
             if (P_CheckMissileRange(actor))
             {
                 P_SetMobjState(
-                    actor, static_cast<statenum_t>(actor->info->missilestate));
+                    actor, static_cast<statenum_t>(actor->info->missilestate)
+                );
                 actor->flags |= MF_JUSTATTACKED;
                 return;
             }
@@ -1814,8 +1829,9 @@ void A_HeadAttack(mobj_t *actor)
             P_SetMobjState(baseFire, HERETIC_S_HEADFX3_4); // Don't grow
             for (i = 0; i < 5; i++)
             {
-                fire = P_SpawnMobj(baseFire->x, baseFire->y, baseFire->z,
-                                   HERETIC_MT_HEADFX3);
+                fire = P_SpawnMobj(
+                    baseFire->x, baseFire->y, baseFire->z, HERETIC_MT_HEADFX3
+                );
                 if (i == 0)
                 {
                     S_StartSound(actor, heretic_sfx_hedat1);
@@ -1942,8 +1958,9 @@ void A_Tracer(mobj_t *actor)
     // spawn a puff of smoke behind the rocket
     P_SpawnPuff(actor->x, actor->y, actor->z);
 
-    th = P_SpawnMobj(actor->x - actor->momx, actor->y - actor->momy, actor->z,
-                     MT_SMOKE);
+    th = P_SpawnMobj(
+        actor->x - actor->momx, actor->y - actor->momy, actor->z, MT_SMOKE
+    );
 
     th->momz = FRACUNIT;
     th->tics -= P_Random(pr_tracer) & 3;
@@ -2159,8 +2176,9 @@ void A_VileChase(mobj_t *actor)
                     S_StartSound(corpsehit, sfx_archvile_resurrect);
                     info = corpsehit->info;
 
-                    P_SetMobjState(corpsehit,
-                                   static_cast<statenum_t>(info->raisestate));
+                    P_SetMobjState(
+                        corpsehit, static_cast<statenum_t>(info->raisestate)
+                    );
 
                     if (comp[comp_vile])
                     {                            // phares
@@ -2279,11 +2297,12 @@ void A_VileTarget(mobj_t *actor)
 
     // killough 12/98: fix Vile fog coordinates // CPhipps - compatibility
     // optioned
-    fog = P_SpawnMobj(actor->target->x,
-                      (compatibility_level < lxdoom_1_compatibility)
-                          ? actor->target->x
-                          : actor->target->y,
-                      actor->target->z, MT_FIRE);
+    fog = P_SpawnMobj(
+        actor->target->x,
+        (compatibility_level < lxdoom_1_compatibility) ? actor->target->x
+                                                       : actor->target->y,
+        actor->target->z, MT_FIRE
+    );
 
     P_SetTarget(&actor->tracer, fog);
     P_SetTarget(&fog->target, actor);
@@ -2656,8 +2675,10 @@ void A_SkullPop(mobj_t *actor)
     }
 
     actor->flags &= ~MF_SOLID;
-    mo = P_SpawnMobj(actor->x, actor->y, actor->z + 48 * FRACUNIT,
-                     static_cast<mobjtype_t>(g_skullpop_mt));
+    mo = P_SpawnMobj(
+        actor->x, actor->y, actor->z + 48 * FRACUNIT,
+        static_cast<mobjtype_t>(g_skullpop_mt)
+    );
     // mo->target = actor;
     mo->momx = P_SubRandom() << 9;
     mo->momy = P_SubRandom() << 9;
@@ -3065,7 +3086,8 @@ void P_SpawnBrainTargets() // killough 3/26/98: renamed old function
                         (numbraintargets_alloc = numbraintargets_alloc
                                                      ? numbraintargets_alloc * 2
                                                      : 32) *
-                            sizeof *braintargets));
+                            sizeof *braintargets
+                    ));
                 }
                 braintargets[numbraintargets++] = m;
             }
@@ -3082,8 +3104,10 @@ void A_BrainAwake(mobj_t * /* mo */)
         brain.easy = 0;
     }
 
-    S_StartSound(nullptr,
-                 sfx_bossit); // killough 3/26/98: only generates sound now
+    S_StartSound(
+        nullptr,
+        sfx_bossit
+    ); // killough 3/26/98: only generates sound now
 }
 
 void A_BrainPain(mobj_t * /* mo */)
@@ -3265,8 +3289,9 @@ void A_SpawnFly(mobj_t *mo)
 
     if (P_LookForTargets(newmobj, true))
     { /* killough 9/4/98 */
-        P_SetMobjState(newmobj,
-                       static_cast<statenum_t>(newmobj->info->seestate));
+        P_SetMobjState(
+            newmobj, static_cast<statenum_t>(newmobj->info->seestate)
+        );
     }
 
     // telefrag anything in this spot
@@ -3328,8 +3353,8 @@ void A_Mushroom(mobj_t *actor)
     // Mushroom parameters are part of code pointer's state
     dboolean mbf =
         (compatibility_level == mbf_compatibility &&
-         !prboom_comp[PC_DO_NOT_USE_MISC12_FRAME_PARAMETERS_IN_A_MUSHROOM]
-              .state);
+         !prboom_comp[PC_DO_NOT_USE_MISC12_FRAME_PARAMETERS_IN_A_MUSHROOM].state
+        );
     fixed_t misc1 =
         ((mbf && actor->state->misc1) ? actor->state->misc1 : FRACUNIT * 4);
     fixed_t misc2 =
@@ -3379,9 +3404,10 @@ void A_Spawn(mobj_t *mo)
 
     if (mo->state->misc1)
     {
-        mobj_t *newmobj =
-            P_SpawnMobj(mo->x, mo->y, (mo->state->misc2 << FRACBITS) + mo->z,
-                        static_cast<mobjtype_t>(mo->state->misc1 - 1));
+        mobj_t *newmobj = P_SpawnMobj(
+            mo->x, mo->y, (mo->state->misc2 << FRACBITS) + mo->z,
+            static_cast<mobjtype_t>(mo->state->misc1 - 1)
+        );
         if (compatibility_level == mbf_compatibility &&
             !prboom_comp[PC_DO_NOT_INHERIT_FRIENDLYNESS_FLAG_ON_SPAWN].state)
         {
@@ -3527,8 +3553,9 @@ void A_DripBlood(mobj_t *actor)
     r1 = P_SubRandom();
     r2 = P_SubRandom();
 
-    mo = P_SpawnMobj(actor->x + (r2 << 11), actor->y + (r1 << 11), actor->z,
-                     HERETIC_MT_BLOOD);
+    mo = P_SpawnMobj(
+        actor->x + (r2 << 11), actor->y + (r1 << 11), actor->z, HERETIC_MT_BLOOD
+    );
     mo->momx = P_SubRandom() << 10;
     mo->momy = P_SubRandom() << 10;
     mo->flags2 |= MF2_LOGRAV;
@@ -3583,8 +3610,10 @@ void A_BeastPuff(mobj_t *actor)
         r1 = P_SubRandom();
         r2 = P_SubRandom();
         r3 = P_SubRandom();
-        P_SpawnMobj(actor->x + (r3 << 10), actor->y + (r2 << 10),
-                    actor->z + (r1 << 10), HERETIC_MT_PUFFY);
+        P_SpawnMobj(
+            actor->x + (r3 << 10), actor->y + (r2 << 10), actor->z + (r1 << 10),
+            HERETIC_MT_PUFFY
+        );
     }
 }
 
@@ -3597,8 +3626,9 @@ void A_ImpMeAttack(mobj_t *actor)
     S_StartSound(actor, actor->info->attacksound);
     if (P_CheckMeleeRange(actor))
     {
-        P_DamageMobj(actor->target, actor, actor,
-                     5 + (P_Random(pr_heretic) & 7));
+        P_DamageMobj(
+            actor->target, actor, actor, 5 + (P_Random(pr_heretic) & 7)
+        );
     }
 }
 
@@ -3638,8 +3668,9 @@ void A_ImpMsAttack2(mobj_t *actor)
     S_StartSound(actor, actor->info->attacksound);
     if (P_CheckMeleeRange(actor))
     {
-        P_DamageMobj(actor->target, actor, actor,
-                     5 + (P_Random(pr_heretic) & 7));
+        P_DamageMobj(
+            actor->target, actor, actor, 5 + (P_Random(pr_heretic) & 7)
+        );
         return;
     }
     P_SpawnMissile(actor, actor->target, HERETIC_MT_IMPBALL);
@@ -3725,8 +3756,9 @@ void A_ChicAttack(mobj_t *actor)
     }
     if (P_CheckMeleeRange(actor))
     {
-        P_DamageMobj(actor->target, actor, actor,
-                     1 + (P_Random(pr_heretic) & 1));
+        P_DamageMobj(
+            actor->target, actor, actor, 1 + (P_Random(pr_heretic) & 1)
+        );
     }
 }
 
@@ -3773,14 +3805,18 @@ void A_Feathers(mobj_t *actor)
     }
     for (i = 0; i < count; i++)
     {
-        mo = P_SpawnMobj(actor->x, actor->y, actor->z + 20 * FRACUNIT,
-                         HERETIC_MT_FEATHER);
+        mo = P_SpawnMobj(
+            actor->x, actor->y, actor->z + 20 * FRACUNIT, HERETIC_MT_FEATHER
+        );
         P_SetTarget(&mo->target, actor);
         mo->momx = P_SubRandom() << 8;
         mo->momy = P_SubRandom() << 8;
         mo->momz = FRACUNIT + (P_Random(pr_heretic) << 9);
-        P_SetMobjState(mo, static_cast<statenum_t>(HERETIC_S_FEATHER1 +
-                                                   (P_Random(pr_heretic) & 7)));
+        P_SetMobjState(
+            mo, static_cast<statenum_t>(
+                    HERETIC_S_FEATHER1 + (P_Random(pr_heretic) & 7)
+                )
+        );
     }
 }
 
@@ -3831,8 +3867,9 @@ void A_MummySoul(mobj_t *mummy)
 {
     mobj_t *mo;
 
-    mo = P_SpawnMobj(mummy->x, mummy->y, mummy->z + 10 * FRACUNIT,
-                     HERETIC_MT_MUMMYSOUL);
+    mo = P_SpawnMobj(
+        mummy->x, mummy->y, mummy->z + 10 * FRACUNIT, HERETIC_MT_MUMMYSOUL
+    );
     mo->momz = FRACUNIT;
 }
 
@@ -3879,10 +3916,12 @@ void A_Srcr1Attack(mobj_t *actor)
         {
             momz = mo->momz;
             angle = mo->angle;
-            P_SpawnMissileAngle(actor, HERETIC_MT_SRCRFX1, angle - ANG1_X * 3,
-                                momz);
-            P_SpawnMissileAngle(actor, HERETIC_MT_SRCRFX1, angle + ANG1_X * 3,
-                                momz);
+            P_SpawnMissileAngle(
+                actor, HERETIC_MT_SRCRFX1, angle - ANG1_X * 3, momz
+            );
+            P_SpawnMissileAngle(
+                actor, HERETIC_MT_SRCRFX1, angle + ANG1_X * 3, momz
+            );
         }
         if (actor->health < actor->info->spawnhealth / 3)
         { // Maybe attack again
@@ -3978,10 +4017,12 @@ void A_Srcr2Attack(mobj_t *actor)
     chance = actor->health < actor->info->spawnhealth / 2 ? 96 : 48;
     if (P_Random(pr_heretic) < chance)
     { // Wizard spawners
-        P_SpawnMissileAngle(actor, HERETIC_MT_SOR2FX2, actor->angle - ANG45,
-                            FRACUNIT / 2);
-        P_SpawnMissileAngle(actor, HERETIC_MT_SOR2FX2, actor->angle + ANG45,
-                            FRACUNIT / 2);
+        P_SpawnMissileAngle(
+            actor, HERETIC_MT_SOR2FX2, actor->angle - ANG45, FRACUNIT / 2
+        );
+        P_SpawnMissileAngle(
+            actor, HERETIC_MT_SOR2FX2, actor->angle + ANG45, FRACUNIT / 2
+        );
     }
     else
     { // Blue bolt
@@ -4008,17 +4049,19 @@ void A_GenWizard(mobj_t *actor)
     mobj_t *mo;
     mobj_t *fog;
 
-    mo = P_SpawnMobj(actor->x, actor->y,
-                     actor->z - mobjinfo[HERETIC_MT_WIZARD].height / 2,
-                     HERETIC_MT_WIZARD);
+    mo = P_SpawnMobj(
+        actor->x, actor->y, actor->z - mobjinfo[HERETIC_MT_WIZARD].height / 2,
+        HERETIC_MT_WIZARD
+    );
     if (P_TestMobjLocation(mo) == false)
     { // Didn't fit
         P_RemoveMobj(mo);
         return;
     }
     actor->momx = actor->momy = actor->momz = 0;
-    P_SetMobjState(actor,
-                   static_cast<statenum_t>(mobjinfo[actor->type].deathstate));
+    P_SetMobjState(
+        actor, static_cast<statenum_t>(mobjinfo[actor->type].deathstate)
+    );
     actor->flags &= ~MF_MISSILE;
     fog = P_SpawnMobj(actor->x, actor->y, actor->z, HERETIC_MT_TFOG);
     S_StartSound(fog, heretic_sfx_telept);
@@ -4135,8 +4178,7 @@ void A_MinotaurDecide(mobj_t *actor)
         actor->momy = FixedMul(MNTR_CHARGE_SPEED, finesine[angle]);
         actor->special1.i = 35 / 2; // Charge duration
     }
-    else if (target->z == target->floorz && dist < 9 * 64 * FRACUNIT &&
-             P_Random(pr_heretic) < 220)
+    else if (target->z == target->floorz && dist < 9 * 64 * FRACUNIT && P_Random(pr_heretic) < 220)
     { // Floor fire attack
         P_SetMobjState(actor, HERETIC_S_MNTR_ATK3_1);
         actor->special2.i = 0;
@@ -4189,14 +4231,18 @@ void A_MinotaurAtk2(mobj_t *actor)
         S_StartSound(mo, heretic_sfx_minat2);
         momz = mo->momz;
         angle = mo->angle;
-        P_SpawnMissileAngle(actor, HERETIC_MT_MNTRFX1, angle - (ANG45 / 8),
-                            momz);
-        P_SpawnMissileAngle(actor, HERETIC_MT_MNTRFX1, angle + (ANG45 / 8),
-                            momz);
-        P_SpawnMissileAngle(actor, HERETIC_MT_MNTRFX1, angle - (ANG45 / 16),
-                            momz);
-        P_SpawnMissileAngle(actor, HERETIC_MT_MNTRFX1, angle + (ANG45 / 16),
-                            momz);
+        P_SpawnMissileAngle(
+            actor, HERETIC_MT_MNTRFX1, angle - (ANG45 / 8), momz
+        );
+        P_SpawnMissileAngle(
+            actor, HERETIC_MT_MNTRFX1, angle + (ANG45 / 8), momz
+        );
+        P_SpawnMissileAngle(
+            actor, HERETIC_MT_MNTRFX1, angle - (ANG45 / 16), momz
+        );
+        P_SpawnMissileAngle(
+            actor, HERETIC_MT_MNTRFX1, angle + (ANG45 / 16), momz
+        );
     }
 }
 
@@ -4241,8 +4287,10 @@ void A_MntrFloorFire(mobj_t *actor)
     r2 = P_SubRandom();
 
     actor->z = actor->floorz;
-    mo = P_SpawnMobj(actor->x + (r2 << 10), actor->y + (r1 << 10), ONFLOORZ,
-                     HERETIC_MT_MNTRFX3);
+    mo = P_SpawnMobj(
+        actor->x + (r2 << 10), actor->y + (r1 << 10), ONFLOORZ,
+        HERETIC_MT_MNTRFX3
+    );
     P_SetTarget(&mo->target, actor->target);
     mo->momx = 1; // Force block checking
     P_CheckMissileSpawn(mo);
@@ -4270,7 +4318,8 @@ void A_WhirlwindSeek(mobj_t *actor)
     {
         actor->momx = actor->momy = actor->momz = 0;
         P_SetMobjState(
-            actor, static_cast<statenum_t>(mobjinfo[actor->type].deathstate));
+            actor, static_cast<statenum_t>(mobjinfo[actor->type].deathstate)
+        );
         actor->flags &= ~MF_MISSILE;
         return;
     }
@@ -4398,10 +4447,12 @@ void A_WizAtk3(mobj_t *actor)
     {
         momz = mo->momz;
         angle = mo->angle;
-        P_SpawnMissileAngle(actor, HERETIC_MT_WIZFX1, angle - (ANG45 / 8),
-                            momz);
-        P_SpawnMissileAngle(actor, HERETIC_MT_WIZFX1, angle + (ANG45 / 8),
-                            momz);
+        P_SpawnMissileAngle(
+            actor, HERETIC_MT_WIZFX1, angle - (ANG45 / 8), momz
+        );
+        P_SpawnMissileAngle(
+            actor, HERETIC_MT_WIZFX1, angle + (ANG45 / 8), momz
+        );
     }
 }
 
@@ -4413,8 +4464,9 @@ void P_DropItem(mobj_t *source, mobjtype_t type, int special, int chance)
     {
         return;
     }
-    mo = P_SpawnMobj(source->x, source->y, source->z + (source->height >> 1),
-                     type);
+    mo = P_SpawnMobj(
+        source->x, source->y, source->z + (source->height >> 1), type
+    );
     mo->momx = P_SubRandom() << 8;
     mo->momy = P_SubRandom() << 8;
     mo->momz = FRACUNIT * 5 + (P_Random(pr_heretic) << 10);
@@ -4479,8 +4531,9 @@ void A_PodPain(mobj_t *actor)
     count = chance > 240 ? 2 : 1;
     for (i = 0; i < count; i++)
     {
-        goo = P_SpawnMobj(actor->x, actor->y, actor->z + 48 * FRACUNIT,
-                          HERETIC_MT_PODGOO);
+        goo = P_SpawnMobj(
+            actor->x, actor->y, actor->z + 48 * FRACUNIT, HERETIC_MT_PODGOO
+        );
         P_SetTarget(&goo->target, actor);
         goo->momx = P_SubRandom() << 9;
         goo->momy = P_SubRandom() << 9;
@@ -4555,10 +4608,11 @@ void A_SpawnTeleGlitter(mobj_t *actor)
 
     r1 = P_Random(pr_heretic);
     r2 = P_Random(pr_heretic);
-    mo = P_SpawnMobj(actor->x + ((r2 & 31) - 16) * FRACUNIT,
-                     actor->y + ((r1 & 31) - 16) * FRACUNIT,
-                     actor->subsector->sector->floorheight,
-                     HERETIC_MT_TELEGLITTER);
+    mo = P_SpawnMobj(
+        actor->x + ((r2 & 31) - 16) * FRACUNIT,
+        actor->y + ((r1 & 31) - 16) * FRACUNIT,
+        actor->subsector->sector->floorheight, HERETIC_MT_TELEGLITTER
+    );
     mo->momz = FRACUNIT / 4;
 }
 
@@ -4569,10 +4623,11 @@ void A_SpawnTeleGlitter2(mobj_t *actor)
 
     r1 = P_Random(pr_heretic);
     r2 = P_Random(pr_heretic);
-    mo = P_SpawnMobj(actor->x + ((r2 & 31) - 16) * FRACUNIT,
-                     actor->y + ((r1 & 31) - 16) * FRACUNIT,
-                     actor->subsector->sector->floorheight,
-                     HERETIC_MT_TELEGLITTER2);
+    mo = P_SpawnMobj(
+        actor->x + ((r2 & 31) - 16) * FRACUNIT,
+        actor->y + ((r1 & 31) - 16) * FRACUNIT,
+        actor->subsector->sector->floorheight, HERETIC_MT_TELEGLITTER2
+    );
     mo->momz = FRACUNIT / 4;
 }
 
@@ -4603,8 +4658,9 @@ void A_InitKeyGizmo(mobj_t *gizmo)
     default:
         break;
     }
-    mo = P_SpawnMobj(gizmo->x, gizmo->y, gizmo->z + 60 * FRACUNIT,
-                     HERETIC_MT_KEYGIZMOFLOAT);
+    mo = P_SpawnMobj(
+        gizmo->x, gizmo->y, gizmo->z + 60 * FRACUNIT, HERETIC_MT_KEYGIZMOFLOAT
+    );
     P_SetMobjState(mo, state);
 }
 
@@ -4623,8 +4679,10 @@ void A_VolcanoBlast(mobj_t *volcano)
     count = 1 + (P_Random(pr_heretic) % 3);
     for (i = 0; i < count; i++)
     {
-        blast = P_SpawnMobj(volcano->x, volcano->y, volcano->z + 44 * FRACUNIT,
-                            HERETIC_MT_VOLCANOBLAST);
+        blast = P_SpawnMobj(
+            volcano->x, volcano->y, volcano->z + 44 * FRACUNIT,
+            HERETIC_MT_VOLCANOBLAST
+        );
         P_SetTarget(&blast->target, volcano);
         angle = P_Random(pr_heretic) << 24;
         blast->angle = angle;
@@ -4710,9 +4768,12 @@ void A_AddPlayerCorpse(mobj_t *actor)
         if (queuesize < bodyquesize)
         {
             bodyque = static_cast<mobj_t **>(
-                realloc(bodyque, bodyquesize * sizeof(*bodyque)));
-            memset(bodyque + queuesize, 0,
-                   (bodyquesize - queuesize) * sizeof(*bodyque));
+                realloc(bodyque, bodyquesize * sizeof(*bodyque))
+            );
+            memset(
+                bodyque + queuesize, 0,
+                (bodyquesize - queuesize) * sizeof(*bodyque)
+            );
             queuesize = bodyquesize;
         }
         if (bodyqueslot >= bodyquesize)
@@ -4901,13 +4962,15 @@ dboolean Heretic_P_LookForPlayers(mobj_t *actor, dboolean allaround)
 
         if (!allaround)
         {
-            an = R_PointToAngle2(actor->x, actor->y, player->mo->x,
-                                 player->mo->y) -
+            an = R_PointToAngle2(
+                     actor->x, actor->y, player->mo->x, player->mo->y
+                 ) -
                  actor->angle;
             if (an > ANG90 && an < ANG270)
             {
-                dist = P_AproxDistance(player->mo->x - actor->x,
-                                       player->mo->y - actor->y);
+                dist = P_AproxDistance(
+                    player->mo->x - actor->x, player->mo->y - actor->y
+                );
                 // if real close, react anyway
                 if (dist > MELEERANGE)
                 {
@@ -4917,8 +4980,9 @@ dboolean Heretic_P_LookForPlayers(mobj_t *actor, dboolean allaround)
         }
         if (player->mo->flags & MF_SHADOW)
         { // Player is invisible
-            if ((P_AproxDistance(player->mo->x - actor->x,
-                                 player->mo->y - actor->y) > 2 * MELEERANGE) &&
+            if ((P_AproxDistance(
+                     player->mo->x - actor->x, player->mo->y - actor->y
+                 ) > 2 * MELEERANGE) &&
                 P_AproxDistance(player->mo->momx, player->mo->momy) <
                     5 * FRACUNIT)
             { // Player is sneaking - can't detect

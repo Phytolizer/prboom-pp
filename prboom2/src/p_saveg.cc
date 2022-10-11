@@ -141,10 +141,10 @@ void P_ArchiveWorld()
 
     // killough 3/22/98: fix bug caused by hoisting save_p too early
     // killough 10/98: adjust size for changes below
-    size_t size = (sizeof(short) * 5 + sizeof sec->floorheight +
-                   sizeof sec->ceilingheight) *
-                      numsectors +
-                  sizeof(short) * 3 * numlines + 4 + 2;
+    size_t size =
+        (sizeof(short) * 5 + sizeof sec->floorheight + sizeof sec->ceilingheight
+        ) * numsectors +
+        sizeof(short) * 3 * numlines + 4 + 2;
 
     for (i = 0; i < numlines; i++)
     {
@@ -171,11 +171,13 @@ void P_ArchiveWorld()
     {
         // killough 10/98: save full floor & ceiling heights, including fraction
         memcpy(put, &sec->floorheight, sizeof sec->floorheight);
-        put = static_cast<short *>(
-            (void *)((char *)put + sizeof sec->floorheight));
+        put =
+            static_cast<short *>((void *)((char *)put + sizeof sec->floorheight)
+            );
         memcpy(put, &sec->ceilingheight, sizeof sec->ceilingheight);
         put = static_cast<short *>(
-            (void *)((char *)put + sizeof sec->ceilingheight));
+            (void *)((char *)put + sizeof sec->ceilingheight)
+        );
 
         *put++ = sec->floorpic;
         *put++ = sec->ceilingpic;
@@ -204,10 +206,12 @@ void P_ArchiveWorld()
 
                 memcpy(put, &si->textureoffset, sizeof si->textureoffset);
                 put = static_cast<short *>(
-                    (void *)((char *)put + sizeof si->textureoffset));
+                    (void *)((char *)put + sizeof si->textureoffset)
+                );
                 memcpy(put, &si->rowoffset, sizeof si->rowoffset);
                 put = static_cast<short *>(
-                    (void *)((char *)put + sizeof si->rowoffset));
+                    (void *)((char *)put + sizeof si->rowoffset)
+                );
 
                 *put++ = si->toptexture;
                 *put++ = si->bottomtexture;
@@ -242,11 +246,13 @@ void P_UnArchiveWorld()
         // fractions
 
         memcpy(&sec->floorheight, get, sizeof sec->floorheight);
-        get = static_cast<short *>(
-            (void *)((char *)get + sizeof sec->floorheight));
+        get =
+            static_cast<short *>((void *)((char *)get + sizeof sec->floorheight)
+            );
         memcpy(&sec->ceilingheight, get, sizeof sec->ceilingheight);
         get = static_cast<short *>(
-            (void *)((char *)get + sizeof sec->ceilingheight));
+            (void *)((char *)get + sizeof sec->ceilingheight)
+        );
 
         sec->floorpic = *get++;
         sec->ceilingpic = *get++;
@@ -279,10 +285,12 @@ void P_UnArchiveWorld()
 
                 memcpy(&si->textureoffset, get, sizeof si->textureoffset);
                 get = static_cast<short *>(
-                    (void *)((char *)get + sizeof si->textureoffset));
+                    (void *)((char *)get + sizeof si->textureoffset)
+                );
                 memcpy(&si->rowoffset, get, sizeof si->rowoffset);
                 get = static_cast<short *>(
-                    (void *)((char *)get + sizeof si->rowoffset));
+                    (void *)((char *)get + sizeof si->rowoffset)
+                );
 
                 si->toptexture = *get++;
                 si->bottomtexture = *get++;
@@ -414,10 +422,11 @@ void P_UnArchiveRNG()
 void P_ArchiveMap()
 {
     int i, zero = 0, one = 1;
-    CheckSaveGame(2 * sizeof zero + sizeof markpointnum +
-                  markpointnum *
-                      (sizeof(markpoints[0].x) + sizeof(markpoints[0].y)) +
-                  sizeof automapmode + sizeof one);
+    CheckSaveGame(
+        2 * sizeof zero + sizeof markpointnum +
+        markpointnum * (sizeof(markpoints[0].x) + sizeof(markpoints[0].y)) +
+        sizeof automapmode + sizeof one
+    );
 
     memcpy(save_p, &automapmode, sizeof automapmode);
     save_p += sizeof automapmode;
@@ -425,8 +434,10 @@ void P_ArchiveMap()
     save_p += sizeof one;             // that's worked out locally by D_Display
     memcpy(save_p, &zero, sizeof zero); // CPhipps - used to be followplayer
     save_p += sizeof zero;              //  that is now part of automapmode
-    memcpy(save_p, &zero,
-           sizeof zero); // CPhipps - used to be automap_grid, ditto
+    memcpy(
+        save_p, &zero,
+        sizeof zero
+    ); // CPhipps - used to be automap_grid, ditto
     save_p += sizeof zero;
     memcpy(save_p, &markpointnum, sizeof markpointnum);
     save_p += sizeof markpointnum;
@@ -469,7 +480,8 @@ void P_UnArchiveMap()
                 markpoints,
                 sizeof *markpoints *
                     (markpointnum_max =
-                         markpointnum_max ? markpointnum_max * 2 : 16)));
+                         markpointnum_max ? markpointnum_max * 2 : 16)
+            ));
         }
 
         for (i = 0; i < markpointnum; i++)
@@ -1068,8 +1080,8 @@ void P_TrueUnArchiveThinkers()
         sp = save_p;
         mobj_count = 0;
 
-        while ((tc = static_cast<true_thinkerclass_t>(*save_p++)) !=
-               tc_true_end)
+        while ((tc = static_cast<true_thinkerclass_t>(*save_p++)) != tc_true_end
+        )
         {
             if (tc == tc_true_mobj)
             {
@@ -1096,13 +1108,14 @@ void P_TrueUnArchiveThinkers()
         {
             I_Error(
                 "P_TrueUnArchiveThinkers: Unknown tc %i in size calculation",
-                *save_p);
+                *save_p
+            );
         }
 
         // first table entry special: 0 maps to nullptr
-        *(mobj_p = static_cast<mobj_t **>(
-              malloc((mobj_count + 1) * sizeof *mobj_p))) =
-            nullptr; // table of pointers
+        *(mobj_p =
+              static_cast<mobj_t **>(malloc((mobj_count + 1) * sizeof *mobj_p))
+        ) = nullptr; // table of pointers
         save_p = sp; // restore save pointer
     }
 
@@ -1367,15 +1380,18 @@ void P_TrueUnArchiveThinkers()
         {
             P_SetNewTarget(
                 &((mobj_t *)th)->target,
-                mobj_p[P_GetMobj(((mobj_t *)th)->target, mobj_count + 1)]);
+                mobj_p[P_GetMobj(((mobj_t *)th)->target, mobj_count + 1)]
+            );
 
             P_SetNewTarget(
                 &((mobj_t *)th)->tracer,
-                mobj_p[P_GetMobj(((mobj_t *)th)->tracer, mobj_count + 1)]);
+                mobj_p[P_GetMobj(((mobj_t *)th)->tracer, mobj_count + 1)]
+            );
 
             P_SetNewTarget(
                 &((mobj_t *)th)->lastenemy,
-                mobj_p[P_GetMobj(((mobj_t *)th)->lastenemy, mobj_count + 1)]);
+                mobj_p[P_GetMobj(((mobj_t *)th)->lastenemy, mobj_count + 1)]
+            );
 
             if (heretic)
             {
@@ -1386,14 +1402,20 @@ void P_TrueUnArchiveThinkers()
                 case HERETIC_MT_MUMMYFX1:   // A_MummyFX1Seek
                 case HERETIC_MT_HORNRODFX2: // A_SkullRodPL2Seek
                 case HERETIC_MT_PHOENIXFX1: // A_PhoenixPuff
-                    P_SetNewTarget(&((mobj_t *)th)->special1.m,
-                                   mobj_p[P_GetMobj(((mobj_t *)th)->special1.m,
-                                                    mobj_count + 1)]);
+                    P_SetNewTarget(
+                        &((mobj_t *)th)->special1.m,
+                        mobj_p[P_GetMobj(
+                            ((mobj_t *)th)->special1.m, mobj_count + 1
+                        )]
+                    );
                     break;
                 case HERETIC_MT_POD:
-                    P_SetNewTarget(&((mobj_t *)th)->special2.m,
-                                   mobj_p[P_GetMobj(((mobj_t *)th)->special2.m,
-                                                    mobj_count + 1)]);
+                    P_SetNewTarget(
+                        &((mobj_t *)th)->special2.m,
+                        mobj_p[P_GetMobj(
+                            ((mobj_t *)th)->special2.m, mobj_count + 1
+                        )]
+                    );
                     break;
                 default:
                     break;
@@ -1417,8 +1439,10 @@ void P_TrueUnArchiveThinkers()
             memcpy(&target, save_p, sizeof target);
             save_p += sizeof target;
             // Must verify soundtarget. See P_TrueArchiveThinkers.
-            P_SetNewTarget(&sectors[i].soundtarget,
-                           mobj_p[P_GetMobj(target, mobj_count + 1)]);
+            P_SetNewTarget(
+                &sectors[i].soundtarget,
+                mobj_p[P_GetMobj(target, mobj_count + 1)]
+            );
         }
     }
 

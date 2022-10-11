@@ -181,16 +181,18 @@ dboolean dsda_InputTickActivated(int identifier);
 dboolean dsda_InputDeactivated(int identifier);
 dsda_input_t *dsda_Input(int identifier);
 void dsda_InputFlush();
-void dsda_InputCopy(int identifier,
-                    dsda_input_t *input[DSDA_INPUT_PROFILE_COUNT]);
+void dsda_InputCopy(
+    int identifier, dsda_input_t *input[DSDA_INPUT_PROFILE_COUNT]
+);
 int dsda_InputMatchKey(int identifier, int value);
 int dsda_InputMatchMouseB(int identifier, int value);
 int dsda_InputMatchJoyB(int identifier, int value);
 void dsda_InputReset(int identifier);
 void dsda_InputResetSpecific(int config_index, int identifier);
 void dsda_InputSet(int identifier, dsda_input_default_t input);
-void dsda_InputSetSpecific(int config_index, int identifier,
-                           dsda_input_default_t input);
+void dsda_InputSetSpecific(
+    int config_index, int identifier, dsda_input_default_t input
+);
 void dsda_InputAddKey(int identifier, int value);
 void dsda_InputAddSpecificKey(int config_index, int identifier, int value);
 void dsda_InputAddMouseB(int identifier, int value);

@@ -132,7 +132,8 @@ void MarkAnimatedTextures()
     anim_t *anim;
 
     anim_textures = static_cast<TAnimItemParam *>(
-        calloc(numtextures, sizeof(TAnimItemParam)));
+        calloc(numtextures, sizeof(TAnimItemParam))
+    );
     anim_flats =
         static_cast<TAnimItemParam *>(calloc(numflats, sizeof(TAnimItemParam)));
 
@@ -203,8 +204,9 @@ void P_InitPicAnims()
         if (lastanim >= anims + maxanims)
         {
             size_t newmax = maxanims ? maxanims * 2 : MAXANIMS;
-            anims = static_cast<anim_t *>(
-                realloc(anims, newmax * sizeof(*anims))); // killough
+            anims =
+                static_cast<anim_t *>(realloc(anims, newmax * sizeof(*anims))
+                ); // killough
             lastanim = anims + maxanims;
             maxanims = newmax;
         }
@@ -236,8 +238,10 @@ void P_InitPicAnims()
 
         if (lastanim->numpics < 2)
         {
-            I_Error("P_InitPicAnims: bad cycle from %s to %s",
-                    animdefs[i].startname, animdefs[i].endname);
+            I_Error(
+                "P_InitPicAnims: bad cycle from %s to %s",
+                animdefs[i].startname, animdefs[i].endname
+            );
         }
 
         lastanim->speed =
@@ -455,7 +459,8 @@ fixed_t P_FindNextHighestFloor(sector_t *sec, int currentheight)
                 heightlist_size = heightlist_size ? heightlist_size * 2 : 128;
             } while (sec->linecount > heightlist_size);
             heightlist = static_cast<fixed_t *>(
-                realloc(heightlist, heightlist_size * sizeof(heightlist[0])));
+                realloc(heightlist, heightlist_size * sizeof(heightlist[0]))
+            );
         }
 
         for (i = 0, h = 0; i < sec->linecount; i++)
@@ -480,13 +485,16 @@ fixed_t P_FindNextHighestFloor(sector_t *sec, int currentheight)
                 if (compatibility_level < dosdoom_compatibility &&
                     h >= MAX_ADJOINING_SECTORS)
                 {
-                    lprintf(LO_WARN,
-                            "P_FindNextHighestFloor: Overflow of "
-                            "heightlist[%d] array is detected.\n",
-                            MAX_ADJOINING_SECTORS);
-                    lprintf(LO_WARN,
-                            " Sector %d, line %d, heightlist index %d: ",
-                            sec->iSectorID, sec->lines[i]->iLineID, h);
+                    lprintf(
+                        LO_WARN,
+                        "P_FindNextHighestFloor: Overflow of "
+                        "heightlist[%d] array is detected.\n",
+                        MAX_ADJOINING_SECTORS
+                    );
+                    lprintf(
+                        LO_WARN, " Sector %d, line %d, heightlist index %d: ",
+                        sec->iSectorID, sec->lines[i]->iLineID, h
+                    );
 
                     if (h == MAX_ADJOINING_SECTORS + 1)
                     {
@@ -501,12 +509,15 @@ fixed_t P_FindNextHighestFloor(sector_t *sec, int currentheight)
                     {
                         lprintf(
                             LO_WARN,
-                            "cannot be emulated - unpredictable behaviour.\n");
+                            "cannot be emulated - unpredictable behaviour.\n"
+                        );
                     }
                     else
                     {
-                        lprintf(LO_WARN, "cannot be emulated - crash with high "
-                                         "probability.\n");
+                        lprintf(
+                            LO_WARN, "cannot be emulated - crash with high "
+                                     "probability.\n"
+                        );
                     }
                 }
                 heightlist[h++] = other->floorheight;
@@ -516,8 +527,9 @@ fixed_t P_FindNextHighestFloor(sector_t *sec, int currentheight)
             if (compatibility_level >= dosdoom_compatibility &&
                 h >= MAX_ADJOINING_SECTORS)
             {
-                lprintf(LO_WARN,
-                        "Sector with more than 20 adjoining sectors\n");
+                lprintf(
+                    LO_WARN, "Sector with more than 20 adjoining sectors\n"
+                );
                 break;
             }
         }
@@ -534,9 +546,10 @@ fixed_t P_FindNextHighestFloor(sector_t *sec, int currentheight)
             // It's not *quite* random stack noise. If this function is called
             // as part of a loop, heightlist will be at the same location as in
             // the previous call. Doing it this way fixes 1_ON_1.WAD.
-            return (compatibility_level < doom_1666_compatibility
-                        ? last_height_0
-                        : currentheight);
+            return (
+                compatibility_level < doom_1666_compatibility ? last_height_0
+                                                              : currentheight
+            );
         }
 
         last_height_0 = heightlist[0];
@@ -1355,8 +1368,9 @@ dboolean PUREFUNC P_WasSecret(const sector_t *sec)
 //  crossed. Change is qualified by demo_compatibility.
 //
 // CPhipps - take a line_t pointer instead of a line number, as in MBF
-void P_CrossSpecialLine(line_t *line, int side, mobj_t *thing,
-                        dboolean bossaction)
+void P_CrossSpecialLine(
+    line_t *line, int side, mobj_t *thing, dboolean bossaction
+)
 {
     int ok;
 
@@ -2783,8 +2797,10 @@ void P_PlayerInSpecialSector(player_t *player)
                 int sfx_id = (lumpNums.size() == 0 || lumpNums[0] < 0)
                                  ? sfx_itmbk
                                  : sfx_secret;
-                SetCustomMessage(player - players, STSTR_SECRETFOUND, 0,
-                                 2 * TICRATE, CR_GOLD, sfx_id);
+                SetCustomMessage(
+                    player - players, STSTR_SECRETFOUND, 0, 2 * TICRATE,
+                    CR_GOLD, sfx_id
+                );
             }
 
             dsda_WatchSecret();
@@ -2863,8 +2879,10 @@ void P_PlayerInSpecialSector(player_t *player)
                 int sfx_id =
                     (I_GetSfxLumpNums(&S_sfx[sfx_secret])[0] < 0 ? sfx_itmbk
                                                                  : sfx_secret);
-                SetCustomMessage(player - players, STSTR_SECRETFOUND, 0,
-                                 2 * TICRATE, CR_GOLD, sfx_id);
+                SetCustomMessage(
+                    player - players, STSTR_SECRETFOUND, 0, 2 * TICRATE,
+                    CR_GOLD, sfx_id
+                );
             }
 
             dsda_WatchSecret();
@@ -3383,8 +3401,9 @@ void T_Scroll(scroll_t *s)
 // accel: non-zero if this is an accelerative effect
 //
 
-static void Add_Scroller(int type, fixed_t dx, fixed_t dy, int control,
-                         int affectee, int accel)
+static void Add_Scroller(
+    int type, fixed_t dx, fixed_t dy, int control, int affectee, int accel
+)
 {
     scroll_t *s = static_cast<scroll_t *>(std::malloc(sizeof *s));
     s->thinker.function = T_Scroll;
@@ -3412,26 +3431,30 @@ static void Add_Scroller(int type, fixed_t dx, fixed_t dy, int control,
 // killough 10/98:
 // fix scrolling aliasing problems, caused by long linedefs causing overflowing
 
-static void Add_WallScroller(fixed_t dx, fixed_t dy, const line_t *l,
-                             int control, int accel)
+static void Add_WallScroller(
+    fixed_t dx, fixed_t dy, const line_t *l, int control, int accel
+)
 {
     fixed_t x = D_abs(l->dx), y = D_abs(l->dy), d;
     if (y > x)
     {
         d = x, x = y, y = d;
     }
-    d = FixedDiv(x, finesine[(tantoangle[FixedDiv(y, x) >> DBITS] + ANG90) >>
-                             ANGLETOFINESHIFT]);
+    d = FixedDiv(
+        x,
+        finesine
+            [(tantoangle[FixedDiv(y, x) >> DBITS] + ANG90) >> ANGLETOFINESHIFT]
+    );
 
     // CPhipps - Import scroller calc overflow fix, compatibility optioned
     if (compatibility_level >= lxdoom_1_compatibility)
     {
-        x = (fixed_t)(
-            ((int_64_t)dy * -(int_64_t)l->dy - (int_64_t)dx * (int_64_t)l->dx) /
-            (int_64_t)d); // killough 10/98:
-        y = (fixed_t)(
-            ((int_64_t)dy * (int_64_t)l->dx - (int_64_t)dx * (int_64_t)l->dy) /
-            (int_64_t)d); // Use long long arithmetic
+        x = (fixed_t
+        )(((int_64_t)dy * -(int_64_t)l->dy - (int_64_t)dx * (int_64_t)l->dx) /
+          (int_64_t)d); // killough 10/98:
+        y = (fixed_t
+        )(((int_64_t)dy * (int_64_t)l->dx - (int_64_t)dx * (int_64_t)l->dy) /
+          (int_64_t)d); // Use long long arithmetic
     }
     else
     {
@@ -3538,18 +3561,22 @@ static void P_SpawnScrollers()
 
         case 255: // killough 3/2/98: scroll according to sidedef offsets
             s = lines[i].sidenum[0];
-            Add_Scroller(scroll_t::sc_side, -sides[s].textureoffset,
-                         sides[s].rowoffset, -1, s, accel);
+            Add_Scroller(
+                scroll_t::sc_side, -sides[s].textureoffset, sides[s].rowoffset,
+                -1, s, accel
+            );
             break;
 
         case 48: // scroll first side
-            Add_Scroller(scroll_t::sc_side, FRACUNIT, 0, -1,
-                         lines[i].sidenum[0], accel);
+            Add_Scroller(
+                scroll_t::sc_side, FRACUNIT, 0, -1, lines[i].sidenum[0], accel
+            );
             break;
 
         case 85: // jff 1/30/98 2-way scroll
-            Add_Scroller(scroll_t::sc_side, -FRACUNIT, 0, -1,
-                         lines[i].sidenum[0], accel);
+            Add_Scroller(
+                scroll_t::sc_side, -FRACUNIT, 0, -1, lines[i].sidenum[0], accel
+            );
             break;
         }
     }
@@ -3813,8 +3840,9 @@ static void P_SpawnFriction()
 //
 // Add a push thinker to the thinker list
 
-static void Add_Pusher(int type, int x_mag, int y_mag, mobj_t *source,
-                       int affectee)
+static void Add_Pusher(
+    int type, int x_mag, int y_mag, mobj_t *source, int affectee
+)
 {
     pusher_t *p = static_cast<pusher_t *>(std::malloc(sizeof *p));
 
@@ -3876,8 +3904,8 @@ static dboolean PIT_PushThing(mobj_t *thing)
         {
             int x = (thing->x - sx) >> FRACBITS;
             int y = (thing->y - sy) >> FRACBITS;
-            speed = (int)(((uint_64_t)tmpusher->magnitude << 23) /
-                          (x * x + y * y + 1));
+            speed = (int
+            )(((uint_64_t)tmpusher->magnitude << 23) / (x * x + y * y + 1));
         }
 
         // If speed <= 0, you're outside the effective radius. You also have
@@ -4033,14 +4061,14 @@ void T_Pusher(pusher_t *p)
             }
             else // special water sector
                 if (thing->z > ht)
-            {                        // above ground
-                xspeed = yspeed = 0; // no force
-            }
-            else // underwater
-            {
-                xspeed = p->x_mag; // full force
-                yspeed = p->y_mag;
-            }
+                {                        // above ground
+                    xspeed = yspeed = 0; // no force
+                }
+                else // underwater
+                {
+                    xspeed = p->x_mag; // full force
+                    yspeed = p->y_mag;
+                }
         }
         thing->momx += xspeed << (FRACBITS - PUSH_FACTOR);
         thing->momy += yspeed << (FRACBITS - PUSH_FACTOR);
@@ -4676,8 +4704,8 @@ void Heretic_P_CrossSpecialLine(line_t *line, int side, mobj_t *thing)
 void Heretic_P_PlayerInSpecialSector(player_t *player)
 {
     sector_t *sector;
-    static int pushTab[5] = {2048 * 5, 2048 * 10, 2048 * 25, 2048 * 30,
-                             2048 * 35};
+    static int pushTab[5] = {
+        2048 * 5, 2048 * 10, 2048 * 25, 2048 * 30, 2048 * 35};
 
     sector = player->mo->subsector->sector;
     if (player->mo->z != sector->floorheight)
@@ -4721,8 +4749,10 @@ void Heretic_P_PlayerInSpecialSector(player_t *player)
         // e6y
         if (hudadd_secretarea)
         {
-            SetCustomMessage(player - players, STSTR_SECRETFOUND, 0,
-                             2 * TICRATE, CR_GOLD, heretic_sfx_chat);
+            SetCustomMessage(
+                player - players, STSTR_SECRETFOUND, 0, 2 * TICRATE, CR_GOLD,
+                heretic_sfx_chat
+            );
         }
 
         dsda_WatchSecret();
@@ -4780,9 +4810,11 @@ void Heretic_P_PlayerInSpecialSector(player_t *player)
         break;
 
     default:
-        I_Error("P_PlayerInSpecialSector: "
-                "unknown special %i",
-                sector->special);
+        I_Error(
+            "P_PlayerInSpecialSector: "
+            "unknown special %i",
+            sector->special
+        );
     }
 }
 

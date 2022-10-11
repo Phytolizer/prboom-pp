@@ -282,9 +282,11 @@ dboolean SC_GetNumber()
         sc_Number = strtol(sc_String, &stopper, 0);
         if (*stopper != 0)
         {
-            I_Error("SC_GetNumber: Bad numeric constant \"%s\".\n"
-                    "Script %s, Line %d",
-                    sc_String, ScriptName, sc_Line);
+            I_Error(
+                "SC_GetNumber: Bad numeric constant \"%s\".\n"
+                "Script %s, Line %d",
+                sc_String, ScriptName, sc_Line
+            );
         }
         return true;
     }

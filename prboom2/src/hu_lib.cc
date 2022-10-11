@@ -74,8 +74,10 @@ void HUlib_clearTextLine(hu_textline_t *t)
 // Passed a hu_textline_t, and the values used to initialize
 // Returns nothing
 //
-void HUlib_initTextLine(hu_textline_t *t, int x, int y, const patchnum_t *f,
-                        int sc, int cm, enum patch_translation_e flags)
+void HUlib_initTextLine(
+    hu_textline_t *t, int x, int y, const patchnum_t *f, int sc, int cm,
+    enum patch_translation_e flags
+)
 // jff 2/16/98 add color range parameter
 {
     t->x = x;
@@ -185,8 +187,8 @@ void HUlib_drawTextLine(hu_textline_t *l, dboolean drawcursor)
     y = (l->y < 0 ? -l->y - l->f[toupper(l->l[0]) - l->sc].height : l->y);
     for (i = 0; i < l->len; i++)
     {
-        c = static_cast<unsigned char>(toupper(
-            l->l[i])); // jff insure were not getting a cheap toupper conv.
+        c = static_cast<unsigned char>(toupper(l->l[i])
+        ); // jff insure were not getting a cheap toupper conv.
 
         if (c == '\n')
         { // killough 1/18/98 -- support multiple lines
@@ -217,7 +219,8 @@ void HUlib_drawTextLine(hu_textline_t *l, dboolean drawcursor)
             // CPhipps - patch drawing updated
             V_DrawNumPatch(
                 x, y, FG, l->f[c - l->sc].lumpnum, l->cm,
-                static_cast<patch_translation_e>(VPT_TRANS | l->flags));
+                static_cast<patch_translation_e>(VPT_TRANS | l->flags)
+            );
             x += w;
         }
         else
@@ -236,8 +239,10 @@ void HUlib_drawTextLine(hu_textline_t *l, dboolean drawcursor)
     {
         // killough 1/18/98 -- support multiple lines
         // CPhipps - patch drawing updated
-        V_DrawNumPatch(x, y, FG, l->f['_' - l->sc].lumpnum, CR_DEFAULT,
-                       static_cast<patch_translation_e>(VPT_NONE | l->flags));
+        V_DrawNumPatch(
+            x, y, FG, l->f['_' - l->sc].lumpnum, CR_DEFAULT,
+            static_cast<patch_translation_e>(VPT_NONE | l->flags)
+        );
     }
 }
 
@@ -311,10 +316,11 @@ void HUlib_eraseTextLine(hu_textline_t *l)
 // Passed a hu_stext_t, and the values used to initialize
 // Returns nothing
 //
-void HUlib_initSText(hu_stext_t *s, int x, int y, int h, const patchnum_t *font,
-                     int startchar,
-                     int cm, // jff 2/16/98 add color range parameter
-                     enum patch_translation_e flags, dboolean *on)
+void HUlib_initSText(
+    hu_stext_t *s, int x, int y, int h, const patchnum_t *font, int startchar,
+    int cm, // jff 2/16/98 add color range parameter
+    enum patch_translation_e flags, dboolean *on
+)
 {
 
     int i;
@@ -325,8 +331,10 @@ void HUlib_initSText(hu_stext_t *s, int x, int y, int h, const patchnum_t *font,
     s->cl = 0;
     for (i = 0; i < h; i++)
     {
-        HUlib_initTextLine(&s->l[i], x, y - i * (font[0].height + 1), font,
-                           startchar, cm, flags);
+        HUlib_initTextLine(
+            &s->l[i], x, y - i * (font[0].height + 1), font, startchar, cm,
+            flags
+        );
     }
 }
 
@@ -457,10 +465,11 @@ void HUlib_eraseSText(hu_stext_t *s)
 // Passed a hu_mtext_t, and the values used to initialize
 // Returns nothing
 //
-void HUlib_initMText(hu_mtext_t *m, int x, int y, int w, int h,
-                     const patchnum_t *font, int startchar, int cm,
-                     const patchnum_t *bgfont, enum patch_translation_e flags,
-                     dboolean *on)
+void HUlib_initMText(
+    hu_mtext_t *m, int x, int y, int w, int h, const patchnum_t *font,
+    int startchar, int cm, const patchnum_t *bgfont,
+    enum patch_translation_e flags, dboolean *on
+)
 {
     int i;
 
@@ -475,9 +484,10 @@ void HUlib_initMText(hu_mtext_t *m, int x, int y, int w, int h,
     m->on = on;
     for (i = 0; i < HU_MAXMESSAGES; i++)
     {
-        HUlib_initTextLine(&m->l[i], x,
-                           y + (hud_list_bgon ? i + 1 : i) * HU_REFRESHSPACING,
-                           font, startchar, cm, flags);
+        HUlib_initTextLine(
+            &m->l[i], x, y + (hud_list_bgon ? i + 1 : i) * HU_REFRESHSPACING,
+            font, startchar, cm, flags
+        );
     }
 }
 
@@ -701,10 +711,11 @@ void HUlib_eraseMText(hu_mtext_t *m)
 // Passed a hu_itext_t, and the values used to initialize
 // Returns nothing
 //
-void HUlib_initIText(hu_itext_t *it, int x, int y, const patchnum_t *font,
-                     int startchar,
-                     int cm, // jff 2/16/98 add color range parameter
-                     enum patch_translation_e flags, dboolean *on)
+void HUlib_initIText(
+    hu_itext_t *it, int x, int y, const patchnum_t *font, int startchar,
+    int cm, // jff 2/16/98 add color range parameter
+    enum patch_translation_e flags, dboolean *on
+)
 {
     it->lm = 0; // default left margin is start of text
     it->on = on;

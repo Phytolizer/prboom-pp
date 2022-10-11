@@ -299,8 +299,9 @@ static visplane_t *new_visplane(unsigned hash)
     if (!check)
     {
         // e6y: resolution limitation is removed
-        check = static_cast<visplane_t *>(calloc(
-            1, sizeof(*check) + sizeof(*check->top) * (SCREENWIDTH * 2)));
+        check = static_cast<visplane_t *>(
+            calloc(1, sizeof(*check) + sizeof(*check->top) * (SCREENWIDTH * 2))
+        );
         check->bottom = &check->top[SCREENWIDTH + 2];
     }
     else if (!(freetail = freetail->next))
@@ -342,8 +343,10 @@ visplane_t *R_DupPlane(const visplane_t *pl, int start, int stop)
 //
 // killough 2/28/98: Add offsets
 
-visplane_t *R_FindPlane(fixed_t height, int picnum, int lightlevel, int special,
-                        fixed_t xoffs, fixed_t yoffs)
+visplane_t *R_FindPlane(
+    fixed_t height, int picnum, int lightlevel, int special, fixed_t xoffs,
+    fixed_t yoffs
+)
 {
     visplane_t *check;
     unsigned hash; // killough
@@ -437,9 +440,10 @@ visplane_t *R_CheckPlane(visplane_t *pl, int start, int stop)
 // R_MakeSpans
 //
 
-static void R_MakeSpans(int x, unsigned int t1, unsigned int b1,
-                        unsigned int t2, unsigned int b2,
-                        draw_span_vars_t *dsvars)
+static void R_MakeSpans(
+    int x, unsigned int t1, unsigned int b1, unsigned int t2, unsigned int b2,
+    draw_span_vars_t *dsvars
+)
 {
     for (; t1 < t2 && t1 <= b1; t1++)
     {
@@ -466,7 +470,8 @@ static void R_DoDrawPlane(visplane_t *pl)
     int x;
     draw_column_vars_t dcvars;
     R_DrawColumn_f colfunc = R_GetDrawColumnFunc(
-        RDC_PIPELINE_STANDARD, drawvars.filterwall, drawvars.filterz);
+        RDC_PIPELINE_STANDARD, drawvars.filterwall, drawvars.filterz
+    );
 
     R_SetDefaultDrawColumnVars(&dcvars);
 
@@ -518,8 +523,9 @@ static void R_DoDrawPlane(visplane_t *pl)
                 if (skystretch)
                 {
                     int skyheight = textureheight[texture] >> FRACBITS;
-                    dcvars.texturemid = (int)((int_64_t)dcvars.texturemid *
-                                              skyheight / SKYSTRETCH_HEIGHT);
+                    dcvars.texturemid = (int
+                    )((int_64_t)dcvars.texturemid * skyheight /
+                      SKYSTRETCH_HEIGHT);
                 }
             }
             else
@@ -562,13 +568,16 @@ static void R_DoDrawPlane(visplane_t *pl)
                 {
                     dcvars.source = R_GetTextureColumn(
                         tex_patch,
-                        ((an + xtoviewangle[x]) ^ flip) >> ANGLETOSKYSHIFT);
+                        ((an + xtoviewangle[x]) ^ flip) >> ANGLETOSKYSHIFT
+                    );
                     dcvars.prevsource = R_GetTextureColumn(
                         tex_patch,
-                        ((an + xtoviewangle[x - 1]) ^ flip) >> ANGLETOSKYSHIFT);
+                        ((an + xtoviewangle[x - 1]) ^ flip) >> ANGLETOSKYSHIFT
+                    );
                     dcvars.nextsource = R_GetTextureColumn(
                         tex_patch,
-                        ((an + xtoviewangle[x + 1]) ^ flip) >> ANGLETOSKYSHIFT);
+                        ((an + xtoviewangle[x + 1]) ^ flip) >> ANGLETOSKYSHIFT
+                    );
                     colfunc(&dcvars);
                 }
             }
@@ -582,7 +591,8 @@ static void R_DoDrawPlane(visplane_t *pl)
             draw_span_vars_t dsvars;
 
             dsvars.source = static_cast<const byte *>(
-                W_CacheLumpNum(firstflat + flattranslation[pl->picnum]));
+                W_CacheLumpNum(firstflat + flattranslation[pl->picnum])
+            );
 
             if (heretic)
             {
@@ -639,8 +649,10 @@ static void R_DoDrawPlane(visplane_t *pl)
 
             for (x = pl->minx; x <= stop; x++)
             {
-                R_MakeSpans(x, pl->top[x - 1], pl->bottom[x - 1], pl->top[x],
-                            pl->bottom[x], &dsvars);
+                R_MakeSpans(
+                    x, pl->top[x - 1], pl->bottom[x - 1], pl->top[x],
+                    pl->bottom[x], &dsvars
+                );
             }
 
             W_UnlockLumpNum(firstflat + flattranslation[pl->picnum]);

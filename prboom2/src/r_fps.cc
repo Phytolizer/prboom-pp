@@ -161,10 +161,12 @@ void R_InterpolateView(player_t *player, fixed_t frac)
         }
         else
         {
-            viewangle = player->prev_viewangle +
-                        FixedMul(frac, R_SmoothPlaying_Get(player) -
-                                           player->prev_viewangle) +
-                        viewangleoffset;
+            viewangle =
+                player->prev_viewangle +
+                FixedMul(
+                    frac, R_SmoothPlaying_Get(player) - player->prev_viewangle
+                ) +
+                viewangleoffset;
             viewpitch =
                 player->prev_viewpitch +
                 FixedMul(frac, P_PlayerPitch(player) - player->prev_viewpitch) +
@@ -379,8 +381,9 @@ static void R_SetInterpolation(interpolation_type_e type, void *posptr)
             (fixed2_t *)realloc(oldipos, sizeof(*oldipos) * interpolations_max);
         bakipos =
             (fixed2_t *)realloc(bakipos, sizeof(*bakipos) * interpolations_max);
-        curipos = (interpolation_t *)realloc(curipos, sizeof(*curipos) *
-                                                          interpolations_max);
+        curipos = (interpolation_t *)realloc(
+            curipos, sizeof(*curipos) * interpolations_max
+        );
     }
 
     i = nullptr;
@@ -568,9 +571,10 @@ void R_ActivateSectorInterpolations()
     }
 }
 
-static void R_InterpolationGetData(thinker_t *th, interpolation_type_e *type1,
-                                   interpolation_type_e *type2, void **posptr1,
-                                   void **posptr2)
+static void R_InterpolationGetData(
+    thinker_t *th, interpolation_type_e *type1, interpolation_type_e *type2,
+    void **posptr1, void **posptr2
+)
 {
     *posptr1 = nullptr;
     *posptr2 = nullptr;

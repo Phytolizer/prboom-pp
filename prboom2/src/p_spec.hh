@@ -822,21 +822,29 @@ fixed_t P_FindLowestCeilingSurrounding(sector_t *sec); // jff 2/04/98
 
 fixed_t P_FindHighestCeilingSurrounding(sector_t *sec); // jff 2/04/98
 
-fixed_t P_FindNextLowestCeiling(sector_t *sec,
-                                int currentheight); // jff 2/04/98
+fixed_t P_FindNextLowestCeiling(
+    sector_t *sec,
+    int currentheight
+); // jff 2/04/98
 
-fixed_t P_FindNextHighestCeiling(sector_t *sec,
-                                 int currentheight); // jff 2/04/98
+fixed_t P_FindNextHighestCeiling(
+    sector_t *sec,
+    int currentheight
+); // jff 2/04/98
 
 fixed_t P_FindShortestTextureAround(int secnum); // jff 2/04/98
 
 fixed_t P_FindShortestUpperAround(int secnum); // jff 2/04/98
 
-sector_t *P_FindModelFloorSector(fixed_t floordestheight,
-                                 int secnum); // jff 02/04/98
+sector_t *P_FindModelFloorSector(
+    fixed_t floordestheight,
+    int secnum
+); // jff 02/04/98
 
-sector_t *P_FindModelCeilingSector(fixed_t ceildestheight,
-                                   int secnum); // jff 02/04/98
+sector_t *P_FindModelCeilingSector(
+    fixed_t ceildestheight,
+    int secnum
+); // jff 02/04/98
 
 int P_FindSectorFromLineTag(const line_t *line,
                             int start); // killough 4/17/98
@@ -891,8 +899,10 @@ void T_MoveCeiling(ceiling_t *ceiling);
 
 // p_floor
 
-result_e T_MovePlane(sector_t *sector, fixed_t speed, fixed_t dest,
-                     dboolean crush, int floorOrCeiling, int direction);
+result_e T_MovePlane(
+    sector_t *sector, fixed_t speed, fixed_t dest, dboolean crush,
+    int floorOrCeiling, int direction
+);
 
 void T_MoveFloor(floormove_t *floor);
 
@@ -920,8 +930,9 @@ int EV_Teleport(line_t *line, int side, mobj_t *thing);
 int EV_SilentTeleport(line_t *line, int side, mobj_t *thing);
 
 // killough 1/31/98: Add silent line teleporter
-int EV_SilentLineTeleport(line_t *line, int side, mobj_t *thing,
-                          dboolean reverse);
+int EV_SilentLineTeleport(
+    line_t *line, int side, mobj_t *thing, dboolean reverse
+);
 
 // p_floor
 
@@ -1001,13 +1012,15 @@ void P_SpawnSpecials(void);
 void P_UpdateSpecials(void);
 
 // when needed
-dboolean P_UseSpecialLine(mobj_t *thing, line_t *line, int side,
-                          dboolean noplayercheck);
+dboolean P_UseSpecialLine(
+    mobj_t *thing, line_t *line, int side, dboolean noplayercheck
+);
 
 void P_ShootSpecialLine(mobj_t *thing, line_t *line);
 
-void P_CrossSpecialLine(line_t *line, int side, mobj_t *thing,
-                        dboolean noplayercheck);
+void P_CrossSpecialLine(
+    line_t *line, int side, mobj_t *thing, dboolean noplayercheck
+);
 
 void P_PlayerInSpecialSector(player_t *player);
 
@@ -1064,8 +1077,9 @@ void P_AmbientSound(void);
 void P_AddAmbientSfx(int sequence);
 dboolean P_Teleport(mobj_t *thing, fixed_t x, fixed_t y, angle_t angle);
 dboolean Heretic_EV_Teleport(line_t *line, int side, mobj_t *thing);
-dboolean Heretic_P_UseSpecialLine(mobj_t *thing, line_t *line, int side,
-                                  dboolean bossaction);
+dboolean Heretic_P_UseSpecialLine(
+    mobj_t *thing, line_t *line, int side, dboolean bossaction
+);
 void Heretic_EV_VerticalDoor(line_t *line, mobj_t *thing);
 
 #endif

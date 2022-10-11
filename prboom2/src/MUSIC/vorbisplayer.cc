@@ -371,7 +371,8 @@ static void vorb_render_ex(void *dest, unsigned nsamp)
         if (vorb_looping && vorb_total_pos + nsamp > vorb_loop_from)
         {
             numread = ov_read_float(
-                &vf, &pcmdata, vorb_loop_from - vorb_total_pos, &bitstreamnum);
+                &vf, &pcmdata, vorb_loop_from - vorb_total_pos, &bitstreamnum
+            );
         }
         else
         {
@@ -443,8 +444,9 @@ static void vorb_render_ex(void *dest, unsigned nsamp)
 
 void vorb_render(void *dest, unsigned nsamp)
 {
-    I_ResampleStream(dest, nsamp, vorb_render_ex, vorb_samplerate_in,
-                     vorb_samplerate_target);
+    I_ResampleStream(
+        dest, nsamp, vorb_render_ex, vorb_samplerate_in, vorb_samplerate_target
+    );
 }
 
 #endif // HAVE_LIBVORBISFILE

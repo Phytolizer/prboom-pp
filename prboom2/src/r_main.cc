@@ -237,8 +237,9 @@ PUREFUNC int R_PointOnSegSide(fixed_t x, fixed_t y, const seg_t *line)
 //
 // killough 5/2/98: reformatted, cleaned up
 
-angle_t R_PointToAngleSlope(fixed_t x1, fixed_t y1, fixed_t x, fixed_t y,
-                            slope_div_fn slope_div)
+angle_t R_PointToAngleSlope(
+    fixed_t x1, fixed_t y1, fixed_t x, fixed_t y, slope_div_fn slope_div
+)
 {
     return (y -= y1, (x -= x1) || y)
                ? x >= 0 ? y >= 0 ? (x > y) ? tantoangle[slope_div(y, x)]
@@ -337,10 +338,12 @@ static void R_InitTextureMapping()
     // screen that would be visible on a 4:3 display has the requested FOV.
     if (wide_centerx != centerx)
     { // wide_centerx is what centerx would be if the display was not widescreen
-        FieldOfView = (int)(atan((double)centerx *
-                                 tan((double)FieldOfView * M_PI / FINEANGLES) /
-                                 (double)wide_centerx) *
-                            FINEANGLES / M_PI);
+        FieldOfView = (int
+        )(atan(
+              (double)centerx * tan((double)FieldOfView * M_PI / FINEANGLES) /
+              (double)wide_centerx
+          ) *
+          FINEANGLES / M_PI);
         if (FieldOfView > 160 * FINEANGLES / 360)
         {
             FieldOfView = 160 * FINEANGLES / 360;
@@ -356,8 +359,9 @@ static void R_InitTextureMapping()
 
     focallength =
         FixedDiv(centerxfrac, finetangent[FINEANGLES / 4 + FieldOfView / 2]);
-    focallengthy = Scale(centerxfrac, yaspectmul,
-                         finetangent[FINEANGLES / 4 + FieldOfView / 2]);
+    focallengthy = Scale(
+        centerxfrac, yaspectmul, finetangent[FINEANGLES / 4 + FieldOfView / 2]
+    );
 
     for (i = 0; i < FINEANGLES / 2; i++)
     {
@@ -430,9 +434,11 @@ static void R_InitLightTables()
 
     // killough 4/4/98: dynamic colormaps
     c_zlight = reinterpret_cast<const lighttable_t *(*)[32][128]>(
-        malloc(sizeof(*c_zlight) * numcolormaps));
+        malloc(sizeof(*c_zlight) * numcolormaps)
+    );
     c_scalelight = static_cast<const lighttable_t *(*)[32][48]>(
-        malloc(sizeof(*c_scalelight) * numcolormaps));
+        malloc(sizeof(*c_scalelight) * numcolormaps)
+    );
 
     LIGHTLEVELS = (render_doom_lightmaps ? 16 : 32);
     LIGHTSEGSHIFT = (render_doom_lightmaps ? 4 : 3);
@@ -489,8 +495,9 @@ void R_SetViewSize(int blocks)
     setblocks = blocks;
 }
 
-static void GenLookup(short *lookup1, short *lookup2, int size, int max,
-                      int step)
+static void GenLookup(
+    short *lookup1, short *lookup2, int size, int max, int step
+)
 {
     int i;
     fixed_t frac, lastfrac;
@@ -526,8 +533,9 @@ static void GenLookup(short *lookup1, short *lookup2, int size, int max,
     }
 }
 
-static void InitStretchParam(stretch_param_t *offsets, int stretch,
-                             enum patch_translation_e flags)
+static void InitStretchParam(
+    stretch_param_t *offsets, int stretch, enum patch_translation_e flags
+)
 {
     memset(offsets, 0, sizeof(*offsets));
 
@@ -601,8 +609,10 @@ void R_SetupViewScaling()
     {
         for (k = 0; k < VPT_ALIGN_MAX; k++)
         {
-            InitStretchParam(&stretch_params_table[i][k], i,
-                             static_cast<patch_translation_e>(k));
+            InitStretchParam(
+                &stretch_params_table[i][k], i,
+                static_cast<patch_translation_e>(k)
+            );
         }
     }
     stretch_params = stretch_params_table[render_stretch_hud];
@@ -637,17 +647,25 @@ void R_SetupViewScaling()
 
     video_stretch.width = WIDE_SCREENWIDTH;
     video_stretch.height = WIDE_SCREENHEIGHT;
-    GenLookup(video_stretch.x1lookup, video_stretch.x2lookup,
-              video_stretch.width, 320, video_stretch.xstep);
-    GenLookup(video_stretch.y1lookup, video_stretch.y2lookup,
-              video_stretch.height, 200, video_stretch.ystep);
+    GenLookup(
+        video_stretch.x1lookup, video_stretch.x2lookup, video_stretch.width,
+        320, video_stretch.xstep
+    );
+    GenLookup(
+        video_stretch.y1lookup, video_stretch.y2lookup, video_stretch.height,
+        200, video_stretch.ystep
+    );
 
     video_full.width = SCREENWIDTH;
     video_full.height = SCREENHEIGHT;
-    GenLookup(video_full.x1lookup, video_full.x2lookup, video_full.width, 320,
-              video_full.xstep);
-    GenLookup(video_full.y1lookup, video_full.y2lookup, video_full.height, 200,
-              video_full.ystep);
+    GenLookup(
+        video_full.x1lookup, video_full.x2lookup, video_full.width, 320,
+        video_full.xstep
+    );
+    GenLookup(
+        video_full.y1lookup, video_full.y2lookup, video_full.height, 200,
+        video_full.ystep
+    );
 }
 
 void R_MultMatrixVecd(const float matrix[16], const float in[4], float out[4])
@@ -661,8 +679,9 @@ void R_MultMatrixVecd(const float matrix[16], const float in[4], float out[4])
     }
 }
 
-int R_Project(float objx, float objy, float objz, float *winx, float *winy,
-              float *winz)
+int R_Project(
+    float objx, float objy, float objz, float *winx, float *winy, float *winz
+)
 {
     float in[4];
     float out[4];
@@ -861,8 +880,8 @@ void R_ExecuteSetViewSize()
     // proff 11/06/98: Added for high-res
     // calculate projectiony using int_64_t math to avoid overflow when
     // SCREENWIDTH>4228
-    projectiony = (fixed_t)((((int_64_t)cheight * centerx * 320) / 200) /
-                            SCREENWIDTH * FRACUNIT);
+    projectiony = (fixed_t
+    )((((int_64_t)cheight * centerx * 320) / 200) / SCREENWIDTH * FRACUNIT);
     // e6y: this is a precalculated value for more precise flats drawing (see
     // R_MapPlane)
     viewfocratio = projectiony / wide_centerx;
@@ -894,8 +913,8 @@ void R_ExecuteSetViewSize()
     pspriteyscale_f =
         (((float)cheight * viewwidth) / (float)SCREENWIDTH) / 200.0f;
 
-    skyiscale = (fixed_t)(((uint_64_t)FRACUNIT * SCREENWIDTH * 200) /
-                          (viewwidth * SCREENHEIGHT));
+    skyiscale = (fixed_t
+    )(((uint_64_t)FRACUNIT * SCREENWIDTH * 200) / (viewwidth * SCREENHEIGHT));
 
     // [RH] Sky height fix for screens not 200 (or 240) pixels tall
     R_InitSkyMap();
@@ -1011,8 +1030,10 @@ void R_SetupFreelook()
         centery = viewheight / 2;
         if (heretic || GetMouseLook())
         {
-            dy = FixedMul(focallengthy,
-                          finetangent[(ANG90 - viewpitch) >> ANGLETOFINESHIFT]);
+            dy = FixedMul(
+                focallengthy,
+                finetangent[(ANG90 - viewpitch) >> ANGLETOFINESHIFT]
+            );
             centery += dy >> FRACBITS;
         }
         centeryfrac = centery << FRACBITS;
@@ -1108,8 +1129,9 @@ static void R_SetupFrame(player_t *player)
     frame_fixedcolormap = player->fixedcolormap;
     if (frame_fixedcolormap < 0 || frame_fixedcolormap > NUMCOLORMAPS)
     {
-        I_Error("<fixedcolormap> value out of range: %d\n",
-                player->fixedcolormap);
+        I_Error(
+            "<fixedcolormap> value out of range: %d\n", player->fixedcolormap
+        );
     }
 
     if (player->fixedcolormap)
@@ -1165,7 +1187,8 @@ void R_ShowStats()
                     ? "Frame rate %d fps\nWalls %d, Flats %d, Sprites %d"
                     : "Frame rate %d fps\nSegs %d, Visplanes %d, Sprites %d",
                 renderer_fps, rendered_segs, rendered_visplanes,
-                rendered_vissprites);
+                rendered_vissprites
+            );
         }
         FPS_SavedTick = tick;
         FPS_FrameCount = 0;
@@ -1214,8 +1237,9 @@ void R_RenderPlayerView(player_t *player)
         if (flashing_hom)
         { // killough 2/10/98: add flashing red HOM indicators
             unsigned char color = (gametic % 20) < 9 ? 0xb0 : 0;
-            V_FillRect(0, viewwindowx, viewwindowy, viewwidth, viewheight,
-                       color);
+            V_FillRect(
+                0, viewwindowx, viewwindowy, viewwidth, viewheight, color
+            );
             R_DrawViewBorder();
         }
     }
@@ -1231,8 +1255,9 @@ void R_RenderPlayerView(player_t *player)
         {
             angle_t a1 = gld_FrustumAngle();
             gld_clipper_Clear();
-            gld_clipper_SafeAddClipRangeRealAngles(viewangle + a1,
-                                                   viewangle - a1);
+            gld_clipper_SafeAddClipRangeRealAngles(
+                viewangle + a1, viewangle - a1
+            );
             gld_FrustrumSetup();
         }
     }

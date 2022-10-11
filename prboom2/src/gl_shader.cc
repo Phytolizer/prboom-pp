@@ -78,8 +78,9 @@ int glsl_Init()
     return (sh_main != nullptr);
 }
 
-static int ReadLump(const char *filename, const char *lumpname,
-                    unsigned char **buffer)
+static int ReadLump(
+    const char *filename, const char *lumpname, unsigned char **buffer
+)
 {
     FILE *file = nullptr;
     int size = 0;
@@ -148,12 +149,14 @@ static GLShader *gld_LoadShader(const char *vpname, const char *fpname)
     filename = static_cast<char *>(std::malloc(MAX(vp_fnlen, fp_fnlen) + 1));
 
     sprintf(filename, "%s/shaders/%s.txt", I_DoomExeDir(), vpname);
-    vp_size = ReadLump(filename, vpname,
-                       reinterpret_cast<unsigned char **>(&vp_data));
+    vp_size = ReadLump(
+        filename, vpname, reinterpret_cast<unsigned char **>(&vp_data)
+    );
 
     sprintf(filename, "%s/shaders/%s.txt", I_DoomExeDir(), fpname);
-    fp_size = ReadLump(filename, fpname,
-                       reinterpret_cast<unsigned char **>(&fp_data));
+    fp_size = ReadLump(
+        filename, fpname, reinterpret_cast<unsigned char **>(&fp_data)
+    );
 
     if (vp_data && fp_data)
     {
@@ -163,12 +166,14 @@ static GLShader *gld_LoadShader(const char *vpname, const char *fpname)
         shader->hFragProg =
             GLEXT_glCreateShaderObjectARB(GL_FRAGMENT_SHADER_ARB);
 
-        GLEXT_glShaderSourceARB(shader->hVertProg, 1,
-                                const_cast<const GLcharARB **>(&vp_data),
-                                &vp_size);
-        GLEXT_glShaderSourceARB(shader->hFragProg, 1,
-                                const_cast<const GLcharARB **>(&fp_data),
-                                &fp_size);
+        GLEXT_glShaderSourceARB(
+            shader->hVertProg, 1, const_cast<const GLcharARB **>(&vp_data),
+            &vp_size
+        );
+        GLEXT_glShaderSourceARB(
+            shader->hFragProg, 1, const_cast<const GLcharARB **>(&fp_data),
+            &fp_size
+        );
 
         GLEXT_glCompileShaderARB(shader->hVertProg);
         GLEXT_glCompileShaderARB(shader->hFragProg);
@@ -182,14 +187,16 @@ static GLShader *gld_LoadShader(const char *vpname, const char *fpname)
 
         GLEXT_glGetInfoLogARB(shader->hShader, buffer_size, nullptr, buffer);
 
-        GLEXT_glGetObjectParameterivARB(shader->hShader,
-                                        GL_OBJECT_LINK_STATUS_ARB, &linked);
+        GLEXT_glGetObjectParameterivARB(
+            shader->hShader, GL_OBJECT_LINK_STATUS_ARB, &linked
+        );
 
         if (linked)
         {
-            lprintf(LO_INFO,
-                    "gld_LoadShader: Shader \"%s+%s\" compiled OK: %s\n",
-                    vpname, fpname, buffer);
+            lprintf(
+                LO_INFO, "gld_LoadShader: Shader \"%s+%s\" compiled OK: %s\n",
+                vpname, fpname, buffer
+            );
 
             shader->lightlevel_index =
                 GLEXT_glGetUniformLocationARB(shader->hShader, "lightlevel");
@@ -203,9 +210,11 @@ static GLShader *gld_LoadShader(const char *vpname, const char *fpname)
         }
         else
         {
-            lprintf(LO_ERROR,
-                    "gld_LoadShader: Error compiling shader \"%s+%s\": %s\n",
-                    vpname, fpname, buffer);
+            lprintf(
+                LO_ERROR,
+                "gld_LoadShader: Error compiling shader \"%s+%s\": %s\n",
+                vpname, fpname, buffer
+            );
             free(shader);
             shader = nullptr;
         }

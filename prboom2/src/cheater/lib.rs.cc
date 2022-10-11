@@ -139,11 +139,13 @@ template <typename T> Slice<T>::Slice() noexcept
 template <typename T> Slice<T>::Slice(T *s, std::size_t count) noexcept
 {
     assert(s != nullptr || count == 0);
-    sliceInit(this,
-              s == nullptr && count == 0
-                  ? reinterpret_cast<void *>(align_of<T>())
-                  : const_cast<typename std::remove_const<T>::type *>(s),
-              count);
+    sliceInit(
+        this,
+        s == nullptr && count == 0
+            ? reinterpret_cast<void *>(align_of<T>())
+            : const_cast<typename std::remove_const<T>::type *>(s),
+        count
+    );
 }
 
 template <typename T> T *Slice<T>::data() const noexcept
@@ -195,22 +197,23 @@ template <typename T> T &Slice<T>::back() const noexcept
 }
 
 template <typename T>
-typename Slice<T>::iterator::reference Slice<T>::iterator::operator*()
-    const noexcept
+typename Slice<T>::iterator::reference Slice<T>::iterator::operator*(
+) const noexcept
 {
     return *static_cast<T *>(this->pos);
 }
 
 template <typename T>
-typename Slice<T>::iterator::pointer Slice<T>::iterator::operator->()
-    const noexcept
+typename Slice<T>::iterator::pointer Slice<T>::iterator::operator->(
+) const noexcept
 {
     return static_cast<T *>(this->pos);
 }
 
 template <typename T>
 typename Slice<T>::iterator::reference Slice<T>::iterator::operator[](
-    typename Slice<T>::iterator::difference_type n) const noexcept
+    typename Slice<T>::iterator::difference_type n
+) const noexcept
 {
     auto pos = static_cast<char *>(this->pos) + this->stride * n;
     return *reinterpret_cast<T *>(pos);
@@ -248,7 +251,8 @@ typename Slice<T>::iterator Slice<T>::iterator::operator--(int) noexcept
 
 template <typename T>
 typename Slice<T>::iterator &Slice<T>::iterator::operator+=(
-    typename Slice<T>::iterator::difference_type n) noexcept
+    typename Slice<T>::iterator::difference_type n
+) noexcept
 {
     this->pos = static_cast<char *>(this->pos) + this->stride * n;
     return *this;
@@ -256,7 +260,8 @@ typename Slice<T>::iterator &Slice<T>::iterator::operator+=(
 
 template <typename T>
 typename Slice<T>::iterator &Slice<T>::iterator::operator-=(
-    typename Slice<T>::iterator::difference_type n) noexcept
+    typename Slice<T>::iterator::difference_type n
+) noexcept
 {
     this->pos = static_cast<char *>(this->pos) - this->stride * n;
     return *this;
@@ -264,7 +269,8 @@ typename Slice<T>::iterator &Slice<T>::iterator::operator-=(
 
 template <typename T>
 typename Slice<T>::iterator Slice<T>::iterator::operator+(
-    typename Slice<T>::iterator::difference_type n) const noexcept
+    typename Slice<T>::iterator::difference_type n
+) const noexcept
 {
     auto ret = iterator(*this);
     ret.pos = static_cast<char *>(this->pos) + this->stride * n;
@@ -273,7 +279,8 @@ typename Slice<T>::iterator Slice<T>::iterator::operator+(
 
 template <typename T>
 typename Slice<T>::iterator Slice<T>::iterator::operator-(
-    typename Slice<T>::iterator::difference_type n) const noexcept
+    typename Slice<T>::iterator::difference_type n
+) const noexcept
 {
     auto ret = iterator(*this);
     ret.pos = static_cast<char *>(this->pos) - this->stride * n;
@@ -282,10 +289,12 @@ typename Slice<T>::iterator Slice<T>::iterator::operator-(
 
 template <typename T>
 typename Slice<T>::iterator::difference_type Slice<T>::iterator::operator-(
-    const iterator &other) const noexcept
+    const iterator &other
+) const noexcept
 {
-    auto diff = std::distance(static_cast<char *>(other.pos),
-                              static_cast<char *>(this->pos));
+    auto diff = std::distance(
+        static_cast<char *>(other.pos), static_cast<char *>(this->pos)
+    );
     return diff / this->stride;
 }
 
@@ -546,9 +555,9 @@ void Vec<T>::emplace_back(Args &&...args)
 {
     auto size = this->size();
     this->reserve_total(size + 1);
-    ::new (reinterpret_cast<T *>(reinterpret_cast<char *>(this->data()) +
-                                 size * size_of<T>()))
-        T(std::forward<Args>(args)...);
+    ::new (reinterpret_cast<T *>(
+        reinterpret_cast<char *>(this->data()) + size * size_of<T>()
+    )) T(std::forward<Args>(args)...);
     this->set_len(size + 1);
 }
 
@@ -623,43 +632,43 @@ class layout
     template <typename T> friend std::size_t size_of();
     template <typename T> friend std::size_t align_of();
     template <typename T>
-    static typename std::enable_if<std::is_base_of<Opaque, T>::value,
-                                   std::size_t>::type
+    static typename std::enable_if<
+        std::is_base_of<Opaque, T>::value, std::size_t>::type
     do_size_of()
     {
         return T::layout::size();
     }
     template <typename T>
-    static typename std::enable_if<!std::is_base_of<Opaque, T>::value,
-                                   std::size_t>::type
+    static typename std::enable_if<
+        !std::is_base_of<Opaque, T>::value, std::size_t>::type
     do_size_of()
     {
         return sizeof(T);
     }
     template <typename T>
-    static typename std::enable_if<detail::is_complete<T>::value,
-                                   std::size_t>::type
+    static typename std::enable_if<
+        detail::is_complete<T>::value, std::size_t>::type
     size_of()
     {
         return do_size_of<T>();
     }
     template <typename T>
-    static typename std::enable_if<std::is_base_of<Opaque, T>::value,
-                                   std::size_t>::type
+    static typename std::enable_if<
+        std::is_base_of<Opaque, T>::value, std::size_t>::type
     do_align_of()
     {
         return T::layout::align();
     }
     template <typename T>
-    static typename std::enable_if<!std::is_base_of<Opaque, T>::value,
-                                   std::size_t>::type
+    static typename std::enable_if<
+        !std::is_base_of<Opaque, T>::value, std::size_t>::type
     do_align_of()
     {
         return alignof(T);
     }
     template <typename T>
-    static typename std::enable_if<detail::is_complete<T>::value,
-                                   std::size_t>::type
+    static typename std::enable_if<
+        detail::is_complete<T>::value, std::size_t>::type
     align_of()
     {
         return do_align_of<T>();
@@ -778,8 +787,8 @@ namespace cheater
 {
 extern "C"
 {
-    void rust$cheater$cxxbridge1$start_game(
-        ::rust::Vec<::Cheats> *return$) noexcept;
+    void rust$cheater$cxxbridge1$start_game(::rust::Vec<::Cheats> *return$
+    ) noexcept;
 } // extern "C"
 } // namespace cheater
 } // namespace rust
@@ -820,19 +829,24 @@ namespace cheater
 
 extern "C"
 {
-    void cxxbridge1$rust_vec$Cheats$new(
-        const ::rust::Vec<::Cheats> *ptr) noexcept;
+    void cxxbridge1$rust_vec$Cheats$new(const ::rust::Vec<::Cheats> *ptr
+    ) noexcept;
     void cxxbridge1$rust_vec$Cheats$drop(::rust::Vec<::Cheats> *ptr) noexcept;
     ::std::size_t cxxbridge1$rust_vec$Cheats$len(
-        const ::rust::Vec<::Cheats> *ptr) noexcept;
+        const ::rust::Vec<::Cheats> *ptr
+    ) noexcept;
     ::std::size_t cxxbridge1$rust_vec$Cheats$capacity(
-        const ::rust::Vec<::Cheats> *ptr) noexcept;
+        const ::rust::Vec<::Cheats> *ptr
+    ) noexcept;
     const ::Cheats *cxxbridge1$rust_vec$Cheats$data(
-        const ::rust::Vec<::Cheats> *ptr) noexcept;
-    void cxxbridge1$rust_vec$Cheats$reserve_total(::rust::Vec<::Cheats> *ptr,
-                                                  ::std::size_t cap) noexcept;
-    void cxxbridge1$rust_vec$Cheats$set_len(::rust::Vec<::Cheats> *ptr,
-                                            ::std::size_t len) noexcept;
+        const ::rust::Vec<::Cheats> *ptr
+    ) noexcept;
+    void cxxbridge1$rust_vec$Cheats$reserve_total(
+        ::rust::Vec<::Cheats> *ptr, ::std::size_t cap
+    ) noexcept;
+    void cxxbridge1$rust_vec$Cheats$set_len(
+        ::rust::Vec<::Cheats> *ptr, ::std::size_t len
+    ) noexcept;
 } // extern "C"
 
 namespace rust

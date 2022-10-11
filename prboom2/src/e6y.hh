@@ -251,8 +251,9 @@ enum
 
 extern prboom_comp_t prboom_comp[];
 
-int StepwiseSum(int value, int direction, int step, int minval, int maxval,
-                int defval);
+int StepwiseSum(
+    int value, int direction, int step, int minval, int maxval, int defval
+);
 
 enum
 {
@@ -309,8 +310,9 @@ dboolean ProcessNoTagLines(line_t *line, sector_t **sec, int *secnum);
 
 char *PathFindFileName(const char *pPath);
 void NormalizeSlashes2(char *str);
-unsigned int AfxGetFileName(const char *lpszPathName, char *lpszTitle,
-                            unsigned int nMax);
+unsigned int AfxGetFileName(
+    const char *lpszPathName, char *lpszTitle, unsigned int nMax
+);
 void AbbreviateName(char *lpszCanon, int cchMax, int bAtLeastName);
 
 // extern int viewMaxY;
@@ -324,8 +326,9 @@ extern int force_singletics_to;
 int HU_DrawDemoProgress(int force);
 
 #ifdef _WIN32
-int GetFullPath(const char *FileName, const char *ext, char *Buffer,
-                size_t BufferLength);
+int GetFullPath(
+    const char *FileName, const char *ext, char *Buffer, size_t BufferLength
+);
 #endif
 
 void I_vWarning(const char *message, va_list argList);

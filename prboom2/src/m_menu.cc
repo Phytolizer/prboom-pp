@@ -260,8 +260,9 @@ void M_DrawSelCell(menu_t *menu, int item);
 void M_WriteText(int x, int y, const char *string, int cm);
 int M_StringWidth(const char *string);
 int M_StringHeight(const char *string);
-void M_DrawTitle(int x, int y, const char *patch, int cm, const char *alttext,
-                 int altcm);
+void M_DrawTitle(
+    int x, int y, const char *patch, int cm, const char *alttext, int altcm
+);
 void M_StartMessage(const char *string, void *routine, dboolean input);
 void M_StopMessage();
 void M_ClearMenus();
@@ -335,12 +336,13 @@ enum main_e
 // associated with the item.
 //
 
-menuitem_t MainMenu[] = {{1, "M_NGAME", M_NewGame, 'n', "NEW GAME"},
-                         {1, "M_OPTION", M_Options, 'o', "OPTIONS"},
-                         {1, "M_LOADG", M_LoadGame, 'l', "LOAD GAME"},
-                         {1, "M_SAVEG", M_SaveGame, 's', "SAVE GAME"},
-                         {1, "M_RDTHIS", M_ReadThis, 'r', "READ THIS"},
-                         {1, "M_QUITG", M_QuitDOOM, 'q', "QUIT GAME"}};
+menuitem_t MainMenu[] = {
+    {1, "M_NGAME", M_NewGame, 'n', "NEW GAME"},
+    {1, "M_OPTION", M_Options, 'o', "OPTIONS"},
+    {1, "M_LOADG", M_LoadGame, 'l', "LOAD GAME"},
+    {1, "M_SAVEG", M_SaveGame, 's', "SAVE GAME"},
+    {1, "M_RDTHIS", M_ReadThis, 'r', "READ THIS"},
+    {1, "M_QUITG", M_QuitDOOM, 'q', "QUIT GAME"}};
 
 menu_t MainDef = {
     main_end,       // number of menu items
@@ -570,8 +572,10 @@ void M_Episode(int choice)
     {
         if ((gamemode == shareware) && choice)
         {
-            M_StartMessage(s_SWSTRING, nullptr,
-                           false); // Ty 03/27/98 - externalized
+            M_StartMessage(
+                s_SWSTRING, nullptr,
+                false
+            ); // Ty 03/27/98 - externalized
             M_SetupNextMenu(&ReadDef1);
             return;
         }
@@ -606,11 +610,12 @@ enum
 
 // The definitions of the New Game menu
 
-menuitem_t NewGameMenu[] = {{1, "M_JKILL", M_ChooseSkill, 'i'},
-                            {1, "M_ROUGH", M_ChooseSkill, 'h'},
-                            {1, "M_HURT", M_ChooseSkill, 'h'},
-                            {1, "M_ULTRA", M_ChooseSkill, 'u'},
-                            {1, "M_NMARE", M_ChooseSkill, 'n'}};
+menuitem_t NewGameMenu[] = {
+    {1, "M_JKILL", M_ChooseSkill, 'i'},
+    {1, "M_ROUGH", M_ChooseSkill, 'h'},
+    {1, "M_HURT", M_ChooseSkill, 'h'},
+    {1, "M_ULTRA", M_ChooseSkill, 'u'},
+    {1, "M_NMARE", M_ChooseSkill, 'n'}};
 
 menu_t NewDef = {
     newg_end,      // # of menu items
@@ -662,23 +667,28 @@ void M_NewGame(int /* choice */)
     {
         if (compatibility_level < lxdoom_1_compatibility)
         {
-            M_StartMessage(s_NEWGAME, nullptr,
-                           false); // Ty 03/27/98 - externalized
+            M_StartMessage(
+                s_NEWGAME, nullptr,
+                false
+            ); // Ty 03/27/98 - externalized
         }
         else
         { // CPhipps - query restarting the level
-            M_StartMessage(s_RESTARTLEVEL,
-                           reinterpret_cast<void *>(M_RestartLevelResponse),
-                           true);
+            M_StartMessage(
+                s_RESTARTLEVEL,
+                reinterpret_cast<void *>(M_RestartLevelResponse), true
+            );
         }
         return;
     }
 
     if (demorecording)
     { /* killough 5/26/98: exclude during demo recordings */
-        M_StartMessage("you can't start a new game\n"
-                       "while recording a demo!\n\n" PRESSKEY,
-                       nullptr, false); // killough 5/26/98: not externalized
+        M_StartMessage(
+            "you can't start a new game\n"
+            "while recording a demo!\n\n" PRESSKEY,
+            nullptr, false
+        ); // killough 5/26/98: not externalized
         return;
     }
 
@@ -703,8 +713,10 @@ static void M_VerifyNightmare(int ch)
         return;
     }
 
-    G_DeferedInitNew(static_cast<skill_t>(nightmare), EpiMenuEpi[epiChoice],
-                     EpiMenuMap[epiChoice]);
+    G_DeferedInitNew(
+        static_cast<skill_t>(nightmare), EpiMenuEpi[epiChoice],
+        EpiMenuMap[epiChoice]
+    );
     M_ClearMenus();
 }
 
@@ -712,8 +724,9 @@ void M_ChooseSkill(int choice)
 {
     if (choice == nightmare)
     { // Ty 03/27/98 - externalized
-        M_StartMessage(s_NIGHTMARE, reinterpret_cast<void *>(M_VerifyNightmare),
-                       true);
+        M_StartMessage(
+            s_NIGHTMARE, reinterpret_cast<void *>(M_VerifyNightmare), true
+        );
         return;
     }
     if (EpiMenuEpi[epiChoice] == -1 || EpiMenuMap[epiChoice] == -1)
@@ -721,8 +734,10 @@ void M_ChooseSkill(int choice)
         return; // There is no map to start here.
     }
 
-    G_DeferedInitNew(static_cast<skill_t>(choice), EpiMenuEpi[epiChoice],
-                     EpiMenuMap[epiChoice]);
+    G_DeferedInitNew(
+        static_cast<skill_t>(choice), EpiMenuEpi[epiChoice],
+        EpiMenuMap[epiChoice]
+    );
     M_ClearMenus();
 }
 
@@ -781,8 +796,10 @@ void M_DrawLoad()
     for (i = 0; i < load_end; i++)
     {
         M_DrawSaveLoadBorder(LoadDef.x, LoadDef.y + LINEHEIGHT * i);
-        M_WriteText(LoadDef.x, LoadDef.y + LINEHEIGHT * i, savegamestrings[i],
-                    CR_DEFAULT);
+        M_WriteText(
+            LoadDef.x, LoadDef.y + LINEHEIGHT * i, savegamestrings[i],
+            CR_DEFAULT
+        );
     }
 }
 
@@ -838,8 +855,10 @@ static void M_VerifyForcedLoadGame(int ch)
 void M_ForcedLoadGame(const char *msg)
 {
     forced_loadgame_message = strdup(msg); // free()'d above
-    M_StartMessage(forced_loadgame_message,
-                   reinterpret_cast<void *>(M_VerifyForcedLoadGame), true);
+    M_StartMessage(
+        forced_loadgame_message,
+        reinterpret_cast<void *>(M_VerifyForcedLoadGame), true
+    );
 }
 
 //
@@ -852,9 +871,11 @@ void M_LoadGame(int /* choice */)
      * cph - unless a new demo */
     if (demorecording && (compatibility_level < prboom_2_compatibility))
     {
-        M_StartMessage("you can't load a game\n"
-                       "while recording an old demo!\n\n" PRESSKEY,
-                       nullptr, false); // killough 5/26/98: not externalized
+        M_StartMessage(
+            "you can't load a game\n"
+            "while recording an old demo!\n\n" PRESSKEY,
+            nullptr, false
+        ); // killough 5/26/98: not externalized
         return;
     }
 
@@ -933,15 +954,18 @@ void M_DrawSave()
     for (i = 0; i < load_end; i++)
     {
         M_DrawSaveLoadBorder(LoadDef.x, LoadDef.y + LINEHEIGHT * i);
-        M_WriteText(LoadDef.x, LoadDef.y + LINEHEIGHT * i, savegamestrings[i],
-                    CR_DEFAULT);
+        M_WriteText(
+            LoadDef.x, LoadDef.y + LINEHEIGHT * i, savegamestrings[i],
+            CR_DEFAULT
+        );
     }
 
     if (saveStringEnter)
     {
         i = M_StringWidth(savegamestrings[saveSlot]);
-        M_WriteText(LoadDef.x + i, LoadDef.y + LINEHEIGHT * saveSlot, "_",
-                    CR_DEFAULT);
+        M_WriteText(
+            LoadDef.x + i, LoadDef.y + LINEHEIGHT * saveSlot, "_", CR_DEFAULT
+        );
     }
 }
 
@@ -985,8 +1009,10 @@ void M_SaveGame(int /* choice */)
     // killough 10/6/98: allow savegames during single-player demo playback
     if (!usergame && (!demoplayback || netgame))
     {
-        M_StartMessage(s_SAVEDEAD, nullptr,
-                       false); // Ty 03/27/98 - externalized
+        M_StartMessage(
+            s_SAVEDEAD, nullptr,
+            false
+        ); // Ty 03/27/98 - externalized
         return;
     }
 
@@ -1059,20 +1085,24 @@ void M_DrawOptions()
     if ((W_CheckNumForName("M_GENERL") < 0) ||
         (W_CheckNumForName("M_SETUP") < 0))
     {
-        M_WriteText(OptionsDef.x + M_StringWidth("MESSAGES: "),
-                    OptionsDef.y + 8 - (M_StringHeight("ONOFF") / 2) +
-                        LINEHEIGHT * messages,
-                    showMessages ? "ON" : "OFF", CR_DEFAULT);
+        M_WriteText(
+            OptionsDef.x + M_StringWidth("MESSAGES: "),
+            OptionsDef.y + 8 - (M_StringHeight("ONOFF") / 2) +
+                LINEHEIGHT * messages,
+            showMessages ? "ON" : "OFF", CR_DEFAULT
+        );
     }
     else
     {
-        V_DrawNamePatch(OptionsDef.x + 120,
-                        OptionsDef.y + LINEHEIGHT * messages, 0,
-                        msgNames[showMessages], CR_DEFAULT, VPT_STRETCH);
+        V_DrawNamePatch(
+            OptionsDef.x + 120, OptionsDef.y + LINEHEIGHT * messages, 0,
+            msgNames[showMessages], CR_DEFAULT, VPT_STRETCH
+        );
     }
 
-    M_DrawThermo(OptionsDef.x, OptionsDef.y + LINEHEIGHT * (scrnsize + 1), 9,
-                 screenSize);
+    M_DrawThermo(
+        OptionsDef.x, OptionsDef.y + LINEHEIGHT * (scrnsize + 1), 9, screenSize
+    );
 }
 
 void M_Options(int /* choice */)
@@ -1088,14 +1118,15 @@ int quitsounds[8] = {sfx_player_death, sfx_pinky_pain, sfx_possessed_pain,
                      sfx_slop,         sfx_telept,     sfx_possessed_wake,
                      sfx_pinky_attack};
 
-int quitsounds2[8] = {sfx_archvile_active,
-                      sfx_getpow,
-                      sfx_boscub,
-                      sfx_slop,
-                      sfx_skeswg,
-                      sfx_hellknight_death,
-                      sfx_arachnotron_active,
-                      sfx_pinky_attack};
+int quitsounds2[8] = {
+    sfx_archvile_active,
+    sfx_getpow,
+    sfx_boscub,
+    sfx_slop,
+    sfx_skeswg,
+    sfx_hellknight_death,
+    sfx_arachnotron_active,
+    sfx_pinky_attack};
 
 static void M_QuitResponse(int ch)
 {
@@ -1147,8 +1178,10 @@ void M_QuitDOOM(int /* choice */)
     }
     else
     { // killough 1/18/98: fix endgame message calculation:
-        sprintf(endstring, "%s\n\n%s",
-                endmsg[gametic % (NUM_QUITMESSAGES - 1) + 1], s_DOSY);
+        sprintf(
+            endstring, "%s\n\n%s", endmsg[gametic % (NUM_QUITMESSAGES - 1) + 1],
+            s_DOSY
+        );
     }
 
     M_StartMessage(endstring, reinterpret_cast<void *>(M_QuitResponse), true);
@@ -1173,10 +1206,11 @@ enum
 
 // The definitions of the Sound Volume menu
 
-menuitem_t SoundMenu[] = {{2, "M_SFXVOL", M_SfxVol, 's'},
-                          {-1, "", nullptr},
-                          {2, "M_MUSVOL", M_MusicVol, 'm'},
-                          {-1, "", nullptr}};
+menuitem_t SoundMenu[] = {
+    {2, "M_SFXVOL", M_SfxVol, 's'},
+    {-1, "", nullptr},
+    {2, "M_MUSVOL", M_MusicVol, 'm'},
+    {-1, "", nullptr}};
 
 menu_t SoundDef = {sound_end, &OptionsDef, SoundMenu, M_DrawSound, 80, 64, 0};
 
@@ -1194,11 +1228,14 @@ void M_DrawSound()
     // CPhipps - patch drawing updated
     V_DrawNamePatch(60, 38, 0, "M_SVOL", CR_DEFAULT, VPT_STRETCH);
 
-    M_DrawThermo(SoundDef.x, SoundDef.y + LINEHEIGHT * (sfx_vol + 1), 16,
-                 snd_SfxVolume);
+    M_DrawThermo(
+        SoundDef.x, SoundDef.y + LINEHEIGHT * (sfx_vol + 1), 16, snd_SfxVolume
+    );
 
-    M_DrawThermo(SoundDef.x, SoundDef.y + LINEHEIGHT * (music_vol + 1), 16,
-                 snd_MusicVolume);
+    M_DrawThermo(
+        SoundDef.x, SoundDef.y + LINEHEIGHT * (music_vol + 1), 16,
+        snd_MusicVolume
+    );
 }
 
 void M_Sound(int /* choice */)
@@ -1274,17 +1311,18 @@ enum
 
 // The definitions of the Mouse Sensitivity menu
 
-menuitem_t MouseMenu[] = {{2, "M_HORSEN", M_MouseHoriz, 'h', "HORIZONTAL"},
-                          {-1, "", nullptr},
-                          {2, "M_VERSEN", M_MouseVert, 'v', "VERTICAL"},
-                          {-1, "", nullptr}
+menuitem_t MouseMenu[] = {
+    {2, "M_HORSEN", M_MouseHoriz, 'h', "HORIZONTAL"},
+    {-1, "", nullptr},
+    {2, "M_VERSEN", M_MouseVert, 'v', "VERTICAL"},
+    {-1, "", nullptr}
 
-                          // e6y
-                          ,
-                          {2, "M_LOKSEN", M_MouseMLook, 'l', "MOUSE LOOK"},
-                          {-1, "", nullptr},
-                          {2, "M_ACCEL", M_MouseAccel, 'a', "ACCELERATION"},
-                          {-1, "", nullptr}};
+    // e6y
+    ,
+    {2, "M_LOKSEN", M_MouseMLook, 'l', "MOUSE LOOK"},
+    {-1, "", nullptr},
+    {2, "M_ACCEL", M_MouseAccel, 'a', "ACCELERATION"},
+    {-1, "", nullptr}};
 
 menu_t MouseDef = {mouse_end, &OptionsDef, MouseMenu, M_DrawMouse,
                    60,        37, // e6y
@@ -1304,17 +1342,25 @@ void M_DrawMouse()
     // CPhipps - patch drawing updated
     V_DrawNamePatch(60, 15, 0, "M_MSENS", CR_DEFAULT, VPT_STRETCH); // e6y
 
-    M_DrawThermo(MouseDef.x, MouseDef.y + LINEHEIGHT * (mouse_horiz + 1), 200,
-                 mouseSensitivity_horiz);
+    M_DrawThermo(
+        MouseDef.x, MouseDef.y + LINEHEIGHT * (mouse_horiz + 1), 200,
+        mouseSensitivity_horiz
+    );
 
-    M_DrawThermo(MouseDef.x, MouseDef.y + LINEHEIGHT * (mouse_vert + 1), 200,
-                 mouseSensitivity_vert);
+    M_DrawThermo(
+        MouseDef.x, MouseDef.y + LINEHEIGHT * (mouse_vert + 1), 200,
+        mouseSensitivity_vert
+    );
 
-    M_DrawThermo(MouseDef.x, MouseDef.y + LINEHEIGHT * (mouse_mlook + 1), 200,
-                 mouseSensitivity_mlook);
+    M_DrawThermo(
+        MouseDef.x, MouseDef.y + LINEHEIGHT * (mouse_mlook + 1), 200,
+        mouseSensitivity_mlook
+    );
 
-    M_DrawThermo(MouseDef.x, MouseDef.y + LINEHEIGHT * (mouse_accel + 1), 200,
-                 mouse_acceleration);
+    M_DrawThermo(
+        MouseDef.x, MouseDef.y + LINEHEIGHT * (mouse_accel + 1), 200,
+        mouse_acceleration
+    );
 }
 
 void M_ChangeSensitivity(int /* choice */)
@@ -1397,10 +1443,13 @@ void M_QuickSave()
         quickSaveSlot = -2; // means to pick a slot now
         return;
     }
-    sprintf(tempstring, s_QSPROMPT,
-            savegamestrings[quickSaveSlot]); // Ty 03/27/98 - externalized
-    M_StartMessage(tempstring, reinterpret_cast<void *>(M_QuickSaveResponse),
-                   true);
+    sprintf(
+        tempstring, s_QSPROMPT,
+        savegamestrings[quickSaveSlot]
+    ); // Ty 03/27/98 - externalized
+    M_StartMessage(
+        tempstring, reinterpret_cast<void *>(M_QuickSaveResponse), true
+    );
 }
 
 /////////////////////////////
@@ -1423,22 +1472,29 @@ void M_QuickLoad()
 
     if (demorecording)
     { // killough 5/26/98: exclude during demo recordings
-        M_StartMessage("you can't quickload\n"
-                       "while recording a demo!\n\n" PRESSKEY,
-                       nullptr, false); // killough 5/26/98: not externalized
+        M_StartMessage(
+            "you can't quickload\n"
+            "while recording a demo!\n\n" PRESSKEY,
+            nullptr, false
+        ); // killough 5/26/98: not externalized
         return;
     }
 
     if (quickSaveSlot < 0)
     {
-        M_StartMessage(s_QSAVESPOT, nullptr,
-                       false); // Ty 03/27/98 - externalized
+        M_StartMessage(
+            s_QSAVESPOT, nullptr,
+            false
+        ); // Ty 03/27/98 - externalized
         return;
     }
-    sprintf(tempstring, s_QLPROMPT,
-            savegamestrings[quickSaveSlot]); // Ty 03/27/98 - externalized
-    M_StartMessage(tempstring, reinterpret_cast<void *>(M_QuickLoadResponse),
-                   true);
+    sprintf(
+        tempstring, s_QLPROMPT,
+        savegamestrings[quickSaveSlot]
+    ); // Ty 03/27/98 - externalized
+    M_StartMessage(
+        tempstring, reinterpret_cast<void *>(M_QuickLoadResponse), true
+    );
 }
 
 /////////////////////////////
@@ -1471,8 +1527,10 @@ void M_EndGame(int /* choice */)
         M_StartMessage(s_NETEND, nullptr, false); // Ty 03/27/98 - externalized
         return;
     }
-    M_StartMessage(s_ENDGAME, reinterpret_cast<void *>(M_EndGameResponse),
-                   true); // Ty 03/27/98 - externalized
+    M_StartMessage(
+        s_ENDGAME, reinterpret_cast<void *>(M_EndGameResponse),
+        true
+    ); // Ty 03/27/98 - externalized
 }
 
 /////////////////////////////
@@ -1710,37 +1768,41 @@ menu_t SetupDef = {
 // follow the format of the 'Big Font' menu structures. See the comments
 // for SetupDef (above) to help understand what each of these says.
 
-menu_t KeybndDef = {generic_setup_end,
-                    &SetupDef,
-                    Generic_Setup,
-                    M_DrawKeybnd,
-                    34,
-                    5, // skull drawn here
-                    0};
+menu_t KeybndDef = {
+    generic_setup_end,
+    &SetupDef,
+    Generic_Setup,
+    M_DrawKeybnd,
+    34,
+    5, // skull drawn here
+    0};
 
-menu_t WeaponDef = {generic_setup_end,
-                    &SetupDef,
-                    Generic_Setup,
-                    M_DrawWeapons,
-                    34,
-                    5, // skull drawn here
-                    0};
+menu_t WeaponDef = {
+    generic_setup_end,
+    &SetupDef,
+    Generic_Setup,
+    M_DrawWeapons,
+    34,
+    5, // skull drawn here
+    0};
 
-menu_t StatusHUDDef = {generic_setup_end,
-                       &SetupDef,
-                       Generic_Setup,
-                       M_DrawStatusHUD,
-                       34,
-                       5, // skull drawn here
-                       0};
+menu_t StatusHUDDef = {
+    generic_setup_end,
+    &SetupDef,
+    Generic_Setup,
+    M_DrawStatusHUD,
+    34,
+    5, // skull drawn here
+    0};
 
-menu_t AutoMapDef = {generic_setup_end,
-                     &SetupDef,
-                     Generic_Setup,
-                     M_DrawAutoMap,
-                     34,
-                     5, // skull drawn here
-                     0};
+menu_t AutoMapDef = {
+    generic_setup_end,
+    &SetupDef,
+    Generic_Setup,
+    M_DrawAutoMap,
+    34,
+    5, // skull drawn here
+    0};
 
 menu_t MessageDef = // phares 4/08/98
     {generic_setup_end,
@@ -1852,9 +1914,10 @@ static void M_DrawItem(const setup_menu_t *s)
         {
             V_DrawNamePatch(
                 x, y, 0,
-                ResetButtonName[(flags & (S_HILITE | S_SELECT)) ? whichSkull
-                                                                : 0],
-                CR_DEFAULT, VPT_STRETCH);
+                ResetButtonName
+                    [(flags & (S_HILITE | S_SELECT)) ? whichSkull : 0],
+                CR_DEFAULT, VPT_STRETCH
+            );
         }
     }
     else // Draw the item string
@@ -1998,8 +2061,9 @@ static void M_DrawSetting(const setup_menu_t *s)
                 format = "MB%d";
             }
 
-            sprintf(menu_buffer + strlen(menu_buffer), format,
-                    input->mouseb + 1);
+            sprintf(
+                menu_buffer + strlen(menu_buffer), format, input->mouseb + 1
+            );
             any_input = true;
         }
 
@@ -2052,8 +2116,9 @@ static void M_DrawSetting(const setup_menu_t *s)
         {
             M_DrawString(x + 8, y, color, " <");
         }
-        M_DrawMenuString(x, y,
-                         flags & S_CRITEM ? *s->var.def->location.pi : color);
+        M_DrawMenuString(
+            x, y, flags & S_CRITEM ? *s->var.def->location.pi : color
+        );
         return;
     }
 
@@ -2225,8 +2290,9 @@ static void M_DrawScreenItems(const setup_menu_t *src)
         }
         else if (warning_about_changes & S_PRGWARN)
         {
-            strcpy(menu_buffer,
-                   "Warning: Program must be restarted to see changes");
+            strcpy(
+                menu_buffer, "Warning: Program must be restarted to see changes"
+            );
             M_DrawMenuString(3, 176, g_cr_red);
         }
         else if (warning_about_changes & S_BADVID)
@@ -2275,8 +2341,9 @@ static void M_DrawDefVerify()
 {
     // proff 12/6/98: Drawing of verify box changed for hi-res, it now uses a
     // patch
-    V_DrawNamePatch(VERIFYBOXXORG, VERIFYBOXYORG, 0, "M_VBOX", CR_DEFAULT,
-                    VPT_STRETCH);
+    V_DrawNamePatch(
+        VERIFYBOXXORG, VERIFYBOXYORG, 0, "M_VBOX", CR_DEFAULT, VPT_STRETCH
+    );
     // The blinking messages is keyed off of the blinking of the
     // cursor skull.
 
@@ -2308,40 +2375,50 @@ static void M_DrawInstructions()
                          S_CRITEM | S_CHAT | S_RESET | S_FILE | S_CHOICE))
         {
         case S_INPUT:
-            M_DrawStringCentered(160, 20, g_menu_cr_select,
-                                 "Press key or button for this action");
+            M_DrawStringCentered(
+                160, 20, g_menu_cr_select, "Press key or button for this action"
+            );
             break;
 
         case S_YESNO:
-            M_DrawStringCentered(160, 20, g_menu_cr_select,
-                                 "Press ENTER key to toggle");
+            M_DrawStringCentered(
+                160, 20, g_menu_cr_select, "Press ENTER key to toggle"
+            );
             break;
         case S_WEAP:
-            M_DrawStringCentered(160, 20, g_menu_cr_select,
-                                 "Enter weapon number");
+            M_DrawStringCentered(
+                160, 20, g_menu_cr_select, "Enter weapon number"
+            );
             break;
         case S_NUM:
-            M_DrawStringCentered(160, 20, g_menu_cr_select,
-                                 "Enter value. Press ENTER when finished.");
+            M_DrawStringCentered(
+                160, 20, g_menu_cr_select,
+                "Enter value. Press ENTER when finished."
+            );
             break;
         case S_COLOR:
-            M_DrawStringCentered(160, 20, g_menu_cr_select,
-                                 "Select color and press enter");
+            M_DrawStringCentered(
+                160, 20, g_menu_cr_select, "Select color and press enter"
+            );
             break;
         case S_CRITEM:
             M_DrawStringCentered(160, 20, g_menu_cr_select, "Enter value");
             break;
         case S_CHAT:
-            M_DrawStringCentered(160, 20, g_menu_cr_select,
-                                 "Type/edit chat string and Press ENTER");
+            M_DrawStringCentered(
+                160, 20, g_menu_cr_select,
+                "Type/edit chat string and Press ENTER"
+            );
             break;
         case S_FILE:
-            M_DrawStringCentered(160, 20, g_menu_cr_select,
-                                 "Type/edit filename and Press ENTER");
+            M_DrawStringCentered(
+                160, 20, g_menu_cr_select, "Type/edit filename and Press ENTER"
+            );
             break;
         case S_CHOICE:
-            M_DrawStringCentered(160, 20, g_menu_cr_select,
-                                 "Press left or right to choose");
+            M_DrawStringCentered(
+                160, 20, g_menu_cr_select, "Press left or right to choose"
+            );
             break;
         case S_RESET:
             break;
@@ -2355,18 +2432,22 @@ static void M_DrawInstructions()
     {
         if (flags & S_RESET)
         {
-            M_DrawStringCentered(160, 20, g_menu_cr_hilite,
-                                 "Press ENTER key to reset to defaults");
+            M_DrawStringCentered(
+                160, 20, g_menu_cr_hilite,
+                "Press ENTER key to reset to defaults"
+            );
         }
         else if (flags & S_INPUT)
         {
-            M_DrawStringCentered(160, 20, g_menu_cr_hilite,
-                                 "Press Enter to Change, Del to Clear");
+            M_DrawStringCentered(
+                160, 20, g_menu_cr_hilite, "Press Enter to Change, Del to Clear"
+            );
         }
         else
         {
-            M_DrawStringCentered(160, 20, g_menu_cr_hilite,
-                                 "Press Enter to Change");
+            M_DrawStringCentered(
+                160, 20, g_menu_cr_hilite, "Press Enter to Change"
+            );
         }
     }
 }
@@ -3722,9 +3803,10 @@ extern setup_menu_t stat_settings1[];
 // e6y
 extern setup_menu_t stat_settings2[];
 
-setup_menu_t *stat_settings[] = {stat_settings1,
-                                 // e6y
-                                 stat_settings2, nullptr};
+setup_menu_t *stat_settings[] = {
+    stat_settings1,
+    // e6y
+    stat_settings2, nullptr};
 
 setup_menu_t stat_settings1[] = // Status Bar and HUD Settings screen
     {{"STATUS BAR", S_SKIP | S_TITLE, m_null, SB_X, SB_Y + 1 * 8},
@@ -3939,8 +4021,8 @@ extern setup_menu_t auto_settings1[];
 extern setup_menu_t auto_settings2[];
 extern setup_menu_t auto_settings3[];
 
-setup_menu_t *auto_settings[] = {auto_settings1, auto_settings2, auto_settings3,
-                                 nullptr};
+setup_menu_t *auto_settings[] = {
+    auto_settings1, auto_settings2, auto_settings3, nullptr};
 
 setup_menu_t auto_settings1[] = // 1st AutoMap Settings screen
     {{"Show Kills/Secrts/Items statistics",
@@ -4244,8 +4326,10 @@ static void M_DrawColPal()
 
     // proff/nicolas 09/20/98 -- changed for hi-res
     // CPhipps - patch drawing updated
-    V_DrawNamePatch(COLORPALXORIG - 5, COLORPALYORIG - 5, 0, "M_COLORS",
-                    CR_DEFAULT, VPT_STRETCH);
+    V_DrawNamePatch(
+        COLORPALXORIG - 5, COLORPALYORIG - 5, 0, "M_COLORS", CR_DEFAULT,
+        VPT_STRETCH
+    );
 
     // Draw the cursor around the paint chip
     // (cpx,cpy) is the upper left-hand corner of the paint chip
@@ -4254,8 +4338,10 @@ static void M_DrawColPal()
     cpy = COLORPALYORIG + color_palette_y * (CHIP_SIZE + 1) - 1;
     // proff 12/6/98: Drawing of colorchips completly changed for hi-res, it now
     // uses a patch
-    V_DrawNamePatch(cpx, cpy, 0, "M_PALSEL", CR_DEFAULT,
-                    VPT_STRETCH); // PROFF_GL_FIX
+    V_DrawNamePatch(
+        cpx, cpy, 0, "M_PALSEL", CR_DEFAULT,
+        VPT_STRETCH
+    ); // PROFF_GL_FIX
 }
 
 // The drawing part of the Automap Setup initialization. Draw the
@@ -4323,8 +4409,8 @@ static const char *videomodes[] = {"8bit",   "15bit", "16bit", "32bit",
 #endif
                                    nullptr};
 
-static const char *gltexformats[] = {"GL_RGBA", "GL_RGB5_A1", "GL_RGBA4",
-                                     nullptr};
+static const char *gltexformats[] = {
+    "GL_RGBA", "GL_RGB5_A1", "GL_RGBA4", nullptr};
 
 setup_menu_t gen_settings1[] = {
     {// General Settings screen1
@@ -4460,26 +4546,27 @@ static const char *gen_skillstrings[] = {
     // Dummy first option because defaultskill is 1-based
     "", "ITYTD", "HNTR", "HMP", "UV", "NM", nullptr};
 
-static const char *gen_compstrings[] = {"Default",
-                                        "Doom v1.2",
-                                        "Doom v1.666",
-                                        "Doom/2 v1.9",
-                                        "Ultimate Doom",
-                                        "Final Doom",
-                                        "DosDoom",
-                                        "TASDoom",
-                                        "Boom's vanilla",
-                                        "Boom v2.01",
-                                        "Boom",
-                                        "LxDoom",
-                                        "MBF",
-                                        "PrBoom 2.03b",
-                                        "PrBoom 2.1.x",
-                                        "PrBoom 2.2.x",
-                                        "PrBoom 2.3.x",
-                                        "PrBoom 2.4.0",
-                                        "Latest PrBoom+",
-                                        nullptr};
+static const char *gen_compstrings[] = {
+    "Default",
+    "Doom v1.2",
+    "Doom v1.666",
+    "Doom/2 v1.9",
+    "Ultimate Doom",
+    "Final Doom",
+    "DosDoom",
+    "TASDoom",
+    "Boom's vanilla",
+    "Boom v2.01",
+    "Boom",
+    "LxDoom",
+    "MBF",
+    "PrBoom 2.03b",
+    "PrBoom 2.1.x",
+    "PrBoom 2.2.x",
+    "PrBoom 2.3.x",
+    "PrBoom 2.4.0",
+    "Latest PrBoom+",
+    nullptr};
 
 setup_menu_t gen_settings2[] = { // General Settings screen2
 
@@ -5003,70 +5090,71 @@ setup_menu_t gen_settings6[] = {
 
 static const char *jumpheights[] = {"No", "Low", "High", nullptr};
 
-setup_menu_t gen_settings7[] = {{"COMPATIBILITY WITH COMMON MAPPING ERRORS",
-                                 S_SKIP | S_TITLE, m_null, G_X2, G_Y + 1 * 8},
-                                {"LINEDEFS W/O TAGS APPLY LOCALLY",
-                                 S_YESNO,
-                                 m_null,
-                                 G_X2,
-                                 G_Y + 2 * 8,
-                                 {"comperr_zerotag"}},
-                                {"USE PASSES THRU ALL SPECIAL LINES",
-                                 S_YESNO,
-                                 m_null,
-                                 G_X2,
-                                 G_Y + 3 * 8,
-                                 {"comperr_passuse"}},
-                                {"WALK UNDER SOLID HANGING BODIES",
-                                 S_YESNO,
-                                 m_null,
-                                 G_X2,
-                                 G_Y + 4 * 8,
-                                 {"comperr_hangsolid"}},
-                                {"FIX CLIPPING PROBLEMS IN LARGE LEVELS",
-                                 S_YESNO,
-                                 m_null,
-                                 G_X2,
-                                 G_Y + 5 * 8,
-                                 {"comperr_blockmap"}},
-                                {"ALLOW JUMP",
-                                 S_CHOICE,
-                                 m_null,
-                                 G_X2,
-                                 G_Y + 6 * 8,
-                                 {"comperr_allowjump"},
-                                 0,
-                                 nullptr,
-                                 jumpheights},
-                                {"ALLOW VERTICAL AIMING",
-                                 S_YESNO,
-                                 m_null,
-                                 G_X2,
-                                 G_Y + 7 * 8,
-                                 {"comperr_freeaim"}},
+setup_menu_t gen_settings7[] = {
+    {"COMPATIBILITY WITH COMMON MAPPING ERRORS", S_SKIP | S_TITLE, m_null, G_X2,
+     G_Y + 1 * 8},
+    {"LINEDEFS W/O TAGS APPLY LOCALLY",
+     S_YESNO,
+     m_null,
+     G_X2,
+     G_Y + 2 * 8,
+     {"comperr_zerotag"}},
+    {"USE PASSES THRU ALL SPECIAL LINES",
+     S_YESNO,
+     m_null,
+     G_X2,
+     G_Y + 3 * 8,
+     {"comperr_passuse"}},
+    {"WALK UNDER SOLID HANGING BODIES",
+     S_YESNO,
+     m_null,
+     G_X2,
+     G_Y + 4 * 8,
+     {"comperr_hangsolid"}},
+    {"FIX CLIPPING PROBLEMS IN LARGE LEVELS",
+     S_YESNO,
+     m_null,
+     G_X2,
+     G_Y + 5 * 8,
+     {"comperr_blockmap"}},
+    {"ALLOW JUMP",
+     S_CHOICE,
+     m_null,
+     G_X2,
+     G_Y + 6 * 8,
+     {"comperr_allowjump"},
+     0,
+     nullptr,
+     jumpheights},
+    {"ALLOW VERTICAL AIMING",
+     S_YESNO,
+     m_null,
+     G_X2,
+     G_Y + 7 * 8,
+     {"comperr_freeaim"}},
 
-                                {"<- PREV",
-                                 S_SKIP | S_PREV,
-                                 m_null,
-                                 KB_PREV,
-                                 KB_Y + 20 * 8,
-                                 {gen_settings6}},
+    {"<- PREV",
+     S_SKIP | S_PREV,
+     m_null,
+     KB_PREV,
+     KB_Y + 20 * 8,
+     {gen_settings6}},
 #ifdef GL_DOOM
-                                {"NEXT ->",
-                                 S_SKIP | S_NEXT,
-                                 m_null,
-                                 KB_NEXT,
-                                 KB_Y + 20 * 8,
-                                 {gen_settings8}},
+    {"NEXT ->",
+     S_SKIP | S_NEXT,
+     m_null,
+     KB_NEXT,
+     KB_Y + 20 * 8,
+     {gen_settings8}},
 #else
-                                {"NEXT ->",
-                                 S_SKIP | S_NEXT,
-                                 m_null,
-                                 KB_NEXT,
-                                 KB_Y + 20 * 8,
-                                 {dsda_gen_settings}},
+    {"NEXT ->",
+     S_SKIP | S_NEXT,
+     m_null,
+     KB_NEXT,
+     KB_Y + 20 * 8,
+     {dsda_gen_settings}},
 #endif
-                                {nullptr, S_SKIP | S_END, m_null}};
+    {nullptr, S_SKIP | S_END, m_null}};
 
 static const char *gltexfilters[] = {
     "None",     "Linear",    "Nearest Mipmap", "Linear Mipmap",
@@ -5723,8 +5811,9 @@ static void M_ResetDefaults()
                     {
                         if (dp->identifier == p->input)
                         {
-                            dsda_InputSet(dp->identifier,
-                                          dp->inputs[dsda_input_profile]);
+                            dsda_InputSet(
+                                dp->identifier, dp->inputs[dsda_input_profile]
+                            );
 
                             goto end;
                         }
@@ -5794,7 +5883,8 @@ static void M_InitDefaults()
                     {
                         I_Error(
                             "M_InitDefaults: Couldn't find config variable %s",
-                            t->var.name);
+                            t->var.name
+                        );
                     }
                     else
                     {
@@ -6514,7 +6604,8 @@ static void M_DrawString(int cx, int cy, int color, const char *ch)
         // CPhipps - patch drawing updated
         V_DrawNumPatch(
             cx, cy, 0, g_menu_font[c].lumpnum, color,
-            static_cast<patch_translation_e>(VPT_STRETCH | VPT_TRANS));
+            static_cast<patch_translation_e>(VPT_STRETCH | VPT_TRANS)
+        );
         // The screen is cramped, so trim one unit from each
         // character so they butt up against each other.
         cx += w + g_menu_font_spacing;
@@ -6667,8 +6758,10 @@ void M_DrawCredits() // killough 10/98: credit screen
     {
         // Use V_DrawBackground here deliberately to force drawing a background
         V_DrawBackground(gamemode == shareware ? "CEIL5_1" : "MFLR8_4", 0);
-        M_DrawTitle(81, 9, "PRBOOM", g_cr_gold,
-                    PACKAGE_NAME " v" PACKAGE_VERSION, g_cr_gold);
+        M_DrawTitle(
+            81, 9, "PRBOOM", g_cr_gold, PACKAGE_NAME " v" PACKAGE_VERSION,
+            g_cr_gold
+        );
         M_DrawScreenItems(cred_settings);
     }
 }
@@ -6824,21 +6917,21 @@ dboolean M_Responder(event_t *ev)
         else
             // Process keyboard input
             if (ev->type == ev_keydown)
-        {
-            ch = ev->data1;
-            // phares 4/11/98:
-            if (ch == KEYD_RSHIFT)
-            {                     // For chat string processing, need
-                shiftdown = true; // to know when shift key is up or
+            {
+                ch = ev->data1;
+                // phares 4/11/98:
+                if (ch == KEYD_RSHIFT)
+                {                     // For chat string processing, need
+                    shiftdown = true; // to know when shift key is up or
+                }
+            } // down so you can get at the !,#,
+            else if (ev->type == ev_keyup)
+            { // etc. keys. Keydowns are allowed
+                if (ev->data1 == KEYD_RSHIFT)
+                {                      // past this point, but keyups aren't
+                    shiftdown = false; // so we need to note the difference
+                }
             }
-        } // down so you can get at the !,#,
-        else if (ev->type == ev_keyup)
-        { // etc. keys. Keydowns are allowed
-            if (ev->data1 == KEYD_RSHIFT)
-            {                      // past this point, but keyups aren't
-                shiftdown = false; // so we need to note the difference
-            }
-        }
     } // here using the 'shiftdown' dboolean.
 
     if (dsda_InputActivated(dsda_input_menu_left))
@@ -7207,9 +7300,11 @@ dboolean M_Responder(event_t *ev)
         {
             rust::RawWeaponStats stats{0, nullptr, 0, 0};
             rust::get_stats(players[consoleplayer].readyweapon, &stats);
-            doom_printf("%s: %zu total kills",
-                        rust::weapon_name(players[consoleplayer].readyweapon),
-                        stats.kills);
+            doom_printf(
+                "%s: %zu total kills",
+                rust::weapon_name(players[consoleplayer].readyweapon),
+                stats.kills
+            );
         }
 
         if (dsda_InputActivated(dsda_input_walkcamera))
@@ -7234,10 +7329,12 @@ dboolean M_Responder(event_t *ev)
             if (dsda_InputActivated(dsda_input_showalive) && !dsda_StrictMode())
             {
                 show_alive = (show_alive + 1) % 3;
-                doom_printf("Show Alive Monsters %s",
-                            (show_alive ? (show_alive == 1 ? "(mode 1) on"
-                                                           : "(mode 2) on")
-                                        : "off"));
+                doom_printf(
+                    "Show Alive Monsters %s",
+                    (show_alive
+                         ? (show_alive == 1 ? "(mode 1) on" : "(mode 2) on")
+                         : "off")
+                );
             }
         }
 #endif
@@ -7361,8 +7458,10 @@ dboolean M_Responder(event_t *ev)
 
                     if (ptr1->m_flags & (S_LEVWARN | S_PRGWARN))
                     {
-                        warn_about_changes(ptr1->m_flags & // killough 10/98
-                                           (S_LEVWARN | S_PRGWARN));
+                        warn_about_changes(
+                            ptr1->m_flags & // killough 10/98
+                            (S_LEVWARN | S_PRGWARN)
+                        );
                     }
                     else
                     {
@@ -7381,8 +7480,9 @@ dboolean M_Responder(event_t *ev)
                         if ((ptr1->m_flags & S_CANT_GL_ARB_MULTITEXTURE) &&
                             !gl_arb_multitexture)
                         {
-                            warn_about_changes(ptr1->m_flags &
-                                               S_CANT_GL_ARB_MULTITEXTURE);
+                            warn_about_changes(
+                                ptr1->m_flags & S_CANT_GL_ARB_MULTITEXTURE
+                            );
                         }
                     }
 #endif
@@ -7429,13 +7529,14 @@ dboolean M_Responder(event_t *ev)
                             value = atoi(gather_buffer); // Integer value
 
                             // e6y
-                            if ((ptr1->m_flags &
-                                 S_CANT_GL_ARB_MULTISAMPLEFACTOR) &&
+                            if ((ptr1->m_flags & S_CANT_GL_ARB_MULTISAMPLEFACTOR
+                                ) &&
                                 value % 2 != 0)
                             {
                                 warn_about_changes(
                                     ptr1->m_flags &
-                                    S_CANT_GL_ARB_MULTISAMPLEFACTOR);
+                                    S_CANT_GL_ARB_MULTISAMPLEFACTOR
+                                );
                             }
                             else
 
@@ -7455,8 +7556,9 @@ dboolean M_Responder(event_t *ev)
                                  */
                                 if (ptr1->m_flags & (S_LEVWARN | S_PRGWARN))
                                 {
-                                    warn_about_changes(ptr1->m_flags &
-                                                       (S_LEVWARN | S_PRGWARN));
+                                    warn_about_changes(
+                                        ptr1->m_flags & (S_LEVWARN | S_PRGWARN)
+                                    );
                                 }
                                 else
                                 {
@@ -7526,7 +7628,8 @@ dboolean M_Responder(event_t *ev)
                         int old_value, value;
 
                         old_value = M_IndexInChoices(
-                            *ptr1->var.def->location.ppsz, ptr1->selectstrings);
+                            *ptr1->var.def->location.ppsz, ptr1->selectstrings
+                        );
                         value = old_value - 1;
                         if (value < 0)
                         {
@@ -7568,7 +7671,8 @@ dboolean M_Responder(event_t *ev)
                         int old_value, value;
 
                         old_value = M_IndexInChoices(
-                            *ptr1->var.def->location.ppsz, ptr1->selectstrings);
+                            *ptr1->var.def->location.ppsz, ptr1->selectstrings
+                        );
                         value = old_value + 1;
                         if (ptr1->selectstrings[value] == nullptr)
                         {
@@ -7593,8 +7697,10 @@ dboolean M_Responder(event_t *ev)
 
                     if (ptr1->m_flags & (S_LEVWARN | S_PRGWARN))
                     {
-                        warn_about_changes(ptr1->m_flags & // killough 10/98
-                                           (S_LEVWARN | S_PRGWARN));
+                        warn_about_changes(
+                            ptr1->m_flags & // killough 10/98
+                            (S_LEVWARN | S_PRGWARN)
+                        );
                     }
                     else
                     {
@@ -7878,8 +7984,10 @@ dboolean M_Responder(event_t *ev)
                     // shift the remainder of the text one char left
                     else
                     {
-                        strcpy(&chat_string_buffer[chat_index],
-                               &chat_string_buffer[chat_index + 1]);
+                        strcpy(
+                            &chat_string_buffer[chat_index],
+                            &chat_string_buffer[chat_index + 1]
+                        );
                     }
                 }
                 else if (action == MENU_LEFT) // move cursor left
@@ -7966,13 +8074,15 @@ dboolean M_Responder(event_t *ev)
                     do
                     {
                         set_menu_itemon++;
-                    } while (!((current_setup_menu + set_menu_itemon)->m_flags &
-                               S_END));
+                    } while (!(
+                        (current_setup_menu + set_menu_itemon)->m_flags & S_END
+                    ));
                 }
                 set_menu_itemon--;
             } while ((current_setup_menu + set_menu_itemon)->m_flags & S_SKIP);
-            M_SelectDone(current_setup_menu +
-                         set_menu_itemon); // phares 4/17/98
+            M_SelectDone(
+                current_setup_menu + set_menu_itemon
+            ); // phares 4/17/98
             return true;
         }
 
@@ -8025,8 +8135,10 @@ dboolean M_Responder(event_t *ev)
 
                 chat_string_buffer =
                     static_cast<char *>(malloc(CHAT_STRING_BFR_SIZE));
-                strncpy(chat_string_buffer, *ptr1->var.def->location.ppsz,
-                        CHAT_STRING_BFR_SIZE);
+                strncpy(
+                    chat_string_buffer, *ptr1->var.def->location.ppsz,
+                    CHAT_STRING_BFR_SIZE
+                );
 
                 // guarantee null delimiter
                 chat_string_buffer[CHAT_STRING_BFR_SIZE - 1] = 0;
@@ -8065,11 +8177,11 @@ dboolean M_Responder(event_t *ev)
             }
             else // MENU_BACKSPACE = return to Setup Menu
                 if (currentMenu->prevMenu)
-            {
-                currentMenu = currentMenu->prevMenu;
-                itemOn = currentMenu->lastOn;
-                S_StartSound(nullptr, g_sfx_swtchn);
-            }
+                {
+                    currentMenu = currentMenu->prevMenu;
+                    itemOn = currentMenu->lastOn;
+                    S_StartSound(nullptr, g_sfx_swtchn);
+                }
             ptr1->m_flags &= ~(S_HILITE | S_SELECT); // phares 4/19/98
             setup_active = false;
             set_keybnd_active = false;
@@ -8427,8 +8539,10 @@ void M_Drawer()
             {
                 if (currentMenu->menuitems[i].name[0])
                 {
-                    V_DrawNamePatch(x, y, 0, currentMenu->menuitems[i].name,
-                                    CR_DEFAULT, VPT_STRETCH);
+                    V_DrawNamePatch(
+                        x, y, 0, currentMenu->menuitems[i].name, CR_DEFAULT,
+                        VPT_STRETCH
+                    );
                 }
                 y += LINEHEIGHT;
             }
@@ -8440,8 +8554,10 @@ void M_Drawer()
                 const char *alttext = currentMenu->menuitems[i].alttext;
                 if (alttext)
                 {
-                    M_WriteText(x, y + 8 - (M_StringHeight(alttext) / 2),
-                                alttext, CR_DEFAULT);
+                    M_WriteText(
+                        x, y + 8 - (M_StringHeight(alttext) / 2), alttext,
+                        CR_DEFAULT
+                    );
                 }
                 y += LINEHEIGHT;
             }
@@ -8450,8 +8566,10 @@ void M_Drawer()
         // DRAW SKULL
 
         // CPhipps - patch drawing updated
-        V_DrawNamePatch(x + SKULLXOFF, currentMenu->y - 5 + itemOn * LINEHEIGHT,
-                        0, skullName[whichSkull], CR_DEFAULT, VPT_STRETCH);
+        V_DrawNamePatch(
+            x + SKULLXOFF, currentMenu->y - 5 + itemOn * LINEHEIGHT, 0,
+            skullName[whichSkull], CR_DEFAULT, VPT_STRETCH
+        );
     }
 }
 
@@ -8582,8 +8700,10 @@ void M_DrawThermo(int x, int y, int thermWidth, int thermDot)
         thermDot = thermWidth - 1;
     }
 
-    V_DrawNamePatch((x + 8) + thermDot * horizScaler, y, 0, "M_THERMO",
-                    CR_DEFAULT, VPT_STRETCH);
+    V_DrawNamePatch(
+        (x + 8) + thermDot * horizScaler, y, 0, "M_THERMO", CR_DEFAULT,
+        VPT_STRETCH
+    );
 }
 
 //
@@ -8593,8 +8713,10 @@ void M_DrawThermo(int x, int y, int thermWidth, int thermDot)
 void M_DrawEmptyCell(menu_t *menu, int item)
 {
     // CPhipps - patch drawing updated
-    V_DrawNamePatch(menu->x - 10, menu->y + item * LINEHEIGHT - 1, 0, "M_CELL1",
-                    CR_DEFAULT, VPT_STRETCH);
+    V_DrawNamePatch(
+        menu->x - 10, menu->y + item * LINEHEIGHT - 1, 0, "M_CELL1", CR_DEFAULT,
+        VPT_STRETCH
+    );
 }
 
 //
@@ -8604,8 +8726,10 @@ void M_DrawEmptyCell(menu_t *menu, int item)
 void M_DrawSelCell(menu_t *menu, int item)
 {
     // CPhipps - patch drawing updated
-    V_DrawNamePatch(menu->x - 10, menu->y + item * LINEHEIGHT - 1, 0, "M_CELL2",
-                    CR_DEFAULT, VPT_STRETCH);
+    V_DrawNamePatch(
+        menu->x - 10, menu->y + item * LINEHEIGHT - 1, 0, "M_CELL2", CR_DEFAULT,
+        VPT_STRETCH
+    );
 }
 
 /////////////////////////////
@@ -8696,14 +8820,17 @@ void M_WriteText(int x, int y, const char *string, int cm)
         }
         // proff/nicolas 09/20/98 -- changed for hi-res
         // CPhipps - patch drawing updated
-        V_DrawNumPatch(cx, cy, 0, g_menu_font[c].lumpnum, cm,
-                       static_cast<patch_translation_e>(flags));
+        V_DrawNumPatch(
+            cx, cy, 0, g_menu_font[c].lumpnum, cm,
+            static_cast<patch_translation_e>(flags)
+        );
         cx += w;
     }
 }
 
-void M_DrawTitle(int x, int y, const char *patch, int cm, const char *alttext,
-                 int altcm)
+void M_DrawTitle(
+    int x, int y, const char *patch, int cm, const char *alttext, int altcm
+)
 {
     int lumpnum = W_CheckNumForName(patch);
 
@@ -8714,8 +8841,9 @@ void M_DrawTitle(int x, int y, const char *patch, int cm, const char *alttext,
         {
             flags |= VPT_TRANS;
         }
-        V_DrawNumPatch(x, y, 0, lumpnum, cm,
-                       static_cast<patch_translation_e>(flags));
+        V_DrawNumPatch(
+            x, y, 0, lumpnum, cm, static_cast<patch_translation_e>(flags)
+        );
     }
     else
     {
@@ -8723,7 +8851,8 @@ void M_DrawTitle(int x, int y, const char *patch, int cm, const char *alttext,
         M_WriteText(
             160 - (M_StringWidth(alttext) / 2),
             y + 8 - (M_StringHeight(alttext) / 2), // assumes patch height 16
-            alttext, altcm);
+            alttext, altcm
+        );
     }
 }
 

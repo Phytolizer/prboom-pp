@@ -69,9 +69,7 @@ void FMI_StartFinale()
     {
         finaletext = gamemapinfo->intertextsecret.c_str();
     }
-    else if (!gamemapinfo->intertext.empty() && !secretexit &&
-             gamemapinfo->intertext[0] !=
-                 '-') // '-' means that any default intermission was cleared.
+    else if (!gamemapinfo->intertext.empty() && !secretexit && gamemapinfo->intertext[0] != '-') // '-' means that any default intermission was cleared.
     {
         finaletext = gamemapinfo->intertext.c_str();
     }

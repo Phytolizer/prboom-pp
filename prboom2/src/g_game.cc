@@ -224,15 +224,16 @@ static const struct
 {
     weapontype_t weapon;
     weapontype_t weapon_num;
-} weapon_order_table[] = {{wp_fist, wp_fist},
-                          {wp_chainsaw, wp_fist},
-                          {wp_pistol, wp_pistol},
-                          {wp_shotgun, wp_shotgun},
-                          {wp_supershotgun, wp_shotgun},
-                          {wp_chaingun, wp_chaingun},
-                          {wp_missile, wp_missile},
-                          {wp_plasma, wp_plasma},
-                          {wp_bfg, wp_bfg}};
+} weapon_order_table[] = {
+    {wp_fist, wp_fist},
+    {wp_chainsaw, wp_fist},
+    {wp_pistol, wp_pistol},
+    {wp_shotgun, wp_shotgun},
+    {wp_supershotgun, wp_shotgun},
+    {wp_chaingun, wp_chaingun},
+    {wp_missile, wp_missile},
+    {wp_plasma, wp_plasma},
+    {wp_bfg, wp_bfg}};
 
 // HERETIC_TODO: dynamically set these
 
@@ -599,14 +600,16 @@ void G_BuildTiccmd(ticcmd_t *cmd)
             if (inventory)
             {
                 players[consoleplayer].readyArtifact = static_cast<artitype_t>(
-                    players[consoleplayer].inventory[inv_ptr].type);
+                    players[consoleplayer].inventory[inv_ptr].type
+                );
                 inventory = false;
                 cmd->arti = 0;
             }
             else
             {
                 cmd->arti = static_cast<byte>(
-                    players[consoleplayer].inventory[inv_ptr].type);
+                    players[consoleplayer].inventory[inv_ptr].type
+                );
             }
         }
         if (dsda_InputTickActivated(dsda_input_arti_tome) && !cmd->arti &&
@@ -631,13 +634,11 @@ void G_BuildTiccmd(ticcmd_t *cmd)
         {
             cmd->arti = arti_invulnerability;
         }
-        else if (dsda_InputTickActivated(dsda_input_arti_chaosdevice) &&
-                 !cmd->arti)
+        else if (dsda_InputTickActivated(dsda_input_arti_chaosdevice) && !cmd->arti)
         {
             cmd->arti = arti_teleport;
         }
-        else if (dsda_InputTickActivated(dsda_input_arti_shadowsphere) &&
-                 !cmd->arti)
+        else if (dsda_InputTickActivated(dsda_input_arti_shadowsphere) && !cmd->arti)
         {
             cmd->arti = arti_invisibility;
         }
@@ -989,7 +990,8 @@ void G_BuildTiccmd(ticcmd_t *cmd)
 void G_RestartLevel()
 {
     special_event = static_cast<buttoncode_t>(
-        BT_SPECIAL | (BTS_RESTARTLEVEL & BT_SPECIALMASK));
+        BT_SPECIAL | (BTS_RESTARTLEVEL & BT_SPECIALMASK)
+    );
 }
 
 //
@@ -1014,8 +1016,8 @@ static void G_DoLoadLevel()
     }
     else if (heretic)
     {
-        static const char *sky_lump_names[5] = {"SKY1", "SKY2", "SKY3", "SKY1",
-                                                "SKY3"};
+        static const char *sky_lump_names[5] = {
+            "SKY1", "SKY2", "SKY3", "SKY1", "SKY3"};
 
         if (gameepisode < 6)
         {
@@ -1156,8 +1158,8 @@ dboolean G_Responder(event_t *ev)
             {
                 displayplayer = 0;
             }
-        } while (!playeringame[displayplayer] &&
-                 displayplayer != consoleplayer);
+        } while (!playeringame[displayplayer] && displayplayer != consoleplayer
+        );
 
         ST_Start(); // killough 3/7/98: switch status bar views too
         HU_Start();
@@ -1219,8 +1221,9 @@ dboolean G_Responder(event_t *ev)
 
     if (dsda_InputActivated(dsda_input_pause))
     {
-        special_event = static_cast<buttoncode_t>(BT_SPECIAL |
-                                                  (BTS_PAUSE & BT_SPECIALMASK));
+        special_event = static_cast<buttoncode_t>(
+            BT_SPECIAL | (BTS_PAUSE & BT_SPECIALMASK)
+        );
         return true;
     }
 
@@ -1403,7 +1406,8 @@ void G_Ticker()
                     {
                         I_Error(
                             "G_Ticker: Consistency failure (%i should be %i)",
-                            cmd->consistancy, consistancy[i][buf]);
+                            cmd->consistancy, consistancy[i][buf]
+                        );
                     }
                     if (players[i].mo)
                     {
@@ -1482,7 +1486,8 @@ void G_Ticker()
         if (inventory && !(--inventoryTics))
         {
             players[consoleplayer].readyArtifact = static_cast<artitype_t>(
-                players[consoleplayer].inventory[inv_ptr].type);
+                players[consoleplayer].inventory[inv_ptr].type
+            );
             inventory = false;
         }
 
@@ -1743,14 +1748,16 @@ static dboolean G_CheckSpot(int playernum, mapthing_t *mthing)
         ss = R_PointInSubsector(x, y);
         an = ((unsigned)ANG45 * (mthing->angle / 45)) >> ANGLETOFINESHIFT;
 
-        mo = P_SpawnMobj(x + 20 * finecosine[an], y + 20 * finesine[an],
-                         ss->sector->floorheight + TELEFOGHEIGHT,
-                         HERETIC_MT_TFOG);
+        mo = P_SpawnMobj(
+            x + 20 * finecosine[an], y + 20 * finesine[an],
+            ss->sector->floorheight + TELEFOGHEIGHT, HERETIC_MT_TFOG
+        );
 
         if (players[consoleplayer].viewz != 1)
         {
             S_StartSound(
-                mo, heretic_sfx_telept); // don't start sound on first frame
+                mo, heretic_sfx_telept
+            ); // don't start sound on first frame
         }
 
         return true;
@@ -1781,9 +1788,12 @@ static dboolean G_CheckSpot(int playernum, mapthing_t *mthing)
         if (queuesize < bodyquesize)
         {
             bodyque = static_cast<mobj_t **>(
-                realloc(bodyque, bodyquesize * sizeof *bodyque));
-            memset(bodyque + queuesize, 0,
-                   (bodyquesize - queuesize) * sizeof *bodyque);
+                realloc(bodyque, bodyquesize * sizeof *bodyque)
+            );
+            memset(
+                bodyque + queuesize, 0,
+                (bodyquesize - queuesize) * sizeof *bodyque
+            );
             queuesize = bodyquesize;
         }
         if (bodyqueslot >= bodyquesize)
@@ -1843,8 +1853,9 @@ static dboolean G_CheckSpot(int playernum, mapthing_t *mthing)
             }
         }
 
-        mo = P_SpawnMobj(x + 20 * xa, y + 20 * ya, ss->sector->floorheight,
-                         MT_TFOG);
+        mo = P_SpawnMobj(
+            x + 20 * xa, y + 20 * ya, ss->sector->floorheight, MT_TFOG
+        );
 
         if (players[consoleplayer].viewz != 1)
         {
@@ -1867,7 +1878,8 @@ void G_DeathMatchSpawnPlayer(int playernum)
     {
         I_Error(
             "G_DeathMatchSpawnPlayer: Only %i deathmatch spots, %d required",
-            selections, MAXPLAYERS);
+            selections, MAXPLAYERS
+        );
     }
 
     for (j = 0; j < 20; j++)
@@ -1935,12 +1947,13 @@ void G_ScreenShot()
 }
 
 // DOOM Par Times
-int pars[5][10] = {{0},
-                   {0, 30, 75, 120, 90, 165, 180, 180, 30, 165},
-                   {0, 90, 90, 90, 120, 90, 360, 240, 30, 170},
-                   {0, 90, 45, 90, 150, 90, 90, 165, 30, 135},
-                   // from Doom 3 BFG Edition
-                   {0, 165, 255, 135, 150, 180, 390, 135, 360, 180}};
+int pars[5][10] = {
+    {0},
+    {0, 30, 75, 120, 90, 165, 180, 180, 30, 165},
+    {0, 90, 90, 90, 120, 90, 360, 240, 30, 170},
+    {0, 90, 45, 90, 150, 90, 90, 165, 30, 135},
+    // from Doom 3 BFG Edition
+    {0, 165, 255, 135, 150, 180, 390, 135, 360, 180}};
 
 // DOOM II Par Times
 int cpars[34] = {
@@ -2189,8 +2202,9 @@ frommapinfo:
         wminfo.plyr[i].sitems = players[i].itemcount;
         wminfo.plyr[i].ssecret = players[i].secretcount;
         wminfo.plyr[i].stime = leveltime;
-        memcpy(wminfo.plyr[i].frags, players[i].frags,
-               sizeof(wminfo.plyr[i].frags));
+        memcpy(
+            wminfo.plyr[i].frags, players[i].frags, sizeof(wminfo.plyr[i].frags)
+        );
     }
 
     /* cph - modified so that only whole seconds are added to the
@@ -2262,8 +2276,7 @@ void G_WorldDone()
 
             return;
         }
-        else if (gamemapinfo->endpic[0] &&
-                 (strcmp(gamemapinfo->endpic, "-") != 0))
+        else if (gamemapinfo->endpic[0] && (strcmp(gamemapinfo->endpic, "-") != 0))
         {
             // game ends without a status screen.
             gameaction = ga_victory;
@@ -2402,7 +2415,8 @@ void G_LoadGame(int slot, dboolean command)
         //         - store info in special_event
         special_event = static_cast<buttoncode_t>(
             BT_SPECIAL | (BTS_LOADGAME & BT_SPECIALMASK) |
-            ((slot << BTS_SAVESHIFT) & BTS_SAVEMASK));
+            ((slot << BTS_SAVESHIFT) & BTS_SAVEMASK)
+        );
         forced_loadgame = netgame; // CPhipps - always force load netgames
     }
     else
@@ -2437,24 +2451,25 @@ static void G_LoadGameErr(const char *msg)
 // CPhipps - size of version header
 #define VERSIONSIZE 16
 
-const char *comp_lev_str[MAX_COMPATIBILITY_LEVEL] = {"Doom v1.2",
-                                                     "Doom v1.666",
-                                                     "Doom/Doom2 v1.9",
-                                                     "Ultimate Doom/Doom95",
-                                                     "Final Doom",
-                                                     "early DosDoom",
-                                                     "TASDoom",
-                                                     "\"boom compatibility\"",
-                                                     "boom v2.01",
-                                                     "boom v2.02",
-                                                     "lxdoom v1.3.2+",
-                                                     "MBF",
-                                                     "PrBoom 2.03beta",
-                                                     "PrBoom v2.1.0-2.1.1",
-                                                     "PrBoom v2.1.2-v2.2.6",
-                                                     "PrBoom v2.3.x",
-                                                     "PrBoom 2.4.0",
-                                                     "Current PrBoom"};
+const char *comp_lev_str[MAX_COMPATIBILITY_LEVEL] = {
+    "Doom v1.2",
+    "Doom v1.666",
+    "Doom/Doom2 v1.9",
+    "Ultimate Doom/Doom95",
+    "Final Doom",
+    "early DosDoom",
+    "TASDoom",
+    "\"boom compatibility\"",
+    "boom v2.01",
+    "boom v2.02",
+    "lxdoom v1.3.2+",
+    "MBF",
+    "PrBoom 2.03beta",
+    "PrBoom v2.1.0-2.1.1",
+    "PrBoom v2.1.2-v2.2.6",
+    "PrBoom v2.3.x",
+    "PrBoom 2.4.0",
+    "Current PrBoom"};
 
 // comp_options_by_version removed - see G_Compatibility
 
@@ -2576,8 +2591,9 @@ void G_DoLoadGame()
     {
         char vcheck[VERSIONSIZE];
         // killough 2/22/98: "proprietary" version string :-)
-        sprintf(vcheck, version_headers[i].ver_printf,
-                version_headers[i].version);
+        sprintf(
+            vcheck, version_headers[i].ver_printf, version_headers[i].version
+        );
 
         if (!strncmp((char *)save_p, vcheck, VERSIONSIZE))
         {
@@ -2593,8 +2609,8 @@ void G_DoLoadGame()
         }
         else
         {
-            G_LoadGameErr(
-                "Unrecognised savegame version!\nAre you sure? (y/n) ");
+            G_LoadGameErr("Unrecognised savegame version!\nAre you sure? (y/n) "
+            );
             return;
         }
     }
@@ -2613,12 +2629,15 @@ void G_DoLoadGame()
             if (!forced_loadgame)
             {
                 char *msg = static_cast<char *>(
-                    malloc(strlen((char *)save_p + sizeof checksum) + 128));
+                    malloc(strlen((char *)save_p + sizeof checksum) + 128)
+                );
                 strcpy(msg, "Incompatible Savegame!!!\n");
                 if (save_p[sizeof checksum])
                 {
-                    strcat(strcat(msg, "Wads expected:\n\n"),
-                           (char *)save_p + sizeof checksum);
+                    strcat(
+                        strcat(msg, "Wads expected:\n\n"),
+                        (char *)save_p + sizeof checksum
+                    );
                 }
                 strcat(msg, "\nAre you sure?");
                 G_LoadGameErr(msg);
@@ -2736,13 +2755,15 @@ void G_DoLoadGame()
     time = leveltime / TICRATE;
     ttime = (totalleveltimes + leveltime) / TICRATE;
 
-    lprintf(LO_INFO,
-            "G_DoLoadGame: [%d] %s (%s), Skill %d, Level Time %02d:%02d:%02d, "
-            "Total Time %02d:%02d:%02d\n",
-            savegameslot + 1, maplump,
-            W_GetLumpInfoByNum(W_GetNumForName(maplump))->wadfile->name,
-            gameskill + 1, time / 3600, (time % 3600) / 60, time % 60,
-            ttime / 3600, (ttime % 3600) / 60, ttime % 60);
+    lprintf(
+        LO_INFO,
+        "G_DoLoadGame: [%d] %s (%s), Skill %d, Level Time %02d:%02d:%02d, "
+        "Total Time %02d:%02d:%02d\n",
+        savegameslot + 1, maplump,
+        W_GetLumpInfoByNum(W_GetNumForName(maplump))->wadfile->name,
+        gameskill + 1, time / 3600, (time % 3600) / 60, time % 60, ttime / 3600,
+        (ttime % 3600) / 60, ttime % 60
+    );
 
     // done
     free(savebuffer);
@@ -2768,9 +2789,9 @@ void G_DoLoadGame()
     }
     else /* Command line + record means it's a recordfrom */
         if (demorecording)
-    {
-        G_BeginRecording();
-    }
+        {
+            G_BeginRecording();
+        }
 }
 
 //
@@ -2791,12 +2812,14 @@ void G_SaveGame(int slot, char *description)
         G_DoSaveGame(true);
     }
     // CPhipps - store info in special_event
-    special_event =
-        static_cast<buttoncode_t>(BT_SPECIAL | (BTS_SAVEGAME & BT_SPECIALMASK) |
-                                  ((slot << BTS_SAVESHIFT) & BTS_SAVEMASK));
+    special_event = static_cast<buttoncode_t>(
+        BT_SPECIAL | (BTS_SAVEGAME & BT_SPECIALMASK) |
+        ((slot << BTS_SAVESHIFT) & BTS_SAVEMASK)
+    );
 #ifdef HAVE_NET
-    D_NetSendMisc(nm_savegamename, strlen(savedescription) + 1,
-                  savedescription);
+    D_NetSendMisc(
+        nm_savegamename, strlen(savedescription) + 1, savedescription
+    );
 #endif
 }
 
@@ -2814,7 +2837,8 @@ void(CheckSaveGame)(size_t size, const char * /* file */, int /* line */)
     if (pos > prev_check)
         I_Error(
             "CheckSaveGame at %s:%d called for insufficient buffer (%u < %u)",
-            prevf, prevl, prev_check, pos);
+            prevf, prevl, prev_check, pos
+        );
     prev_check = size + pos;
     prevf = file;
     prevl = line;
@@ -2823,9 +2847,11 @@ void(CheckSaveGame)(size_t size, const char * /* file */, int /* line */)
     size += 1024; // breathing room
     if (pos + size > savegamesize)
     {
-        save_p = (savebuffer = static_cast<byte *>(std::realloc(
-                      savebuffer, savegamesize += (size + 1023) & ~1023))) +
-                 pos;
+        save_p =
+            (savebuffer = static_cast<byte *>(
+                 std::realloc(savebuffer, savegamesize += (size + 1023) & ~1023)
+             )) +
+            pos;
     }
 }
 
@@ -2873,8 +2899,9 @@ static void G_DoSaveGame(dboolean menu)
         if (version_headers[i].comp_level == best_compatibility)
         {
             // killough 2/22/98: "proprietary" version string :-)
-            sprintf(name2, version_headers[i].ver_printf,
-                    version_headers[i].version);
+            sprintf(
+                name2, version_headers[i].ver_printf, version_headers[i].version
+            );
             memcpy(save_p, name2, VERSIONSIZE);
             i = num_version_headers + 1;
         }
@@ -2903,8 +2930,10 @@ static void G_DoSaveGame(dboolean menu)
         *save_p++ = 0;
     }
 
-    CheckSaveGame(GAME_OPTION_SIZE + MIN_MAXPLAYERS + 14 +
-                  strlen(NEWFORMATSIG) + sizeof packageversion);
+    CheckSaveGame(
+        GAME_OPTION_SIZE + MIN_MAXPLAYERS + 14 + strlen(NEWFORMATSIG) +
+        sizeof packageversion
+    );
 
     // e6y: saving of the version number of package
     strcpy((char *)save_p, NEWFORMATSIG);
@@ -2967,9 +2996,11 @@ static void G_DoSaveGame(dboolean menu)
 
     *save_p++ = 0xe6; // consistancy marker
 
-    doom_printf("%s", M_WriteFile(name, savebuffer, save_p - savebuffer)
-                          ? s_GGSAVED             /* Ty - externalised */
-                          : "Game save failed!"); // CPhipps - not externalised
+    doom_printf(
+        "%s", M_WriteFile(name, savebuffer, save_p - savebuffer)
+                  ? s_GGSAVED /* Ty - externalised */
+                  : "Game save failed!"
+    ); // CPhipps - not externalised
 
     /* Print some information about the save game */
     if (gamemode == commercial)
@@ -2983,13 +3014,15 @@ static void G_DoSaveGame(dboolean menu)
     time = leveltime / TICRATE;
     ttime = (totalleveltimes + leveltime) / TICRATE;
 
-    lprintf(LO_INFO,
-            "G_DoSaveGame: [%d] %s (%s), Skill %d, Level Time %02d:%02d:%02d, "
-            "Total Time %02d:%02d:%02d\n",
-            savegameslot + 1, maplump,
-            W_GetLumpInfoByNum(W_GetNumForName(maplump))->wadfile->name,
-            gameskill + 1, time / 3600, (time % 3600) / 60, time % 60,
-            ttime / 3600, (ttime % 3600) / 60, ttime % 60);
+    lprintf(
+        LO_INFO,
+        "G_DoSaveGame: [%d] %s (%s), Skill %d, Level Time %02d:%02d:%02d, "
+        "Total Time %02d:%02d:%02d\n",
+        savegameslot + 1, maplump,
+        W_GetLumpInfoByNum(W_GetNumForName(maplump))->wadfile->name,
+        gameskill + 1, time / 3600, (time % 3600) / 60, time % 60, ttime / 3600,
+        (ttime % 3600) / 60, ttime % 60
+    );
 
     free(savebuffer); // killough
     savebuffer = save_p = nullptr;
@@ -3480,9 +3513,9 @@ void G_InitNew(skill_t skill, int episode, int map)
                 // Final Doom or Doom95 compatibility and -warp command line
                 // switch
                 if (fake_episode_check ? episode == 0 : episode > 3)
-            {
-                episode = 3;
-            }
+                {
+                    episode = 3;
+                }
 
             if (map < 1)
             {
@@ -3906,8 +3939,10 @@ void G_BeginRecording()
             // table.
             if (mapname_len > 8)
             {
-                I_Error("Unable to save map lump name %s, too large.",
-                        mapname.c_str());
+                I_Error(
+                    "Unable to save map lump name %s, too large.",
+                    mapname.c_str()
+                );
             }
 
             for (i = 0; i < mapname_len; i++)
@@ -4168,9 +4203,10 @@ static int G_GetOriginalDoomCompatLevel(int ver)
 }
 
 // e6y: Check for overrun
-static dboolean CheckForOverrun(const byte *start_p, const byte *current_p,
-                                size_t maxsize, size_t size,
-                                dboolean failonerror)
+static dboolean CheckForOverrun(
+    const byte *start_p, const byte *current_p, size_t maxsize, size_t size,
+    dboolean failonerror
+)
 {
     size_t pos = current_p - start_p;
     if (pos + size > maxsize)
@@ -4192,8 +4228,9 @@ const byte *G_ReadDemoHeader(const byte *demo_pointer, size_t size)
     return G_ReadDemoHeaderEx(demo_pointer, size, 0);
 }
 
-const byte *G_ReadDemoHeaderEx(const byte *demo_pointer, size_t size,
-                               unsigned int params)
+const byte *G_ReadDemoHeaderEx(
+    const byte *demo_pointer, size_t size, unsigned int params
+)
 {
     skill_t skill;
     int i, episode = 1, map = 0, extension_version;
@@ -4269,16 +4306,19 @@ const byte *G_ReadDemoHeaderEx(const byte *demo_pointer, size_t size,
 
         if (extension_version != 1)
         {
-            I_Error("G_ReadDemoHeader: Extended demo format version %d "
-                    "unrecognized.",
-                    extension_version);
+            I_Error(
+                "G_ReadDemoHeader: Extended demo format version %d "
+                "unrecognized.",
+                extension_version
+            );
         }
 
         num_extensions = *demo_pointer++;
         num_extensions |= ((unsigned int)(*demo_pointer++)) << 8;
 
-        if (CheckForOverrun(header_p, demo_pointer, size, num_extensions,
-                            failonerror))
+        if (CheckForOverrun(
+                header_p, demo_pointer, size, num_extensions, failonerror
+            ))
         {
             return nullptr;
         }
@@ -4287,8 +4327,9 @@ const byte *G_ReadDemoHeaderEx(const byte *demo_pointer, size_t size,
         {
             int r_len = *demo_pointer++;
 
-            if (CheckForOverrun(header_p, demo_pointer, size, r_len,
-                                failonerror))
+            if (CheckForOverrun(
+                    header_p, demo_pointer, size, r_len, failonerror
+                ))
             {
                 return nullptr;
             }
@@ -4527,8 +4568,8 @@ const byte *G_ReadDemoHeaderEx(const byte *demo_pointer, size_t size,
                 // 2 at 4,6 means playerclass=mage -> not DOOM_old or HERETIC;
                 if ((size >= 8 && (size - 8) % 4 != 0 && !heretic) ||
                     (map > 9) ||
-                    (size >= 6 &&
-                     (*(header_p + 4) == 2 || *(header_p + 6) == 2)))
+                    (size >= 6 && (*(header_p + 4) == 2 || *(header_p + 6) == 2)
+                    ))
                 {
                     I_Error("Unrecognised demo format.");
                 }
@@ -4635,8 +4676,9 @@ const byte *G_ReadDemoHeaderEx(const byte *demo_pointer, size_t size,
         consoleplayer = *demo_pointer++;
 
         // e6y: check for overrun
-        if (CheckForOverrun(header_p, demo_pointer, size, GAME_OPTION_SIZE,
-                            failonerror))
+        if (CheckForOverrun(
+                header_p, demo_pointer, size, GAME_OPTION_SIZE, failonerror
+            ))
         {
             return nullptr;
         }
@@ -4655,8 +4697,10 @@ const byte *G_ReadDemoHeaderEx(const byte *demo_pointer, size_t size,
     {
         I_Error("G_ReadDemoHeader: compatibility level strings incomplete");
     }
-    lprintf(LO_INFO, "G_DoPlayDemo: playing demo with %s compatibility\n",
-            comp_lev_str[compatibility_level]);
+    lprintf(
+        LO_INFO, "G_DoPlayDemo: playing demo with %s compatibility\n",
+        comp_lev_str[compatibility_level]
+    );
 
     if (demo_compatibility ||
         demover < 200) // e6y  // only 4 players can exist in old demos
@@ -4679,8 +4723,9 @@ const byte *G_ReadDemoHeaderEx(const byte *demo_pointer, size_t size,
     else
     {
         // e6y: check for overrun
-        if (CheckForOverrun(header_p, demo_pointer, size, MAXPLAYERS,
-                            failonerror))
+        if (CheckForOverrun(
+                header_p, demo_pointer, size, MAXPLAYERS, failonerror
+            ))
         {
             return nullptr;
         }
@@ -4744,9 +4789,10 @@ const byte *G_ReadDemoHeaderEx(const byte *demo_pointer, size_t size,
 
             demo_tics_count /= demo_playerscount;
 
-            sprintf(demo_len_st, "\x1b\x35/%d:%02d",
-                    demo_tics_count / TICRATE / 60,
-                    (demo_tics_count % (60 * TICRATE)) / TICRATE);
+            sprintf(
+                demo_len_st, "\x1b\x35/%d:%02d", demo_tics_count / TICRATE / 60,
+                (demo_tics_count % (60 * TICRATE)) / TICRATE
+            );
         }
     }
 
@@ -4822,10 +4868,12 @@ dboolean G_CheckDemoStatus()
         // M_SaveDefaults();
         rust::save_defaults();
 
-        lprintf(LO_INFO,
-                "Timed %u gametics in %u realtics = %-.1f frames per second\n",
-                (unsigned)gametic, realtics,
-                (unsigned)gametic * (double)TICRATE / realtics);
+        lprintf(
+            LO_INFO,
+            "Timed %u gametics in %u realtics = %-.1f frames per second\n",
+            (unsigned)gametic, realtics,
+            (unsigned)gametic * (double)TICRATE / realtics
+        );
         exit(0);
     }
 
@@ -5022,18 +5070,24 @@ void P_WalkTicker()
     }
 
     // moving forward
-    walkcamera.x += FixedMul((ORIG_FRICTION / 4) * forward,
-                             finecosine[walkcamera.angle >> ANGLETOFINESHIFT]);
-    walkcamera.y += FixedMul((ORIG_FRICTION / 4) * forward,
-                             finesine[walkcamera.angle >> ANGLETOFINESHIFT]);
+    walkcamera.x += FixedMul(
+        (ORIG_FRICTION / 4) * forward,
+        finecosine[walkcamera.angle >> ANGLETOFINESHIFT]
+    );
+    walkcamera.y += FixedMul(
+        (ORIG_FRICTION / 4) * forward,
+        finesine[walkcamera.angle >> ANGLETOFINESHIFT]
+    );
 
     // strafing
-    walkcamera.x +=
-        FixedMul((ORIG_FRICTION / 6) * side,
-                 finecosine[(walkcamera.angle - ANG90) >> ANGLETOFINESHIFT]);
-    walkcamera.y +=
-        FixedMul((ORIG_FRICTION / 6) * side,
-                 finesine[(walkcamera.angle - ANG90) >> ANGLETOFINESHIFT]);
+    walkcamera.x += FixedMul(
+        (ORIG_FRICTION / 6) * side,
+        finecosine[(walkcamera.angle - ANG90) >> ANGLETOFINESHIFT]
+    );
+    walkcamera.y += FixedMul(
+        (ORIG_FRICTION / 6) * side,
+        finesine[(walkcamera.angle - ANG90) >> ANGLETOFINESHIFT]
+    );
 
     {
         subsector_t *subsec = R_PointInSubsector(walkcamera.x, walkcamera.y);

@@ -1,2 +1,3 @@
 BasedOnStyle: Microsoft
 ColumnLimit: 80
+AlignAfterOpenBracket: BlockIndent

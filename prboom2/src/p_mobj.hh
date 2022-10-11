@@ -512,8 +512,9 @@ void P_ExplodeMissile(mobj_t *);        // killough
 extern mobj_t *MissileMobj;
 
 void P_BlasterMobjThinker(mobj_t *mobj);
-mobj_t *P_SpawnMissileAngle(mobj_t *source, mobjtype_t type, angle_t angle,
-                            fixed_t momz);
+mobj_t *P_SpawnMissileAngle(
+    mobj_t *source, mobjtype_t type, angle_t angle, fixed_t momz
+);
 dboolean P_SetMobjStateNF(mobj_t *mobj, statenum_t state);
 void P_ThrustMobj(mobj_t *mo, angle_t angle, fixed_t move);
 dboolean P_SeekerMissile(mobj_t *actor, angle_t thresh, angle_t turnMax);

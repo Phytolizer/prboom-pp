@@ -216,8 +216,10 @@ static void W_AddFile(wadfile_info_t *wadfile)
         if (strncmp(header.identification, "IWAD", 4) &&
             strncmp(header.identification, "PWAD", 4))
         {
-            I_Error("W_AddFile: Wad file %s doesn't have IWAD or PWAD id",
-                    wadfile->name);
+            I_Error(
+                "W_AddFile: Wad file %s doesn't have IWAD or PWAD id",
+                wadfile->name
+            );
         }
         header.numlumps = LittleLong(header.numlumps);
         header.infotableofs = LittleLong(header.infotableofs);
@@ -231,7 +233,8 @@ static void W_AddFile(wadfile_info_t *wadfile)
 
     // Fill in lumpinfo
     lumpinfo = static_cast<lumpinfo_t *>(
-        std::realloc(lumpinfo, numlumps * sizeof(lumpinfo_t)));
+        std::realloc(lumpinfo, numlumps * sizeof(lumpinfo_t))
+    );
 
     lump_p = &lumpinfo[startlump];
 
@@ -277,9 +280,10 @@ static int IsMarker(const char *marker, const char *name)
 
 // killough 4/17/98: add namespace tags
 
-static int W_CoalesceMarkedResource(const char *start_marker,
-                                    const char *end_marker,
-                                    li_namespace_e li_namespace)
+static int W_CoalesceMarkedResource(
+    const char *start_marker, const char *end_marker,
+    li_namespace_e li_namespace
+)
 {
     int result = 0;
     lumpinfo_t *marked =
@@ -357,13 +361,13 @@ static int W_CoalesceMarkedResource(const char *start_marker,
 unsigned W_LumpNameHash(const char *s)
 {
     unsigned hash;
-    (void)((hash = toupper(s[0]), s[1]) &&
-           (hash = hash * 3 + toupper(s[1]), s[2]) &&
-           (hash = hash * 2 + toupper(s[2]), s[3]) &&
-           (hash = hash * 2 + toupper(s[3]), s[4]) &&
-           (hash = hash * 2 + toupper(s[4]), s[5]) &&
-           (hash = hash * 2 + toupper(s[5]), s[6]) &&
-           (hash = hash * 2 + toupper(s[6]), hash = hash * 2 + toupper(s[7])));
+    (void
+    )((hash = toupper(s[0]), s[1]) && (hash = hash * 3 + toupper(s[1]), s[2]) &&
+      (hash = hash * 2 + toupper(s[2]), s[3]) &&
+      (hash = hash * 2 + toupper(s[3]), s[4]) &&
+      (hash = hash * 2 + toupper(s[4]), s[5]) &&
+      (hash = hash * 2 + toupper(s[5]), s[6]) &&
+      (hash = hash * 2 + toupper(s[6]), hash = hash * 2 + toupper(s[7])));
     return hash;
 }
 

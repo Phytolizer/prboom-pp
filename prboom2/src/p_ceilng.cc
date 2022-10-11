@@ -71,8 +71,10 @@ void T_MoveCeiling(ceiling_t *ceiling)
 
     case 1:
         // Ceiling is moving up
-        res = T_MovePlane(ceiling->sector, ceiling->speed, ceiling->topheight,
-                          false, 1, ceiling->direction);
+        res = T_MovePlane(
+            ceiling->sector, ceiling->speed, ceiling->topheight, false, 1,
+            ceiling->direction
+        );
 
         // if not a silent crusher, make moving sound
         if (!(leveltime & 7))
@@ -83,8 +85,9 @@ void T_MoveCeiling(ceiling_t *ceiling)
             case genSilentCrusher:
                 break;
             default:
-                S_StartSound((mobj_t *)&ceiling->sector->soundorg,
-                             g_sfx_stnmov);
+                S_StartSound(
+                    (mobj_t *)&ceiling->sector->soundorg, g_sfx_stnmov
+                );
                 break;
             }
         }
@@ -133,9 +136,10 @@ void T_MoveCeiling(ceiling_t *ceiling)
 
     case -1:
         // Ceiling moving down
-        res =
-            T_MovePlane(ceiling->sector, ceiling->speed, ceiling->bottomheight,
-                        ceiling->crush, 1, ceiling->direction);
+        res = T_MovePlane(
+            ceiling->sector, ceiling->speed, ceiling->bottomheight,
+            ceiling->crush, 1, ceiling->direction
+        );
 
         // if not silent crusher type make moving sound
         if (!(leveltime & 7))
@@ -146,8 +150,9 @@ void T_MoveCeiling(ceiling_t *ceiling)
             case genSilentCrusher:
                 break;
             default:
-                S_StartSound((mobj_t *)&ceiling->sector->soundorg,
-                             g_sfx_stnmov);
+                S_StartSound(
+                    (mobj_t *)&ceiling->sector->soundorg, g_sfx_stnmov
+                );
             }
         }
 
@@ -274,8 +279,8 @@ int EV_DoCeiling(line_t *line, ceiling_e type)
     case silentCrushAndRaise:
     case crushAndRaise:
         // jff 4/5/98 return if activated
-        rtn = P_ActivateInStasisCeiling(
-            line); // heretic_note: rtn not set in heretic
+        rtn = P_ActivateInStasisCeiling(line
+        ); // heretic_note: rtn not set in heretic
     default:
         break;
     }

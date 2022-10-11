@@ -89,8 +89,9 @@ clipnode_t *cliphead;
 
 static clipnode_t *gld_clipnode_GetNew();
 static clipnode_t *gld_clipnode_NewRange(angle_t start, angle_t end);
-static dboolean gld_clipper_IsRangeVisible(angle_t startAngle,
-                                           angle_t endAngle);
+static dboolean gld_clipper_IsRangeVisible(
+    angle_t startAngle, angle_t endAngle
+);
 static void gld_clipper_AddClipRange(angle_t start, angle_t end);
 static void gld_clipper_RemoveRange(clipnode_t *range);
 static void gld_clipnode_Free(clipnode_t *node);
@@ -120,8 +121,10 @@ dboolean gld_clipper_SafeCheckRange(angle_t startAngle, angle_t endAngle)
 {
     if (startAngle > endAngle)
     {
-        return (gld_clipper_IsRangeVisible(startAngle, ANGLE_MAX) ||
-                gld_clipper_IsRangeVisible(0, endAngle));
+        return (
+            gld_clipper_IsRangeVisible(startAngle, ANGLE_MAX) ||
+            gld_clipper_IsRangeVisible(0, endAngle)
+        );
     }
 
     return gld_clipper_IsRangeVisible(startAngle, endAngle);
@@ -204,11 +207,14 @@ angle_t gld_clipper_AngleToPseudo(angle_t ang)
     return (angle_t)xs_CRoundToUInt(result * (1 << 30));
 }
 
-void gld_clipper_SafeAddClipRangeRealAngles(angle_t startangle,
-                                            angle_t endangle)
+void gld_clipper_SafeAddClipRangeRealAngles(
+    angle_t startangle, angle_t endangle
+)
 {
-    gld_clipper_SafeAddClipRange(gld_clipper_AngleToPseudo(startangle),
-                                 gld_clipper_AngleToPseudo(endangle));
+    gld_clipper_SafeAddClipRange(
+        gld_clipper_AngleToPseudo(startangle),
+        gld_clipper_AngleToPseudo(endangle)
+    );
 }
 
 static void gld_clipper_AddClipRange(angle_t start, angle_t end)
@@ -366,13 +372,15 @@ angle_t gld_FrustumAngle()
 //
 
 #define CALCMATRIX(a, b, c, d, e, f, g, h)                                     \
-    (float)(modelMatrix[a] * projMatrix[b] + modelMatrix[c] * projMatrix[d] +  \
-            modelMatrix[e] * projMatrix[f] + modelMatrix[g] * projMatrix[h])
+    (float                                                                     \
+    )(modelMatrix[a] * projMatrix[b] + modelMatrix[c] * projMatrix[d] +        \
+      modelMatrix[e] * projMatrix[f] + modelMatrix[g] * projMatrix[h])
 
 #define NORMALIZE_PLANE(i)                                                     \
-    t = (float)sqrt(frustum[i][0] * frustum[i][0] +                            \
-                    frustum[i][1] * frustum[i][1] +                            \
-                    frustum[i][2] * frustum[i][2]);                            \
+    t = (float)sqrt(                                                           \
+        frustum[i][0] * frustum[i][0] + frustum[i][1] * frustum[i][1] +        \
+        frustum[i][2] * frustum[i][2]                                          \
+    );                                                                         \
     frustum[i][0] /= t;                                                        \
     frustum[i][1] /= t;                                                        \
     frustum[i][2] /= t;                                                        \

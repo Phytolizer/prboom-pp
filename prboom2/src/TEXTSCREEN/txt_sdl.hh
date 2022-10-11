@@ -35,7 +35,8 @@ using TxtSDLEventCallbackFunc = int (*)(SDL_Event *, void *);
 // callback function.
 // user_data is a void pointer to be passed to the callback function.
 
-void TXT_SDL_SetEventCallback(TxtSDLEventCallbackFunc callback,
-                              void *user_data);
+void TXT_SDL_SetEventCallback(
+    TxtSDLEventCallbackFunc callback, void *user_data
+);
 
 #endif /* #ifndef TXT_SDL_H */

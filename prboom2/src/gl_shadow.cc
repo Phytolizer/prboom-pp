@@ -74,7 +74,8 @@ void gld_InitShadows()
         SDL_Surface *surf = nullptr;
         SDL_Surface *surf_raw;
         surf_raw = SDL_LoadBMP_RW(
-            SDL_RWFromConstMem(W_CacheLumpNum(lump), W_LumpLength(lump)), 1);
+            SDL_RWFromConstMem(W_CacheLumpNum(lump), W_LumpLength(lump)), 1
+        );
         W_UnlockLumpNum(lump);
 
         fmt = *surf_raw->format;
@@ -88,8 +89,10 @@ void gld_InitShadows()
             glGenTextures(1, &simple_shadows.tex_id);
             glBindTexture(GL_TEXTURE_2D, simple_shadows.tex_id);
 
-            glTexImage2D(GL_TEXTURE_2D, 0, GL_LUMINANCE, surf->w, surf->h, 0,
-                         GL_RGB, GL_UNSIGNED_BYTE, surf->pixels);
+            glTexImage2D(
+                GL_TEXTURE_2D, 0, GL_LUMINANCE, surf->w, surf->h, 0, GL_RGB,
+                GL_UNSIGNED_BYTE, surf->pixels
+            );
 
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
@@ -97,8 +100,10 @@ void gld_InitShadows()
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
             if (gl_ext_texture_filter_anisotropic)
             {
-                glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT,
-                                (GLfloat)(1 << gl_texture_filter_anisotropic));
+                glTexParameterf(
+                    GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT,
+                    (GLfloat)(1 << gl_texture_filter_anisotropic)
+                );
             }
 
             simple_shadows.loaded = true;
@@ -111,8 +116,9 @@ void gld_InitShadows()
 
     if (simple_shadows.enable && !simple_shadows.loaded)
     {
-        lprintf(LO_INFO,
-                "gld_InitShadows: failed to initialise shadow texture");
+        lprintf(
+            LO_INFO, "gld_InitShadows: failed to initialise shadow texture"
+        );
     }
 }
 
@@ -123,17 +129,21 @@ static void gld_DrawShadow(GLShadow *shadow)
     glBegin(GL_TRIANGLE_FAN);
 
     glTexCoord2f(1.0f, 0.0f);
-    glVertex3f(shadow->x + shadow->radius, shadow->z,
-               shadow->y - shadow->radius);
+    glVertex3f(
+        shadow->x + shadow->radius, shadow->z, shadow->y - shadow->radius
+    );
     glTexCoord2f(0.0f, 0.0f);
-    glVertex3f(shadow->x - shadow->radius, shadow->z,
-               shadow->y - shadow->radius);
+    glVertex3f(
+        shadow->x - shadow->radius, shadow->z, shadow->y - shadow->radius
+    );
     glTexCoord2f(0.0f, 1.0f);
-    glVertex3f(shadow->x - shadow->radius, shadow->z,
-               shadow->y + shadow->radius);
+    glVertex3f(
+        shadow->x - shadow->radius, shadow->z, shadow->y + shadow->radius
+    );
     glTexCoord2f(1.0f, 1.0f);
-    glVertex3f(shadow->x + shadow->radius, shadow->z,
-               shadow->y + shadow->radius);
+    glVertex3f(
+        shadow->x + shadow->radius, shadow->z, shadow->y + shadow->radius
+    );
 
     glEnd();
 }
@@ -179,8 +189,9 @@ void gld_ProcessThingShadow(mobj_t *mo)
     }
 
     // Is this too far?
-    dist = P_AproxDistance((mo->x >> 16) - (viewx >> 16),
-                           (mo->y >> 16) - (viewy >> 16));
+    dist = P_AproxDistance(
+        (mo->x >> 16) - (viewx >> 16), (mo->y >> 16) - (viewy >> 16)
+    );
     if (dist > simple_shadows.max_dist)
     {
         return;

@@ -198,16 +198,18 @@ void gld_AddSkyTexture(GLWall *wall, int sky1, int sky2, int skytype)
         wall->gltexture = gld_RegisterTexture(
             texturetranslation[s->toptexture], false,
             texturetranslation[s->toptexture] == skytexture ||
-                l->special == 271 || l->special == 272);
+                l->special == 271 || l->special == 272
+        );
         if (wall->gltexture)
         {
             if (!mlook_or_fov)
             {
                 wall->skyyaw =
-                    -2.0f * ((-(float)((viewangle + s->textureoffset) >>
-                                       ANGLETOFINESHIFT) *
-                              360.0f / FINEANGLES) /
-                             90.0f);
+                    -2.0f *
+                    ((-(float
+                      )((viewangle + s->textureoffset) >> ANGLETOFINESHIFT) *
+                      360.0f / FINEANGLES) /
+                     90.0f);
                 wall->skyymid =
                     200.0f / 319.5f *
                     (((float)s->rowoffset / (float)FRACUNIT - 28.0f) / 100.0f);
@@ -215,12 +217,12 @@ void gld_AddSkyTexture(GLWall *wall, int sky1, int sky2, int skytype)
             else
             {
                 wall->skyyaw =
-                    -2.0f *
-                    (((270.0f - (float)((viewangle + s->textureoffset) >>
-                                        ANGLETOFINESHIFT) *
-                                    360.0f / FINEANGLES) +
-                      90.0f) /
-                     90.0f / skyscale);
+                    -2.0f * (((270.0f - (float
+                                        )((viewangle + s->textureoffset) >>
+                                          ANGLETOFINESHIFT) *
+                                            360.0f / FINEANGLES) +
+                              90.0f) /
+                             90.0f / skyscale);
                 wall->skyymid =
                     skyYShift +
                     (((float)s->rowoffset / (float)FRACUNIT) / 100.0f);
@@ -335,8 +337,9 @@ void gld_DrawStripsSky()
 
             gld_GetScreenSkyScale(wall, &sx, &sy);
             glScalef(sx, sy * skyymid_multiplier, 1.0f);
-            glTranslatef(wall->skyyaw, wall->skyymid / skyymid_multiplier,
-                         0.0f);
+            glTranslatef(
+                wall->skyyaw, wall->skyymid / skyymid_multiplier, 0.0f
+            );
         }
 
 #if 0
@@ -440,8 +443,10 @@ void gld_DrawSkyCaps()
 #define GPART(c) (((c) >> 8) & 0xff)
 #define BPART(c) ((c)&0xff)
 
-void averageColor(PalEntry_t *PalEntry, const unsigned int *data, int size,
-                  fixed_t maxout_factor)
+void averageColor(
+    PalEntry_t *PalEntry, const unsigned int *data, int size,
+    fixed_t maxout_factor
+)
 {
     int i;
     int maxv;
@@ -625,14 +630,16 @@ void gld_GetSkyCapColors()
     buffer = static_cast<unsigned char *>(malloc(width * height * 4));
     glGetTexImage(GL_TEXTURE_2D, 0, GL_RGBA, GL_UNSIGNED_BYTE, buffer);
 
-    averageColor(ceiling_rgb, (unsigned int *)buffer, width * MIN(30, height),
-                 0);
+    averageColor(
+        ceiling_rgb, (unsigned int *)buffer, width * MIN(30, height), 0
+    );
 
     if (height > 30)
     {
-        averageColor(floor_rgb,
-                     ((unsigned int *)buffer) + (height - 30) * width,
-                     width * 30, 0);
+        averageColor(
+            floor_rgb, ((unsigned int *)buffer) + (height - 30) * width,
+            width * 30, 0
+        );
     }
     else
     {
@@ -726,8 +733,9 @@ static void SkyVertex(vbo_vertex_t *vbo, int r, int c)
 
 GLSkyVBO sky_vbo[2];
 
-static void gld_BuildSky(int row_count, int col_count, SkyBoxParams_t *sky,
-                         int cm)
+static void gld_BuildSky(
+    int row_count, int col_count, SkyBoxParams_t *sky, int cm
+)
 {
     int texh, c, r;
     vbo_vertex_t *vertex_p;
@@ -746,10 +754,12 @@ static void gld_BuildSky(int row_count, int col_count, SkyBoxParams_t *sky,
     {
         memset(vbo, 0, sizeof(vbo[0]));
         vbo->loops = static_cast<GLSkyLoopDef *>(
-            malloc((row_count * 2 + 2) * sizeof(vbo->loops[0])));
+            malloc((row_count * 2 + 2) * sizeof(vbo->loops[0]))
+        );
         // create vertex array
         vbo->data = static_cast<vbo_vertex_t *>(
-            malloc(vertex_count * sizeof(vbo->data[0])));
+            malloc(vertex_count * sizeof(vbo->data[0]))
+        );
     }
 
     vbo->columns = col_count;
@@ -892,9 +902,10 @@ static void RenderDome(SkyBoxParams_t *sky)
             // bind VBO in order to use
             GLEXT_glBindBufferARB(GL_ARRAY_BUFFER, vbo->id);
             // upload data to VBO
-            GLEXT_glBufferDataARB(GL_ARRAY_BUFFER,
-                                  vbosize * sizeof(vbo->data[0]), vbo->data,
-                                  GL_STATIC_DRAW_ARB);
+            GLEXT_glBufferDataARB(
+                GL_ARRAY_BUFFER, vbosize * sizeof(vbo->data[0]), vbo->data,
+                GL_STATIC_DRAW_ARB
+            );
         }
 #endif
     }
@@ -1123,7 +1134,8 @@ void gld_ParseSkybox()
                 {
                     BoxSkyboxCount++;
                     BoxSkybox = static_cast<box_skybox_t *>(realloc(
-                        BoxSkybox, BoxSkyboxCount * sizeof(BoxSkybox[0])));
+                        BoxSkybox, BoxSkyboxCount * sizeof(BoxSkybox[0])
+                    ));
                     memcpy(&BoxSkybox[BoxSkyboxCount - 1], &sb, sizeof(sb));
                 }
             }

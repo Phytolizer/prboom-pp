@@ -203,8 +203,9 @@ void MN_Drawer()
 
     y = currentMenu->y + (itemOn * ITEM_HEIGHT) + SELECTOR_YOFFSET;
     selName = DEH_String(MenuTime & 16 ? "M_SLCTR1" : "M_SLCTR2");
-    V_DrawNamePatch(x + SELECTOR_XOFFSET, y, 0, selName, CR_DEFAULT,
-                    VPT_STRETCH);
+    V_DrawNamePatch(
+        x + SELECTOR_XOFFSET, y, 0, selName, CR_DEFAULT, VPT_STRETCH
+    );
     // MenuItem_t *item;
     // const char *message;
     // const char *selName;
@@ -277,8 +278,9 @@ void MN_DrawMainMenu()
 
     frame = (MenuTime / 3) % 18;
     V_DrawNamePatch(88, 0, 0, DEH_String("M_HTIC"), CR_DEFAULT, VPT_STRETCH);
-    V_DrawNumPatch(40, 10, 0, SkullBaseLump + (17 - frame), CR_DEFAULT,
-                   VPT_STRETCH);
+    V_DrawNumPatch(
+        40, 10, 0, SkullBaseLump + (17 - frame), CR_DEFAULT, VPT_STRETCH
+    );
     V_DrawNumPatch(232, 10, 0, SkullBaseLump + frame, CR_DEFAULT, VPT_STRETCH);
 }
 
@@ -292,8 +294,10 @@ void MN_DrawOptions()
     {
         MN_DrTextB(DEH_String("OFF"), 196, OptionsDef.y + 3 * ITEM_HEIGHT);
     }
-    MN_DrawSlider(OptionsDef.x - 8,
-                  OptionsDef.y + ITEM_HEIGHT * SCREENSIZE_INDEX, 9, screenSize);
+    MN_DrawSlider(
+        OptionsDef.x - 8, OptionsDef.y + ITEM_HEIGHT * SCREENSIZE_INDEX, 9,
+        screenSize
+    );
 }
 
 void MN_DrawSetup()
@@ -306,27 +310,39 @@ extern int mouse_acceleration;
 
 void MN_DrawMouse()
 {
-    MN_DrawSlider(MouseDef.x - 8, MouseDef.y + ITEM_HEIGHT * MOUSE_HORIZ_INDEX,
-                  200, mouseSensitivity_horiz);
+    MN_DrawSlider(
+        MouseDef.x - 8, MouseDef.y + ITEM_HEIGHT * MOUSE_HORIZ_INDEX, 200,
+        mouseSensitivity_horiz
+    );
 
-    MN_DrawSlider(MouseDef.x - 8, MouseDef.y + ITEM_HEIGHT * MOUSE_VERT_INDEX,
-                  200, mouseSensitivity_vert);
+    MN_DrawSlider(
+        MouseDef.x - 8, MouseDef.y + ITEM_HEIGHT * MOUSE_VERT_INDEX, 200,
+        mouseSensitivity_vert
+    );
 
     // e6y
-    MN_DrawSlider(MouseDef.x - 8, MouseDef.y + ITEM_HEIGHT * MOUSE_MLOOK_INDEX,
-                  200, mouseSensitivity_mlook);
+    MN_DrawSlider(
+        MouseDef.x - 8, MouseDef.y + ITEM_HEIGHT * MOUSE_MLOOK_INDEX, 200,
+        mouseSensitivity_mlook
+    );
 
-    MN_DrawSlider(MouseDef.x - 8, MouseDef.y + ITEM_HEIGHT * MOUSE_ACCEL_INDEX,
-                  200, mouse_acceleration);
+    MN_DrawSlider(
+        MouseDef.x - 8, MouseDef.y + ITEM_HEIGHT * MOUSE_ACCEL_INDEX, 200,
+        mouse_acceleration
+    );
 }
 
 void MN_DrawSound()
 {
-    MN_DrawSlider(SoundDef.x - 8, SoundDef.y + ITEM_HEIGHT * SFX_VOL_INDEX, 16,
-                  snd_SfxVolume);
+    MN_DrawSlider(
+        SoundDef.x - 8, SoundDef.y + ITEM_HEIGHT * SFX_VOL_INDEX, 16,
+        snd_SfxVolume
+    );
 
-    MN_DrawSlider(SoundDef.x - 8, SoundDef.y + ITEM_HEIGHT * MUS_VOL_INDEX, 16,
-                  snd_MusicVolume);
+    MN_DrawSlider(
+        SoundDef.x - 8, SoundDef.y + ITEM_HEIGHT * MUS_VOL_INDEX, 16,
+        snd_MusicVolume
+    );
 }
 
 extern char savegamestrings[10][SAVESTRINGSIZE];
@@ -337,8 +353,9 @@ static void MN_DrawFileSlots(int x, int y)
 
     for (i = 0; i < 6; i++)
     {
-        V_DrawNamePatch(x, y, 0, DEH_String("M_FSLOT"), CR_DEFAULT,
-                        VPT_STRETCH);
+        V_DrawNamePatch(
+            x, y, 0, DEH_String("M_FSLOT"), CR_DEFAULT, VPT_STRETCH
+        );
         MN_DrTextA(savegamestrings[i], x + 5, y + 5);
         y += ITEM_HEIGHT;
     }
@@ -371,8 +388,10 @@ void MN_DrawSave()
         int i;
 
         i = MN_TextAWidth(savegamestrings[saveSlot]);
-        MN_DrTextA("[", SaveDef.x + 5 + i,
-                   SaveDef.y + 5 + saveSlot * ITEM_HEIGHT); // [ is _ in font A
+        MN_DrTextA(
+            "[", SaveDef.x + 5 + i,
+            SaveDef.y + 5 + saveSlot * ITEM_HEIGHT
+        ); // [ is _ in font A
     }
 }
 
@@ -529,6 +548,7 @@ void MN_DrawSlider(int x, int y, int width, int slot)
 
     slot_x = x + 36 + (SLIDER_WIDTH - 8) * slot / (width - 1);
 
-    V_DrawNamePatch(slot_x, y + 7, 0, DEH_String("M_SLDKB"), CR_DEFAULT,
-                    VPT_STRETCH);
+    V_DrawNamePatch(
+        slot_x, y + 7, 0, DEH_String("M_SLDKB"), CR_DEFAULT, VPT_STRETCH
+    );
 }

@@ -582,12 +582,15 @@ static void I_UploadNewPalette(int pal, int force)
 
 #ifdef RANGECHECK
     if ((size_t)pal >= num_pals)
-        I_Error("I_UploadNewPalette: Palette number out of range (%d>=%d)", pal,
-                num_pals);
+        I_Error(
+            "I_UploadNewPalette: Palette number out of range (%d>=%d)", pal,
+            num_pals
+        );
 #endif
 
-    SDL_SetPaletteColors(screen->format->palette,
-                         playpal_data->colours + 256 * pal, 0, 256);
+    SDL_SetPaletteColors(
+        screen->format->palette, playpal_data->colours + 256 * pal, 0, 256
+    );
 }
 
 //////////////////////////////////////////////////////////////////////////////
@@ -855,8 +858,9 @@ static void I_FillScreenResolutionsList()
                 SDL_GetDisplayMode(display_index, i, &mode);
             }
 
-            doom_snprintf(mode_name, sizeof(mode_name), "%dx%d", mode.w,
-                          mode.h);
+            doom_snprintf(
+                mode_name, sizeof(mode_name), "%dx%d", mode.w, mode.h
+            );
 
             for (j = 0; j < list_size; j++)
             {
@@ -885,8 +889,10 @@ static void I_FillScreenResolutionsList()
 
     if (list_size == 0)
     {
-        doom_snprintf(mode_name, sizeof(mode_name), "%dx%d",
-                      desired_screenwidth, desired_screenheight);
+        doom_snprintf(
+            mode_name, sizeof(mode_name), "%dx%d", desired_screenwidth,
+            desired_screenheight
+        );
         screen_resolutions_list[0] = strdup(mode_name);
         current_resolution_index = 0;
         list_size = 1;
@@ -894,8 +900,10 @@ static void I_FillScreenResolutionsList()
 
     if (current_resolution_index == -1)
     {
-        doom_snprintf(mode_name, sizeof(mode_name), "%dx%d",
-                      desired_screenwidth, desired_screenheight);
+        doom_snprintf(
+            mode_name, sizeof(mode_name), "%dx%d", desired_screenwidth,
+            desired_screenheight
+        );
 
         // make it first
         list_size++;
@@ -1047,16 +1055,19 @@ void I_CalculateRes(int width, int height)
             count1 = I_TestCPUCacheMisses(pitch1, SCREENHEIGHT, mintime);
             count2 = I_TestCPUCacheMisses(pitch2, SCREENHEIGHT, mintime);
 
-            lprintf(LO_INFO,
-                    "I_CalculateRes: trying to optimize screen pitch\n");
+            lprintf(
+                LO_INFO, "I_CalculateRes: trying to optimize screen pitch\n"
+            );
             lprintf(
                 LO_INFO,
                 " test case for pitch=%d is processed %d times for %d msec\n",
-                pitch1, count1, mintime);
+                pitch1, count1, mintime
+            );
             lprintf(
                 LO_INFO,
                 " test case for pitch=%d is processed %d times for %d msec\n",
-                pitch2, count2, mintime);
+                pitch2, count2, mintime
+            );
 
             SCREENPITCH = (count2 > count1 ? pitch2 : pitch1);
 
@@ -1210,8 +1221,10 @@ void I_InitScreenResolution()
 
     I_InitBuffersRes();
 
-    lprintf(LO_INFO, "I_InitScreenResolution: Using resolution %dx%d\n",
-            SCREENWIDTH, SCREENHEIGHT);
+    lprintf(
+        LO_INFO, "I_InitScreenResolution: Using resolution %dx%d\n",
+        SCREENWIDTH, SCREENHEIGHT
+    );
 }
 
 //
@@ -1236,9 +1249,10 @@ void I_SetWindowIcon()
     // do it only once, because of crash in SDL_InitVideoMode in SDL 1.3
     if (!surface)
     {
-        surface = SDL_CreateRGBSurfaceFrom(icon_data, icon_w, icon_h, 32,
-                                           icon_w * 4, 0xff << 0, 0xff << 8,
-                                           0xff << 16, 0xff << 24);
+        surface = SDL_CreateRGBSurfaceFrom(
+            icon_data, icon_w, icon_h, 32, icon_w * 4, 0xff << 0, 0xff << 8,
+            0xff << 16, 0xff << 24
+        );
     }
 
     if (surface)
@@ -1424,7 +1438,8 @@ void I_UpdateVideoMode()
 
         sdl_window = SDL_CreateWindow(
             PACKAGE_NAME " " PACKAGE_VERSION, SDL_WINDOWPOS_CENTERED,
-            SDL_WINDOWPOS_CENTERED, SCREENWIDTH, SCREENHEIGHT, init_flags);
+            SDL_WINDOWPOS_CENTERED, SCREENWIDTH, SCREENHEIGHT, init_flags
+        );
         sdl_glcontext = SDL_GL_CreateContext(sdl_window);
 
         gld_CheckHardwareGamma();
@@ -1441,7 +1456,8 @@ void I_UpdateVideoMode()
 
         sdl_window = SDL_CreateWindow(
             PACKAGE_NAME " " PACKAGE_VERSION, SDL_WINDOWPOS_CENTERED,
-            SDL_WINDOWPOS_CENTERED, SCREENWIDTH, SCREENHEIGHT, init_flags);
+            SDL_WINDOWPOS_CENTERED, SCREENWIDTH, SCREENHEIGHT, init_flags
+        );
         sdl_renderer = SDL_CreateRenderer(sdl_window, -1, flags);
 
         // [FG] aspect ratio correction for the canonical video modes
@@ -1467,16 +1483,20 @@ void I_UpdateVideoMode()
         // [FG] apply screen_multiply to initial window size
         if (!(init_flags & SDL_WINDOW_FULLSCREEN_DESKTOP))
         {
-            SDL_SetWindowSize(sdl_window, screen_multiply * SCREENWIDTH,
-                              screen_multiply * actualheight);
+            SDL_SetWindowSize(
+                sdl_window, screen_multiply * SCREENWIDTH,
+                screen_multiply * actualheight
+            );
         }
 
         // [FG] force integer scales
-        SDL_RenderSetIntegerScale(sdl_renderer,
-                                  static_cast<SDL_bool>(integer_scaling));
+        SDL_RenderSetIntegerScale(
+            sdl_renderer, static_cast<SDL_bool>(integer_scaling)
+        );
 
-        screen = SDL_CreateRGBSurface(0, SCREENWIDTH, SCREENHEIGHT,
-                                      V_GetNumPixelBits(), 0, 0, 0, 0);
+        screen = SDL_CreateRGBSurface(
+            0, SCREENWIDTH, SCREENHEIGHT, V_GetNumPixelBits(), 0, 0, 0, 0
+        );
         buffer =
             SDL_CreateRGBSurface(0, SCREENWIDTH, SCREENHEIGHT, 32, 0, 0, 0, 0);
         SDL_FillRect(buffer, nullptr, 0);
@@ -1485,8 +1505,10 @@ void I_UpdateVideoMode()
 
         if (screen == nullptr)
         {
-            I_Error("Couldn't set %dx%d video mode [%s]", SCREENWIDTH,
-                    SCREENHEIGHT, SDL_GetError());
+            I_Error(
+                "Couldn't set %dx%d video mode [%s]", SCREENWIDTH, SCREENHEIGHT,
+                SDL_GetError()
+            );
         }
     }
 
@@ -1499,8 +1521,9 @@ void I_UpdateVideoMode()
         }
         if (strcmp(sdl_video_window_pos, "center") == 0)
         {
-            SDL_SetWindowPosition(sdl_window, SDL_WINDOWPOS_CENTERED,
-                                  SDL_WINDOWPOS_CENTERED);
+            SDL_SetWindowPosition(
+                sdl_window, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED
+            );
         }
     }
 
@@ -1511,8 +1534,9 @@ void I_UpdateVideoMode()
         SDL_GetVersion(&ver);
         if (ver.major == 2 && ver.minor == 0 && ver.patch == 14)
         {
-            SDL_SetHintWithPriority(SDL_HINT_VIDEO_MINIMIZE_ON_FOCUS_LOSS, "1",
-                                    SDL_HINT_OVERRIDE);
+            SDL_SetHintWithPriority(
+                SDL_HINT_VIDEO_MINIMIZE_ON_FOCUS_LOSS, "1", SDL_HINT_OVERRIDE
+            );
         }
     }
 #endif
@@ -1533,10 +1557,11 @@ void I_UpdateVideoMode()
 
     if (V_GetMode() != VID_MODEGL)
     {
-        lprintf(LO_INFO, "I_UpdateVideoMode: 0x%x, %s, %s\n", init_flags,
-                screen && screen->pixels ? "SDL buffer" : "own buffer",
-                screen && SDL_MUSTLOCK(screen) ? "lock-and-copy"
-                                               : "direct access");
+        lprintf(
+            LO_INFO, "I_UpdateVideoMode: 0x%x, %s, %s\n", init_flags,
+            screen && screen->pixels ? "SDL buffer" : "own buffer",
+            screen && SDL_MUSTLOCK(screen) ? "lock-and-copy" : "direct access"
+        );
 
         // Get the info needed to render to the display
         if (!SDL_MUSTLOCK(screen))

@@ -103,10 +103,12 @@ int R_NumPatchHeight(int lump);
 #define R_NamePatchWidth(name) R_NumPatchWidth(W_GetNumForName(name))
 #define R_NamePatchHeight(name) R_NumPatchHeight(W_GetNumForName(name))
 
-const rcolumn_t *R_GetPatchColumnWrapped(const rpatch_t *patch,
-                                         int columnIndex);
-const rcolumn_t *R_GetPatchColumnClamped(const rpatch_t *patch,
-                                         int columnIndex);
+const rcolumn_t *R_GetPatchColumnWrapped(
+    const rpatch_t *patch, int columnIndex
+);
+const rcolumn_t *R_GetPatchColumnClamped(
+    const rpatch_t *patch, int columnIndex
+);
 
 // returns R_GetPatchColumnWrapped for square, non-holed textures
 // and R_GetPatchColumnClamped otherwise

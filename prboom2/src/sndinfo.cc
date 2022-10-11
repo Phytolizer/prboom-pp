@@ -13,8 +13,10 @@ void sndinfo::parse(int lumpnum)
     std::string lump = {rawData, rawData + W_LumpLength(lumpnum)};
     rust::SoundInfo *buf = nullptr;
     size_t bufLen = 0;
-    rust::parse_sndinfo(heretic, M_CheckParm("-strict-sndinfo"), lump.c_str(),
-                        lump.length(), &buf, &bufLen);
+    rust::parse_sndinfo(
+        heretic, M_CheckParm("-strict-sndinfo"), lump.c_str(), lump.length(),
+        &buf, &bufLen
+    );
     std::map<sfxenum_t, SoundInfo> lumps;
 
     for (int i = 0; i < bufLen; i++)
@@ -24,13 +26,16 @@ void sndinfo::parse(int lumpnum)
         {
             auto [_, inserted] = lumps.try_emplace(
                 si.sfx,
-                SoundInfo{std::vector{std::string{
-                              si.lumps[j], si.lumps[j] + si.lump_lens[j]}},
-                          si.singularity, si.pitch, si.volume});
+                SoundInfo{
+                    std::vector{std::string{
+                        si.lumps[j], si.lumps[j] + si.lump_lens[j]}},
+                    si.singularity, si.pitch, si.volume}
+            );
             if (!inserted)
             {
-                lumps[si.sfx].lumps.emplace_back(si.lumps[j],
-                                                 si.lumps[j] + si.lump_lens[j]);
+                lumps[si.sfx].lumps.emplace_back(
+                    si.lumps[j], si.lumps[j] + si.lump_lens[j]
+                );
             }
         }
     }

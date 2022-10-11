@@ -298,18 +298,18 @@ void F_Ticker()
             }
             else // you must press a button to continue in Doom 2
                 if (!demo_compatibility && midstage)
-            {
-            next_level:
-                if (gamemap == 30 ||
-                    (gamemission == pack_nerve && singleplayer && gamemap == 8))
                 {
-                    F_StartCast(); // cast of Doom 2 characters
+                next_level:
+                    if (gamemap == 30 || (gamemission == pack_nerve &&
+                                          singleplayer && gamemap == 8))
+                    {
+                        F_StartCast(); // cast of Doom 2 characters
+                    }
+                    else
+                    {
+                        gameaction = ga_worlddone; // next level, e.g. MAP07
+                    }
                 }
-                else
-                {
-                    gameaction = ga_worlddone; // next level, e.g. MAP07
-                }
-            }
         }
     }
 }
@@ -384,8 +384,9 @@ void F_TextWrite()
                 break;
             }
             // CPhipps - patch drawing updated
-            V_DrawNumPatch(cx, cy, 0, hu_font[c].lumpnum, CR_DEFAULT,
-                           VPT_STRETCH);
+            V_DrawNumPatch(
+                cx, cy, 0, hu_font[c].lumpnum, CR_DEFAULT, VPT_STRETCH
+            );
             cx += w;
         }
     }
@@ -698,8 +699,10 @@ void F_CastDrawer()
 
     // erase the entire screen to a background
     // CPhipps - patch drawing updated
-    V_DrawNamePatch(0, 0, 0, bgcastcall, CR_DEFAULT,
-                    VPT_STRETCH); // Ty 03/30/98 bg texture extern
+    V_DrawNamePatch(
+        0, 0, 0, bgcastcall, CR_DEFAULT,
+        VPT_STRETCH
+    ); // Ty 03/30/98 bg texture extern
     // e6y: wide-res
     V_FillBorder(-1, 0);
 
@@ -714,7 +717,8 @@ void F_CastDrawer()
     // CPhipps - patch drawing updated
     V_DrawNumPatch(
         160, 170, 0, lump + firstspritelump, CR_DEFAULT,
-        static_cast<patch_translation_e>(VPT_STRETCH | (flip ? VPT_FLIP : 0)));
+        static_cast<patch_translation_e>(VPT_STRETCH | (flip ? VPT_FLIP : 0))
+    );
 }
 
 //
@@ -741,8 +745,9 @@ static void F_BunnyScroll()
         }
         else
         {
-            V_DrawNamePatch(320 - scrolled, 0, 0, pfub1, CR_DEFAULT,
-                            VPT_STRETCH);
+            V_DrawNamePatch(
+                320 - scrolled, 0, 0, pfub1, CR_DEFAULT, VPT_STRETCH
+            );
             V_DrawNamePatch(-scrolled, 0, 0, pfub2, CR_DEFAULT, VPT_STRETCH);
         }
     }
@@ -754,8 +759,10 @@ static void F_BunnyScroll()
     if (finalecount < 1180)
     {
         // CPhipps - patch drawing updated
-        V_DrawNamePatch((320 - 13 * 8) / 2, (200 - 8 * 8) / 2, 0, "END0",
-                        CR_DEFAULT, VPT_STRETCH);
+        V_DrawNamePatch(
+            (320 - 13 * 8) / 2, (200 - 8 * 8) / 2, 0, "END0", CR_DEFAULT,
+            VPT_STRETCH
+        );
         laststage = 0;
         return;
     }
@@ -773,8 +780,9 @@ static void F_BunnyScroll()
 
     sprintf(name, "END%i", stage);
     // CPhipps - patch drawing updated
-    V_DrawNamePatch((320 - 13 * 8) / 2, (200 - 8 * 8) / 2, 0, name, CR_DEFAULT,
-                    VPT_STRETCH);
+    V_DrawNamePatch(
+        (320 - 13 * 8) / 2, (200 - 8 * 8) / 2, 0, name, CR_DEFAULT, VPT_STRETCH
+    );
 }
 
 //

@@ -99,14 +99,13 @@ int PUREFUNC P_BoxOnLineSide(const fixed_t *tmbox, const line_t *ld)
                    : -1;
     case ST_POSITIVE:
         return P_PointOnLineSide(tmbox[BOXRIGHT], tmbox[BOXBOTTOM], ld) ==
-                       (p = P_PointOnLineSide(tmbox[BOXLEFT], tmbox[BOXTOP],
-                                              ld))
+                       (p = P_PointOnLineSide(tmbox[BOXLEFT], tmbox[BOXTOP], ld)
+                       )
                    ? p
                    : -1;
     case ST_NEGATIVE:
-        return (P_PointOnLineSide(tmbox[BOXLEFT], tmbox[BOXBOTTOM], ld)) ==
-                       (p = P_PointOnLineSide(tmbox[BOXRIGHT], tmbox[BOXTOP],
-                                              ld))
+        return (P_PointOnLineSide(tmbox[BOXLEFT], tmbox[BOXBOTTOM], ld)
+               ) == (p = P_PointOnLineSide(tmbox[BOXRIGHT], tmbox[BOXTOP], ld))
                    ? p
                    : -1;
     }
@@ -155,9 +154,11 @@ fixed_t PUREFUNC P_InterceptVector2(const divline_t *v2, const divline_t *v1)
 {
     fixed_t den;
     return (den = FixedMul(v1->dy >> 8, v2->dx) - FixedMul(v1->dx >> 8, v2->dy))
-               ? FixedDiv(FixedMul((v1->x - v2->x) >> 8, v1->dy) +
-                              FixedMul((v2->y - v1->y) >> 8, v1->dx),
-                          den)
+               ? FixedDiv(
+                     FixedMul((v1->x - v2->x) >> 8, v1->dy) +
+                         FixedMul((v2->y - v1->y) >> 8, v1->dx),
+                     den
+                 )
                : 0;
 }
 
@@ -176,9 +177,10 @@ fixed_t PUREFUNC P_InterceptVector(const divline_t *v2, const divline_t *v1)
     {
         return 0;
     }
-    return (fixed_t)(((int_64_t)(v1->x - v2->x) * v1->dy -
-                      (int_64_t)(v1->y - v2->y) * v1->dx) /
-                     den);
+    return (fixed_t
+    )(((int_64_t)(v1->x - v2->x) * v1->dy - (int_64_t)(v1->y - v2->y) * v1->dx
+      ) /
+      den);
 }
 
 //
@@ -474,7 +476,8 @@ void check_intercept()
     {
         num_intercepts = num_intercepts ? num_intercepts * 2 : 128;
         intercepts = static_cast<intercept_t *>(
-            realloc(intercepts, sizeof(*intercepts) * num_intercepts));
+            realloc(intercepts, sizeof(*intercepts) * num_intercepts)
+        );
         intercept_p = intercepts + offset;
     }
 }
@@ -640,8 +643,10 @@ dboolean P_TraverseIntercepts(traverser_t func, fixed_t maxfrac)
 //
 // killough 5/3/98: reformatted, cleaned up
 
-dboolean P_PathTraverse(fixed_t x1, fixed_t y1, fixed_t x2, fixed_t y2,
-                        int flags, dboolean trav(intercept_t *))
+dboolean P_PathTraverse(
+    fixed_t x1, fixed_t y1, fixed_t x2, fixed_t y2, int flags,
+    dboolean trav(intercept_t *)
+)
 {
     fixed_t xt1, yt1;
     fixed_t xt2, yt2;

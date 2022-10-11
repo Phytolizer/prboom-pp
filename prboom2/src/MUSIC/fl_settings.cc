@@ -14,14 +14,15 @@ fl::FluidSynthSettings::~FluidSynthSettings() noexcept
         delete_fluid_settings(m_ptr);
     }
 }
-fl::FluidSynthSettings::FluidSynthSettings(
-    fl::FluidSynthSettings &&other) noexcept
+fl::FluidSynthSettings::FluidSynthSettings(fl::FluidSynthSettings &&other
+) noexcept
     : m_ptr(other.m_ptr)
 {
     other.m_ptr = nullptr;
 }
 fl::FluidSynthSettings &fl::FluidSynthSettings::operator=(
-    fl::FluidSynthSettings &&other) noexcept
+    fl::FluidSynthSettings &&other
+) noexcept
 {
     if (&other != this)
     {

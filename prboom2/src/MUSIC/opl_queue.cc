@@ -70,8 +70,10 @@ void OPL_Queue_Clear(opl_callback_queue_t *queue)
     queue->num_entries = 0;
 }
 
-void OPL_Queue_Push(opl_callback_queue_t *queue, opl_callback_t callback,
-                    void *data, unsigned int time)
+void OPL_Queue_Push(
+    opl_callback_queue_t *queue, opl_callback_t callback, void *data,
+    unsigned int time
+)
 {
     int entry_id;
     int parent_id;
@@ -102,8 +104,10 @@ void OPL_Queue_Push(opl_callback_queue_t *queue, opl_callback_t callback,
 
         // Move the existing entry down in the heap.
 
-        memcpy(&queue->entries[entry_id], &queue->entries[parent_id],
-               sizeof(opl_queue_entry_t));
+        memcpy(
+            &queue->entries[entry_id], &queue->entries[parent_id],
+            sizeof(opl_queue_entry_t)
+        );
 
         // Advance to the parent.
 
@@ -117,8 +121,9 @@ void OPL_Queue_Push(opl_callback_queue_t *queue, opl_callback_t callback,
     queue->entries[entry_id].time = time;
 }
 
-int OPL_Queue_Pop(opl_callback_queue_t *queue, opl_callback_t *callback,
-                  void **data)
+int OPL_Queue_Pop(
+    opl_callback_queue_t *queue, opl_callback_t *callback, void **data
+)
 {
     opl_queue_entry_t *entry;
     int child1, child2;
@@ -182,8 +187,10 @@ int OPL_Queue_Pop(opl_callback_queue_t *queue, opl_callback_t *callback,
 
         // Percolate the next value up and advance.
 
-        memcpy(&queue->entries[i], &queue->entries[next_i],
-               sizeof(opl_queue_entry_t));
+        memcpy(
+            &queue->entries[i], &queue->entries[next_i],
+            sizeof(opl_queue_entry_t)
+        );
         i = next_i;
     }
 

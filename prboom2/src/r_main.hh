@@ -157,8 +157,8 @@ extern int r_have_internal_hires;
 void R_RenderPlayerView(player_t *player); // Called by G_Drawer.
 void R_Init(void);                         // Called by startup code.
 void R_SetViewSize(int blocks);            // Called by M_Responder.
-void R_ExecuteSetViewSize(
-    void); // cph - called by D_Display to complete a view resize
+void R_ExecuteSetViewSize(void
+); // cph - called by D_Display to complete a view resize
 
 void R_ShowStats(void);
 void R_ClearStats(void);
@@ -172,7 +172,8 @@ void R_ClearStats(void);
 extern int viewport[4];
 extern float modelMatrix[16];
 extern float projMatrix[16];
-int R_Project(float objx, float objy, float objz, float *winx, float *winy,
-              float *winz);
+int R_Project(
+    float objx, float objy, float objz, float *winx, float *winy, float *winz
+);
 
 #endif

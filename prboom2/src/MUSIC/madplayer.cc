@@ -135,8 +135,10 @@ const void *mp_registersong(const void *data, unsigned len)
         {
             if (!MAD_RECOVERABLE(Stream.error))
             {
-                lprintf(LO_WARN, "mad_registersong failed: %s\n",
-                        mad_stream_errorstr(&Stream));
+                lprintf(
+                    LO_WARN, "mad_registersong failed: %s\n",
+                    mad_stream_errorstr(&Stream)
+                );
                 return nullptr;
             }
         }
@@ -153,8 +155,10 @@ const void *mp_registersong(const void *data, unsigned len)
         return nullptr;
     }
 
-    lprintf(LO_INFO, "mad_registersong succeed. bitrate %lu samplerate %d\n",
-            Header.bitrate, Header.samplerate);
+    lprintf(
+        LO_INFO, "mad_registersong succeed. bitrate %lu samplerate %d\n",
+        Header.bitrate, Header.samplerate
+    );
 
     mp_data = data;
     mp_len = len;
@@ -268,7 +272,8 @@ static void mp_render_ex(void *dest, unsigned nsamp)
                     lprintf(
                         LO_WARN,
                         "mad_frame_decode: Lots of errors.  Most recent %s\n",
-                        mad_stream_errorstr(&Stream));
+                        mad_stream_errorstr(&Stream)
+                    );
                     mp_playing = 0;
                     memset(sout, 0, nsamp * 4);
                     return;
@@ -281,8 +286,9 @@ static void mp_render_ex(void *dest, unsigned nsamp)
                 // end of the file.  current implementation drops last frame
                 if (mp_looping)
                 { // rewind, then go again
-                    mad_stream_buffer(&Stream, (const unsigned char *)mp_data,
-                                      mp_len);
+                    mad_stream_buffer(
+                        &Stream, (const unsigned char *)mp_data, mp_len
+                    );
                     continue;
                 }
 
@@ -293,8 +299,10 @@ static void mp_render_ex(void *dest, unsigned nsamp)
             }
             else
             { // oh well.
-                lprintf(LO_WARN, "mad_frame_decode: Unrecoverable error %s\n",
-                        mad_stream_errorstr(&Stream));
+                lprintf(
+                    LO_WARN, "mad_frame_decode: Unrecoverable error %s\n",
+                    mad_stream_errorstr(&Stream)
+                );
                 mp_playing = 0;
                 memset(sout, 0, nsamp * 4);
                 return;
@@ -311,8 +319,9 @@ static void mp_render_ex(void *dest, unsigned nsamp)
 
 void mp_render(void *dest, unsigned nsamp)
 {
-    I_ResampleStream(dest, nsamp, mp_render_ex, Header.samplerate,
-                     mp_samplerate_target);
+    I_ResampleStream(
+        dest, nsamp, mp_render_ex, Header.samplerate, mp_samplerate_target
+    );
 }
 
 #endif // HAVE_LIBMAD

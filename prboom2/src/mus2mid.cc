@@ -148,8 +148,9 @@ static dboolean WriteEndTrack(MEMFILE *midioutput)
 }
 
 // Write a key press event
-static dboolean WritePressKey(byte channel, byte key, byte velocity,
-                              MEMFILE *midioutput)
+static dboolean WritePressKey(
+    byte channel, byte key, byte velocity, MEMFILE *midioutput
+)
 {
     byte working = midi_presskey | channel;
 
@@ -278,8 +279,9 @@ static dboolean WriteChangePatch(byte channel, byte patch, MEMFILE *midioutput)
 
 // Write a valued controller change event
 
-static dboolean WriteChangeController_Valued(byte channel, byte control,
-                                             byte value, MEMFILE *midioutput)
+static dboolean WriteChangeController_Valued(
+    byte channel, byte control, byte value, MEMFILE *midioutput
+)
 {
     byte working = midi_changecontroller | channel;
 
@@ -324,8 +326,9 @@ static dboolean WriteChangeController_Valued(byte channel, byte control,
 }
 
 // Write a valueless controller change event
-static dboolean WriteChangeController_Valueless(byte channel, byte control,
-                                                MEMFILE *midioutput)
+static dboolean WriteChangeController_Valueless(
+    byte channel, byte control, MEMFILE *midioutput
+)
 {
     return WriteChangeController_Valued(channel, control, 0, midioutput);
 }
@@ -520,8 +523,9 @@ dboolean mus2mid(MEMFILE *musinput, MEMFILE *midioutput)
 
                 if (key & 0x80)
                 {
-                    if (mem_fread(&channelvelocities[channel], 1, 1,
-                                  musinput) != 1)
+                    if (mem_fread(
+                            &channelvelocities[channel], 1, 1, musinput
+                        ) != 1)
                     {
                         return true;
                     }
@@ -529,8 +533,9 @@ dboolean mus2mid(MEMFILE *musinput, MEMFILE *midioutput)
                     channelvelocities[channel] &= 0x7F;
                 }
 
-                if (WritePressKey(channel, key, channelvelocities[channel],
-                                  midioutput))
+                if (WritePressKey(
+                        channel, key, channelvelocities[channel], midioutput
+                    ))
                 {
                     return true;
                 }
@@ -560,7 +565,8 @@ dboolean mus2mid(MEMFILE *musinput, MEMFILE *midioutput)
                 }
 
                 if (WriteChangeController_Valueless(
-                        channel, controller_map[controllernumber], midioutput))
+                        channel, controller_map[controllernumber], midioutput
+                    ))
                 {
                     return true;
                 }
@@ -594,7 +600,8 @@ dboolean mus2mid(MEMFILE *musinput, MEMFILE *midioutput)
 
                     if (WriteChangeController_Valued(
                             channel, controller_map[controllernumber],
-                            controllervalue, midioutput))
+                            controllervalue, midioutput
+                        ))
                     {
                         return true;
                     }

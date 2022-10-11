@@ -120,35 +120,55 @@ static void cheat_fly();
 //-----------------------------------------------------------------------------
 
 cheatseq_t cheat[] = {
-    CHEAT("idmus", "Change music", cheat_when_t::always,
-          reinterpret_cast<void (*)()>(cheat_mus), -2),
+    CHEAT(
+        "idmus", "Change music", cheat_when_t::always,
+        reinterpret_cast<void (*)()>(cheat_mus), -2
+    ),
     CHEAT("idchoppers", "Chainsaw", cheat_when_t::cht_never, cheat_choppers, 0),
     CHEAT("iddqd", "God mode", cheat_when_t::cht_never, cheat_god, 0),
     CHEAT("idkfa", "Ammo & Keys", cheat_when_t::cht_never, cheat_kfa, 0),
     CHEAT("idfa", "Ammo", cheat_when_t::cht_never, cheat_fa, 0),
-    CHEAT("idspispopd", "No Clipping 1", cheat_when_t::cht_never, cheat_noclip,
-          0),
+    CHEAT(
+        "idspispopd", "No Clipping 1", cheat_when_t::cht_never, cheat_noclip, 0
+    ),
     CHEAT("idclip", "No Clipping 2", cheat_when_t::cht_never, cheat_noclip, 0),
-    CHEAT("idbeholdh", "Invincibility", cheat_when_t::cht_never, cheat_health,
-          0),
-    CHEAT("idbeholdm", "Invincibility", cheat_when_t::cht_never,
-          cheat_megaarmour, 0),
-    CHEAT("idbeholdv", "Invincibility", cheat_when_t::cht_never,
-          reinterpret_cast<void (*)()>(cheat_pw), pw_invulnerability),
-    CHEAT("idbeholds", "Berserk", cheat_when_t::cht_never,
-          reinterpret_cast<void (*)()>(cheat_pw), pw_strength),
-    CHEAT("idbeholdi", "Invisibility", cheat_when_t::cht_never,
-          reinterpret_cast<void (*)()>(cheat_pw), pw_invisibility),
-    CHEAT("idbeholdr", "Radiation Suit", cheat_when_t::cht_never,
-          reinterpret_cast<void (*)()>(cheat_pw), pw_ironfeet),
-    CHEAT("idbeholda", "Auto-map", cheat_when_t::not_dm,
-          reinterpret_cast<void (*)()>(cheat_pw), pw_allmap),
-    CHEAT("idbeholdl", "Lite-Amp Goggles", cheat_when_t::not_dm,
-          reinterpret_cast<void (*)()>(cheat_pw), pw_infrared),
+    CHEAT(
+        "idbeholdh", "Invincibility", cheat_when_t::cht_never, cheat_health, 0
+    ),
+    CHEAT(
+        "idbeholdm", "Invincibility", cheat_when_t::cht_never, cheat_megaarmour,
+        0
+    ),
+    CHEAT(
+        "idbeholdv", "Invincibility", cheat_when_t::cht_never,
+        reinterpret_cast<void (*)()>(cheat_pw), pw_invulnerability
+    ),
+    CHEAT(
+        "idbeholds", "Berserk", cheat_when_t::cht_never,
+        reinterpret_cast<void (*)()>(cheat_pw), pw_strength
+    ),
+    CHEAT(
+        "idbeholdi", "Invisibility", cheat_when_t::cht_never,
+        reinterpret_cast<void (*)()>(cheat_pw), pw_invisibility
+    ),
+    CHEAT(
+        "idbeholdr", "Radiation Suit", cheat_when_t::cht_never,
+        reinterpret_cast<void (*)()>(cheat_pw), pw_ironfeet
+    ),
+    CHEAT(
+        "idbeholda", "Auto-map", cheat_when_t::not_dm,
+        reinterpret_cast<void (*)()>(cheat_pw), pw_allmap
+    ),
+    CHEAT(
+        "idbeholdl", "Lite-Amp Goggles", cheat_when_t::not_dm,
+        reinterpret_cast<void (*)()>(cheat_pw), pw_infrared
+    ),
     CHEAT("idbehold", "BEHOLD menu", cheat_when_t::not_dm, cheat_behold, 0),
-    CHEAT("idclev", "Level Warp",
-          cheat_when_t::cht_never | cheat_when_t::not_menu,
-          reinterpret_cast<void (*)()>(cheat_clev), -2),
+    CHEAT(
+        "idclev", "Level Warp",
+        cheat_when_t::cht_never | cheat_when_t::not_menu,
+        reinterpret_cast<void (*)()>(cheat_clev), -2
+    ),
     CHEAT("idmypos", "Player Position", cheat_when_t::not_dm, cheat_mypos, 0),
     CHEAT("idrate", "Frame rate", cheat_when_t::always, cheat_rate, 0),
     // phares
@@ -164,30 +184,46 @@ cheatseq_t cheat[] = {
     CHEAT("tntkeyr", nullptr, cheat_when_t::cht_never, cheat_tntkeyx, 0),
     CHEAT("tntkeyy", nullptr, cheat_when_t::cht_never, cheat_tntkeyx, 0),
     CHEAT("tntkeyb", nullptr, cheat_when_t::cht_never, cheat_tntkeyx, 0),
-    CHEAT("tntkeyrc", nullptr, cheat_when_t::cht_never,
-          reinterpret_cast<void (*)()>(cheat_tntkeyxx), it_redcard),
-    CHEAT("tntkeyyc", nullptr, cheat_when_t::cht_never,
-          reinterpret_cast<void (*)()>(cheat_tntkeyxx), it_yellowcard),
-    CHEAT("tntkeybc", nullptr, cheat_when_t::cht_never,
-          reinterpret_cast<void (*)()>(cheat_tntkeyxx), it_bluecard),
-    CHEAT("tntkeyrs", nullptr, cheat_when_t::cht_never,
-          reinterpret_cast<void (*)()>(cheat_tntkeyxx), it_redskull),
-    CHEAT("tntkeyys", nullptr, cheat_when_t::cht_never,
-          reinterpret_cast<void (*)()>(cheat_tntkeyxx), it_yellowskull),
+    CHEAT(
+        "tntkeyrc", nullptr, cheat_when_t::cht_never,
+        reinterpret_cast<void (*)()>(cheat_tntkeyxx), it_redcard
+    ),
+    CHEAT(
+        "tntkeyyc", nullptr, cheat_when_t::cht_never,
+        reinterpret_cast<void (*)()>(cheat_tntkeyxx), it_yellowcard
+    ),
+    CHEAT(
+        "tntkeybc", nullptr, cheat_when_t::cht_never,
+        reinterpret_cast<void (*)()>(cheat_tntkeyxx), it_bluecard
+    ),
+    CHEAT(
+        "tntkeyrs", nullptr, cheat_when_t::cht_never,
+        reinterpret_cast<void (*)()>(cheat_tntkeyxx), it_redskull
+    ),
+    CHEAT(
+        "tntkeyys", nullptr, cheat_when_t::cht_never,
+        reinterpret_cast<void (*)()>(cheat_tntkeyxx), it_yellowskull
+    ),
     // killough 2/16/98: end generalized keys
-    CHEAT("tntkeybs", nullptr, cheat_when_t::cht_never,
-          reinterpret_cast<void (*)()>(cheat_tntkeyxx), it_blueskull),
+    CHEAT(
+        "tntkeybs", nullptr, cheat_when_t::cht_never,
+        reinterpret_cast<void (*)()>(cheat_tntkeyxx), it_blueskull
+    ),
 
     // Ty 04/11/98 - Added TNTKA
     CHEAT("tntka", nullptr, cheat_when_t::cht_never, cheat_k, 0),
     // killough 2/16/98: generalized weapon cheats
     CHEAT("tntweap", nullptr, cheat_when_t::cht_never, cheat_tntweap, 0),
-    CHEAT("tntweap", nullptr, cheat_when_t::cht_never,
-          reinterpret_cast<void (*)()>(cheat_tntweapx), -1),
+    CHEAT(
+        "tntweap", nullptr, cheat_when_t::cht_never,
+        reinterpret_cast<void (*)()>(cheat_tntweapx), -1
+    ),
     CHEAT("tntammo", nullptr, cheat_when_t::cht_never, cheat_tntammo, 0),
     // killough 2/16/98: end generalized weapons
-    CHEAT("tntammo", nullptr, cheat_when_t::cht_never,
-          reinterpret_cast<void (*)()>(cheat_tntammox), -1),
+    CHEAT(
+        "tntammo", nullptr, cheat_when_t::cht_never,
+        reinterpret_cast<void (*)()>(cheat_tntammox), -1
+    ),
     // invoke translucency         // phares
     CHEAT("tnttran", nullptr, cheat_when_t::always, cheat_tnttran, 0),
     // killough 2/21/98: smart monster toggle
@@ -200,8 +236,10 @@ cheatseq_t cheat[] = {
     // killough 2/21/98: same as tntammo
     CHEAT("tntamo", nullptr, cheat_when_t::cht_never, cheat_tntammo, 0),
     // killough 2/21/98: same as tntammo
-    CHEAT("tntamo", nullptr, cheat_when_t::cht_never,
-          reinterpret_cast<void (*)()>(cheat_tntammox), -1),
+    CHEAT(
+        "tntamo", nullptr, cheat_when_t::cht_never,
+        reinterpret_cast<void (*)()>(cheat_tntammox), -1
+    ),
     // killough 3/6/98: -fast toggle
     CHEAT("tntfast", nullptr, cheat_when_t::cht_never, cheat_fast, 0),
     // phares 3/10/98: toggle variable friction effects
@@ -293,8 +331,10 @@ void cheat_god()
 
         // spawn a teleport fog
         an = plyr->mo->angle >> ANGLETOFINESHIFT;
-        P_SpawnMobj(plyr->mo->x + 20 * finecosine[an],
-                    plyr->mo->y + 20 * finesine[an], plyr->mo->z, MT_TFOG);
+        P_SpawnMobj(
+            plyr->mo->x + 20 * finecosine[an], plyr->mo->y + 20 * finesine[an],
+            plyr->mo->z, MT_TFOG
+        );
         S_StartSound(plyr, sfx_slop);
         P_MapEnd();
     }
@@ -432,8 +472,8 @@ static dboolean cannot_clev(int epsd, int map)
     char *next;
 
     if (epsd < 1 || map < 0 ||
-        ((gamemode == retail || gamemode == registered) &&
-         (epsd > 9 || map > 9)) ||
+        ((gamemode == retail || gamemode == registered) && (epsd > 9 || map > 9)
+        ) ||
         (gamemode == shareware && (epsd > 1 || map > 9)) ||
         (gamemode == commercial && (epsd > 1 || map > 99)) ||
         (gamemission == pack_nerve && map > 9))
@@ -499,11 +539,13 @@ static void cheat_clev(char buf[3])
 // killough 2/7/98: simplified using dprintf and made output more user-friendly
 static void cheat_mypos()
 {
-    doom_printf("Position (%d,%d,%d)\tAngle %-.0f",
-                players[consoleplayer].mo->x >> FRACBITS,
-                players[consoleplayer].mo->y >> FRACBITS,
-                players[consoleplayer].mo->z >> FRACBITS,
-                players[consoleplayer].mo->angle * (90.0 / ANG90));
+    doom_printf(
+        "Position (%d,%d,%d)\tAngle %-.0f",
+        players[consoleplayer].mo->x >> FRACBITS,
+        players[consoleplayer].mo->y >> FRACBITS,
+        players[consoleplayer].mo->z >> FRACBITS,
+        players[consoleplayer].mo->angle * (90.0 / ANG90)
+    );
 }
 
 // cph - cheat to toggle frame rate/rendering stats display
@@ -522,8 +564,9 @@ static void cheat_comp()
     // must call G_Compatibility after changing compatibility_level
     // (fixes sf bug number 1558738)
     G_Compatibility();
-    doom_printf("New compatibility level:\n%s",
-                comp_lev_str[compatibility_level]);
+    doom_printf(
+        "New compatibility level:\n%s", comp_lev_str[compatibility_level]
+    );
 }
 
 // variable friction cheat
@@ -579,16 +622,17 @@ static void cheat_massacre() // jff 2/01/98 kill all monsters
                nullptr)
         {
             if (currentthinker->function == P_MobjThinker &&
-                !(((mobj_t *)currentthinker)->flags &
-                  mask) && // killough 7/20/98
+                !(((mobj_t *)currentthinker)->flags & mask
+                ) && // killough 7/20/98
                 (((mobj_t *)currentthinker)->flags & MF_COUNTKILL ||
                  ((mobj_t *)currentthinker)->type == MT_SKULL))
             { // killough 3/6/98: kill even if PE is dead
                 if (((mobj_t *)currentthinker)->health > 0)
                 {
                     killcount++;
-                    P_DamageMobj((mobj_t *)currentthinker, nullptr, nullptr,
-                                 10000);
+                    P_DamageMobj(
+                        (mobj_t *)currentthinker, nullptr, nullptr, 10000
+                    );
                 }
                 if (((mobj_t *)currentthinker)->type == MT_PAIN)
                 {
@@ -798,8 +842,8 @@ static dboolean M_CheatAllowed(cheat_when_t::Type when)
 {
     return !(when.nonzero() && dsda_StrictMode()) &&
            !((when & cheat_when_t::not_dm).nonzero() && deathmatch) &&
-           !((when & cheat_when_t::not_coop).nonzero() && netgame &&
-             !deathmatch) &&
+           !((when & cheat_when_t::not_coop).nonzero() && netgame && !deathmatch
+           ) &&
            !((when & cheat_when_t::not_demo).nonzero() &&
              (demorecording || demoplayback)) &&
            !((when & cheat_when_t::not_menu).nonzero() && menuactive) &&
@@ -826,8 +870,8 @@ static int M_FindCheats_Boom(int key)
         *arg++ = static_cast<char>(tolower(key)); // store key in arg buffer
         if (!--argsleft)
         { // if last key in arg list,
-            reinterpret_cast<void (*)(char *)>(cheat[cht].func)(
-                argbuf); // process the arg buffer
+            reinterpret_cast<void (*)(char *)>(cheat[cht].func)(argbuf
+            ); // process the arg buffer
         }
         return 1; // affirmative response
     }
@@ -879,8 +923,8 @@ static int M_FindCheats_Boom(int key)
             else if (!matchedbefore) // allow only one cheat at a time
             {
                 matchedbefore = ret = 1; // responder has eaten key
-                reinterpret_cast<void (*)(int)>(cheat[i].func)(
-                    cheat[i].arg); // call cheat handler
+                reinterpret_cast<void (*)(int)>(cheat[i].func)(cheat[i].arg
+                ); // call cheat handler
             }
         }
     }

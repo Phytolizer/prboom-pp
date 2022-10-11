@@ -112,33 +112,34 @@ using yahpt_t = struct
     int y;
 };
 
-static yahpt_t YAHspot[3][9] = {{{172, 78},
-                                 {86, 90},
-                                 {73, 66},
-                                 {159, 95},
-                                 {148, 126},
-                                 {132, 54},
-                                 {131, 74},
-                                 {208, 138},
-                                 {52, 101}},
-                                {{218, 57},
-                                 {137, 81},
-                                 {155, 124},
-                                 {171, 68},
-                                 {250, 86},
-                                 {136, 98},
-                                 {203, 90},
-                                 {220, 140},
-                                 {279, 106}},
-                                {{86, 99},
-                                 {124, 103},
-                                 {154, 79},
-                                 {202, 83},
-                                 {178, 59},
-                                 {142, 58},
-                                 {219, 66},
-                                 {247, 57},
-                                 {107, 80}}};
+static yahpt_t YAHspot[3][9] = {
+    {{172, 78},
+     {86, 90},
+     {73, 66},
+     {159, 95},
+     {148, 126},
+     {132, 54},
+     {131, 74},
+     {208, 138},
+     {52, 101}},
+    {{218, 57},
+     {137, 81},
+     {155, 124},
+     {171, 68},
+     {250, 86},
+     {136, 98},
+     {203, 90},
+     {220, 140},
+     {279, 106}},
+    {{86, 99},
+     {124, 103},
+     {154, 79},
+     {202, 83},
+     {178, 59},
+     {142, 58},
+     {219, 66},
+     {247, 57},
+     {107, 80}}};
 
 static const char *NameForMap(int map)
 {
@@ -170,16 +171,18 @@ static void IN_DrawInterpic()
 
 static void IN_DrawBeenThere(int i)
 {
-    V_DrawNamePatch(YAHspot[gameepisode - 1][i].x,
-                    YAHspot[gameepisode - 1][i].y, 0, DEH_String("IN_X"),
-                    CR_DEFAULT, VPT_STRETCH);
+    V_DrawNamePatch(
+        YAHspot[gameepisode - 1][i].x, YAHspot[gameepisode - 1][i].y, 0,
+        DEH_String("IN_X"), CR_DEFAULT, VPT_STRETCH
+    );
 }
 
 static void IN_DrawGoingThere(int i)
 {
-    V_DrawNamePatch(YAHspot[gameepisode - 1][i].x,
-                    YAHspot[gameepisode - 1][i].y, 0, DEH_String("IN_YAH"),
-                    CR_DEFAULT, VPT_STRETCH);
+    V_DrawNamePatch(
+        YAHspot[gameepisode - 1][i].x, YAHspot[gameepisode - 1][i].y, 0,
+        DEH_String("IN_YAH"), CR_DEFAULT, VPT_STRETCH
+    );
 }
 
 static void IN_InitLumps()
@@ -843,10 +846,12 @@ void IN_DrawDMStats()
                 V_DrawShadowedNumPatch(
                     40,
                     ((ypos << FRACBITS) + dSlideY[i] * intertime) >> FRACBITS,
-                    patchFaceOkayBase + i);
+                    patchFaceOkayBase + i
+                );
                 V_DrawShadowedNumPatch(
                     ((xpos << FRACBITS) + dSlideX[i] * intertime) >> FRACBITS,
-                    18, patchFaceDeadBase + i);
+                    18, patchFaceDeadBase + i
+                );
             }
         }
         sounds = 0;
@@ -990,16 +995,18 @@ void IN_DrawNumber(int val, int x, int y, int digits)
     if (digits == 4)
     {
         lump = FontBNumbers[val / 1000];
-        V_DrawShadowedNumPatch(xpos + 6 - R_NumPatchWidth(lump) / 2 - 12, y,
-                               lump);
+        V_DrawShadowedNumPatch(
+            xpos + 6 - R_NumPatchWidth(lump) / 2 - 12, y, lump
+        );
     }
     if (digits > 2)
     {
         if (realdigits > 2)
         {
             lump = FontBNumbers[val / 100];
-            V_DrawShadowedNumPatch(xpos + 6 - R_NumPatchWidth(lump) / 2, y,
-                                   lump);
+            V_DrawShadowedNumPatch(
+                xpos + 6 - R_NumPatchWidth(lump) / 2, y, lump
+            );
         }
         xpos += 12;
     }
@@ -1009,8 +1016,9 @@ void IN_DrawNumber(int val, int x, int y, int digits)
         if (val > 9)
         {
             lump = FontBNumbers[val / 10];
-            V_DrawShadowedNumPatch(xpos + 6 - R_NumPatchWidth(lump) / 2, y,
-                                   lump);
+            V_DrawShadowedNumPatch(
+                xpos + 6 - R_NumPatchWidth(lump) / 2, y, lump
+            );
         }
         else if (digits == 2 || oldval > 99)
         {
@@ -1023,9 +1031,10 @@ void IN_DrawNumber(int val, int x, int y, int digits)
     V_DrawShadowedNumPatch(xpos + 6 - R_NumPatchWidth(lump) / 2, y, lump);
     if (neg)
     {
-        V_DrawShadowedNamePatch(xpos + 6 - R_NamePatchWidth("FONTB13") / 2 -
-                                    12 * (realdigits),
-                                y, DEH_String("FONTB13"));
+        V_DrawShadowedNamePatch(
+            xpos + 6 - R_NamePatchWidth("FONTB13") / 2 - 12 * (realdigits), y,
+            DEH_String("FONTB13")
+        );
     }
 }
 

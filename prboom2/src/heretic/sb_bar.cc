@@ -243,14 +243,16 @@ static void DrINumber(signed int val, int x, int y)
     {
         if (val < -9)
         {
-            V_DrawNamePatch(x + 1, y + 1, 0, DEH_String("LAME"), CR_DEFAULT,
-                            VPT_STRETCH);
+            V_DrawNamePatch(
+                x + 1, y + 1, 0, DEH_String("LAME"), CR_DEFAULT, VPT_STRETCH
+            );
         }
         else
         {
             val = -val;
-            V_DrawNumPatch(x + 18, y, 0, LumpINumbers[val], CR_DEFAULT,
-                           VPT_STRETCH);
+            V_DrawNumPatch(
+                x + 18, y, 0, LumpINumbers[val], CR_DEFAULT, VPT_STRETCH
+            );
             V_DrawNumPatch(x + 9, y, 0, LumpNEGATIVE, CR_DEFAULT, VPT_STRETCH);
         }
         return;
@@ -341,8 +343,8 @@ static void DrSmallNumber(int val, int x, int y)
 //
 //---------------------------------------------------------------------------
 
-static void ShadeLine(int /* x */, int /* y */, int /* height */,
-                      int /* shade */)
+static void
+ShadeLine(int /* x */, int /* y */, int /* height */, int /* shade */)
 {
     // HERETIC_TODO: ShadeLine
     // byte *dest;
@@ -428,10 +430,12 @@ void SB_Drawer(dboolean statusbaron, dboolean refresh, dboolean fullmenu)
             V_DrawNumPatch(0, 158, 0, LumpBARBACK, CR_DEFAULT, VPT_STRETCH);
             if (players[consoleplayer].cheats & CF_GODMODE)
             {
-                V_DrawNamePatch(16, 167, 0, DEH_String("GOD1"), CR_DEFAULT,
-                                VPT_STRETCH);
-                V_DrawNamePatch(287, 167, 0, DEH_String("GOD2"), CR_DEFAULT,
-                                VPT_STRETCH);
+                V_DrawNamePatch(
+                    16, 167, 0, DEH_String("GOD1"), CR_DEFAULT, VPT_STRETCH
+                );
+                V_DrawNamePatch(
+                    287, 167, 0, DEH_String("GOD2"), CR_DEFAULT, VPT_STRETCH
+                );
             }
             oldhealth = -1;
         }
@@ -441,8 +445,9 @@ void SB_Drawer(dboolean statusbaron, dboolean refresh, dboolean fullmenu)
             if (SB_state != 0)
             {
                 // Main interface
-                V_DrawNumPatch(34, 160, 0, LumpSTATBAR, CR_DEFAULT,
-                               VPT_STRETCH);
+                V_DrawNumPatch(
+                    34, 160, 0, LumpSTATBAR, CR_DEFAULT, VPT_STRETCH
+                );
                 oldarti = 0;
                 oldammo = -1;
                 oldarmor = -1;
@@ -477,13 +482,15 @@ void SB_Drawer(dboolean statusbaron, dboolean refresh, dboolean fullmenu)
             {
                 if (hitCenterFrame && (frame != 15 && frame != 0))
                 {
-                    V_DrawNumPatch(20, 17, 0, spinflylump + 15, CR_DEFAULT,
-                                   VPT_STRETCH);
+                    V_DrawNumPatch(
+                        20, 17, 0, spinflylump + 15, CR_DEFAULT, VPT_STRETCH
+                    );
                 }
                 else
                 {
-                    V_DrawNumPatch(20, 17, 0, spinflylump + frame, CR_DEFAULT,
-                                   VPT_STRETCH);
+                    V_DrawNumPatch(
+                        20, 17, 0, spinflylump + frame, CR_DEFAULT, VPT_STRETCH
+                    );
                     hitCenterFrame = false;
                 }
             }
@@ -491,14 +498,16 @@ void SB_Drawer(dboolean statusbaron, dboolean refresh, dboolean fullmenu)
             {
                 if (!hitCenterFrame && (frame != 15 && frame != 0))
                 {
-                    V_DrawNumPatch(20, 17, 0, spinflylump + frame, CR_DEFAULT,
-                                   VPT_STRETCH);
+                    V_DrawNumPatch(
+                        20, 17, 0, spinflylump + frame, CR_DEFAULT, VPT_STRETCH
+                    );
                     hitCenterFrame = false;
                 }
                 else
                 {
-                    V_DrawNumPatch(20, 17, 0, spinflylump + 15, CR_DEFAULT,
-                                   VPT_STRETCH);
+                    V_DrawNumPatch(
+                        20, 17, 0, spinflylump + 15, CR_DEFAULT, VPT_STRETCH
+                    );
                     hitCenterFrame = true;
                 }
             }
@@ -518,8 +527,9 @@ void SB_Drawer(dboolean statusbaron, dboolean refresh, dboolean fullmenu)
             !(CPlayer->powers[pw_weaponlevel2] & 16))
         {
             frame = (leveltime / 3) & 15;
-            V_DrawNumPatch(300, 17, 0, spinbooklump + frame, CR_DEFAULT,
-                           VPT_STRETCH);
+            V_DrawNumPatch(
+                300, 17, 0, spinbooklump + frame, CR_DEFAULT, VPT_STRETCH
+            );
             BorderTopRefresh = true;
             // UpdateState |= I_MESSAGES;
         }
@@ -603,10 +613,12 @@ void DrawCommonBar()
         chainY =
             (HealthMarker == CPlayer->mo->health) ? 191 : 191 + ChainWiggle;
         V_DrawNumPatch(0, 190, 0, LumpCHAINBACK, CR_DEFAULT, VPT_STRETCH);
-        V_DrawNumPatch(2 + (healthPos % 17), chainY, 0, LumpCHAIN, CR_DEFAULT,
-                       VPT_STRETCH);
-        V_DrawNumPatch(17 + healthPos, chainY, 0, LumpLIFEGEM, CR_DEFAULT,
-                       VPT_STRETCH);
+        V_DrawNumPatch(
+            2 + (healthPos % 17), chainY, 0, LumpCHAIN, CR_DEFAULT, VPT_STRETCH
+        );
+        V_DrawNumPatch(
+            17 + healthPos, chainY, 0, LumpLIFEGEM, CR_DEFAULT, VPT_STRETCH
+        );
         V_DrawNumPatch(0, 190, 0, LumpLTFACE, CR_DEFAULT, VPT_STRETCH);
         V_DrawNumPatch(276, 190, 0, LumpRTFACE, CR_DEFAULT, VPT_STRETCH);
         ShadeChain();
@@ -643,8 +655,10 @@ void DrawMainBar()
         V_DrawNumPatch(180, 161, 0, LumpBLACKSQ, CR_DEFAULT, VPT_STRETCH);
         if (CPlayer->readyArtifact > 0)
         {
-            V_DrawNumPatch(179, 160, 0, lumparti[CPlayer->readyArtifact],
-                           CR_DEFAULT, VPT_STRETCH);
+            V_DrawNumPatch(
+                179, 160, 0, lumparti[CPlayer->readyArtifact], CR_DEFAULT,
+                VPT_STRETCH
+            );
 
             DrSmallNumber(CPlayer->inventory[inv_ptr].count, 201, 182);
         }
@@ -694,18 +708,21 @@ void DrawMainBar()
     {
         if (CPlayer->cards[key_yellow])
         {
-            V_DrawNamePatch(153, 164, 0, DEH_String("ykeyicon"), CR_DEFAULT,
-                            VPT_STRETCH);
+            V_DrawNamePatch(
+                153, 164, 0, DEH_String("ykeyicon"), CR_DEFAULT, VPT_STRETCH
+            );
         }
         if (CPlayer->cards[key_green])
         {
-            V_DrawNamePatch(153, 172, 0, DEH_String("gkeyicon"), CR_DEFAULT,
-                            VPT_STRETCH);
+            V_DrawNamePatch(
+                153, 172, 0, DEH_String("gkeyicon"), CR_DEFAULT, VPT_STRETCH
+            );
         }
         if (CPlayer->cards[key_blue])
         {
-            V_DrawNamePatch(153, 180, 0, DEH_String("bkeyicon"), CR_DEFAULT,
-                            VPT_STRETCH);
+            V_DrawNamePatch(
+                153, 180, 0, DEH_String("bkeyicon"), CR_DEFAULT, VPT_STRETCH
+            );
         }
         oldkeys = playerkeys;
         // UpdateState |= I_STATBAR;
@@ -718,9 +735,10 @@ void DrawMainBar()
         if (temp && CPlayer->readyweapon > 0 && CPlayer->readyweapon < 7)
         {
             DrINumber(temp, 109, 162);
-            V_DrawNamePatch(111, 172, 0,
-                            DEH_String(ammopic[CPlayer->readyweapon - 1]),
-                            CR_DEFAULT, VPT_STRETCH);
+            V_DrawNamePatch(
+                111, 172, 0, DEH_String(ammopic[CPlayer->readyweapon - 1]),
+                CR_DEFAULT, VPT_STRETCH
+            );
         }
         oldammo = temp;
         oldweapon = CPlayer->readyweapon;
@@ -757,14 +775,16 @@ void DrawInventoryBar()
         if (CPlayer->inventorySlotNum > x + i &&
             CPlayer->inventory[x + i].type != arti_none)
         {
-            V_DrawNumPatch(50 + i * 31, 160, 0,
-                           lumparti[CPlayer->inventory[x + i].type], CR_DEFAULT,
-                           VPT_STRETCH);
+            V_DrawNumPatch(
+                50 + i * 31, 160, 0, lumparti[CPlayer->inventory[x + i].type],
+                CR_DEFAULT, VPT_STRETCH
+            );
             DrSmallNumber(CPlayer->inventory[x + i].count, 69 + i * 31, 182);
         }
     }
-    V_DrawNumPatch(50 + curpos * 31, 189, 0, LumpSELECTBOX, CR_DEFAULT,
-                   VPT_STRETCH);
+    V_DrawNumPatch(
+        50 + curpos * 31, 189, 0, LumpSELECTBOX, CR_DEFAULT, VPT_STRETCH
+    );
     if (x != 0)
     {
         lump = !(leveltime & 4) ? LumpINVLFGEM1 : LumpINVLFGEM2;
@@ -825,14 +845,17 @@ void DrawFullScreenStuff()
                 CPlayer->inventory[x + i].type != arti_none)
             {
                 lump = lumparti[CPlayer->inventory[x + i].type];
-                V_DrawNumPatch(50 + i * 31, 168, 0, lump, CR_DEFAULT,
-                               VPT_STRETCH);
-                DrSmallNumber(CPlayer->inventory[x + i].count, 69 + i * 31,
-                              190);
+                V_DrawNumPatch(
+                    50 + i * 31, 168, 0, lump, CR_DEFAULT, VPT_STRETCH
+                );
+                DrSmallNumber(
+                    CPlayer->inventory[x + i].count, 69 + i * 31, 190
+                );
             }
         }
-        V_DrawNumPatch(50 + curpos * 31, 197, 0, LumpSELECTBOX, CR_DEFAULT,
-                       VPT_STRETCH);
+        V_DrawNumPatch(
+            50 + curpos * 31, 197, 0, LumpSELECTBOX, CR_DEFAULT, VPT_STRETCH
+        );
         if (x != 0)
         {
             lump = !(leveltime & 4) ? LumpINVLFGEM1 : LumpINVLFGEM2;

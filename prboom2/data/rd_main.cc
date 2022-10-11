@@ -33,16 +33,18 @@ enum argtype
 static void ATTR((noreturn)) usage(int exitcode)
 {
     FILE *f = exitcode ? stderr : stdout;
-    fprintf(f, "Usage: rdatawad <options...>\n"
-               "  -o <output filename>\n"
-               "  -I <search directory>\n"
-               "  -palette <rgbfile>\n"
-               "  -marker <lumpname>\n"
-               "  -lumps <file>...\n"
-               "  -graphics <ppmfile>...\n"
-               "  -sounds <wavfile>...\n"
-               "  -flats <ppmfile>...\n"
-               "  -sprites <x,y,ppmfile>...\n");
+    fprintf(
+        f, "Usage: rdatawad <options...>\n"
+           "  -o <output filename>\n"
+           "  -I <search directory>\n"
+           "  -palette <rgbfile>\n"
+           "  -marker <lumpname>\n"
+           "  -lumps <file>...\n"
+           "  -graphics <ppmfile>...\n"
+           "  -sounds <wavfile>...\n"
+           "  -flats <ppmfile>...\n"
+           "  -sprites <x,y,ppmfile>...\n"
+    );
     exit(exitcode);
 }
 

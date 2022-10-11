@@ -236,9 +236,10 @@ int TXT_Init()
     // Always create the screen at the native screen depth (bpp=0);
     // some systems nowadays don't seem to support true 8-bit palettized
     // screen modes very well and we end up with screwed up colors.
-    TXT_SDLWindow =
-        SDL_CreateWindow("", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
-                         TXT_SCREEN_W * font->w, TXT_SCREEN_H * font->h, 0);
+    TXT_SDLWindow = SDL_CreateWindow(
+        "", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
+        TXT_SCREEN_W * font->w, TXT_SCREEN_H * font->h, 0
+    );
 
     if (TXT_SDLWindow == nullptr)
     {
@@ -248,8 +249,9 @@ int TXT_Init()
     // Instead, we draw everything into an intermediate 8-bit surface
     // the same dimensions as the screen. SDL then takes care of all the
     // 8->32 bit (or whatever depth) color conversions for us.
-    screenbuffer = SDL_CreateRGBSurface(0, TXT_SCREEN_W * font->w,
-                                        TXT_SCREEN_H * font->h, 8, 0, 0, 0, 0);
+    screenbuffer = SDL_CreateRGBSurface(
+        0, TXT_SCREEN_W * font->w, TXT_SCREEN_H * font->h, 8, 0, 0, 0, 0
+    );
 
     SDL_LockSurface(screenbuffer);
     SDL_SetPaletteColors(screenbuffer->format->palette, ega_colors, 0, 16);
@@ -397,8 +399,9 @@ void TXT_UpdateScreenArea(int x, int y, int w, int h)
 
     SDL_UnlockSurface(screenbuffer);
 
-    SDL_BlitSurface(screenbuffer, &rect, SDL_GetWindowSurface(TXT_SDLWindow),
-                    &rect);
+    SDL_BlitSurface(
+        screenbuffer, &rect, SDL_GetWindowSurface(TXT_SDLWindow), &rect
+    );
     SDL_UpdateWindowSurfaceRects(TXT_SDLWindow, &rect, 1);
 }
 

@@ -152,13 +152,15 @@ static void PrintPercentage(FILE *stream, int amount, int total)
 
 /* Display statistics for a single player. */
 
-static void PrintPlayerStats(FILE *stream, const wbstartstruct_t *stats,
-                             int player_num)
+static void PrintPlayerStats(
+    FILE *stream, const wbstartstruct_t *stats, int player_num
+)
 {
     const wbplayerstruct_t *player = &stats->plyr[player_num];
 
-    fprintf(stream, "Player %i (%s):\n", player_num + 1,
-            player_colors[player_num]);
+    fprintf(
+        stream, "Player %i (%s):\n", player_num + 1, player_colors[player_num]
+    );
 
     /* Kills percentage */
 
@@ -251,8 +253,9 @@ static void PrintLevelName(FILE *stream, int episode, int level)
         break;
     default:
     case none:
-        fprintf(stream, "E%iM%i / MAP%02i\n", episode + 1, level + 1,
-                level + 1);
+        fprintf(
+            stream, "E%iM%i / MAP%02i\n", episode + 1, level + 1, level + 1
+        );
         break;
     }
 
@@ -295,8 +298,9 @@ void StatCopy(const wbstartstruct_t *stats)
 {
     if (M_CheckParm("-statdump") && num_captured_stats < MAX_CAPTURES)
     {
-        memcpy(&captured_stats[num_captured_stats], stats,
-               sizeof(wbstartstruct_t));
+        memcpy(
+            &captured_stats[num_captured_stats], stats, sizeof(wbstartstruct_t)
+        );
         ++num_captured_stats;
     }
 }

@@ -85,8 +85,8 @@ int R_FlatNumForName(const char *name); // killough -- const added
 /* cph 2006/07/23 - defined value for no-texture marker (texture "-" in the WAD
  * file) */
 #define NO_TEXTURE 0
-int PUREFUNC R_TextureNumForName(
-    const char *name); // killough -- const added; cph - now PUREFUNC
+int PUREFUNC R_TextureNumForName(const char *name
+); // killough -- const added; cph - now PUREFUNC
 int PUREFUNC R_SafeTextureNumForName(const char *name, int snum);
 int PUREFUNC R_CheckTextureNumForName(const char *name);
 

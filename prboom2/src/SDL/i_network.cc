@@ -261,7 +261,8 @@ size_t I_GetPacket(packet_header_t *buffer, size_t buflen)
     if ((status != 0) && (len > 0))
     {
         byte psum = ChecksumPacket(
-            buffer, len); // https://logicaltrust.net/blog/2019/10/prboom1.html
+            buffer, len
+        ); // https://logicaltrust.net/blog/2019/10/prboom1.html
         /*    fprintf(stderr, "recvlen = %u, stolen = %u, csum = %u, psum =
           %u\n", udp_packet->len, len, checksum, psum); */
         if (psum == checksum)

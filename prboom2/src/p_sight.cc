@@ -419,15 +419,14 @@ static los_t los; // cph - made static
 INLINE static int P_DivlineSide(fixed_t x, fixed_t y, const divline_t *node)
 {
     fixed_t left, right;
-    return !node->dx ? x == node->x   ? 2
-                       : x <= node->x ? node->dy > 0
-                                      : node->dy < 0
-           : !node->dy
-               ? (compatibility_level < prboom_4_compatibility ? x : y) ==
-                         node->y
-                     ? 2
-                 : y <= node->y ? node->dx < 0
-                                : node->dx > 0
+    return !node->dx   ? x == node->x   ? 2
+                         : x <= node->x ? node->dy > 0
+                                        : node->dy < 0
+           : !node->dy ? (compatibility_level < prboom_4_compatibility ? x : y
+                         ) == node->y
+                             ? 2
+                         : y <= node->y ? node->dx < 0
+                                        : node->dx > 0
            : (right = ((y - node->y) >> FRACBITS) * (node->dx >> FRACBITS)) <
                    (left = ((x - node->x) >> FRACBITS) * (node->dy >> FRACBITS))
                ? 0
@@ -435,8 +434,9 @@ INLINE static int P_DivlineSide(fixed_t x, fixed_t y, const divline_t *node)
                            : 1;
 }
 
-INLINE static int P_DivlineCrossed(fixed_t x1, fixed_t y1, fixed_t x2,
-                                   fixed_t y2, divline_t *node)
+INLINE static int P_DivlineCrossed(
+    fixed_t x1, fixed_t y1, fixed_t x2, fixed_t y2, divline_t *node
+)
 {
 #if 1
     return (P_DivlineSide(x1, y1, node) == P_DivlineSide(x2, y2, node));
@@ -535,8 +535,9 @@ dboolean P_CrossSubsector_PrBoom(int num)
         }
 
         // Forget this line if it doesn't cross the line of sight
-        if (P_DivlineCrossed(ssline->x1, ssline->y1, ssline->x2, ssline->y2,
-                             &los.strace))
+        if (P_DivlineCrossed(
+                ssline->x1, ssline->y1, ssline->x2, ssline->y2, &los.strace
+            ))
         {
             ssline->linedef->validcount = validcount;
             continue;
@@ -546,8 +547,9 @@ dboolean P_CrossSubsector_PrBoom(int num)
         divl.dy = ssline->y2 - (divl.y = ssline->y1);
 
         // line isn't crossed?
-        if (P_DivlineCrossed(los.strace.x, los.strace.y, los.t2x, los.t2y,
-                             &divl))
+        if (P_DivlineCrossed(
+                los.strace.x, los.strace.y, los.t2x, los.t2y, &divl
+            ))
         {
             ssline->linedef->validcount = validcount;
             continue;
@@ -655,8 +657,9 @@ dboolean P_CrossSubsector_Doom(int num)
         fixed_t frac;
 
         // line isn't crossed?
-        if (P_DivlineCrossed(ssline->x1, ssline->y1, ssline->x2, ssline->y2,
-                             &los.strace))
+        if (P_DivlineCrossed(
+                ssline->x1, ssline->y1, ssline->x2, ssline->y2, &los.strace
+            ))
         {
             ssline->linedef->validcount = validcount;
             continue;
@@ -666,8 +669,9 @@ dboolean P_CrossSubsector_Doom(int num)
         divl.dy = ssline->y2 - (divl.y = ssline->y1);
 
         // line isn't crossed?
-        if (P_DivlineCrossed(los.strace.x, los.strace.y, los.t2x, los.t2y,
-                             &divl))
+        if (P_DivlineCrossed(
+                los.strace.x, los.strace.y, los.t2x, los.t2y, &divl
+            ))
         {
             ssline->linedef->validcount = validcount;
             continue;
@@ -775,8 +779,9 @@ dboolean P_CrossSubsector_Boom(int num)
         }
 
         // line isn't crossed?
-        if (P_DivlineCrossed(ssline->x1, ssline->y1, ssline->x2, ssline->y2,
-                             &los.strace))
+        if (P_DivlineCrossed(
+                ssline->x1, ssline->y1, ssline->x2, ssline->y2, &los.strace
+            ))
         {
             ssline->linedef->validcount = validcount;
             continue;
@@ -786,8 +791,9 @@ dboolean P_CrossSubsector_Boom(int num)
         divl.dy = ssline->y2 - (divl.y = ssline->y1);
 
         // line isn't crossed?
-        if (P_DivlineCrossed(los.strace.x, los.strace.y, los.t2x, los.t2y,
-                             &divl))
+        if (P_DivlineCrossed(
+                los.strace.x, los.strace.y, los.t2x, los.t2y, &divl
+            ))
         {
             ssline->linedef->validcount = validcount;
             continue;
@@ -884,13 +890,13 @@ static dboolean P_CrossBSPNode_LxDoom(int bspnum)
         }
         else // the partition plane is crossed here
             if (!P_CrossBSPNode_LxDoom(bsp->children[side]))
-        {
-            return 0; // cross the starting side
-        }
-        else
-        {
-            bspnum = bsp->children[side ^ 1]; // cross the ending side
-        }
+            {
+                return 0; // cross the starting side
+            }
+            else
+            {
+                bspnum = bsp->children[side ^ 1]; // cross the ending side
+            }
     }
     return P_CrossSubsector(bspnum == -1 ? 0 : bspnum & ~NF_SUBSECTOR);
 }
@@ -911,13 +917,13 @@ static dboolean P_CrossBSPNode_PrBoom(int bspnum)
         }
         else // the partition plane is crossed here
             if (!P_CrossBSPNode_PrBoom(bsp->children[side]))
-        {
-            return 0; // cross the starting side
-        }
-        else
-        {
-            bspnum = bsp->children[side ^ 1]; // cross the ending side
-        }
+            {
+                return 0; // cross the starting side
+            }
+            else
+            {
+                bspnum = bsp->children[side ^ 1]; // cross the ending side
+            }
     }
     return P_CrossSubsector(bspnum == -1 ? 0 : bspnum & ~NF_SUBSECTOR);
 }

@@ -539,26 +539,32 @@ void Scanner::Error(Token::Type token)
     if (token < Token::NumSpecialTokens &&
         this->token < Token::NumSpecialTokens)
     {
-        error("%d:%d:Expected '%s' but got '%s' instead.", GetLine(),
-              GetLinePos(), TokenNames[token.value()],
-              TokenNames[this->token.value()]);
+        error(
+            "%d:%d:Expected '%s' but got '%s' instead.", GetLine(),
+            GetLinePos(), TokenNames[token.value()],
+            TokenNames[this->token.value()]
+        );
     }
-    else if (token < Token::NumSpecialTokens &&
-             this->token >= Token::NumSpecialTokens)
+    else if (token < Token::NumSpecialTokens && this->token >= Token::NumSpecialTokens)
     {
-        error("%d:%d:Expected '%s' but got '%c' instead.", GetLine(),
-              GetLinePos(), TokenNames[token.value()], this->token);
+        error(
+            "%d:%d:Expected '%s' but got '%c' instead.", GetLine(),
+            GetLinePos(), TokenNames[token.value()], this->token
+        );
     }
-    else if (token >= Token::NumSpecialTokens &&
-             this->token < Token::NumSpecialTokens)
+    else if (token >= Token::NumSpecialTokens && this->token < Token::NumSpecialTokens)
     {
-        error("%d:%d:Expected '%c' but got '%s' instead.", GetLine(),
-              GetLinePos(), token, TokenNames[this->token.value()]);
+        error(
+            "%d:%d:Expected '%c' but got '%s' instead.", GetLine(),
+            GetLinePos(), token, TokenNames[this->token.value()]
+        );
     }
     else
     {
-        error("%d:%d:Expected '%c' but got '%c' instead.", GetLine(),
-              GetLinePos(), token, this->token);
+        error(
+            "%d:%d:Expected '%c' but got '%c' instead.", GetLine(),
+            GetLinePos(), token, this->token
+        );
     }
 }
 
@@ -567,13 +573,17 @@ void Scanner::Error(const char *mustget)
     if (token < Token::NumSpecialTokens &&
         this->token < Token::NumSpecialTokens)
     {
-        error("%d:%d:Expected '%s' but got '%s' instead.", GetLine(),
-              GetLinePos(), mustget, TokenNames[this->token.value()]);
+        error(
+            "%d:%d:Expected '%s' but got '%s' instead.", GetLine(),
+            GetLinePos(), mustget, TokenNames[this->token.value()]
+        );
     }
     else
     {
-        error("%d:%d:Expected '%s' but got '%c' instead.", GetLine(),
-              GetLinePos(), mustget, this->token);
+        error(
+            "%d:%d:Expected '%s' but got '%c' instead.", GetLine(),
+            GetLinePos(), mustget, this->token
+        );
     }
 }
 

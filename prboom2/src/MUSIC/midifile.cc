@@ -60,14 +60,18 @@ typedef unsigned char byte;
 #else // WORDS_BIGENDIAN
 
 #define ntohl(x)                                                               \
-    (/*(long int)*/ ((((unsigned long int)(x)&0x000000ffU) << 24) |            \
-                     (((unsigned long int)(x)&0x0000ff00U) << 8) |             \
-                     (((unsigned long int)(x)&0x00ff0000U) >> 8) |             \
-                     (((unsigned long int)(x)&0xff000000U) >> 24)))
+    (/*(long int)*/ (                                                          \
+        (((unsigned long int)(x)&0x000000ffU) << 24) |                         \
+        (((unsigned long int)(x)&0x0000ff00U) << 8) |                          \
+        (((unsigned long int)(x)&0x00ff0000U) >> 8) |                          \
+        (((unsigned long int)(x)&0xff000000U) >> 24)                           \
+    ))
 
 #define ntohs(x)                                                               \
-    (/*(short int)*/ ((((unsigned short int)(x)&0x00ff) << 8) |                \
-                      (((unsigned short int)(x)&0xff00) >> 8)))
+    (/*(short int)*/ (                                                         \
+        (((unsigned short int)(x)&0x00ff) << 8) |                              \
+        (((unsigned short int)(x)&0xff00) >> 8)                                \
+    ))
 #endif // WORDS_BIGENDIAN
 #endif // ntohl
 
@@ -100,11 +104,13 @@ static dboolean CheckChunkHeader(chunk_header_t *chunk, const char *expected_id)
 
     if (!result)
     {
-        lprintf(LO_WARN,
-                "CheckChunkHeader: Expected '%s' chunk header, "
-                "got '%c%c%c%c'\n",
-                expected_id, chunk->chunk_id[0], chunk->chunk_id[1],
-                chunk->chunk_id[2], chunk->chunk_id[3]);
+        lprintf(
+            LO_WARN,
+            "CheckChunkHeader: Expected '%s' chunk header, "
+            "got '%c%c%c%c'\n",
+            expected_id, chunk->chunk_id[0], chunk->chunk_id[1],
+            chunk->chunk_id[2], chunk->chunk_id[3]
+        );
     }
 
     return result;
@@ -152,8 +158,10 @@ static dboolean ReadVariableLength(unsigned int *result, midimem_t *mf)
     {
         if (!ReadByte(&b, mf))
         {
-            lprintf(LO_WARN, "ReadVariableLength: Error while reading "
-                             "variable-length value\n");
+            lprintf(
+                LO_WARN, "ReadVariableLength: Error while reading "
+                         "variable-length value\n"
+            );
             return false;
         }
 
@@ -170,8 +178,10 @@ static dboolean ReadVariableLength(unsigned int *result, midimem_t *mf)
         }
     }
 
-    lprintf(LO_WARN, "ReadVariableLength: Variable-length value too "
-                     "long: maximum of four bytes\n");
+    lprintf(
+        LO_WARN, "ReadVariableLength: Variable-length value too "
+                 "long: maximum of four bytes\n"
+    );
     return false;
 }
 
@@ -194,9 +204,10 @@ static void *ReadByteSequence(unsigned int num_bytes, midimem_t *mf)
 
     if (result == nullptr)
     {
-        lprintf(LO_WARN,
-                "ReadByteSequence: Failed to allocate buffer %u bytes\n",
-                num_bytes);
+        lprintf(
+            LO_WARN, "ReadByteSequence: Failed to allocate buffer %u bytes\n",
+            num_bytes
+        );
         return nullptr;
     }
 
@@ -206,8 +217,9 @@ static void *ReadByteSequence(unsigned int num_bytes, midimem_t *mf)
     {
         if (!ReadByte(&result[i], mf))
         {
-            lprintf(LO_WARN, "ReadByteSequence: Error while reading byte %u\n",
-                    i);
+            lprintf(
+                LO_WARN, "ReadByteSequence: Error while reading byte %u\n", i
+            );
             free(result);
             return nullptr;
         }
@@ -220,8 +232,9 @@ static void *ReadByteSequence(unsigned int num_bytes, midimem_t *mf)
 // two_param indicates that the event type takes two parameters
 // (three byte) otherwise it is single parameter (two byte)
 
-static dboolean ReadChannelEvent(midi_event_t *event, byte event_type,
-                                 dboolean two_param, midimem_t *mf)
+static dboolean ReadChannelEvent(
+    midi_event_t *event, byte event_type, dboolean two_param, midimem_t *mf
+)
 {
     byte b;
 
@@ -235,8 +248,10 @@ static dboolean ReadChannelEvent(midi_event_t *event, byte event_type,
 
     if (!ReadByte(&b, mf))
     {
-        lprintf(LO_WARN, "ReadChannelEvent: Error while reading channel "
-                         "event parameters\n");
+        lprintf(
+            LO_WARN, "ReadChannelEvent: Error while reading channel "
+                     "event parameters\n"
+        );
         return false;
     }
 
@@ -248,8 +263,10 @@ static dboolean ReadChannelEvent(midi_event_t *event, byte event_type,
     {
         if (!ReadByte(&b, mf))
         {
-            lprintf(LO_WARN, "ReadChannelEvent: Error while reading channel "
-                             "event parameters\n");
+            lprintf(
+                LO_WARN, "ReadChannelEvent: Error while reading channel "
+                         "event parameters\n"
+            );
             return false;
         }
 
@@ -261,16 +278,19 @@ static dboolean ReadChannelEvent(midi_event_t *event, byte event_type,
 
 // Read sysex event:
 
-static dboolean ReadSysExEvent(midi_event_t *event, byte event_type,
-                               midimem_t *mf)
+static dboolean ReadSysExEvent(
+    midi_event_t *event, byte event_type, midimem_t *mf
+)
 {
     event->event_type = midi_event_type_t::Type{event_type};
 
     event->data.setSysex();
     if (!ReadVariableLength(&event->data.sysex().length, mf))
     {
-        lprintf(LO_WARN, "ReadSysExEvent: Failed to read length of "
-                         "SysEx block\n");
+        lprintf(
+            LO_WARN, "ReadSysExEvent: Failed to read length of "
+                     "SysEx block\n"
+        );
         return false;
     }
 
@@ -311,8 +331,10 @@ static dboolean ReadMetaEvent(midi_event_t *event, midimem_t *mf)
 
     if (!ReadVariableLength(&event->data.meta().length, mf))
     {
-        lprintf(LO_WARN, "ReadMetaEvent: Failed to read length of "
-                         "MetaEvent block\n");
+        lprintf(
+            LO_WARN, "ReadMetaEvent: Failed to read length of "
+                     "MetaEvent block\n"
+        );
         return false;
     }
 
@@ -330,8 +352,9 @@ static dboolean ReadMetaEvent(midi_event_t *event, midimem_t *mf)
     return true;
 }
 
-static dboolean ReadEvent(midi_event_t *event, unsigned int *last_event_type,
-                          midimem_t *mf)
+static dboolean ReadEvent(
+    midi_event_t *event, unsigned int *last_event_type, midimem_t *mf
+)
 {
     byte event_type;
 
@@ -539,10 +562,12 @@ static dboolean ReadFileHeader(midi_file_t *file, midimem_t *mf)
     if (!CheckChunkHeader(&file->header.chunk_header, HEADER_CHUNK_ID) ||
         ntohl(file->header.chunk_header.chunk_size) != 6)
     {
-        lprintf(LO_WARN,
-                "ReadFileHeader: Invalid MIDI chunk header! "
-                "chunk_size=%ld\n",
-                ntohl(file->header.chunk_header.chunk_size));
+        lprintf(
+            LO_WARN,
+            "ReadFileHeader: Invalid MIDI chunk header! "
+            "chunk_size=%ld\n",
+            ntohl(file->header.chunk_header.chunk_size)
+        );
         return false;
     }
 
@@ -551,8 +576,10 @@ static dboolean ReadFileHeader(midi_file_t *file, midimem_t *mf)
 
     if ((format_type != 0 && format_type != 1) || file->num_tracks < 1)
     {
-        lprintf(LO_WARN, "ReadFileHeader: Only type 0/1 "
-                         "MIDI files supported!\n");
+        lprintf(
+            LO_WARN, "ReadFileHeader: Only type 0/1 "
+                     "MIDI files supported!\n"
+        );
         return false;
     }
     // NSM
@@ -617,8 +644,9 @@ unsigned int MIDI_NumTracks(const midi_file_t *file)
 
 // Start iterating over the events in a track.
 
-midi_track_iter_t *MIDI_IterateTrack(const midi_file_t *file,
-                                     unsigned int track)
+midi_track_iter_t *MIDI_IterateTrack(
+    const midi_file_t *file, unsigned int track
+)
 {
     midi_track_iter_t *iter;
 
@@ -834,8 +862,9 @@ midi_event_t **MIDI_GenerateFlatList(midi_file_t *file)
         else if (static_cast<unsigned int>(trackpos[nextrk]) ==
                  file->tracks[nextrk].events.size())
         {
-            lprintf(LO_WARN,
-                    "MIDI_GenerateFlatList: Unexpected end of track\n");
+            lprintf(
+                LO_WARN, "MIDI_GenerateFlatList: Unexpected end of track\n"
+            );
             std::free(trackpos);
             std::free(tracktime);
             std::free(ret);
@@ -846,8 +875,9 @@ midi_event_t **MIDI_GenerateFlatList(midi_file_t *file)
 
     if (trackactive)
     { // unexpected EOF
-        lprintf(LO_WARN,
-                "MIDI_GenerateFlatList: Unexpected end of midi file\n");
+        lprintf(
+            LO_WARN, "MIDI_GenerateFlatList: Unexpected end of midi file\n"
+        );
         std::free(trackpos);
         std::free(tracktime);
         std::free(ret);
@@ -862,8 +892,9 @@ midi_event_t **MIDI_GenerateFlatList(midi_file_t *file)
 
     if (totaldelta < 100)
     {
-        lprintf(LO_WARN, "MIDI_GeneratFlatList: very short file %i\n",
-                totaldelta);
+        lprintf(
+            LO_WARN, "MIDI_GeneratFlatList: very short file %i\n", totaldelta
+        );
         free(ret);
         return nullptr;
     }
@@ -883,8 +914,9 @@ void MIDI_DestroyFlatList(midi_event_t **evs)
 // that the time deltas are in, and samples is an arbitrary unit of which
 // "sndrate" of them occur per second
 
-static double compute_spmc_normal(unsigned mpq, unsigned tempo,
-                                  unsigned sndrate)
+static double compute_spmc_normal(
+    unsigned mpq, unsigned tempo, unsigned sndrate
+)
 { // returns samples per midi clock
 
     // inputs: mpq (midi clocks per quarternote, from header)
@@ -900,8 +932,9 @@ static double compute_spmc_normal(unsigned mpq, unsigned tempo,
     return (double)tempo / 1000000 * sndrate / mpq;
 }
 
-static double compute_spmc_smpte(unsigned smpte_fps, unsigned mpf,
-                                 unsigned sndrate)
+static double compute_spmc_smpte(
+    unsigned smpte_fps, unsigned mpf, unsigned sndrate
+)
 { // returns samples per midi clock
 
     // inputs: smpte_fps (24, 25, 29, 30)
@@ -929,8 +962,9 @@ static double compute_spmc_smpte(unsigned smpte_fps, unsigned mpf,
         fps = smpte_fps * 1000.0 / 1001.0;
         break;
     default:
-        lprintf(LO_WARN, "MIDI_spmc: Unexpected SMPTE timestamp %i\n",
-                smpte_fps);
+        lprintf(
+            LO_WARN, "MIDI_spmc: Unexpected SMPTE timestamp %i\n", smpte_fps
+        );
         // assume
         fps = 30.0;
         break;
@@ -941,8 +975,9 @@ static double compute_spmc_smpte(unsigned smpte_fps, unsigned mpf,
 
 // if event is nullptr, compute with default starting tempo (120BPM)
 
-double MIDI_spmc(const midi_file_t *file, const midi_event_t *ev,
-                 unsigned sndrate)
+double MIDI_spmc(
+    const midi_file_t *file, const midi_event_t *ev, unsigned sndrate
+)
 {
     int smpte_fps;
     unsigned tempo;
@@ -968,8 +1003,10 @@ double MIDI_spmc(const midi_file_t *file, const midi_event_t *ev,
             }
             else
             {
-                lprintf(LO_WARN, "MIDI_spmc: wrong length tempo meta message "
-                                 "in midi file\n");
+                lprintf(
+                    LO_WARN, "MIDI_spmc: wrong length tempo meta message "
+                             "in midi file\n"
+                );
             }
         }
         else
@@ -1070,8 +1107,10 @@ midi_file_t *MIDI_LoadFileSpecial(midimem_t *mf)
             continue;
         }
         // non meta events can simply be copied (excluding delta time)
-        memcpy(&nextev.event_type, &oldev->event_type,
-               sizeof(midi_event_t) - sizeof(unsigned));
+        memcpy(
+            &nextev.event_type, &oldev->event_type,
+            sizeof(midi_event_t) - sizeof(unsigned)
+        );
         epos++;
     }
 
@@ -1126,8 +1165,10 @@ void PrintTrack(midi_track_t *track)
             printf("Delay: %i ticks\n", event->delta_time);
         }
 
-        printf("Event type: %s (%i)\n",
-               MIDI_EventTypeToString(event->event_type), event->event_type);
+        printf(
+            "Event type: %s (%i)\n", MIDI_EventTypeToString(event->event_type),
+            event->event_type
+        );
 
         switch (event->event_type)
         {

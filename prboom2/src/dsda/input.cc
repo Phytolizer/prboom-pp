@@ -41,8 +41,9 @@ static dsda_input_state_t *mousebuttons = &mousearray[1]; // allow [-1]
 static dsda_input_state_t joyarray[MAX_JOY_BUTTONS + 1];
 static dsda_input_state_t *joybuttons = &joyarray[1]; // allow [-1]
 
-static void dsda_InputTrackButtons(dsda_input_state_t *buttons, int max,
-                                   event_t *ev)
+static void dsda_InputTrackButtons(
+    dsda_input_state_t *buttons, int max, event_t *ev
+)
 {
     int i;
 
@@ -118,8 +119,9 @@ void dsda_InputTrackEvent(event_t *ev)
     }
 }
 
-static void dsda_InputTrackGameButtons(dsda_input_state_t *buttons, int max,
-                                       event_t *ev)
+static void dsda_InputTrackGameButtons(
+    dsda_input_state_t *buttons, int max, event_t *ev
+)
 {
     int i;
 
@@ -319,8 +321,9 @@ void dsda_InputSet(int identifier, dsda_input_default_t input)
     dsda_InputSetSpecific(dsda_input_profile, identifier, input);
 }
 
-void dsda_InputSetSpecific(int config_index, int identifier,
-                           dsda_input_default_t input)
+void dsda_InputSetSpecific(
+    int config_index, int identifier, dsda_input_default_t input
+)
 {
     dsda_input_t *p = &dsda_input[config_index][identifier];
 

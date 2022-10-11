@@ -67,9 +67,10 @@ void G_EndGame(void); /* cph - make m_menu.c call a G_* function for this */
 void G_Ticker(void);
 void G_ScreenShot(void);
 void G_ReloadDefaults(void); // killough 3/1/98: loads game defaults
-int G_SaveGameName(char *, size_t, int,
-                   dboolean); /* killough 3/22/98: sets savegame filename */
-void G_SetFastParms(int);     // killough 4/10/98: sets -fast parameters
+int G_SaveGameName(
+    char *, size_t, int, dboolean
+);                        /* killough 3/22/98: sets savegame filename */
+void G_SetFastParms(int); // killough 4/10/98: sets -fast parameters
 void G_DoNewGame(void);
 void G_DoReborn(int playernum);
 void G_DoPlayDemo(void);
@@ -79,15 +80,16 @@ void G_ReadDemoTiccmd(ticcmd_t *cmd);
 void G_WriteDemoTiccmd(ticcmd_t *cmd);
 void G_DoWorldDone(void);
 void G_Compatibility(void);
-const byte *G_ReadOptions(
-    const byte *demo_pointer); /* killough 3/1/98 - cph: const byte* */
+const byte *G_ReadOptions(const byte *demo_pointer
+); /* killough 3/1/98 - cph: const byte* */
 byte *G_WriteOptions(byte *demo_pointer); // killough 3/1/98
 void G_PlayerReborn(int player);
 void G_RestartLevel(void); // CPhipps - menu involked level restart
 void G_DoVictory(void);
 void G_BuildTiccmd(ticcmd_t *cmd); // CPhipps - move decl to header
 void G_ChangedPlayerColour(
-    int pn, int cl); // CPhipps - On-the-fly player colour changing
+    int pn, int cl
+); // CPhipps - On-the-fly player colour changing
 void G_MakeSpecialEvent(buttoncode_t bc, ...); /* cph - new event stuff */
 int G_ValidateMapName(const std::string &mapname, int *pEpi, int *pMap);
 
@@ -100,8 +102,9 @@ void G_SetSpeed(void);
 // e6y
 #define RDH_SAFE 0x00000001
 #define RDH_SKIP_HEADER 0x00000002
-const byte *G_ReadDemoHeaderEx(const byte *demo_pointer, size_t size,
-                               unsigned int params);
+const byte *G_ReadDemoHeaderEx(
+    const byte *demo_pointer, size_t size, unsigned int params
+);
 const byte *G_ReadDemoHeader(const byte *demo_pointer, size_t size);
 void G_CalculateDemoParams(const byte *demo_p);
 

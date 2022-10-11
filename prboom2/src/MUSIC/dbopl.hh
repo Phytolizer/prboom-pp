@@ -57,8 +57,8 @@ typedef Bits(DB_FASTCALL *WaveHandler)(Bitu i, Bitu volume);
 #define DB_FASTCALL
 
 using VolumeHandler = Bits (*)(Operator *self);
-using SynthHandler = Channel *(*)(Channel *self, Chip *chip, Bit32u samples,
-                                  Bit32s *output);
+using SynthHandler =
+    Channel *(*)(Channel *self, Chip *chip, Bit32u samples, Bit32s *output);
 
 // Different synth modes that can generate blocks of data
 using SynthMode = enum

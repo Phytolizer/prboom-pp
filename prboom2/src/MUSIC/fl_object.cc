@@ -21,7 +21,8 @@ fl::FluidSynthObject::FluidSynthObject(fl::FluidSynthObject &&other)
     other.m_ptr = nullptr;
 }
 fl::FluidSynthObject &fl::FluidSynthObject::operator=(
-    fl::FluidSynthObject &&other)
+    fl::FluidSynthObject &&other
+)
 {
     if (&other != this)
     {

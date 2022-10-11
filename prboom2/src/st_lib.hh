@@ -146,27 +146,35 @@ typedef struct
 void STlib_init(void);
 
 // Number widget routines
-void STlib_initNum(st_number_t *n, int x, int y, const patchnum_t *pl, int *num,
-                   dboolean *on, int width);
+void STlib_initNum(
+    st_number_t *n, int x, int y, const patchnum_t *pl, int *num, dboolean *on,
+    int width
+);
 
 void STlib_updateNum(st_number_t *n, int cm, dboolean refresh);
 
 // Percent widget routines
-void STlib_initPercent(st_percent_t *p, int x, int y, const patchnum_t *pl,
-                       int *num, dboolean *on, const patchnum_t *percent);
+void STlib_initPercent(
+    st_percent_t *p, int x, int y, const patchnum_t *pl, int *num, dboolean *on,
+    const patchnum_t *percent
+);
 
 void STlib_updatePercent(st_percent_t *per, int cm, int refresh);
 
 // Multiple Icon widget routines
-void STlib_initMultIcon(st_multicon_t *mi, int x, int y, const patchnum_t *il,
-                        int *inum, dboolean *on);
+void STlib_initMultIcon(
+    st_multicon_t *mi, int x, int y, const patchnum_t *il, int *inum,
+    dboolean *on
+);
 
 void STlib_updateMultIcon(st_multicon_t *mi, dboolean refresh);
 
 // Binary Icon widget routines
 
-void STlib_initBinIcon(st_binicon_t *b, int x, int y, const patchnum_t *i,
-                       dboolean *val, dboolean *on);
+void STlib_initBinIcon(
+    st_binicon_t *b, int x, int y, const patchnum_t *i, dboolean *val,
+    dboolean *on
+);
 
 void STlib_updateBinIcon(st_binicon_t *bi, dboolean refresh);
 

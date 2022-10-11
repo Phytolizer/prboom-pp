@@ -1008,8 +1008,9 @@ static void ReleaseVoice(opl_voice_t *voice)
 
 // Load data to the specified Operator
 
-static void LoadOperatorData(int Operator, const genmidi_op_t *data,
-                             dboolean max_level)
+static void LoadOperatorData(
+    int Operator, const genmidi_op_t *data, dboolean max_level
+)
 {
     int level;
 
@@ -1032,8 +1033,9 @@ static void LoadOperatorData(int Operator, const genmidi_op_t *data,
 
 // Set the instrument for a particular voice.
 
-static void SetVoiceInstrument(opl_voice_t *voice, const genmidi_instr_t *instr,
-                               unsigned int instr_voice)
+static void SetVoiceInstrument(
+    opl_voice_t *voice, const genmidi_instr_t *instr, unsigned int instr_voice
+)
 {
     const genmidi_voice_t *data;
     unsigned int modulating;
@@ -1211,8 +1213,9 @@ static void KeyOffEvent(opl_track_data_t *track, midi_event_t *event)
 
 // Compare the priorities of channels, returning either -1, 0 or 1.
 
-static int CompareChannelPriorities(opl_channel_data_t *chan1,
-                                    opl_channel_data_t *chan2)
+static int CompareChannelPriorities(
+    opl_channel_data_t *chan1, opl_channel_data_t *chan2
+)
 {
     // TODO ...
 
@@ -1381,10 +1384,10 @@ static void UpdateVoiceFrequency(opl_voice_t *voice)
 // instrument (GENMIDI_FLAG_2VOICE), this is called twice for each
 // key on event.
 
-static void VoiceKeyOn(opl_channel_data_t *channel,
-                       const genmidi_instr_t *instrument,
-                       unsigned int instrument_voice, unsigned int key,
-                       unsigned int volume)
+static void VoiceKeyOn(
+    opl_channel_data_t *channel, const genmidi_instr_t *instrument,
+    unsigned int instrument_voice, unsigned int key, unsigned int volume
+)
 {
     opl_voice_t *voice;
 
@@ -1607,8 +1610,9 @@ static void MetaEvent(opl_track_data_t *track, midi_event_t *event)
 
     default:
 #ifdef OPL_MIDI_DEBUG
-        lprintf(LO_WARN, "Unknown MIDI meta event type: %i\n",
-                event->data.meta.type);
+        lprintf(
+            LO_WARN, "Unknown MIDI meta event type: %i\n", event->data.meta.type
+        );
 #endif
         break;
     }
@@ -1796,8 +1800,9 @@ void I_OPL_PlaySong(const void *handle, int looping)
 
     // Allocate track data.
 
-    tracks = (opl_track_data_t *)malloc(MIDI_NumTracks(file) *
-                                        sizeof(opl_track_data_t));
+    tracks = (opl_track_data_t *)malloc(
+        MIDI_NumTracks(file) * sizeof(opl_track_data_t)
+    );
 
     num_tracks = MIDI_NumTracks(file);
     running_tracks = num_tracks;
@@ -1924,8 +1929,9 @@ const void *I_OPL_RegisterSong(const void *data, unsigned len)
     // time numbers we have to traverse the tracks and everything
     if (mf.len < 100)
     {
-        lprintf(LO_WARN, "I_OPL_RegisterSong: Very short MIDI (%li bytes)\n",
-                mf.len);
+        lprintf(
+            LO_WARN, "I_OPL_RegisterSong: Very short MIDI (%li bytes)\n", mf.len
+        );
         return nullptr;
     }
 

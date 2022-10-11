@@ -128,8 +128,9 @@ typedef struct
 {
     netmisctype_t type;
     size_t len;
-    byte value[sizeof(ticcmd_t) * BACKUPTICS - sizeof(netmisctype_t) -
-               sizeof(size_t)];
+    byte value
+        [sizeof(ticcmd_t) * BACKUPTICS - sizeof(netmisctype_t) -
+         sizeof(size_t)];
 } netmisc_t;
 
 typedef struct

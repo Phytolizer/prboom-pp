@@ -147,12 +147,15 @@ void gld_SplitLeftEdge(const GLWall *wall, dboolean detail)
                     GLEXT_glMultiTexCoord2fARB(
                         GL_TEXTURE1_ARB,
                         s * tex->detail_width + tex->detail->offsetx,
-                        t * tex->detail_height + tex->detail->offsety);
+                        t * tex->detail_height + tex->detail->offsety
+                    );
                 }
                 else
                 {
-                    glTexCoord2f(s * tex->detail_width + tex->detail->offsetx,
-                                 t * tex->detail_height + tex->detail->offsety);
+                    glTexCoord2f(
+                        s * tex->detail_width + tex->detail->offsetx,
+                        t * tex->detail_height + tex->detail->offsety
+                    );
                 }
             }
             else
@@ -213,12 +216,15 @@ void gld_SplitRightEdge(const GLWall *wall, dboolean detail)
                     GLEXT_glMultiTexCoord2fARB(
                         GL_TEXTURE1_ARB,
                         s * tex->detail_width + tex->detail->offsetx,
-                        t * tex->detail_height + tex->detail->offsety);
+                        t * tex->detail_height + tex->detail->offsety
+                    );
                 }
                 else
                 {
-                    glTexCoord2f(s * tex->detail_width + tex->detail->offsetx,
-                                 t * tex->detail_height + tex->detail->offsety);
+                    glTexCoord2f(
+                        s * tex->detail_width + tex->detail->offsetx,
+                        t * tex->detail_height + tex->detail->offsety
+                    );
                 }
             }
             else
@@ -285,8 +291,10 @@ void gld_RecalcVertexHeights(const vertex_t *v)
 
                 if (height < vi->heightlist[k])
                 {
-                    memmove(&vi->heightlist[k + 1], &vi->heightlist[k],
-                            sizeof(vi->heightlist[0]) * (vi->numheights - k));
+                    memmove(
+                        &vi->heightlist[k + 1], &vi->heightlist[k],
+                        sizeof(vi->heightlist[0]) * (vi->numheights - k)
+                    );
                     vi->heightlist[k] = height;
                     vi->numheights++;
                     break;
@@ -322,8 +330,9 @@ static void AddToVertex(const sector_t *sec, int **list, unsigned int *size)
             return;
         }
     }
-    (*list) = static_cast<int *>(
-        std::realloc((*list), sizeof(*list) * ((*size) + 1)));
+    (*list) =
+        static_cast<int *>(std::realloc((*list), sizeof(*list) * ((*size) + 1))
+        );
     (*list)[(*size)] = secno;
     (*size)++;
 }
@@ -333,8 +342,9 @@ static void AddToVertex(const sector_t *sec, int **list, unsigned int *size)
 //
 //
 //==========================================================================
-static void AddToSplitBySector(vertexsplit_info_t *vi,
-                               splitsbysector_t *splitsbysector)
+static void AddToSplitBySector(
+    vertexsplit_info_t *vi, splitsbysector_t *splitsbysector
+)
 {
     int i;
     for (i = 0; i < splitsbysector->numsplits; i++)
@@ -346,7 +356,8 @@ static void AddToSplitBySector(vertexsplit_info_t *vi,
     }
     splitsbysector->splits = static_cast<vertexsplit_info_t **>(std::realloc(
         splitsbysector->splits,
-        sizeof(splitsbysector->splits) * (splitsbysector->numsplits + 1)));
+        sizeof(splitsbysector->splits) * (splitsbysector->numsplits + 1)
+    ));
     splitsbysector->splits[splitsbysector->numsplits] = vi;
     splitsbysector->numsplits++;
 }
@@ -368,10 +379,12 @@ void gld_InitVertexData()
         return;
     }
 
-    vt_sectorlists = static_cast<int **>(
-        std::calloc(sizeof(vt_sectorlists[0]), numvertexes));
+    vt_sectorlists =
+        static_cast<int **>(std::calloc(sizeof(vt_sectorlists[0]), numvertexes)
+        );
     vt_sectorlists_size = static_cast<unsigned int *>(
-        std::calloc(sizeof(vt_sectorlists_size[0]), numvertexes));
+        std::calloc(sizeof(vt_sectorlists_size[0]), numvertexes)
+    );
 
     for (i = 0; i < numlines; i++)
     {
@@ -387,13 +400,17 @@ void gld_InitVertexData()
 
                 if (sec)
                 {
-                    AddToVertex(sec, &vt_sectorlists[v - vertexes],
-                                &vt_sectorlists_size[v - vertexes]);
+                    AddToVertex(
+                        sec, &vt_sectorlists[v - vertexes],
+                        &vt_sectorlists_size[v - vertexes]
+                    );
                     if (sec->heightsec >= 0)
                     {
-                        AddToVertex(&sectors[sec->heightsec],
-                                    &vt_sectorlists[v - vertexes],
-                                    &vt_sectorlists_size[v - vertexes]);
+                        AddToVertex(
+                            &sectors[sec->heightsec],
+                            &vt_sectorlists[v - vertexes],
+                            &vt_sectorlists_size[v - vertexes]
+                        );
                     }
                 }
             }
@@ -448,7 +465,8 @@ void gld_InitVertexData()
     }
 
     gl_splitsbysector = static_cast<splitsbysector_t *>(
-        malloc(sizeof(gl_splitsbysector[0]) * numsectors));
+        malloc(sizeof(gl_splitsbysector[0]) * numsectors)
+    );
     memset(gl_splitsbysector, 0, sizeof(gl_splitsbysector[0]) * numsectors);
 
     for (i = 0; i < numsectors; i++)

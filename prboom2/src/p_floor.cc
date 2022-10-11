@@ -68,8 +68,10 @@
 //  pastdest - plane moved normally and is now at destination height
 //  crushed - plane encountered an obstacle, is holding until removed
 //
-result_e T_MovePlane(sector_t *sector, fixed_t speed, fixed_t dest,
-                     dboolean crush, int floorOrCeiling, int direction)
+result_e T_MovePlane(
+    sector_t *sector, fixed_t speed, fixed_t dest, dboolean crush,
+    int floorOrCeiling, int direction
+)
 {
     dboolean flag;
     fixed_t lastpos;
@@ -314,9 +316,9 @@ void T_MoveFloor(floormove_t *floor)
             case lowerAndChange:
                 floor->sector->special = static_cast<short>(floor->newspecial);
                 // jff add to fix bug in special transfers from changes
-                floor->sector->oldspecial = static_cast<short>(
-                    floor->oldspecial); // heretic_note: here and elsewhere, not
-                                        // in heretic
+                floor->sector->oldspecial = static_cast<short>(floor->oldspecial
+                ); // heretic_note: here and elsewhere, not
+                   // in heretic
                 floor->sector->floorpic = floor->texture;
                 break;
             case genFloorChgT:
@@ -335,8 +337,8 @@ void T_MoveFloor(floormove_t *floor)
         }
 
         floor->sector->floordata = nullptr; // jff 2/22/98
-        P_RemoveThinker(
-            &floor->thinker); // remove this floor from list of movers
+        P_RemoveThinker(&floor->thinker
+        ); // remove this floor from list of movers
 
         // jff 2/26/98 implement stair retrigger lockout while still building
         // note this only applies to the retriggerable generalized stairs
@@ -403,10 +405,11 @@ void T_MoveElevator(elevator_t *elevator)
              elevator->direction);
         if (res == ok || res == pastdest)
         { // jff 4/7/98 don't move ceil if blocked
-            T_MovePlane(elevator->sector, elevator->speed,
-                        elevator->floordestheight, 0,
-                        0, // move ceiling
-                        elevator->direction);
+            T_MovePlane(
+                elevator->sector, elevator->speed, elevator->floordestheight, 0,
+                0, // move ceiling
+                elevator->direction
+            );
         }
     }
     else // up
@@ -417,10 +420,12 @@ void T_MoveElevator(elevator_t *elevator)
              elevator->direction);
         if (res == ok || res == pastdest)
         { // jff 4/7/98 don't move floor if blocked
-            T_MovePlane(elevator->sector, elevator->speed,
-                        elevator->ceilingdestheight, 0,
-                        1, // move floor
-                        elevator->direction);
+            T_MovePlane(
+                elevator->sector, elevator->speed, elevator->ceilingdestheight,
+                0,
+                1, // move floor
+                elevator->direction
+            );
         }
     }
 
@@ -791,8 +796,9 @@ int EV_DoChange(line_t *line, change_e changetype)
  * stairs
  * - Boom fixed the bug, and MBF/PrBoom without comp_stairs work right
  */
-static inline int P_FindSectorFromLineTagWithLowerBound(line_t *l, int start,
-                                                        int min)
+static inline int P_FindSectorFromLineTagWithLowerBound(
+    line_t *l, int start, int min
+)
 {
     /* Emulate original Doom's linear lower-bounded P_FindSectorFromLineTag
      * as needed */
@@ -828,8 +834,8 @@ int EV_BuildStairs(line_t *line, stair_e type)
     }; // e6y
 
     // start a stair at each sector tagged the same as the linedef
-    while ((ssec = P_FindSectorFromLineTagWithLowerBound(line, ssec,
-                                                         minssec)) >= 0)
+    while ((ssec = P_FindSectorFromLineTagWithLowerBound(line, ssec, minssec)
+           ) >= 0)
     {
         // e6y int
         secnum = ssec;
@@ -1097,11 +1103,13 @@ int EV_DoDonut(line_t *line)
         {
             if (demo_compatibility)
             {
-                lprintf(LO_ERROR,
-                        "EV_DoDonut: lowest numbered line (linedef: %d) "
-                        "around pillar (sector: %d) must be two-sided. "
-                        "Unexpected behavior may occur in Vanilla Doom.\n",
-                        s1->lines[0]->iLineID, s1->iSectorID);
+                lprintf(
+                    LO_ERROR,
+                    "EV_DoDonut: lowest numbered line (linedef: %d) "
+                    "around pillar (sector: %d) must be two-sided. "
+                    "Unexpected behavior may occur in Vanilla Doom.\n",
+                    s1->lines[0]->iLineID, s1->iSectorID
+                );
                 continue;
             }
 
@@ -1132,8 +1140,7 @@ int EV_DoDonut(line_t *line)
                     continue;
                 }
             }
-            else if (!s2->lines[i]->backsector ||
-                     s2->lines[i]->backsector == s1)
+            else if (!s2->lines[i]->backsector || s2->lines[i]->backsector == s1)
             {
                 continue;
             }
@@ -1152,13 +1159,16 @@ int EV_DoDonut(line_t *line)
                     LO_ERROR,
                     "EV_DoDonut: Access violation at linedef %d, sector %d. "
                     "Unexpected behavior may occur in Vanilla Doom.\n",
-                    line->iLineID, s1->iSectorID);
+                    line->iLineID, s1->iSectorID
+                );
                 if (DonutOverrun(&s3_floorheight, &s3_floorpic))
                 {
-                    lprintf(LO_WARN,
-                            "EV_DoDonut: Emulated with floorheight %d, floor "
-                            "pic %d.\n",
-                            s3_floorheight >> 16, s3_floorpic);
+                    lprintf(
+                        LO_WARN,
+                        "EV_DoDonut: Emulated with floorheight %d, floor "
+                        "pic %d.\n",
+                        s3_floorheight >> 16, s3_floorpic
+                    );
                 }
                 else
                 {

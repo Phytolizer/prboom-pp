@@ -4176,80 +4176,90 @@ void M_SaveDefaults()
         else
             // e6y: arrays
             if (defaults[i].type == default_t::def_arr)
-        {
-            int k;
-            fprintf(f, "%-*s \"%s\"\n", maxlen, defaults[i].name,
-                    *(defaults[i].location.ppsz));
-            for (k = 0; k < *(defaults[i].location.array_size); k++)
             {
-                char ***arr = defaults[i].location.array_data;
-                if ((*arr)[k])
+                int k;
+                fprintf(
+                    f, "%-*s \"%s\"\n", maxlen, defaults[i].name,
+                    *(defaults[i].location.ppsz)
+                );
+                for (k = 0; k < *(defaults[i].location.array_size); k++)
                 {
-                    char def[80];
-                    sprintf(def, "%s%d", *(defaults[i].location.ppsz), k);
-                    fprintf(f, "%-*s \"%s\"\n", maxlen, def, (*arr)[k]);
-                }
-            }
-            i += defaults[i].defaultvalue.array_size;
-        }
-        else
-
-            // CPhipps - modified for new default_t form
-            if (!IS_STRING(defaults[i])) // jff 4/10/98 kill super-hack on
-                                         // pointer value
-        {
-            // CPhipps - remove keycode hack
-            // killough 3/6/98: use spaces instead of tabs for uniform
-            // justification
-            if (defaults[i].type == default_t::def_hex)
-            {
-                fprintf(f, "%-*s 0x%x\n", maxlen, defaults[i].name,
-                        *(defaults[i].location.pi));
-            }
-            else if (defaults[i].type == default_t::def_input)
-            {
-                int a, j;
-                dsda_input_t *input[DSDA_INPUT_PROFILE_COUNT];
-                dsda_InputCopy(defaults[i].identifier, input);
-
-                fprintf(f, "%-*s", maxlen, defaults[i].name);
-
-                for (a = 0; a < DSDA_INPUT_PROFILE_COUNT; ++a)
-                {
-                    if (input[a]->num_keys)
+                    char ***arr = defaults[i].location.array_data;
+                    if ((*arr)[k])
                     {
-                        fprintf(f, " %i", input[a]->key[0]);
-                        for (j = 1; j < input[a]->num_keys; ++j)
+                        char def[80];
+                        sprintf(def, "%s%d", *(defaults[i].location.ppsz), k);
+                        fprintf(f, "%-*s \"%s\"\n", maxlen, def, (*arr)[k]);
+                    }
+                }
+                i += defaults[i].defaultvalue.array_size;
+            }
+            else
+
+                // CPhipps - modified for new default_t form
+                if (!IS_STRING(defaults[i])) // jff 4/10/98 kill super-hack on
+                                             // pointer value
+                {
+                    // CPhipps - remove keycode hack
+                    // killough 3/6/98: use spaces instead of tabs for uniform
+                    // justification
+                    if (defaults[i].type == default_t::def_hex)
+                    {
+                        fprintf(
+                            f, "%-*s 0x%x\n", maxlen, defaults[i].name,
+                            *(defaults[i].location.pi)
+                        );
+                    }
+                    else if (defaults[i].type == default_t::def_input)
+                    {
+                        int a, j;
+                        dsda_input_t *input[DSDA_INPUT_PROFILE_COUNT];
+                        dsda_InputCopy(defaults[i].identifier, input);
+
+                        fprintf(f, "%-*s", maxlen, defaults[i].name);
+
+                        for (a = 0; a < DSDA_INPUT_PROFILE_COUNT; ++a)
                         {
-                            fprintf(f, ",%i", input[a]->key[j]);
+                            if (input[a]->num_keys)
+                            {
+                                fprintf(f, " %i", input[a]->key[0]);
+                                for (j = 1; j < input[a]->num_keys; ++j)
+                                {
+                                    fprintf(f, ",%i", input[a]->key[j]);
+                                }
+                            }
+                            else
+                            {
+                                fprintf(f, " 0");
+                            }
+
+                            fprintf(
+                                f, " %i %i", input[a]->mouseb, input[a]->joyb
+                            );
+
+                            if (a != DSDA_INPUT_PROFILE_COUNT - 1)
+                            {
+                                fprintf(f, " |");
+                            }
                         }
+
+                        fprintf(f, "\n");
                     }
                     else
                     {
-                        fprintf(f, " 0");
-                    }
-
-                    fprintf(f, " %i %i", input[a]->mouseb, input[a]->joyb);
-
-                    if (a != DSDA_INPUT_PROFILE_COUNT - 1)
-                    {
-                        fprintf(f, " |");
+                        fprintf(
+                            f, "%-*s %i\n", maxlen, defaults[i].name,
+                            *(defaults[i].location.pi)
+                        );
                     }
                 }
-
-                fprintf(f, "\n");
-            }
-            else
-            {
-                fprintf(f, "%-*s %i\n", maxlen, defaults[i].name,
-                        *(defaults[i].location.pi));
-            }
-        }
-        else
-        {
-            fprintf(f, "%-*s \"%s\"\n", maxlen, defaults[i].name,
-                    *(defaults[i].location.ppsz));
-        }
+                else
+                {
+                    fprintf(
+                        f, "%-*s \"%s\"\n", maxlen, defaults[i].name,
+                        *(defaults[i].location.ppsz)
+                    );
+                }
     }
 
     fclose(f);
@@ -4309,8 +4319,9 @@ void M_LoadDefaults()
             int c;
             for (c = 0; c < DSDA_INPUT_PROFILE_COUNT; ++c)
             {
-                dsda_InputSetSpecific(c, defaults[i].identifier,
-                                      defaults[i].inputs[c]);
+                dsda_InputSetSpecific(
+                    c, defaults[i].identifier, defaults[i].inputs[c]
+                );
             }
         }
         else
@@ -4361,7 +4372,8 @@ void M_LoadDefaults()
             *(item->location.array_size) = 0;
             // load predefined data
             *arr = static_cast<char **>(
-                realloc(*arr, sizeof(char *) * item->defaultvalue.array_size));
+                realloc(*arr, sizeof(char *) * item->defaultvalue.array_size)
+            );
             *(item->location.array_size) = item->defaultvalue.array_size;
             item->location.array_index = 0;
             for (k = 0; k < item->defaultvalue.array_size; k++)
@@ -4426,8 +4438,10 @@ void M_LoadDefaults()
                     len = strlen(strparm);
                     newstring = static_cast<char *>(malloc(len));
                     strparm[len - 1] = 0; // clears trailing double-quote mark
-                    strcpy(newstring,
-                           strparm + 1); // clears leading double-quote mark
+                    strcpy(
+                        newstring,
+                        strparm + 1
+                    ); // clears leading double-quote mark
                 }
                 else if ((strparm[0] == '0') && (strparm[1] == 'x'))
                 {
@@ -4446,15 +4460,18 @@ void M_LoadDefaults()
                     int *pcount = item->location.array_size;
                     int *index = &item->location.array_index;
                     char ***arr = (char ***)(item->location.array_data);
-                    if (!strncmp(def, *(item->location.ppsz),
-                                 strlen(*(item->location.ppsz))) &&
+                    if (!strncmp(
+                            def, *(item->location.ppsz),
+                            strlen(*(item->location.ppsz))
+                        ) &&
                         ((item->maxvalue == UL) ||
                          *(item->location.array_size) < item->maxvalue))
                     {
                         if ((*index) + 1 > *pcount)
                         {
                             *arr = static_cast<char **>(
-                                realloc(*arr, sizeof(char *) * ((*index) + 1)));
+                                realloc(*arr, sizeof(char *) * ((*index) + 1))
+                            );
                             (*pcount)++;
                         }
                         else
@@ -4500,7 +4517,8 @@ void M_LoadDefaults()
                             lprintf(
                                 LO_WARN,
                                 "M_LoadDefaults: Type mismatch reading %s\n",
-                                defaults[i].name);
+                                defaults[i].name
+                            );
                             continue;
                         }
                         if (!isstring)
@@ -4517,8 +4535,10 @@ void M_LoadDefaults()
                                 config_scan_p = strparm;
                                 do
                                 {
-                                    count = sscanf(config_scan_p, "%79s %d %d",
-                                                   keys, &mouseb, &joyb);
+                                    count = sscanf(
+                                        config_scan_p, "%79s %d %d", keys,
+                                        &mouseb, &joyb
+                                    );
 
                                     if (count != 3)
                                     {
@@ -4526,12 +4546,15 @@ void M_LoadDefaults()
                                     }
 
                                     dsda_InputResetSpecific(
-                                        index, defaults[i].identifier);
+                                        index, defaults[i].identifier
+                                    );
 
                                     dsda_InputAddSpecificMouseB(
-                                        index, defaults[i].identifier, mouseb);
+                                        index, defaults[i].identifier, mouseb
+                                    );
                                     dsda_InputAddSpecificJoyB(
-                                        index, defaults[i].identifier, joyb);
+                                        index, defaults[i].identifier, joyb
+                                    );
 
                                     key_scan_p = strtok(keys, ",");
                                     do
@@ -4544,7 +4567,8 @@ void M_LoadDefaults()
                                         }
 
                                         dsda_InputAddSpecificKey(
-                                            index, defaults[i].identifier, key);
+                                            index, defaults[i].identifier, key
+                                        );
 
                                         key_scan_p = strtok(nullptr, ",");
                                     } while (key_scan_p);
@@ -4712,18 +4736,22 @@ void M_ScreenShot()
             do
             {
                 int size = doom_snprintf(
-                    nullptr, 0, "%s/doom%02d" SCREENSHOT_EXT, shot_dir, shot);
+                    nullptr, 0, "%s/doom%02d" SCREENSHOT_EXT, shot_dir, shot
+                );
                 lbmname = static_cast<char *>(realloc(lbmname, size + 1));
-                doom_snprintf(lbmname, size + 1, "%s/doom%02d" SCREENSHOT_EXT,
-                              shot_dir, shot);
+                doom_snprintf(
+                    lbmname, size + 1, "%s/doom%02d" SCREENSHOT_EXT, shot_dir,
+                    shot
+                );
                 shot++;
             } while (!access(lbmname, 0) && (shot != startshot) &&
                      (shot < 10000));
 
             if (access(lbmname, 0))
             {
-                S_StartSound(nullptr,
-                             gamemode == commercial ? sfx_radio : sfx_tink);
+                S_StartSound(
+                    nullptr, gamemode == commercial ? sfx_radio : sfx_tink
+                );
                 M_DoScreenShot(lbmname); // cph
                 success = 1;
             }
@@ -4740,8 +4768,10 @@ void M_ScreenShot()
 
     int M_StrToInt(const char *s, int *l)
     {
-        return ((sscanf(s, " 0x%x", l) == 1) || (sscanf(s, " 0X%x", l) == 1) ||
-                (sscanf(s, " 0%o", l) == 1) || (sscanf(s, " %d", l) == 1));
+        return (
+            (sscanf(s, " 0x%x", l) == 1) || (sscanf(s, " 0X%x", l) == 1) ||
+            (sscanf(s, " 0%o", l) == 1) || (sscanf(s, " %d", l) == 1)
+        );
     }
 
     int M_StrToFloat(const char *s, float *f)

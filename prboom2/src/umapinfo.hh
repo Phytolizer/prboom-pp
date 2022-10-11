@@ -61,13 +61,15 @@ struct MapList
     struct MapEntry *maps;
 };
 
-typedef void (*umapinfo_errorfunc)(const char *fmt,
-                                   ...); // this must not return!
+typedef void (*umapinfo_errorfunc
+)(const char *fmt,
+  ...); // this must not return!
 
 extern struct MapList Maps;
 
-int ParseUMapInfo(const unsigned char *buffer, std::size_t length,
-                  umapinfo_errorfunc err);
+int ParseUMapInfo(
+    const unsigned char *buffer, std::size_t length, umapinfo_errorfunc err
+);
 void FreeMapList();
 struct MapProperty *FindProperty(struct MapEntry *map, const char *name);
 

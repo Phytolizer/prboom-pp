@@ -102,10 +102,10 @@ void P_InitSwitchList()
         if (index + 1 >= max_numswitches)
         {
             switchlist = static_cast<int *>(std::realloc(
-                switchlist,
-                sizeof *switchlist *
-                    (max_numswitches =
-                         max_numswitches ? max_numswitches * 2 : 8)));
+                switchlist, sizeof *switchlist *
+                                (max_numswitches =
+                                     max_numswitches ? max_numswitches * 2 : 8)
+            ));
         }
         if (LittleShort(alphSwitchList[i].episode) <=
             episode) // jff 5/11/98 endianess
@@ -123,14 +123,18 @@ void P_InitSwitchList()
             texture1 = R_CheckTextureNumForName(alphSwitchList[i].name1);
             if (texture1 == -1)
             {
-                lprintf(LO_WARN, "P_InitSwitchList: unknown texture %s\n",
-                        alphSwitchList[i].name1);
+                lprintf(
+                    LO_WARN, "P_InitSwitchList: unknown texture %s\n",
+                    alphSwitchList[i].name1
+                );
             }
             texture2 = R_CheckTextureNumForName(alphSwitchList[i].name2);
             if (texture2 == -1)
             {
-                lprintf(LO_WARN, "P_InitSwitchList: unknown texture %s\n",
-                        alphSwitchList[i].name2);
+                lprintf(
+                    LO_WARN, "P_InitSwitchList: unknown texture %s\n",
+                    alphSwitchList[i].name2
+                );
             }
             if (texture1 != -1 && texture2 != -1)
             {
@@ -321,8 +325,9 @@ int GetPairForSwitchTexture(side_t *side)
 // Passed the thing using the line, the line being used, and the side used
 // Returns true if a thinker was created
 //
-dboolean P_UseSpecialLine(mobj_t *thing, line_t *line, int side,
-                          dboolean bossaction)
+dboolean P_UseSpecialLine(
+    mobj_t *thing, line_t *line, int side, dboolean bossaction
+)
 {
     if (heretic)
     {
@@ -1539,8 +1544,9 @@ dboolean P_UseSpecialLine(mobj_t *thing, line_t *line, int side,
 
 // heretic
 
-dboolean Heretic_P_UseSpecialLine(mobj_t *thing, line_t *line, int side,
-                                  dboolean bossaction)
+dboolean Heretic_P_UseSpecialLine(
+    mobj_t *thing, line_t *line, int side, dboolean bossaction
+)
 {
     // This condition never reached in heretic
     if (side || bossaction)

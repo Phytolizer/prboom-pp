@@ -68,32 +68,33 @@ using dsda_ghost_file_t = struct
     int count;
 };
 
-mobjinfo_t dsda_ghost_info = {-1,                             // doomednum
-                              S_PLAYER,                       // spawnstate
-                              0,                              // spawnhealth
-                              S_PLAYER_RUN1,                  // seestate
-                              sfx_none,                       // seesound
-                              0,                              // reactiontime
-                              sfx_none,                       // attacksound
-                              S_PLAYER_PAIN,                  // painstate
-                              0,                              // painchance
-                              sfx_none,                       // painsound
-                              S_NULL,                         // meleestate
-                              S_PLAYER_ATTACK1,               // missilestate
-                              S_PLAYER_DEATH1,                // deathstate
-                              S_PLAYER_GIB1,                  // xdeathstate
-                              sfx_none,                       // deathsound
-                              0,                              // speed
-                              0,                              // radius
-                              0,                              // height
-                              0,                              // mass
-                              0,                              // damage
-                              sfx_none,                       // activesound
-                              MF_NOBLOCKMAP | MF_TRANSLUCENT, // flags
-                              S_NULL,                         // raisestate
-                              MT_NULL,
-                              S_NULL,
-                              0};
+mobjinfo_t dsda_ghost_info = {
+    -1,                             // doomednum
+    S_PLAYER,                       // spawnstate
+    0,                              // spawnhealth
+    S_PLAYER_RUN1,                  // seestate
+    sfx_none,                       // seesound
+    0,                              // reactiontime
+    sfx_none,                       // attacksound
+    S_PLAYER_PAIN,                  // painstate
+    0,                              // painchance
+    sfx_none,                       // painsound
+    S_NULL,                         // meleestate
+    S_PLAYER_ATTACK1,               // missilestate
+    S_PLAYER_DEATH1,                // deathstate
+    S_PLAYER_GIB1,                  // xdeathstate
+    sfx_none,                       // deathsound
+    0,                              // speed
+    0,                              // radius
+    0,                              // height
+    0,                              // mass
+    0,                              // damage
+    sfx_none,                       // activesound
+    MF_NOBLOCKMAP | MF_TRANSLUCENT, // flags
+    S_NULL,                         // raisestate
+    MT_NULL,
+    S_NULL,
+    0};
 
 FILE *dsda_ghost_export;
 dsda_ghost_import_t dsda_ghost_import;
@@ -137,8 +138,9 @@ void dsda_OpenGhostFile(int arg_i, dsda_ghost_file_t *ghost_file)
     if (ghost_file->version < DSDA_GHOST_MIN_VERSION ||
         ghost_file->version > DSDA_GHOST_VERSION)
     {
-        I_Error("dsda_OpenGhostImport: unsupported ghost version %s",
-                myargv[arg_i]);
+        I_Error(
+            "dsda_OpenGhostImport: unsupported ghost version %s", myargv[arg_i]
+        );
     }
 
     if (ghost_file->version == 1)
@@ -180,7 +182,8 @@ void dsda_InitGhostImport(int option_i)
     }
 
     dsda_ghost_import.ghosts = static_cast<dsda_ghost_t *>(
-        calloc(dsda_ghost_import.count, sizeof(dsda_ghost_t)));
+        calloc(dsda_ghost_import.count, sizeof(dsda_ghost_t))
+    );
 
     arg_i = option_i;
     while (++arg_i != myargc && *myargv[arg_i] != '-')
@@ -363,8 +366,9 @@ void dsda_UpdateGhosts(void * /* _void */)
         // if the ghost was left behind, catch it up
         do
         {
-            read_result = fread(&ghost->frame, sizeof(dsda_ghost_frame_t), 1,
-                                ghost->fstream);
+            read_result = fread(
+                &ghost->frame, sizeof(dsda_ghost_frame_t), 1, ghost->fstream
+            );
 
             if (read_result != 1)
             {

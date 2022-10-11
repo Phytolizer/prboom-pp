@@ -698,8 +698,8 @@ static dboolean PIT_CheckThing(mobj_t *thing) // killough 3/26/98: make static
 
         if (tmthing->target &&
             (tmthing->target->type == thing->type ||
-             (tmthing->target->type == MT_KNIGHT &&
-              thing->type == MT_BRUISER) ||
+             (tmthing->target->type == MT_KNIGHT && thing->type == MT_BRUISER
+             ) ||
              (tmthing->target->type == MT_BRUISER && thing->type == MT_KNIGHT)))
         {
             if (thing == tmthing->target)
@@ -823,8 +823,10 @@ static dboolean PIT_CheckThing(mobj_t *thing) // killough 3/26/98: make static
         return !(thing->flags & MF_SOLID);
     }
 
-    return !((thing->flags & MF_SOLID && !(thing->flags & MF_NOCLIP)) &&
-             (tmthing->flags & MF_SOLID || demo_compatibility));
+    return !(
+        (thing->flags & MF_SOLID && !(thing->flags & MF_NOCLIP)) &&
+        (tmthing->flags & MF_SOLID || demo_compatibility)
+    );
 
     // return !(thing->flags & MF_SOLID);   // old code -- killough
 }
@@ -1004,8 +1006,10 @@ dboolean P_CheckPosition(mobj_t *thing, fixed_t x, fixed_t y)
 // Attempt to move to a new position,
 // crossing special lines unless MF_TELEPORT is set.
 //
-dboolean P_TryMove(mobj_t *thing, fixed_t x, fixed_t y,
-                   int dropoff) // killough 3/15/98: allow dropoff as option
+dboolean P_TryMove(
+    mobj_t *thing, fixed_t x, fixed_t y,
+    int dropoff
+) // killough 3/15/98: allow dropoff as option
 {
     fixed_t oldx;
     fixed_t oldy;
@@ -1178,8 +1182,9 @@ dboolean P_TryMove(mobj_t *thing, fixed_t x, fixed_t y,
                          P_PointOnLineSide(oldx, oldy, spechit[numspechit])) !=
                     P_PointOnLineSide(thing->x, thing->y, spechit[numspechit]))
                 {
-                    P_CrossSpecialLine(spechit[numspechit], oldside, thing,
-                                       false);
+                    P_CrossSpecialLine(
+                        spechit[numspechit], oldside, thing, false
+                    );
                 }
             }
         }
@@ -1237,8 +1242,9 @@ static dboolean PIT_ApplyTorque(line_t *ld)
                 y = t;
             }
 
-            y = finesine[(tantoangle[FixedDiv(y, x) >> DBITS] + ANG90) >>
-                         ANGLETOFINESHIFT];
+            y = finesine
+                [(tantoangle[FixedDiv(y, x) >> DBITS] + ANG90) >>
+                 ANGLETOFINESHIFT];
 
             /* Momentum is proportional to distance between the
              * object's center of mass and the pivot linedef.
@@ -1248,10 +1254,13 @@ static dboolean PIT_ApplyTorque(line_t *ld)
              * the same amount of pseudotorque, so that oscillations
              * are prevented, yet it has a chance to reach equilibrium.
              */
-            dist = FixedDiv(FixedMul(dist, (mo->gear < OVERDRIVE)
-                                               ? y << -(mo->gear - OVERDRIVE)
-                                               : y >> +(mo->gear - OVERDRIVE)),
-                            x);
+            dist = FixedDiv(
+                FixedMul(
+                    dist, (mo->gear < OVERDRIVE) ? y << -(mo->gear - OVERDRIVE)
+                                                 : y >> +(mo->gear - OVERDRIVE)
+                ),
+                x
+            );
 
             /* Apply momentum away from the pivot linedef. */
 
@@ -1629,12 +1638,18 @@ void P_SlideMove(mobj_t *mo)
 
         bestslidefrac = FRACUNIT + 1;
 
-        P_PathTraverse(leadx, leady, leadx + mo->momx, leady + mo->momy,
-                       PT_ADDLINES, PTR_SlideTraverse);
-        P_PathTraverse(trailx, leady, trailx + mo->momx, leady + mo->momy,
-                       PT_ADDLINES, PTR_SlideTraverse);
-        P_PathTraverse(leadx, traily, leadx + mo->momx, traily + mo->momy,
-                       PT_ADDLINES, PTR_SlideTraverse);
+        P_PathTraverse(
+            leadx, leady, leadx + mo->momx, leady + mo->momy, PT_ADDLINES,
+            PTR_SlideTraverse
+        );
+        P_PathTraverse(
+            trailx, leady, trailx + mo->momx, leady + mo->momy, PT_ADDLINES,
+            PTR_SlideTraverse
+        );
+        P_PathTraverse(
+            leadx, traily, leadx + mo->momx, traily + mo->momy, PT_ADDLINES,
+            PTR_SlideTraverse
+        );
 
         // move up to the wall
 
@@ -2057,8 +2072,9 @@ dboolean PTR_ShootTraverse(intercept_t *in)
 //
 // P_AimLineAttack
 //
-fixed_t P_AimLineAttack(mobj_t *t1, angle_t angle, fixed_t distance,
-                        uint_64_t mask)
+fixed_t P_AimLineAttack(
+    mobj_t *t1, angle_t angle, fixed_t distance, uint_64_t mask
+)
 {
     fixed_t x2;
     fixed_t y2;
@@ -2083,8 +2099,9 @@ fixed_t P_AimLineAttack(mobj_t *t1, angle_t angle, fixed_t distance,
     /* killough 8/2/98: prevent friends from aiming at friends */
     aim_flags_mask = mask;
 
-    P_PathTraverse(t1->x, t1->y, x2, y2, PT_ADDLINES | PT_ADDTHINGS,
-                   PTR_AimTraverse);
+    P_PathTraverse(
+        t1->x, t1->y, x2, y2, PT_ADDLINES | PT_ADDTHINGS, PTR_AimTraverse
+    );
 
     if (linetarget)
     {
@@ -2100,8 +2117,9 @@ fixed_t P_AimLineAttack(mobj_t *t1, angle_t angle, fixed_t distance,
 // that will leave linetarget set.
 //
 
-void P_LineAttack(mobj_t *t1, angle_t angle, fixed_t distance, fixed_t slope,
-                  int damage)
+void P_LineAttack(
+    mobj_t *t1, angle_t angle, fixed_t distance, fixed_t slope, int damage
+)
 {
     fixed_t x2;
     fixed_t y2;
@@ -2119,8 +2137,9 @@ void P_LineAttack(mobj_t *t1, angle_t angle, fixed_t distance, fixed_t slope,
     attackrange = distance;
     aimslope = slope;
 
-    P_PathTraverse(t1->x, t1->y, x2, y2, PT_ADDLINES | PT_ADDTHINGS,
-                   PTR_ShootTraverse);
+    P_PathTraverse(
+        t1->x, t1->y, x2, y2, PT_ADDLINES | PT_ADDTHINGS, PTR_ShootTraverse
+    );
 }
 
 //
@@ -2198,7 +2217,9 @@ dboolean PTR_NoWayTraverse(intercept_t *in)
                        // Too high it blocks
                        openbottom > usething->z + 24 * FRACUNIT ||
                        // Too low it blocks
-                       opentop < usething->z + usething->height));
+                       opentop < usething->z + usething->height
+               )
+           );
 }
 
 //
@@ -2415,8 +2436,10 @@ dboolean PIT_ChangeSector(mobj_t *thing)
         dsda_WatchCrush(thing, 10);
 
         // spray blood in a random direction
-        mo = P_SpawnMobj(thing->x, thing->y, thing->z + thing->height / 2,
-                         static_cast<mobjtype_t>(g_mt_blood));
+        mo = P_SpawnMobj(
+            thing->x, thing->y, thing->z + thing->height / 2,
+            static_cast<mobjtype_t>(g_mt_blood)
+        );
         mo->flags |= P_ColoredBlood(thing);
 
         /* killough 8/10/98: remove dependence on order of evaluation */
@@ -2520,8 +2543,9 @@ dboolean P_CheckSector(sector_t *sector, dboolean crunch)
 #include "z_bmalloc.hh"
 
 // FIXME this is awful
-IMPLEMENT_BLOCK_MEMORY_ALLOC_ZONE(secnodezone, sizeof(msecnode_t), 0, 256,
-                                  "SecNodes");
+IMPLEMENT_BLOCK_MEMORY_ALLOC_ZONE(
+    secnodezone, sizeof(msecnode_t), 0, 256, "SecNodes"
+);
 
 //
 // P_FreeSecNodeList
@@ -3099,7 +3123,8 @@ void P_AppendSpecHit(line_t *ld)
     {
         spechit_max = spechit_max ? spechit_max * 2 : 8;
         spechit = static_cast<line_t **>(
-            realloc(spechit, sizeof *spechit * spechit_max));
+            realloc(spechit, sizeof *spechit * spechit_max)
+        );
     }
     spechit[numspechit++] = ld;
     // e6y: Spechits overrun emulation code

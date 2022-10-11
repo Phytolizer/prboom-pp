@@ -234,8 +234,9 @@ static dboolean P_GiveAmmo(player_t *player, ammotype_t ammo, int num)
 // The weapon name may have a MF_DROPPED flag ored in.
 //
 
-static dboolean P_GiveWeapon(player_t *player, weapontype_t weapon,
-                             dboolean dropped)
+static dboolean P_GiveWeapon(
+    player_t *player, weapontype_t weapon, dboolean dropped
+)
 {
     dboolean gaveammo;
     dboolean gaveweapon;
@@ -264,8 +265,10 @@ static dboolean P_GiveWeapon(player_t *player, weapontype_t weapon,
         // displayplayer, not consoleplayer, for viewing multiplayer demos
         if (!comp[comp_sound] || player == &players[displayplayer])
         {
-            S_StartSound(player->mo,
-                         sfx_wpnup | PICKUP_SOUND); // killough 4/25/98
+            S_StartSound(
+                player->mo,
+                sfx_wpnup | PICKUP_SOUND
+            ); // killough 4/25/98
         }
         return false;
     }
@@ -508,8 +511,8 @@ void P_TouchSpecialThing(mobj_t *special, mobj_t *toucher)
         {
             player->armortype =
                 ((!demo_compatibility ||
-                  prboom_comp[PC_APPLY_GREEN_ARMOR_CLASS_TO_ARMOR_BONUSES]
-                      .state)
+                  prboom_comp[PC_APPLY_GREEN_ARMOR_CLASS_TO_ARMOR_BONUSES].state
+                 )
                      ? green_armor_class
                      : 1);
         }
@@ -542,7 +545,8 @@ void P_TouchSpecialThing(mobj_t *special, mobj_t *toucher)
             ((!demo_compatibility ||
               prboom_comp[PC_APPLY_BLUE_ARMOR_CLASS_TO_MEGASPHERE].state)
                  ? blue_armor_class
-                 : 2));
+                 : 2)
+        );
         player->message = s_GOTMSPHERE; // Ty 03/22/98 - externalized
         sound = sfx_getpow;
         break;
@@ -808,8 +812,9 @@ void P_TouchSpecialThing(mobj_t *special, mobj_t *toucher)
         break;
 
     case SPR_MGUN:
-        if (!P_GiveWeapon(player, wp_chaingun,
-                          (special->flags & MF_DROPPED) != 0))
+        if (!P_GiveWeapon(
+                player, wp_chaingun, (special->flags & MF_DROPPED) != 0
+            ))
         {
             return;
         }
@@ -845,8 +850,9 @@ void P_TouchSpecialThing(mobj_t *special, mobj_t *toucher)
         break;
 
     case SPR_SHOT:
-        if (!P_GiveWeapon(player, wp_shotgun,
-                          (special->flags & MF_DROPPED) != 0))
+        if (!P_GiveWeapon(
+                player, wp_shotgun, (special->flags & MF_DROPPED) != 0
+            ))
         {
             return;
         }
@@ -855,8 +861,9 @@ void P_TouchSpecialThing(mobj_t *special, mobj_t *toucher)
         break;
 
     case SPR_SGN2:
-        if (!P_GiveWeapon(player, wp_supershotgun,
-                          (special->flags & MF_DROPPED) != 0))
+        if (!P_GiveWeapon(
+                player, wp_supershotgun, (special->flags & MF_DROPPED) != 0
+            ))
         {
             return;
         }
@@ -956,9 +963,10 @@ static void P_KillMobj(mobj_t *source, mobj_t *target)
             {
                 throw std::runtime_error{"Getting weapon stats failed!"};
             }
-            lprintf(LO_INFO, "Stats for %s: %lu total kills\n",
-                    rust::weapon_name(source->player->readyweapon),
-                    stats.kills);
+            lprintf(
+                LO_INFO, "Stats for %s: %lu total kills\n",
+                rust::weapon_name(source->player->readyweapon), stats.kills
+            );
             rust::cleanup_stats(&stats);
         }
     }
@@ -1074,13 +1082,15 @@ static void P_KillMobj(mobj_t *source, mobj_t *target)
         heretic ? (target->info->spawnhealth >> 1) : target->info->spawnhealth;
     if (target->health < -xdeath_limit && target->info->xdeathstate)
     {
-        P_SetMobjState(target,
-                       static_cast<statenum_t>(target->info->xdeathstate));
+        P_SetMobjState(
+            target, static_cast<statenum_t>(target->info->xdeathstate)
+        );
     }
     else
     {
-        P_SetMobjState(target,
-                       static_cast<statenum_t>(target->info->deathstate));
+        P_SetMobjState(
+            target, static_cast<statenum_t>(target->info->deathstate)
+        );
     }
 
     target->tics -= P_Random(pr_killtics) & 3;
@@ -1271,16 +1281,18 @@ void P_DamageMobj(mobj_t *target, mobj_t *inflictor, mobj_t *source, int damage)
 
         if (buddha_mode && target->player)
         {
-            damage =
-                static_cast<int>(static_cast<double>(damage) *
-                                 static_cast<double>(target->health) / 100.0);
+            damage = static_cast<int>(
+                static_cast<double>(damage) *
+                static_cast<double>(target->health) / 100.0
+            );
         }
 
         if (damage_multiplier != 100 && target->player)
         {
-            damage = static_cast<int>(static_cast<double>(damage) *
-                                      static_cast<double>(damage_multiplier) /
-                                      100.0);
+            damage = static_cast<int>(
+                static_cast<double>(damage) *
+                static_cast<double>(damage_multiplier) / 100.0
+            );
         }
     }
 
@@ -1349,8 +1361,8 @@ void P_DamageMobj(mobj_t *target, mobj_t *inflictor, mobj_t *source, int damage)
         // ignore damage in GOD mode, or with INVUL power.
         // killough 3/26/98: make god mode 100% god mode in non-compat mode
 
-        if ((damage < 1000 ||
-             (!comp[comp_god] && (player->cheats & CF_GODMODE))) &&
+        if ((damage < 1000 || (!comp[comp_god] && (player->cheats & CF_GODMODE))
+            ) &&
             (player->cheats & CF_GODMODE || player->powers[pw_invulnerability]))
         {
             return;
@@ -1460,8 +1472,8 @@ void P_DamageMobj(mobj_t *target, mobj_t *inflictor, mobj_t *source, int damage)
         if (target->health * 2 < target->info->spawnhealth)
         {
             thinker_t *cap =
-                &thinkerclasscap[target->flags & MF_FRIEND ? th_friends
-                                                           : th_enemies];
+                &thinkerclasscap
+                    [target->flags & MF_FRIEND ? th_friends : th_enemies];
             (target->thinker.cprev->cnext = target->thinker.cnext)->cprev =
                 target->thinker.cprev;
             (target->thinker.cnext = cap->cnext)->cprev = &target->thinker;
@@ -1481,8 +1493,9 @@ void P_DamageMobj(mobj_t *target, mobj_t *inflictor, mobj_t *source, int damage)
             target->flags |= MF_JUSTHIT; // fight back!
         }
 
-        P_SetMobjState(target,
-                       static_cast<statenum_t>(target->info->painstate));
+        P_SetMobjState(
+            target, static_cast<statenum_t>(target->info->painstate)
+        );
     }
 
     target->reactiontime = 0; // we're awake now...
@@ -1521,8 +1534,9 @@ void P_DamageMobj(mobj_t *target, mobj_t *inflictor, mobj_t *source, int damage)
         if (target->state == &states[target->info->spawnstate] &&
             target->info->seestate != g_s_null)
         {
-            P_SetMobjState(target,
-                           static_cast<statenum_t>(target->info->seestate));
+            P_SetMobjState(
+                target, static_cast<statenum_t>(target->info->seestate)
+            );
         }
     }
 
@@ -1697,24 +1711,27 @@ void Heretic_P_TouchSpecialThing(mobj_t *special, mobj_t *toucher)
     case HERETIC_SPR_INVU: // Arti_Invulnerability
         if (P_GiveArtifact(player, arti_invulnerability, special))
         {
-            P_SetMessage(player, DEH_String(HERETIC_TXT_ARTIINVULNERABILITY),
-                         false);
+            P_SetMessage(
+                player, DEH_String(HERETIC_TXT_ARTIINVULNERABILITY), false
+            );
             P_SetDormantArtifact(special);
         }
         return;
     case HERETIC_SPR_PWBK: // Arti_TomeOfPower
         if (P_GiveArtifact(player, arti_tomeofpower, special))
         {
-            P_SetMessage(player, DEH_String(HERETIC_TXT_ARTITOMEOFPOWER),
-                         false);
+            P_SetMessage(
+                player, DEH_String(HERETIC_TXT_ARTITOMEOFPOWER), false
+            );
             P_SetDormantArtifact(special);
         }
         return;
     case HERETIC_SPR_INVS: // Arti_Invisibility
         if (P_GiveArtifact(player, arti_invisibility, special))
         {
-            P_SetMessage(player, DEH_String(HERETIC_TXT_ARTIINVISIBILITY),
-                         false);
+            P_SetMessage(
+                player, DEH_String(HERETIC_TXT_ARTIINVISIBILITY), false
+            );
             P_SetDormantArtifact(special);
         }
         return;
@@ -1728,8 +1745,9 @@ void Heretic_P_TouchSpecialThing(mobj_t *special, mobj_t *toucher)
     case HERETIC_SPR_SPHL: // Arti_SuperHealth
         if (P_GiveArtifact(player, arti_superhealth, special))
         {
-            P_SetMessage(player, DEH_String(HERETIC_TXT_ARTISUPERHEALTH),
-                         false);
+            P_SetMessage(
+                player, DEH_String(HERETIC_TXT_ARTISUPERHEALTH), false
+            );
             P_SetDormantArtifact(special);
         }
         return;
@@ -2240,8 +2258,7 @@ void P_AutoUseHealth(player_t *player, int saveHealth)
             P_PlayerRemoveArtifact(player, superSlot);
         }
     }
-    else if ((gameskill == sk_baby) &&
-             (superCount * 100 + normalCount * 25 >= saveHealth))
+    else if ((gameskill == sk_baby) && (superCount * 100 + normalCount * 25 >= saveHealth))
     { // Use mystic urns and quartz flasks
         count = (saveHealth + 24) / 25;
         saveHealth -= count * 25;

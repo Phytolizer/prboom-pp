@@ -67,8 +67,9 @@ struct packet_header_t
     unsigned tic;
 } PACKEDATTR;
 
-static inline void packet_set(packet_header_t *p, packet_type_e::Type t,
-                              unsigned long tic)
+static inline void packet_set(
+    packet_header_t *p, packet_type_e::Type t, unsigned long tic
+)
 {
     p->tic = doom_htonl(tic);
     p->type = t;
