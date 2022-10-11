@@ -87,7 +87,7 @@ struct midi_track_t
 {
     // Length in bytes:
 
-    unsigned int data_len;
+    unsigned int data_len = 0;
 
     // Events in this track:
 
@@ -522,15 +522,12 @@ static dboolean ReadAllTracks(midi_file_t *file, midimem_t *mf)
 
     // Allocate list of tracks and read each track:
 
-    file->tracks =
-        (midi_track_t *)malloc(sizeof(midi_track_t) * file->num_tracks);
+    file->tracks = new midi_track_t[file->num_tracks];
 
     if (file->tracks == nullptr)
     {
         return false;
     }
-
-    memset(file->tracks, 0, sizeof(midi_track_t) * file->num_tracks);
 
     // Read each track:
 
@@ -594,7 +591,7 @@ void MIDI_FreeFile(midi_file_t *file)
 
     if (file->tracks != nullptr)
     {
-        free(file->tracks);
+        delete[] file->tracks;
     }
 
     free(file);
@@ -1055,9 +1052,7 @@ midi_file_t *MIDI_LoadFileSpecial(midimem_t *mf)
     ret->num_tracks = 1;
     ret->buffer_size = 0;
     ret->buffer = nullptr;
-    ret->tracks = (midi_track_t *)malloc(sizeof(midi_track_t));
-
-    ret->tracks->events = {};
+    ret->tracks = new midi_track_t[1];
 
     opi = MIDI_spmc(base, nullptr, 20000);
 
@@ -1087,6 +1082,7 @@ midi_file_t *MIDI_LoadFileSpecial(midimem_t *mf)
                 opi = MIDI_spmc(base, oldev, 20000);
                 // insert event as dummy
                 nextev.event_type = midi_event_type_t::META;
+                nextev.data.setMeta();
                 nextev.data.meta().type = midi_meta_event_type_t::TEXT;
                 nextev.data.meta().length = 0;
                 nextev.data.meta().data = (byte *)malloc(4);
@@ -1096,6 +1092,7 @@ midi_file_t *MIDI_LoadFileSpecial(midimem_t *mf)
             if (oldev->data.meta().type == midi_meta_event_type_t::END_OF_TRACK)
             { // reproduce event and break
                 nextev.event_type = midi_event_type_t::META;
+                nextev.data.setMeta();
                 nextev.data.meta().type = midi_meta_event_type_t::END_OF_TRACK;
                 nextev.data.meta().length = 0;
                 nextev.data.meta().data = (byte *)malloc(4);
