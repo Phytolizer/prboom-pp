@@ -41,22 +41,27 @@ struct RawWeaponStats
     unsigned long kills;
     EnemyStats *enemies;
     unsigned long num_enemies;
+    unsigned long enemies_capacity;
 
     RawWeaponStats(unsigned long const &kills, EnemyStats *const &enemies,
-                   unsigned long const &num_enemies)
-        : kills(kills), enemies(enemies), num_enemies(num_enemies)
+                   unsigned long const &num_enemies,
+                   unsigned long const &enemies_capacity)
+        : kills(kills), enemies(enemies), num_enemies(num_enemies),
+          enemies_capacity(enemies_capacity)
     {
     }
 
     bool operator==(const RawWeaponStats &other) const
     {
         return kills == other.kills && enemies == other.enemies &&
-               num_enemies == other.num_enemies;
+               num_enemies == other.num_enemies &&
+               enemies_capacity == other.enemies_capacity;
     }
     bool operator!=(const RawWeaponStats &other) const
     {
         return kills != other.kills || enemies != other.enemies ||
-               num_enemies != other.num_enemies;
+               num_enemies != other.num_enemies ||
+               enemies_capacity != other.enemies_capacity;
     }
 };
 
@@ -115,6 +120,13 @@ extern "C"
     int get_stats(weapontype_t weapon, RawWeaponStats *raw_stats);
 
     /// # Safety
+    /// This function's safety relies on that of M_LookupDefault.
+    /// Otherwise, it is safe.
+    int load_defaults();
+
+    int load_weapon_stats();
+
+    /// # Safety
     /// This function uses a ptr/length pair to construct a slice.
     /// It is a safe conversion as long as W_LumpLength and W_CacheLumpNum
     /// return accurate values.
@@ -122,13 +134,13 @@ extern "C"
                        int lump_length, SoundInfo **buf,
                        unsigned long *buf_len);
 
-    int load_weapon_stats();
+    /// # Safety
+    /// This function reads lots of raw C structs.
+    void save_defaults();
+
     int save_weapon_stats();
 
     const char *weapon_name(weapontype_t weapon);
-
-    int load_defaults();
-    void save_defaults();
 
 } // extern "C"
 

@@ -1,7 +1,7 @@
 [package]
 name = "cheater_macros"
 version = "0.1.0"
-authors = ["onContentStop <kylecoffey1999@gmail.com>"]
+authors = ["Kyle Coffey <kylecoffey1999@gmail.com>"]
 edition = "2018"
 
 [lib]

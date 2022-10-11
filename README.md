@@ -1,5 +1,4 @@
 # PrBoom++ v0.1.0
-[![Language grade: Python](https://img.shields.io/lgtm/grade/python/g/onContentStop/prboom-pp.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/onContentStop/prboom-pp/context:python)
 
 ## IMPORTANT NOTE: THIS PROJECT CURRENTLY DOES NOT BUILD ON WINDOWS OR MAC OS. I AM WORKING ON IT :)
 

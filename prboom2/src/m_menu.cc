@@ -7205,7 +7205,7 @@ dboolean M_Responder(event_t *ev)
 
         if (dsda_InputActivated(dsda_input_stats))
         {
-            rust::RawWeaponStats stats{0, nullptr, 0};
+            rust::RawWeaponStats stats{0, nullptr, 0, 0};
             rust::get_stats(players[consoleplayer].readyweapon, &stats);
             doom_printf("%s: %zu total kills",
                         rust::weapon_name(players[consoleplayer].readyweapon),

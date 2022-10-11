@@ -950,7 +950,7 @@ static void P_KillMobj(mobj_t *source, mobj_t *target)
         {
             rust::add_kill(source->player->readyweapon, target->type);
 
-            rust::RawWeaponStats stats(0, nullptr, 0);
+            rust::RawWeaponStats stats(0, nullptr, 0, 0);
             int status = rust::get_stats(source->player->readyweapon, &stats);
             if (status != 0)
             {

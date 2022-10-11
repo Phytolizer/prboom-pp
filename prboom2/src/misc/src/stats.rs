@@ -30,6 +30,7 @@ pub struct RawWeaponStats {
     kills: c_ulong,
     enemies: *mut EnemyStats,
     num_enemies: c_ulong,
+    enemies_capacity: c_ulong,
 }
 
 impl Default for RawWeaponStats {
@@ -38,6 +39,7 @@ impl Default for RawWeaponStats {
             kills: 0,
             enemies: ptr::null_mut(),
             num_enemies: 0,
+            enemies_capacity: 0,
         }
     }
 }
@@ -94,15 +96,15 @@ static SUPER_SHOTGUN: Lazy<CString> =
 
 const fn rust_weapon_name(weapon: weapontype_t) -> &'static str {
     match weapon {
-        0 => "fist",
-        1 => "pistol",
-        2 => "shotgun",
-        3 => "chaingun",
-        4 => "rocket launcher",
-        5 => "plasma rifle",
-        6 => "BFG 9000",
-        7 => "chainsaw",
-        8 => "super shotgun",
+        weapontype_t_wp_fist => "fist",
+        weapontype_t_wp_pistol => "pistol",
+        weapontype_t_wp_shotgun => "shotgun",
+        weapontype_t_wp_chaingun => "chaingun",
+        weapontype_t_wp_missile => "rocket launcher",
+        weapontype_t_wp_plasma => "plasma rifle",
+        weapontype_t_wp_bfg => "BFG 9000",
+        weapontype_t_wp_chainsaw => "chainsaw",
+        weapontype_t_wp_supershotgun => "super shotgun",
         _ => "(invalid weapon)",
     }
 }
@@ -149,15 +151,12 @@ static KILL_STATS: Lazy<Mutex<HashMap<String, WeaponStats>>> = Lazy::new(|| {
     Mutex::new(map)
 });
 
-unsafe fn get_weapon_stats_filename() -> PathBuf {
+fn get_weapon_stats_filename() -> PathBuf {
     PathBuf::from(PRBOOM_DIR.as_str()).join("weapon_stats.toml")
 }
 
-/// # Safety
-/// This function just needs the prboom_dir value as a String.
-/// It's probably fine, as that is a constant.
 #[no_mangle]
-pub unsafe extern "C" fn load_weapon_stats() -> c_int {
+pub extern "C" fn load_weapon_stats() -> c_int {
     let contents = match fs::read(get_weapon_stats_filename()) {
         Ok(c) => c,
         Err(e) => {
@@ -177,10 +176,8 @@ pub unsafe extern "C" fn load_weapon_stats() -> c_int {
     0
 }
 
-/// # Safety
-/// This function just needs to get the prboom_dir value as a String. It's probably fine.
 #[no_mangle]
-pub unsafe extern "C" fn save_weapon_stats() -> c_int {
+pub extern "C" fn save_weapon_stats() -> c_int {
     let contents = toml::to_string_pretty(&*(KILL_STATS.lock())).unwrap();
 
     if let Err(e) = fs::write(get_weapon_stats_filename(), contents) {
@@ -212,7 +209,7 @@ pub unsafe extern "C" fn cleanup_stats(stats: *mut RawWeaponStats) {
     drop(Vec::from_raw_parts(
         (*stats).enemies,
         (*stats).num_enemies as usize,
-        (*stats).num_enemies as usize,
+        (*stats).enemies_capacity as usize,
     ));
     (*stats).num_enemies = 0;
     (*stats).kills = 0;
@@ -241,11 +238,13 @@ pub unsafe extern "C" fn get_stats(weapon: weapontype_t, raw_stats: *mut RawWeap
     enemy_stats.sort_by_key(|stats| stats.kills);
     let enemies = enemy_stats.as_mut_ptr();
     let num_enemies = enemy_stats.len() as c_ulong;
+    let enemies_capacity = enemy_stats.capacity() as c_ulong;
     forget(enemy_stats);
     *raw_stats = RawWeaponStats {
         kills: stats.kills as c_ulong,
         enemies,
         num_enemies,
+        enemies_capacity,
     };
     0
 }
